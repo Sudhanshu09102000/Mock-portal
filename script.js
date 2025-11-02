@@ -13,7 +13,8 @@ const topics = [
   "Chemistry", 
   "Biology", 
   "Miscellaneous", 
-  "Computers"
+  "Computers",
+  "Vocabulary"
 ];
 
 // Each topic has an array of objects: { name: "Button Name", url: "..." }
@@ -88,7 +89,16 @@ const links = {
     { name: "4. Computer Memory", url: "https://sudhanshu09102000.github.io/4.-Computer-Memory/" },
     { name: "5. Memory unit", url: "https://sudhanshu09102000.github.io/5.-Memory-unit/" },
     { name: "6. Types of Computer", url: "https://sudhanshu09102000.github.io/6.-Types-of-Computer/" },
+  ],
+  10: [
+    { name: "1. Set1 Vocab Words", url: "https://sudhanshu09102000.github.io/1.-Set1-Vocab-Words/" },
+    { name: "2. Set2 Vocab Words", url: "https://sudhanshu09102000.github.io/2.-Set2-Vocab-Words/" },
+    { name: "3. Set3 Vocab Words", url: "https://sudhanshu09102000.github.io/3.-Set3-Vocab-Words/" },
+    { name: "4. Set4 Vocab Words", url: "https://sudhanshu09102000.github.io/4.-Set4-Vocab-Words/" },
+    { name: "5. Set5 Vocab Words", url: "https://sudhanshu09102000.github.io/5.-Set5-Vocab-Words/" },
+    { name: "6. Set6 Vocab Words", url: "https://sudhanshu09102000.github.io/6.-Set6-Vocab-Words/" },
   ]
+
 };
 
 const mainPage = document.getElementById('mainPage');
