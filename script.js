@@ -90,6 +90,10 @@ const links = {
     { name: "5. Memory unit", url: "https://sudhanshu09102000.github.io/5.-Memory-unit/" },
     { name: "6. Types of Computer", url: "https://sudhanshu09102000.github.io/6.-Types-of-Computer/" },
     { name: "7. Input and Output device", url: "https://sudhanshu09102000.github.io/7.-Input-and-Output-device/" },
+    { name: "8. Computer architecture and Components", url: "https://sudhanshu09102000.github.io/8.-Computer-architecture-and-Components" },
+    { name: "9. Input and Output device", url: "https://sudhanshu09102000.github.io/7.-Input-and-Output-device/" },
+    { name: "10. Input and Output device", url: "https://sudhanshu09102000.github.io/7.-Input-and-Output-device/" },
+    { name: "11. Input and Output device", url: "https://sudhanshu09102000.github.io/7.-Input-and-Output-device/" },
   ],
   10: [
     { name: "1. Set1 Vocab Words", url: "https://sudhanshu09102000.github.io/1.-Set1-Vocab-Words/" },
