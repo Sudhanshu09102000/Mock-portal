@@ -102,6 +102,13 @@ const links = {
     { name: "4. Set4 Vocab Words", url: "https://sudhanshu09102000.github.io/4.-Set4-Vocab-Words/" },
     { name: "5. Set5 Vocab Words", url: "https://sudhanshu09102000.github.io/5.-Set5-Vocab-Words/" },
     { name: "6. Set6 Vocab Words", url: "https://sudhanshu09102000.github.io/6.-Set6-Vocab-Words/" },
+    { name: "7. Set7 Vocab Words", url: "https://sudhanshu09102000.github.io/7.-Set7-Vocab-Words/" },
+    { name: "8. Set8 Vocab Words", url: "https://sudhanshu09102000.github.io/8.-Set8-Vocab-Words/" },
+    { name: "9. Set9 Vocab Words", url: "https://sudhanshu09102000.github.io/9.-Set9-Vocab-Words/" },
+    { name: "10. Set10 Vocab Words", url: "https://sudhanshu09102000.github.io/10.-Set10-Vocab-Words/" },
+    { name: "11. Set11 Vocab Words", url: "https://sudhanshu09102000.github.io/11.-Set11-Vocab-Words/" },
+    { name: "12. Set12 Vocab Words", url: "https://sudhanshu09102000.github.io/12.-Set12-Vocab-Words/" },
+    { name: "13. Set13 Vocab Words", url: "https://sudhanshu09102000.github.io/13.-Set13-Vocab-Words/" },
   ]
 
 };
