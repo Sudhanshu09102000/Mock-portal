@@ -24,7 +24,7 @@ const links = {
     { name: "Vedic Culture (1500 BC–600 BC)", url: "https://sudhanshu09102000.github.io/2.-Vedic-Culture-1500-BC-600-BC-/" },
     { name: "Rig Vedic Period (1500 BC–1000 BC)", url: "https://sudhanshu09102000.github.io/3.-Rig-Vedic-or-Early-Vedic-Period-1500-BC-1000-BC-/" },
     { name: "Later Vedic Period (1000 BC-600 BC)", url: "https://sudhanshu09102000.github.io/Later-Vedic-Period-1000-BC---600-BC-/" },
-    { name: "3.1. Mahajanapada Period (600 BC-325 BC)	", url: "https://example.com/hist5" }
+    { name: "3.1. Mahajanapada Period (600 BC-325 BC)	", url: "https://sudhanshu09102000.github.io/3.1.-Mahajanapada-Period-600-BC-325-BC-/" }
   ],
   1: [
     { name: "Ancient Civilizations", url: "https://example.com/world1" },
