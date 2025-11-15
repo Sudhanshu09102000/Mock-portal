@@ -23,8 +23,8 @@ const links = {
     { name: "Indus Civilization (2500 BC–1750 BC)", url: "https://sudhanshu09102000.github.io/1.-Indus-Civilization-2500-BC-1750-BC-/" },
     { name: "Vedic Culture (1500 BC–600 BC)", url: "https://sudhanshu09102000.github.io/2.-Vedic-Culture-1500-BC-600-BC-/" },
     { name: "Rig Vedic Period (1500 BC–1000 BC)", url: "https://sudhanshu09102000.github.io/3.-Rig-Vedic-or-Early-Vedic-Period-1500-BC-1000-BC-/" },
-    { name: "Later Vedic Period", url: "https://example.com/hist4" },
-    { name: "Mauryan Empire", url: "https://example.com/hist5" }
+    { name: "Later Vedic Period (1000 BC-600 BC)", url: "https://sudhanshu09102000.github.io/Later-Vedic-Period-1000-BC---600-BC-/" },
+    { name: "3.1. Mahajanapada Period (600 BC-325 BC)	", url: "https://example.com/hist5" }
   ],
   1: [
     { name: "Ancient Civilizations", url: "https://example.com/world1" },
