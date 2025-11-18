@@ -20,7 +20,7 @@ const topics = [
 // Each topic has an array of objects: { name: "Button Name", url: "..." }
 const links = {
   0: [
-     { "name": "Harappan or Indus Civilization", "url": "https://sudhanshu09102000.github.io/Harappan-or-Indus-Civilization/" },
+  { "name": "Harappan or Indus Civilization", "url": "https://sudhanshu09102000.github.io/Harappan-or-Indus-Civilization/" },
   { "name": "Vedic Culture", "url": "https://sudhanshu09102000.github.io/Vedic-Culture/" },
   { "name": "Mahajanapada Period", "url": "https://sudhanshu09102000.github.io/Mahajanapada-Period/" },
   { "name": "Religious Movements", "url": "https://sudhanshu09102000.github.io/Religious-Movements/" },
@@ -58,7 +58,7 @@ const links = {
   { "name": "Committees or Commissions", "url": "https://sudhanshu09102000.github.io/Committees-or-Commissions/" },
   { "name": "Congress Session", "url": "https://sudhanshu09102000.github.io/Congress-Session/" },
   { "name": "Governor-Generals & Viceroys", "url": "https://sudhanshu09102000.github.io/Governor-Generals-Viceroys/" }
-  ],
+],
   
   1: [
     { name: "Mesopotamian Civilization", url: "https://sudhanshu09102000.github.io/Mesopotamian-Civilization/" },
