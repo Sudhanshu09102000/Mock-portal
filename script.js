@@ -15,7 +15,8 @@ const topics = [
   "BIOLOGY", 
   "ENVIRONMENT",
   "STATIC GK",
-  "VOCABULARY"
+  "VOCABULARY",
+  "COMPUTER AWARENESS"
 ];
 
 // Each topic has an array of objects: { name: "Button Name", url: "..." }
@@ -188,7 +189,36 @@ const links = {
     { name: "11. Set11 Vocab Words", url: "https://sudhanshu09102000.github.io/11.-Set11-Vocab-Words/" },
     { name: "12. Set12 Vocab Words", url: "https://sudhanshu09102000.github.io/12.-Set12-Vocab-Words/" },
     { name: "13. Set13 Vocab Words", url: "https://sudhanshu09102000.github.io/13.-Set13-Vocab-Words/" },
-  ]
+  ],
+     12: [
+
+       { name: "1. Introduction of Computer", url: "https://sudhanshu09102000.github.io/1.-Introduction-of-Computer/" },
+{ name: "2. History of Computer", url: "https://sudhanshu09102000.github.io/2.-History-of-Computer/" },
+{ name: "3. Generation of Computer", url: "https://sudhanshu09102000.github.io/3.-Generation-of-Computer/" },
+{ name: "4. Computer Hardware and Software", url: "https://sudhanshu09102000.github.io/4.-Computer-Hardware-and-Software/" },
+{ name: "5. Computer Memory", url: "https://sudhanshu09102000.github.io/5.-Computer-Memory/" },
+{ name: "6. Memory Unit", url: "https://sudhanshu09102000.github.io/6.-Memory-Unit/" },
+{ name: "7. Types of Computer", url: "https://sudhanshu09102000.github.io/7.-Types-of-Computer/" },
+{ name: "8. Input and Output Device", url: "https://sudhanshu09102000.github.io/8.-Input-and-Output-Device/" },
+{ name: "9. Computer Architecture and Components", url: "https://sudhanshu09102000.github.io/9.-Computer-Architecture-and-Components/" },
+{ name: "10. Types of Operating System and Its Functions", url: "https://sudhanshu09102000.github.io/10.-Types-of-Operating-System-and-Its-Functions/" },
+{ name: "11. Logic Gates and Boolean Operations", url: "https://sudhanshu09102000.github.io/11.-Logic-Gates-and-Boolean-Operations/" },
+{ name: "12. Basics of Combinatorial Components", url: "https://sudhanshu09102000.github.io/12.-Basics-of-Combinatorial-Components/" },
+{ name: "13. Number System", url: "https://sudhanshu09102000.github.io/13.-Number-System/" },
+{ name: "14. Programming Languages", url: "https://sudhanshu09102000.github.io/14.-Programming-Languages/" },
+{ name: "15. Database Management System", url: "https://sudhanshu09102000.github.io/15.-Database-Management-System/" },
+{ name: "16. Computer Network and Its Types", url: "https://sudhanshu09102000.github.io/16.-Computer-Network-and-Its-Types/" },
+{ name: "17. Computer Network Topology", url: "https://sudhanshu09102000.github.io/17.-Computer-Network-Topology/" },
+{ name: "18. Transmission Modes", url: "https://sudhanshu09102000.github.io/18.-Transmission-Modes/" },
+{ name: "19. OSI Model", url: "https://sudhanshu09102000.github.io/19.-OSI-Model/" },
+{ name: "20. Computer Security", url: "https://sudhanshu09102000.github.io/20.-Computer-Security/" },
+{ name: "21. Fathers and Inventors of Computer Field", url: "https://sudhanshu09102000.github.io/21.-Fathers-and-Inventors-of-Computer-Field/" },
+{ name: "22. Shortcut Keys", url: "https://sudhanshu09102000.github.io/22.-Shortcut-Keys/" },
+{ name: "23. Definitions and Terminologies", url: "https://sudhanshu09102000.github.io/23.-Definitions-and-Terminologies/" },
+{ name: "24. Extension", url: "https://sudhanshu09102000.github.io/24.-Extension/" },
+{ name: "25. Abbreviations", url: "https://sudhanshu09102000.github.io/25.-Abbreviations/" },
+
+     ]
 
 };
 
