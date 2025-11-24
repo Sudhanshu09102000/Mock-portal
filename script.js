@@ -15,7 +15,7 @@ const topics = [
   "BIOLOGY", 
   "ENVIRONMENT",
   "STATIC GK",
-  "VOCABULARY",
+  "ENGLISH",
   "COMPUTER AWARENESS"
 ];
 
