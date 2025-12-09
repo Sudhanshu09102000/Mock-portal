@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mock Portal</title>
 
+  <!-- Bootstrap + Fonts -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -15,20 +16,35 @@
       --grad2: #0072ff;
       --grad3: #6dd3ff;
       --grad4: #7b61ff;
+      --accent: #0d6efd;
+      --muted: #6c757d;
     }
 
+    /* Global body styling for both portal + test */
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background: linear-gradient(120deg, #0a0f24, #1a2740);
-      color: #f0f8ff;
+      color: #111827; /* DARK TEXT for light mode */
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       overflow-x: hidden;
+      animation: fadeIn 0.8s ease;
     }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* ---------- PORTAL STYLES ---------- */
 
     .card-main {
       width: 95%;
@@ -40,6 +56,7 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
       text-align: center;
       animation: fadeIn 0.6s ease;
+      margin: 40px auto;
     }
 
     h1 {
@@ -115,19 +132,17 @@
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Background Canvas */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
     @keyframes fadeOut {
@@ -140,16 +155,6 @@
         opacity: 0;
         transform: translateY(15px);
       }
-    }
-
-    /* Background Canvas */
-    #bgCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
     }
 
     /* Responsive */
@@ -168,15 +173,467 @@
         font-size: 0.9rem;
       }
     }
+
+    /* ---------- TEST ENGINE STYLES ---------- */
+
+    #question-container {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    .option {
+      margin-bottom: 10px;
+    }
+
+    .explanation-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #helpContent a.btn {
+      background: linear-gradient(90deg, #0d6efd, #6f42c1);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    #helpContent a.btn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #6f42c1, #0d6efd);
+    }
+
+    #helpContent img {
+      transition: transform 0.3s ease;
+    }
+
+    #helpContent img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Text colors in modals/helps (LIGHT MODE) */
+    #helpContent,
+    #explanationContent,
+    #scoreContent {
+      color: #111827;
+    }
+
+    .card-app {
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(13, 110, 253, 0.06);
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.25) !important;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 12px 42px rgba(0, 0, 0, 0.10);
+      animation: fadeIn 1s ease;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .question-box {
+      padding: 22px;
+      background: #fff !important;
+      border-radius: 15px !important;
+      border: 1px solid #e6e6e6 !important;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      min-height: 260px;
+      height: 100%;
+      max-height: none;
+      overflow: visible;
+      transition: transform 0.15s ease; /* for light swipe nudge */
+    }
+
+    .question-text {
+      font-size: 1.05rem;
+      color: #111827;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px
+    }
+
+    .option-label {
+      flex: 1 1 48%;
+      min-height: 64px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #e6eef9;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      background: #fbfdff;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      color: #111827;
+    }
+
+    .option-label:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px rgba(13, 110, 253, 0.25);
+      border-color: #0d6efd;
+    }
+
+    .option-label .badge-pos {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700
+    }
+
+    .option-label.selected {
+      background: linear-gradient(90deg, #e6f6ff, #f1fbff);
+      border-color: var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-label.selected::after {
+      content: "";
+      position: absolute;
+      top: -120%;
+      left: -100%;
+      width: 300%;
+      height: 300%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent 60%);
+      animation: shineEffect 0.9s ease-out;
+    }
+
+    @keyframes shineEffect {
+      0% {
+        transform: translate(-50%, -50%);
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: translate(60%, 60%);
+        opacity: 0;
+      }
+    }
+
+    .option-label.correct {
+      outline: 3px solid rgba(40, 167, 69, 0.12);
+      border-color: #28a745 !important;
+      background: linear-gradient(90deg, rgba(40, 167, 69, 0.12), rgba(40, 167, 69, 0.04));
+      box-shadow: 0 6px 20px rgba(40, 167, 69, 0.08);
+      transform: translateY(-2px);
+      animation: pulseGood 900ms ease-out;
+    }
+
+    .option-label.wrong {
+      outline: 3px solid rgba(220, 53, 69, 0.08);
+      border-color: #dc3545 !important;
+      background: linear-gradient(90deg, rgba(220, 53, 69, 0.08), rgba(220, 53, 69, 0.03));
+      box-shadow: 0 6px 20px rgba(220, 53, 69, 0.06);
+      transform: translateY(-2px);
+      animation: pulseBad 900ms ease-out;
+    }
+
+    .option-label.correct .badge-pos {
+      background: #28a745;
+      color: #fff;
+    }
+
+    .option-label.wrong .badge-pos {
+      background: #dc3545;
+      color: #fff;
+    }
+
+    @keyframes pulseGood {
+      0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.18);
+      }
+
+      70% {
+        box-shadow: 0 0 0 14px rgba(40, 167, 69, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+      }
+    }
+
+    @keyframes pulseBad {
+      0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.18);
+      }
+
+      70% {
+        box-shadow: 0 0 0 14px rgba(220, 53, 69, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+      }
+    }
+
+    .question-nav {
+      gap: 8px;
+      margin-top: 18px
+    }
+
+    .qbtn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      transition: 0.3s ease;
+    }
+
+    .qbtn.default {
+      background: #f8f9fb;
+      border: 1px solid #e6eef9
+    }
+
+    .qbtn.answered {
+      background: #28a745;
+      color: #fff
+    }
+
+    .qbtn.not-answered {
+      background: #dc3545;
+      color: #fff
+    }
+
+    .qbtn.review {
+      background: #ffc107;
+      color: #212529
+    }
+
+    .qbtn.review-answered {
+      background: linear-gradient(90deg, #ffc107 50%, #28a745 50%);
+      color: #212529
+    }
+
+    .qbtn.current {
+      box-shadow: 0 6px 18px rgba(13, 110, 253, 0.12);
+      border: 2px solid rgba(13, 110, 253, 0.12)
+    }
+
+    .qbtn:hover {
+      transform: scale(1.18);
+      box-shadow: 0 0 12px rgba(0, 255, 200, 0.6);
+    }
+
+    #timer {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: #0d6efd;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      z-index: 1100
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px
+    }
+
+    .progress-wrap {
+      height: 10px;
+      border-radius: 20px;
+      background: #e9f2ff;
+      overflow: hidden
+    }
+
+    .progress-inner {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #6f42c1)
+    }
+
+    #review-container .card {
+      border-radius: 12px
+    }
+
+    @media (max-width:680px) {
+      .option-label {
+        flex-basis: 100%
+      }
+
+      .qbtn {
+        width: 40px;
+        height: 40px
+      }
+    }
+
+    /* overlay blink on body */
+    body.blink-green::before,
+    body.blink-red::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2000;
+      opacity: 0;
+    }
+
+    body.blink-green::before {
+      background: linear-gradient(180deg, rgba(40, 167, 69, 0.14), rgba(40, 167, 69, 0.08));
+      animation: blinkGreen 900ms ease-out;
+    }
+
+    body.blink-red::before {
+      background: linear-gradient(180deg, rgba(220, 53, 69, 0.14), rgba(220, 53, 69, 0.08));
+      animation: blinkRed 900ms ease-out;
+    }
+
+    @keyframes blinkGreen {
+      0% {
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      10% {
+        opacity: 1;
+        transform: scale(1.01);
+      }
+
+      70% {
+        opacity: 0.35;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes blinkRed {
+      0% {
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      10% {
+        opacity: 1;
+        transform: scale(1.01);
+      }
+
+      70% {
+        opacity: 0.35;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1);
+      }
+    }
+
+    .options.disabled .option-label {
+      pointer-events: none;
+      opacity: 0.94;
+    }
+
+    body.darkmode {
+      background: #000 !important;
+      color: #f8f9fa !important;
+    }
+
+    body.darkmode .question-box,
+    body.darkmode .card,
+    body.darkmode .card-app {
+      background: #181818 !important;
+      border-color: #282828 !important;
+      color: #f8f9fa !important;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    body.darkmode .option-label {
+      background: #232323 !important;
+      color: #f8f9fa !important;
+      border-color: #323232 !important;
+    }
+
+    body.darkmode .option-label.selected {
+      background: #222233 !important;
+    }
+
+    body.darkmode .btn,
+    body.darkmode .btn:focus {
+      background: #222 !important;
+      color: #f8f9fa !important;
+      border-color: #444 !important;
+    }
+
+    body.darkmode #helpModal .modal-content,
+    body.darkmode #scoreModal .modal-content,
+    body.darkmode #explanationModal .modal-content {
+      background-color: #181818 !important;
+      color: #f8f9fa !important;
+      border-color: #282828 !important;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    body.darkmode #helpModal .modal-body,
+    body.darkmode #scoreModal .modal-body,
+    body.darkmode #explanationModal .modal-body {
+      background-color: #181818 !important;
+      color: #f8f9fa !important;
+    }
+
+    /* DARK MODE: ensure texts visible inside content areas */
+    body.darkmode #helpContent,
+    body.darkmode #explanationContent,
+    body.darkmode #scoreContent {
+      color: #f8f9fa !important;
+    }
+
+    body.darkmode .question-text {
+      color: #f8f9fa !important;
+    }
+
+    body.darkmode .card .card-body,
+    body.darkmode .modal-body {
+      color: #f8f9fa !important;
+    }
+
+    .qbtn.skipped {
+      background-color: #ada7a0b9;
+      color: white;
+    }
+
+    .btn {
+      transition: all 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+    }
   </style>
 </head>
 
 <body>
-
   <!-- Animated Background -->
   <canvas id="bgCanvas"></canvas>
 
-  <!-- Main Page -->
+  <!-- ========== PORTAL MAIN PAGE ========== -->
   <div class="card-main" id="mainPage">
     <h1>Mock Portal</h1>
     <div class="grid">
@@ -197,20 +654,152 @@
     </div>
   </div>
 
-  <!-- Sub Page -->
+  <!-- ========== PORTAL SUB PAGE (CHAPTERS) ========== -->
   <div class="card-main hidden" id="subPage">
     <button class="back-btn" onclick="goBack()">← Back</button>
     <h2 id="topicName"></h2>
     <div class="grid" id="subButtons"></div>
   </div>
 
-  <!-- External Script -->
+  <!-- ========== TEST PAGE (MOCK ENGINE) ========== -->
+  <div id="testPage" class="hidden">
+    <div class="container py-4">
+      <div class="topbar mb-3">
+        <button id="backToPortalBtn" class="btn btn-outline-light">← Back to Portal</button>
+        <div class="text-end">
+          <div id="timer">00:00</div>
+        </div>
+      </div>
+
+      <div class="card card-app p-3">
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+          <div>
+            <h4 id="testTitle" class="mb-0 text-light">Mock Test</h4>
+            <small class="text-light-50">Tap options or use keys 1-4, Enter, Arrow keys</small>
+          </div>
+          <div class="progress-wrap ms-3 flex-grow-1">
+            <div id="timeProgress" class="progress-inner" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-lg-8">
+            <div class="question-box" id="question-box">
+              <div id="question-image" class="mb-3 text-center"></div>
+              <div id="questionText" class="question-text mb-2">loading...</div>
+              <div id="options" class="options"></div>
+
+              <div class="controls mt-3">
+                <button id="prevBtn" class="btn btn-outline-secondary">⟵ Previous</button>
+                <button id="saveNextBtn" class="btn btn-primary">Save & Next</button>
+                <button id="helpBtn" class="btn btn-info">Help!</button>
+                <button id="reviewNextBtn" class="btn btn-warning">Mark for Review & Next</button>
+                <button id="clearBtn" class="btn btn-outline-danger">Clear Response</button>
+                <button id="jumpBtn" class="btn btn-outline-info">Jump To</button>
+                <button id="soundToggle" class="btn btn-success">🔊 Sound ON</button>
+                <button id="modeSwitcher" class="btn btn-dark">🌙 Dark Mode</button>
+                <button id="hintToggle" class="btn btn-secondary">Exam Mode</button>
+              </div>
+
+              <div class="mt-2">
+                <button id="reviewSummaryBtn" class="btn btn-success" style="display: none;">📊 Show Summary</button>
+              </div>
+            </div>
+
+            <div id="review-container" class="mt-3" style="display:none;"></div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="d-grid mb-2">
+              <button id="toggleNavBtn" class="btn btn-outline-primary">
+                👁️ Toggle Question Navigator
+              </button>
+            </div>
+            <div class="card p-3 mb-3">
+              <h6>Question Navigator</h6>
+              <div id="question-nav" class="d-flex flex-wrap question-nav mt-2"></div>
+
+              <hr>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="small text-muted">Answered</div>
+                  <div class="d-flex gap-2 mt-2"><span class="badge bg-success">&nbsp;</span> <small
+                      class="text-muted">Attempted</small></div>
+                </div>
+                <div>
+                  <div class="small text-muted">Marked for Review</div>
+                  <div class="d-flex gap-2 mt-2"><span class="badge bg-warning">&nbsp;</span> <small
+                      class="text-muted">Review</small></div>
+                </div>
+              </div>
+
+              <hr>
+              <div class="d-grid">
+                <button id="submitBtn" class="btn btn-danger">Submit Test</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score Modal -->
+    <div class="modal fade" id="scoreModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Test Summary</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="scoreContent"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Explanation Modal -->
+    <div class="modal fade" id="explanationModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Explanation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="explanationContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Help</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="helpContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
+  </div>
+
+  <!-- Google Translate script (if you use it) -->
+  <script type="text/javascript"
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
     // ===============================
-    // Script for Complete Lucent GK Mock
+    // PORTAL DATA (topics & chapters)
     // ===============================
-
-    // Topic Titles
     const topics = [
       "GEOGRAPHY",
       "ANCIENT HISTORY",
@@ -228,243 +817,238 @@
       "CURRENT AFFAIRS"
     ];
 
-    // Each topic has an array of objects: { name: "Button Name", url: "..." }
+    // Each topic has an array of {name, url}, url not used now
     const links = {
       0: [
-        { name: "1. Solar System", url: "https://sudhanshu09102000.github.io/1.-Solar-System/" },
-        { name: "2. Longitude and Latitude", url: "https://sudhanshu09102000.github.io/2.-Longitude-and-Latitude/" },
-        { name: "3. Earth's Interior and Plate Tectonics", url: "https://sudhanshu09102000.github.io/3.-Earth-Interior-and-Plate-Tectonics/" },
-        { name: "4. Rocks, Continents and Ocean", url: "https://sudhanshu09102000.github.io/4.-Rocks-Continents-and-Ocean/" },
-        { name: "5. Geomorphology and Landforms", url: "https://sudhanshu09102000.github.io/5.-Geomorphology-and-Landforms/" },
-        { name: "6. Atmosphere", url: "https://sudhanshu09102000.github.io/6.-Atmosphere/" },
-        { name: "7. Wind, Ocean Current and Cyclone", url: "https://sudhanshu09102000.github.io/7.-Wind-Ocean-Current-and-Cyclone/" },
-        { name: "8. India and Its Location", url: "https://sudhanshu09102000.github.io/8.-India-and-Its-Location/" },
-        { name: "9. Himalayas", url: "https://sudhanshu09102000.github.io/9.-Himalayas/" },
-        { name: "10. Peninsular Plateaus", url: "https://sudhanshu09102000.github.io/10.-Peninsular-Plateaus/" },
-        { name: "11. Northern Plain and Islands", url: "https://sudhanshu09102000.github.io/11.-Northern-Plain-and-Islands/" },
-        { name: "12. Himalayan River System", url: "https://sudhanshu09102000.github.io/12.-Himalayan-River-System/" },
-        { name: "13. Peninsular Rivers", url: "https://sudhanshu09102000.github.io/13.-Peninsular-Rivers/" },
-        { name: "14. Dams, Lakes and Waterfall", url: "https://sudhanshu09102000.github.io/14.-Dams-Lakes-and-Waterfall/" },
-        { name: "15. Monsoon", url: "https://sudhanshu09102000.github.io/15.-Monsoon/" },
-        { name: "16. Forest and Grassland", url: "https://sudhanshu09102000.github.io/16.-Forest-and-Grassland/" },
-        { name: "17. Soil and Agriculture", url: "https://sudhanshu09102000.github.io/17.-Soil-and-Agriculture/" },
-        { name: "18. Minerals", url: "https://sudhanshu09102000.github.io/18.-Minerals/" },
-        { name: "19. World Map", url: "https://sudhanshu09102000.github.io/19.-World-Map/" },
-        { name: "20. National Parks", url: "https://sudhanshu09102000.github.io/20.-National-Parks/" },
-
+        { name: "1. Solar System", url: "#" },
+        { name: "2. Longitude and Latitude", url: "#" },
+        { name: "3. Earth's Interior and Plate Tectonics", url: "#" },
+        { name: "4. Rocks, Continents and Ocean", url: "#" },
+        { name: "5. Geomorphology and Landforms", url: "#" },
+        { name: "6. Atmosphere", url: "#" },
+        { name: "7. Wind, Ocean Current and Cyclone", url: "#" },
+        { name: "8. India and Its Location", url: "#" },
+        { name: "9. Himalayas", url: "#" },
+        { name: "10. Peninsular Plateaus", url: "#" },
+        { name: "11. Northern Plain and Islands", url: "#" },
+        { name: "12. Himalayan River System", url: "#" },
+        { name: "13. Peninsular Rivers", url: "#" },
+        { name: "14. Dams, Lakes and Waterfall", url: "#" },
+        { name: "15. Monsoon", url: "#" },
+        { name: "16. Forest and Grassland", url: "#" },
+        { name: "17. Soil and Agriculture", url: "#" },
+        { name: "18. Minerals", url: "#" },
+        { name: "19. World Map", url: "#" },
+        { name: "20. National Parks", url: "#" },
       ],
-
       1: [
-        { name: "1. Stone Age", url: "https://sudhanshu09102000.github.io/1.-Stone-Age/" },
-        { name: "2. Indus Valley Civilization", url: "https://sudhanshu09102000.github.io/2.-Indus-Valley-Civilization/" },
-        { name: "3. Vedic Age", url: "https://sudhanshu09102000.github.io/3.-Vedic-Age/" },
-        { name: "4. Jainism and Buddhism", url: "https://sudhanshu09102000.github.io/4.-Jainism-and-Buddhism/" },
-        { name: "5. Mahajanpadas", url: "https://sudhanshu09102000.github.io/5.-Mahajanpadas/" },
-        { name: "6. Maurya Dynasty", url: "https://sudhanshu09102000.github.io/6.-Maurya-Dynasty/" },
-        { name: "7. Post-Maurya Dynasties", url: "https://sudhanshu09102000.github.io/7.-Post-Maurya-Dynasties/" },
-        { name: "8. Gupta Dynasty", url: "https://sudhanshu09102000.github.io/8.-Gupta-Dynasty/" },
-        { name: "9. Post-Gupta Dynasties", url: "https://sudhanshu09102000.github.io/9.-Post-Gupta-Dynasties/" },
-        { name: "10. Sangam Age", url: "https://sudhanshu09102000.github.io/10.-Sangam-Age/" },
-        { name: "11. Tripartite Struggle and Cholas", url: "https://sudhanshu09102000.github.io/11.-Tripartite-Struggle-and-Cholas/" },
-
+        { name: "1. Stone Age", url: "#" },
+        { name: "2. Indus Valley Civilization", url: "#" },
+        { name: "3. Vedic Age", url: "#" },
+        { name: "4. Jainism and Buddhism", url: "#" },
+        { name: "5. Mahajanpadas", url: "#" },
+        { name: "6. Maurya Dynasty", url: "#" },
+        { name: "7. Post-Maurya Dynasties", url: "#" },
+        { name: "8. Gupta Dynasty", url: "#" },
+        { name: "9. Post-Gupta Dynasties", url: "#" },
+        { name: "10. Sangam Age", url: "#" },
+        { name: "11. Tripartite Struggle and Cholas", url: "#" },
       ],
       2: [
-        { name: "1. Delhi Sultanate", url: "https://sudhanshu09102000.github.io/1.-Delhi-Sultanate/" },
-        { name: "2. Vijayanagara and Bahmani Kingdom", url: "https://sudhanshu09102000.github.io/2.-Vijayanagara-and-Bahmani-Kingdom/" },
-        { name: "3. Mughal Empire", url: "https://sudhanshu09102000.github.io/3.-Mughal-Empire/" },
-        { name: "4. Marathas", url: "https://sudhanshu09102000.github.io/4.-Marathas/" },
-        { name: "5. Bhakti and Sufi Movements", url: "https://sudhanshu09102000.github.io/5.-Bhakti-and-Sufi-Movements/" },
-
+        { name: "1. Delhi Sultanate", url: "#" },
+        { name: "2. Vijayanagara and Bahmani Kingdom", url: "#" },
+        { name: "3. Mughal Empire", url: "#" },
+        { name: "4. Marathas", url: "#" },
+        { name: "5. Bhakti and Sufi Movements", url: "#" },
       ],
       3: [
-
-        { name: "1. Advent of Europeans", url: "https://sudhanshu09102000.github.io/1.-Advent-of-Europeans/" },
-        { name: "2. Socio-Religious Reforms", url: "https://sudhanshu09102000.github.io/2.-Socio-Religious-Reforms/" },
-        { name: "3. Revolt of 1857", url: "https://sudhanshu09102000.github.io/3.-Revolt-of-1857/" },
-        { name: "4. Indian National Congress", url: "https://sudhanshu09102000.github.io/4.-Indian-National-Congress/" },
-        { name: "5. Bengal Partition", url: "https://sudhanshu09102000.github.io/5.-Bengal-Partition/" },
-        { name: "6. Gandhian Era", url: "https://sudhanshu09102000.github.io/6.-Gandhian-Era/" },
-        { name: "7. CDM and Simon Commission", url: "https://sudhanshu09102000.github.io/7.-CDM-and-Simon-Commission/" },
-        { name: "8. Quit India Movement", url: "https://sudhanshu09102000.github.io/8.-Quit-India-Movement/" },
-        { name: "9. Governor-General and Viceroy", url: "https://sudhanshu09102000.github.io/9.-Governor-General-and-Viceroy/" },
-
+        { name: "1. Advent of Europeans", url: "#" },
+        { name: "2. Socio-Religious Reforms", url: "#" },
+        { name: "3. Revolt of 1857", url: "#" },
+        { name: "4. Indian National Congress", url: "#" },
+        { name: "5. Bengal Partition", url: "#" },
+        { name: "6. Gandhian Era", url: "#" },
+        { name: "7. CDM and Simon Commission", url: "#" },
+        { name: "8. Quit India Movement", url: "#" },
+        { name: "9. Governor-General and Viceroy", url: "#" },
       ],
       4: [
-        { name: "1. Making of Constitution", url: "https://sudhanshu09102000.github.io/1.-Making-of-Constitution/" },
-        { name: "2. Salient Features of the Constitution", url: "https://sudhanshu09102000.github.io/2.-Salient-Features-of-the-Constitution/" },
-        { name: "3. Preamble", url: "https://sudhanshu09102000.github.io/3.-Preamble/" },
-        { name: "4. Part 1 and Part 2 of the Constitution", url: "https://sudhanshu09102000.github.io/4.-Part-1-and-Part-2-of-the-Constitution/" },
-        { name: "5. Fundamental Rights", url: "https://sudhanshu09102000.github.io/5.-Fundamental-Rights/" },
-        { name: "6. DPSP and Fundamental Duties", url: "https://sudhanshu09102000.github.io/6.-DPSP-and-Fundamental-Duties/" },
-        { name: "7. President and Vice President of India", url: "https://sudhanshu09102000.github.io/7.-President-and-Vice-President-of-India/" },
-        { name: "8. Prime Minister and Council of Ministers", url: "https://sudhanshu09102000.github.io/8.-Prime-Minister-and-Council-of-Ministers/" },
-        { name: "9. Parliament", url: "https://sudhanshu09102000.github.io/9.-Parliament/" },
-        { name: "10. State Legislature", url: "https://sudhanshu09102000.github.io/10.-State-Legislature/" },
-        { name: "11. Emergency & Constitutional Amendment", url: "https://sudhanshu09102000.github.io/11.-Emergency-and-Constitutional-Amendment/" },
-        { name: "12. Supreme Court and High Court", url: "https://sudhanshu09102000.github.io/12.-Supreme-Court-and-High-Court/" },
-        { name: "13. Local Government", url: "https://sudhanshu09102000.github.io/13.-Local-Government/" },
-        { name: "14. Constitutional and Non-Constitutional Bodies", url: "https://sudhanshu09102000.github.io/14.-Constitutional-and-Non-Constitutional-Bodies/" },
-        { name: "15. Important Acts", url: "https://sudhanshu09102000.github.io/15.-Important-Acts/" },
-        { name: "16. Sources of the Indian Constitution", url: "https://sudhanshu09102000.github.io/16.-Sources-of-the-Indian-Constitution/" },
-
-
+        { name: "1. Making of Constitution", url: "#" },
+        { name: "2. Salient Features of the Constitution", url: "#" },
+        { name: "3. Preamble", url: "#" },
+        { name: "4. Part 1 and Part 2 of the Constitution", url: "#" },
+        { name: "5. Fundamental Rights", url: "#" },
+        { name: "6. DPSP and Fundamental Duties", url: "#" },
+        { name: "7. President and Vice President of India", url: "#" },
+        { name: "8. Prime Minister and Council of Ministers", url: "#" },
+        { name: "9. Parliament", url: "#" },
+        { name: "10. State Legislature", url: "#" },
+        { name: "11. Emergency & Constitutional Amendment", url: "#" },
+        { name: "12. Supreme Court and High Court", url: "#" },
+        { name: "13. Local Government", url: "#" },
+        { name: "14. Constitutional and Non-Constitutional Bodies", url: "#" },
+        { name: "15. Important Acts", url: "#" },
+        { name: "16. Sources of the Indian Constitution", url: "#" },
       ],
       5: [
-        { name: "1. Basics of Economy", url: "https://sudhanshu09102000.github.io/1.-Basics-of-Economy/" },
-        { name: "2. Demand and Supply", url: "https://sudhanshu09102000.github.io/2.-Demand-and-Supply/" },
-        { name: "3. National Income", url: "https://sudhanshu09102000.github.io/3.-National-Income/" },
-        { name: "4. Inflation and Unemployment", url: "https://sudhanshu09102000.github.io/4.-Inflation-and-Unemployment/" },
-        { name: "5. Budget and Taxation", url: "https://sudhanshu09102000.github.io/5.-Budget-and-Taxation/" },
-        { name: "6. Monetary Policy", url: "https://sudhanshu09102000.github.io/6.-Monetary-Policy/" },
-        { name: "7. Money and Banking", url: "https://sudhanshu09102000.github.io/7.-Money-and-Banking/" },
-        { name: "8. Balance of Payment and Poverty", url: "https://sudhanshu09102000.github.io/8.-Balance-of-Payment-and-Poverty/" },
-        { name: "9. Five Year Plan and Industrial Policy Resolution", url: "https://sudhanshu09102000.github.io/9.-Five-Year-Plan-and-Industrial-Policy-Resolution/" },
-
-
+        { name: "1. Basics of Economy", url: "#" },
+        { name: "2. Demand and Supply", url: "#" },
+        { name: "3. National Income", url: "#" },
+        { name: "4. Inflation and Unemployment", url: "#" },
+        { name: "5. Budget and Taxation", url: "#" },
+        { name: "6. Monetary Policy", url: "#" },
+        { name: "7. Money and Banking", url: "#" },
+        { name: "8. Balance of Payment and Poverty", url: "#" },
+        { name: "9. Five Year Plan and Industrial Policy Resolution", url: "#" },
       ],
       6: [
-        { name: "1. Motion", url: "https://sudhanshu09102000.github.io/1.-Motion/" },
-        { name: "2. Force and Laws of Motion", url: "https://sudhanshu09102000.github.io/2.-Force-and-Laws-of-Motion/" },
-        { name: "3. Gravitation and Work Done", url: "https://sudhanshu09102000.github.io/3.-Gravitation-and-Work-Done/" },
-        { name: "4. Sound", url: "https://sudhanshu09102000.github.io/4.-Sound/" },
-        { name: "5. Reflection and Refraction", url: "https://sudhanshu09102000.github.io/5.-Reflection-and-Refraction/" },
-        { name: "6. Human Eye and Vision", url: "https://sudhanshu09102000.github.io/6.-Human-Eye-and-Vision/" },
-        { name: "7. Electricity", url: "https://sudhanshu09102000.github.io/7.-Electricity/" },
-        { name: "8. Magnetic Effect of Electric Current", url: "https://sudhanshu09102000.github.io/8.-Magnetic-Effect-of-Electric-Current/" },
-
+        { name: "1. Motion", url: "#" },
+        { name: "2. Force and Laws of Motion", url: "#" },
+        { name: "3. Gravitation and Work Done", url: "#" },
+        { name: "4. Sound", url: "#" },
+        { name: "5. Reflection and Refraction", url: "#" },
+        { name: "6. Human Eye and Vision", url: "#" },
+        { name: "7. Electricity", url: "#" },
+        { name: "8. Magnetic Effect of Electric Current", url: "#" },
       ],
       7: [
-        { name: "1. Matter", url: "https://sudhanshu09102000.github.io/1.-Matter/" },
-        { name: "2. Atom and Its Structure", url: "https://sudhanshu09102000.github.io/2.-Atom-and-Its-Structure/" },
-        { name: "3. Periodic Table", url: "https://sudhanshu09102000.github.io/3.-Periodic-Table/" },
-        { name: "4. Chemical Reactions", url: "https://sudhanshu09102000.github.io/4.-Chemical-Reactions/" },
-        { name: "5. Metals and Non-Metals", url: "https://sudhanshu09102000.github.io/5.-Metals-and-Non-Metals/" },
-        { name: "6. Acid, Base and Salt", url: "https://sudhanshu09102000.github.io/6.-Acid-Base-and-Salt/" },
-        { name: "7. Carbon and Its Compounds", url: "https://sudhanshu09102000.github.io/7.-Carbon-and-Its-Compounds/" },
-
-
+        { name: "1. Matter", url: "#" },
+        { name: "2. Atom and Its Structure", url: "#" },
+        { name: "3. Periodic Table", url: "#" },
+        { name: "4. Chemical Reactions", url: "#" },
+        { name: "5. Metals and Non-Metals", url: "#" },
+        { name: "6. Acid, Base and Salt", url: "#" },
+        { name: "7. Carbon and Its Compounds", url: "#" },
       ],
       8: [
-        { name: "1. Cell", url: "https://sudhanshu09102000.github.io/1.-Cell/" },
-        { name: "2. Plant Tissue and Animal Tissue", url: "https://sudhanshu09102000.github.io/2.-Plant-Tissue-and-Animal-Tissue/" },
-        { name: "3. Plant and Animal Kingdom", url: "https://sudhanshu09102000.github.io/3.-Plant-and-Animal-Kingdom/" },
-        { name: "4. Nervous System", url: "https://sudhanshu09102000.github.io/4.-Nervous-System/" },
-        { name: "5. Hormones and Plant Movements", url: "https://sudhanshu09102000.github.io/5.-Hormones-and-Plant-Movements/" },
-        { name: "6. Reproduction", url: "https://sudhanshu09102000.github.io/6.-Reproduction/" },
-        { name: "7. Digestion and Respiration", url: "https://sudhanshu09102000.github.io/7.-Digestion-and-Respiration/" },
-        { name: "8. Circulatory System and Excretory System", url: "https://sudhanshu09102000.github.io/8.-Circulatory-System-and-Excretory-System/" },
-        { name: "9. Diseases", url: "https://sudhanshu09102000.github.io/9.-Diseases/" },
-        { name: "10. Nutrients", url: "https://sudhanshu09102000.github.io/10.-Nutrients/" },
-        { name: "11. Hereditary and Evolution", url: "https://sudhanshu09102000.github.io/11.-Hereditary-and-Evolution/" },
-
+        { name: "1. Cell", url: "#" },
+        { name: "2. Plant Tissue and Animal Tissue", url: "#" },
+        { name: "3. Plant and Animal Kingdom", url: "#" },
+        { name: "4. Nervous System", url: "#" },
+        { name: "5. Hormones and Plant Movements", url: "#" },
+        { name: "6. Reproduction", url: "#" },
+        { name: "7. Digestion and Respiration", url: "#" },
+        { name: "8. Circulatory System and Excretory System", url: "#" },
+        { name: "9. Diseases", url: "#" },
+        { name: "10. Nutrients", url: "#" },
+        { name: "11. Hereditary and Evolution", url: "#" },
       ],
       9: [
-        { name: "1. Basics of Environmental Sciences", url: "https://sudhanshu09102000.github.io/1.-Basics-of-Environmental-Sciences/" },
-        { name: "2. Ecosystem", url: "https://sudhanshu09102000.github.io/2.-Ecosystem/" },
-        { name: "3. Trophic Dynamics and Energy Transfer", url: "https://sudhanshu09102000.github.io/3.-Trophic-Dynamics-and-Energy-Transfer/" },
-        { name: "4. Biogeochemical Cycles", url: "https://sudhanshu09102000.github.io/4.-Biogeochemical-Cycles/" },
-        { name: "5. Environmental Conventions", url: "https://sudhanshu09102000.github.io/5.-Environmental-Conventions/" },
-
+        { name: "1. Basics of Environmental Sciences", url: "#" },
+        { name: "2. Ecosystem", url: "#" },
+        { name: "3. Trophic Dynamics and Energy Transfer", url: "#" },
+        { name: "4. Biogeochemical Cycles", url: "#" },
+        { name: "5. Environmental Conventions", url: "#" },
       ],
-
       10: [
-        { name: "1. Classical Dance", url: "https://sudhanshu09102000.github.io/1.-Classical-Dance/" },
-        { name: "2. Folk Dances of India", url: "https://sudhanshu09102000.github.io/2.-Folk-Dances-of-India/" },
-        { name: "3. Census", url: "https://sudhanshu09102000.github.io/3.-Census/" },
-        { name: "4. Musical Instruments", url: "https://sudhanshu09102000.github.io/4.-Musical-Instruments/" },
-        { name: "5. Gharanas", url: "https://sudhanshu09102000.github.io/5.-Gharanas/" },
-        { name: "6. Important Days", url: "https://sudhanshu09102000.github.io/6.-Important-Days/" },
-        { name: "7. Books and Authors", url: "https://sudhanshu09102000.github.io/7.-Books-and-Authors/" },
-        { name: "8. Sports", url: "https://sudhanshu09102000.github.io/8.-Sports/" },
-        { name: "9. International Organisations", url: "https://sudhanshu09102000.github.io/9.-International-Organisations/" },
-        { name: "10. National Organisations", url: "https://sudhanshu09102000.github.io/10.-National-Organisations/" },
-        { name: "11. Festivals of India", url: "https://sudhanshu09102000.github.io/11.-Festivals-of-India/" },
-        { name: "12. Government Schemes", url: "https://sudhanshu09102000.github.io/12.-Government-Schemes/" },
-        { name: "13. Awards and Honours", url: "https://sudhanshu09102000.github.io/13.-Awards-and-Honours/" },
-
-
+        { name: "1. Classical Dance", url: "#" },
+        { name: "2. Folk Dances of India", url: "#" },
+        { name: "3. Census", url: "#" },
+        { name: "4. Musical Instruments", url: "#" },
+        { name: "5. Gharanas", url: "#" },
+        { name: "6. Important Days", url: "#" },
+        { name: "7. Books and Authors", url: "#" },
+        { name: "8. Sports", url: "#" },
+        { name: "9. International Organisations", url: "#" },
+        { name: "10. National Organisations", url: "#" },
+        { name: "11. Festivals of India", url: "#" },
+        { name: "12. Government Schemes", url: "#" },
+        { name: "13. Awards and Honours", url: "#" },
       ],
       11: [
-        { name: "1. Set1 Vocab Words", url: "https://sudhanshu09102000.github.io/1.-Set1-Vocab-Words/" },
-        { name: "2. Set2 Vocab Words", url: "https://sudhanshu09102000.github.io/2.-Set2-Vocab-Words/" },
-        { name: "3. Set3 Vocab Words", url: "https://sudhanshu09102000.github.io/3.-Set3-Vocab-Words/" },
-        { name: "4. Set4 Vocab Words", url: "https://sudhanshu09102000.github.io/4.-Set4-Vocab-Words/" },
-        { name: "5. Set5 Vocab Words", url: "https://sudhanshu09102000.github.io/5.-Set5-Vocab-Words/" },
-        { name: "6. Set6 Vocab Words", url: "https://sudhanshu09102000.github.io/6.-Set6-Vocab-Words/" },
-        { name: "7. Set7 Vocab Words", url: "https://sudhanshu09102000.github.io/7.-Set7-Vocab-Words/" },
-        { name: "8. Set8 Vocab Words", url: "https://sudhanshu09102000.github.io/8.-Set8-Vocab-Words/" },
-        { name: "9. Set9 Vocab Words", url: "https://sudhanshu09102000.github.io/9.-Set9-Vocab-Words/" },
-        { name: "10. Set10 Vocab Words", url: "https://sudhanshu09102000.github.io/10.-Set10-Vocab-Words/" },
-        { name: "11. Set11 Vocab Words", url: "https://sudhanshu09102000.github.io/11.-Set11-Vocab-Words/" },
-        { name: "12. Set12 Vocab Words", url: "https://sudhanshu09102000.github.io/12.-Set12-Vocab-Words/" },
-        { name: "13. Set13 Vocab Words", url: "https://sudhanshu09102000.github.io/13.-Set13-Vocab-Words/" },
+        { name: "1. Set1 Vocab Words", url: "#" },
+        { name: "2. Set2 Vocab Words", url: "#" },
+        { name: "3. Set3 Vocab Words", url: "#" },
+        { name: "4. Set4 Vocab Words", url: "#" },
+        { name: "5. Set5 Vocab Words", url: "#" },
+        { name: "6. Set6 Vocab Words", url: "#" },
+        { name: "7. Set7 Vocab Words", url: "#" },
+        { name: "8. Set8 Vocab Words", url: "#" },
+        { name: "9. Set9 Vocab Words", url: "#" },
+        { name: "10. Set10 Vocab Words", url: "#" },
+        { name: "11. Set11 Vocab Words", url: "#" },
+        { name: "12. Set12 Vocab Words", url: "#" },
+        { name: "13. Set13 Vocab Words", url: "#" },
       ],
       12: [
-
-        { name: "1. Introduction of Computer", url: "https://sudhanshu09102000.github.io/1.-Introduction-of-Computer/" },
-        { name: "2. History of Computer", url: "https://sudhanshu09102000.github.io/2.-History-of-Computer/" },
-        { name: "3. Generation of Computer", url: "https://sudhanshu09102000.github.io/3.-Generation-of-Computer/" },
-        { name: "4. Computer Hardware and Software", url: "https://sudhanshu09102000.github.io/4.-Computer-Hardware-and-Software/" },
-        { name: "5. Computer Memory", url: "https://sudhanshu09102000.github.io/5.-Computer-Memory/" },
-        { name: "6. Memory Unit", url: "https://sudhanshu09102000.github.io/6.-Memory-Unit/" },
-        { name: "7. Types of Computer", url: "https://sudhanshu09102000.github.io/7.-Types-of-Computer/" },
-        { name: "8. Input and Output Device", url: "https://sudhanshu09102000.github.io/8.-Input-and-Output-Device/" },
-        { name: "9. Computer Architecture and Components", url: "https://sudhanshu09102000.github.io/9.-Computer-Architecture-and-Components/" },
-        { name: "10. Types of Operating System and Its Functions", url: "https://sudhanshu09102000.github.io/10.-Types-of-Operating-System-and-Its-Functions/" },
-        { name: "11. Logic Gates and Boolean Operations", url: "https://sudhanshu09102000.github.io/11.-Logic-Gates-and-Boolean-Operations/" },
-        { name: "12. Basics of Combinatorial Components", url: "https://sudhanshu09102000.github.io/12.-Basics-of-Combinatorial-Components/" },
-        { name: "13. Number System", url: "https://sudhanshu09102000.github.io/13.-Number-System/" },
-        { name: "14. Programming Languages", url: "https://sudhanshu09102000.github.io/14.-Programming-Languages/" },
-        { name: "15. Database Management System", url: "https://sudhanshu09102000.github.io/15.-Database-Management-System/" },
-        { name: "16. Computer Network and Its Types", url: "https://sudhanshu09102000.github.io/16.-Computer-Network-and-Its-Types/" },
-        { name: "17. Computer Network Topology", url: "https://sudhanshu09102000.github.io/17.-Computer-Network-Topology/" },
-        { name: "18. Transmission Modes", url: "https://sudhanshu09102000.github.io/18.-Transmission-Modes/" },
-        { name: "19. OSI Model", url: "https://sudhanshu09102000.github.io/19.-OSI-Model/" },
-        { name: "20. Computer Security", url: "https://sudhanshu09102000.github.io/20.-Computer-Security/" },
-        { name: "21. Fathers and Inventors of Computer Field", url: "https://sudhanshu09102000.github.io/21.-Fathers-and-Inventors-of-Computer-Field/" },
-        { name: "22. Shortcut Keys", url: "https://sudhanshu09102000.github.io/22.-Shortcut-Keys/" },
-        { name: "23. Definitions and Terminologies", url: "https://sudhanshu09102000.github.io/23.-Definitions-and-Terminologies/" },
-        { name: "24. Extension", url: "https://sudhanshu09102000.github.io/24.-Extension/" },
-        { name: "25. Abbreviations", url: "https://sudhanshu09102000.github.io/25.-Abbreviations/" },
-
+        { name: "1. Introduction of Computer", url: "#" },
+        { name: "2. History of Computer", url: "#" },
+        { name: "3. Generation of Computer", url: "#" },
+        { name: "4. Computer Hardware and Software", url: "#" },
+        { name: "5. Computer Memory", url: "#" },
+        { name: "6. Memory Unit", url: "#" },
+        { name: "7. Types of Computer", url: "#" },
+        { name: "8. Input and Output Device", url: "#" },
+        { name: "9. Computer Architecture and Components", url: "#" },
+        { name: "10. Types of Operating System and Its Functions", url: "#" },
+        { name: "11. Logic Gates and Boolean Operations", url: "#" },
+        { name: "12. Basics of Combinatorial Components", url: "#" },
+        { name: "13. Number System", url: "#" },
+        { name: "14. Programming Languages", url: "#" },
+        { name: "15. Database Management System", url: "#" },
+        { name: "16. Computer Network and Its Types", url: "#" },
+        { name: "17. Computer Network Topology", url: "#" },
+        { name: "18. Transmission Modes", url: "#" },
+        { name: "19. OSI Model", url: "#" },
+        { name: "20. Computer Security", url: "#" },
+        { name: "21. Fathers and Inventors of Computer Field", url: "#" },
+        { name: "22. Shortcut Keys", url: "#" },
+        { name: "23. Definitions and Terminologies", url: "#" },
+        { name: "24. Extension", url: "#" },
+        { name: "25. Abbreviations", url: "#" },
       ],
-
       13: [
-        { name: "1. January Current Affairs", url: "https://sudhanshu09102000.github.io/1.-January-Current-Affairs/" },
-        { name: "2. February Current Affairs", url: "https://sudhanshu09102000.github.io/2.-February-Current-Affairs/" },
-        { name: "3. March Current Affairs", url: "https://sudhanshu09102000.github.io/3.-March-Current-Affairs/" },
-        { name: "4. April Current Affairs", url: "https://sudhanshu09102000.github.io/4.-April-Current-Affairs/" },
-        { name: "5. May Current Affairs", url: "https://sudhanshu09102000.github.io/5.-May-Current-Affairs/" },
-        { name: "6. June Current Affairs", url: "https://sudhanshu09102000.github.io/6.-June-Current-Affairs/" },
-        { name: "7. July Current Affairs", url: "https://sudhanshu09102000.github.io/7.-July-Current-Affairs/" },
-        { name: "8. August Current Affairs", url: "https://sudhanshu09102000.github.io/8.-August-Current-Affairs/" },
-        { name: "9. September Current Affairs", url: "https://sudhanshu09102000.github.io/9.-September-Current-Affairs/" },
-        { name: "10. October Current Affairs", url: "https://sudhanshu09102000.github.io/10.-October-Current-Affairs/" },
-        { name: "11. November Current Affairs", url: "https://sudhanshu09102000.github.io/11.-November-Current-Affairs/" },
-        { name: "12. December Current Affairs", url: "https://sudhanshu09102000.github.io/12.-December-Current-Affairs/" },
-        { name: "1. Speedy January Current Affairs", url: "https://sudhanshu09102000.github.io/1.-Speedy-January-Current-Affairs/" },
-        { name: "2. Speedy February Current Affairs", url: "https://sudhanshu09102000.github.io/2.-Speedy-February-Current-Affairs/" },
-        { name: "3. Speedy March Current Affairs", url: "https://sudhanshu09102000.github.io/3.-Speedy-March-Current-Affairs/" },
-        { name: "4. Speedy April Current Affairs", url: "https://sudhanshu09102000.github.io/4.-Speedy-April-Current-Affairs/" },
-        { name: "5. Speedy May Current Affairs", url: "https://sudhanshu09102000.github.io/5.-Speedy-May-Current-Affairs/" },
-        { name: "6. Speedy June Current Affairs", url: "https://sudhanshu09102000.github.io/6.-Speedy-June-Current-Affairs/" },
-        { name: "7. Speedy July Current Affairs", url: "https://sudhanshu09102000.github.io/7.-Speedy-July-Current-Affairs/" },
-        { name: "8. Speedy August Current Affairs", url: "https://sudhanshu09102000.github.io/8.-Speedy-August-Current-Affairs/" },
-        { name: "9. Speedy September Current Affairs", url: "https://sudhanshu09102000.github.io/9.-Speedy-September-Current-Affairs/" },
-        { name: "10. Speedy October Current Affairs", url: "https://sudhanshu09102000.github.io/10.-Speedy-October-Current-Affairs/" },
-        { name: "11. Speedy November Current Affairs", url: "https://sudhanshu09102000.github.io/11.-Speedy-November-Current-Affairs/" },
-        { name: "12. Speedy December Current Affairs", url: "https://sudhanshu09102000.github.io/12.-Speedy-December-Current-Affairs/" },
-
+        { name: "1. January Current Affairs", url: "#" },
+        { name: "2. February Current Affairs", url: "#" },
+        { name: "3. March Current Affairs", url: "#" },
+        { name: "4. April Current Affairs", url: "#" },
+        { name: "5. May Current Affairs", url: "#" },
+        { name: "6. June Current Affairs", url: "#" },
+        { name: "7. July Current Affairs", url: "#" },
+        { name: "8. August Current Affairs", url: "#" },
+        { name: "9. September Current Affairs", url: "#" },
+        { name: "10. October Current Affairs", url: "#" },
+        { name: "11. November Current Affairs", url: "#" },
+        { name: "12. December Current Affairs", url: "#" },
+        { name: "1. Speedy January Current Affairs", url: "#" },
+        { name: "2. Speedy February Current Affairs", url: "#" },
+        { name: "3. Speedy March Current Affairs", url: "#" },
+        { name: "4. Speedy April Current Affairs", url: "#" },
+        { name: "5. Speedy May Current Affairs", url: "#" },
+        { name: "6. Speedy June Current Affairs", url: "#" },
+        { name: "7. Speedy July Current Affairs", url: "#" },
+        { name: "8. Speedy August Current Affairs", url: "#" },
+        { name: "9. Speedy September Current Affairs", url: "#" },
+        { name: "10. Speedy October Current Affairs", url: "#" },
+        { name: "11. Speedy November Current Affairs", url: "#" },
+        { name: "12. Speedy December Current Affairs", url: "#" },
       ]
-
     };
+
+    // File prefixes for each topic index
+    const topicPrefixes = [
+      "geo",  // 0
+      "anc",  // 1
+      "med",  // 2
+      "mod",  // 3
+      "pol",  // 4
+      "eco",  // 5
+      "phy",  // 6
+      "che",  // 7
+      "bio",  // 8
+      "env",  // 9
+      "gk",   // 10
+      "eng",  // 11
+      "comp", // 12
+      "ca"    // 13
+    ];
 
     const mainPage = document.getElementById('mainPage');
     const subPage = document.getElementById('subPage');
     const topicName = document.getElementById('topicName');
     const subButtons = document.getElementById('subButtons');
+    const testPage = document.getElementById('testPage');
 
-    // Open subpage with fade animation
     function openSubPage(index) {
       mainPage.style.animation = "fadeOut 0.5s forwards";
       setTimeout(() => {
@@ -476,16 +1060,15 @@
       topicName.textContent = topics[index];
       subButtons.innerHTML = '';
 
-      links[index].forEach(item => {
+      (links[index] || []).forEach((item, chapterIdx) => {
         const btn = document.createElement('button');
         btn.className = 'btn-glass';
         btn.textContent = item.name;
-        btn.onclick = () => window.open(item.url, "_blank");
+        btn.onclick = () => openTestForChapter(index, chapterIdx, item);
         subButtons.appendChild(btn);
       });
     }
 
-    // Back to main page
     function goBack() {
       subPage.style.animation = "fadeOut 0.5s forwards";
       setTimeout(() => {
@@ -495,7 +1078,68 @@
       }, 400);
     }
 
-    // Simple floating particles animation
+    // Back from test → easiest is reload page
+    document.getElementById('backToPortalBtn').addEventListener('click', () => {
+      location.reload();
+    });
+
+    function openTestForChapter(topicIndex, chapterIdx, item) {
+      const prefix = topicPrefixes[topicIndex] || `t${topicIndex}`;
+      // Extract chapter number from "1. Something"
+      const match = item.name.trim().match(/^(\d+)\./);
+      const chapterNum = match ? parseInt(match[1], 10) : (chapterIdx + 1);
+      const baseName = `${prefix}${chapterNum}`;
+
+      const title = `${topics[topicIndex]} - ${item.name}`;
+      loadTestForChapter(baseName, title);
+    }
+
+    function loadTestForChapter(baseName, title) {
+      // Hide portal, show test page
+      mainPage.classList.add('hidden');
+      subPage.classList.add('hidden');
+      testPage.classList.remove('hidden');
+
+      document.getElementById('testTitle').textContent = title;
+
+      // Clear previous questions/explanations
+      window.questions = {};
+      window.explanations = {};
+
+      // Remove old dynamic scripts if any
+      const oldQ = document.getElementById('dynQuestions');
+      const oldE = document.getElementById('dynExplanations');
+      if (oldQ) oldQ.remove();
+      if (oldE) oldE.remove();
+
+      const qScript = document.createElement('script');
+      qScript.src = `scripts/${baseName}.js`;
+      qScript.id = 'dynQuestions';
+
+      const eScript = document.createElement('script');
+      eScript.src = `scripts/${baseName}exp.js`;
+      eScript.id = 'dynExplanations';
+
+      let loaded = 0;
+      const onLoaded = () => {
+        loaded++;
+        if (loaded === 2) {
+          // both questions and explanations loaded
+          initMockEngine();
+        }
+      };
+
+      qScript.onload = onLoaded;
+      eScript.onload = onLoaded;
+
+      qScript.onerror = () => alert('Failed to load questions file: ' + qScript.src);
+      eScript.onerror = () => alert('Failed to load explanations file: ' + eScript.src);
+
+      document.body.appendChild(qScript);
+      document.body.appendChild(eScript);
+    }
+
+    // ============== SIMPLE BACKGROUND PARTICLES ==============
     const canvas = document.getElementById("bgCanvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -525,8 +1169,680 @@
     }
     animateParticles();
 
+    // ===============================
+    // GOOGLE TRANSLATE INIT (optional)
+    // ===============================
+    function googleTranslateElementInit() {
+      if (window.google && google.translate) {
+        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+      }
+    }
 
+    // ===============================
+    // MOCK TEST ENGINE SCRIPT
+    // ===============================
 
+    // sounds
+    const correctSound = new Audio("a.mp3");
+    const wrongSound = new Audio("b.mp3");
+    let soundEnabled = true;
+
+    function playFeedbackSound(isCorrect) {
+      if (!soundEnabled) return;
+      if (isCorrect) {
+        correctSound.currentTime = 0;
+        correctSound.play();
+      } else {
+        wrongSound.currentTime = 0;
+        wrongSound.play();
+      }
+    }
+
+    document.getElementById("soundToggle").addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById("soundToggle");
+
+      if (soundEnabled) {
+        btn.classList.remove("btn-danger");
+        btn.classList.add("btn-success");
+        btn.innerText = "🔊 Sound ON";
+      } else {
+        btn.classList.remove("btn-success");
+        btn.classList.add("btn-danger");
+        btn.innerText = "🔇 Sound OFF";
+      }
+    });
+
+    // Toggle question navigator visibility
+    document.getElementById('toggleNavBtn').addEventListener('click', () => {
+      const nav = document.getElementById('question-nav');
+      nav.classList.toggle('hidden');
+      const btn = document.getElementById('toggleNavBtn');
+      if (nav.classList.contains('hidden')) {
+        btn.innerHTML = '👁️ Show Question Navigator';
+      } else {
+        btn.innerHTML = '👁️ Hide Question Navigator';
+      }
+    });
+
+    // INTERNAL STATE
+    let totalQuestions = 0;
+    let currentQuestion = 1;
+    const answers = {}; // qNo => { selectedMetaId, review, answeredFeedback }
+    let totalSeconds = 0;
+    let timerInterval = null;
+    let isDarkMode = false;
+    let hintEnabled = true;
+    let testSubmitted = false;
+    let enterPressedForQuestion = {};
+
+    // helpers
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function shuffleOptionsForQuestion(q) {
+      const mapped = q.options.map((text, idx) => ({ id: idx, text }));
+      const shuffled = shuffleArray(mapped);
+      const origCorrectId = parseInt(q.correct, 10) - 1;
+      const newCorrectIndex = shuffled.findIndex(o => o.id === origCorrectId);
+      q._shuffled = {
+        options: shuffled.map(o => o.text),
+        meta: shuffled,
+        correct: (newCorrectIndex + 1).toString()
+      };
+    }
+
+    function prepareQuestions() {
+      Object.keys(questions).forEach(k => {
+        const q = questions[k];
+        if (!q._shuffled) shuffleOptionsForQuestion(q);
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": "&#39;"
+      })[c]);
+    }
+
+    // Build Google search query: question + all options
+    function buildSearchQuery(index) {
+      const q = questions[index];
+      if (!q) return "";
+      let combined = q.text + " ";
+      if (Array.isArray(q.options)) {
+        combined += q.options.join(" ");
+      }
+      return encodeURIComponent(combined);
+    }
+
+    // Question Nav
+    function buildQuestionNav() {
+      const nav = document.getElementById('question-nav');
+      nav.innerHTML = '';
+      for (let i = 1; i <= totalQuestions; i++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.id = 'q' + i;
+        btn.className = 'qbtn default';
+        btn.innerText = i;
+        btn.addEventListener('click', () => loadQuestion(i));
+        nav.append(btn);
+        updateNav(i);
+      }
+    }
+
+    function updateNav(num) {
+      const btn = document.getElementById('q' + num);
+      if (!btn) return;
+
+      btn.className = 'qbtn';
+
+      if (testSubmitted) {
+        const q = questions[num];
+        const ans = answers[num];
+        const origCorrectId = parseInt(q.correct, 10) - 1;
+
+        if (ans && (ans.selectedMetaId === 0 || (ans.selectedMetaId !== null && ans.selectedMetaId !== undefined))) {
+          if (ans.selectedMetaId === origCorrectId) {
+            btn.classList.add('answered'); // green
+          } else {
+            btn.classList.add('not-answered'); // red
+          }
+        } else {
+          btn.classList.add('skipped'); // brown
+        }
+      } else {
+        const ans = answers[num];
+        if (ans && ans.review) {
+          if (ans.selectedMetaId !== null && ans.selectedMetaId !== undefined) {
+            btn.classList.add('review-answered');
+          } else {
+            btn.classList.add('review');
+          }
+        } else if (ans && (ans.selectedMetaId === 0 || ans.selectedMetaId)) {
+          btn.classList.add('answered');
+        } else {
+          btn.classList.add('not-answered');
+        }
+      }
+
+      if (num === currentQuestion) {
+        btn.classList.add('current');
+      }
+    }
+
+    function renderQuestion(num) {
+      const q = questions[num];
+      if (!q) return;
+      if (!q._shuffled) shuffleOptionsForQuestion(q);
+      const s = q._shuffled;
+
+      const qImg = document.getElementById('question-image');
+      qImg.innerHTML = '';
+      if (q.image) {
+        qImg.innerHTML = `<img src="${escapeHtml(q.image)}" class="img-fluid rounded" style="max-height:240px;">`;
+      }
+
+      document.getElementById('questionText').innerHTML =
+        `<div><strong>Q${num}.</strong> ${escapeHtml(q.text)}</div>`;
+
+      const optionsWrap = document.getElementById('options');
+      optionsWrap.innerHTML = s.meta.map((m, idx) => {
+        const pos = idx + 1;
+        const selected = (answers[num] && answers[num].selectedMetaId === m.id) ? 'selected' : '';
+        return `
+        <label class="option-label ${selected}" data-pos="${pos}" data-original-id="${m.id}">
+          <div class="badge-pos bg-light text-muted">${pos}</div>
+          <div>${escapeHtml(m.text)}</div>
+        </label>`;
+      }).join('');
+
+      if (testSubmitted) {
+        const origCorrectId = parseInt(q.correct, 10) - 1;
+        const curAns = answers[num];
+        document.querySelectorAll('#options .option-label').forEach((lbl) => {
+          const origId = parseInt(lbl.dataset.originalId, 10);
+          if (origId === origCorrectId) {
+            lbl.classList.add('correct');
+            lbl.querySelector('.badge-pos').innerHTML = '✔';
+          }
+          if (curAns && (curAns.selectedMetaId === 0 || (curAns.selectedMetaId !== null && curAns.selectedMetaId !== undefined))) {
+            if (curAns.selectedMetaId === origId && curAns.selectedMetaId !== origCorrectId) {
+              lbl.classList.add('wrong');
+              lbl.querySelector('.badge-pos').innerHTML = '✖';
+            }
+          }
+        });
+      }
+
+      document.querySelectorAll('#options .option-label').forEach(lbl => {
+        lbl.addEventListener('click', () => {
+          if (testSubmitted) return;
+          if (answers[currentQuestion] && answers[currentQuestion].answeredFeedback) return;
+
+          const origId = parseInt(lbl.dataset.originalId, 10);
+          const prev = answers[currentQuestion] || { selectedMetaId: null, review: false };
+
+          answers[currentQuestion] = {
+            selectedMetaId: origId,
+            review: !!prev.review,
+            answeredFeedback: true
+          };
+
+          document.querySelectorAll('#options .option-label').forEach(l => l.classList.remove('selected'));
+          lbl.classList.add('selected');
+
+          const qNow = questions[currentQuestion];
+          const origCorrectId = parseInt(qNow.correct, 10) - 1;
+          const correctLbl = Array.from(document.querySelectorAll('#options .option-label'))
+            .find(l => parseInt(l.dataset.originalId, 10) === origCorrectId);
+
+          const isCorrect = (origId === origCorrectId);
+          showInstantFeedback(isCorrect, lbl, correctLbl);
+          updateNav(currentQuestion);
+        });
+      });
+
+      document.querySelectorAll('.qbtn').forEach(b => b.classList.remove('current'));
+      const curBtn = document.getElementById('q' + num);
+      if (curBtn) curBtn.classList.add('current');
+    }
+
+    function loadQuestion(num) {
+      currentQuestion = num;
+      renderQuestion(num);
+      document.getElementById('review-container').style.display = 'none';
+      for (let i = 1; i <= totalQuestions; i++) updateNav(i);
+      enterPressedForQuestion[num] = false;
+    }
+
+    function mark(forReview) {
+      if (testSubmitted) {
+        if (currentQuestion < totalQuestions) {
+          loadQuestion(currentQuestion + 1);
+        }
+        return;
+      }
+
+      const curAns = answers[currentQuestion];
+      if (!curAns) {
+        answers[currentQuestion] = { selectedMetaId: null, review: !!forReview };
+      } else {
+        answers[currentQuestion].review = !!forReview;
+      }
+      updateNav(currentQuestion);
+      if (currentQuestion < totalQuestions) loadQuestion(currentQuestion + 1);
+    }
+
+    function clearResponse() {
+      delete answers[currentQuestion];
+      renderQuestion(currentQuestion);
+      updateNav(currentQuestion);
+    }
+
+    function jumpTo() {
+      const num = parseInt(prompt('Jump to question number (1-' + totalQuestions + ')'), 10);
+      if (num && num >= 1 && num <= totalQuestions) loadQuestion(num);
+    }
+
+    function startTimerDisplay() {
+      const prog = document.getElementById('timeProgress');
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (totalSeconds > 0) {
+          totalSeconds--;
+          const m = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+          const s = String(totalSeconds % 60).padStart(2, '0');
+          document.getElementById('timer').innerText = `${m}:${s}`;
+          const initial = parseInt(document.body.dataset.initialSeconds || '0', 10);
+          const perc = initial ? ((initial - totalSeconds) / initial) * 100 : 0;
+          prog.style.width = `${perc}%`;
+        } else {
+          document.getElementById('timer').innerText = "Time's up!";
+          clearInterval(timerInterval);
+          autoSubmit();
+        }
+      }, 1000);
+    }
+
+    function autoSubmit() {
+      submitTest(true);
+    }
+
+    function submitTest(isAuto = false) {
+      testSubmitted = true;
+
+      const saveNextButton = document.getElementById('saveNextBtn');
+      saveNextButton.textContent = 'Next ⟶';
+
+      document.getElementById('reviewNextBtn').style.display = 'none';
+      document.getElementById('clearBtn').style.display = 'none';
+      document.getElementById('submitBtn').style.display = 'none';
+      document.getElementById('reviewSummaryBtn').style.display = 'inline-block';
+
+      let attempted = 0, correct = 0, wrong = 0;
+      for (let i = 1; i <= totalQuestions; i++) {
+        const a = answers[i];
+        if (a && (a.selectedMetaId === 0 || a.selectedMetaId)) {
+          attempted++;
+          const origCorrectId = parseInt(questions[i].correct, 10) - 1;
+          if (a.selectedMetaId === origCorrectId) correct++;
+          else wrong++;
+        }
+      }
+      const skipped = totalQuestions - attempted;
+      const score = (correct * 2) - (wrong * 0.5);
+
+      let scHtml = `<div class="row"><div class="col-md-6">
+  <h4>Result</h4>
+  <p>Attempted: <strong>${attempted}</strong></p>
+  <p>Correct: <strong>${correct}</strong></p>
+  <p>Wrong: <strong>${wrong}</strong></p>
+  <p>Skipped: <strong>${skipped}</strong></p>
+  <p>Score: <strong>${score}</strong></p>
+</div><div class="col-md-6">
+  <h5>Summary</h5>
+  <div class="progress" style="height:16px"><div class="progress-bar" role="progressbar" style="width:${Math.round((correct / totalQuestions) * 100)}%">${Math.round((correct / totalQuestions) * 100)}%</div></div>
+</div></div>
+<hr>
+<h5>Question Review</h5>`;
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        const q = questions[i];
+        const a = answers[i];
+        const origCorrectId = parseInt(q.correct, 10) - 1;
+        const userAnsText =
+          (a && (a.selectedMetaId === 0 || a.selectedMetaId)) ?
+            q._shuffled.meta.find(m => m.id === a.selectedMetaId).text : 'Not Attempted';
+        const correctAnsText = q._shuffled.meta.find(m => m.id === origCorrectId).text;
+        const bg =
+          (a && (a.selectedMetaId === 0 || a.selectedMetaId)) ?
+            (a.selectedMetaId === origCorrectId ? 'bg-success text-white' : 'bg-danger text-white') :
+            'bg-secondary text-white';
+
+        scHtml += `<div class="card mb-2 ${bg}"><div class="card-body">
+    <p><strong>Q${i}.</strong> ${escapeHtml(q.text)}</p>
+    <p><strong>Your Answer:</strong> ${escapeHtml(userAnsText)}</p>
+    <p><strong>Correct Answer ✅:</strong> ${escapeHtml(correctAnsText)}</p>
+  ${explanations[i] ? `<button class="btn btn-sm btn-light mt-2" onclick="showExplanation(${i})">View Explanation</button>` : ''}
+  <div class="mt-2">
+    <a href="https://www.google.com/search?q=${buildSearchQuery(i)}"
+       target="_blank"
+       class="btn btn-sm btn-primary">
+       🔍 Search it on Google
+    </a>
+  </div>
+      </div></div>`;
+      }
+
+      document.getElementById('scoreContent').innerHTML = scHtml;
+      new bootstrap.Modal(document.getElementById('scoreModal')).show();
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        updateNav(i);
+      }
+
+      renderQuestion(currentQuestion);
+    }
+
+    function showExplanation(num) {
+      const q = questions[num];
+      const e = explanations[num];
+      if (!q) return;
+
+      let html = `
+    <p><strong>Q${num}.</strong> ${q.text}</p>
+    <p><strong>Options:</strong></p>
+    <ul>
+      ${q.options.map((opt, idx) => `<li>${idx + 1}. ${opt}</li>`).join('')}
+    </ul>
+    <p><strong>Correct Answer:</strong> ${q.options[parseInt(q.correct) - 1]}</p>
+    <hr>
+    <p><strong>Explanation:</strong> ${e.text}</p>
+  `;
+
+      if (e.image) {
+        html += `
+      <div class="text-center mt-3">
+        <img src="${e.image}" alt="Explanation Image" class="img-fluid rounded shadow">
+      </div>
+    `;
+      }
+
+      document.getElementById('explanationContent').innerHTML = html;
+      new bootstrap.Modal(document.getElementById('explanationModal')).show();
+    }
+
+    function showInstantFeedback(isCorrect, selectedLbl, correctLbl) {
+      if (!hintEnabled) {
+        document.getElementById('options').classList.remove('disabled');
+        return;
+      }
+
+      const optionsWrap = document.getElementById('options');
+      optionsWrap.classList.add('disabled');
+
+      playFeedbackSound(isCorrect);
+
+      if (isCorrect) {
+        selectedLbl.classList.add('correct');
+        selectedLbl.querySelector('.badge-pos').innerHTML = '✔';
+        document.body.classList.add('blink-green');
+      } else {
+        selectedLbl.classList.add('wrong');
+        selectedLbl.querySelector('.badge-pos').innerHTML = '✖';
+        document.body.classList.add('blink-red');
+        if (correctLbl) {
+          correctLbl.classList.add('correct');
+          correctLbl.querySelector('.badge-pos').innerHTML = '✔';
+        }
+      }
+
+      setTimeout(() => {
+        document.body.classList.remove('blink-green', 'blink-red');
+        optionsWrap.classList.remove('disabled');
+      }, 900);
+    }
+
+    function showHelpForCurrentQuestion() {
+      const q = questions[currentQuestion];
+      const e = explanations[currentQuestion];
+      if (!q) return;
+
+      const searchUrl = `https://www.google.com/search?q=${buildSearchQuery(currentQuestion)}`;
+
+      let helpHTML = `<p><strong>Q${currentQuestion}.</strong> ${q.text}</p><hr>`;
+
+      if (e && e.text) {
+        helpHTML += `<p>${e.text}</p>`;
+      } else {
+        helpHTML += `<p>No help available for this question.</p>`;
+      }
+
+      if (e && e.image) {
+        helpHTML += `
+      <div class="text-center my-3">
+        <img src="${e.image}" alt="Explanation Image" class="img-fluid rounded shadow-sm"
+             style="max-height:250px; object-fit:contain; border:2px solid #ddd; border-radius:10px;">
+      </div>
+    `;
+      }
+
+      helpHTML += `
+    <div class="text-center mt-4">
+      <a href="${searchUrl}" target="_blank"
+         class="btn btn-primary shadow-sm"
+         style="border-radius:12px; padding:10px 20px; font-weight:600;">
+         🔍 Search it on Google
+      </a>
+    </div>
+  `;
+
+      document.getElementById('helpContent').innerHTML = helpHTML;
+    }
+
+    document.getElementById('helpBtn').addEventListener('click', () => {
+      showHelpForCurrentQuestion();
+      bootstrap.Modal.getOrCreateInstance(document.getElementById('helpModal')).show();
+    });
+
+    // Keyboard "0" toggles help modal
+    document.addEventListener('keydown', function (event) {
+      if (event.key === "0" && !testPage.classList.contains('hidden')) {
+        const helpEl = document.getElementById("helpModal");
+        const modalInst = bootstrap.Modal.getInstance(helpEl);
+
+        if (helpEl.classList.contains("show") && modalInst) {
+          modalInst.hide();
+        } else {
+          showHelpForCurrentQuestion();
+          bootstrap.Modal.getOrCreateInstance(helpEl).show();
+        }
+        event.preventDefault();
+      }
+    });
+
+    // Dark mode
+    document.getElementById('modeSwitcher').addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      document.body.classList.toggle('darkmode', isDarkMode);
+      const btn = document.getElementById('modeSwitcher');
+      if (isDarkMode) {
+        btn.innerHTML = '☀️ Light Mode';
+      } else {
+        btn.innerHTML = '🌙 Dark Mode';
+      }
+    });
+
+    // Hint / practice mode
+    document.getElementById('hintToggle').addEventListener('click', () => {
+      hintEnabled = !hintEnabled;
+      const btn = document.getElementById('hintToggle');
+      if (hintEnabled) {
+        btn.innerText = 'Exam Mode';
+        document.getElementById('helpBtn').style.display = '';
+      } else {
+        btn.innerText = 'Practice Mode';
+        document.getElementById('helpBtn').style.display = 'none';
+      }
+    });
+
+    document.getElementById('reviewSummaryBtn').addEventListener('click', () => {
+      new bootstrap.Modal(document.getElementById('scoreModal')).show();
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener("keydown", function (e) {
+      if (testPage.classList.contains('hidden')) return;
+
+      if (["1", "2", "3", "4"].includes(e.key) && !testSubmitted) {
+        const idx = parseInt(e.key, 10) - 1;
+        const optionLabels = document.querySelectorAll("#options .option-label");
+        if (optionLabels[idx]) {
+          optionLabels[idx].click();
+          enterPressedForQuestion[currentQuestion] = false;
+          e.preventDefault();
+          return;
+        }
+      }
+      if (e.key === "Enter") {
+        if (!enterPressedForQuestion[currentQuestion]) {
+          mark(false);
+          enterPressedForQuestion[currentQuestion] = true;
+        }
+        e.preventDefault();
+        return;
+      }
+      if (e.key === "ArrowLeft") {
+        if (currentQuestion > 1) loadQuestion(currentQuestion - 1);
+        e.preventDefault();
+        return;
+      }
+      if (e.key === "ArrowRight") {
+        if (currentQuestion < totalQuestions) {
+          mark(false);
+          enterPressedForQuestion[currentQuestion + 1] = false;
+        }
+        e.preventDefault();
+        return;
+      }
+    });
+
+    // INIT MOCK ENGINE (called after scripts for a chapter are loaded)
+    function initMockEngine() {
+      if (!window.questions || Object.keys(questions).length === 0) {
+        alert("No questions loaded.");
+        return;
+      }
+      if (!window.explanations) window.explanations = {};
+
+      // reset state
+      totalQuestions = Object.keys(questions).length;
+      currentQuestion = 1;
+      for (const k in answers) delete answers[k];
+      testSubmitted = false;
+      hintEnabled = true;
+      soundEnabled = true;
+      enterPressedForQuestion = {};
+      totalSeconds = 0;
+      if (timerInterval) clearInterval(timerInterval);
+      document.getElementById('timeProgress').style.width = '0%';
+
+      prepareQuestions();
+      buildQuestionNav();
+      loadQuestion(1);
+
+      // Ask time
+      (function askTime() {
+        const mins = parseInt(prompt('Enter test time in minutes (e.g. 10)'), 10);
+        if (mins && mins > 0) {
+          totalSeconds = mins * 60;
+          document.body.dataset.initialSeconds = totalSeconds;
+          startTimerDisplay();
+        } else {
+          totalSeconds = 10 * 60;
+          document.body.dataset.initialSeconds = totalSeconds;
+          startTimerDisplay();
+        }
+      })();
+
+      // Buttons
+      document.getElementById('saveNextBtn').onclick = () => { mark(false); };
+      document.getElementById('reviewNextBtn').onclick = () => { mark(true); };
+      document.getElementById('prevBtn').onclick = () => { if (currentQuestion > 1) loadQuestion(currentQuestion - 1); };
+      document.getElementById('clearBtn').onclick = clearResponse;
+      document.getElementById('jumpBtn').onclick = jumpTo;
+      document.getElementById('submitBtn').onclick = () => {
+        if (confirm('Submit test?')) submitTest(false);
+      };
+    }
+
+    // ===============================
+    // LIGHT SWIPE LEFT/RIGHT ON QUESTION BOX
+    // ===============================
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const swipeZone = document.getElementById("question-box");
+
+    function goToNextQuestion() {
+      if (currentQuestion < totalQuestions) {
+        // same behavior as ArrowRight (save & next)
+        mark(false);
+        enterPressedForQuestion[currentQuestion + 1] = false;
+      }
+    }
+
+    function goToPreviousQuestion() {
+      if (currentQuestion > 1) {
+        loadQuestion(currentQuestion - 1);
+      }
+    }
+
+    function handleGesture() {
+      const diff = touchEndX - touchStartX;
+      const threshold = 50; // minimum distance for swipe
+
+      if (Math.abs(diff) < threshold) return;
+
+      // small nudge animation, no heavy effect
+      if (diff < 0) {
+        // swipe LEFT → next
+        swipeZone.style.transform = "translateX(-20px)";
+        setTimeout(() => {
+          swipeZone.style.transform = "translateX(0)";
+          goToNextQuestion();
+        }, 120);
+      } else {
+        // swipe RIGHT → previous
+        swipeZone.style.transform = "translateX(20px)";
+        setTimeout(() => {
+          swipeZone.style.transform = "translateX(0)";
+          goToPreviousQuestion();
+        }, 120);
+      }
+    }
+
+    swipeZone.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    swipeZone.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleGesture();
+    });
+
+    // initial: only portal visible, test engine is idle until chapter selected
   </script>
 </body>
 
