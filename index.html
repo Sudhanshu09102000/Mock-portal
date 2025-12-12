@@ -1010,18 +1010,18 @@
         { name: "10. October Current Affairs", url: "#" },
         { name: "11. November Current Affairs", url: "#" },
         { name: "12. December Current Affairs", url: "#" },
-        { name: "13. Speedy January Current Affairs", url: "#" },
-        { name: "14. Speedy February Current Affairs", url: "#" },
-        { name: "15. Speedy March Current Affairs", url: "#" },
-        { name: "16. Speedy April Current Affairs", url: "#" },
-        { name: "17. Speedy May Current Affairs", url: "#" },
-        { name: "18. Speedy June Current Affairs", url: "#" },
-        { name: "19. Speedy July Current Affairs", url: "#" },
-        { name: "20. Speedy August Current Affairs", url: "#" },
-        { name: "21. Speedy September Current Affairs", url: "#" },
-        { name: "22. Speedy October Current Affairs", url: "#" },
-        { name: "23. Speedy November Current Affairs", url: "#" },
-        { name: "24. Speedy December Current Affairs", url: "#" },
+        { name: "1. Speedy January Current Affairs", url: "#" },
+        { name: "2. Speedy February Current Affairs", url: "#" },
+        { name: "3. Speedy March Current Affairs", url: "#" },
+        { name: "4. Speedy April Current Affairs", url: "#" },
+        { name: "5. Speedy May Current Affairs", url: "#" },
+        { name: "6. Speedy June Current Affairs", url: "#" },
+        { name: "7. Speedy July Current Affairs", url: "#" },
+        { name: "8. Speedy August Current Affairs", url: "#" },
+        { name: "9. Speedy September Current Affairs", url: "#" },
+        { name: "10. Speedy October Current Affairs", url: "#" },
+        { name: "11. Speedy November Current Affairs", url: "#" },
+        { name: "12. Speedy December Current Affairs", url: "#" },
       ]
     };
 
@@ -1704,7 +1704,15 @@
 
     // Keyboard shortcuts
     document.addEventListener("keydown", function (e) {
-      if (testPage.classList.contains('hidden')) return;
+
+  // ⛔ Do NOT trigger shortcuts when typing in popup input boxes
+  const active = document.activeElement;
+  if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
+    return; // allow typing normally
+  }
+
+  if (testPage.classList.contains('hidden')) return;
+
 
       if (["1", "2", "3", "4"].includes(e.key) && !testSubmitted) {
         const idx = parseInt(e.key, 10) - 1;
@@ -1765,17 +1773,31 @@
 
       // Ask time
       (function askTime() {
-        const mins = parseInt(prompt('Enter test time in minutes (e.g. 10)'), 10);
-        if (mins && mins > 0) {
-          totalSeconds = mins * 60;
-          document.body.dataset.initialSeconds = totalSeconds;
-          startTimerDisplay();
-        } else {
-          totalSeconds = 10 * 60;
+  showPopup(
+    "Set Test Time",
+    `
+      <label style="font-weight:600;">Enter time in minutes:</label>
+      <input id="timeInput" type="number" class="form-control mt-2" placeholder="e.g. 10">
+    `,
+    [
+      {
+        text: "Start Test",
+        class: "btn-success",
+        onClick: () => {
+          const mins = parseInt(document.getElementById("timeInput").value);
+          if (mins > 0) {
+            totalSeconds = mins * 60;
+          } else {
+            totalSeconds = 10 * 60;
+          }
           document.body.dataset.initialSeconds = totalSeconds;
           startTimerDisplay();
         }
-      })();
+      }
+    ]
+  );
+})();
+
 
       // Buttons
       document.getElementById('saveNextBtn').onclick = () => { mark(false); };
@@ -1784,8 +1806,16 @@
       document.getElementById('clearBtn').onclick = clearResponse;
       document.getElementById('jumpBtn').onclick = jumpTo;
       document.getElementById('submitBtn').onclick = () => {
-        if (confirm('Submit test?')) submitTest(false);
-      };
+  showPopup(
+    "Submit Test?",
+    "Are you sure you want to submit the test? You cannot change answers after submitting.",
+    [
+      { text: "Cancel", class: "btn-secondary" },
+      { text: "Submit", class: "btn-danger", onClick: () => submitTest(false) }
+    ]
+  );
+};
+
     }
 
     // ===============================
@@ -1843,7 +1873,46 @@
     });
 
     // initial: only portal visible, test engine is idle until chapter selected
+  
+  function showPopup(title, message, buttons = []) {
+  document.getElementById("customPopupTitle").innerText = title;
+  document.getElementById("customPopupBody").innerHTML = message;
+
+  const footer = document.getElementById("customPopupFooter");
+  footer.innerHTML = "";
+
+  buttons.forEach(btn => {
+    const b = document.createElement("button");
+    b.className = "btn " + (btn.class || "btn-primary");
+    b.innerText = btn.text;
+    b.onclick = () => {
+      if (btn.onClick) btn.onClick();
+      modal.hide();
+    };
+    footer.appendChild(b);
+  });
+
+  const modalEl = document.getElementById("customPopup");
+  var modal = new bootstrap.Modal(modalEl);
+  modal.show();
+}
+
   </script>
+  
+  <!-- Custom Popup Modal -->
+<div class="modal fade" id="customPopup" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:18px; backdrop-filter:blur(10px); background:rgba(255,255,255,0.15);">
+      <div class="modal-header">
+        <h5 class="modal-title" id="customPopupTitle">Alert</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="customPopupBody" style="font-size:1.1rem;"></div>
+      <div class="modal-footer" id="customPopupFooter"></div>
+    </div>
+  </div>
+</div>
+
 </body>
 
 </html>
