@@ -1655,20 +1655,29 @@
     });
 
     // Keyboard "0" toggles help modal
-    document.addEventListener('keydown', function (event) {
-      if (event.key === "0" && !testPage.classList.contains('hidden')) {
-        const helpEl = document.getElementById("helpModal");
-        const modalInst = bootstrap.Modal.getInstance(helpEl);
+    // Keyboard "0" toggles help modal (disabled while typing in input fields)
+document.addEventListener('keydown', function (event) {
 
-        if (helpEl.classList.contains("show") && modalInst) {
-          modalInst.hide();
-        } else {
-          showHelpForCurrentQuestion();
-          bootstrap.Modal.getOrCreateInstance(helpEl).show();
-        }
-        event.preventDefault();
-      }
-    });
+  // 🔒 Block help shortcut when user is typing in input or textarea
+  const active = document.activeElement;
+  if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
+    return;
+  }
+
+  if (event.key === "0" && !testPage.classList.contains('hidden')) {
+    const helpEl = document.getElementById("helpModal");
+    const modalInst = bootstrap.Modal.getInstance(helpEl);
+
+    if (helpEl.classList.contains("show") && modalInst) {
+      modalInst.hide();
+    } else {
+      showHelpForCurrentQuestion();
+      bootstrap.Modal.getOrCreateInstance(helpEl).show();
+    }
+    event.preventDefault();
+  }
+});
+
 
     // Dark mode
     document.getElementById('modeSwitcher').addEventListener('click', () => {
