@@ -695,7 +695,7 @@
                 <button id="helpBtn" class="btn btn-info">Help!</button>
                 <button id="reviewNextBtn" class="btn btn-warning">Mark for Review & Next</button>
                 <button id="clearBtn" class="btn btn-outline-danger">Clear Response</button>
-                <button id="jumpBtn" class="btn btn-outline-info">Jump To</button>
+                
                 <button id="soundToggle" class="btn btn-success">🔊 Sound ON</button>
                 <button id="modeSwitcher" class="btn btn-dark">🌙 Dark Mode</button>
                 <button id="hintToggle" class="btn btn-secondary">Exam Mode</button>
@@ -1010,18 +1010,18 @@
         { name: "10. October Current Affairs", url: "#" },
         { name: "11. November Current Affairs", url: "#" },
         { name: "12. December Current Affairs", url: "#" },
-        { name: "13. Speedy January Current Affairs", url: "#" },
-        { name: "14. Speedy February Current Affairs", url: "#" },
-        { name: "15. Speedy March Current Affairs", url: "#" },
-        { name: "16. Speedy April Current Affairs", url: "#" },
-        { name: "17. Speedy May Current Affairs", url: "#" },
-        { name: "18. Speedy June Current Affairs", url: "#" },
-        { name: "19. Speedy July Current Affairs", url: "#" },
-        { name: "20. Speedy August Current Affairs", url: "#" },
-        { name: "21. Speedy September Current Affairs", url: "#" },
-        { name: "22. Speedy October Current Affairs", url: "#" },
-        { name: "23. Speedy November Current Affairs", url: "#" },
-        { name: "24. Speedy December Current Affairs", url: "#" },
+        { name: "1. Speedy January Current Affairs", url: "#" },
+        { name: "2. Speedy February Current Affairs", url: "#" },
+        { name: "3. Speedy March Current Affairs", url: "#" },
+        { name: "4. Speedy April Current Affairs", url: "#" },
+        { name: "5. Speedy May Current Affairs", url: "#" },
+        { name: "6. Speedy June Current Affairs", url: "#" },
+        { name: "7. Speedy July Current Affairs", url: "#" },
+        { name: "8. Speedy August Current Affairs", url: "#" },
+        { name: "9. Speedy September Current Affairs", url: "#" },
+        { name: "10. Speedy October Current Affairs", url: "#" },
+        { name: "11. Speedy November Current Affairs", url: "#" },
+        { name: "12. Speedy December Current Affairs", url: "#" },
       ]
     };
 
@@ -1451,10 +1451,7 @@
       updateNav(currentQuestion);
     }
 
-    function jumpTo() {
-      const num = parseInt(prompt('Jump to question number (1-' + totalQuestions + ')'), 10);
-      if (num && num >= 1 && num <= totalQuestions) loadQuestion(num);
-    }
+    
 
     function startTimerDisplay() {
       const prog = document.getElementById('timeProgress');
@@ -1804,7 +1801,7 @@
       document.getElementById('reviewNextBtn').onclick = () => { mark(true); };
       document.getElementById('prevBtn').onclick = () => { if (currentQuestion > 1) loadQuestion(currentQuestion - 1); };
       document.getElementById('clearBtn').onclick = clearResponse;
-      document.getElementById('jumpBtn').onclick = jumpTo;
+      
       document.getElementById('submitBtn').onclick = () => {
   showPopup(
     "Submit Test?",
