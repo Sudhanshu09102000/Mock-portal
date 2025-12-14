@@ -24,7 +24,8 @@
     body {
       font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background: linear-gradient(120deg, #0a0f24, #1a2740);
-      color: #111827; /* DARK TEXT for light mode */
+      color: #111827;
+      /* DARK TEXT for light mode */
       margin: 0;
       padding: 0;
       min-height: 100vh;
@@ -246,7 +247,8 @@
       height: 100%;
       max-height: none;
       overflow: visible;
-      transition: transform 0.15s ease; /* for light swipe nudge */
+      transition: transform 0.15s ease;
+      /* for light swipe nudge */
     }
 
     .question-text {
@@ -695,7 +697,7 @@
                 <button id="helpBtn" class="btn btn-info">Help!</button>
                 <button id="reviewNextBtn" class="btn btn-warning">Mark for Review & Next</button>
                 <button id="clearBtn" class="btn btn-outline-danger">Clear Response</button>
-                
+
                 <button id="soundToggle" class="btn btn-success">🔊 Sound ON</button>
                 <button id="modeSwitcher" class="btn btn-dark">🌙 Dark Mode</button>
                 <button id="hintToggle" class="btn btn-secondary">Exam Mode</button>
@@ -1235,6 +1237,8 @@
     let hintEnabled = true;
     let testSubmitted = false;
     let enterPressedForQuestion = {};
+    let candidateName = "Anonymous";
+
 
     // helpers
     function shuffleArray(arr) {
@@ -1451,7 +1455,7 @@
       updateNav(currentQuestion);
     }
 
-    
+
 
     function startTimerDisplay() {
       const prog = document.getElementById('timeProgress');
@@ -1500,6 +1504,32 @@
       }
       const skipped = totalQuestions - attempted;
       const score = (correct * 2) - (wrong * 0.5);
+
+      // ===== SEND DATA TO GOOGLE SHEET =====
+      const now = new Date();
+
+      const testData = {
+        date: now.toLocaleDateString(),
+        time: now.toLocaleTimeString(),
+        candidateName: candidateName,   // 👈 ADD THIS LINE
+        testName: document.getElementById("testTitle").innerText,
+        totalQuestions: totalQuestions,
+        attempted: attempted,
+        correct: correct,
+        wrong: wrong,
+        skipped: skipped,
+        score: score,
+        timeTakenMinutes: Math.round(
+          (parseInt(document.body.dataset.initialSeconds || 0) - totalSeconds) / 60
+        ),
+        autoSubmitted: isAuto ? "YES" : "NO"
+      };
+
+
+
+      sendTestDataToSheet(testData);
+      // ====================================
+
 
       let scHtml = `<div class="row"><div class="col-md-6">
   <h4>Result</h4>
@@ -1656,27 +1686,31 @@
 
     // Keyboard "0" toggles help modal
     // Keyboard "0" toggles help modal (disabled while typing in input fields)
-document.addEventListener('keydown', function (event) {
+    document.addEventListener('keydown', function (event) {
 
-  // 🔒 Block help shortcut when user is typing in input or textarea
-  const active = document.activeElement;
-  if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
-    return;
-  }
+      // 🔒 Block help shortcut when user is typing in input or textarea
+      const active = document.activeElement;
+      if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
+        return;
+      }
 
-  if (event.key === "0" && !testPage.classList.contains('hidden')) {
-    const helpEl = document.getElementById("helpModal");
-    const modalInst = bootstrap.Modal.getInstance(helpEl);
+      if (event.key === "0" && !testPage.classList.contains('hidden')) {
+        const helpEl = document.getElementById("helpModal");
+        const modalInst = bootstrap.Modal.getInstance(helpEl);
 
-    if (helpEl.classList.contains("show") && modalInst) {
-      modalInst.hide();
-    } else {
-      showHelpForCurrentQuestion();
-      bootstrap.Modal.getOrCreateInstance(helpEl).show();
-    }
-    event.preventDefault();
-  }
-});
+        if (helpEl.classList.contains("show") && modalInst) {
+          modalInst.hide();
+        } else {
+          showHelpForCurrentQuestion();
+          bootstrap.Modal.getOrCreateInstance(helpEl).show();
+        }
+        event.preventDefault();
+      }
+    });
+
+
+
+
 
 
     // Dark mode
@@ -1711,13 +1745,13 @@ document.addEventListener('keydown', function (event) {
     // Keyboard shortcuts
     document.addEventListener("keydown", function (e) {
 
-  // ⛔ Do NOT trigger shortcuts when typing in popup input boxes
-  const active = document.activeElement;
-  if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
-    return; // allow typing normally
-  }
+      // ⛔ Do NOT trigger shortcuts when typing in popup input boxes
+      const active = document.activeElement;
+      if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
+        return; // allow typing normally
+      }
 
-  if (testPage.classList.contains('hidden')) return;
+      if (testPage.classList.contains('hidden')) return;
 
 
       if (["1", "2", "3", "4"].includes(e.key) && !testSubmitted) {
@@ -1753,6 +1787,30 @@ document.addEventListener('keydown', function (event) {
       }
     });
 
+
+
+    function sendTestDataToSheet(data) {
+      const url = "https://script.google.com/macros/s/AKfycby4H6Jr-ff1zPIXyAh8O4g0UIcBgeFmEnpn1DPXGft7tyPTKXttGhijpQYkLQm7Cq7MZw/exec";
+
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+
+      fetch(url, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"   // 🔥 THIS LINE IS CRITICAL
+      }).catch(() => {
+        // silently ignore — browser blocks response but request is sent
+      });
+    }
+
+    document.addEventListener('hidden.bs.modal', () => {
+      document.activeElement?.blur();
+    });
+
+
     // INIT MOCK ENGINE (called after scripts for a chapter are loaded)
     function initMockEngine() {
       if (!window.questions || Object.keys(questions).length === 0) {
@@ -1776,33 +1834,11 @@ document.addEventListener('keydown', function (event) {
       prepareQuestions();
       buildQuestionNav();
       loadQuestion(1);
+      openStartTestDialog();
 
-      // Ask time
-      (function askTime() {
-  showPopup(
-    "Set Test Time",
-    `
-      <label style="font-weight:600;">Enter time in minutes:</label>
-      <input id="timeInput" type="number" class="form-control mt-2" placeholder="e.g. 10">
-    `,
-    [
-      {
-        text: "Start Test",
-        class: "btn-success",
-        onClick: () => {
-          const mins = parseInt(document.getElementById("timeInput").value);
-          if (mins > 0) {
-            totalSeconds = mins * 60;
-          } else {
-            totalSeconds = 10 * 60;
-          }
-          document.body.dataset.initialSeconds = totalSeconds;
-          startTimerDisplay();
-        }
-      }
-    ]
-  );
-})();
+
+      
+
 
 
       // Buttons
@@ -1810,19 +1846,45 @@ document.addEventListener('keydown', function (event) {
       document.getElementById('reviewNextBtn').onclick = () => { mark(true); };
       document.getElementById('prevBtn').onclick = () => { if (currentQuestion > 1) loadQuestion(currentQuestion - 1); };
       document.getElementById('clearBtn').onclick = clearResponse;
-      
+
       document.getElementById('submitBtn').onclick = () => {
-  showPopup(
-    "Submit Test?",
-    "Are you sure you want to submit the test? You cannot change answers after submitting.",
-    [
-      { text: "Cancel", class: "btn-secondary" },
-      { text: "Submit", class: "btn-danger", onClick: () => submitTest(false) }
-    ]
-  );
-};
+        showPopup(
+          "Submit Test?",
+          "Are you sure you want to submit the test? You cannot change answers after submitting.",
+          [
+            { text: "Cancel", class: "btn-secondary" },
+            { text: "Submit", class: "btn-danger", onClick: () => submitTest(false) }
+          ]
+        );
+      };
 
     }
+
+
+function openStartTestDialog() {
+  const modalEl = document.getElementById("startTestModal");
+  const modal = new bootstrap.Modal(modalEl, {
+    backdrop: "static",
+    keyboard: false
+  });
+
+  modal.show();
+
+  document.getElementById("startTestBtn").onclick = () => {
+    const nameVal =
+      document.getElementById("candidateNameInput").value.trim();
+    const timeVal =
+      parseInt(document.getElementById("testTimeInput").value, 10);
+
+    candidateName = nameVal || "Anonymous";
+
+    totalSeconds = (timeVal && timeVal > 0 ? timeVal : 10) * 60;
+    document.body.dataset.initialSeconds = totalSeconds;
+
+    modal.hide();
+    startTimerDisplay();
+  };
+}
 
     // ===============================
     // LIGHT SWIPE LEFT/RIGHT ON QUESTION BOX
@@ -1879,46 +1941,87 @@ document.addEventListener('keydown', function (event) {
     });
 
     // initial: only portal visible, test engine is idle until chapter selected
-  
-  function showPopup(title, message, buttons = []) {
-  document.getElementById("customPopupTitle").innerText = title;
-  document.getElementById("customPopupBody").innerHTML = message;
 
-  const footer = document.getElementById("customPopupFooter");
-  footer.innerHTML = "";
+    function showPopup(title, message, buttons = []) {
+      document.getElementById("customPopupTitle").innerText = title;
+      document.getElementById("customPopupBody").innerHTML = message;
 
-  buttons.forEach(btn => {
-    const b = document.createElement("button");
-    b.className = "btn " + (btn.class || "btn-primary");
-    b.innerText = btn.text;
-    b.onclick = () => {
-      if (btn.onClick) btn.onClick();
-      modal.hide();
-    };
-    footer.appendChild(b);
-  });
+      const footer = document.getElementById("customPopupFooter");
+      footer.innerHTML = "";
 
-  const modalEl = document.getElementById("customPopup");
-  var modal = new bootstrap.Modal(modalEl);
-  modal.show();
-}
+      buttons.forEach(btn => {
+        const b = document.createElement("button");
+        b.className = "btn " + (btn.class || "btn-primary");
+        b.innerText = btn.text;
+        b.onclick = () => {
+          if (btn.onClick) btn.onClick();
+          modal.hide();
+        };
+        footer.appendChild(b);
+      });
+
+      const modalEl = document.getElementById("customPopup");
+      var modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    }
 
   </script>
-  
+
   <!-- Custom Popup Modal -->
-<div class="modal fade" id="customPopup" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius:18px; backdrop-filter:blur(10px); background:rgba(255,255,255,0.15);">
-      <div class="modal-header">
-        <h5 class="modal-title" id="customPopupTitle">Alert</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <div class="modal fade" id="customPopup" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content"
+        style="border-radius:18px; backdrop-filter:blur(10px); background:rgba(255,255,255,0.15);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="customPopupTitle">Alert</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="customPopupBody" style="font-size:1.1rem;"></div>
+        <div class="modal-footer" id="customPopupFooter"></div>
       </div>
-      <div class="modal-body" id="customPopupBody" style="font-size:1.1rem;"></div>
-      <div class="modal-footer" id="customPopupFooter"></div>
+    </div>
+  </div>
+
+<!-- Start Test Dialog -->
+<div class="modal fade" id="startTestModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered mx-3 mx-sm-auto">
+
+    <div class="modal-content card-app">
+      
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Start Test</h5>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Enter Your Name (optional)</label>
+          <input type="text"
+                 id="candidateNameInput"
+                 class="form-control"
+                 placeholder="e.g. Sudhanshu">
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Test Time (in minutes)</label>
+          <input type="number"
+                 id="testTimeInput"
+                 class="form-control"
+                 placeholder="10"
+                 min="1">
+        </div>
+      </div>
+
+      <div class="modal-footer border-0">
+        <button class="btn btn-primary w-100" id="startTestBtn">
+          🚀 Start Test
+        </button>
+      </div>
+
     </div>
   </div>
 </div>
 
+  
 </body>
 
 </html>
