@@ -738,6 +738,10 @@
               <hr>
               <div class="d-grid">
                 <button id="submitBtn" class="btn btn-danger">Submit Test</button>
+                <button id="downloadPdfBtn" class="btn btn-outline-primary mb-2">
+                  📄 Download Response PDF
+                </button>
+
               </div>
             </div>
           </div>
@@ -799,6 +803,110 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
+
+
+    document.getElementById("downloadPdfBtn").addEventListener("click", generateResponsePDF);
+
+function generateResponsePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("p", "mm", "a4");
+
+  const LEFT = 14;
+  const RIGHT = 196;
+  const WIDTH = 168;
+  let y = 18;
+
+  // ================= HEADER =================
+  doc.setFont("times", "bold");
+  doc.setFontSize(19);
+  doc.setTextColor(13, 110, 253);
+  doc.text("Mock Test Response Sheet", 105, y, { align: "center" });
+
+  y += 12;
+  doc.setFont("times", "normal");
+  doc.setFontSize(11);
+  doc.setTextColor(0);
+  doc.text(`Name : ${candidateName}`, LEFT, y);
+  doc.text(`Test : ${document.getElementById("testTitle").innerText}`, LEFT, y + 6);
+
+  y += 14;
+  doc.setDrawColor(180);
+  doc.line(LEFT, y, RIGHT, y);
+  y += 8;
+
+  // ================= QUESTIONS =================
+  for (let i = 1; i <= totalQuestions; i++) {
+    const q = questions[i];
+    const a = answers[i];
+    const correctId = parseInt(q.correct, 10) - 1;
+
+    const yourAnswer =
+      a && (a.selectedMetaId === 0 || a.selectedMetaId !== undefined)
+        ? q.options[a.selectedMetaId]
+        : "Not Attempted";
+
+    const correctAnswer = q.options[correctId];
+    const isCorrect = a && a.selectedMetaId === correctId;
+
+    if (y > 250) {
+      doc.addPage();
+      y = 18;
+    }
+
+    // -------- Question --------
+    doc.setFont("times", "bold");
+    doc.setFontSize(12.5);
+    doc.setTextColor(0);
+    const qLines = doc.splitTextToSize(`Q${i}. ${q.text}`, WIDTH);
+    doc.text(qLines, LEFT, y);
+    y += qLines.length * 6.5;
+
+    // -------- Your Answer --------
+    doc.setFont("times", "normal");
+    doc.setFontSize(11.2);
+    doc.setTextColor(
+      isCorrect ? 40 : 200,
+      isCorrect ? 120 : 50,
+      isCorrect ? 60 : 60
+    );
+    doc.text(`Your Answer : ${yourAnswer}`, LEFT + 2, y);
+    y += 6;
+
+    // -------- Correct Answer --------
+    doc.setTextColor(40, 140, 70);
+    doc.text(`Correct Answer : ${correctAnswer}`, LEFT + 2, y);
+    y += 7;
+
+    // -------- Explanation --------
+    if (explanations[i] && explanations[i].text) {
+      doc.setFont("times", "bold");
+      doc.setFontSize(11.5);
+      doc.setTextColor(0);
+      doc.text("Explanation", LEFT + 2, y);
+      doc.line(LEFT + 2, y + 1.5, LEFT + 34, y + 1.5);
+      y += 7;
+
+      doc.setFont("times", "normal");
+      doc.setFontSize(10.8);
+      doc.setTextColor(80);
+      const expLines = doc.splitTextToSize(
+        explanations[i].text,
+        WIDTH - 6
+      );
+      doc.text(expLines, LEFT + 4, y);
+      y += expLines.length * 5.5;
+    }
+
+    y += 7;
+    doc.setDrawColor(220);
+    doc.line(LEFT, y, RIGHT, y);
+    y += 9;
+  }
+
+  doc.save("Mock_Test_Response_Sheet.pdf");
+}
+
+
     // ===============================
     // PORTAL DATA (topics & chapters)
     // ===============================
@@ -1379,12 +1487,12 @@
           const origId = parseInt(lbl.dataset.originalId, 10);
           if (origId === origCorrectId) {
             lbl.classList.add('correct');
-            lbl.querySelector('.badge-pos').innerHTML = '✔';
+            lbl.querySelector('.badge-pos').innerHTML = '✅';
           }
           if (curAns && (curAns.selectedMetaId === 0 || (curAns.selectedMetaId !== null && curAns.selectedMetaId !== undefined))) {
             if (curAns.selectedMetaId === origId && curAns.selectedMetaId !== origCorrectId) {
               lbl.classList.add('wrong');
-              lbl.querySelector('.badge-pos').innerHTML = '✖';
+              lbl.querySelector('.badge-pos').innerHTML = '❌';
             }
           }
         });
@@ -1624,15 +1732,15 @@
 
       if (isCorrect) {
         selectedLbl.classList.add('correct');
-        selectedLbl.querySelector('.badge-pos').innerHTML = '✔';
+        selectedLbl.querySelector('.badge-pos').innerHTML = '✅';
         document.body.classList.add('blink-green');
       } else {
         selectedLbl.classList.add('wrong');
-        selectedLbl.querySelector('.badge-pos').innerHTML = '✖';
+        selectedLbl.querySelector('.badge-pos').innerHTML = '❌';
         document.body.classList.add('blink-red');
         if (correctLbl) {
           correctLbl.classList.add('correct');
-          correctLbl.querySelector('.badge-pos').innerHTML = '✔';
+          correctLbl.querySelector('.badge-pos').innerHTML = '✅';
         }
       }
 
@@ -1837,7 +1945,7 @@
       openStartTestDialog();
 
 
-      
+
 
 
 
@@ -1861,30 +1969,30 @@
     }
 
 
-function openStartTestDialog() {
-  const modalEl = document.getElementById("startTestModal");
-  const modal = new bootstrap.Modal(modalEl, {
-    backdrop: "static",
-    keyboard: false
-  });
+    function openStartTestDialog() {
+      const modalEl = document.getElementById("startTestModal");
+      const modal = new bootstrap.Modal(modalEl, {
+        backdrop: "static",
+        keyboard: false
+      });
 
-  modal.show();
+      modal.show();
 
-  document.getElementById("startTestBtn").onclick = () => {
-    const nameVal =
-      document.getElementById("candidateNameInput").value.trim();
-    const timeVal =
-      parseInt(document.getElementById("testTimeInput").value, 10);
+      document.getElementById("startTestBtn").onclick = () => {
+        const nameVal =
+          document.getElementById("candidateNameInput").value.trim();
+        const timeVal =
+          parseInt(document.getElementById("testTimeInput").value, 10);
 
-    candidateName = nameVal || "Anonymous";
+        candidateName = nameVal || "Anonymous";
 
-    totalSeconds = (timeVal && timeVal > 0 ? timeVal : 10) * 60;
-    document.body.dataset.initialSeconds = totalSeconds;
+        totalSeconds = (timeVal && timeVal > 0 ? timeVal : 10) * 60;
+        document.body.dataset.initialSeconds = totalSeconds;
 
-    modal.hide();
-    startTimerDisplay();
-  };
-}
+        modal.hide();
+        startTimerDisplay();
+      };
+    }
 
     // ===============================
     // LIGHT SWIPE LEFT/RIGHT ON QUESTION BOX
@@ -1982,46 +2090,43 @@ function openStartTestDialog() {
     </div>
   </div>
 
-<!-- Start Test Dialog -->
-<div class="modal fade" id="startTestModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered mx-3 mx-sm-auto">
+  <!-- Start Test Dialog -->
+  <div class="modal fade" id="startTestModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered mx-3 mx-sm-auto">
 
-    <div class="modal-content card-app">
-      
-      <div class="modal-header border-0">
-        <h5 class="modal-title">Start Test</h5>
-      </div>
+      <div class="modal-content card-app">
 
-      <div class="modal-body">
-        <div class="mb-3">
-          <label class="form-label">Enter Your Name (optional)</label>
-          <input type="text"
-                 id="candidateNameInput"
-                 class="form-control"
-                 placeholder="e.g. Sudhanshu">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">Start Test</h5>
         </div>
 
-        <div class="mb-2">
-          <label class="form-label">Test Time (in minutes)</label>
-          <input type="number"
-                 id="testTimeInput"
-                 class="form-control"
-                 placeholder="10"
-                 min="1">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Enter Your Name (optional)</label>
+            <input type="text" id="candidateNameInput" class="form-control" placeholder="e.g. Sudhanshu">
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">Test Time (in minutes)</label>
+            <input type="number" id="testTimeInput" class="form-control" placeholder="10" min="1">
+          </div>
         </div>
-      </div>
 
-      <div class="modal-footer border-0">
-        <button class="btn btn-primary w-100" id="startTestBtn">
-          🚀 Start Test
-        </button>
-      </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-primary w-100" id="startTestBtn">
+            🚀 Start Test
+          </button>
+        </div>
 
+      </div>
     </div>
   </div>
-</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
 
-  
+
+  </script>
+
+
 </body>
 
 </html>
