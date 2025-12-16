@@ -805,6 +805,10 @@
   <script>
 
     function renderHtmlToPdf(doc, html, x, y, maxWidth) {
+
+      // 🔥 HARD RESET jsPDF text state (VERY IMPORTANT)
+  doc.setCharSpace(0);
+  doc.setFont("times", "normal");
       const temp = document.createElement("div");
       temp.innerHTML = html;
 
@@ -814,7 +818,9 @@
         if (node.nodeType === Node.TEXT_NODE) {
           const text = node.textContent.trim();
           if (text) {
-            const lines = doc.splitTextToSize(text, maxWidth - 6);
+           doc.setCharSpace(0); // 🔒 force reset before split
+const lines = doc.splitTextToSize(text, maxWidth - 6);
+
 
             lines.forEach(line => {
               if (cursorY > 280) {
@@ -868,7 +874,9 @@
         node.childNodes.forEach(child => {
           if (customX !== x && child.nodeType === Node.TEXT_NODE) {
             const lines = doc.splitTextToSize(child.textContent.trim(), maxWidth - 6);
-            doc.text(lines, customX, cursorY);
+            doc.setCharSpace(0); // 🔒 jsPDF state fix
+doc.text(lines, customX, cursorY);
+
             cursorY += lines.length * 5.5;
           } else {
             walk(child);
@@ -896,12 +904,15 @@
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF("p", "mm", "a4");
 
-      doc.setLineHeightFactor(1.25);
-      doc.setCharSpace(0.2);
+      doc.setLineHeightFactor(1.3);
+// doc.setCharSpace(0);   // 🔥 VERY IMPORTANT
+
 
       const LEFT = 16;
-      const RIGHT = 190;          // HARD SAFE EDGE
-      const WIDTH = RIGHT - LEFT; // = 174mm REAL usable width
+      const RIGHT = 190;              // hard edge
+      const SAFE_PADDING = 6;         // 🔒 new
+      const WIDTH = RIGHT - LEFT - SAFE_PADDING;
+
 
 
       let y = 18;
@@ -981,13 +992,30 @@
           isCorrect ? 120 : 50,
           isCorrect ? 60 : 60
         );
-        doc.text(`Your Answer : ${yourAnswer}`, LEFT + 2, y);
-        y += 6;
+        // -------- Your Answer (WRAPPED) --------
+        doc.setFont("times", "normal");
+        doc.setFontSize(11.2);
+
+        let yourAnsLines = doc.splitTextToSize(
+          `Your Answer : ${yourAnswer}`,
+          WIDTH - 10
+        );
+        y = ensureSpace(doc, y, yourAnsLines.length * 6);
+        doc.text(yourAnsLines, LEFT + 2, y);
+        y += yourAnsLines.length * 6;
+
+        // -------- Correct Answer (WRAPPED) --------
+        doc.setTextColor(40, 140, 70);
+
+        let correctAnsLines = doc.splitTextToSize(
+          `Correct Answer : ${correctAnswer}`,
+          WIDTH - 10
+        );
+        y = ensureSpace(doc, y, correctAnsLines.length * 6);
+        doc.text(correctAnsLines, LEFT + 2, y);
+        y += correctAnsLines.length * 6 + 2;
 
         doc.setTextColor(40, 140, 70);
-        doc.text(`Correct Answer : ${correctAnswer}`, LEFT + 2, y);
-        y += 7;
-
 
         doc.setTextColor(40, 140, 70);
         // -------- Explanation --------
@@ -1014,8 +1042,9 @@
             explanations[i].text,
             LEFT + 4,
             y,
-            WIDTH - 12   // extra safety buffer
+            WIDTH - 16   // 🔒 extra safety
           );
+
 
 
         }
