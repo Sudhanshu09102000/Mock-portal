@@ -804,107 +804,214 @@
 
   <script>
 
+    function renderHtmlToPdf(doc, html, x, y, maxWidth) {
+      const temp = document.createElement("div");
+      temp.innerHTML = html;
+
+      let cursorY = y;
+
+      function walk(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent.trim();
+          if (text) {
+            const lines = doc.splitTextToSize(text, maxWidth);
+            lines.forEach(line => {
+  if (cursorY > 280) {
+    doc.addPage();
+    cursorY = 18;
+  }
+  doc.text(line, x, cursorY);
+  cursorY += 5.5;
+});
+
+          }
+        }
+
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          switch (node.tagName) {
+            case "BR":
+              cursorY += 5;
+              break;
+
+            case "B":
+            case "STRONG":
+              doc.setFont("times", "bold");
+              walkChildren(node);
+              doc.setFont("times", "normal");
+              break;
+
+            case "UL":
+              cursorY += 2;
+              walkChildren(node);
+              cursorY += 3;
+              break;
+
+            case "LI":
+              doc.text("•", x, cursorY);
+              walkChildren(node, x + 4);
+              cursorY += 5;
+              break;
+
+            case "P":
+              walkChildren(node);
+              cursorY += 5;
+              break;
+
+            default:
+              walkChildren(node);
+          }
+        }
+      }
+
+      function walkChildren(node, customX = x) {
+        node.childNodes.forEach(child => {
+          if (customX !== x && child.nodeType === Node.TEXT_NODE) {
+            const lines = doc.splitTextToSize(child.textContent.trim(), maxWidth - 6);
+            doc.text(lines, customX, cursorY);
+            cursorY += lines.length * 5.5;
+          } else {
+            walk(child);
+          }
+        });
+      }
+
+      temp.childNodes.forEach(walk);
+
+      return cursorY;
+    }
+function ensureSpace(doc, y, neededHeight) {
+  const PAGE_BOTTOM = 280; // safe A4 bottom
+
+  if (y + neededHeight > PAGE_BOTTOM) {
+    doc.addPage();
+    return 18; // reset Y safely
+  }
+  return y;
+}
 
     document.getElementById("downloadPdfBtn").addEventListener("click", generateResponsePDF);
 
-function generateResponsePDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF("p", "mm", "a4");
+    function generateResponsePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF("p", "mm", "a4");
 
-  const LEFT = 14;
-  const RIGHT = 196;
-  const WIDTH = 168;
-  let y = 18;
+      const LEFT = 14;
+      const RIGHT = 196;
+      const WIDTH = 168;
+      let y = 18;
 
-  // ================= HEADER =================
-  doc.setFont("times", "bold");
-  doc.setFontSize(19);
-  doc.setTextColor(13, 110, 253);
-  doc.text("Mock Test Response Sheet", 105, y, { align: "center" });
-
-  y += 12;
-  doc.setFont("times", "normal");
-  doc.setFontSize(11);
-  doc.setTextColor(0);
-  doc.text(`Name : ${candidateName}`, LEFT, y);
-  doc.text(`Test : ${document.getElementById("testTitle").innerText}`, LEFT, y + 6);
-
-  y += 14;
-  doc.setDrawColor(180);
-  doc.line(LEFT, y, RIGHT, y);
-  y += 8;
-
-  // ================= QUESTIONS =================
-  for (let i = 1; i <= totalQuestions; i++) {
-    const q = questions[i];
-    const a = answers[i];
-    const correctId = parseInt(q.correct, 10) - 1;
-
-    const yourAnswer =
-      a && (a.selectedMetaId === 0 || a.selectedMetaId !== undefined)
-        ? q.options[a.selectedMetaId]
-        : "Not Attempted";
-
-    const correctAnswer = q.options[correctId];
-    const isCorrect = a && a.selectedMetaId === correctId;
-
-    if (y > 250) {
-      doc.addPage();
-      y = 18;
-    }
-
-    // -------- Question --------
-    doc.setFont("times", "bold");
-    doc.setFontSize(12.5);
-    doc.setTextColor(0);
-    const qLines = doc.splitTextToSize(`Q${i}. ${q.text}`, WIDTH);
-    doc.text(qLines, LEFT, y);
-    y += qLines.length * 6.5;
-
-    // -------- Your Answer --------
-    doc.setFont("times", "normal");
-    doc.setFontSize(11.2);
-    doc.setTextColor(
-      isCorrect ? 40 : 200,
-      isCorrect ? 120 : 50,
-      isCorrect ? 60 : 60
-    );
-    doc.text(`Your Answer : ${yourAnswer}`, LEFT + 2, y);
-    y += 6;
-
-    // -------- Correct Answer --------
-    doc.setTextColor(40, 140, 70);
-    doc.text(`Correct Answer : ${correctAnswer}`, LEFT + 2, y);
-    y += 7;
-
-    // -------- Explanation --------
-    if (explanations[i] && explanations[i].text) {
+      // ================= HEADER =================
       doc.setFont("times", "bold");
-      doc.setFontSize(11.5);
-      doc.setTextColor(0);
-      doc.text("Explanation", LEFT + 2, y);
-      doc.line(LEFT + 2, y + 1.5, LEFT + 34, y + 1.5);
-      y += 7;
+      doc.setFontSize(19);
+      doc.setTextColor(13, 110, 253);
+      doc.text("Mock Test Response Sheet", 105, y, { align: "center" });
 
+      y += 12;
       doc.setFont("times", "normal");
-      doc.setFontSize(10.8);
-      doc.setTextColor(80);
-      const expLines = doc.splitTextToSize(
-        explanations[i].text,
-        WIDTH - 6
-      );
-      doc.text(expLines, LEFT + 4, y);
-      y += expLines.length * 5.5;
+      doc.setFontSize(11);
+      doc.setTextColor(0);
+      doc.text(`Name : ${candidateName}`, LEFT, y);
+      doc.text(`Test : ${document.getElementById("testTitle").innerText}`, LEFT, y + 6);
+
+      y += 14;
+      doc.setDrawColor(180);
+      doc.line(LEFT, y, RIGHT, y);
+      y += 8;
+
+      // ================= QUESTIONS =================
+      for (let i = 1; i <= totalQuestions; i++) {
+        const q = questions[i];
+        const a = answers[i];
+        const correctId = parseInt(q.correct, 10) - 1;
+
+        const yourAnswer =
+          a && (a.selectedMetaId === 0 || a.selectedMetaId !== undefined)
+            ? q.options[a.selectedMetaId]
+            : "Not Attempted";
+
+        const correctAnswer = q.options[correctId];
+        const isCorrect = a && a.selectedMetaId === correctId;
+
+        if (y > 250) {
+          doc.addPage();
+          y = 18;
+        }
+
+        const qLines = doc.splitTextToSize(`Q${i}. ${q.text}`, WIDTH);
+
+// 🔒 ensure full question fits
+y = ensureSpace(doc, y, qLines.length * 7);
+
+doc.setFont("times", "bold");
+doc.setFontSize(12.5);
+doc.setTextColor(0);
+doc.text(qLines, LEFT, y);
+y += qLines.length * 7;
+
+
+        // -------- Your Answer --------
+        doc.setFont("times", "normal");
+        doc.setFontSize(11.2);
+        doc.setTextColor(
+          isCorrect ? 40 : 200,
+          isCorrect ? 120 : 50,
+          isCorrect ? 60 : 60
+        );
+        y = ensureSpace(doc, y, 20);
+
+doc.setFont("times", "normal");
+doc.setFontSize(11.2);
+doc.setTextColor(
+  isCorrect ? 40 : 200,
+  isCorrect ? 120 : 50,
+  isCorrect ? 60 : 60
+);
+doc.text(`Your Answer : ${yourAnswer}`, LEFT + 2, y);
+y += 6;
+
+doc.setTextColor(40, 140, 70);
+doc.text(`Correct Answer : ${correctAnswer}`, LEFT + 2, y);
+y += 7;
+
+        
+        doc.setTextColor(40, 140, 70);
+        // -------- Explanation --------
+        if (explanations[i] && explanations[i].text) {
+          doc.setFont("times", "bold");
+          doc.setFontSize(11.5);
+          doc.setTextColor(0);
+          // 🔒 Explanation must NEVER start at page bottom
+y = ensureSpace(doc, y, 25);
+
+doc.setFont("times", "bold");
+doc.setFontSize(11.5);
+doc.setTextColor(0);
+doc.text("Explanation", LEFT + 2, y);
+doc.line(LEFT + 2, y + 1.5, LEFT + 34, y + 1.5);
+y += 7;
+
+
+          doc.setFont("times", "normal");
+          doc.setFontSize(10.8);
+          doc.setTextColor(80);
+          y = renderHtmlToPdf(
+            doc,
+            explanations[i].text,   // HTML explanation
+            LEFT + 4,
+            y,
+            WIDTH - 8
+          );
+
+        }
+
+        y += 7;
+        doc.setDrawColor(220);
+        doc.line(LEFT, y, RIGHT, y);
+        y += 9;
+      }
+
+      doc.save("Mock_Test_Response_Sheet.pdf");
     }
-
-    y += 7;
-    doc.setDrawColor(220);
-    doc.line(LEFT, y, RIGHT, y);
-    y += 9;
-  }
-
-  doc.save("Mock_Test_Response_Sheet.pdf");
-}
 
 
     // ===============================
@@ -2103,7 +2210,8 @@ function generateResponsePDF() {
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label">Enter Your Name (optional)</label>
-            <input type="text" id="candidateNameInput" class="form-control" placeholder="e.g. Sudhanshu The King Maker 😂">
+            <input type="text" id="candidateNameInput" class="form-control"
+              placeholder="e.g. Sudhanshu The King Maker 😂">
           </div>
 
           <div class="mb-2">
