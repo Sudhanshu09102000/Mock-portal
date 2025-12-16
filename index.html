@@ -814,15 +814,16 @@
         if (node.nodeType === Node.TEXT_NODE) {
           const text = node.textContent.trim();
           if (text) {
-            const lines = doc.splitTextToSize(text, maxWidth);
+            const lines = doc.splitTextToSize(text, maxWidth - 6);
+
             lines.forEach(line => {
-  if (cursorY > 280) {
-    doc.addPage();
-    cursorY = 18;
-  }
-  doc.text(line, x, cursorY);
-  cursorY += 5.5;
-});
+              if (cursorY > 280) {
+                doc.addPage();
+                cursorY = 18;
+              }
+              doc.text(line, x, cursorY);
+              cursorY += 5.5;
+            });
 
           }
         }
@@ -879,15 +880,15 @@
 
       return cursorY;
     }
-function ensureSpace(doc, y, neededHeight) {
-  const PAGE_BOTTOM = 280; // safe A4 bottom
+    function ensureSpace(doc, y, neededHeight) {
+      const PAGE_BOTTOM = 280; // safe A4 bottom
 
-  if (y + neededHeight > PAGE_BOTTOM) {
-    doc.addPage();
-    return 18; // reset Y safely
-  }
-  return y;
-}
+      if (y + neededHeight > PAGE_BOTTOM) {
+        doc.addPage();
+        return 18; // reset Y safely
+      }
+      return y;
+    }
 
     document.getElementById("downloadPdfBtn").addEventListener("click", generateResponsePDF);
 
@@ -895,9 +896,14 @@ function ensureSpace(doc, y, neededHeight) {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF("p", "mm", "a4");
 
-      const LEFT = 14;
-      const RIGHT = 196;
-      const WIDTH = 168;
+      doc.setLineHeightFactor(1.25);
+      doc.setCharSpace(0.2);
+
+      const LEFT = 16;
+      const RIGHT = 190;          // HARD SAFE EDGE
+      const WIDTH = RIGHT - LEFT; // = 174mm REAL usable width
+
+
       let y = 18;
 
       // ================= HEADER =================
@@ -936,17 +942,26 @@ function ensureSpace(doc, y, neededHeight) {
           doc.addPage();
           y = 18;
         }
+        doc.setFont("times", "bold");
+        doc.setFontSize(12.5);
 
-        const qLines = doc.splitTextToSize(`Q${i}. ${q.text}`, WIDTH);
+        // 🔥 width must be calculated AFTER font is set
+        const qLines = doc.splitTextToSize(
+          `Q${i}. ${q.text}`,
+          WIDTH - 14   // extra hard safety
+        );
 
-// 🔒 ensure full question fits
-y = ensureSpace(doc, y, qLines.length * 7);
+        // 🔒 ensure space
+        y = ensureSpace(doc, y, qLines.length * 7);
 
-doc.setFont("times", "bold");
-doc.setFontSize(12.5);
-doc.setTextColor(0);
-doc.text(qLines, LEFT, y);
-y += qLines.length * 7;
+        doc.text(qLines, LEFT, y);
+        y += qLines.length * 7;
+
+
+
+
+
+
 
 
         // -------- Your Answer --------
@@ -959,21 +974,21 @@ y += qLines.length * 7;
         );
         y = ensureSpace(doc, y, 20);
 
-doc.setFont("times", "normal");
-doc.setFontSize(11.2);
-doc.setTextColor(
-  isCorrect ? 40 : 200,
-  isCorrect ? 120 : 50,
-  isCorrect ? 60 : 60
-);
-doc.text(`Your Answer : ${yourAnswer}`, LEFT + 2, y);
-y += 6;
+        doc.setFont("times", "normal");
+        doc.setFontSize(11.2);
+        doc.setTextColor(
+          isCorrect ? 40 : 200,
+          isCorrect ? 120 : 50,
+          isCorrect ? 60 : 60
+        );
+        doc.text(`Your Answer : ${yourAnswer}`, LEFT + 2, y);
+        y += 6;
 
-doc.setTextColor(40, 140, 70);
-doc.text(`Correct Answer : ${correctAnswer}`, LEFT + 2, y);
-y += 7;
+        doc.setTextColor(40, 140, 70);
+        doc.text(`Correct Answer : ${correctAnswer}`, LEFT + 2, y);
+        y += 7;
 
-        
+
         doc.setTextColor(40, 140, 70);
         // -------- Explanation --------
         if (explanations[i] && explanations[i].text) {
@@ -981,14 +996,14 @@ y += 7;
           doc.setFontSize(11.5);
           doc.setTextColor(0);
           // 🔒 Explanation must NEVER start at page bottom
-y = ensureSpace(doc, y, 25);
+          y = ensureSpace(doc, y, 25);
 
-doc.setFont("times", "bold");
-doc.setFontSize(11.5);
-doc.setTextColor(0);
-doc.text("Explanation", LEFT + 2, y);
-doc.line(LEFT + 2, y + 1.5, LEFT + 34, y + 1.5);
-y += 7;
+          doc.setFont("times", "bold");
+          doc.setFontSize(11.5);
+          doc.setTextColor(0);
+          doc.text("Explanation", LEFT + 2, y);
+          doc.line(LEFT + 2, y + 1.5, LEFT + 34, y + 1.5);
+          y += 7;
 
 
           doc.setFont("times", "normal");
@@ -996,11 +1011,12 @@ y += 7;
           doc.setTextColor(80);
           y = renderHtmlToPdf(
             doc,
-            explanations[i].text,   // HTML explanation
+            explanations[i].text,
             LEFT + 4,
             y,
-            WIDTH - 8
+            WIDTH - 12   // extra safety buffer
           );
+
 
         }
 
