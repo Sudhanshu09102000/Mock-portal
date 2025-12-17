@@ -807,6 +807,50 @@
 
     document.getElementById("downloadPdfBtn").addEventListener("click", generateResponsePDF);
 
+  
+  function renderHtmlToPdf(doc, html, x, y, maxWidth) {
+  const temp = document.createElement("div");
+  temp.innerHTML = html;
+
+  let cursorY = y;
+
+  temp.childNodes.forEach(node => {
+
+    // LINE BREAK
+    if (node.nodeName === "BR") {
+      cursorY += 5;
+      return;
+    }
+
+    // TEXT NODE
+    if (node.nodeType === Node.TEXT_NODE) {
+      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth);
+      doc.setFont("times", "normal");
+      doc.text(lines, x, cursorY);
+      cursorY += lines.length * 5;
+    }
+
+    // BOLD TEXT
+    if (node.nodeName === "B" || node.nodeName === "STRONG") {
+      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth);
+      doc.setFont("times", "bold");
+      doc.text(lines, x, cursorY);
+      cursorY += lines.length * 5;
+    }
+
+    // PARAGRAPH
+    if (node.nodeName === "P") {
+      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth);
+      doc.setFont("times", "normal");
+      doc.text(lines, x, cursorY);
+      cursorY += lines.length * 6;
+    }
+
+  });
+
+  return cursorY;
+}
+
 function generateResponsePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF("p", "mm", "a4");
@@ -895,12 +939,14 @@ if (a) {
       doc.setFont("times", "normal");
       doc.setFontSize(10.8);
       doc.setTextColor(80);
-      const expLines = doc.splitTextToSize(
-        explanations[i].text,
-        WIDTH - 6
-      );
-      doc.text(expLines, LEFT + 4, y);
-      y += expLines.length * 5.5;
+      y = renderHtmlToPdf(
+  doc,
+  explanations[i].text,
+  LEFT + 4,
+  y,
+  WIDTH - 6
+);
+
     }
 
     y += 7;
@@ -1037,18 +1083,22 @@ if (a) {
         { name: "7. Carbon and Its Compounds", url: "#" },
       ],
       8: [
-        { name: "1. Cell", url: "#" },
-        { name: "2. Plant Tissue and Animal Tissue", url: "#" },
-        { name: "3. Plant and Animal Kingdom", url: "#" },
-        { name: "4. Nervous System", url: "#" },
-        { name: "5. Hormones and Plant Movements", url: "#" },
-        { name: "6. Reproduction", url: "#" },
-        { name: "7. Digestion and Respiration", url: "#" },
-        { name: "8. Circulatory System and Excretory System", url: "#" },
-        { name: "9. Diseases", url: "#" },
-        { name: "10. Nutrients", url: "#" },
-        { name: "11. Hereditary and Evolution", url: "#" },
-      ],
+  { name: "1. Cell", url: "#" },
+  { name: "2. Animal Tissues", url: "#" },
+  { name: "3. Plant Tissues", url: "#" },
+  { name: "4. Plant Kingdom", url: "#" },
+  { name: "5. Animal Kingdom", url: "#" },
+  { name: "6. Nervous System", url: "#" },
+  { name: "7. Hormones and Movement in Plants", url: "#" },
+  { name: "8. Reproduction", url: "#" },
+  { name: "9. Digestive System and Respiration", url: "#" },
+  { name: "10. Circulatory and Excretory System", url: "#" },
+  { name: "11. Nutrition", url: "#" },
+  { name: "12. Diseases", url: "#" },
+  { name: "13. Genetics and Skeletal System", url: "#" }
+]
+
+      ,
       9: [
         { name: "1. Basics of Environmental Sciences", url: "#" },
         { name: "2. Ecosystem", url: "#" },
