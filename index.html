@@ -824,7 +824,7 @@
 
     // TEXT NODE
     if (node.nodeType === Node.TEXT_NODE) {
-      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth);
+      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth-1);
       doc.setFont("times", "normal");
       doc.text(lines, x, cursorY);
       cursorY += lines.length * 5;
@@ -832,7 +832,7 @@
 
     // BOLD TEXT
     if (node.nodeName === "B" || node.nodeName === "STRONG") {
-      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth);
+      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth-1);
       doc.setFont("times", "bold");
       doc.text(lines, x, cursorY);
       cursorY += lines.length * 5;
@@ -840,7 +840,7 @@
 
     // PARAGRAPH
     if (node.nodeName === "P") {
-      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth);
+      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth-1);
       doc.setFont("times", "normal");
       doc.text(lines, x, cursorY);
       cursorY += lines.length * 6;
@@ -851,22 +851,39 @@
   return cursorY;
 }
 
+  
+  function ensureSpace(doc, y, neededHeight) {
+  const PAGE_HEIGHT = doc.internal.pageSize.height;
+  const BOTTOM_MARGIN = 18;
+
+  if (y + neededHeight > PAGE_HEIGHT - BOTTOM_MARGIN) {
+    doc.addPage();
+    return 20; // new page top
+  }
+  return y;
+}
 function generateResponsePDF() {
+ 
+
+  
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF("p", "mm", "a4");
 
-  const LEFT = 14;
-  const RIGHT = 196;
-  const WIDTH = 168;
-  let y = 18;
+  // ===== SAFE MARGINS =====
+  const LEFT = 18;
+  const RIGHT = 192;
+  const WIDTH = RIGHT - LEFT;
 
-  // ================= HEADER =================
+  let y = 22;
+
+  // ===== HEADER =====
   doc.setFont("times", "bold");
-  doc.setFontSize(19);
-  doc.setTextColor(13, 110, 253);
+  doc.setFontSize(20);
+  doc.setTextColor(30, 90, 180);
   doc.text("Mock Test Response Sheet", 105, y, { align: "center" });
 
   y += 12;
+
   doc.setFont("times", "normal");
   doc.setFontSize(11);
   doc.setTextColor(0);
@@ -874,89 +891,146 @@ function generateResponsePDF() {
   doc.text(`Test : ${document.getElementById("testTitle").innerText}`, LEFT, y + 6);
 
   y += 14;
-  doc.setDrawColor(180);
+  doc.setDrawColor(200);
   doc.line(LEFT, y, RIGHT, y);
-  y += 8;
+  y += 10;
 
-  // ================= QUESTIONS =================
+  // ===== QUESTIONS LOOP =====
   for (let i = 1; i <= totalQuestions; i++) {
     const q = questions[i];
     const a = answers[i];
     const correctId = parseInt(q.correct, 10) - 1;
 
-    let yourAnswer = "Not Attempted";
-
-if (a) {
-  if (a.selectedMetaId === 0 || typeof a.selectedMetaId === "number") {
-    yourAnswer = q.options[a.selectedMetaId];
-  } else {
-    yourAnswer = "Visited But Not Attempted";
-  }
-}
-
+    let yourAnswer = "Visited But Not Answered";
+    if (a && typeof a.selectedMetaId === "number") {
+      yourAnswer = q.options[a.selectedMetaId];
+    }
 
     const correctAnswer = q.options[correctId];
     const isCorrect = a && a.selectedMetaId === correctId;
 
-    if (y > 250) {
-      doc.addPage();
-      y = 18;
-    }
+    // ===== QUESTION BOX HEIGHT ESTIMATE =====
+    y = ensureSpace(doc, y, 80);
 
-    // -------- Question --------
+    // ===== QUESTION CONTAINER =====
+    doc.setDrawColor(220);
+    doc.setFillColor(248, 250, 255);
+    doc.roundedRect(LEFT - 2, y - 6, WIDTH + 4, 8, 3, 3, "F");
+
+    // QUESTION
     doc.setFont("times", "bold");
     doc.setFontSize(12.5);
     doc.setTextColor(0);
+
     const qLines = doc.splitTextToSize(`Q${i}. ${q.text}`, WIDTH);
     doc.text(qLines, LEFT, y);
     y += qLines.length * 6.5;
 
-    // -------- Your Answer --------
-    doc.setFont("times", "normal");
-    doc.setFontSize(11.2);
-    doc.setTextColor(
-      isCorrect ? 40 : 200,
-      isCorrect ? 120 : 50,
-      isCorrect ? 60 : 60
-    );
-    doc.text(`Your Answer : ${yourAnswer}`, LEFT + 2, y);
-    y += 6;
+    // -------- OPTIONS --------
+doc.setFont("times", "normal");
+doc.setFontSize(11);
+doc.setTextColor(0);
 
-    // -------- Correct Answer --------
-    doc.setTextColor(40, 140, 70);
-    doc.text(`Correct Answer : ${correctAnswer}`, LEFT + 2, y);
-    y += 7;
+q.options.forEach((opt, idx) => {
+  y = ensureSpace(doc, y, 6);
 
-    // -------- Explanation --------
+  const optText = `${idx + 1}. ${opt}`;
+  const optLines = doc.splitTextToSize(optText, WIDTH - 6);
+  doc.text(optLines, LEFT + 4, y);
+  y += optLines.length * 5.5;
+});
+
+    
+// -------- YOUR ANSWER & STATUS (FINAL CORRECT LOGIC) --------
+let yourAnsText = "Not Answered";
+let yourAnsColor = [0, 0, 0]; // black
+
+if (answers[i]) {
+  if (answers[i].answeredFeedback === true) {
+    // Question was answered
+    yourAnsText = q.options[answers[i].selectedMetaId];
+
+    if (answers[i].selectedMetaId === correctId) {
+      // ✅ correct
+      yourAnsColor = [40, 140, 70]; // green
+    } else {
+      // ❌ wrong
+      yourAnsColor = [200, 50, 50]; // red
+    }
+
+  } else {
+    // 👀 visited but not answered
+    yourAnsText = "Visited But Not Answered";
+    yourAnsColor = [0, 0, 0];
+  }
+}
+
+// -------- YOUR ANSWER (WRAPPED, NO CUTTING) --------
+doc.setFont("times", "normal");
+doc.setFontSize(11.2);
+doc.setTextColor(...yourAnsColor);
+
+const yourAnsLines = doc.splitTextToSize(
+  `Your Answer : ${yourAnsText}`,
+  WIDTH - 4
+);
+
+y = ensureSpace(doc, y, yourAnsLines.length * 6);
+doc.text(yourAnsLines, LEFT + 2, y);
+y += yourAnsLines.length * 6;
+
+
+// -------- CORRECT ANSWER (WRAPPED, GREEN + BOLD) --------
+doc.setFont("times", "bold");
+doc.setFontSize(11.2);
+doc.setTextColor(40, 140, 70);
+
+const correctAnsLines = doc.splitTextToSize(
+  `Correct Answer : ${correctAnswer}`,
+  WIDTH - 4
+);
+
+y = ensureSpace(doc, y, correctAnsLines.length * 6);
+doc.text(correctAnsLines, LEFT + 2, y);
+y += correctAnsLines.length * 6 + 2;
+
+
+
+
+    // ===== EXPLANATION =====
     if (explanations[i] && explanations[i].text) {
+      y = ensureSpace(doc, y, 30);
+
       doc.setFont("times", "bold");
       doc.setFontSize(11.5);
       doc.setTextColor(0);
       doc.text("Explanation", LEFT + 2, y);
-      doc.line(LEFT + 2, y + 1.5, LEFT + 34, y + 1.5);
-      y += 7;
+      doc.line(LEFT + 2, y + 1.5, LEFT + 36, y + 1.5);
+      y += 6;
 
       doc.setFont("times", "normal");
       doc.setFontSize(10.8);
-      doc.setTextColor(80);
-      y = renderHtmlToPdf(
-  doc,
-  explanations[i].text,
-  LEFT + 4,
-  y,
-  WIDTH - 6
-);
+      doc.setTextColor(70);
 
+      y = renderHtmlToPdf(
+        doc,
+        explanations[i].text,
+        LEFT + 4,
+        y,
+        WIDTH - 8
+      );
     }
 
-    y += 7;
-    doc.setDrawColor(220);
+    // ===== DIVIDER =====
+    y += 6;
+    doc.setDrawColor(230);
     doc.line(LEFT, y, RIGHT, y);
-    y += 9;
+    y += 10;
   }
 
   doc.save("Mock_Test_Response_Sheet.pdf");
 }
+
 
 
     // ===============================
