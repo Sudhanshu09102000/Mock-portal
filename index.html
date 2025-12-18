@@ -813,43 +813,75 @@
   temp.innerHTML = html;
 
   let cursorY = y;
+  let cursorX = x;
+  const lineHeight = 5.5;
 
-  temp.childNodes.forEach(node => {
+  function renderNode(node) {
 
     // LINE BREAK
     if (node.nodeName === "BR") {
-      cursorY += 5;
+      cursorY += lineHeight;
+      cursorX = x;
+      return;
+    }
+
+    // PARAGRAPH
+    if (node.nodeName === "P") {
+      cursorY += lineHeight;
+      cursorX = x;
+      node.childNodes.forEach(renderNode);
+      cursorY += lineHeight;
+      cursorX = x;
       return;
     }
 
     // TEXT NODE
     if (node.nodeType === Node.TEXT_NODE) {
-      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth-1);
+      const text = node.textContent;
       doc.setFont("times", "normal");
-      doc.text(lines, x, cursorY);
-      cursorY += lines.length * 5;
+
+      const words = text.split(" ");
+      words.forEach(word => {
+        const w = word + " ";
+        const wWidth = doc.getTextWidth(w);
+
+        if (cursorX + wWidth > x + maxWidth) {
+          cursorY += lineHeight;
+          cursorX = x;
+        }
+
+        doc.text(w, cursorX, cursorY);
+        cursorX += wWidth;
+      });
     }
 
-    // BOLD TEXT
+    // BOLD / STRONG (INLINE)
     if (node.nodeName === "B" || node.nodeName === "STRONG") {
-      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth-1);
       doc.setFont("times", "bold");
-      doc.text(lines, x, cursorY);
-      cursorY += lines.length * 5;
-    }
+      const words = node.textContent.split(" ");
 
-    // PARAGRAPH
-    if (node.nodeName === "P") {
-      const lines = doc.splitTextToSize(node.textContent.trim(), maxWidth-1);
+      words.forEach(word => {
+        const w = word + " ";
+        const wWidth = doc.getTextWidth(w);
+
+        if (cursorX + wWidth > x + maxWidth) {
+          cursorY += lineHeight;
+          cursorX = x;
+        }
+
+        doc.text(w, cursorX, cursorY);
+        cursorX += wWidth;
+      });
+
       doc.setFont("times", "normal");
-      doc.text(lines, x, cursorY);
-      cursorY += lines.length * 6;
     }
+  }
 
-  });
+  temp.childNodes.forEach(renderNode);
 
-  return cursorY;
+  return cursorY + lineHeight;
 }
+
 
   
   function ensureSpace(doc, y, neededHeight) {
