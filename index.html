@@ -973,29 +973,28 @@ q.options.forEach((opt, idx) => {
 });
 
     
-// -------- YOUR ANSWER & STATUS (FINAL CORRECT LOGIC) --------
 let yourAnsText = "Not Answered";
 let yourAnsColor = [0, 0, 0]; // black
 
-if (answers[i]) {
-  if (answers[i].answeredFeedback === true) {
-    // Question was answered
-    yourAnsText = q.options[answers[i].selectedMetaId];
+const ans = answers[i];
 
-    if (answers[i].selectedMetaId === correctId) {
-      // ✅ correct
-      yourAnsColor = [40, 140, 70]; // green
-    } else {
-      // ❌ wrong
-      yourAnsColor = [200, 50, 50]; // red
-    }
+if (ans && ans.answeredFeedback === true) {
+  // ANSWERED
+  yourAnsText = q.options[ans.selectedMetaId];
 
+  if (ans.selectedMetaId === correctId) {
+    yourAnsColor = [40, 140, 70]; // green
   } else {
-    // 👀 visited but not answered
-    yourAnsText = "Visited But Not Answered";
-    yourAnsColor = [0, 0, 0];
+    yourAnsColor = [200, 50, 50]; // red
   }
+
+} else if (ans && ans.visited === true) {
+  // VISITED BUT NOT ANSWERED
+  yourAnsText = "Visited But Not Answered";
+  yourAnsColor = [0, 0, 0];
 }
+// else → truly never opened → "Not Answered"
+
 
 // -------- YOUR ANSWER (WRAPPED, NO CUTTING) --------
 doc.setFont("times", "normal");
@@ -1694,6 +1693,17 @@ y += correctAnsLines.length * 6 + 2;
     }
 
     function loadQuestion(num) {
+      // 👀 MARK AS VISITED WHEN QUESTION COMES ON SCREEN
+  if (!answers[num]) {
+    answers[num] = {
+      selectedMetaId: null,
+      review: false,
+      answeredFeedback: false,
+      visited: true
+    };
+  } else {
+    answers[num].visited = true;
+  }
       currentQuestion = num;
       renderQuestion(num);
       document.getElementById('review-container').style.display = 'none';
@@ -2105,6 +2115,14 @@ if (e && e.text) {
       // reset state
       totalQuestions = Object.keys(questions).length;
       currentQuestion = 1;
+      // First question is always visited
+answers[1] = {
+  selectedMetaId: null,
+  review: false,
+  answeredFeedback: false,
+  visited: true
+};
+
       for (const k in answers) delete answers[k];
       testSubmitted = false;
       hintEnabled = true;
