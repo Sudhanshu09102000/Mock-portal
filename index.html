@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+
     :root {
       --grad1: #00c6ff;
       --grad2: #0072ff;
@@ -628,6 +629,27 @@
     .btn:active {
       transform: scale(0.95);
     }
+
+    .controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.controls button {
+  white-space: nowrap;
+}
+
+/* CURRENT QUESTION HIGHLIGHT (PURPLE) */
+.qbtn.current {
+  background: linear-gradient(135deg, #7b2cff, #b84cff);
+  color: #ffffff;
+  border: 2px solid #5b1fd6;
+  box-shadow: 0 0 12px rgba(123, 44, 255, 0.7);
+  transform: scale(1.12);
+}
+
+
   </style>
 </head>
 
@@ -687,11 +709,14 @@
         <div class="row g-3">
           <div class="col-lg-8">
             <div class="question-box" id="question-box">
-              <div id="question-image" class="mb-3 text-center"></div>
               <div id="questionText" class="question-text mb-2">loading...</div>
+
+<div id="question-image" class="mb-3 text-center"></div>
+
               <div id="options" class="options"></div>
 
-              <div class="controls mt-3">
+              <div class="controls mt-3 position-relative" id="controlsWrap">
+
                 <button id="prevBtn" class="btn btn-outline-secondary">⟵ Previous</button>
                 <button id="saveNextBtn" class="btn btn-primary">Save & Next</button>
                 <button id="helpBtn" class="btn btn-info">Help!</button>
@@ -719,7 +744,7 @@
             </div>
             <div class="card p-3 mb-3">
               <h6>Question Navigator</h6>
-              <div id="question-nav" class="d-flex flex-wrap question-nav mt-2"></div>
+              <div id="question-nav" class="question-nav hidden"></div>
 
               <hr>
               <div class="d-flex justify-content-between align-items-center">
@@ -807,342 +832,342 @@
 
     document.getElementById("downloadPdfBtn").addEventListener("click", generateResponsePDF);
 
-  
-  function renderHtmlToPdf(doc, html, x, y, maxWidth) {
-  const temp = document.createElement("div");
-  temp.innerHTML = html;
 
-  let cursorY = y;
-  let cursorX = x;
-  const lineHeight = 5.5;
+    function renderHtmlToPdf(doc, html, x, y, maxWidth) {
+      const temp = document.createElement("div");
+      temp.innerHTML = html;
 
-  function renderNode(node) {
+      let cursorY = y;
+      let cursorX = x;
+      const lineHeight = 5.5;
 
-    // LINE BREAK
-    if (node.nodeName === "BR") {
-      cursorY += lineHeight;
-      cursorX = x;
-      return;
-    }
+      function renderNode(node) {
 
-    // PARAGRAPH
-    if (node.nodeName === "P") {
-      cursorY += lineHeight;
-      cursorX = x;
-      node.childNodes.forEach(renderNode);
-      cursorY += lineHeight;
-      cursorX = x;
-      return;
-    }
-
-    // TEXT NODE
-    if (node.nodeType === Node.TEXT_NODE) {
-      const text = node.textContent;
-      doc.setFont("times", "normal");
-
-      const words = text.split(" ");
-      words.forEach(word => {
-        const w = word + " ";
-        const wWidth = doc.getTextWidth(w);
-
-        if (cursorX + wWidth > x + maxWidth) {
+        // LINE BREAK
+        if (node.nodeName === "BR") {
           cursorY += lineHeight;
           cursorX = x;
+          return;
         }
 
-        doc.text(w, cursorX, cursorY);
-        cursorX += wWidth;
-      });
-    }
-
-    // BOLD / STRONG (INLINE)
-    if (node.nodeName === "B" || node.nodeName === "STRONG") {
-      doc.setFont("times", "bold");
-      const words = node.textContent.split(" ");
-
-      words.forEach(word => {
-        const w = word + " ";
-        const wWidth = doc.getTextWidth(w);
-
-        if (cursorX + wWidth > x + maxWidth) {
+        // PARAGRAPH
+        if (node.nodeName === "P") {
           cursorY += lineHeight;
           cursorX = x;
+          node.childNodes.forEach(renderNode);
+          cursorY += lineHeight;
+          cursorX = x;
+          return;
         }
 
-        doc.text(w, cursorX, cursorY);
-        cursorX += wWidth;
-      });
+        // TEXT NODE
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent;
+          doc.setFont("times", "normal");
 
-      doc.setFont("times", "normal");
-    }
-  }
+          const words = text.split(" ");
+          words.forEach(word => {
+            const w = word + " ";
+            const wWidth = doc.getTextWidth(w);
 
-  temp.childNodes.forEach(renderNode);
+            if (cursorX + wWidth > x + maxWidth) {
+              cursorY += lineHeight;
+              cursorX = x;
+            }
 
-  return cursorY + lineHeight;
-}
+            doc.text(w, cursorX, cursorY);
+            cursorX += wWidth;
+          });
+        }
 
+        // BOLD / STRONG (INLINE)
+        if (node.nodeName === "B" || node.nodeName === "STRONG") {
+          doc.setFont("times", "bold");
+          const words = node.textContent.split(" ");
 
-  
-  function ensureSpace(doc, y, neededHeight) {
-  const PAGE_HEIGHT = doc.internal.pageSize.height;
-  const BOTTOM_MARGIN = 18;
+          words.forEach(word => {
+            const w = word + " ";
+            const wWidth = doc.getTextWidth(w);
 
-  if (y + neededHeight > PAGE_HEIGHT - BOTTOM_MARGIN) {
-    doc.addPage();
-    return 20; // new page top
-  }
-  return y;
-}
-  
-  function drawGoogleClickableQuestion(doc, qNo, qText, x, y, width) {
-  const searchUrl =
-    "https://www.google.com/search?q=" +
-    encodeURIComponent(qText);
+            if (cursorX + wWidth > x + maxWidth) {
+              cursorY += lineHeight;
+              cursorX = x;
+            }
 
-  // STYLE
-  doc.setFont("times", "bold");
-  doc.setFontSize(12.5);
-  doc.setTextColor(200, 0, 0); // RED
+            doc.text(w, cursorX, cursorY);
+            cursorX += wWidth;
+          });
 
-  const lines = doc.splitTextToSize(`Q${qNo}. ${qText}`, width);
-
-  lines.forEach(line => {
-    doc.textWithLink(line, x, y, { url: searchUrl });
-    y += 6.5;
-  });
-
-  // RESET COLOR
-  doc.setTextColor(0);
-
-  return y;
-}
-  
-  async function addImageToPDF(doc, imgSrc, x, y, maxWidth) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = function () {
-      const ratio = img.height / img.width;
-      const imgWidth = maxWidth;
-      const imgHeight = imgWidth * ratio;
-
-      // Page break check
-      const pageHeight = doc.internal.pageSize.height;
-      if (y + imgHeight > pageHeight - 20) {
-        doc.addPage();
-        y = 20;
+          doc.setFont("times", "normal");
+        }
       }
 
-      doc.addImage(img, "JPEG", x, y, imgWidth, imgHeight);
-      resolve(y + imgHeight + 6);
-    };
-    img.src = imgSrc;
-  });
-}
+      temp.childNodes.forEach(renderNode);
 
-
-async function generateResponsePDF() {
- 
-
-  
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF("p", "mm", "a4");
-
-  // ===== SAFE MARGINS =====
-  const LEFT = 18;
-  const RIGHT = 192;
-  const WIDTH = RIGHT - LEFT;
-
-  let y = 22;
-
-  // ===== HEADER =====
-  doc.setFont("times", "bold");
-  doc.setFontSize(20);
-  doc.setTextColor(30, 90, 180);
-  doc.text("Mock Test Response Sheet", 105, y, { align: "center" });
-
-  y += 12;
-
-  doc.setFont("times", "normal");
-  doc.setFontSize(11);
-  doc.setTextColor(0);
-  doc.text(`Name : ${candidateName}`, LEFT, y);
-  doc.text(`Test : ${document.getElementById("testTitle").innerText}`, LEFT, y + 6);
-
-  y += 14;
-  doc.setDrawColor(200);
-  doc.line(LEFT, y, RIGHT, y);
-  y += 10;
-
-  // ===== QUESTIONS LOOP =====
-  for (let i = 1; i <= totalQuestions; i++) {
-    const q = questions[i];
-    const a = answers[i];
-    const correctId = parseInt(q.correct, 10) - 1;
-
-    let yourAnswer = "Visited But Not Answered";
-    if (a && typeof a.selectedMetaId === "number") {
-      yourAnswer = q.options[a.selectedMetaId];
+      return cursorY + lineHeight;
     }
 
-    const correctAnswer = q.options[correctId];
-    const isCorrect = a && a.selectedMetaId === correctId;
-
-    // ===== QUESTION BOX HEIGHT ESTIMATE =====
-    y = ensureSpace(doc, y, 80);
-
-    // ===== QUESTION CONTAINER =====
-    doc.setDrawColor(220);
-    doc.setFillColor(248, 250, 255);
-    doc.roundedRect(LEFT - 2, y - 6, WIDTH + 4, 8, 3, 3, "F");
-
-    // QUESTION
-    doc.setFont("times", "bold");
-    doc.setFontSize(12.5);
-    doc.setTextColor(0);
-
-    y = drawGoogleClickableQuestion(
-  doc,
-  i,
-  q.text,
-  LEFT,
-  y,
-  WIDTH
-);
-    
-    // ===== QUESTION IMAGE (IF ANY) =====
-if (q.image) {
-  y = await addImageToPDF(
-    doc,
-    q.image,
-    LEFT + 10,
-    y + 4,
-    WIDTH - 20
-  );
-}
 
 
+    function ensureSpace(doc, y, neededHeight) {
+      const PAGE_HEIGHT = doc.internal.pageSize.height;
+      const BOTTOM_MARGIN = 18;
 
-    // -------- OPTIONS --------
-doc.setFont("times", "normal");
-doc.setFontSize(11);
-doc.setTextColor(0);
+      if (y + neededHeight > PAGE_HEIGHT - BOTTOM_MARGIN) {
+        doc.addPage();
+        return 20; // new page top
+      }
+      return y;
+    }
 
-q.options.forEach((opt, idx) => {
-  y = ensureSpace(doc, y, 6);
+    function drawGoogleClickableQuestion(doc, qNo, qText, x, y, width) {
+      const searchUrl =
+        "https://www.google.com/search?q=" +
+        encodeURIComponent(qText);
 
-  const optText = `${idx + 1}. ${opt}`;
-  const optLines = doc.splitTextToSize(optText, WIDTH - 6);
-  doc.text(optLines, LEFT + 4, y);
-  y += optLines.length * 5.5;
-});
-
-    
-let yourAnsText = "Not Answered";
-let yourAnsColor = [0, 0, 0]; // black
-
-const ans = answers[i];
-
-if (ans && ans.answeredFeedback === true) {
-  // ANSWERED
-  yourAnsText = q.options[ans.selectedMetaId];
-
-  if (ans.selectedMetaId === correctId) {
-    yourAnsColor = [40, 140, 70]; // green
-  } else {
-    yourAnsColor = [200, 50, 50]; // red
-  }
-
-} else if (ans && ans.visited === true) {
-  // VISITED BUT NOT ANSWERED
-  yourAnsText = "Visited But Not Answered";
-  yourAnsColor = [0, 0, 0];
-}
-// else → truly never opened → "Not Answered"
-
-
-// -------- YOUR ANSWER (WRAPPED, NO CUTTING) --------
-doc.setFont("times", "normal");
-doc.setFontSize(11.2);
-doc.setTextColor(...yourAnsColor);
-
-const yourAnsLines = doc.splitTextToSize(
-  `Your Answer : ${yourAnsText}`,
-  WIDTH - 4
-);
-
-y = ensureSpace(doc, y, yourAnsLines.length * 6);
-doc.text(yourAnsLines, LEFT + 2, y);
-y += yourAnsLines.length * 6;
-
-
-// -------- CORRECT ANSWER (WRAPPED, GREEN + BOLD) --------
-doc.setFont("times", "bold");
-doc.setFontSize(11.2);
-doc.setTextColor(40, 140, 70);
-
-const correctAnsLines = doc.splitTextToSize(
-  `Correct Answer : ${correctAnswer}`,
-  WIDTH - 4
-);
-
-y = ensureSpace(doc, y, correctAnsLines.length * 6);
-doc.text(correctAnsLines, LEFT + 2, y);
-y += correctAnsLines.length * 6 + 2;
-
-
-
-
-    // ===== EXPLANATION =====
-    if (explanations[i] && explanations[i].text) {
-      y = ensureSpace(doc, y, 30);
-
+      // STYLE
       doc.setFont("times", "bold");
-      doc.setFontSize(11.5);
+      doc.setFontSize(12.5);
+      doc.setTextColor(200, 0, 0); // RED
+
+      const lines = doc.splitTextToSize(`Q${qNo}. ${qText}`, width);
+
+      lines.forEach(line => {
+        doc.textWithLink(line, x, y, { url: searchUrl });
+        y += 6.5;
+      });
+
+      // RESET COLOR
       doc.setTextColor(0);
-      doc.text("Explanation", LEFT + 2, y);
-      doc.line(LEFT + 2, y + 1.5, LEFT + 36, y + 1.5);
-      y += 6;
+
+      return y;
+    }
+
+    async function addImageToPDF(doc, imgSrc, x, y, maxWidth) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = function () {
+          const ratio = img.height / img.width;
+          const imgWidth = maxWidth;
+          const imgHeight = imgWidth * ratio;
+
+          // Page break check
+          const pageHeight = doc.internal.pageSize.height;
+          if (y + imgHeight > pageHeight - 20) {
+            doc.addPage();
+            y = 20;
+          }
+
+          doc.addImage(img, "JPEG", x, y, imgWidth, imgHeight);
+          resolve(y + imgHeight + 6);
+        };
+        img.src = imgSrc;
+      });
+    }
+
+
+    async function generateResponsePDF() {
+
+
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF("p", "mm", "a4");
+
+      // ===== SAFE MARGINS =====
+      const LEFT = 18;
+      const RIGHT = 192;
+      const WIDTH = RIGHT - LEFT;
+
+      let y = 22;
+
+      // ===== HEADER =====
+      doc.setFont("times", "bold");
+      doc.setFontSize(20);
+      doc.setTextColor(30, 90, 180);
+      doc.text("Mock Test Response Sheet", 105, y, { align: "center" });
+
+      y += 12;
 
       doc.setFont("times", "normal");
-      doc.setFontSize(10.8);
-      doc.setTextColor(70);
+      doc.setFontSize(11);
+      doc.setTextColor(0);
+      doc.text(`Name : ${candidateName}`, LEFT, y);
+      doc.text(`Test : ${document.getElementById("testTitle").innerText}`, LEFT, y + 6);
 
-      y = renderHtmlToPdf(
-        doc,
-        explanations[i].text,
-        LEFT + 4,
-        y,
-        WIDTH - 8
-      );
-      
-      // ===== EXPLANATION IMAGE (IF ANY) =====
-if (explanations[i].image) {
-  y = await addImageToPDF(
-    doc,
-    explanations[i].image,
-    LEFT + 10,
-    y + 4,
-    WIDTH - 20
-  );
-}
+      y += 14;
+      doc.setDrawColor(200);
+      doc.line(LEFT, y, RIGHT, y);
+      y += 10;
+
+      // ===== QUESTIONS LOOP =====
+      for (let i = 1; i <= totalQuestions; i++) {
+        const q = questions[i];
+        const a = answers[i];
+        const correctId = parseInt(q.correct, 10) - 1;
+
+        let yourAnswer = "Visited But Not Answered";
+        if (a && typeof a.selectedMetaId === "number") {
+          yourAnswer = q.options[a.selectedMetaId];
+        }
+
+        const correctAnswer = q.options[correctId];
+        const isCorrect = a && a.selectedMetaId === correctId;
+
+        // ===== QUESTION BOX HEIGHT ESTIMATE =====
+        y = ensureSpace(doc, y, 80);
+
+        // ===== QUESTION CONTAINER =====
+        doc.setDrawColor(220);
+        doc.setFillColor(248, 250, 255);
+        doc.roundedRect(LEFT - 2, y - 6, WIDTH + 4, 8, 3, 3, "F");
+
+        // QUESTION
+        doc.setFont("times", "bold");
+        doc.setFontSize(12.5);
+        doc.setTextColor(0);
+
+        y = drawGoogleClickableQuestion(
+          doc,
+          i,
+          q.text,
+          LEFT,
+          y,
+          WIDTH
+        );
+
+        // ===== QUESTION IMAGE (IF ANY) =====
+        if (q.image) {
+          y = await addImageToPDF(
+            doc,
+            q.image,
+            LEFT + 10,
+            y + 4,
+            WIDTH - 20
+          );
+        }
+
+
+
+        // -------- OPTIONS --------
+        doc.setFont("times", "normal");
+        doc.setFontSize(11);
+        doc.setTextColor(0);
+
+        q.options.forEach((opt, idx) => {
+          y = ensureSpace(doc, y, 6);
+
+          const optText = `${idx + 1}. ${opt}`;
+          const optLines = doc.splitTextToSize(optText, WIDTH - 6);
+          doc.text(optLines, LEFT + 4, y);
+          y += optLines.length * 5.5;
+        });
+
+
+        let yourAnsText = "Not Answered";
+        let yourAnsColor = [0, 0, 0]; // black
+
+        const ans = answers[i];
+
+        if (ans && ans.answeredFeedback === true) {
+          // ANSWERED
+          yourAnsText = q.options[ans.selectedMetaId];
+
+          if (ans.selectedMetaId === correctId) {
+            yourAnsColor = [40, 140, 70]; // green
+          } else {
+            yourAnsColor = [200, 50, 50]; // red
+          }
+
+        } else if (ans && ans.visited === true) {
+          // VISITED BUT NOT ANSWERED
+          yourAnsText = "Visited But Not Answered";
+          yourAnsColor = [0, 0, 0];
+        }
+        // else → truly never opened → "Not Answered"
+
+
+        // -------- YOUR ANSWER (WRAPPED, NO CUTTING) --------
+        doc.setFont("times", "normal");
+        doc.setFontSize(11.2);
+        doc.setTextColor(...yourAnsColor);
+
+        const yourAnsLines = doc.splitTextToSize(
+          `Your Answer : ${yourAnsText}`,
+          WIDTH - 4
+        );
+
+        y = ensureSpace(doc, y, yourAnsLines.length * 6);
+        doc.text(yourAnsLines, LEFT + 2, y);
+        y += yourAnsLines.length * 6;
+
+
+        // -------- CORRECT ANSWER (WRAPPED, GREEN + BOLD) --------
+        doc.setFont("times", "bold");
+        doc.setFontSize(11.2);
+        doc.setTextColor(40, 140, 70);
+
+        const correctAnsLines = doc.splitTextToSize(
+          `Correct Answer : ${correctAnswer}`,
+          WIDTH - 4
+        );
+
+        y = ensureSpace(doc, y, correctAnsLines.length * 6);
+        doc.text(correctAnsLines, LEFT + 2, y);
+        y += correctAnsLines.length * 6 + 2;
+
+
+
+
+        // ===== EXPLANATION =====
+        if (explanations[i] && explanations[i].text) {
+          y = ensureSpace(doc, y, 30);
+
+          doc.setFont("times", "bold");
+          doc.setFontSize(11.5);
+          doc.setTextColor(0);
+          doc.text("Explanation", LEFT + 2, y);
+          doc.line(LEFT + 2, y + 1.5, LEFT + 36, y + 1.5);
+          y += 6;
+
+          doc.setFont("times", "normal");
+          doc.setFontSize(10.8);
+          doc.setTextColor(70);
+
+          y = renderHtmlToPdf(
+            doc,
+            explanations[i].text,
+            LEFT + 4,
+            y,
+            WIDTH - 8
+          );
+
+          // ===== EXPLANATION IMAGE (IF ANY) =====
+          if (explanations[i].image) {
+            y = await addImageToPDF(
+              doc,
+              explanations[i].image,
+              LEFT + 10,
+              y + 4,
+              WIDTH - 20
+            );
+          }
+
+        }
+
+
+
+
+        // ===== DIVIDER =====
+        y += 6;
+        doc.setDrawColor(230);
+        doc.line(LEFT, y, RIGHT, y);
+        y += 10;
+      }
+
+      doc.save("Mock_Test_Response_Sheet.pdf");
 
     }
-    
-
-
-
-    // ===== DIVIDER =====
-    y += 6;
-    doc.setDrawColor(230);
-    doc.line(LEFT, y, RIGHT, y);
-    y += 10;
-  }
-
- doc.save("Mock_Test_Response_Sheet.pdf");
-
-}
 
 
 
@@ -1270,20 +1295,20 @@ if (explanations[i].image) {
         { name: "7. Carbon and Its Compounds", url: "#" },
       ],
       8: [
-  { name: "1. Cell", url: "#" },
-  { name: "2. Animal Tissues", url: "#" },
-  { name: "3. Plant Tissues", url: "#" },
-  { name: "4. Plant Kingdom", url: "#" },
-  { name: "5. Animal Kingdom", url: "#" },
-  { name: "6. Nervous System", url: "#" },
-  { name: "7. Hormones and Movement in Plants", url: "#" },
-  { name: "8. Reproduction", url: "#" },
-  { name: "9. Digestive System and Respiration", url: "#" },
-  { name: "10. Circulatory and Excretory System", url: "#" },
-  { name: "11. Nutrition", url: "#" },
-  { name: "12. Diseases", url: "#" },
-  { name: "13. Genetics and Skeletal System", url: "#" }
-]
+        { name: "1. Cell", url: "#" },
+        { name: "2. Animal Tissues", url: "#" },
+        { name: "3. Plant Tissues", url: "#" },
+        { name: "4. Plant Kingdom", url: "#" },
+        { name: "5. Animal Kingdom", url: "#" },
+        { name: "6. Nervous System", url: "#" },
+        { name: "7. Hormones and Movement in Plants", url: "#" },
+        { name: "8. Reproduction", url: "#" },
+        { name: "9. Digestive System and Respiration", url: "#" },
+        { name: "10. Circulatory and Excretory System", url: "#" },
+        { name: "11. Nutrition", url: "#" },
+        { name: "12. Diseases", url: "#" },
+        { name: "13. Genetics and Skeletal System", url: "#" }
+      ]
 
       ,
       9: [
@@ -1776,16 +1801,16 @@ if (explanations[i].image) {
 
     function loadQuestion(num) {
       // 👀 MARK AS VISITED WHEN QUESTION COMES ON SCREEN
-  if (!answers[num]) {
-    answers[num] = {
-      selectedMetaId: null,
-      review: false,
-      answeredFeedback: false,
-      visited: true
-    };
-  } else {
-    answers[num].visited = true;
-  }
+      if (!answers[num]) {
+        answers[num] = {
+          selectedMetaId: null,
+          review: false,
+          answeredFeedback: false,
+          visited: true
+        };
+      } else {
+        answers[num].visited = true;
+      }
       currentQuestion = num;
       renderQuestion(num);
       document.getElementById('review-container').style.display = 'none';
@@ -2023,11 +2048,11 @@ if (explanations[i].image) {
   <hr>
 `;
 
-if (e && e.text) {
-  helpHTML += `<p>${e.text}</p>`;
-} else {
-  helpHTML += `<p>No explanation available.</p>`;
-}
+      if (e && e.text) {
+        helpHTML += `<p>${e.text}</p>`;
+      } else {
+        helpHTML += `<p>No explanation available.</p>`;
+      }
 
 
       if (e && e.image) {
@@ -2178,8 +2203,8 @@ if (e && e.text) {
         // silently ignore — browser blocks response but request is sent
       });
     }
-  
-  
+
+
 
     document.addEventListener('hidden.bs.modal', () => {
       document.activeElement?.blur();
@@ -2198,12 +2223,12 @@ if (e && e.text) {
       totalQuestions = Object.keys(questions).length;
       currentQuestion = 1;
       // First question is always visited
-answers[1] = {
-  selectedMetaId: null,
-  review: false,
-  answeredFeedback: false,
-  visited: true
-};
+      answers[1] = {
+        selectedMetaId: null,
+        review: false,
+        answeredFeedback: false,
+        visited: true
+      };
 
       for (const k in answers) delete answers[k];
       testSubmitted = false;
