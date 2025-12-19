@@ -917,8 +917,32 @@
 
   return y;
 }
+  
+  async function addImageToPDF(doc, imgSrc, x, y, maxWidth) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = function () {
+      const ratio = img.height / img.width;
+      const imgWidth = maxWidth;
+      const imgHeight = imgWidth * ratio;
 
-function generateResponsePDF() {
+      // Page break check
+      const pageHeight = doc.internal.pageSize.height;
+      if (y + imgHeight > pageHeight - 20) {
+        doc.addPage();
+        y = 20;
+      }
+
+      doc.addImage(img, "JPEG", x, y, imgWidth, imgHeight);
+      resolve(y + imgHeight + 6);
+    };
+    img.src = imgSrc;
+  });
+}
+
+
+async function generateResponsePDF() {
  
 
   
@@ -986,6 +1010,18 @@ function generateResponsePDF() {
   y,
   WIDTH
 );
+    
+    // ===== QUESTION IMAGE (IF ANY) =====
+if (q.image) {
+  y = await addImageToPDF(
+    doc,
+    q.image,
+    LEFT + 10,
+    y + 4,
+    WIDTH - 20
+  );
+}
+
 
 
     // -------- OPTIONS --------
@@ -1080,7 +1116,22 @@ y += correctAnsLines.length * 6 + 2;
         y,
         WIDTH - 8
       );
+      
+      // ===== EXPLANATION IMAGE (IF ANY) =====
+if (explanations[i].image) {
+  y = await addImageToPDF(
+    doc,
+    explanations[i].image,
+    LEFT + 10,
+    y + 4,
+    WIDTH - 20
+  );
+}
+
     }
+    
+
+
 
     // ===== DIVIDER =====
     y += 6;
@@ -1089,7 +1140,8 @@ y += correctAnsLines.length * 6 + 2;
     y += 10;
   }
 
-  doc.save("Mock_Test_Response_Sheet.pdf");
+ doc.save("Mock_Test_Response_Sheet.pdf");
+
 }
 
 
