@@ -100,7 +100,7 @@ const questions={
   text: "Select the option that shows the correct matching of Column I with Column II regarding Asexual Reproduction. [RRB GROUP D 24/08/2022]",
   options: ["a-ii, b-iv, c-iii, d-i", "a-ii, b-i, c-iii, d-iv", "a-i, b-ii, c-iii, d-iv", "a-iv, b-ii, c-i, d-iii"],
   correct: "1",
-  image: "attached_image:1"
+  image: "images/bio817.jpg"
 },
 18: {
   text: "Identify an algae that undergoes anisogamous fusion of gametes. [SSC PHASE XI 28/06/2023]",
@@ -226,7 +226,7 @@ const questions={
   text: "A flow chart of sex determination in human beings is shown below. Some conclusions that can be drawn from it are mentioned in the options. Select the INCORRECT option. [RRB GROUP D 26/08/2022]",
   options: ["All children inherit X chromosome from their mother.", "The chances of a child being male or female is 50%.", "The male decides the sex of the offspring.", "The female decides the sex of the offspring."],
   correct: "4",
-  image: "attached_image:2"
+  image: "images/bio838.jpg"
 },
 // Level II Questions (Start as numbering 39)
 39: {
