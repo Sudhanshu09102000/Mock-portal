@@ -226,7 +226,7 @@ const questions={
   text: "A flow chart of sex determination in human beings is shown below. Some conclusions that can be drawn from it are mentioned in the options. Select the INCORRECT option. [RRB GROUP D 26/08/2022]",
   options: ["All children inherit X chromosome from their mother.", "The chances of a child being male or female is 50%.", "The male decides the sex of the offspring.", "The female decides the sex of the offspring."],
   correct: "4",
-  image: "images/bio838.jpg"
+  image: "bio838.jpg"
 },
 // Level II Questions (Start as numbering 39)
 39: {
