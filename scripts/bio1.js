@@ -321,7 +321,7 @@ image: ''
 text: "Which of the following illustrations shows the mitochondrial structural details? [SSC CGL 09/09/2024]",
 options: ["a", "b", "c", "d"],
 correct: "2",
-image: 'scripts/photo_2025-12-16_23-32-24.jpg'
+image: 'images/photo_2025-12-16_23-32-24.jpg'
 },
 55: {
 text: "Under the electron microscope, which cell organelle is visible as either clusters or single, small dots that float freely in the cytoplasm? [SSC CHSL 25/05/2022]",
@@ -537,7 +537,7 @@ image: ''
 text: "In the following simplified diagram of a plant cell, five parts/organelles are marked from 1 to 5. Which one of the following correctly represents the above parts/organelles? [CDS II 2023]",
 options: ["1-cell membrane; 2-cell wall; 3-vacuole; 4-endoplasmic reticulum; 5-nucleus", "1-cell wall; 2-cell membrane; 3-endoplasmic reticulum; 4-vacuole; 5-nucleus", "1-cell wall; 2-cell membrane; 3-endoplasmic reticulum; 4-nucleus; 5-vacuole", "1-cell wall; 2-cell membrane; 3-vacuole; 4-endoplasmic reticulum; 5-nucleus"],
 correct: "4",
-image: 'scripts/photo_2025-12-16_23-32-30.jpg'
+image: 'images/photo_2025-12-16_23-32-30.jpg'
 },
 91: {
 text: "Chromosomes are composed of DNA and : [CDS II 2023]",
