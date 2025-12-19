@@ -894,6 +894,30 @@
   }
   return y;
 }
+  
+  function drawGoogleClickableQuestion(doc, qNo, qText, x, y, width) {
+  const searchUrl =
+    "https://www.google.com/search?q=" +
+    encodeURIComponent(qText);
+
+  // STYLE
+  doc.setFont("times", "bold");
+  doc.setFontSize(12.5);
+  doc.setTextColor(200, 0, 0); // RED
+
+  const lines = doc.splitTextToSize(`Q${qNo}. ${qText}`, width);
+
+  lines.forEach(line => {
+    doc.textWithLink(line, x, y, { url: searchUrl });
+    y += 6.5;
+  });
+
+  // RESET COLOR
+  doc.setTextColor(0);
+
+  return y;
+}
+
 function generateResponsePDF() {
  
 
@@ -954,9 +978,15 @@ function generateResponsePDF() {
     doc.setFontSize(12.5);
     doc.setTextColor(0);
 
-    const qLines = doc.splitTextToSize(`Q${i}. ${q.text}`, WIDTH);
-    doc.text(qLines, LEFT, y);
-    y += qLines.length * 6.5;
+    y = drawGoogleClickableQuestion(
+  doc,
+  i,
+  q.text,
+  LEFT,
+  y,
+  WIDTH
+);
+
 
     // -------- OPTIONS --------
 doc.setFont("times", "normal");
