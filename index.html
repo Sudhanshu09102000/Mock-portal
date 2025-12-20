@@ -740,7 +740,7 @@
 
   <!-- ========== PORTAL MAIN PAGE ========== -->
   <div class="card-main" id="mainPage">
-  <h1 class="landing-title"> MOCK PORTAL</h1>
+  <h1 class="landing-title">SSC MOCK TEST PORTAL</h1>
 
   <div class="landing-grid">
     <button class="subject-card reasoning" onclick="openMainSubject(0)">
@@ -764,7 +764,7 @@
 
 <!-- ========== PORTAL SUB PAGE (CHAPTERS) ========== -->
 <div class="card-main hidden" id="subPage">
-  <button class="back-btn" onclick="goBack()">← Back To Portal</button>
+  <button class="back-btn" onclick="goBack()">← Back</button>
   <h2 id="topicName"></h2>
   <div class="grid" id="subButtons"></div>
 </div>
@@ -774,7 +774,7 @@
   <div id="testPage" class="hidden">
     <div class="container py-4">
       <div class="topbar mb-3">
-        <button id="backToPortalBtn" class="btn btn-outline-light">← Back</button>
+        <button id="backToPortalBtn" class="btn btn-outline-light">← Back to Portal</button>
         <div class="text-end">
           <div id="timer">00:00</div>
         </div>
@@ -1511,13 +1511,8 @@
     const topicName = document.getElementById('topicName');
     const subButtons = document.getElementById('subButtons');
     const testPage = document.getElementById('testPage');
-  let currentView = "main"; 
-// main | sub | test
-
 
     function openSubPage(index) {
-      currentView = "sub";
-
       mainPage.style.animation = "fadeOut 0.5s forwards";
       setTimeout(() => {
         mainPage.classList.add('hidden');
@@ -1538,32 +1533,18 @@
     }
 
     function goBack() {
+      subPage.style.animation = "fadeOut 0.5s forwards";
+      setTimeout(() => {
+        subPage.classList.add('hidden');
+        mainPage.classList.remove('hidden');
+        mainPage.style.animation = "fadeIn 0.5s forwards";
+      }, 400);
+    }
 
-  // If currently on chapter list → go to landing page
-  if (currentView === "sub") {
-    subPage.style.animation = "fadeOut 0.4s forwards";
-    setTimeout(() => {
-      subPage.classList.add("hidden");
-      mainPage.classList.remove("hidden");
-      mainPage.style.animation = "fadeIn 0.4s forwards";
-      currentView = "main";
-    }, 350);
-  }
-
-  // (future-proof: if ever used elsewhere)
-}
-
-
+    // Back from test → easiest is reload page
     document.getElementById('backToPortalBtn').addEventListener('click', () => {
-  if (currentView === "test") {
-    // Test → Chapter list
-    testPage.classList.add('hidden');
-    subPage.classList.remove('hidden');
-    subPage.style.animation = "fadeIn 0.4s forwards";
-    currentView = "sub";
-  }
-});
-
+      location.reload();
+    });
 
     function openTestForChapter(topicIndex, chapterIdx, item) {
       const prefix = topicPrefixes[topicIndex] || `t${topicIndex}`;
@@ -1577,8 +1558,6 @@
     }
 
     function loadTestForChapter(baseName, title) {
-      currentView = "test";
-
       // Hide portal, show test page
       mainPage.classList.add('hidden');
       subPage.classList.add('hidden');
@@ -2483,8 +2462,6 @@
   
   <script>
   function openMainSubject(mainIndex) {
-    currentView = "sub";
-
 
     const subjectMap = {
       0: [],                             // General Intelligence & Reasoning (no topics yet)
