@@ -17,11 +17,11 @@ text: "The Assam government launched the Chief Minister’s Women Entrepreneursh
 image: ""
 },
 5: {
-text: "Shivshankar Raman assumed charge as Chairman of the Pension Fund Regulatory and Development Authority (PFRDA) on April 1, 2025. PFRDA regulates and develops the National Pension System (NPS).",
+text: "Sivasubramanian Ramann assumed charge as Chairman of the Pension Fund Regulatory and Development Authority (PFRDA) on April 1, 2025. PFRDA regulates and develops the National Pension System (NPS).",
 image: ""
 },
 6: {
-text: "Salila Panigrahi was appointed MD and CEO of SBI Card on April 1, 2025. SBI Card is one of India’s largest credit card issuers.",
+text: "Ms. Salila Pande was appointed MD and CEO of SBI Card on April 1, 2025. SBI Card is one of India’s largest credit card issuers.",
 image: ""
 },
 7: {
