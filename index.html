@@ -11,7 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-
     :root {
       --grad1: #00c6ff;
       --grad2: #0072ff;
@@ -631,106 +630,117 @@
     }
 
     .controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-.controls button {
-  white-space: nowrap;
-}
+    .controls button {
+      white-space: nowrap;
+    }
 
-/* CURRENT QUESTION HIGHLIGHT (PURPLE) */
-.qbtn.current {
-  background: linear-gradient(135deg, #7b2cff, #b84cff);
-  color: #ffffff;
-  border: 2px solid #5b1fd6;
-  box-shadow: 0 0 12px rgba(123, 44, 255, 0.7);
-  transform: scale(1.12);
-}
+    /* CURRENT QUESTION HIGHLIGHT (PURPLE) */
+    .qbtn.current {
+      background: linear-gradient(135deg, #7b2cff, #b84cff);
+      color: #ffffff;
+      border: 2px solid #5b1fd6;
+      box-shadow: 0 0 12px rgba(123, 44, 255, 0.7);
+      transform: scale(1.12);
+    }
 
-/* ===============================
+    /* ===============================
    BEAUTIFUL LANDING PAGE ONLY
    (NON-BLUE COLOR THEME)
 ================================ */
 
-.landing-title {
-  font-size: 2.2rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #ff7a18, #ff3d81, #7f5cff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 35px;
-}
+    .landing-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #ff7a18, #ff3d81, #7f5cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 35px;
+    }
 
-.landing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 22px;
-}
+    .landing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+    }
 
-.subject-card {
-  position: relative;
-  padding: 26px 20px;
-  border-radius: 20px;
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-align: center;
-  color: #fff;
-  cursor: pointer;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.45);
-}
+    .subject-card {
+      position: relative;
+      padding: 26px 20px;
+      border-radius: 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      color: #fff;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+    }
 
-/* Gradient Variants */
-.subject-card.reasoning {
-  background: linear-gradient(135deg, #7f5cff, #c77dff);
-}
-.subject-card.awareness {
-  background: linear-gradient(135deg, #ff7a18, #ffb703);
-}
-.subject-card.quant {
-  background: linear-gradient(135deg, #00b894, #55efc4);
-}
-.subject-card.english {
-  background: linear-gradient(135deg, #ff3d81, #ff6f91);
-}
+    /* Gradient Variants */
+    .subject-card.reasoning {
+      background: linear-gradient(135deg, #7f5cff, #c77dff);
+    }
 
-/* Hover Effects */
-.subject-card:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 0 40px rgba(255,255,255,0.25);
-}
+    .subject-card.awareness {
+      background: linear-gradient(135deg, #ff7a18, #ffb703);
+    }
 
-/* Glow ripple */
-.subject-card::after {
-  content: "";
-  position: absolute;
-  inset: -60%;
-  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
+    .subject-card.quant {
+      background: linear-gradient(135deg, #00b894, #55efc4);
+    }
 
-.subject-card:hover::after {
-  opacity: 1;
-}
+    .subject-card.english {
+      background: linear-gradient(135deg, #ff3d81, #ff6f91);
+    }
 
-  
-  /* FIX: sub page grid visibility */
-#subPage .grid {
-  margin-top: 25px;
-}
+    /* Computer Awareness */
+    .subject-card.computer {
+      background: linear-gradient(135deg, #1d976c, #93f9b9);
+    }
 
-#subPage {
-  min-height: 60vh;
-}
+    /* Others */
+    .subject-card.others {
+      background: linear-gradient(135deg, #ff9966, #ff5e62);
+    }
 
-  
-  
+
+    /* Hover Effects */
+    .subject-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+    }
+
+    /* Glow ripple */
+    .subject-card::after {
+      content: "";
+      position: absolute;
+      inset: -60%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.25), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .subject-card:hover::after {
+      opacity: 1;
+    }
+
+
+    /* FIX: sub page grid visibility */
+    #subPage .grid {
+      margin-top: 25px;
+    }
+
+    #subPage {
+      min-height: 60vh;
+    }
   </style>
 </head>
 
@@ -740,34 +750,47 @@
 
   <!-- ========== PORTAL MAIN PAGE ========== -->
   <div class="card-main" id="mainPage">
-  <h1 class="landing-title">SSC MOCK TEST PORTAL</h1>
+    <h1 class="landing-title">MOCK TEST PORTAL</h1>
 
-  <div class="landing-grid">
-    <button class="subject-card reasoning" onclick="openMainSubject(0)">
-      🧠<br>General Intelligence<br>& Reasoning
-    </button>
+    <div class="landing-grid">
+      <button class="subject-card reasoning" onclick="openMainSubject(0)">
+        🧠<br>General Intelligence<br>& Reasoning
+      </button>
 
-    <button class="subject-card awareness" onclick="openMainSubject(1)">
-      🌍<br>General Awareness
-    </button>
+      <button class="subject-card awareness" onclick="openMainSubject(1)">
+        🌍<br>General Awareness
+      </button>
 
-    <button class="subject-card quant" onclick="openMainSubject(2)">
-      📊<br>Quantitative Aptitude
-    </button>
+      <button class="subject-card quant" onclick="openMainSubject(2)">
+        📊<br>Quantitative Aptitude
+      </button>
 
-    <button class="subject-card english" onclick="openMainSubject(3)">
-      📖<br>English Comprehension
-    </button>
+      <button class="subject-card english" onclick="openMainSubject(3)">
+        📖<br>English Comprehension
+      </button>
+
+      <button class="subject-card computer" onclick="openMainSubject(4)">
+        💻<br>Computer Awareness
+      </button>
+
+      <!-- ✅ NEW: Others -->
+      <button class="subject-card others" onclick="openMainSubject(5)">
+        🗂️<br>Others
+      </button>
+
+
+
+
+    </div>
+  </div> <!-- ✅ THIS WAS MISSING -->
+
+
+  <!-- ========== PORTAL SUB PAGE (CHAPTERS) ========== -->
+  <div class="card-main hidden" id="subPage">
+    <button class="back-btn" onclick="goBack()">← Back to Portal</button>
+    <h2 id="topicName"></h2>
+    <div class="grid" id="subButtons"></div>
   </div>
-</div>   <!-- ✅ THIS WAS MISSING -->
-
-
-<!-- ========== PORTAL SUB PAGE (CHAPTERS) ========== -->
-<div class="card-main hidden" id="subPage">
-  <button class="back-btn" onclick="goBack()">← Back to Portal</button>
-  <h2 id="topicName"></h2>
-  <div class="grid" id="subButtons"></div>
-</div>
 
 
   <!-- ========== TEST PAGE (MOCK ENGINE) ========== -->
@@ -796,7 +819,7 @@
             <div class="question-box" id="question-box">
               <div id="questionText" class="question-text mb-2">loading...</div>
 
-<div id="question-image" class="mb-3 text-center"></div>
+              <div id="question-image" class="mb-3 text-center"></div>
 
               <div id="options" class="options"></div>
 
@@ -1256,261 +1279,7 @@
 
 
 
-    // ===============================
-    // PORTAL DATA (topics & chapters)
-    // ===============================
-    const topics = [
-      "GEOGRAPHY",
-      "ANCIENT HISTORY",
-      "MEDIEVAL HISTORY",
-      "MODERN HISTORY",
-      "POLITY",
-      "ECONOMICS",
-      "PHYSICS",
-      "CHEMISTRY",
-      "BIOLOGY",
-      "ENVIRONMENT",
-      "STATIC GK",
-      "ENGLISH VOCABULARY",
-      "COMPUTER AWARENESS",
-      "CURRENT AFFAIRS"
-    ];
 
-    // Each topic has an array of {name, url}, url not used now
-    const links = {
-      0: [
-        { name: "1. Solar System", url: "#" },
-        { name: "2. Longitude and Latitude", url: "#" },
-        { name: "3. Earth's Interior and Plate Tectonics", url: "#" },
-        { name: "4. Rocks, Continents and Ocean", url: "#" },
-        { name: "5. Geomorphology and Landforms", url: "#" },
-        { name: "6. Atmosphere", url: "#" },
-        { name: "7. Wind, Ocean Current and Cyclone", url: "#" },
-        { name: "8. India and Its Location", url: "#" },
-        { name: "9. Himalayas", url: "#" },
-        { name: "10. Peninsular Plateaus", url: "#" },
-        { name: "11. Northern Plain and Islands", url: "#" },
-        { name: "12. Himalayan River System", url: "#" },
-        { name: "13. Peninsular Rivers", url: "#" },
-        { name: "14. Dams, Lakes and Waterfall", url: "#" },
-        { name: "15. Monsoon", url: "#" },
-        { name: "16. Forest and Grassland", url: "#" },
-        { name: "17. Soil and Agriculture", url: "#" },
-        { name: "18. Minerals", url: "#" },
-        { name: "19. World Map", url: "#" },
-        { name: "20. National Parks", url: "#" },
-      ],
-      1: [
-        { name: "1. Stone Age", url: "#" },
-        { name: "2. Indus Valley Civilization", url: "#" },
-        { name: "3. Vedic Age", url: "#" },
-        { name: "4. Jainism and Buddhism", url: "#" },
-        { name: "5. Mahajanpadas", url: "#" },
-        { name: "6. Maurya Dynasty", url: "#" },
-        { name: "7. Post-Maurya Dynasties", url: "#" },
-        { name: "8. Gupta Dynasty", url: "#" },
-        { name: "9. Post-Gupta Dynasties", url: "#" },
-        { name: "10. Sangam Age", url: "#" },
-        { name: "11. Tripartite Struggle and Cholas", url: "#" },
-      ],
-      2: [
-        { name: "1. Delhi Sultanate", url: "#" },
-        { name: "2. Vijayanagara and Bahmani Kingdom", url: "#" },
-        { name: "3. Mughal Empire", url: "#" },
-        { name: "4. Marathas", url: "#" },
-        { name: "5. Bhakti and Sufi Movements", url: "#" },
-      ],
-      3: [
-        { name: "1. Advent of Europeans", url: "#" },
-        { name: "2. Socio-Religious Reforms", url: "#" },
-        { name: "3. Revolt of 1857", url: "#" },
-        { name: "4. Indian National Congress", url: "#" },
-        { name: "5. Bengal Partition", url: "#" },
-        { name: "6. Gandhian Era", url: "#" },
-        { name: "7. CDM and Simon Commission", url: "#" },
-        { name: "8. Quit India Movement", url: "#" },
-        { name: "9. Governor-General and Viceroy", url: "#" },
-      ],
-      4: [
-        { name: "1. Making of Constitution", url: "#" },
-        { name: "2. Salient Features of the Constitution", url: "#" },
-        { name: "3. Preamble", url: "#" },
-        { name: "4. Part 1 and Part 2 of the Constitution", url: "#" },
-        { name: "5. Fundamental Rights", url: "#" },
-        { name: "6. DPSP and Fundamental Duties", url: "#" },
-        { name: "7. President and Vice President of India", url: "#" },
-        { name: "8. Prime Minister and Council of Ministers", url: "#" },
-        { name: "9. Parliament", url: "#" },
-        { name: "10. State Legislature", url: "#" },
-        { name: "11. Emergency & Constitutional Amendment", url: "#" },
-        { name: "12. Supreme Court and High Court", url: "#" },
-        { name: "13. Local Government", url: "#" },
-        { name: "14. Constitutional and Non-Constitutional Bodies", url: "#" },
-        { name: "15. Important Acts", url: "#" },
-        { name: "16. Sources of the Indian Constitution", url: "#" },
-      ],
-      5: [
-        { name: "1. Basics of Economy", url: "#" },
-        { name: "2. Demand and Supply", url: "#" },
-        { name: "3. National Income", url: "#" },
-        { name: "4. Inflation and Unemployment", url: "#" },
-        { name: "5. Budget and Taxation", url: "#" },
-        { name: "6. Monetary Policy", url: "#" },
-        { name: "7. Money and Banking", url: "#" },
-        { name: "8. Balance of Payment and Poverty", url: "#" },
-        { name: "9. Five Year Plan and Industrial Policy Resolution", url: "#" },
-      ],
-      6: [
-        { name: "1. Motion", url: "#" },
-        { name: "2. Force and Laws of Motion", url: "#" },
-        { name: "3. Gravitation and Work Done", url: "#" },
-        { name: "4. Sound", url: "#" },
-        { name: "5. Reflection and Refraction", url: "#" },
-        { name: "6. Human Eye and Vision", url: "#" },
-        { name: "7. Electricity", url: "#" },
-        { name: "8. Magnetic Effect of Electric Current", url: "#" },
-      ],
-      7: [
-        { name: "1. Matter", url: "#" },
-        { name: "2. Atom and Its Structure", url: "#" },
-        { name: "3. Periodic Table", url: "#" },
-        { name: "4. Chemical Reactions", url: "#" },
-        { name: "5. Metals and Non-Metals", url: "#" },
-        { name: "6. Acid, Base and Salt", url: "#" },
-        { name: "7. Carbon and Its Compounds", url: "#" },
-      ],
-      8: [
-        { name: "1. Cell", url: "#" },
-        { name: "2. Animal Tissues", url: "#" },
-        { name: "3. Plant Tissues", url: "#" },
-        { name: "4. Plant Kingdom", url: "#" },
-        { name: "5. Animal Kingdom", url: "#" },
-        { name: "6. Nervous System", url: "#" },
-        { name: "7. Hormones and Movement in Plants", url: "#" },
-        { name: "8. Reproduction", url: "#" },
-        { name: "9. Digestive System and Respiration", url: "#" },
-        { name: "10. Circulatory and Excretory System", url: "#" },
-        { name: "11. Nutrition", url: "#" },
-        { name: "12. Diseases", url: "#" },
-        { name: "13. Genetics and Skeletal System", url: "#" }
-      ]
-
-      ,
-      9: [
-        { name: "1. Basics of Environmental Sciences", url: "#" },
-        { name: "2. Ecosystem", url: "#" },
-        { name: "3. Trophic Dynamics and Energy Transfer", url: "#" },
-        { name: "4. Biogeochemical Cycles", url: "#" },
-        { name: "5. Environmental Conventions", url: "#" },
-      ],
-      10: [
-        { name: "1. Classical Dance", url: "#" },
-        { name: "2. Folk Dances of India", url: "#" },
-        { name: "3. Census", url: "#" },
-        { name: "4. Musical Instruments", url: "#" },
-        { name: "5. Gharanas", url: "#" },
-        { name: "6. Important Days", url: "#" },
-        { name: "7. Books and Authors", url: "#" },
-        { name: "8. Sports", url: "#" },
-        { name: "9. International Organisations", url: "#" },
-        { name: "10. National Organisations", url: "#" },
-        { name: "11. Festivals of India", url: "#" },
-        { name: "12. Government Schemes", url: "#" },
-        { name: "13. Awards and Honours", url: "#" },
-      ],
-      11: [
-        { name: "1. Set1 Vocab Words", url: "#" },
-        { name: "2. Set2 Vocab Words", url: "#" },
-        { name: "3. Set3 Vocab Words", url: "#" },
-        { name: "4. Set4 Vocab Words", url: "#" },
-        { name: "5. Set5 Vocab Words", url: "#" },
-        { name: "6. Set6 Vocab Words", url: "#" },
-        { name: "7. Set7 Vocab Words", url: "#" },
-        { name: "8. Set8 Vocab Words", url: "#" },
-        { name: "9. Set9 Vocab Words", url: "#" },
-        { name: "10. Set10 Vocab Words", url: "#" },
-        { name: "11. Set11 Vocab Words", url: "#" },
-        { name: "12. Set12 Vocab Words", url: "#" },
-        { name: "13. Set13 Vocab Words", url: "#" },
-      ],
-      12: [
-        { name: "1. Introduction of Computer", url: "#" },
-        { name: "2. History of Computer", url: "#" },
-        { name: "3. Generation of Computer", url: "#" },
-        { name: "4. Computer Hardware and Software", url: "#" },
-        { name: "5. Computer Memory", url: "#" },
-        { name: "6. Memory Unit", url: "#" },
-        { name: "7. Types of Computer", url: "#" },
-        { name: "8. Input and Output Device", url: "#" },
-        { name: "9. Computer Architecture and Components", url: "#" },
-        { name: "10. Types of Operating System and Its Functions", url: "#" },
-        { name: "11. Logic Gates and Boolean Operations", url: "#" },
-        { name: "12. Basics of Combinatorial Components", url: "#" },
-        { name: "13. Number System", url: "#" },
-        { name: "14. Programming Languages", url: "#" },
-        { name: "15. Database Management System", url: "#" },
-        { name: "16. Computer Network and Its Types", url: "#" },
-        { name: "17. Computer Network Topology", url: "#" },
-        { name: "18. Transmission Modes", url: "#" },
-        { name: "19. OSI Model", url: "#" },
-        { name: "20. Computer Security", url: "#" },
-        { name: "21. Fathers and Inventors of Computer Field", url: "#" },
-        { name: "22. Shortcut Keys", url: "#" },
-        { name: "23. Definitions and Terminologies", url: "#" },
-        { name: "24. Extension", url: "#" },
-        { name: "25. Abbreviations", url: "#" },
-      ],
-      13: [
-        { name: "1. January Current Affairs", url: "#" },
-        { name: "2. February Current Affairs", url: "#" },
-        { name: "3. March Current Affairs", url: "#" },
-        { name: "4. April Current Affairs", url: "#" },
-        { name: "5. May Current Affairs", url: "#" },
-        { name: "6. June Current Affairs", url: "#" },
-        { name: "7. July Current Affairs", url: "#" },
-        { name: "8. August Current Affairs", url: "#" },
-        { name: "9. September Current Affairs", url: "#" },
-        { name: "10. October Current Affairs", url: "#" },
-        { name: "11. November Current Affairs", url: "#" },
-        { name: "12. December Current Affairs", url: "#" },
-        { name: "13. Speedy January Current Affairs", url: "#" },
-        { name: "14. Speedy February Current Affairs", url: "#" },
-        { name: "15. Speedy March Current Affairs", url: "#" },
-        { name: "16. Speedy April Current Affairs", url: "#" },
-        { name: "17. Speedy May Current Affairs", url: "#" },
-        { name: "18. Speedy June Current Affairs", url: "#" },
-        { name: "19. Speedy July Current Affairs", url: "#" },
-        { name: "20. Speedy August Current Affairs", url: "#" },
-        { name: "21. Speedy September Current Affairs", url: "#" },
-        { name: "22. Speedy October Current Affairs", url: "#" },
-        { name: "23. Speedy November Current Affairs", url: "#" },
-        { name: "24. Speedy December Current Affairs", url: "#" },
-      ]
-    };
-
-    // File prefixes for each topic index
-    const topicPrefixes = [
-      "geo",  // 0
-      "anc",  // 1
-      "med",  // 2
-      "mod",  // 3
-      "pol",  // 4
-      "eco",  // 5
-      "phy",  // 6
-      "che",  // 7
-      "bio",  // 8
-      "env",  // 9
-      "gk",   // 10
-      "eng",  // 11
-      "comp", // 12
-      "ca"    // 13
-    ];
-
-    const mainPage = document.getElementById('mainPage');
-    const subPage = document.getElementById('subPage');
-    const topicName = document.getElementById('topicName');
-    const subButtons = document.getElementById('subButtons');
-    const testPage = document.getElementById('testPage');
 
     function openSubPage(index) {
       mainPage.style.animation = "fadeOut 0.5s forwards";
@@ -2459,54 +2228,60 @@
     }
 
   </script>
-  
+
   <script>
-  function openMainSubject(mainIndex) {
+    function openMainSubject(mainIndex) {
 
-    const subjectMap = {
-      0: [],                             // General Intelligence & Reasoning (no topics yet)
-      1: [0,1,2,3,4,5,8,9,10,13],         // General Awareness
-      2: [],                             // Quantitative Aptitude (no maths yet)
-      3: [11]                            // English Comprehension
-    };
+      const subjectMap = {
+        0: [],                       // General Intelligence & Reasoning
+        1: [0, 1, 2, 3, 4, 5, 8, 9, 10, 13], // General Awareness
+        2: [],                       // Quantitative Aptitude
+        3: [11],                     // English Comprehension
+        4: [12],                     // Computer Awareness
+        5: [14]                      // Others
+      };
 
-    const titles = [
-      "General Intelligence & Reasoning",
-      "General Awareness",
-      "Quantitative Aptitude",
-      "English Comprehension"
-    ];
 
-    mainPage.style.animation = "fadeOut 0.5s forwards";
-    setTimeout(() => {
-      mainPage.classList.add("hidden");
-      subPage.classList.remove("hidden");
-      subPage.style.animation = "fadeIn 0.5s forwards";
-    }, 400);
+      const titles = [
+        "General Intelligence & Reasoning",
+        "General Awareness",
+        "Quantitative Aptitude",
+        "English Comprehension",
+        "Computer Awareness",
+        "Others"
+      ];
 
-    topicName.textContent = titles[mainIndex];
-    subButtons.innerHTML = "";
 
-    // If no topics available
-    if (subjectMap[mainIndex].length === 0) {
-      const info = document.createElement("div");
-      info.style.color = "#e4f3ff";
-      info.style.fontWeight = "600";
-      info.style.textAlign = "center";
-      info.innerText = "Topics will be added soon.";
-      subButtons.appendChild(info);
-      return;
+      mainPage.style.animation = "fadeOut 0.5s forwards";
+      setTimeout(() => {
+        mainPage.classList.add("hidden");
+        subPage.classList.remove("hidden");
+        subPage.style.animation = "fadeIn 0.5s forwards";
+      }, 400);
+
+      topicName.textContent = titles[mainIndex];
+      subButtons.innerHTML = "";
+
+      // If no topics available
+      if (subjectMap[mainIndex].length === 0) {
+        const info = document.createElement("div");
+        info.style.color = "#e4f3ff";
+        info.style.fontWeight = "600";
+        info.style.textAlign = "center";
+        info.innerText = "Topics will be added soon.";
+        subButtons.appendChild(info);
+        return;
+      }
+
+      subjectMap[mainIndex].forEach(idx => {
+        const btn = document.createElement("button");
+        btn.className = "btn-glass";
+        btn.textContent = topics[idx];
+        btn.onclick = () => openSubPage(idx);
+        subButtons.appendChild(btn);
+      });
     }
-
-    subjectMap[mainIndex].forEach(idx => {
-      const btn = document.createElement("button");
-      btn.className = "btn-glass";
-      btn.textContent = topics[idx];
-      btn.onclick = () => openSubPage(idx);
-      subButtons.appendChild(btn);
-    });
-  }
-</script>
+  </script>
 
 
 
@@ -2561,6 +2336,88 @@
 
   </script>
 
+  <script src="portalData.js"></script>
+
+  <script>
+    const mainPage = document.getElementById("mainPage");
+    const subPage = document.getElementById("subPage");
+    const testPage = document.getElementById("testPage");
+    const topicName = document.getElementById("topicName");
+    const subButtons = document.getElementById("subButtons");
+
+    let currentSubject = null;
+    let currentTopic = null;
+
+    // STEP 1: OPEN SUBJECT → SHOW TOPICS
+    function openMainSubject(index) {
+      currentSubject = PORTAL_DATA[index];
+
+      mainPage.classList.add("hidden");
+      subPage.classList.remove("hidden");
+
+      topicName.textContent = currentSubject.title;
+      subButtons.innerHTML = "";
+
+      currentSubject.topics.forEach((topic, tIndex) => {
+        const btn = document.createElement("button");
+        btn.className = "btn-glass";
+        btn.textContent = topic.name;
+        btn.onclick = () => openTopic(tIndex);
+        subButtons.appendChild(btn);
+      });
+    }
+
+    // STEP 2: OPEN TOPIC → SHOW SUBTOPICS
+    function openTopic(topicIndex) {
+      currentTopic = currentSubject.topics[topicIndex];
+      topicName.textContent = currentTopic.name;
+      subButtons.innerHTML = "";
+
+      currentTopic.subtopics.forEach(sub => {
+        const btn = document.createElement("button");
+        btn.className = "btn-glass";
+        btn.textContent = sub.name;
+        btn.onclick = () => openSubtopic(sub);
+        subButtons.appendChild(btn);
+      });
+    }
+
+    // STEP 3: OPEN SUBTOPIC → LOAD SINGLE JS FILE
+    function openSubtopic(sub) {
+      mainPage.classList.add("hidden");
+      subPage.classList.add("hidden");
+      testPage.classList.remove("hidden");
+
+      document.getElementById("testTitle").textContent = sub.name;
+
+      // clear old data
+      window.questions = {};
+      window.explanations = {};
+
+      const old = document.getElementById("dynamicTestFile");
+      if (old) old.remove();
+
+      const script = document.createElement("script");
+      script.src = `tests/${sub.file}.js`;
+      script.id = "dynamicTestFile";
+
+      script.onload = () => {
+        initMockEngine(); // YOUR EXISTING FUNCTION
+      };
+
+      script.onerror = () => {
+        alert("Test file not found: " + script.src);
+      };
+
+      document.body.appendChild(script);
+    }
+
+    // BACK BUTTON (ONE LEVEL ONLY)
+    function goBack() {
+      subPage.classList.add("hidden");
+      mainPage.classList.remove("hidden");
+    }
+  </script>
 
 </body>
 
