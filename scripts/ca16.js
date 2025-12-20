@@ -28,13 +28,13 @@ const questions={
   },
  5: {
     text: "Who assumed charge as the new Chairman of the Pension Fund Regulatory and Development Authority (PFRDA) on April 1, 2025?",
-    options: ["Shivshankar Raman", "Deepak Mohanty", "Hemant Contractor", "Rahul Khullar"],
+    options: ["Sivasubramanian Ramann", "Deepak Mohanty", "Hemant Contractor", "Rahul Khullar"],
     correct: "1",
     image: ""
   },
  6: {
     text: "Who was appointed as the MD and CEO of SBI Card on April 1, 2025?",
-    options: ["Salila Panigrahi", "Rama Mohan Rao", "Ashwini Kumar Tewari", "Vikram Sharma"],
+    options: ["Ms. Salila Pande", "Rama Mohan Rao", "Ashwini Kumar Tewari", "Vikram Sharma"],
     correct: "1",
     image: ""
   },
