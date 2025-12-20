@@ -31,20 +31,10 @@
       padding: 0;
       min-height: 100vh;
       overflow-x: hidden;
-      animation: fadeIn 0.8s ease;
+     
     }
 
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.98);
-      }
-
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
+    
 
     /* ---------- PORTAL STYLES ---------- */
 
@@ -57,7 +47,7 @@
       padding: 30px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
       text-align: center;
-      animation: fadeIn 0.6s ease;
+      
       margin: 40px auto;
     }
 
@@ -649,7 +639,88 @@
   transform: scale(1.12);
 }
 
+/* ===============================
+   BEAUTIFUL LANDING PAGE ONLY
+   (NON-BLUE COLOR THEME)
+================================ */
 
+.landing-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #ff7a18, #ff3d81, #7f5cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 35px;
+}
+
+.landing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+.subject-card {
+  position: relative;
+  padding: 26px 20px;
+  border-radius: 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+}
+
+/* Gradient Variants */
+.subject-card.reasoning {
+  background: linear-gradient(135deg, #7f5cff, #c77dff);
+}
+.subject-card.awareness {
+  background: linear-gradient(135deg, #ff7a18, #ffb703);
+}
+.subject-card.quant {
+  background: linear-gradient(135deg, #00b894, #55efc4);
+}
+.subject-card.english {
+  background: linear-gradient(135deg, #ff3d81, #ff6f91);
+}
+
+/* Hover Effects */
+.subject-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 0 40px rgba(255,255,255,0.25);
+}
+
+/* Glow ripple */
+.subject-card::after {
+  content: "";
+  position: absolute;
+  inset: -60%;
+  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.subject-card:hover::after {
+  opacity: 1;
+}
+
+  
+  /* FIX: sub page grid visibility */
+#subPage .grid {
+  margin-top: 25px;
+}
+
+#subPage {
+  min-height: 60vh;
+}
+
+  
+  
   </style>
 </head>
 
@@ -659,37 +730,41 @@
 
   <!-- ========== PORTAL MAIN PAGE ========== -->
   <div class="card-main" id="mainPage">
-    <h1>Mock Portal</h1>
-    <div class="grid">
-      <button class="btn-glass" onclick="openSubPage(0)">GEOGRAPHY</button>
-      <button class="btn-glass" onclick="openSubPage(1)">ANCIENT HISTORY</button>
-      <button class="btn-glass" onclick="openSubPage(2)">MEDIEVAL HISTORY</button>
-      <button class="btn-glass" onclick="openSubPage(3)">MODERN HISTORY</button>
-      <button class="btn-glass" onclick="openSubPage(4)">POLITY</button>
-      <button class="btn-glass" onclick="openSubPage(5)">ECONOMICS</button>
-      <button class="btn-glass" onclick="openSubPage(6)">PHYSICS</button>
-      <button class="btn-glass" onclick="openSubPage(7)">CHEMISTRY</button>
-      <button class="btn-glass" onclick="openSubPage(8)">BIOLOGY</button>
-      <button class="btn-glass" onclick="openSubPage(9)">ENVIRONMENT</button>
-      <button class="btn-glass" onclick="openSubPage(10)">STATIC GK</button>
-      <button class="btn-glass" onclick="openSubPage(11)">ENGLISH</button>
-      <button class="btn-glass" onclick="openSubPage(12)">COMPUTER AWARENESS</button>
-      <button class="btn-glass" onclick="openSubPage(13)">CURRENT AFFAIRS</button>
-    </div>
-  </div>
+  <h1 class="landing-title"> MOCK PORTAL</h1>
 
-  <!-- ========== PORTAL SUB PAGE (CHAPTERS) ========== -->
-  <div class="card-main hidden" id="subPage">
-    <button class="back-btn" onclick="goBack()">← Back</button>
-    <h2 id="topicName"></h2>
-    <div class="grid" id="subButtons"></div>
+  <div class="landing-grid">
+    <button class="subject-card reasoning" onclick="openMainSubject(0)">
+      🧠<br>General Intelligence<br>& Reasoning
+    </button>
+
+    <button class="subject-card awareness" onclick="openMainSubject(1)">
+      🌍<br>General Awareness
+    </button>
+
+    <button class="subject-card quant" onclick="openMainSubject(2)">
+      📊<br>Quantitative Aptitude
+    </button>
+
+    <button class="subject-card english" onclick="openMainSubject(3)">
+      📖<br>English Comprehension
+    </button>
   </div>
+</div>   <!-- ✅ THIS WAS MISSING -->
+
+
+<!-- ========== PORTAL SUB PAGE (CHAPTERS) ========== -->
+<div class="card-main hidden" id="subPage">
+  <button class="back-btn" onclick="goBack()">← Back To Portal</button>
+  <h2 id="topicName"></h2>
+  <div class="grid" id="subButtons"></div>
+</div>
+
 
   <!-- ========== TEST PAGE (MOCK ENGINE) ========== -->
   <div id="testPage" class="hidden">
     <div class="container py-4">
       <div class="topbar mb-3">
-        <button id="backToPortalBtn" class="btn btn-outline-light">← Back to Portal</button>
+        <button id="backToPortalBtn" class="btn btn-outline-light">← Back</button>
         <div class="text-end">
           <div id="timer">00:00</div>
         </div>
@@ -1186,7 +1261,7 @@
       "BIOLOGY",
       "ENVIRONMENT",
       "STATIC GK",
-      "ENGLISH",
+      "ENGLISH VOCABULARY",
       "COMPUTER AWARENESS",
       "CURRENT AFFAIRS"
     ];
@@ -1426,40 +1501,56 @@
     const topicName = document.getElementById('topicName');
     const subButtons = document.getElementById('subButtons');
     const testPage = document.getElementById('testPage');
+  let currentView = "main"; 
+// main | sub | test
+
 
     function openSubPage(index) {
-      mainPage.style.animation = "fadeOut 0.5s forwards";
-      setTimeout(() => {
-        mainPage.classList.add('hidden');
-        subPage.classList.remove('hidden');
-        subPage.style.animation = "fadeIn 0.5s forwards";
-      }, 400);
+  currentView = "sub";
 
-      topicName.textContent = topics[index];
-      subButtons.innerHTML = '';
+  mainPage.classList.add('hidden');
+  subPage.classList.remove('hidden');
 
-      (links[index] || []).forEach((item, chapterIdx) => {
-        const btn = document.createElement('button');
-        btn.className = 'btn-glass';
-        btn.textContent = item.name;
-        btn.onclick = () => openTestForChapter(index, chapterIdx, item);
-        subButtons.appendChild(btn);
-      });
-    }
+  topicName.textContent = topics[index];
+  subButtons.innerHTML = '';
+
+  (links[index] || []).forEach((item, chapterIdx) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn-glass';
+    btn.textContent = item.name;
+    btn.onclick = () => openTestForChapter(index, chapterIdx, item);
+    subButtons.appendChild(btn);
+  });
+}
+
 
     function goBack() {
-      subPage.style.animation = "fadeOut 0.5s forwards";
-      setTimeout(() => {
-        subPage.classList.add('hidden');
-        mainPage.classList.remove('hidden');
-        mainPage.style.animation = "fadeIn 0.5s forwards";
-      }, 400);
-    }
 
-    // Back from test → easiest is reload page
+  // If currently on chapter list → go to landing page
+  if (currentView === "sub") {
+    subPage.style.animation = "fadeOut 0.4s forwards";
+    setTimeout(() => {
+      subPage.classList.add("hidden");
+      mainPage.classList.remove("hidden");
+      mainPage.style.animation = "fadeIn 0.4s forwards";
+      currentView = "main";
+    }, 350);
+  }
+
+  // (future-proof: if ever used elsewhere)
+}
+
+
     document.getElementById('backToPortalBtn').addEventListener('click', () => {
-      location.reload();
-    });
+  if (currentView === "test") {
+    // Test → Chapter list
+    testPage.classList.add('hidden');
+    subPage.classList.remove('hidden');
+    subPage.style.animation = "fadeIn 0.4s forwards";
+    currentView = "sub";
+  }
+});
+
 
     function openTestForChapter(topicIndex, chapterIdx, item) {
       const prefix = topicPrefixes[topicIndex] || `t${topicIndex}`;
@@ -1473,6 +1564,8 @@
     }
 
     function loadTestForChapter(baseName, title) {
+      currentView = "test";
+
       // Hide portal, show test page
       mainPage.classList.add('hidden');
       subPage.classList.add('hidden');
@@ -1545,7 +1638,12 @@
       });
       requestAnimationFrame(animateParticles);
     }
-    animateParticles();
+    if (!document.getElementById("testPage")?.classList.contains("hidden")) {
+  // do nothing
+} else {
+  animateParticles();
+}
+
 
     // ===============================
     // GOOGLE TRANSLATE INIT (optional)
@@ -2374,6 +2472,58 @@
     }
 
   </script>
+  
+  <script>
+  function openMainSubject(mainIndex) {
+    currentView = "sub";
+
+
+    const subjectMap = {
+      0: [],                             // General Intelligence & Reasoning (no topics yet)
+      1: [0,1,2,3,4,5,8,9,10,13],         // General Awareness
+      2: [],                             // Quantitative Aptitude (no maths yet)
+      3: [11]                            // English Comprehension
+    };
+
+    const titles = [
+      "General Intelligence & Reasoning",
+      "General Awareness",
+      "Quantitative Aptitude",
+      "English Comprehension"
+    ];
+
+    mainPage.style.animation = "fadeOut 0.5s forwards";
+    setTimeout(() => {
+      mainPage.classList.add("hidden");
+      subPage.classList.remove("hidden");
+      subPage.style.animation = "fadeIn 0.5s forwards";
+    }, 400);
+
+    topicName.textContent = titles[mainIndex];
+    subButtons.innerHTML = "";
+
+    // If no topics available
+    if (subjectMap[mainIndex].length === 0) {
+      const info = document.createElement("div");
+      info.style.color = "#e4f3ff";
+      info.style.fontWeight = "600";
+      info.style.textAlign = "center";
+      info.innerText = "Topics will be added soon.";
+      subButtons.appendChild(info);
+      return;
+    }
+
+    subjectMap[mainIndex].forEach(idx => {
+      const btn = document.createElement("button");
+      btn.className = "btn-glass";
+      btn.textContent = topics[idx];
+      btn.onclick = () => openSubPage(idx);
+      subButtons.appendChild(btn);
+    });
+  }
+</script>
+
+
 
   <!-- Custom Popup Modal -->
   <div class="modal fade" id="customPopup" tabindex="-1">
