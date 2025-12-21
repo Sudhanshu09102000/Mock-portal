@@ -252,9 +252,11 @@ const PORTAL_DATA = [
           { name: "Set 10", file: "vocabulary-set-10" },
           { name: "Set 11", file: "vocabulary-set-11" },
           { name: "Set 12", file: "vocabulary-set-12" },
-          { name: "Set 13", file: "vocabulary-set-13" }
+          { name: "Set 13", file: "vocabulary-set-13" },
+          { name: "Set 14", file: "vocabulary-set-14" },
         ]
-      },
+      }
+,
     
     {
         name: "Idioms",
@@ -319,3 +321,4 @@ const PORTAL_DATA = [
   }
 
 ];
+
