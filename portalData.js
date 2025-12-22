@@ -252,18 +252,23 @@ const PORTAL_DATA = [
           { name: "Set 10", file: "vocabulary-set-10" },
           { name: "Set 11", file: "vocabulary-set-11" },
           { name: "Set 12", file: "vocabulary-set-12" },
-          { name: "Set 13", file: "vocabulary-set-13" },
-          { name: "Set 14", file: "vocabulary-set-14" },
+          { name: "Set 13", file: "vocabulary-set-13" }
         ]
-      }
-,
-    
-    {
+      },
+
+      {
         name: "Idioms",
         subtopics: [
           { name: "Idioms Set 1", file: "Idioms-set-1" },
-      ]
-      }
+        ]
+      },
+
+      {
+        name: "Phrasal Verbs",
+        subtopics: [
+          { name: "Phrasal Verbs Set 1", file: "phrasal-verbs-set-1" },
+        ]
+      },
 
     ]
   },
@@ -273,35 +278,35 @@ const PORTAL_DATA = [
     colorClass: "computer",
     topics: [
       {
-  name: "Basics to Advanced Computer Knowledge",
-  subtopics: [
-    { name: "Introduction of Computer", file: "introduction-of-computer" },
-    { name: "History of Computer", file: "history-of-computer" },
-    { name: "Generation of Computer", file: "generation-of-computer" },
-    { name: "Computer Hardware and Software", file: "computer-hardware-software" },
-    { name: "Computer Memory", file: "computer-memory" },
-    { name: "Memory Unit", file: "memory-unit" },
-    { name: "Types of Computer", file: "types-of-computer" },
-    { name: "Input and Output Device", file: "input-output-device" },
-    { name: "Computer Architecture and Components", file: "computer-architecture-components" },
-    { name: "Types of Operating System and Its Functions", file: "operating-system-functions" },
-    { name: "Logic Gates and Boolean Operations", file: "logic-gates-boolean-operations" },
-    { name: "Basics of Combinatorial Components", file: "combinatorial-components" },
-    { name: "Number System", file: "number-system" },
-    { name: "Programming Languages", file: "programming-languages" },
-    { name: "Database Management System", file: "database-management-system" },
-    { name: "Computer Network and Its Types", file: "computer-network-types" },
-    { name: "Computer Network Topology", file: "computer-network-topology" },
-    { name: "Transmission Modes", file: "transmission-modes" },
-    { name: "OSI Model", file: "osi-model" },
-    { name: "Computer Security", file: "computer-security" },
-    { name: "Fathers and Inventors of Computer Field", file: "fathers-inventors-computer" },
-    { name: "Shortcut Keys", file: "shortcut-keys" },
-    { name: "Definitions and Terminologies", file: "definitions-terminologies" },
-    { name: "Extension", file: "extension" },
-    { name: "Abbreviations", file: "abbreviations" }
-  ]
-}
+        name: "Basics to Advanced Computer Knowledge",
+        subtopics: [
+          { name: "Introduction of Computer", file: "introduction-of-computer" },
+          { name: "History of Computer", file: "history-of-computer" },
+          { name: "Generation of Computer", file: "generation-of-computer" },
+          { name: "Computer Hardware and Software", file: "computer-hardware-software" },
+          { name: "Computer Memory", file: "computer-memory" },
+          { name: "Memory Unit", file: "memory-unit" },
+          { name: "Types of Computer", file: "types-of-computer" },
+          { name: "Input and Output Device", file: "input-output-device" },
+          { name: "Computer Architecture and Components", file: "computer-architecture-components" },
+          { name: "Types of Operating System and Its Functions", file: "operating-system-functions" },
+          { name: "Logic Gates and Boolean Operations", file: "logic-gates-boolean-operations" },
+          { name: "Basics of Combinatorial Components", file: "combinatorial-components" },
+          { name: "Number System", file: "number-system" },
+          { name: "Programming Languages", file: "programming-languages" },
+          { name: "Database Management System", file: "database-management-system" },
+          { name: "Computer Network and Its Types", file: "computer-network-types" },
+          { name: "Computer Network Topology", file: "computer-network-topology" },
+          { name: "Transmission Modes", file: "transmission-modes" },
+          { name: "OSI Model", file: "osi-model" },
+          { name: "Computer Security", file: "computer-security" },
+          { name: "Fathers and Inventors of Computer Field", file: "fathers-inventors-computer" },
+          { name: "Shortcut Keys", file: "shortcut-keys" },
+          { name: "Definitions and Terminologies", file: "definitions-terminologies" },
+          { name: "Extension", file: "extension" },
+          { name: "Abbreviations", file: "abbreviations" }
+        ]
+      }
 
     ]
   },
@@ -321,4 +326,3 @@ const PORTAL_DATA = [
   }
 
 ];
-
