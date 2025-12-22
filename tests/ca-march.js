@@ -5,7 +5,7 @@ const questions={
 
 1: {
   text: "Who took charge as the 11th chairman of the capital market regulator Securities and Exchange Board of India (SEBI) on March 1, 2025",
-  options: ["Tuhin Kant Pandey", "Ajay Seth", "Rajiv Kumar", "Mayank Sharma"],
+  options: ["Tuhin Kanta Pandey", "Ajay Seth", "Rajiv Kumar", "Mayank Sharma"],
   correct: "1",
   image: ""
 },
@@ -1458,7 +1458,7 @@ const explanations={
    EXPLANATIONS ARRAY (1–40)
    ========================= */
 
-1: { text: "<b>SEBI leadership</b><br>Tuhin Kant Pandey took charge as the 11th chairman of SEBI on March 1, 2025.", image: "" },
+1: { text: "<b>SEBI leadership</b><br>Tuhin Kanta Pandey took charge as the 11th chairman of SEBI on March 1, 2025.", image: "" },
 2: { text: "<b>Uruguay presidency</b><br>Yamandu Orsi assumed office as the 43rd President of Uruguay on March 1, 2025.", image: "" },
 3: { text: "<b>Defence accounts</b><br>Mayank Sharma became the Controller General of Defence Accounts on March 1, 2025.", image: "" },
 4: { text: "<b>Bar Council leadership</b><br>Manan Kumar Mishra was elected President of the Bar Council of India for the seventh consecutive time.", image: "" },
@@ -1705,4 +1705,5 @@ const explanations={
 
 
 }
+
 
