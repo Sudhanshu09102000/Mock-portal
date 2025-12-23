@@ -284,13 +284,13 @@ image: ''
 },
 48: {
 text: "The coach managed to _____ the best players for the championship team.",
-options: ["rope in", "dress down", "bottle up", " set down"],
+options: ["rope in", "dress down", "bottle up"],
 correct: "1",
 image: ''
 },
 49: {
 text: "You shouldn't _____ your anger; it will only cause problems later.",
-options: ["bottle up", "rope in", "dress down", " cut in"],
+options: ["bottle up", "rope in", "dress down"],
 correct: "1",
 image: ''
 }
@@ -306,209 +306,255 @@ image: ''
 }
 
 const explanations={
-  // Explanations Format
-1: {
-text: "Siphon off means to divert or steal money dishonestly, often from public funds for personal gain. This phrasal verb commonly describes corrupt financial practices. Pick on means to bully, stave off means to prevent or delay, pass away means to die.",
+
+  1: {
+text: "<b>siphon off</b> means to divert or steal money dishonestly, often from public funds.<br><b>pick on</b> means to bully or unfairly criticize someone.<br><b>stave off</b> means to prevent or delay something undesirable.<br><b>pass away</b> means to die.",
 image: ""
 },
+
 2: {
-text: "Pick on means to bully or criticize someone unfairly, especially repeatedly targeting weaker individuals. This describes workplace or school harassment behavior. Siphon off refers to stealing money, stave off means preventing something bad, pass away means dying.",
+text: "<b>pick on</b> means to bully or target someone unfairly, often repeatedly.<br><b>siphon off</b> means to steal money secretly.<br><b>stave off</b> means to delay or prevent something bad.<br><b>pass away</b> means to die.",
 image: ""
 },
+
 3: {
-text: "Stave off means to prevent something undesirable from happening or delay its occurrence, often using medicine or preventive measures. Commonly used for averting crises or illnesses. Pick on means bullying, siphon off means stealing money, pass away means dying.",
+text: "<b>stave off</b> means to prevent or delay an unwanted event.<br><b>pick on</b> means to bully someone.<br><b>siphon off</b> means to divert funds dishonestly.<br><b>pass away</b> means to die.",
 image: ""
 },
+
 4: {
-text: "Pass away is a polite euphemism meaning to die peacefully or naturally. Often used in formal announcements or obituaries. Siphon off means stealing money, pick on means bullying, stave off means preventing.",
+text: "<b>pass away</b> means to die, used as a polite or formal expression.<br><b>siphon off</b> means to steal money secretly.<br><b>pick on</b> means to bully.<br><b>stave off</b> means to prevent or delay.",
 image: ""
 },
+
 5: {
-text: "Teem with means to be completely filled with or overflowing with something, often living creatures or abundant items. Describes crowded or plentiful conditions. Buckle down means work hard, tide over means temporary help, back out means withdraw.",
+text: "<b>teem with</b> means to be full of or overflowing with something.<br><b>buckle down</b> means to work seriously and hard.<br><b>tide over</b> means to help temporarily during difficulty.<br><b>back out</b> means to withdraw from an agreement.",
 image: ""
 },
+
 6: {
-text: "Buckle down means to start working seriously and with determination, often before important deadlines or challenges. Commonly used for students or professionals. Teem with means be full of, tide over means temporary support, back out means withdraw.",
+text: "<b>buckle down</b> means to start working with determination.<br><b>teem with</b> means to be full of.<br><b>tide over</b> means to give temporary support.<br><b>back out</b> means to withdraw from a commitment.",
 image: ""
 },
+
 7: {
-text: "Tide over means to help someone through a difficult period temporarily, often with financial assistance. Describes short-term support solutions. Buckle down means work hard, teem with means full of, back out means withdraw.",
+text: "<b>tide over</b> means to help someone through a difficult time temporarily.<br><b>buckle down</b> means to work hard.<br><b>teem with</b> means to be full of.<br><b>back out</b> means to withdraw.",
 image: ""
 },
+
 8: {
-text: "Back out means to withdraw from a commitment or agreement, especially at the last moment. Often used negatively for unreliability. Tide over means temporary help, buckle down means work hard, teem with means full of.",
+text: "<b>back out</b> means to withdraw from an agreement at the last moment.<br><b>tide over</b> means to help temporarily.<br><b>buckle down</b> means to work seriously.<br><b>teem with</b> means to be full of.",
 image: ""
 },
+
 9: {
-text: "Jot down means to write something quickly and briefly, often notes or reminders. Used for capturing important information hurriedly. Weigh in on means give opinion, hold up means delay, die down means decrease.",
+text: "<b>jot down</b> means to write briefly or quickly.<br><b>weigh in on</b> means to give an opinion.<br><b>hold up</b> means to delay.<br><b>die down</b> means to decrease gradually.",
 image: ""
 },
+
 10: {
-text: "Weigh in on means to give one's opinion or judgment on a particular matter, often as an expert. Commonly used in debates or discussions. Jot down means quick notes, hold up means delay, die down means subside.",
+text: "<b>weigh in on</b> means to express an opinion on an issue.<br><b>jot down</b> means to write quickly.<br><b>hold up</b> means to delay progress.<br><b>die down</b> means to become less intense.",
 image: ""
 },
+
 11: {
-text: "Hold up means to cause a delay or prevent progress, often due to traffic, problems, or obstacles. Describes frustrating interruptions. Die down means decrease, die out means disappear completely, set off means start journey.",
+text: "<b>hold up</b> means to cause delay or obstruction.<br><b>die down</b> means to reduce gradually.<br><b>die out</b> means to disappear completely.<br><b>set off</b> means to begin a journey or trigger something.",
 image: ""
 },
+
 12: {
-text: "Die down means to become less strong or loud gradually, often referring to excitement, controversy, or noise. Describes fading intensity. Hold up means delay, die out means extinction, set off means trigger.",
+text: "<b>die down</b> means to become less strong over time.<br><b>hold up</b> means to delay.<br><b>die out</b> means to become extinct.<br><b>set off</b> means to trigger or start.",
 image: ""
 },
+
 13: {
-text: "Die out means to disappear or cease to exist completely, often referring to species, languages, or customs. Describes total extinction. Die down means decrease gradually, set off means start, set in means begin.",
+text: "<b>die out</b> means to disappear completely.<br><b>die down</b> means to decrease gradually.<br><b>set off</b> means to start or trigger.<br><b>set in</b> means to begin and continue.",
 image: ""
 },
+
 14: {
-text: "Set off means to start a journey or trip, or to cause something to happen suddenly, like alarms or panic. Describes triggering events. Set in means become established, let off means release, look down upon means despise.",
+text: "<b>set off</b> means to start a journey or trigger an event.<br><b>set in</b> means to begin and become established.<br><b>let off</b> means to excuse from punishment.<br><b>look down upon</b> means to consider inferior.",
 image: ""
 },
+
 15: {
-text: "Set in means to begin or become established, often referring to weather conditions or patterns. Describes seasonal changes. Set off means start journey, let off means exempt punishment, look down upon means despise.",
+text: "<b>set in</b> means to begin or become established.<br><b>set off</b> means to start a journey.<br><b>let off</b> means to excuse punishment.<br><b>look down upon</b> means to despise.",
 image: ""
 },
+
 16: {
-text: "Let off means to give someone a lighter punishment than expected, or to release pressure/emotion. Shows leniency. Set in means begin, look down upon means despise, bring about means cause.",
+text: "<b>let off</b> means to give a lighter punishment or release pressure.<br><b>set in</b> means to begin.<br><b>look down upon</b> means to despise.<br><b>bring about</b> means to cause something.",
 image: ""
 },
+
 17: {
-text: "Look down upon means to consider someone or something as inferior or unworthy of respect. Shows arrogance or prejudice. Let off means lenient punishment, bring about means cause, by dint of means through effort.",
+text: "<b>look down upon</b> means to treat someone as inferior.<br><b>let off</b> means to excuse punishment.<br><b>bring about</b> means to cause change.<br><b>by dint of</b> means through effort.",
 image: ""
 },
+
 18: {
-text: "Bring about means to cause something to happen or change. Describes creating results or transformations. Look down upon means despise, by dint of means through effort, carry out means execute.",
+text: "<b>bring about</b> means to cause something to happen.<br><b>look down upon</b> means to despise.<br><b>by dint of</b> means through effort.<br><b>carry out</b> means to execute a task.",
 image: ""
 },
+
 19: {
-text: "By dint of means through the use of a particular method, often hard work or effort. Formal expression of achievement method. Bring about means cause, carry out means execute, break down means fail.",
+text: "<b>by dint of</b> means through hard work or effort.<br><b>bring about</b> means to cause.<br><b>carry out</b> means to perform.<br><b>break down</b> means to fail or collapse.",
 image: ""
 },
+
 20: {
-text: "Carry out means to perform or complete a task, plan, or order as instructed. Describes execution of plans. By dint of means through effort, break down means analyze or fail, cut down on means reduce.",
+text: "<b>carry out</b> means to perform or execute a task.<br><b>by dint of</b> means through effort.<br><b>break down</b> means to fail.<br><b>cut down on</b> means to reduce usage.",
 image: ""
 },
+
 21: {
-text: "Break down means to fail or stop functioning, or negotiations collapsing. Describes mechanical or communication failure. Carry out means execute, cut down on means reduce, bear away means win.",
+text: "<b>break down</b> means to stop functioning or fail.<br><b>carry out</b> means to execute.<br><b>cut down on</b> means to reduce consumption.<br><b>bear away</b> means to win.",
 image: ""
 },
+
 22: {
-text: "Cut down on means to reduce the amount consumed or used, often for health or environmental reasons. Health advice context. Break down means fail, bear away means carry off victoriously, turn out means result.",
+text: "<b>cut down on</b> means to reduce usage or intake.<br><b>break down</b> means to fail.<br><b>bear away</b> means to win.<br><b>turn out</b> means to result.",
 image: ""
 },
+
 23: {
-text: "Bear away means to carry off or win something triumphantly, often prizes or trophies. Victory context. Cut down on means reduce, turn out means prove to be, live through means survive.",
+text: "<b>bear away</b> means to win or carry off something.<br><b>cut down on</b> means to reduce.<br><b>turn out</b> means to prove or result.<br><b>live through</b> means to survive.",
 image: ""
 },
+
 24: {
-text: "Turn out means to prove to be the case, or result unexpectedly, often positively. Describes surprising outcomes. Bear away means win, live through means survive, live up to means meet expectations.",
+text: "<b>turn out</b> means to prove or result in a certain way.<br><b>bear away</b> means to win.<br><b>live through</b> means to survive hardship.<br><b>live up to</b> means to meet expectations.",
 image: ""
 },
+
 25: {
-text: "Live through means to experience and survive a difficult or dangerous period or event. Describes enduring hardships. Turn out means result, live up to means fulfill expectations, take up means start hobby.",
+text: "<b>live through</b> means to experience and survive something difficult.<br><b>turn out</b> means to result.<br><b>live up to</b> means to fulfill expectations.<br><b>take up</b> means to begin an activity.",
 image: ""
 },
+
 26: {
-text: "Live up to means to meet the standards or expectations set for someone or something. Describes fulfilling promises. Live through means survive, take up means begin activity, root for means support.",
+text: "<b>live up to</b> means to meet expectations.<br><b>live through</b> means to survive.<br><b>take up</b> means to begin.<br><b>root for</b> means to support.",
 image: ""
 },
+
 27: {
-text: "Take up means to start doing a new activity or hobby regularly. Describes beginning interests. Live up to means meet expectations, root for means cheer, come across means find by chance.",
+text: "<b>take up</b> means to start a new activity.<br><b>live up to</b> means to meet expectations.<br><b>root for</b> means to cheer for.<br><b>come across</b> means to find by chance.",
 image: ""
 },
+
 28: {
-text: "Root for means to support or cheer enthusiastically for a person or team. Sports fan context. Take up means begin, come across means encounter unexpectedly, cut off means disconnect.",
+text: "<b>root for</b> means to support enthusiastically.<br><b>take up</b> means to begin.<br><b>come across</b> means to encounter unexpectedly.<br><b>cut off</b> means to disconnect.",
 image: ""
 },
+
 29: {
-text: "Come across means to find or meet someone or something by chance. Describes serendipitous discoveries. Root for means support, cut off means isolate, bring in means introduce.",
+text: "<b>come across</b> means to find or meet by chance.<br><b>root for</b> means to support.<br><b>cut off</b> means to disconnect.<br><b>bring in</b> means to introduce.",
 image: ""
 },
+
 30: {
-text: "Cut off means to disconnect or stop supplying something essential, like utilities or communication. Describes punitive actions. Come across means find accidentally, bring in means generate, take over means assume control.",
+text: "<b>cut off</b> means to disconnect supply or communication.<br><b>come across</b> means to find accidentally.<br><b>bring in</b> means to introduce.<br><b>take over</b> means to assume control.",
 image: ""
 },
+
 31: {
-text: "Bring in means to introduce new money, laws, or measures. Describes generating revenue or changes. Cut off means disconnect, take over means seize control, set up means establish.",
+text: "<b>bring in</b> means to introduce laws or revenue.<br><b>cut off</b> means to disconnect.<br><b>take over</b> means to assume control.<br><b>set up</b> means to establish.",
 image: ""
 },
+
 32: {
-text: "Take over means to assume control of something, often a business or responsibility. Corporate acquisition context. Bring in means introduce, set up means organize, with regard to means concerning.",
+text: "<b>take over</b> means to assume control.<br><b>bring in</b> means to introduce.<br><b>set up</b> means to establish.<br><b>with regard to</b> means concerning.",
 image: ""
 },
+
 33: {
-text: "Set up means to start or organize a system, business, or arrangement. Describes establishment processes. Take over means assume control, with regard to means regarding, chip in means contribute.",
+text: "<b>set up</b> means to establish or organize.<br><b>take over</b> means to assume control.<br><b>with regard to</b> means concerning.<br><b>chip in</b> means to contribute.",
 image: ""
 },
+
 34: {
-text: "With regard to means concerning or in relation to a particular matter. Formal writing expression. Set up means establish, chip in means contribute money, make off with means steal.",
+text: "<b>with regard to</b> means concerning a matter.<br><b>set up</b> means to establish.<br><b>chip in</b> means to contribute money.<br><b>make off with</b> means to steal.",
 image: ""
 },
+
 35: {
-text: "Chip in means to contribute money or help towards a shared expense or effort. Group funding context. With regard to means concerning, make off with means steal, spiff up means improve appearance.",
+text: "<b>chip in</b> means to contribute money or help.<br><b>with regard to</b> means concerning.<br><b>make off with</b> means to steal.<br><b>spiff up</b> means to improve appearance.",
 image: ""
 },
+
 36: {
-text: "Make off with means to steal something and escape quickly. Describes theft and getaway. Chip in means contribute, spiff up means smarten up, look up to means admire.",
+text: "<b>make off with</b> means to steal and escape.<br><b>chip in</b> means to contribute.<br><b>spiff up</b> means to smarten up.<br><b>look up to</b> means to admire.",
 image: ""
 },
+
 37: {
-text: "Spiff up means to make something look more attractive or smarten up. Preparation for events. Make off with means steal, look up to means respect, come down with means become ill.",
+text: "<b>spiff up</b> means to improve appearance.<br><b>make off with</b> means to steal.<br><b>look up to</b> means to respect.<br><b>come down with</b> means to become ill.",
 image: ""
 },
+
 38: {
-text: "Look up to means to respect and admire someone for their achievements or qualities. Role model context. Spiff up means improve appearance, come down with means fall ill, come up with means invent.",
+text: "<b>look up to</b> means to admire or respect.<br><b>spiff up</b> means to improve looks.<br><b>come down with</b> means to fall ill.<br><b>come up with</b> means to invent.",
 image: ""
 },
+
 39: {
-text: "Come down with means to become ill with a disease, especially suddenly. Health complaints. Look up to means admire, come up with means devise, whisk away means take quickly.",
+text: "<b>come down with</b> means to become ill.<br><b>look up to</b> means to admire.<br><b>come up with</b> means to devise.<br><b>whisk away</b> means to remove quickly.",
 image: ""
 },
+
 40: {
-text: "Come up with means to suggest or produce a new idea or solution. Brainstorming context. Come down with means become ill, whisk away means remove rapidly, cut in means interrupt.",
+text: "<b>come up with</b> means to produce an idea.<br><b>come down with</b> means to become ill.<br><b>whisk away</b> means to take quickly.<br><b>cut in</b> means to interrupt.",
 image: ""
 },
+
 41: {
-text: "Whisk away means to take or remove someone or something very quickly. Emergency rescues. Come up with means invent, cut in means interrupt conversation, live by means follow principles.",
+text: "<b>whisk away</b> means to take someone quickly.<br><b>come up with</b> means to invent.<br><b>cut in</b> means to interrupt.<br><b>live by</b> means to follow principles.",
 image: ""
 },
+
 42: {
-text: "Cut in means to interrupt someone who is speaking. Rude conversation behavior. Whisk away means take quickly, live by means abide by rules, live on means survive financially.",
+text: "<b>cut in</b> means to interrupt someone.<br><b>whisk away</b> means to remove quickly.<br><b>live by</b> means to follow rules.<br><b>live on</b> means to survive.",
 image: ""
 },
+
 43: {
-text: "Live by means to follow or adhere strictly to certain principles or beliefs. Personal philosophy. Cut in means interrupt, live on means subsist, give up means quit.",
+text: "<b>live by</b> means to follow principles.<br><b>cut in</b> means to interrupt.<br><b>live on</b> means to survive financially.<br><b>give up</b> means to quit.",
 image: ""
 },
+
 44: {
-text: "Live on means to continue to exist or survive, especially with limited resources. Financial hardship. Live by means follow principles, give up means abandon, give in means surrender.",
+text: "<b>live on</b> means to survive with limited means.<br><b>live by</b> means to follow principles.<br><b>give up</b> means to quit.<br><b>give in</b> means to surrender.",
 image: ""
 },
+
 45: {
-text: "Give up means to stop doing or having something, often bad habits. Quitting smoking context. Live on means survive, give in means yield, dress down means scold.",
+text: "<b>give up</b> means to stop doing something.<br><b>live on</b> means to survive.<br><b>give in</b> means to surrender.<br><b>dress down</b> means to scold.",
 image: ""
 },
+
 46: {
-text: "Give in means to finally agree to something after refusing or resisting. Surrendering to pressure. Give up means quit, dress down means reprimand, rope in means recruit.",
+text: "<b>give in</b> means to surrender to pressure.<br><b>give up</b> means to quit.<br><b>dress down</b> means to scold severely.<br><b>rope in</b> means to recruit.",
 image: ""
 },
+
 47: {
-text: "Dress down means to scold or reprimand someone severely. Military discipline context. Give in means surrender, rope in means persuade to join, bottle up means suppress emotions.",
+text: "<b>dress down</b> means to scold harshly.<br><b>give in</b> means to surrender.<br><b>rope in</b> means to persuade to join.<br><b>bottle up</b> means to suppress emotions.",
 image: ""
 },
+
 48: {
-text: "Rope in means to persuade someone to join or participate in an activity. Team recruitment. Dress down means scold, bottle up means repress feelings.",
+text: "<b>rope in</b> means to persuade someone to join.<br><b>dress down</b> means to scold.<br><b>bottle up</b> means to suppress emotions.<br><b>look up to</b> means to admire.",
 image: ""
 },
+
 49: {
-text: "Bottle up means to deliberately not express or show your feelings. Describes emotional suppression. Rope in means recruit, dress down means reprimand. Emotional health experts warn against bottling up feelings long-term.",
+text: "<b>bottle up</b> means to suppress feelings.<br><b>rope in</b> means to recruit.<br><b>dress down</b> means to scold.<br><b>give up</b> means to quit.",
 image: ""
-}
-,
-// Explanations Format
+},
+
 50: {
-text: "Tell upon means to have a noticeable or damaging effect on someone's health, strength, or appearance, often gradually over time. Commonly used for prolonged stress, illness, or overwork impacts. The expression originated from accounting 'tally' concept extended to personal toll.",
+text: "<b>tell upon</b> means to have a noticeable or damaging effect over time.<br><b>pass away</b> means to die.<br><b>break down</b> means to fail or collapse.<br><b>cut down on</b> means to reduce usage.",
 image: ""
 }
 
-
-}
+ }

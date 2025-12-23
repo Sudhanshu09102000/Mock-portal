@@ -354,254 +354,255 @@ image: ''
 
 
 const explanations={
-    1: {
-text: "'Tell upon' means to have a noticeable or adverse effect on something. In the sentence, long hours of study affected health. It is commonly used for negative physical or mental effects.",
+   1: {
+text: "<b>tell upon</b> means to have a noticeable or harmful effect.<br><b>nod off</b> means to fall asleep unintentionally.<br><b>beef up</b> means to strengthen or increase.<br><b>brush aside</b> means to dismiss as unimportant.",
 image: ""
 },
 
 2: {
-text: "'Nod off' means to fall asleep unintentionally, especially due to tiredness. It often occurs during lectures or while sitting quietly.",
+text: "<b>nod off</b> means to fall asleep unintentionally due to tiredness.<br><b>set about</b> means to begin doing something.<br><b>break into</b> means to enter forcibly.<br><b>give way</b> means to collapse or yield.",
 image: ""
 },
 
 3: {
-text: "'Set about' means to begin doing a task or activity. It is followed by a noun or gerund and indicates the start of action.",
+text: "<b>set about</b> means to start doing a task.<br><b>run down</b> means to criticize.<br><b>pass out</b> means to lose consciousness.<br><b>fall through</b> means to fail to happen.",
 image: ""
 },
 
 4: {
-text: "'Beef up' means to strengthen, increase, or make something more effective. It is often used for security, forces, or resources.",
+text: "<b>beef up</b> means to strengthen or make more effective.<br><b>brush aside</b> means to dismiss casually.<br><b>break out</b> means to start suddenly.<br><b>turn down</b> means to refuse.",
 image: ""
 },
 
 5: {
-text: "'Break into' means to enter a place forcibly and illegally. It is commonly associated with theft or burglary.",
+text: "<b>break into</b> means to enter illegally by force.<br><b>call on</b> means to visit someone.<br><b>fall out</b> means to quarrel.<br><b>put out</b> means to extinguish.",
 image: ""
 },
 
 6: {
-text: "'Brush aside' means to reject or dismiss something as unimportant without serious consideration.",
+text: "<b>brush aside</b> means to reject as unimportant.<br><b>bring up</b> means to mention a topic.<br><b>call at</b> means to stop briefly at a place.<br><b>lay down</b> means to establish rules.",
 image: ""
 },
 
 7: {
-text: "'Harp upon' means to talk repeatedly about the same topic, often in an annoying or excessive manner.",
+text: "<b>harp upon</b> means to talk repeatedly about something.<br><b>fizzle out</b> means to gradually fade away.<br><b>look out for</b> means to be watchful for.<br><b>run over</b> means to hit with a vehicle.",
 image: ""
 },
 
 8: {
-text: "'Crack down on' means to take strict action against illegal or unacceptable activities, usually by authorities.",
+text: "<b>crack down on</b> means to take strict action against.<br><b>put up with</b> means to tolerate.<br><b>give way</b> means to collapse or yield.<br><b>turn up</b> means to appear unexpectedly.",
 image: ""
 },
 
 9: {
-text: "'Trump up' means to invent false charges or accusations deliberately. It is commonly used in legal or political contexts.",
+text: "<b>trump up</b> means to invent false charges.<br><b>call on</b> means to visit formally.<br><b>set out</b> means to begin a journey.<br><b>take in</b> means to deceive.",
 image: ""
 },
 
 10: {
-text: "'Fall out' means to quarrel or stop being friendly due to disagreement. It often refers to personal relationships.",
+text: "<b>fall out</b> means to quarrel or stop being friendly.<br><b>run out of</b> means to have no more left.<br><b>take after</b> means to resemble someone.<br><b>look forward to</b> means to eagerly anticipate.",
 image: ""
 },
 
 11: {
-text: "'Taken in' means deceived or fooled. It is used when someone believes something false.",
+text: "<b>taken in</b> means deceived or fooled.<br><b>lay down</b> means to establish rules.<br><b>pass out</b> means to lose consciousness.<br><b>turn up</b> means to arrive unexpectedly.",
 image: ""
 },
 
 12: {
-text: "'Shrug off' means to dismiss or ignore something unpleasant, such as criticism or blame, without being affected.",
+text: "<b>shrug off</b> means to ignore or dismiss.<br><b>bring forth</b> means to produce.<br><b>break out</b> means to start suddenly.<br><b>call at</b> means to stop briefly.",
 image: ""
 },
 
 13: {
-text: "'Sneak out' means to leave a place secretly or quietly to avoid being noticed.",
+text: "<b>sneak out</b> means to leave secretly.<br><b>run down</b> means to criticize.<br><b>give way</b> means to yield.<br><b>touch upon</b> means to mention briefly.",
 image: ""
 },
 
 14: {
-text: "'Look out for' means to be watchful or alert for something or someone, especially for safety or caution.",
+text: "<b>look out for</b> means to be alert for something.<br><b>put out</b> means to extinguish.<br><b>iron out</b> means to resolve problems.<br><b>pass out</b> means to faint.",
 image: ""
 },
 
 15: {
-text: "'Palm off' means to deceive someone into accepting something inferior or unwanted.",
+text: "<b>palm off</b> means to deceive someone into accepting something inferior.<br><b>bring up</b> means to mention.<br><b>fend off</b> means to repel.<br><b>knuckle under</b> means to submit.",
 image: ""
 },
 
 16: {
-text: "'Fend off' means to successfully resist or repel an attack or unwanted action.",
+text: "<b>fend off</b> means to resist successfully.<br><b>turn down</b> means to refuse.<br><b>set out</b> means to begin a journey.<br><b>dawn on</b> means to become clear.",
 image: ""
 },
 
 17: {
-text: "'Stash away' means to hide or store something secretly for future use.",
+text: "<b>stash away</b> means to hide for future use.<br><b>break into</b> means to enter forcibly.<br><b>run over</b> means to hit with a vehicle.<br><b>call at</b> means to stop briefly.",
 image: ""
 },
 
 18: {
-text: "'Turn up' means to arrive unexpectedly or appear suddenly.",
+text: "<b>turn up</b> means to appear unexpectedly.<br><b>lay down</b> means to establish rules.<br><b>fall through</b> means to fail.<br><b>talk over</b> means to discuss calmly.",
 image: ""
 },
 
 19: {
-text: "'Give way' means to collapse or yield under pressure. It can be used both physically and figuratively.",
+text: "<b>give way</b> means to collapse under pressure.<br><b>run down</b> means to criticize.<br><b>set about</b> means to start work.<br><b>look forward to</b> means to eagerly expect.",
 image: ""
 },
 
 20: {
-text: "'Look forward to' means to feel pleased or excited about something that is going to happen in the future.",
+text: "<b>look forward to</b> means to eagerly anticipate.<br><b>call on</b> means to visit.<br><b>run out of</b> means to exhaust supply.<br><b>fall out</b> means to quarrel.",
 image: ""
 },
 
 21: {
-text: "'Lay down' means to establish or state rules, laws, or guidelines formally.",
+text: "<b>lay down</b> means to establish rules or laws.<br><b>put out</b> means to extinguish.<br><b>blow up</b> means to explode.<br><b>run over</b> means to hit with a vehicle.",
 image: ""
 },
 
 22: {
-text: "'Turn down' means to refuse or reject an offer or proposal politely.",
+text: "<b>turn down</b> means to refuse an offer.<br><b>bring forth</b> means to produce.<br><b>call at</b> means to stop briefly.<br><b>pass out</b> means to faint.",
 image: ""
 },
 
 23: {
-text: "'Break out' means to start suddenly, especially unrest, violence, fire, or disease.",
+text: "<b>break out</b> means to start suddenly.<br><b>fizzle out</b> means to die down gradually.<br><b>dawn on</b> means to become clear.<br><b>look out for</b> means to be watchful.",
 image: ""
 },
 
 24: {
-text: "'Run down' means to criticize or speak badly about someone or something.",
+text: "<b>run down</b> means to criticize unfairly.<br><b>set out</b> means to begin a journey.<br><b>give way</b> means to yield.<br><b>iron out</b> means to resolve.",
 image: ""
 },
 
 25: {
-text: "'Bring up' means to mention or introduce a topic for discussion.",
+text: "<b>bring up</b> means to mention or raise a topic.<br><b>run over</b> means to hit with a vehicle.<br><b>pass out</b> means to faint.<br><b>fall through</b> means to fail.",
 image: ""
 },
 
 26: {
-text: "'Take after' means to resemble a family member in appearance or behavior.",
+text: "<b>take after</b> means to resemble a parent.<br><b>put up with</b> means to tolerate.<br><b>fend off</b> means to repel.<br><b>call at</b> means to stop briefly.",
 image: ""
 },
 
 27: {
-text: "'Blow up' means to explode suddenly with great force.",
+text: "<b>blow up</b> means to explode violently.<br><b>put out</b> means to extinguish fire.<br><b>run out of</b> means to exhaust supply.<br><b>touch upon</b> means to mention briefly.",
 image: ""
 },
 
 28: {
-text: "'Blow out' means to extinguish a flame, especially candles, by wind or air.",
+text: "<b>blow out</b> means to extinguish a flame.<br><b>taken aback</b> means to be shocked.<br><b>set about</b> means to start work.<br><b>call on</b> means to visit.",
 image: ""
 },
 
 29: {
-text: "'Get through' means to successfully complete or pass something difficult, such as an exam.",
+text: "<b>get through</b> means to successfully complete.<br><b>run down</b> means to criticize.<br><b>put out</b> means to extinguish.<br><b>fall out</b> means to quarrel.",
 image: ""
 },
 
 30: {
-text: "'Go through' means to experience or endure a difficult situation or process.",
+text: "<b>go through</b> means to experience something difficult.<br><b>turn up</b> means to appear unexpectedly.<br><b>break into</b> means to enter forcibly.<br><b>give way</b> means to collapse.",
 image: ""
 },
 
 31: {
-text: "'Call on' means to visit someone, often officially or formally.",
+text: "<b>call on</b> means to visit formally.<br><b>run over</b> means to hit with a vehicle.<br><b>set out</b> means to begin a journey.<br><b>fizzle out</b> means to fade away.",
 image: ""
 },
 
 32: {
-text: "'Call at' means to stop at a particular place for a short time during a journey.",
+text: "<b>call at</b> means to stop briefly during travel.<br><b>break out</b> means to start suddenly.<br><b>bring forth</b> means to produce.<br><b>knuckle under</b> means to submit.",
 image: ""
 },
 
 33: {
-text: "'Pass out' means to lose consciousness due to exhaustion, illness, or shock.",
+text: "<b>pass out</b> means to lose consciousness.<br><b>give way</b> means to collapse.<br><b>set about</b> means to start work.<br><b>look out for</b> means to be alert.",
 image: ""
 },
 
 34: {
-text: "'Iron out' means to resolve or settle problems or differences smoothly.",
+text: "<b>iron out</b> means to resolve problems smoothly.<br><b>break into</b> means to enter forcibly.<br><b>run out of</b> means to exhaust supply.<br><b>turn up</b> means to appear.",
 image: ""
 },
 
 35: {
-text: "'Fizzle out' means to gradually lose strength, interest, or momentum and come to an end.",
+text: "<b>fizzle out</b> means to gradually lose strength.<br><b>blow up</b> means to explode.<br><b>call at</b> means to stop briefly.<br><b>lay down</b> means to establish rules.",
 image: ""
 },
 
 36: {
-text: "'Dawn on' means to gradually become clear or understood by someone.",
+text: "<b>dawn on</b> means to gradually realize.<br><b>run over</b> means to hit with a vehicle.<br><b>take after</b> means to resemble.<br><b>bring forth</b> means to produce.",
 image: ""
 },
 
 37: {
-text: "'Touch upon' means to mention a topic briefly without detailed discussion.",
+text: "<b>touch upon</b> means to mention briefly.<br><b>pass out</b> means to faint.<br><b>fall out</b> means to quarrel.<br><b>put out</b> means to extinguish.",
 image: ""
 },
 
 38: {
-text: "'Fall through' means to fail to happen or be completed as planned.",
+text: "<b>fall through</b> means to fail to happen.<br><b>turn up</b> means to appear.<br><b>look forward to</b> means to eagerly expect.<br><b>knuckle under</b> means to submit.",
 image: ""
 },
 
 39: {
-text: "'Put up with' means to tolerate or endure something unpleasant.",
+text: "<b>put up with</b> means to tolerate something unpleasant.<br><b>run down</b> means to criticize.<br><b>break out</b> means to start suddenly.<br><b>call on</b> means to visit.",
 image: ""
 },
 
 40: {
-text: "'Talk over' means to discuss something calmly and thoroughly before making a decision.",
+text: "<b>talk over</b> means to discuss calmly.<br><b>give way</b> means to yield.<br><b>stash away</b> means to hide for later.<br><b>blow out</b> means to extinguish flame.",
 image: ""
 },
 
 41: {
-text: "'Knuckle under' means to submit or yield to pressure or authority unwillingly.",
+text: "<b>knuckle under</b> means to submit to pressure.<br><b>run out of</b> means to exhaust supply.<br><b>take in</b> means to deceive.<br><b>set out</b> means to begin a journey.",
 image: ""
 },
 
 42: {
-text: "'Fathom out' means to understand something complex after careful thought.",
+text: "<b>fathom out</b> means to understand after thinking deeply.<br><b>pass out</b> means to faint.<br><b>call at</b> means to stop briefly.<br><b>give way</b> means to collapse.",
 image: ""
 },
 
 43: {
-text: "'Put out' means to extinguish fire or stop something burning.",
+text: "<b>put out</b> means to extinguish fire.<br><b>run over</b> means to hit with a vehicle.<br><b>fall out</b> means to quarrel.<br><b>turn down</b> means to refuse.",
 image: ""
 },
 
 44: {
-text: "'Keep up with' means to move or progress at the same speed or level as someone else.",
+text: "<b>keep up with</b> means to move at the same pace.<br><b>break into</b> means to enter forcibly.<br><b>bring forth</b> means to produce.<br><b>run down</b> means to criticize.",
 image: ""
 },
 
 45: {
-text: "'Bring forth' means to produce or create something new, especially results or ideas.",
+text: "<b>bring forth</b> means to produce results or ideas.<br><b>take after</b> means to resemble.<br><b>call at</b> means to stop briefly.<br><b>pass out</b> means to faint.",
 image: ""
 },
 
 46: {
-text: "'Set out' means to begin a journey or task with a clear intention.",
+text: "<b>set out</b> means to begin a journey.<br><b>blow up</b> means to explode.<br><b>fizzle out</b> means to fade away.<br><b>give way</b> means to collapse.",
 image: ""
 },
 
 47: {
-text: "'Taken aback' means to be surprised or shocked unexpectedly.",
+text: "<b>taken aback</b> means to be shocked or surprised.<br><b>run out of</b> means to exhaust supply.<br><b>look out for</b> means to be alert.<br><b>fall through</b> means to fail.",
 image: ""
 },
 
 48: {
-text: "'Bail out' means to provide financial help to save a person or organization from failure.",
+text: "<b>bail out</b> means to provide financial rescue.<br><b>brush aside</b> means to dismiss casually.<br><b>break out</b> means to start suddenly.<br><b>run down</b> means to criticize.",
 image: ""
 },
 
 49: {
-text: "'Run out of' means to have no more of something left.",
+text: "<b>run out of</b> means to have no supply left.<br><b>call on</b> means to visit.<br><b>set about</b> means to start work.<br><b>turn up</b> means to appear unexpectedly.",
 image: ""
 },
 
 50: {
-text: "'Run over' means to hit and injure someone with a vehicle.",
+text: "<b>run over</b> means to hit and injure with a vehicle.<br><b>fall out</b> means to quarrel.<br><b>put out</b> means to extinguish.<br><b>call at</b> means to stop briefly.",
 image: ""
 }
+
 
 }
