@@ -284,13 +284,13 @@ image: ''
 },
 48: {
 text: "The coach managed to _____ the best players for the championship team.",
-options: ["rope in", "dress down", "bottle up"],
+options: ["rope in", "dress down", "bottle up", " set down"],
 correct: "1",
 image: ''
 },
 49: {
 text: "You shouldn't _____ your anger; it will only cause problems later.",
-options: ["bottle up", "rope in", "dress down"],
+options: ["bottle up", "rope in", "dress down", " cut in"],
 correct: "1",
 image: ''
 }
@@ -509,5 +509,6 @@ image: ""
 text: "Tell upon means to have a noticeable or damaging effect on someone's health, strength, or appearance, often gradually over time. Commonly used for prolonged stress, illness, or overwork impacts. The expression originated from accounting 'tally' concept extended to personal toll.",
 image: ""
 }
+
 
 }
