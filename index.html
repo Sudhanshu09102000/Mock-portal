@@ -771,6 +771,38 @@
     #subPage {
       min-height: 60vh;
     }
+
+
+    /* ===============================
+   DARK MODE FIX FOR HOVER HELP BOX
+================================ */
+
+body.darkmode .hover-help-box {
+  background: #ffffff !important;     /* force light box */
+  color: #111827 !important;          /* dark readable text */
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* text inside */
+body.darkmode .hover-help-box p,
+body.darkmode .hover-help-box li,
+body.darkmode .hover-help-box strong,
+body.darkmode .hover-help-box div {
+  color: #111827 !important;
+}
+
+/* links & buttons inside hover box */
+body.darkmode .hover-help-box a.btn {
+  background: linear-gradient(90deg, #0d6efd, #6f42c1);
+  color: #ffffff !important;
+}
+
+/* horizontal rule visibility */
+body.darkmode .hover-help-box hr {
+  border-color: #e5e7eb;
+}
+
   </style>
 </head>
 
