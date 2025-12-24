@@ -949,66 +949,80 @@
       let cursorX = x;
       const lineHeight = 5.5;
 
-      function renderNode(node) {
+function renderNode(node) {
 
-        // LINE BREAK
-        if (node.nodeName === "BR") {
-          cursorY += lineHeight;
-          cursorX = x;
-          return;
-        }
+  // LINE BREAK
+  if (node.nodeName === "BR") {
+    cursorY += lineHeight;
+    cursorX = x;
+    return;
+  }
 
-        // PARAGRAPH
-        if (node.nodeName === "P") {
-          cursorY += lineHeight;
-          cursorX = x;
-          node.childNodes.forEach(renderNode);
-          cursorY += lineHeight;
-          cursorX = x;
-          return;
-        }
+  // PARAGRAPH / DIV
+  if (node.nodeName === "P" || node.nodeName === "DIV") {
+    cursorY += lineHeight;
+    cursorX = x;
+    node.childNodes.forEach(renderNode);
+    cursorY += lineHeight;
+    cursorX = x;
+    return;
+  }
 
-        // TEXT NODE
-        if (node.nodeType === Node.TEXT_NODE) {
-          const text = node.textContent;
-          doc.setFont("times", "normal");
+  // BOLD
+  if (node.nodeName === "B" || node.nodeName === "STRONG") {
+    doc.setFont("times", "bold");
+    node.childNodes.forEach(renderNode);
+    doc.setFont("times", "normal");
+    return;
+  }
 
-          const words = text.split(" ");
-          words.forEach(word => {
-            const w = word + " ";
-            const wWidth = doc.getTextWidth(w);
+  // UNDERLINE
+  if (node.nodeName === "U") {
+    const startX = cursorX;
+    const startY = cursorY;
 
-            if (cursorX + wWidth > x + maxWidth) {
-              cursorY += lineHeight;
-              cursorX = x;
-            }
+    node.childNodes.forEach(renderNode);
 
-            doc.text(w, cursorX, cursorY);
-            cursorX += wWidth;
-          });
-        }
+    const textWidth = cursorX - startX;
+    doc.line(startX, startY + 1.5, startX + textWidth, startY + 1.5);
+    return;
+  }
 
-        // BOLD / STRONG (INLINE)
-        if (node.nodeName === "B" || node.nodeName === "STRONG") {
-          doc.setFont("times", "bold");
-          const words = node.textContent.split(" ");
+  // LIST
+  if (node.nodeName === "UL") {
+    cursorY += lineHeight;
+    node.childNodes.forEach(renderNode);
+    cursorY += lineHeight;
+    cursorX = x;
+    return;
+  }
 
-          words.forEach(word => {
-            const w = word + " ";
-            const wWidth = doc.getTextWidth(w);
+  if (node.nodeName === "LI") {
+    cursorX = x + 4;
+    doc.text("•", x, cursorY);
+    node.childNodes.forEach(renderNode);
+    cursorY += lineHeight;
+    cursorX = x;
+    return;
+  }
 
-            if (cursorX + wWidth > x + maxWidth) {
-              cursorY += lineHeight;
-              cursorX = x;
-            }
+  // TEXT NODE
+  if (node.nodeType === Node.TEXT_NODE) {
+    const words = node.textContent.split(" ");
+    words.forEach(word => {
+      const w = word + " ";
+      const wWidth = doc.getTextWidth(w);
 
-            doc.text(w, cursorX, cursorY);
-            cursorX += wWidth;
-          });
-
-          doc.setFont("times", "normal");
-        }
+      if (cursorX + wWidth > x + maxWidth) {
+        cursorY += lineHeight;
+        cursorX = x;
       }
+
+      doc.text(w, cursorX, cursorY);
+      cursorX += wWidth;
+    });
+  }
+}
 
       temp.childNodes.forEach(renderNode);
 
@@ -1028,28 +1042,34 @@
       return y;
     }
 
-    function drawGoogleClickableQuestion(doc, qNo, qText, x, y, width) {
-      const searchUrl =
-        "https://www.google.com/search?q=" +
-        encodeURIComponent(qText);
+function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
 
-      // STYLE
-      doc.setFont("times", "bold");
-      doc.setFontSize(12.5);
-      doc.setTextColor(200, 0, 0); // RED
+  // clickable google search
+  const searchUrl =
+    "https://www.google.com/search?q=" +
+    encodeURIComponent(qHtml.replace(/<[^>]*>/g, ""));
 
-      const lines = doc.splitTextToSize(`Q${qNo}. ${qText}`, width);
+  // draw Q number
+  doc.setFont("times", "bold");
+  doc.setFontSize(12.5);
+  doc.setTextColor(200, 0, 0); // red
 
-      lines.forEach(line => {
-        doc.textWithLink(line, x, y, { url: searchUrl });
-        y += 6.5;
-      });
+  doc.textWithLink(`Q${qNo}.`, x, y, { url: searchUrl });
 
-      // RESET COLOR
-      doc.setTextColor(0);
+  // render HTML question text properly
+  doc.setFont("times", "normal");
+  doc.setTextColor(0);
 
-      return y;
-    }
+  y = renderHtmlToPdf(
+    doc,
+    qHtml,
+    x + 10,
+    y,
+    width - 10
+  );
+
+  return y + 2;
+}
 
     async function addImageToPDF(doc, imgSrc, x, y, maxWidth) {
       return new Promise((resolve) => {
@@ -1589,18 +1609,22 @@
       }
 
       document.getElementById('questionText').innerHTML =
-        `<div><strong>Q${num}.</strong> ${escapeHtml(q.text)}</div>`;
+  `<div><strong>Q${num}.</strong> ${q.text}</div>`;
+
 
       const optionsWrap = document.getElementById('options');
       optionsWrap.innerHTML = s.meta.map((m, idx) => {
-        const pos = idx + 1;
-        const selected = (answers[num] && answers[num].selectedMetaId === m.id) ? 'selected' : '';
-        return `
-        <label class="option-label ${selected}" data-pos="${pos}" data-original-id="${m.id}">
-          <div class="badge-pos bg-light text-muted">${pos}</div>
-          <div>${escapeHtml(m.text)}</div>
-        </label>`;
-      }).join('');
+  const pos = idx + 1;
+  const selected =
+    (answers[num] && answers[num].selectedMetaId === m.id) ? 'selected' : '';
+
+  return `
+    <label class="option-label ${selected}" data-pos="${pos}" data-original-id="${m.id}">
+      <div class="badge-pos bg-light text-muted">${pos}</div>
+      <div>${m.text}</div>
+    </label>`;
+}).join('');
+
 
       if (testSubmitted) {
         const origCorrectId = parseInt(q.correct, 10) - 1;
