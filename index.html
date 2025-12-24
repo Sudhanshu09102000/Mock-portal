@@ -33,6 +33,36 @@
       animation: fadeIn 0.8s ease;
     }
 
+    /* ===============================
+   DESKTOP HOVER HELP BOX
+================================ */
+
+/* Only enable on devices that truly support hover */
+@media (hover: hover) and (pointer: fine) {
+  .hover-help-box {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    border: 1px solid #e6e6e6;
+    max-height: 75vh;
+    overflow-y: auto;
+    z-index: 50;
+
+    /* 🔥 important */
+    pointer-events: auto;
+  }
+}
+
+
+/* Mobile: always hidden */
+@media (hover: none) {
+  .hover-help-box {
+    display: none !important;
+  }
+}
+
+
     @keyframes fadeIn {
       0% {
         opacity: 0;
@@ -828,6 +858,8 @@
                 <button id="prevBtn" class="btn btn-outline-secondary">⟵ Previous</button>
                 <button id="saveNextBtn" class="btn btn-primary">Save & Next</button>
                 <button id="helpBtn" class="btn btn-info">Help!</button>
+
+              
                 <button id="reviewNextBtn" class="btn btn-warning">Mark for Review & Next</button>
                 <button id="clearBtn" class="btn btn-outline-danger">Clear Response</button>
 
@@ -845,6 +877,9 @@
           </div>
 
           <div class="col-lg-4">
+            <!-- HOVER HELP BOX (DESKTOP ONLY) -->
+<div id="hoverHelpBox" class="hover-help-box hidden"></div>
+
             <div class="d-grid mb-2">
               <button id="toggleNavBtn" class="btn btn-outline-primary">
                 👁️ Toggle Question Navigator
@@ -1955,6 +1990,48 @@ function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
       document.getElementById('helpContent').innerHTML = helpHTML;
     }
 
+
+
+
+    function renderHoverHelp() {
+  const box = document.getElementById("hoverHelpBox");
+  const q = questions[currentQuestion];
+  const e = explanations[currentQuestion];
+
+  if (!q) return;
+
+  let html = `
+    <p><strong>Q${currentQuestion}.</strong> ${q.text}</p>
+    <hr>
+    <p style="color:#0d6efd;font-weight:600">
+      Correct Answer: ${q.options[parseInt(q.correct, 10) - 1]}
+    </p>
+  `;
+
+  if (e && e.text) {
+    html += `<p>${e.text}</p>`;
+  }
+
+  if (e && e.image) {
+    html += `
+      <div class="text-center my-3">
+        <img src="${e.image}" class="img-fluid shadow-sm">
+      </div>`;
+  }
+
+  html += `
+    <div class="text-center mt-3">
+      <a href="https://www.google.com/search?q=${buildSearchQuery(currentQuestion)}"
+         target="_blank"
+         class="btn btn-primary btn-sm">
+         🔍 Search on Google
+      </a>
+    </div>
+  `;
+
+  box.innerHTML = html;
+}
+
     document.getElementById('helpBtn').addEventListener('click', () => {
       showHelpForCurrentQuestion();
       bootstrap.Modal.getOrCreateInstance(document.getElementById('helpModal')).show();
@@ -2062,6 +2139,43 @@ function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
         return;
       }
     });
+
+const helpBtn = document.getElementById("helpBtn");
+const hoverBox = document.getElementById("hoverHelpBox");
+
+let hoverTimeout;
+
+/* SHOW when mouse enters help button */
+helpBtn.addEventListener("mouseenter", () => {
+  if (!window.matchMedia("(hover: hover)").matches) return;
+
+  clearTimeout(hoverTimeout);
+  renderHoverHelp();
+  hoverBox.classList.remove("hidden");
+});
+
+/* DO NOT hide immediately */
+helpBtn.addEventListener("mouseleave", () => {
+  hoverTimeout = setTimeout(() => {
+    if (!hoverBox.matches(":hover")) {
+      hoverBox.classList.add("hidden");
+    }
+  }, 200); // small delay = smooth transition
+});
+
+/* KEEP OPEN when inside box */
+hoverBox.addEventListener("mouseenter", () => {
+  clearTimeout(hoverTimeout);
+});
+
+/* HIDE only when leaving both */
+hoverBox.addEventListener("mouseleave", () => {
+  hoverTimeout = setTimeout(() => {
+    hoverBox.classList.add("hidden");
+  }, 200);
+});
+
+
 
 
 
