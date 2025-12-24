@@ -1,512 +1,601 @@
-// placeholder
-const questions = {
-1: {
-text: "The sailors checked the ship's ____ before setting sail to ensure all ropes were secure.",
-options: ["rigging", "deck", "anchor", "rudder"],
-correct: "1",
-image: ''
+const questions={
+ 1: {
+  text: "The sailors carefully checked the <b>rigging</b> of the ship before departure.<br>Choose the correct meaning of <b>rigging</b>.",
+  options: ["System of ropes and cables on a ship", "Cargo stored in a ship", "Engine room mechanism", "Navigation instruments"],
+  correct: "1",
+  image: ''
 },
+
 2: {
-text: "His plan to build a castle on the moon was dismissed as completely ____.",
-options: ["quixotic", "realistic", "logical", "feasible"],
-correct: "1",
-image: ''
+  text: "His plan to colonize Mars without resources sounded completely <b>quixotic</b>.<br>Choose the correct meaning of <b>quixotic</b>.",
+  options: ["Unrealistically idealistic", "Highly practical", "Deeply pessimistic", "Carefully planned"],
+  correct: "1",
+  image: ''
 },
+
 3: {
-text: "The lawyer argued that the crime had been wrongly ____ to his client.",
-options: ["imputed", "granted", "offered", "neglected"],
-correct: "1",
-image: ''
+  text: "The blame was wrongly <b>imputed</b> to an innocent employee.<br>Choose the correct meaning of <b>imputed</b>.",
+  options: ["Attributed or assigned", "Clearly proved", "Ignored completely", "Removed officially"],
+  correct: "1",
+  image: ''
 },
+
 4: {
-text: "She gave a ____ speech that inspired everyone in the audience.",
-options: ["fervent", "cold", "indifferent", "casual"],
-correct: "1",
-image: ''
+  text: "She was <b>fervent</b> in her support for the social cause.<br>Choose the correct meaning of <b>fervent</b>.",
+  options: ["Having intense passion", "Mild and casual", "Doubtful in attitude", "Emotionally detached"],
+  correct: "1",
+  image: ''
 },
+
 5: {
-text: "He was deeply ____ with the spirit of patriotism.",
-options: ["imbued", "drained", "devoid", "freed"],
-correct: "1",
-image: ''
+  text: "The speech was <b>imbued</b> with a sense of patriotism.<br>Choose the correct meaning of <b>imbued</b>.",
+  options: ["Filled or saturated with", "Completely removed from", "Opposed strongly", "Briefly mentioned"],
+  correct: "1",
+  image: ''
 },
+
 6: {
-text: "The company decided to ____ its management structure for better performance.",
-options: ["rejig", "ignore", "ruin", "abandon"],
-correct: "1",
-image: ''
+  text: "The company decided to <b>rejig</b> its marketing strategy.<br>Choose the correct meaning of <b>rejig</b>.",
+  options: ["Rearrange or reorganize", "Cancel permanently", "Delay intentionally", "Reduce expenses"],
+  correct: "1",
+  image: ''
 },
+
 7: {
-text: "The manager used the term 'downsizing' as a ____ for job cuts.",
-options: ["euphemism", "compliment", "statement", "insult"],
-correct: "1",
-image: ''
+  text: "Calling layoffs a <b>euphemism</b> for downsizing softens the harsh reality.<br>Choose the correct meaning of <b>euphemism</b>.",
+  options: ["Mild or indirect expression", "Technical terminology", "Offensive remark", "Exact scientific term"],
+  correct: "1",
+  image: ''
 },
+
 8: {
-text: "She may be small, but she’s incredibly ____ when defending her beliefs.",
-options: ["feisty", "timid", "lazy", "indifferent"],
-correct: "1",
-image: ''
+  text: "The <b>feisty</b> child argued fearlessly with elders.<br>Choose the correct meaning of <b>feisty</b>.",
+  options: ["Aggressive and spirited", "Timid and fearful", "Lazy and indifferent", "Quiet and obedient"],
+  correct: "1",
+  image: ''
 },
+
 9: {
-text: "He was a ____ student who completed every assignment with care.",
-options: ["diligent", "careless", "lazy", "negligent"],
-correct: "1",
-image: ''
+  text: "He is a <b>diligent</b> student who completes all assignments on time.<br>Choose the correct meaning of <b>diligent</b>.",
+  options: ["Hard-working and careful", "Careless and lazy", "Uninterested", "Easily distracted"],
+  correct: "1",
+  image: ''
 },
+
 10: {
-text: "The two athletes will ____ for the championship title tomorrow.",
-options: ["contend", "cooperate", "ignore", "depart"],
-correct: "1",
-image: ''
+  text: "The two teams <b>contend</b> for the championship title every year.<br>Choose the correct meaning of <b>contend</b>.",
+  options: ["Compete or argue", "Withdraw silently", "Accept defeat", "Avoid confrontation"],
+  correct: "1",
+  image: ''
 },
 11: {
-text: "He was tired of doing ____ jobs that offered no challenge or respect.",
-options: ["menial", "prestigious", "creative", "managerial"],
-correct: "1",
-image: ''
+  text: "Cleaning floors and carrying files is considered <b>menial</b> work.<br>Choose the correct meaning of <b>menial</b>.",
+  options: ["Low-status and routine", "Highly skilled", "Creative and intellectual", "Managerial"],
+  correct: "1",
+  image: ''
 },
+
 12: {
-text: "Heavy rain was ____ their progress during the mountain climb.",
-options: ["thwarting", "helping", "supporting", "accelerating"],
-correct: "1",
-image: ''
+  text: "Constant interruptions were <b>thwarting</b> his efforts to complete the task.<br>Choose the correct meaning of <b>thwarting</b>.",
+  options: ["Preventing or obstructing", "Encouraging strongly", "Ignoring deliberately", "Completing successfully"],
+  correct: "1",
+  image: ''
 },
+
 13: {
-text: "Climbing the steep mountain was an ____ task that tested their endurance.",
-options: ["arduous", "simple", "easy", "effortless"],
-correct: "1",
-image: ''
+  text: "Climbing the mountain was an <b>arduous</b> journey.<br>Choose the correct meaning of <b>arduous</b>.",
+  options: ["Extremely difficult and tiring", "Easy and pleasant", "Quickly finished", "Mentally relaxing"],
+  correct: "1",
+  image: ''
 },
+
 14: {
-text: "His confident tone seemed to ____ a sense of victory.",
-options: ["evince", "hide", "suppress", "deny"],
-correct: "1",
-image: ''
+  text: "Her trembling voice <b>evinced</b> fear.<br>Choose the correct meaning of <b>evince</b>.",
+  options: ["Show clearly", "Hide deliberately", "Question repeatedly", "Deny firmly"],
+  correct: "1",
+  image: ''
 },
+
 15: {
-text: "She was always ____ to suggestions and open to feedback.",
-options: ["amenable", "hostile", "stubborn", "rigid"],
-correct: "1",
-image: ''
+  text: "He is <b>amenable</b> to suggestions from his seniors.<br>Choose the correct meaning of <b>amenable</b>.",
+  options: ["Willing to accept", "Strongly resistant", "Indifferent", "Unaware"],
+  correct: "1",
+  image: ''
 },
+
 16: {
-text: "They began their new research ____ with great excitement and curiosity.",
-options: ["endeavor", "vacation", "break", "party"],
-correct: "1",
-image: ''
+  text: "Despite failures, she continued her <b>endeavor</b> to succeed.<br>Choose the correct meaning of <b>endeavor</b>.",
+  options: ["Serious effort or attempt", "Sudden decision", "Lucky opportunity", "Final achievement"],
+  correct: "1",
+  image: ''
 },
+
 17: {
-text: "It's wrong to ____ his silence as agreement; he may just be thinking.",
-options: ["construe", "ignore", "dismiss", "praise"],
-correct: "1",
-image: ''
+  text: "His silence was <b>construed</b> as agreement.<br>Choose the correct meaning of <b>construe</b>.",
+  options: ["Interpret or understand", "Reject immediately", "Forget quickly", "Explain angrily"],
+  correct: "1",
+  image: ''
 },
+
 18: {
-text: "The storm ____ against the shore, causing damage to boats and docks.",
-options: ["lashed", "caressed", "kissed", "brushed"],
-correct: "1",
-image: ''
+  text: "The storm <b>lashed</b> the coastline throughout the night.<br>Choose the correct meaning of <b>lashed</b>.",
+  options: ["Hit violently", "Touched gently", "Moved slowly", "Passed silently"],
+  correct: "1",
+  image: ''
 },
+
 19: {
-text: "The coach tried to ____ his team's morale after their first defeat.",
-options: ["bolster", "reduce", "weaken", "ignore"],
-correct: "1",
-image: ''
+  text: "Good nutrition helps <b>bolster</b> immunity.<br>Choose the correct meaning of <b>bolster</b>.",
+  options: ["Strengthen or support", "Weaken gradually", "Completely replace", "Ignore totally"],
+  correct: "1",
+  image: ''
 },
+
 20: {
-text: "Her mood was so ____ that nobody could predict how she would react next.",
-options: ["erratic", "calm", "steady", "consistent"],
-correct: "1",
-image: ''
+  text: "His performance has been <b>erratic</b> this season.<br>Choose the correct meaning of <b>erratic</b>.",
+  options: ["Irregular and unpredictable", "Steady and consistent", "Improving gradually", "Carefully planned"],
+  correct: "1",
+  image: ''
 },
 21: {
-text: "He took a ____ approach to solving the problem, focusing on what worked in real life.",
-options: ["pragmatic", "idealistic", "naive", "impractical"],
-correct: "1",
-image: ''
+  text: "His display of <b>pragmatic</b> thinking helped solve the issue efficiently.<br>Choose the correct meaning of <b>pragmatic</b>.",
+  options: ["Practical and realistic", "Highly emotional", "Idealistic and dreamy", "Theoretical only"],
+  correct: "1",
+  image: ''
 },
+
 22: {
-text: "His constant display of ____ made people feel inferior and unwelcome.",
-options: ["snobbery", "humility", "kindness", "generosity"],
-correct: "1",
-image: ''
+  text: "Her sense of <b>snobbery</b> made her avoid common people.<br>Choose the correct meaning of <b>snobbery</b>.",
+  options: ["Feeling of superiority", "Sense of humility", "Friendly behavior", "Casual attitude"],
+  correct: "1",
+  image: ''
 },
+
 23: {
-text: "She took ____ at his rude remark during the meeting.",
-options: ["umbrage", "pleasure", "interest", "admiration"],
-correct: "1",
-image: ''
+  text: "He took <b>umbrage</b> at the unfair remarks.<br>Choose the correct meaning of <b>umbrage</b>.",
+  options: ["Offence or resentment", "Praise or approval", "Confusion", "Amusement"],
+  correct: "1",
+  image: ''
 },
+
 24: {
-text: "The battlefield was a scene where bodies ____ in mud and blood.",
-options: ["weltered", "rested", "stood", "marched"],
-correct: "1",
-image: ''
+  text: "After the accident, the victims <b>weltered</b> in pain.<br>Choose the correct meaning of <b>weltered</b>.",
+  options: ["Suffer or roll helplessly", "Celebrate joyfully", "Stand firmly", "Recover quickly"],
+  correct: "1",
+  image: ''
 },
+
 25: {
-text: "Corruption tends to ____ the moral values of a society.",
-options: ["vitiate", "improve", "strengthen", "restore"],
-correct: "1",
-image: ''
+  text: "Poor sanitation can <b>vitiate</b> public health.<br>Choose the correct meaning of <b>vitiate</b>.",
+  options: ["Spoil or impair", "Improve greatly", "Preserve carefully", "Strengthen fully"],
+  correct: "1",
+  image: ''
 },
+
 26: {
-text: "New buildings continue to ____ on the city’s green spaces.",
-options: ["encroach", "protect", "preserve", "safeguard"],
-correct: "1",
-image: ''
+  text: "Illegal construction continues to <b>encroach</b> upon forest land.<br>Choose the correct meaning of <b>encroach</b>.",
+  options: ["Intrude gradually", "Protect legally", "Vacate completely", "Ignore entirely"],
+  correct: "1",
+  image: ''
 },
+
 27: {
-text: "Her speech on humanity had a ____ impact on the audience.",
-options: ["profound", "shallow", "simple", "casual"],
-correct: "1",
-image: ''
+  text: "She delivered a <b>profound</b> speech on social justice.<br>Choose the correct meaning of <b>profound</b>.",
+  options: ["Deep and insightful", "Shallow and trivial", "Confusing", "Careless"],
+  correct: "1",
+  image: ''
 },
+
 28: {
-text: "The movie’s monster was so ____ that children were terrified.",
-options: ["hideous", "beautiful", "pleasant", "delightful"],
-correct: "1",
-image: ''
+  text: "The movie portrayed a <b>hideous</b> crime scene.<br>Choose the correct meaning of <b>hideous</b>.",
+  options: ["Extremely ugly or shocking", "Beautiful and pleasant", "Ordinary", "Amusing"],
+  correct: "1",
+  image: ''
 },
+
 29: {
-text: "The horse became ____ and nervous at the sound of thunder.",
-options: ["skittery", "calm", "relaxed", "steady"],
-correct: "1",
-image: ''
+  text: "The mouse made a <b>skittery</b> movement across the floor.<br>Choose the correct meaning of <b>skittery</b>.",
+  options: ["Nervous and quick-moving", "Slow and steady", "Graceful", "Heavy and loud"],
+  correct: "1",
+  image: ''
 },
+
 30: {
-text: "The presence of tiny hair-like structures called ____ helps the cell in movement.",
-options: ["ciliation", "digestion", "division", "respiration"],
-correct: "1",
-image: ''
+  text: "The study focused on <b>ciliation</b> in microscopic organisms.<br>Choose the correct meaning of <b>ciliation</b>.",
+  options: ["Presence of tiny hair-like structures", "Cell division process", "Lack of movement", "Formation of spores"],
+  correct: "1",
+  image: ''
 },
 31: {
-text: "They decided to ____ against the company for breach of contract.",
-options: ["litigate", "agree", "negotiate", "withdraw"],
-correct: "1",
-image: ''
+  text: "The company decided to <b>litigate</b> against the contractor for breach of agreement.<br>Choose the correct meaning of <b>litigate</b>.",
+  options: ["Take a dispute to court", "Settle privately", "Ignore completely", "Withdraw legally"],
+  correct: "1",
+  image: ''
 },
+
 32: {
-text: "He remained ____ during the party, preferring to stay apart from everyone.",
-options: ["aloof", "friendly", "sociable", "talkative"],
-correct: "1",
-image: ''
+  text: "He remained <b>aloof</b> from social gatherings at the office.<br>Choose the correct meaning of <b>aloof</b>.",
+  options: ["Distant and uninvolved", "Friendly and warm", "Emotionally expressive", "Overly familiar"],
+  correct: "1",
+  image: ''
 },
+
 33: {
-text: "The movie portrays a ____ character who delights in cruelty and evil deeds.",
-options: ["depraved", "noble", "virtuous", "kind"],
-correct: "1",
-image: ''
+  text: "The novel depicts a <b>depraved</b> character with no moral values.<br>Choose the correct meaning of <b>depraved</b>.",
+  options: ["Morally corrupt", "Highly disciplined", "Innocent", "Well-mannered"],
+  correct: "1",
+  image: ''
 },
+
 34: {
-text: "She was quite ____ when her best friend forgot her birthday.",
-options: ["miffed", "pleased", "happy", "grateful"],
-correct: "1",
-image: ''
+  text: "She felt <b>miffed</b> by his rude response.<br>Choose the correct meaning of <b>miffed</b>.",
+  options: ["Slightly annoyed", "Extremely delighted", "Completely confused", "Deeply frightened"],
+  correct: "1",
+  image: ''
 },
+
 35: {
-text: "Dark clouds and strong winds ____ a coming storm.",
-options: ["bode", "end", "ignore", "clear"],
-correct: "1",
-image: ''
+  text: "Dark clouds <b>bode</b> trouble for the evening match.<br>Choose the correct meaning of <b>bode</b>.",
+  options: ["Be an omen of", "Prevent actively", "Remove entirely", "Explain clearly"],
+  correct: "1",
+  image: ''
 },
+
 36: {
-text: "After a long day’s work, he sought ____ under the shade of a tree.",
-options: ["repose", "tension", "chaos", "noise"],
-correct: "1",
-image: ''
+  text: "After the long journey, he lay in <b>repose</b> under the tree.<br>Choose the correct meaning of <b>repose</b>.",
+  options: ["Rest or relaxation", "Hard labour", "Sudden movement", "Mental stress"],
+  correct: "1",
+  image: ''
 },
+
 37: {
-text: "Unlike spirits, humans possess ____ bodies made of flesh and bone.",
-options: ["corporeal", "spiritual", "imaginary", "fictional"],
-correct: "1",
-image: ''
+  text: "The soul was believed to be separate from the <b>corporeal</b> body.<br>Choose the correct meaning of <b>corporeal</b>.",
+  options: ["Physical or material", "Spiritual only", "Imaginary", "Invisible"],
+  correct: "1",
+  image: ''
 },
+
 38: {
-text: "Reckless driving can ____ not only your life but also the lives of others.",
-options: ["imperil", "protect", "secure", "save"],
-correct: "1",
-image: ''
+  text: "Careless driving can <b>imperil</b> lives.<br>Choose the correct meaning of <b>imperil</b>.",
+  options: ["Put in danger", "Protect completely", "Ignore risks", "Guarantee safety"],
+  correct: "1",
+  image: ''
 },
+
 39: {
-text: "The farmers had to ____ all day in the hot sun to finish planting the crops.",
-options: ["toil", "rest", "celebrate", "relax"],
-correct: "1",
-image: ''
+  text: "Farmers <b>toil</b> in the fields from dawn to dusk.<br>Choose the correct meaning of <b>toil</b>.",
+  options: ["Work extremely hard", "Relax peacefully", "Work casually", "Supervise lightly"],
+  correct: "1",
+  image: ''
 },
+
 40: {
-text: "Weekends are a time for ____ after a busy work schedule.",
-options: ["leisure", "labor", "stress", "fatigue"],
-correct: "1",
-image: ''
+  text: "He enjoys reading books during his <b>leisure</b> time.<br>Choose the correct meaning of <b>leisure</b>.",
+  options: ["Free time for relaxation", "Busy schedule", "Working hours", "Stressful period"],
+  correct: "1",
+  image: ''
 },
 41: {
-text: "The room was ____ with beautiful decorations and fragrant flowers.",
-options: ["replete", "bare", "empty", "vacant"],
-correct: "1",
-image: ''
+  text: "The library was <b>replete</b> with rare manuscripts.<br>Choose the correct meaning of <b>replete</b>.",
+  options: ["Completely filled", "Nearly empty", "Poorly arranged", "Lightly stocked"],
+  correct: "1",
+  image: ''
 },
+
 42: {
-text: "She was so ____ in her book that she didn’t hear the phone ring.",
-options: ["engrossed", "distracted", "bored", "annoyed"],
-correct: "1",
-image: ''
+  text: "He was so <b>engrossed</b> in the movie that he forgot his surroundings.<br>Choose the correct meaning of <b>engrossed</b>.",
+  options: ["Deeply absorbed", "Partially aware", "Casually watching", "Bored and restless"],
+  correct: "1",
+  image: ''
 },
+
 43: {
-text: "The manager began to ____ the employee for missing the deadline.",
-options: ["berate", "praise", "encourage", "reward"],
-correct: "1",
-image: ''
+  text: "The manager began to <b>berate</b> the staff for their mistakes.<br>Choose the correct meaning of <b>berate</b>.",
+  options: ["Scold harshly", "Praise openly", "Ignore politely", "Advise gently"],
+  correct: "1",
+  image: ''
 },
+
 44: {
-text: "He didn’t want to ____ himself in a conflict that wasn’t his concern.",
-options: ["embroil", "support", "ignore", "assist"],
-correct: "1",
-image: ''
+  text: "He did not want to <b>embroil</b> himself in unnecessary controversies.<br>Choose the correct meaning of <b>embroil</b>.",
+  options: ["Involve deeply in conflict", "Resolve peacefully", "Observe silently", "Withdraw officially"],
+  correct: "1",
+  image: ''
 },
+
 45: {
-text: "Her excuse for being late seemed quite ____ to everyone in the meeting.",
-options: ["plausible", "ridiculous", "impossible", "absurd"],
-correct: "1",
-image: ''
+  text: "Her explanation sounded <b>plausible</b> to the committee.<br>Choose the correct meaning of <b>plausible</b>.",
+  options: ["Seemingly reasonable", "Obviously false", "Completely absurd", "Highly emotional"],
+  correct: "1",
+  image: ''
 },
+
 46: {
-text: "He gave a ____ speech that convinced the audience to support the cause.",
-options: ["persuasive", "confusing", "weak", "boring"],
-correct: "1",
-image: ''
+  text: "The speaker delivered a <b>persuasive</b> argument.<br>Choose the correct meaning of <b>persuasive</b>.",
+  options: ["Able to convince", "Impossible to believe", "Purely factual", "Emotionless"],
+  correct: "1",
+  image: ''
 },
+
 47: {
-text: "The old school friends formed a small ____ that met every month for dinner.",
-options: ["sodality", "conflict", "rivalry", "isolation"],
-correct: "1",
-image: ''
+  text: "The students formed a <b>sodality</b> to promote cultural activities.<br>Choose the correct meaning of <b>sodality</b>.",
+  options: ["Association or fellowship", "Political party", "Temporary crowd", "Legal institution"],
+  correct: "1",
+  image: ''
 },
+
 48: {
-text: "The political ____ caused great confusion and embarrassment for the party.",
-options: ["imbroglio", "celebration", "agreement", "reunion"],
-correct: "1",
-image: ''
+  text: "The issue turned into a complete <b>imbroglio</b> due to miscommunication.<br>Choose the correct meaning of <b>imbroglio</b>.",
+  options: ["Complicated situation", "Clear solution", "Simple task", "Routine matter"],
+  correct: "1",
+  image: ''
 },
+
 49: {
-text: "After a small ____ over who would drive, they quickly made up and laughed.",
-options: ["tiff", "party", "speech", "agreement"],
-correct: "1",
-image: ''
+  text: "A minor <b>tiff</b> between friends soon escalated.<br>Choose the correct meaning of <b>tiff</b>.",
+  options: ["Petty quarrel", "Serious battle", "Formal debate", "Friendly greeting"],
+  correct: "1",
+  image: ''
 },
+
 50: {
-text: "The sailors would often ____ all night after returning from a long voyage.",
-options: ["carouse", "rest", "sleep", "study"],
-correct: "1",
-image: ''
+  text: "They went out to <b>carouse</b> after the exams were over.<br>Choose the correct meaning of <b>carouse</b>.",
+  options: ["Drink and celebrate noisily", "Work silently", "Meditate alone", "Travel officially"],
+  correct: "1",
+  image: ''
 },
 
-    
-};
+   
+}
 
-// placeholder
-const explanations = {
+
+const explanations={
 1: {
-text: "<b>Answer:</b> rigging. <br><b>Definition:</b> The system of ropes, cables, or chains used to support a ship's masts and control sails. <br><b>Synonyms:</b> ropes, tackle, gear, cords, apparatus. <br><b>Antonyms:</b> hull, deck, keel, anchor.",
-image: ""
+  text: "<b><u>रस्सियों का जाल</u></b><br>Rigging means the system of ropes, cables, or chains used on a ship.<br><i>Rhyming trick:</i> ship की <b>rigging</b> देख, rope-rope लगging 😉",
+  image: ""
 },
+
 2: {
-text: "<b>Answer:</b> quixotic. <br><b>Definition:</b> Extremely idealistic, unrealistic, and impractical. <br><b>Synonyms:</b> romantic, impractical, visionary, fanciful, dreamy. <br><b>Antonyms:</b> realistic, practical, pragmatic, sensible, rational.",
-image: ""
+  text: "<b><u>अव्यावहारिक आदर्शवादी</u></b><br>Quixotic means extremely idealistic but impractical.<br><i>Rhyming trick:</i> quick सोचा, logic खोया – <b>quixotic</b> होया 😄",
+  image: ""
 },
+
 3: {
-text: "<b>Answer:</b> imputed. <br><b>Definition:</b> Represented something (especially a fault or crime) as being done by someone. <br><b>Synonyms:</b> attributed, assigned, credited, ascribed, charged. <br><b>Antonyms:</b> acquitted, absolved, exonerated, denied, cleared.",
-image: ""
+  text: "<b><u>दोष मढ़ना</u></b><br>Imputed means to attribute something, usually blame, to someone.<br><i>Rhyming trick:</i> input नहीं, blame put किया – <b>imputed</b> किया 🔁",
+  image: ""
 },
+
 4: {
-text: "<b>Answer:</b> fervent. <br><b>Definition:</b> Having or displaying passionate intensity. <br><b>Synonyms:</b> passionate, zealous, ardent, eager, enthusiastic. <br><b>Antonyms:</b> indifferent, apathetic, cold, unenthusiastic, dull.",
-image: ""
+  text: "<b><u>उत्साही</u></b><br>Fervent means showing strong passion or intensity.<br><i>Rhyming trick:</i> fire-fire emotion – <b>fervent</b> devotion 🔥",
+  image: ""
 },
+
 5: {
-text: "<b>Answer:</b> imbued. <br><b>Definition:</b> Filled or inspired deeply with a feeling or quality. <br><b>Synonyms:</b> filled, infused, saturated, instilled, permeated. <br><b>Antonyms:</b> drained, emptied, deprived, exhausted, cleared.",
-image: ""
+  text: "<b><u>से परिपूर्ण</u></b><br>Imbued means deeply filled with a quality or feeling.<br><i>Rhyming trick:</i> in-bhuya feeling – mind <b>imbued</b> dealing 💭",
+  image: ""
 },
+
 6: {
-text: "<b>Answer:</b> rejig. <br><b>Definition:</b> Reorganize or rearrange something to improve it. <br><b>Synonyms:</b> rearrange, restructure, modify, alter, revamp. <br><b>Antonyms:</b> destroy, neglect, ignore, dismantle, damage.",
-image: ""
+  text: "<b><u>पुनर्गठित करना</u></b><br>Rejig means to reorganize or rearrange something.<br><i>Rhyming trick:</i> फिर से jig-jig – plan को <b>rejig</b> ⚙️",
+  image: ""
 },
+
 7: {
-text: "<b>Answer:</b> euphemism. <br><b>Definition:</b> A mild or indirect word used in place of one considered harsh or blunt. <br><b>Synonyms:</b> substitute, understatement, mild term, polite expression, soft word. <br><b>Antonyms:</b> dysphemism, bluntness, directness, harshness, candor.",
-image: ""
+  text: "<b><u>मृदु शब्द</u></b><br>Euphemism means a polite or mild expression used instead of a harsh one.<br><i>Rhyming trick:</i> you-fame-ism, soft बोल – <b>euphemism</b> goal 🎭",
+  image: ""
 },
+
 8: {
-text: "<b>Answer:</b> feisty. <br><b>Definition:</b> Lively, determined, and courageous. <br><b>Synonyms:</b> spirited, energetic, bold, plucky, courageous. <br><b>Antonyms:</b> timid, fearful, shy, weak, passive.",
-image: ""
+  text: "<b><u>लड़ाकू स्वभाव</u></b><br>Feisty means aggressive, energetic, and spirited.<br><i>Rhyming trick:</i> fighty-fighty mood – <b>feisty</b> dude 😤",
+  image: ""
 },
+
 9: {
-text: "<b>Answer:</b> diligent. <br><b>Definition:</b> Showing care and conscientiousness in one’s work or duties. <br><b>Synonyms:</b> hardworking, industrious, attentive, careful, studious. <br><b>Antonyms:</b> lazy, careless, negligent, idle, indifferent.",
-image: ""
+  text: "<b><u>परिश्रमी</u></b><br>Diligent means hard-working and attentive.<br><i>Rhyming trick:</i> daily-daily effort – <b>diligent</b> student 📘",
+  image: ""
 },
+
 10: {
-text: "<b>Answer:</b> contend. <br><b>Definition:</b> To compete or struggle to overcome difficulties or opponents. <br><b>Synonyms:</b> compete, fight, battle, strive, struggle. <br><b>Antonyms:</b> surrender, yield, submit, retreat, concede.",
-image: ""
+  text: "<b><u>प्रतिस्पर्धा करना</u></b><br>Contend means to compete or struggle for something.<br><i>Rhyming trick:</i> contest का end – teams <b>contend</b> 🏆",
+  image: ""
 },
 11: {
-text: "<b>Answer:</b> menial. <br><b>Definition:</b> (Of work) not requiring much skill and lacking prestige. <br><b>Synonyms:</b> unskilled, lowly, humble, servile, degrading. <br><b>Antonyms:</b> prestigious, skilled, respected, high-level, honorable.",
-image: ""
-},
-12: {
-text: "<b>Answer:</b> thwarting. <br><b>Definition:</b> Preventing someone from accomplishing something. <br><b>Synonyms:</b> hindering, obstructing, opposing, frustrating, defeating. <br><b>Antonyms:</b> aiding, assisting, helping, supporting, encouraging.",
-image: ""
-},
-13: {
-text: "<b>Answer:</b> arduous. <br><b>Definition:</b> Involving or requiring difficult and tiring effort. <br><b>Synonyms:</b> hard, laborious, exhausting, challenging, tough. <br><b>Antonyms:</b> easy, effortless, simple, light, trivial.",
-image: ""
-},
-14: {
-text: "<b>Answer:</b> evince. <br><b>Definition:</b> Reveal the presence of a feeling or quality; make clear. <br><b>Synonyms:</b> show, demonstrate, manifest, exhibit, display. <br><b>Antonyms:</b> conceal, hide, suppress, disguise, obscure.",
-image: ""
-},
-15: {
-text: "<b>Answer:</b> amenable. <br><b>Definition:</b> Willing to be persuaded or controlled; open to suggestions. <br><b>Synonyms:</b> cooperative, agreeable, responsive, compliant, flexible. <br><b>Antonyms:</b> stubborn, uncooperative, resistant, hostile, obstinate.",
-image: ""
-},
-16: {
-text: "<b>Answer:</b> endeavor. <br><b>Definition:</b> An attempt to achieve a goal; serious effort. <br><b>Synonyms:</b> attempt, effort, venture, try, undertaking. <br><b>Antonyms:</b> idleness, inaction, neglect, rest, passivity.",
-image: ""
-},
-17: {
-text: "<b>Answer:</b> construe. <br><b>Definition:</b> Interpret or understand the meaning of something in a particular way. <br><b>Synonyms:</b> interpret, explain, understand, infer, deduce. <br><b>Antonyms:</b> confuse, misinterpret, misunderstand, distort, obscure.",
-image: ""
-},
-18: {
-text: "<b>Answer:</b> lashed. <br><b>Definition:</b> Struck or beat forcefully; moved violently or suddenly. <br><b>Synonyms:</b> struck, whipped, hit, smacked, pounded. <br><b>Antonyms:</b> caressed, soothed, patted, comforted, touched.",
-image: ""
-},
-19: {
-text: "<b>Answer:</b> bolster. <br><b>Definition:</b> Support or strengthen something. <br><b>Synonyms:</b> support, reinforce, boost, strengthen, uphold. <br><b>Antonyms:</b> weaken, undermine, lessen, reduce, damage.",
-image: ""
-},
-20: {
-text: "<b>Answer:</b> erratic. <br><b>Definition:</b> Not regular or consistent in pattern, movement, or behavior. <br><b>Synonyms:</b> unpredictable, inconsistent, irregular, changeable, unstable. <br><b>Antonyms:</b> steady, consistent, stable, predictable, regular.",
-image: ""
-},
-21: {
-text: "<b>Answer:</b> pragmatic. <br><b>Definition:</b> Dealing with things sensibly and realistically based on practical considerations. <br><b>Synonyms:</b> practical, realistic, logical, rational, sensible. <br><b>Antonyms:</b> idealistic, impractical, unrealistic, theoretical, visionary.",
-image: ""
-},
-22: {
-text: "<b>Answer:</b> snobbery. <br><b>Definition:</b> The behavior of people who think they are superior to others in taste or social status. <br><b>Synonyms:</b> arrogance, superiority, haughtiness, elitism, pride. <br><b>Antonyms:</b> humility, modesty, equality, respect, kindness.",
-image: ""
-},
-23: {
-text: "<b>Answer:</b> umbrage. <br><b>Definition:</b> Offense or annoyance caused by a remark or action. <br><b>Synonyms:</b> offense, resentment, indignation, irritation, displeasure. <br><b>Antonyms:</b> delight, satisfaction, pleasure, joy, contentment.",
-image: ""
-},
-24: {
-text: "<b>Answer:</b> weltered. <br><b>Definition:</b> To roll, toss, or be immersed in something such as blood, water, or confusion. <br><b>Synonyms:</b> rolled, tumbled, wallowed, floundered, surged. <br><b>Antonyms:</b> rested, settled, stood, stabilized, calmed.",
-image: ""
-},
-25: {
-text: "<b>Answer:</b> vitiate. <br><b>Definition:</b> To spoil or impair the quality or effectiveness of something. <br><b>Synonyms:</b> spoil, weaken, corrupt, damage, taint. <br><b>Antonyms:</b> improve, strengthen, purify, enhance, restore.",
-image: ""
-},
-26: {
-text: "<b>Answer:</b> encroach. <br><b>Definition:</b> To intrude gradually or stealthily on another's territory, rights, or possessions. <br><b>Synonyms:</b> intrude, invade, trespass, infringe, overstep. <br><b>Antonyms:</b> respect, retreat, withdraw, protect, preserve.",
-image: ""
-},
-27: {
-text: "<b>Answer:</b> profound. <br><b>Definition:</b> Having deep insight, meaning, or intensity. <br><b>Synonyms:</b> deep, intense, thoughtful, insightful, meaningful. <br><b>Antonyms:</b> shallow, superficial, trivial, light, ordinary.",
-image: ""
-},
-28: {
-text: "<b>Answer:</b> hideous. <br><b>Definition:</b> Extremely ugly or unpleasant to look at. <br><b>Synonyms:</b> ugly, horrible, monstrous, dreadful, ghastly. <br><b>Antonyms:</b> beautiful, attractive, lovely, pleasant, charming.",
-image: ""
-},
-29: {
-text: "<b>Answer:</b> skittery. <br><b>Definition:</b> Nervous, easily frightened, or jittery. <br><b>Synonyms:</b> jumpy, restless, anxious, edgy, fidgety. <br><b>Antonyms:</b> calm, relaxed, composed, steady, serene.",
-image: ""
-},
-30: {
-text: "<b>Answer:</b> ciliation. <br><b>Definition:</b> The presence or arrangement of tiny hair-like structures called cilia on a cell surface. <br><b>Synonyms:</b> cilia formation, hair structures, microhair growth, filament presence, cellular bristles. <br><b>Antonyms:</b> smoothness, baldness, bareness, flatness, plainness.",
-image: ""
-},
-31: {
-text: "<b>Answer:</b> litigate. <br><b>Definition:</b> To take a dispute to court for legal resolution. <br><b>Synonyms:</b> sue, prosecute, contest, charge, dispute. <br><b>Antonyms:</b> settle, agree, reconcile, compromise, withdraw.",
-image: ""
-},
-32: {
-text: "<b>Answer:</b> aloof. <br><b>Definition:</b> Not friendly or forthcoming; distant and reserved. <br><b>Synonyms:</b> distant, detached, reserved, cold, indifferent. <br><b>Antonyms:</b> friendly, sociable, warm, open, approachable.",
-image: ""
-},
-33: {
-text: "<b>Answer:</b> depraved. <br><b>Definition:</b> Morally corrupt or wicked. <br><b>Synonyms:</b> wicked, evil, corrupt, immoral, debased. <br><b>Antonyms:</b> virtuous, moral, pure, good, noble.",
-image: ""
-},
-34: {
-text: "<b>Answer:</b> miffed. <br><b>Definition:</b> Slightly annoyed or offended. <br><b>Synonyms:</b> irritated, annoyed, upset, displeased, vexed. <br><b>Antonyms:</b> pleased, content, satisfied, happy, delighted.",
-image: ""
-},
-35: {
-text: "<b>Answer:</b> bode. <br><b>Definition:</b> To be an omen or sign of a future outcome. <br><b>Synonyms:</b> foreshadow, predict, foretell, presage, indicate. <br><b>Antonyms:</b> conceal, ignore, mislead, contradict, suppress.",
-image: ""
-},
-36: {
-text: "<b>Answer:</b> repose. <br><b>Definition:</b> A state of rest, sleep, or tranquility. <br><b>Synonyms:</b> rest, relaxation, calm, peace, ease. <br><b>Antonyms:</b> activity, disturbance, unrest, stress, motion.",
-image: ""
-},
-37: {
-text: "<b>Answer:</b> corporeal. <br><b>Definition:</b> Relating to a physical, material body; not spiritual. <br><b>Synonyms:</b> bodily, physical, material, tangible, fleshly. <br><b>Antonyms:</b> spiritual, ethereal, immaterial, nonphysical, abstract.",
-image: ""
-},
-38: {
-text: "<b>Answer:</b> imperil. <br><b>Definition:</b> To put in danger; to endanger or jeopardize. <br><b>Synonyms:</b> endanger, risk, jeopardize, threaten, expose. <br><b>Antonyms:</b> protect, safeguard, secure, defend, shield.",
-image: ""
-},
-39: {
-text: "<b>Answer:</b> toil. <br><b>Definition:</b> To work extremely hard or incessantly. <br><b>Synonyms:</b> labor, work, struggle, grind, exert. <br><b>Antonyms:</b> rest, relax, idle, laze, ease.",
-image: ""
-},
-40: {
-text: "<b>Answer:</b> leisure. <br><b>Definition:</b> Free time when one is not working; time for relaxation or enjoyment. <br><b>Synonyms:</b> rest, relaxation, recreation, freedom, downtime. <br><b>Antonyms:</b> work, labor, duty, exertion, occupation.",
-image: ""
-},
-41: {
-text: "<b>Answer:</b> replete. <br><b>Definition:</b> Filled or well supplied with something. <br><b>Synonyms:</b> full, abundant, loaded, overflowing, stuffed. <br><b>Antonyms:</b> empty, lacking, scarce, deficient, bare.",
-image: ""
-},
-42: {
-text: "<b>Answer:</b> engross. <br><b>Definition:</b> To completely capture someone’s attention or interest. <br><b>Synonyms:</b> absorb, fascinate, engage, captivate, immerse. <br><b>Antonyms:</b> bore, distract, repel, ignore, disinterest.",
-image: ""
-},
-43: {
-text: "<b>Answer:</b> berate. <br><b>Definition:</b> To scold or criticize angrily. <br><b>Synonyms:</b> scold, rebuke, reprimand, chide, admonish. <br><b>Antonyms:</b> praise, compliment, applaud, commend, approve.",
-image: ""
-},
-44: {
-text: "<b>Answer:</b> embroil. <br><b>Definition:</b> To involve someone deeply in an argument, conflict, or difficult situation. <br><b>Synonyms:</b> entangle, involve, ensnare, mix up, drag in. <br><b>Antonyms:</b> free, release, disengage, disentangle, exclude.",
-image: ""
-},
-45: {
-text: "<b>Answer:</b> plausible. <br><b>Definition:</b> Seeming reasonable or probable; believable. <br><b>Synonyms:</b> credible, reasonable, convincing, likely, possible. <br><b>Antonyms:</b> improbable, unbelievable, doubtful, absurd, impossible.",
-image: ""
-},
-46: {
-text: "<b>Answer:</b> persuasive. <br><b>Definition:</b> Good at convincing others to believe or do something. <br><b>Synonyms:</b> convincing, influential, compelling, eloquent, forceful. <br><b>Antonyms:</b> unconvincing, weak, ineffective, unpersuasive, dull.",
-image: ""
-},
-47: {
-text: "<b>Answer:</b> sodality. <br><b>Definition:</b> A fellowship or association, especially for religious or social purposes. <br><b>Synonyms:</b> brotherhood, fellowship, fraternity, association, society. <br><b>Antonyms:</b> isolation, separation, solitude, division, detachment.",
-image: ""
-},
-48: {
-text: "<b>Answer:</b> imbroglio. <br><b>Definition:</b> A complicated or confusing situation, often involving a misunderstanding or dispute. <br><b>Synonyms:</b> confusion, entanglement, mess, quarrel, dispute. <br><b>Antonyms:</b> clarity, agreement, harmony, order, understanding.",
-image: ""
-},
-49: {
-text: "<b>Answer:</b> tiff. <br><b>Definition:</b> A small or trivial argument, especially between friends or lovers. <br><b>Synonyms:</b> quarrel, spat, argument, squabble, disagreement. <br><b>Antonyms:</b> harmony, peace, accord, agreement, unity.",
-image: ""
-},
-50: {
-text: "<b>Answer:</b> carouse. <br><b>Definition:</b> To drink and enjoy oneself noisily in a lively gathering. <br><b>Synonyms:</b> revel, party, celebrate, feast, binge. <br><b>Antonyms:</b> abstain, rest, refrain, fast, sober.",
-image: ""
+  text: "<b><u>तुच्छ कार्य</u></b><br>Menial means low-status, routine work requiring little skill.<br><i>Rhyming trick:</i> me नीचा feel – job <b>menial</b> deal 😌",
+  image: ""
 },
 
-    
-    
-};
+12: {
+  text: "<b><u>विफल करना</u></b><br>Thwarting means preventing someone from achieving a goal.<br><i>Rhyming trick:</i> thought में आया, block कर दिया – <b>thwarting</b> किया 🚫",
+  image: ""
+},
+
+13: {
+  text: "<b><u>कठिन</u></b><br>Arduous means very difficult and tiring.<br><i>Rhyming trick:</i> hard-hard रास्ता – <b>arduous</b> रास्ता 🏔️",
+  image: ""
+},
+
+14: {
+  text: "<b><u>प्रकट करना</u></b><br>Evince means to show something clearly.<br><i>Rhyming trick:</i> evidence बन गया – fear <b>evince</b> हो गया 👀",
+  image: ""
+},
+
+15: {
+  text: "<b><u>स्वीकार करने योग्य</u></b><br>Amenable means willing to agree or accept.<br><i>Rhyming trick:</i> amen बोला, मान लिया – <b>amenable</b> बन लिया ✔️",
+  image: ""
+},
+
+16: {
+  text: "<b><u>प्रयास</u></b><br>Endeavor means a serious and determined effort.<br><i>Rhyming trick:</i> end तक fight – <b>endeavor</b> right 💪",
+  image: ""
+},
+
+17: {
+  text: "<b><u>अर्थ निकालना</u></b><br>Construe means to interpret meaning.<br><i>Rhyming trick:</i> construct किया meaning – <b>construe</b> feeling 🧠",
+  image: ""
+},
+
+18: {
+  text: "<b><u>जोर से प्रहार करना</u></b><br>Lashed means struck violently.<br><i>Rhyming trick:</i> lightning flashed, waves <b>lashed</b> 🌊",
+  image: ""
+},
+
+19: {
+  text: "<b><u>मजबूत करना</u></b><br>Bolster means to support or strengthen.<br><i>Rhyming trick:</i> बल बढ़ाया – strength <b>bolster</b> कराया 🛡️",
+  image: ""
+},
+
+20: {
+  text: "<b><u>अनियमित</u></b><br>Erratic means unpredictable or inconsistent.<br><i>Rhyming trick:</i> कभी सही, कभी गलत – <b>erratic</b> हालत 🔄",
+  image: ""
+},
+21: {
+  text: "<b><u>व्यावहारिक</u></b><br>Pragmatic means dealing with problems practically and realistically.<br><i>Rhyming trick:</i> practical magic – <b>pragmatic</b> logic 🧠",
+  image: ""
+},
+
+22: {
+  text: "<b><u>घमंड</u></b><br>Snobbery means showing pride and feeling superior to others.<br><i>Rhyming trick:</i> snob का glow – <b>snobbery</b> show 😒",
+  image: ""
+},
+
+23: {
+  text: "<b><u>नाराज़गी</u></b><br>Umbrage means feeling offended or resentful.<br><i>Rhyming trick:</i> rude का coverage – mood में <b>umbrage</b> 😠",
+  image: ""
+},
+
+24: {
+  text: "<b><u>तड़पना</u></b><br>Weltered means to suffer or move helplessly, often in pain.<br><i>Rhyming trick:</i> pain में shelter – body <b>welter</b> 🩸",
+  image: ""
+},
+
+25: {
+  text: "<b><u>खराब करना</u></b><br>Vitiate means to spoil or impair something.<br><i>Rhyming trick:</i> virus आया, health <b>vitiate</b> 🦠",
+  image: ""
+},
+
+26: {
+  text: "<b><u>अतिक्रमण करना</u></b><br>Encroach means to intrude gradually on others' territory.<br><i>Rhyming trick:</i> inch by inch approach – <b>encroach</b> 🌱",
+  image: ""
+},
+
+27: {
+  text: "<b><u>गहन</u></b><br>Profound means deep in meaning or insight.<br><i>Rhyming trick:</i> thought का sound – <b>profound</b> 👓",
+  image: ""
+},
+
+28: {
+  text: "<b><u>भयानक</u></b><br>Hideous means extremely ugly or horrifying.<br><i>Rhyming trick:</i> horror का radius – <b>hideous</b> 😱",
+  image: ""
+},
+
+29: {
+  text: "<b><u>चंचल</u></b><br>Skittery means moving quickly and nervously.<br><i>Rhyming trick:</i> skip-skip hurry – <b>skittery</b> 🐭",
+  image: ""
+},
+
+30: {
+  text: "<b><u>रोमिका संरचना</u></b><br>Ciliation means the presence of tiny hair-like projections.<br><i>Rhyming trick:</i> cilia का nation – <b>ciliation</b> 🔬",
+  image: ""
+},
+31: {
+  text: "<b><u>मुकदमा लड़ना</u></b><br>Litigate means to resolve a dispute by taking it to court.<br><i>Rhyming trick:</i> legal fight का gate – court में <b>litigate</b> ⚖️",
+  image: ""
+},
+
+32: {
+  text: "<b><u>अलग-थलग</u></b><br>Aloof means keeping distance emotionally or socially.<br><i>Rhyming trick:</i> alone mood proof – <b>aloof</b> attitude 🧊",
+  image: ""
+},
+
+33: {
+  text: "<b><u>अधम</u></b><br>Depraved means morally corrupt or wicked.<br><i>Rhyming trick:</i> deprive हुआ value – <b>depraved</b> nature 😈",
+  image: ""
+},
+
+34: {
+  text: "<b><u>नाराज़</u></b><br>Miffed means slightly annoyed or offended.<br><i>Rhyming trick:</i> little सा stiff mood – <b>miffed</b> 😤",
+  image: ""
+},
+
+35: {
+  text: "<b><u>संकेत देना</u></b><br>Bode means to be a sign of something bad or good.<br><i>Rhyming trick:</i> future code – clouds <b>bode</b> ☁️",
+  image: ""
+},
+
+36: {
+  text: "<b><u>विश्राम</u></b><br>Repose means rest or relaxation, often peaceful.<br><i>Rhyming trick:</i> rest की pose – <b>repose</b> 🛌",
+  image: ""
+},
+
+37: {
+  text: "<b><u>शारीरिक</u></b><br>Corporeal means relating to the physical body.<br><i>Rhyming trick:</i> core वाला real – <b>corporeal</b> body 🧍",
+  image: ""
+},
+
+38: {
+  text: "<b><u>खतरे में डालना</u></b><br>Imperil means to put someone or something in danger.<br><i>Rhyming trick:</i> improper drill – life <b>imperil</b> 🚨",
+  image: ""
+},
+
+39: {
+  text: "<b><u>कड़ी मेहनत करना</u></b><br>Toil means to work extremely hard for long hours.<br><i>Rhyming trick:</i> soil में oil – farmers <b>toil</b> 🌾",
+  image: ""
+},
+
+40: {
+  text: "<b><u>फुर्सत</u></b><br>Leisure means free time for rest or enjoyment.<br><i>Rhyming trick:</i> pleasure का measure – <b>leisure</b> time 🎵",
+  image: ""
+},
+41: {
+  text: "<b><u>से परिपूर्ण</u></b><br>Replete means completely filled or well supplied.<br><i>Rhyming trick:</i> repeat-repeat भर गया plate – <b>replete</b> state 🍽️",
+  image: ""
+},
+
+42: {
+  text: "<b><u>पूरी तरह तल्लीन</u></b><br>Engrossed means fully absorbed in something.<br><i>Rhyming trick:</i> engross में loss – world भूल गया boss 🎬",
+  image: ""
+},
+
+43: {
+  text: "<b><u>कड़ी डाँट लगाना</u></b><br>Berate means to scold angrily or harshly.<br><i>Rhyming trick:</i> गुस्से का rate – boss <b>berate</b> 😡",
+  image: ""
+},
+
+44: {
+  text: "<b><u>फँसा देना</u></b><br>Embroil means to involve someone deeply in conflict or trouble.<br><i>Rhyming trick:</i> problem का boil – खुद को <b>embroil</b> 🔥",
+  image: ""
+},
+
+45: {
+  text: "<b><u>विश्वसनीय</u></b><br>Plausible means appearing reasonable or believable.<br><i>Rhyming trick:</i> plus-able logic – story <b>plausible</b> ✔️",
+  image: ""
+},
+
+46: {
+  text: "<b><u>प्रभावशाली</u></b><br>Persuasive means able to convince others.<br><i>Rhyming trick:</i> pressure + wave – words <b>persuasive</b> 🌊",
+  image: ""
+},
+
+47: {
+  text: "<b><u>संघ</u></b><br>Sodality means an association or fellowship with a common purpose.<br><i>Rhyming trick:</i> साथ वाली quality – <b>sodality</b> 🤝",
+  image: ""
+},
+
+48: {
+  text: "<b><u>उलझन</u></b><br>Imbroglio means a complicated or confusing situation.<br><i>Rhyming trick:</i> in-broke-logic – total <b>imbroglio</b> 🌀",
+  image: ""
+},
+
+49: {
+  text: "<b><u>छोटी नोक-झोंक</u></b><br>Tiff means a minor quarrel or disagreement.<br><i>Rhyming trick:</i> stiff mood shift – small <b>tiff</b> 😐",
+  image: ""
+},
+
+50: {
+  text: "<b><u>मौज-मस्ती करना</u></b><br>Carouse means to drink and celebrate noisily.<br><i>Rhyming trick:</i> party spouse – night <b>carouse</b> 🎉",
+  image: ""
+},
+
+
+}
+
