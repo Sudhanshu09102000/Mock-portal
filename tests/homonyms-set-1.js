@@ -26,7 +26,7 @@ image: ''
 5: {
 text: "He will ___ the wood for the fireplace.",
 options: ["Right", "Write", "Wright", "Rite"],
-correct: "2",
+correct: "3",
 image: ''
 },
 6: {
@@ -544,5 +544,6 @@ image: ""
 text: "<b>Rein</b> means to control or restrain.<br><b>Reign</b> means rule or period of rule.<br><b>Rain</b> means water falling from clouds.<br><b>Wane</b> means decrease gradually.",
 image: ""
 },
+
 
 }
