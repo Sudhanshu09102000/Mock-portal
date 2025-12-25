@@ -1,513 +1,605 @@
-// placeholder
-const questions = {
+const questions={
 1: {
-text: "He decided to attend the meeting, ____ he was extremely tired.",
-options: ["albeit", "because", "unless", "although"],
+text: "He decided to attend the meeting, <b>albeit</b> he was exhausted.<br>Choose the correct meaning of <b>albeit</b>.",
+options: ["Although", "Because", "Unless", "Therefore"],
 correct: "1",
-image: ""
+image: ''
 },
+
 2: {
-text: "The magician tried to ____ the audience with his clever tricks.",
-options: ["beguile", "annoy", "confuse", "disturb"],
+text: "The magician tried to <b>beguile</b> the audience with clever tricks.<br>Choose the correct meaning of <b>beguile</b>.",
+options: ["Charm or deceive", "Anger deliberately", "Ignore completely", "Warn seriously"],
 correct: "1",
-image: ""
+image: ''
 },
+
 3: {
-text: "She kept ____ over her misplaced keys instead of searching calmly.",
-options: ["fussing", "ignoring", "resting", "laughing"],
+text: "She kept <b>fussing</b> over minor issues during the trip.<br>Choose the correct meaning of <b>fussing</b>.",
+options: ["Worrying unnecessarily", "Celebrating loudly", "Ignoring details", "Working silently"],
 correct: "1",
-image: ""
+image: ''
 },
+
 4: {
-text: "The children would often ____ endlessly about cartoons.",
-options: ["prattle", "argue", "study", "meditate"],
+text: "The children would <b>prattle</b> endlessly about cartoons.<br>Choose the correct meaning of <b>prattle</b>.",
+options: ["Talk foolishly at length", "Speak formally", "Remain silent", "Argue violently"],
 correct: "1",
-image: ""
+image: ''
 },
+
 5: {
-text: "Her ____ spirit helped her overcome all the obstacles.",
-options: ["tenacious", "fragile", "lazy", "careless"],
+text: "Her <b>tenacious</b> nature helped her succeed despite failures.<br>Choose the correct meaning of <b>tenacious</b>.",
+options: ["Persistent and determined", "Careless and lazy", "Easily discouraged", "Temporarily motivated"],
 correct: "1",
-image: ""
+image: ''
 },
+
 6: {
-text: "After the long trek, the hikers were absolutely ____ and devoured their food.",
-options: ["ravenous", "sleepy", "relieved", "angry"],
+text: "After the long trek, the hikers were absolutely <b>ravenous</b>.<br>Choose the correct meaning of <b>ravenous</b>.",
+options: ["Extremely hungry", "Mildly tired", "Emotionally upset", "Physically injured"],
 correct: "1",
-image: ""
+image: ''
 },
+
 7: {
-text: "He ____ in the corner after being scolded by his teacher.",
-options: ["sulked", "laughed", "danced", "smiled"],
+text: "He <b>sulked</b> in the corner after losing the game.<br>Choose the correct meaning of <b>sulked</b>.",
+options: ["Remained silent in anger", "Celebrated quietly", "Complained loudly", "Left immediately"],
 correct: "1",
-image: ""
+image: ''
 },
+
 8: {
-text: "The teacher ____ at the noisy students to make them silent.",
-options: ["frowned", "smiled", "laughed", "winked"],
+text: "She <b>frowned</b> at the incorrect answer.<br>Choose the correct meaning of <b>frowned</b>.",
+options: ["Showed displeasure", "Smiled broadly", "Laughed loudly", "Approved happily"],
 correct: "1",
-image: ""
+image: ''
 },
+
 9: {
-text: "She ____ with pride when she received the award.",
-options: ["beamed", "frowned", "cried", "hid"],
+text: "The child <b>beamed</b> with joy on seeing the gift.<br>Choose the correct meaning of <b>beamed</b>.",
+options: ["Smiled radiantly", "Cried silently", "Spoke angrily", "Looked confused"],
 correct: "1",
-image: ""
+image: ''
 },
+
 10: {
-text: "The manager ____ at the employee for making the same mistake again.",
-options: ["glowered", "smiled", "laughed", "nodded"],
+text: "The guard <b>glowered</b> at the trespasser.<br>Choose the correct meaning of <b>glowered</b>.",
+options: ["Stared angrily", "Looked lovingly", "Observed casually", "Ignored completely"],
 correct: "1",
-image: ""
+image: ''
 },
+
 11: {
-text: "He ____ the offer, thinking it was beneath his dignity.",
-options: ["disdained", "accepted", "appreciated", "considered"],
+text: "She <b>disdained</b> cheap popularity.<br>Choose the correct meaning of <b>disdained</b>.",
+options: ["Considered unworthy", "Desired strongly", "Accepted happily", "Promoted openly"],
 correct: "1",
-image: ""
+image: ''
 },
+
 12: {
-text: "The prince was criticized for his ____ manner and delicate behavior.",
-options: ["effeminate", "brave", "rough", "sturdy"],
+text: "His voice sounded <b>effeminate</b> to the audience.<br>Choose the correct meaning of <b>effeminate</b>.",
+options: ["Having feminine qualities", "Extremely aggressive", "Emotionless", "Rough and harsh"],
 correct: "1",
-image: ""
+image: ''
 },
+
 13: {
-text: "She grew up ____ violence of any kind after what she witnessed.",
-options: ["detesting", "supporting", "tolerating", "ignoring"],
+text: "She was <b>detesting</b> the unfair treatment.<br>Choose the correct meaning of <b>detesting</b>.",
+options: ["Hating intensely", "Ignoring politely", "Accepting silently", "Understanding calmly"],
 correct: "1",
-image: ""
+image: ''
 },
+
 14: {
-text: "The police are trying to control the increasing cases of ____ after the match.",
-options: ["hooliganism", "discipline", "charity", "education"],
+text: "The rise in street violence was linked to <b>hooliganism</b>.<br>Choose the correct meaning of <b>hooliganism</b>.",
+options: ["Violent and lawless behavior", "Religious discipline", "Academic misconduct", "Political debate"],
 correct: "1",
-image: ""
+image: ''
 },
+
 15: {
-text: "His ____ made him doubt even the kindest of gestures.",
-options: ["cynicism", "optimism", "innocence", "trust"],
+text: "His constant doubt showed deep <b>cynicism</b>.<br>Choose the correct meaning of <b>cynicism</b>.",
+options: ["Distrustful skepticism", "Blind faith", "Cheerful optimism", "Naive belief"],
 correct: "1",
-image: ""
+image: ''
 },
+
 16: {
-text: "The company provides free ____ for its employees to travel to work.",
-options: ["conveyances", "policies", "meetings", "contracts"],
+text: "Public <b>conveyances</b> play a vital role in urban transport.<br>Choose the correct meaning of <b>conveyances</b>.",
+options: ["Means of transport", "Legal documents", "Written messages", "Goods for trade"],
 correct: "1",
-image: ""
+image: ''
 },
+
 17: {
-text: "A good vacation can help to ____ your mind and body.",
-options: ["rejuvenate", "exhaust", "drain", "damage"],
+text: "The spa treatment helped <b>rejuvenate</b> her body and mind.<br>Choose the correct meaning of <b>rejuvenate</b>.",
+options: ["Restore energy or youth", "Cause permanent damage", "Slow down growth", "Create confusion"],
 correct: "1",
-image: ""
+image: ''
 },
+
 18: {
-text: "I can personally ____ for his honesty and dedication.",
-options: ["vouch", "blame", "question", "doubt"],
+text: "I can <b>vouch</b> for his honesty and dedication.<br>Choose the correct meaning of <b>vouch</b>.",
+options: ["Confirm or guarantee", "Question strongly", "Refuse openly", "Ignore completely"],
 correct: "1",
-image: ""
+image: ''
 },
+
 19: {
-text: "She has been suffering from a painful skin ____ for years.",
-options: ["affliction", "pleasure", "habit", "addiction"],
+text: "The disease proved to be a severe <b>affliction</b> for the village.<br>Choose the correct meaning of <b>affliction</b>.",
+options: ["Cause of pain or suffering", "Source of joy", "Temporary pleasure", "Minor inconvenience"],
 correct: "1",
-image: ""
+image: ''
 },
+
 20: {
-text: "He found himself in a difficult financial ____ after losing his job.",
-options: ["predicament", "holiday", "fortune", "vacation"],
+text: "He found himself in a moral <b>predicament</b>.<br>Choose the correct meaning of <b>predicament</b>.",
+options: ["Difficult or unpleasant situation", "Clear solution", "Definite success", "Routine task"],
 correct: "1",
-image: ""
+image: ''
 },
+
 21: {
-text: "They had to take a ____ to buy their first home.",
-options: ["mortgage", "donation", "loan", "tax"],
+text: "They took a <b>mortgage</b> to buy their new house.<br>Choose the correct meaning of <b>mortgage</b>.",
+options: ["Loan secured against property", "Gift of money", "Tax exemption", "Insurance policy"],
 correct: "1",
-image: ""
+image: ''
 },
+
 22: {
-text: "The reckless decision put the entire mission in ____.",
-options: ["jeopardy", "control", "certainty", "comfort"],
+text: "Careless driving put everyone in <b>jeopardy</b>.<br>Choose the correct meaning of <b>jeopardy</b>.",
+options: ["Danger or risk", "Complete safety", "Certain victory", "Legal protection"],
 correct: "1",
-image: ""
+image: ''
 },
+
 23: {
-text: "Her kind words brought some ____ to the grieving family.",
-options: ["consolation", "confusion", "anger", "panic"],
+text: "The prize served as some <b>consolation</b> after the loss.<br>Choose the correct meaning of <b>consolation</b>.",
+options: ["Comfort after disappointment", "Reason for anger", "Public humiliation", "Punitive action"],
 correct: "1",
-image: ""
+image: ''
 },
+
 24: {
-text: "The ____ from the garbage dump was unbearable.",
-options: ["stench", "fragrance", "breeze", "odorless air"],
+text: "A foul <b>stench</b> filled the abandoned room.<br>Choose the correct meaning of <b>stench</b>.",
+options: ["Strong unpleasant smell", "Soft fragrance", "Pleasant aroma", "Neutral scent"],
 correct: "1",
-image: ""
+image: ''
 },
+
 25: {
-text: "She made a ____ attempt to lie to the police, showing no shame at all.",
-options: ["brazen", "honest", "nervous", "careful"],
+text: "He made a <b>brazen</b> attempt to break the rules.<br>Choose the correct meaning of <b>brazen</b>.",
+options: ["Bold and shameless", "Timid and fearful", "Uncertain", "Secretive"],
 correct: "1",
-image: ""
+image: ''
 },
+
 26: {
-text: "Small businesses can ____ if they adapt to changing market trends.",
-options: ["thrive", "collapse", "decline", "suffer"],
+text: "Small businesses can <b>thrive</b> with proper support.<br>Choose the correct meaning of <b>thrive</b>.",
+options: ["Grow and prosper", "Decline rapidly", "Remain stagnant", "Collapse suddenly"],
 correct: "1",
-image: ""
+image: ''
 },
+
 27: {
-text: "The teacher was ____ and allowed the students to submit their work late.",
-options: ["lenient", "strict", "harsh", "rigid"],
+text: "The judge was <b>lenient</b> in sentencing the offender.<br>Choose the correct meaning of <b>lenient</b>.",
+options: ["Merciful or tolerant", "Extremely strict", "Unfairly biased", "Emotionless"],
 correct: "1",
-image: ""
+image: ''
 },
+
 28: {
-text: "People suffering from ____ cannot properly recognize musical tones.",
-options: ["amusia", "amnesia", "dyslexia", "aphasia"],
+text: "The musician suffered from <b>amusia</b> after the injury.<br>Choose the correct meaning of <b>amusia</b>.",
+options: ["Loss of musical ability", "Fear of music", "Excessive love for music", "Loud musical expression"],
 correct: "1",
-image: ""
+image: ''
 },
+
 29: {
-text: "He couldn’t hide his deep ____ toward his former friend who betrayed him.",
-options: ["resentment", "affection", "admiration", "sympathy"],
+text: "Years of neglect created deep <b>resentment</b> in him.<br>Choose the correct meaning of <b>resentment</b>.",
+options: ["Bitter feeling of anger", "Sudden happiness", "Temporary surprise", "Calm acceptance"],
 correct: "1",
-image: ""
+image: ''
 },
+
 30: {
-text: "The new CEO took on the ____ of managing the company’s resources responsibly.",
-options: ["stewardship", "ownership", "competition", "neglect"],
+text: "Environmental <b>stewardship</b> is everyone’s responsibility.<br>Choose the correct meaning of <b>stewardship</b>.",
+options: ["Responsible management or care", "Careless misuse", "Total abandonment", "Commercial exploitation"],
 correct: "1",
-image: ""
+image: ''
 },
+
 31: {
-text: "The general’s ____ attitude made him eager to start a conflict.",
-options: ["bellicose", "peaceful", "calm", "humble"],
+text: "His <b>bellicose</b> remarks escalated the argument.<br>Choose the correct meaning of <b>bellicose</b>.",
+options: ["Aggressive and warlike", "Calm and peaceful", "Friendly in nature", "Indifferent attitude"],
 correct: "1",
-image: ""
+image: ''
 },
+
 32: {
-text: "A small ____ of friends always sat together, excluding others.",
-options: ["clique", "crowd", "community", "team"],
+text: "The manager was accused of favoring a small <b>clique</b> in the office.<br>Choose the correct meaning of <b>clique</b>.",
+options: ["Exclusive small group", "Large public meeting", "Formal committee", "Random gathering"],
 correct: "1",
-image: ""
+image: ''
 },
+
 33: {
-text: "The church ____ gathered to pray for the victims of the disaster.",
-options: ["congregation", "committee", "organization", "crowd"],
+text: "A large <b>congregation</b> gathered for the ceremony.<br>Choose the correct meaning of <b>congregation</b>.",
+options: ["Assembly of people", "Private discussion", "Written declaration", "Political alliance"],
 correct: "1",
-image: ""
+image: ''
 },
+
 34: {
-text: "He was ____ about his personal life and rarely spoke in public.",
-options: ["reticent", "talkative", "friendly", "outgoing"],
+text: "He remained <b>reticent</b> about his personal life.<br>Choose the correct meaning of <b>reticent</b>.",
+options: ["Reserved and silent", "Talkative and open", "Overly emotional", "Carelessly honest"],
 correct: "1",
-image: ""
+image: ''
 },
+
 35: {
-text: "Her ____ nature made her the life of every party.",
-options: ["garrulous", "quiet", "timid", "moody"],
+text: "The host was unusually <b>garrulous</b> throughout the evening.<br>Choose the correct meaning of <b>garrulous</b>.",
+options: ["Excessively talkative", "Quiet and shy", "Rude in speech", "Unclear in expression"],
 correct: "1",
-image: ""
+image: ''
 },
+
 36: {
-text: "There was a heated ____ among the members about the new proposal.",
-options: ["contention", "agreement", "peace", "reconciliation"],
+text: "There is serious <b>contention</b> over the ownership of the land.<br>Choose the correct meaning of <b>contention</b>.",
+options: ["Dispute or disagreement", "Mutual agreement", "Peaceful settlement", "Formal celebration"],
 correct: "1",
-image: ""
+image: ''
 },
+
 37: {
-text: "He tried to remain ____ in the crowd to avoid being noticed.",
-options: ["inconspicuous", "prominent", "visible", "remarkable"],
+text: "The spy tried to remain <b>inconspicuous</b> in the crowd.<br>Choose the correct meaning of <b>inconspicuous</b>.",
+options: ["Not easily noticed", "Highly noticeable", "Famous", "Openly visible"],
 correct: "1",
-image: ""
+image: ''
 },
+
 38: {
-text: "She became a ____ figure in the fight for environmental justice.",
-options: ["prominent", "hidden", "ordinary", "unknown"],
+text: "She became a <b>prominent</b> figure in social reform.<br>Choose the correct meaning of <b>prominent</b>.",
+options: ["Well-known and important", "Unknown and obscure", "Unreliable", "Temporarily visible"],
 correct: "1",
-image: ""
+image: ''
 },
+
 39: {
-text: "The soldiers marched through the battlefield with ____ determination.",
-options: ["grim", "cheerful", "hopeful", "joyful"],
+text: "The situation looked <b>grim</b> after the announcement.<br>Choose the correct meaning of <b>grim</b>.",
+options: ["Serious and depressing", "Cheerful and bright", "Humorous", "Encouraging"],
 correct: "1",
-image: ""
+image: ''
 },
+
 40: {
-text: "The sky turned dark and ____ before the heavy rain began.",
-options: ["gloomy", "bright", "radiant", "clear"],
+text: "A <b>gloomy</b> silence filled the hall.<br>Choose the correct meaning of <b>gloomy</b>.",
+options: ["Dark and depressing", "Lively and joyful", "Energetic", "Hopeful"],
 correct: "1",
-image: ""
+image: ''
 },
+
 41: {
-text: "He tried to ____ his fear with a confident smile, but his voice trembled.",
-options: ["bluff", "confess", "reveal", "admit"],
+text: "He tried to <b>bluff</b> his way through the interview.<br>Choose the correct meaning of <b>bluff</b>.",
+options: ["Deceive by pretending", "Speak honestly", "Remain silent", "Explain clearly"],
 correct: "1",
-image: ""
+image: ''
 },
+
 42: {
-text: "She became ____ when her plans didn’t go as expected.",
-options: ["peevish", "cheerful", "relaxed", "content"],
+text: "She became <b>peevish</b> due to lack of sleep.<br>Choose the correct meaning of <b>peevish</b>.",
+options: ["Irritable and easily annoyed", "Calm and patient", "Cheerful", "Indifferent"],
 correct: "1",
-image: ""
+image: ''
 },
+
 43: {
-text: "Their constant arguments created ____ within the team.",
-options: ["discord", "unity", "agreement", "harmony"],
+text: "Constant <b>discord</b> weakened the team spirit.<br>Choose the correct meaning of <b>discord</b>.",
+options: ["Lack of agreement", "Perfect unity", "Formal discipline", "Mutual respect"],
 correct: "1",
-image: ""
+image: ''
 },
+
 44: {
-text: "They finally achieved ____ after months of bitter disagreements.",
-options: ["harmony", "conflict", "disorder", "discord"],
+text: "Musical <b>harmony</b> pleased the audience.<br>Choose the correct meaning of <b>harmony</b>.",
+options: ["Pleasant agreement", "Harsh conflict", "Sudden interruption", "Serious disagreement"],
 correct: "1",
+image: ''
+},
+
+45: {
+text: "Social <b>conformity</b> often discourages individuality.<br>Choose the correct meaning of <b>conformity</b>.",
+options: ["Compliance with rules or norms", "Rebellion against authority", "Creative independence", "Personal freedom"],
+correct: "1",
+image: ''
+},
+
+46: {
+text: "She took a <b>brisk</b> walk every morning.<br>Choose the correct meaning of <b>brisk</b>.",
+options: ["Quick and energetic", "Slow and relaxed", "Lazy and careless", "Irregular and hesitant"],
+correct: "1",
+image: ''
+},
+
+47: {
+text: "Her <b>vivacious</b> personality lit up the room.<br>Choose the correct meaning of <b>vivacious</b>.",
+options: ["Lively and full of energy", "Quiet and reserved", "Cold and unfriendly", "Serious and dull"],
+correct: "1",
+image: ''
+},
+
+48: {
+text: "The future looked <b>dismal</b> after the company’s losses.<br>Choose the correct meaning of <b>dismal</b>.",
+options: ["Depressing and bleak", "Bright and hopeful", "Exciting", "Comfortable"],
+correct: "1",
+image: ''
+},
+
+49: {
+text: "The host’s <b>jovial</b> nature entertained the guests.<br>Choose the correct meaning of <b>jovial</b>.",
+options: ["Cheerful and friendly", "Angry and rude", "Silent and distant", "Strict and harsh"],
+correct: "1",
+image: ''
+},
+
+50: {
+text: "The leader was criticized as a <b>demagogue</b> during the election.<br>Choose the correct meaning of <b>demagogue</b>.",
+options: ["Leader who manipulates public emotions", "Honest public servant", "Neutral administrator", "Independent judge"],
+correct: "1",
+image: ''
+},
+
+
+}
+
+const explanations={
+    1: {
+text: "<b><u>हालाँकि</u></b><br>Albeit means although or even though, used to introduce a contrast within a sentence.<br><i>Rhyming trick:</i> all सही, <b>albeit</b> फिर भी 😌",
 image: ""
 },
+
+2: {
+text: "<b><u>मोहित या छल करना</u></b><br>Beguile means to charm or deceive someone, often pleasantly or cleverly.<br><i>Rhyming trick:</i> sweet smile में <b>beguile</b> style 😏",
+image: ""
+},
+
+3: {
+text: "<b><u>बेकार चिंता करना</u></b><br>Fussing refers to worrying excessively about small or unimportant matters.<br><i>Rhyming trick:</i> छोटी बात पर <b>fussing</b> fussing 😣",
+image: ""
+},
+
+4: {
+text: "<b><u>बेकार बकबक</u></b><br>Prattle means to talk foolishly or at unnecessary length.<br><i>Rhyming trick:</i> prattle-prattle, nonstop chatter 🗣️",
+image: ""
+},
+
+5: {
+text: "<b><u>दृढ़ निश्चयी</u></b><br>Tenacious describes someone who does not give up easily and holds firmly to goals.<br><i>Rhyming trick:</i> never छोड़ो – <b>tenacious</b> bro 💪",
+image: ""
+},
+
+6: {
+text: "<b><u>अत्यधिक भूखा</u></b><br>Ravenous means extremely hungry or eager for food.<br><i>Rhyming trick:</i> भूख dangerous – <b>ravenous</b> 😋",
+image: ""
+},
+
+7: {
+text: "<b><u>रूठकर चुप रहना</u></b><br>Sulked means to remain silent and moody due to anger or disappointment.<br><i>Rhyming trick:</i> mood bulked – <b>sulked</b> 😒",
+image: ""
+},
+
+8: {
+text: "<b><u>नाराज़गी दिखाना</u></b><br>Frowned means showing displeasure or disapproval through facial expression.<br><i>Rhyming trick:</i> wrong पाया, face <b>frowned</b> 😠",
+image: ""
+},
+
+9: {
+text: "<b><u>चमकती मुस्कान</u></b><br>Beamed means smiling brightly with happiness or pride.<br><i>Rhyming trick:</i> dream fulfilled, face <b>beamed</b> 😄",
+image: ""
+},
+
+10: {
+text: "<b><u>क्रोधित दृष्टि</u></b><br>Glowered means staring angrily or menacingly at someone.<br><i>Rhyming trick:</i> anger powered – <b>glowered</b> 👿",
+image: ""
+},
+
+11: {
+text: "<b><u>तिरस्कार करना</u></b><br>Disdained means treating something as unworthy of respect.<br><i>Rhyming trick:</i> cheap gain – <b>disdain</b> 😤",
+image: ""
+},
+
+12: {
+text: "<b><u>स्त्रीसुलभ</u></b><br>Effeminate refers to having traits traditionally considered feminine.<br><i>Rhyming trick:</i> soft tone – <b>effeminate</b> zone 🎭",
+image: ""
+},
+
+13: {
+text: "<b><u>घोर नफ़रत</u></b><br>Detesting means feeling intense dislike or hatred for something.<br><i>Rhyming trick:</i> hate testing – <b>detesting</b> 😡",
+image: ""
+},
+
+14: {
+text: "<b><u>उपद्रवी प्रवृत्ति</u></b><br>Hooliganism means violent or rowdy behavior, often in public places.<br><i>Rhyming trick:</i> school नहीं, <b>hooliganism</b> rule 🧨",
+image: ""
+},
+
+15: {
+text: "<b><u>निराशावादी अविश्वास</u></b><br>Cynicism is the tendency to doubt sincerity and expect selfish motives.<br><i>Rhyming trick:</i> trust missing – <b>cynicism</b> 😐",
+image: ""
+},
+
+16: {
+text: "<b><u>यातायात के साधन</u></b><br>Conveyances refers to vehicles or means used to transport people or goods from one place to another.<br><i>Rhyming trick:</i> bus–van chances, <b>conveyances</b> 🚍",
+image: ""
+},
+
+17: {
+text: "<b><u>नवजीवन देना</u></b><br>Rejuvenate means to restore energy, strength, or youthful freshness.<br><i>Rhyming trick:</i> juice पिया, <b>rejuvenate</b> किया 🍹",
+image: ""
+},
+
+18: {
+text: "<b><u>गारंटी देना</u></b><br>Vouch means to confirm the truth or reliability of someone or something.<br><i>Rhyming trick:</i> doubt couch, I <b>vouch</b> 👍",
+image: ""
+},
+
+19: {
+text: "<b><u>पीड़ा या कष्ट</u></b><br>Affliction refers to something that causes prolonged suffering or distress.<br><i>Rhyming trick:</i> pain restriction – <b>affliction</b> 😖",
+image: ""
+},
+
+20: {
+text: "<b><u>दुविधाजनक स्थिति</u></b><br>Predicament means a difficult, unpleasant, or embarrassing situation.<br><i>Rhyming trick:</i> problem packet – <b>predicament</b> 🤔",
+image: ""
+},
+
+21: {
+text: "<b><u>गिरवी ऋण</u></b><br>Mortgage is a loan in which property is kept as security until repayment.<br><i>Rhyming trick:</i> more cash – <b>mortgage</b> 🏠",
+image: ""
+},
+
+22: {
+text: "<b><u>खतरे में</u></b><br>Jeopardy means exposure to danger, risk, or harm.<br><i>Rhyming trick:</i> danger ready – <b>jeopardy</b> ⚠️",
+image: ""
+},
+
+23: {
+text: "<b><u>सांत्वना</u></b><br>Consolation refers to comfort received after disappointment or loss.<br><i>Rhyming trick:</i> loss sensation – <b>consolation</b> 🤍",
+image: ""
+},
+
+24: {
+text: "<b><u>तीव्र दुर्गंध</u></b><br>Stench means a strong, offensive, and unpleasant smell.<br><i>Rhyming trick:</i> nose wrench – <b>stench</b> 🤢",
+image: ""
+},
+
+25: {
+text: "<b><u>निर्लज्ज साहस</u></b><br>Brazen describes bold behavior without shame or embarrassment.<br><i>Rhyming trick:</i> shame frozen – <b>brazen</b> 😎",
+image: ""
+},
+
+26: {
+text: "<b><u>फूलना-फलना</u></b><br>Thrive means to grow strongly, prosper, or succeed.<br><i>Rhyming trick:</i> survive to <b>thrive</b> 🌱",
+image: ""
+},
+
+27: {
+text: "<b><u>उदार</u></b><br>Lenient means showing mercy or being less strict in judgment or punishment.<br><i>Rhyming trick:</i> rule light – <b>lenient</b> 🙂",
+image: ""
+},
+
+28: {
+text: "<b><u>संगीत क्षमता की हानि</u></b><br>Amusia is a neurological condition involving loss of musical ability.<br><i>Rhyming trick:</i> no tune – <b>amusia</b> 🎵❌",
+image: ""
+},
+
+29: {
+text: "<b><u>कटु रोष</u></b><br>Resentment is a deep feeling of anger caused by unfair treatment.<br><i>Rhyming trick:</i> pain payment – <b>resentment</b> 😠",
+image: ""
+},
+
+30: {
+text: "<b><u>जिम्मेदार संरक्षण</u></b><br>Stewardship means responsible care, management, or guardianship of resources.<br><i>Rhyming trick:</i> care leadership – <b>stewardship</b> 🌍",
+image: ""
+},
+
+31: {
+text: "<b><u>आक्रामक</u></b><br>Bellicose describes aggressive or war-like behavior and attitude.<br><i>Rhyming trick:</i> fight close – <b>bellicose</b> 🔥",
+image: ""
+},
+
+32: {
+text: "<b><u>गुट</u></b><br>Clique means a small, exclusive group that does not easily allow outsiders.<br><i>Rhyming trick:</i> group sleek – <b>clique</b> 🤝",
+image: ""
+},
+
+33: {
+text: "<b><u>सभा</u></b><br>Congregation refers to a group of people assembled together, especially for a purpose.<br><i>Rhyming trick:</i> crowd nation – <b>congregation</b> 👥",
+image: ""
+},
+
+34: {
+text: "<b><u>अल्पभाषी</u></b><br>Reticent means unwilling to speak freely or reveal thoughts.<br><i>Rhyming trick:</i> silent intent – <b>reticent</b> 🤐",
+image: ""
+},
+
+35: {
+text: "<b><u>अत्यधिक बोलने वाला</u></b><br>Garrulous describes someone who talks excessively.<br><i>Rhyming trick:</i> talk surplus – <b>garrulous</b> 🗣️",
+image: ""
+},
+
+36: {
+text: "<b><u>विवाद</u></b><br>Contention means a disagreement or argument over an issue.<br><i>Rhyming trick:</i> fight mention – <b>contention</b> ⚖️",
+image: ""
+},
+
+37: {
+text: "<b><u>अदृश्य-सा</u></b><br>Inconspicuous means not attracting attention or easily noticed.<br><i>Rhyming trick:</i> hidden focus – <b>inconspicuous</b> 🕵️",
+image: ""
+},
+
+38: {
+text: "<b><u>प्रसिद्ध</u></b><br>Prominent refers to someone well-known or important.<br><i>Rhyming trick:</i> shine eminent – <b>prominent</b> ⭐",
+image: ""
+},
+
+39: {
+text: "<b><u>गंभीर</u></b><br>Grim describes a situation that is serious, harsh, or depressing.<br><i>Rhyming trick:</i> smile dim – <b>grim</b> 😔",
+image: ""
+},
+
+40: {
+text: "<b><u>उदास</u></b><br>Gloomy means dark, sad, or depressing in mood or atmosphere.<br><i>Rhyming trick:</i> sad room – <b>gloomy</b> 🌧️",
+image: ""
+},
+
+41: {
+text: "<b><u>धोखा देना</u></b><br>Bluff means to deceive someone by pretending or misleading.<br><i>Rhyming trick:</i> fake stuff – <b>bluff</b> 🎭",
+image: ""
+},
+
+42: {
+text: "<b><u>चिड़चिड़ा</u></b><br>Peevish describes someone who is easily irritated or annoyed.<br><i>Rhyming trick:</i> sleep-less wish – <b>peevish</b> 😣",
+image: ""
+},
+
+43: {
+text: "<b><u>असहमति</u></b><br>Discord refers to lack of harmony or agreement.<br><i>Rhyming trick:</i> peace cord cut – <b>discord</b> ⚡",
+image: ""
+},
+
+44: {
+text: "<b><u>सामंजस्य</u></b><br>Harmony means pleasant agreement or balance among people or sounds.<br><i>Rhyming trick:</i> calm melody – <b>harmony</b> 🎶",
+image: ""
+},
+
 45: {
-text: "The company expects full ____ to its safety regulations from all employees.",
-options: ["conformity", "resistance", "rebellion", "defiance"],
-correct: "1",
+text: "<b><u>अनुरूपता</u></b><br>Conformity means behaving according to accepted rules or standards.<br><i>Rhyming trick:</i> norm-formity – <b>conformity</b> 📏",
 image: ""
 },
 46: {
-text: "They took a ____ walk in the morning to stay active and fresh.",
-options: ["brisk", "slow", "lazy", "lethargic"],
-correct: "1",
+text: "<b><u>तेज़ और फुर्तीला</u></b><br>Brisk means quick, energetic, and active in movement or manner.<br><i>Rhyming trick:</i> fast risk – <b>brisk</b> 🚶‍♂️",
 image: ""
 },
+
 47: {
-text: "Her ____ personality made everyone around her feel lively and happy.",
-options: ["vivacious", "boring", "dull", "gloomy"],
-correct: "1",
+text: "<b><u>जोशीला</u></b><br>Vivacious describes someone who is lively, animated, and full of enthusiasm.<br><i>Rhyming trick:</i> vibe delicious – <b>vivacious</b> 💃",
 image: ""
 },
+
 48: {
-text: "The rainy weather created a ____ mood across the entire city.",
-options: ["dismal", "cheerful", "festive", "exciting"],
-correct: "1",
+text: "<b><u>निराशाजनक</u></b><br>Dismal refers to something that is gloomy, depressing, or hopeless.<br><i>Rhyming trick:</i> hope fissile – <b>dismal</b> 🌫️",
 image: ""
 },
+
 49: {
-text: "He remained ____ even during tough times, always finding a reason to smile.",
-options: ["jovial", "sad", "grumpy", "depressed"],
-correct: "1",
+text: "<b><u>हँसमुख</u></b><br>Jovial means cheerful, friendly, and good-humored.<br><i>Rhyming trick:</i> joy viral – <b>jovial</b> 😄",
 image: ""
 },
+
 50: {
-text: "The corrupt ____ won the crowd’s support through false promises and emotional speeches.",
-options: ["demagogue", "leader", "philosopher", "scholar"],
-correct: "1",
+text: "<b><u>जनभावनाओं से खेलने वाला नेता</u></b><br>Demagogue is a leader who gains power by appealing to emotions rather than reason.<br><i>Rhyming trick:</i> drama vogue – <b>demagogue</b> 🎤",
 image: ""
-},
+}
 
-
-
-};
-
-
-// placeholder
-const explanations = {
-1: {
-text: "<b>Answer:</b> albeit. <br><b>Definition:</b> Though or although. <br><b>Synonyms:</b> although, though, even though, while, despite. <br><b>Antonyms:</b> because, since, therefore, hence, consequently.",
-image: ""
-},
-2: {
-text: "<b>Answer:</b> beguile. <br><b>Definition:</b> To charm or enchant someone, often in a deceptive way. <br><b>Synonyms:</b> charm, entice, enchant, deceive, mislead. <br><b>Antonyms:</b> repel, disgust, offend, disenchant, bore.",
-image: ""
-},
-3: {
-text: "<b>Answer:</b> fussing. <br><b>Definition:</b> Showing unnecessary or excessive concern about something. <br><b>Synonyms:</b> fretting, worrying, complaining, bothering, nagging. <br><b>Antonyms:</b> relaxing, ignoring, neglecting, resting, accepting.",
-image: ""
-},
-4: {
-text: "<b>Answer:</b> prattle. <br><b>Definition:</b> To talk in a foolish or simple-minded way; to chatter. <br><b>Synonyms:</b> chatter, babble, gabble, ramble, blabber. <br><b>Antonyms:</b> silence, quiet, hush, stillness, muteness.",
-image: ""
-},
-5: {
-text: "<b>Answer:</b> tenacious. <br><b>Definition:</b> Holding firmly; persistent in maintaining something. <br><b>Synonyms:</b> determined, persistent, resolute, steadfast, stubborn. <br><b>Antonyms:</b> weak, irresolute, lazy, fragile, yielding.",
-image: ""
-},
-6: {
-text: "<b>Answer:</b> ravenous. <br><b>Definition:</b> Extremely hungry or eager for something. <br><b>Synonyms:</b> starving, famished, hungry, voracious, gluttonous. <br><b>Antonyms:</b> full, satisfied, content, stuffed, sated.",
-image: ""
-},
-7: {
-text: "<b>Answer:</b> sulked. <br><b>Definition:</b> To be silently angry or disappointed. <br><b>Synonyms:</b> mope, brood, pout, frown, grumble. <br><b>Antonyms:</b> cheer, smile, laugh, rejoice, celebrate.",
-image: ""
-},
-8: {
-text: "<b>Answer:</b> frowned. <br><b>Definition:</b> To make an angry or displeased facial expression. <br><b>Synonyms:</b> scowled, glared, grimaced, glowered, sneered. <br><b>Antonyms:</b> smiled, grinned, laughed, beamed, brightened.",
-image: ""
-},
-9: {
-text: "<b>Answer:</b> beamed. <br><b>Definition:</b> To smile broadly with joy. <br><b>Synonyms:</b> smiled, grinned, radiated, glowed, shone. <br><b>Antonyms:</b> frowned, glowered, grimaced, sulked, scowled.",
-image: ""
-},
-10: {
-text: "<b>Answer:</b> glowered. <br><b>Definition:</b> To look at someone with an angry or sullen expression. <br><b>Synonyms:</b> scowled, fumed, glared, stared, frowned. <br><b>Antonyms:</b> smiled, laughed, beamed, giggled, grinned.",
-image: ""
-},
-11: {
-text: "<b>Answer:</b> disdained. <br><b>Definition:</b> To regard with contempt or scorn. <br><b>Synonyms:</b> despised, scorned, rejected, spurned, dismissed. <br><b>Antonyms:</b> admired, respected, praised, valued, loved.",
-image: ""
-},
-12: {
-text: "<b>Answer:</b> effeminate. <br><b>Definition:</b> Having or showing characteristics regarded as typical of a woman; unmanly. <br><b>Synonyms:</b> delicate, feminine, soft, womanish, graceful. <br><b>Antonyms:</b> masculine, manly, tough, rugged, robust.",
-image: ""
-},
-13: {
-text: "<b>Answer:</b> detesting. <br><b>Definition:</b> Feeling intense dislike or hatred. <br><b>Synonyms:</b> hating, loathing, despising, abhorring, reviling. <br><b>Antonyms:</b> loving, liking, admiring, adoring, cherishing.",
-image: ""
-},
-14: {
-text: "<b>Answer:</b> hooliganism. <br><b>Definition:</b> Violent or rowdy behavior by young troublemakers. <br><b>Synonyms:</b> vandalism, rowdyism, mischief, disorder, delinquency. <br><b>Antonyms:</b> discipline, orderliness, civility, calmness, peace.",
-image: ""
-},
-15: {
-text: "<b>Answer:</b> cynicism. <br><b>Definition:</b> The belief that people are motivated by self-interest; distrust of sincerity. <br><b>Synonyms:</b> skepticism, doubt, distrust, suspicion, pessimism. <br><b>Antonyms:</b> trust, faith, optimism, belief, confidence.",
-image: ""
-},
-16: {
-text: "<b>Answer:</b> conveyances. <br><b>Definition:</b> Means of transport or transfer from one place to another. <br><b>Synonyms:</b> vehicles, transports, cars, carriers, transfers. <br><b>Antonyms:</b> immobility, stagnation, standstill, rest, halt.",
-image: ""
-},
-17: {
-text: "<b>Answer:</b> rejuvenate. <br><b>Definition:</b> To make someone or something look or feel younger or fresher. <br><b>Synonyms:</b> refresh, revive, renew, restore, energize. <br><b>Antonyms:</b> exhaust, tire, drain, weaken, age.",
-image: ""
-},
-18: {
-text: "<b>Answer:</b> vouch. <br><b>Definition:</b> To confirm or affirm something as true or reliable. <br><b>Synonyms:</b> affirm, guarantee, testify, swear, assert. <br><b>Antonyms:</b> deny, refute, disprove, contradict, reject.",
-image: ""
-},
-19: {
-text: "<b>Answer:</b> affliction. <br><b>Definition:</b> Something that causes pain or suffering. <br><b>Synonyms:</b> suffering, distress, pain, hardship, torment. <br><b>Antonyms:</b> relief, comfort, joy, blessing, happiness.",
-image: ""
-},
-20: {
-text: "<b>Answer:</b> predicament. <br><b>Definition:</b> A difficult, unpleasant, or embarrassing situation. <br><b>Synonyms:</b> dilemma, problem, mess, quandary, hardship. <br><b>Antonyms:</b> solution, success, advantage, blessing, ease.",
-image: ""
-},
-21: {
-text: "<b>Answer:</b> mortgage. <br><b>Definition:</b> A legal agreement to borrow money to buy property. <br><b>Synonyms:</b> loan, pledge, lien, financing, debt. <br><b>Antonyms:</b> rent, lease, sale, release, freedom.",
-image: ""
-},
-22: {
-text: "<b>Answer:</b> jeopardy. <br><b>Definition:</b> Danger of loss, harm, or failure. <br><b>Synonyms:</b> danger, risk, threat, peril, hazard. <br><b>Antonyms:</b> safety, security, protection, assurance, certainty.",
-image: ""
-},
-23: {
-text: "<b>Answer:</b> consolation. <br><b>Definition:</b> Comfort received after a loss or disappointment. <br><b>Synonyms:</b> comfort, relief, solace, support, sympathy. <br><b>Antonyms:</b> distress, grief, torment, misery, agony.",
-image: ""
-},
-24: {
-text: "<b>Answer:</b> stench. <br><b>Definition:</b> A strong and unpleasant smell. <br><b>Synonyms:</b> stink, reek, odor, foulness, smell. <br><b>Antonyms:</b> fragrance, aroma, perfume, scent, sweetness.",
-image: ""
-},
-25: {
-text: "<b>Answer:</b> brazen. <br><b>Definition:</b> Bold and without shame. <br><b>Synonyms:</b> shameless, bold, audacious, impudent, defiant. <br><b>Antonyms:</b> shy, modest, timid, humble, cautious.",
-image: ""
-},
-26: {
-text: "<b>Answer:</b> thrive. <br><b>Definition:</b> To grow, develop, or be successful. <br><b>Synonyms:</b> flourish, prosper, succeed, bloom, expand. <br><b>Antonyms:</b> decline, fail, perish, wither, collapse.",
-image: ""
-},
-27: {
-text: "<b>Answer:</b> lenient. <br><b>Definition:</b> Not strict; tolerant and permissive. <br><b>Synonyms:</b> forgiving, tolerant, merciful, kind, gentle. <br><b>Antonyms:</b> strict, harsh, severe, stern, tough.",
-image: ""
-},
-28: {
-text: "<b>Answer:</b> amusia. <br><b>Definition:</b> The inability to recognize or reproduce musical tones. <br><b>Synonyms:</b> tone-deafness, musical disorder, pitch blindness, musical amnesia, auditory deficit. <br><b>Antonyms:</b> musicality, harmony sense, rhythm, tonality, melody perception.",
-image: ""
-},
-29: {
-text: "<b>Answer:</b> resentment. <br><b>Definition:</b> Bitter indignation at having been treated unfairly. <br><b>Synonyms:</b> bitterness, anger, displeasure, indignation, animosity. <br><b>Antonyms:</b> affection, forgiveness, sympathy, goodwill, contentment.",
-image: ""
-},
-30: {
-text: "<b>Answer:</b> stewardship. <br><b>Definition:</b> The responsible management of something entrusted to one’s care. <br><b>Synonyms:</b> management, supervision, administration, guardianship, care. <br><b>Antonyms:</b> neglect, mismanagement, carelessness, irresponsibility, abandonment.",
-image: ""
-},
-31: {
-text: "<b>Answer:</b> bellicose. <br><b>Definition:</b> Demonstrating aggression and willingness to fight. <br><b>Synonyms:</b> aggressive, warlike, hostile, combative, militant. <br><b>Antonyms:</b> peaceful, calm, pacifist, gentle, friendly.",
-image: ""
-},
-32: {
-text: "<b>Answer:</b> clique. <br><b>Definition:</b> A small, exclusive group of people. <br><b>Synonyms:</b> circle, group, faction, coterie, set. <br><b>Antonyms:</b> community, crowd, society, gathering, population.",
-image: ""
-},
-33: {
-text: "<b>Answer:</b> congregation. <br><b>Definition:</b> A group of people assembled for religious worship. <br><b>Synonyms:</b> assembly, gathering, fellowship, crowd, parish. <br><b>Antonyms:</b> isolation, solitude, individual, separation, dispersion.",
-image: ""
-},
-34: {
-text: "<b>Answer:</b> reticent. <br><b>Definition:</b> Not revealing one’s thoughts or feelings readily. <br><b>Synonyms:</b> reserved, silent, withdrawn, restrained, secretive. <br><b>Antonyms:</b> talkative, open, frank, communicative, expressive.",
-image: ""
-},
-35: {
-text: "<b>Answer:</b> garrulous. <br><b>Definition:</b> Excessively talkative, especially on trivial matters. <br><b>Synonyms:</b> talkative, chatty, loquacious, wordy, verbose. <br><b>Antonyms:</b> reticent, quiet, reserved, silent, taciturn.",
-image: ""
-},
-36: {
-text: "<b>Answer:</b> contention. <br><b>Definition:</b> Heated disagreement or argument. <br><b>Synonyms:</b> dispute, argument, conflict, debate, quarrel. <br><b>Antonyms:</b> agreement, peace, unity, consensus, accord.",
-image: ""
-},
-37: {
-text: "<b>Answer:</b> inconspicuous. <br><b>Definition:</b> Not easily seen or noticed. <br><b>Synonyms:</b> hidden, unnoticeable, obscure, unseen, subtle. <br><b>Antonyms:</b> conspicuous, noticeable, visible, obvious, prominent.",
-image: ""
-},
-38: {
-text: "<b>Answer:</b> prominent. <br><b>Definition:</b> Important; famous; easily noticeable. <br><b>Synonyms:</b> notable, distinguished, eminent, visible, outstanding. <br><b>Antonyms:</b> obscure, hidden, minor, invisible, unknown.",
-image: ""
-},
-39: {
-text: "<b>Answer:</b> grim. <br><b>Definition:</b> Harsh, forbidding, or depressing in appearance or outlook. <br><b>Synonyms:</b> stern, severe, bleak, harsh, gloomy. <br><b>Antonyms:</b> cheerful, pleasant, mild, gentle, bright.",
-image: ""
-},
-40: {
-text: "<b>Answer:</b> gloomy. <br><b>Definition:</b> Dark, depressing, or pessimistic. <br><b>Synonyms:</b> sad, dull, bleak, dismal, dreary. <br><b>Antonyms:</b> bright, cheerful, sunny, lively, joyful.",
-image: ""
-},
-41: {
-text: "<b>Answer:</b> bluff. <br><b>Definition:</b> To try to deceive someone into believing one can do or has something. <br><b>Synonyms:</b> deceive, pretend, fake, feign, mislead. <br><b>Antonyms:</b> reveal, confess, admit, disclose, expose.",
-image: ""
-},
-42: {
-text: "<b>Answer:</b> peevish. <br><b>Definition:</b> Easily irritated, especially by unimportant things. <br><b>Synonyms:</b> irritable, grumpy, cross, cranky, moody. <br><b>Antonyms:</b> calm, cheerful, patient, pleasant, good-natured.",
-image: ""
-},
-43: {
-text: "<b>Answer:</b> discord. <br><b>Definition:</b> Disagreement or lack of harmony between people. <br><b>Synonyms:</b> conflict, dispute, tension, strife, disharmony. <br><b>Antonyms:</b> harmony, accord, peace, unity, agreement.",
-image: ""
-},
-44: {
-text: "<b>Answer:</b> harmony. <br><b>Definition:</b> Agreement or concord between people or things. <br><b>Synonyms:</b> peace, unity, accord, balance, concord. <br><b>Antonyms:</b> discord, conflict, disagreement, chaos, tension.",
-image: ""
-},
-45: {
-text: "<b>Answer:</b> conformity. <br><b>Definition:</b> Compliance with standards, rules, or laws. <br><b>Synonyms:</b> compliance, obedience, agreement, accordance, submission. <br><b>Antonyms:</b> resistance, defiance, disobedience, rebellion, nonconformity.",
-image: ""
-},
-46: {
-text: "<b>Answer:</b> brisk. <br><b>Definition:</b> Quick and active; lively and energetic. <br><b>Synonyms:</b> quick, lively, energetic, active, rapid. <br><b>Antonyms:</b> slow, dull, sluggish, lazy, inactive.",
-image: ""
-},
-47: {
-text: "<b>Answer:</b> vivacious. <br><b>Definition:</b> Attractively lively and animated. <br><b>Synonyms:</b> lively, spirited, energetic, cheerful, vibrant. <br><b>Antonyms:</b> dull, lifeless, gloomy, boring, sluggish.",
-image: ""
-},
-48: {
-text: "<b>Answer:</b> dismal. <br><b>Definition:</b> Depressing; dreary; causing a gloomy mood. <br><b>Synonyms:</b> gloomy, bleak, depressing, miserable, dark. <br><b>Antonyms:</b> cheerful, bright, pleasant, joyful, lively.",
-image: ""
-},
-49: {
-text: "<b>Answer:</b> jovial. <br><b>Definition:</b> Cheerful and friendly; full of good humor. <br><b>Synonyms:</b> cheerful, merry, jolly, happy, lighthearted. <br><b>Antonyms:</b> gloomy, morose, sad, moody, sullen.",
-image: ""
-},
-50: {
-text: "<b>Answer:</b> demagogue. <br><b>Definition:</b> A political leader who seeks support by appealing to emotions and prejudices rather than rational argument. <br><b>Synonyms:</b> agitator, rabble-rouser, instigator, manipulator, propagandist. <br><b>Antonyms:</b> peacemaker, unifier, mediator, statesman, reformer.",
-image: ""
-},
-
-    
-};
+}
