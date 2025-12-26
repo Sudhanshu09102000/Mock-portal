@@ -219,7 +219,112 @@ const questions={
   ],
   correct: "1",
   image: ''
-}
+},
+  21: {
+text: "Something was clearly <b>amiss</b> when the lights suddenly went out.<br>Choose the correct meaning of <b>amiss</b>.",
+options: ["Wrong or not quite right", "Perfectly arranged", "Highly decorative", "Well planned"],
+correct: "1",
+image: ''
+},
+
+22: {
+text: "Her <b>impeccable</b> manners impressed everyone at the ceremony.<br>Choose the correct meaning of <b>impeccable</b>.",
+options: ["Flawless or without fault", "Careless and rude", "Partially correct", "Poorly executed"],
+correct: "1",
+image: ''
+},
+
+23: {
+text: "The painting was <b>marred</b> by a deep scratch on its surface.<br>Choose the correct meaning of <b>marred</b>.",
+options: ["Damaged or spoiled", "Highly polished", "Carefully preserved", "Improved greatly"],
+correct: "1",
+image: ''
+},
+
+24: {
+text: "The purity of the sample was <b>vitiated</b> by contamination.<br>Choose the correct meaning of <b>vitiated</b>.",
+options: ["Impaired or corrupted", "Strengthened fully", "Made clearer", "Tested thoroughly"],
+correct: "1",
+image: ''
+},
+
+25: {
+text: "She walked <b>gaily</b> into the room, smiling at everyone.<br>Choose the correct meaning of <b>gaily</b>.",
+options: ["Cheerfully or merrily", "Sadly and slowly", "Angrily", "With hesitation"],
+correct: "1",
+image: ''
+},
+
+26: {
+text: "The officer’s speech was an <b>objurgation</b> of the careless workers.<br>Choose the correct meaning of <b>objurgation</b>.",
+options: ["Severe scolding or rebuke", "Gentle encouragement", "Formal invitation", "Silent approval"],
+correct: "1",
+image: ''
+},
+
+27: {
+text: "Military <b>conscription</b> was introduced during the war.<br>Choose the correct meaning of <b>conscription</b>.",
+options: ["Compulsory enlistment for service", "Voluntary retirement", "Permanent dismissal", "Temporary training"],
+correct: "1",
+image: ''
+},
+
+28: {
+text: "The story is an <b>allegory</b> representing the struggle between good and evil.<br>Choose the correct meaning of <b>allegory</b>.",
+options: ["Story with symbolic meaning", "Historical document", "Scientific report", "Personal diary"],
+correct: "1",
+image: ''
+},
+
+29: {
+text: "He checked the dates in the <b>almanac</b> before planning the trip.<br>Choose the correct meaning of <b>almanac</b>.",
+options: ["Annual book of dates and statistics", "Adventure novel", "Legal handbook", "Religious scripture"],
+correct: "1",
+image: ''
+},
+
+30: {
+text: "Poor sanitation became the <b>bane</b> of the settlement.<br>Choose the correct meaning of <b>bane</b>.",
+options: ["Cause of distress or ruin", "Source of happiness", "Protective factor", "Temporary inconvenience"],
+correct: "1",
+image: ''
+},
+
+31: {
+text: "Guests gathered in the hotel <b>foyer</b> before the event.<br>Choose the correct meaning of <b>foyer</b>.",
+options: ["Entrance hall or lobby", "Private bedroom", "Storage room", "Kitchen area"],
+correct: "1",
+image: ''
+},
+
+32: {
+text: "The circus featured a skilled <b>funambulist</b> walking on a rope.<br>Choose the correct meaning of <b>funambulist</b>.",
+options: ["Tightrope walker", "Animal trainer", "Clown performer", "Stage musician"],
+correct: "1",
+image: ''
+},
+
+33: {
+text: "The village elders narrated an old <b>folktale</b> to the children.<br>Choose the correct meaning of <b>folktale</b>.",
+options: ["Traditional story passed orally", "Modern news report", "Scientific theory", "Legal judgement"],
+correct: "1",
+image: ''
+},
+
+34: {
+text: "Ancient <b>graffiti</b> were discovered on the cave walls.<br>Choose the correct meaning of <b>graffiti</b>.",
+options: ["Writings or drawings on public surfaces", "Formal paintings in galleries", "Printed advertisements", "Official inscriptions"],
+correct: "1",
+image: ''
+},
+
+35: {
+text: "The threads were badly <b>tangled</b> after being left unattended.<br>Choose the correct meaning of <b>tangled</b>.",
+options: ["Twisted together in confusion", "Neatly arranged", "Carefully separated", "Perfectly aligned"],
+correct: "1",
+image: ''
+},
+  
 
 
 }
@@ -306,6 +411,82 @@ const explanations={
 20: {
   text: "<b>Phony</b> refers to something that is <b>fake, false, or not genuine</b>, while <b>pathetic</b> describes something that <b>arouses pity or sadness</b>.<br>Both words are commonly used to criticize insincere or pitiable behavior.",
   image: ""
-}
+},
+  21: {
+text: "<b><u>कुछ गलत</u></b><br>Amiss means something is wrong, improper, or not as expected.<br><i>Rhyming trick:</i> a-miss लगा, scene हुआ <b>amiss</b>",
+image: ""
+},
+
+22: {
+text: "<b><u>बिल्कुल निर्दोष</u></b><br>Impeccable means flawless, perfect, and without any fault or error.<br><i>Rhyming trick:</i> I’m perfect—no speck—<b>impeccable</b> check",
+image: ""
+},
+
+23: {
+text: "<b><u>खराब किया हुआ</u></b><br>Marred means damaged, spoiled, or impaired in quality or appearance.<br><i>Rhyming trick:</i> mark पड़ा, beauty <b>marred</b>",
+image: ""
+},
+
+24: {
+text: "<b><u>दूषित या बिगड़ा हुआ</u></b><br>Vitiated means corrupted, impaired, or spoiled in effectiveness or purity.<br><i>Rhyming trick:</i> virus आया, system <b>vitiated</b>",
+image: ""
+},
+
+25: {
+text: "<b><u>खुशी से</u></b><br>Gaily means cheerfully, merrily, or with bright spirits.<br><i>Rhyming trick:</i> gay सा feel, smile <b>gaily</b>",
+image: ""
+},
+
+26: {
+text: "<b><u>कड़ी फटकार</u></b><br>Objurgation refers to a strong rebuke or severe scolding.<br><i>Rhyming trick:</i> जोर की gurgation—boss की <b>objurgation</b>",
+image: ""
+},
+
+27: {
+text: "<b><u>अनिवार्य भर्ती</u></b><br>Conscription means compulsory enlistment of people for military or national service.<br><i>Rhyming trick:</i> condition नहीं option—army <b>conscription</b>",
+image: ""
+},
+
+28: {
+text: "<b><u>प्रतीकात्मक कथा</u></b><br>Allegory is a story that conveys a deeper moral or symbolic meaning beyond the literal sense.<br><i>Rhyming trick:</i> story में glory—symbolic <b>allegory</b>",
+image: ""
+},
+
+29: {
+text: "<b><u>वार्षिक पंचांग</u></b><br>Almanac is a yearly publication containing dates, calendars, and statistical information.<br><i>Rhyming trick:</i> all-man-knack—dates का <b>almanac</b>",
+image: ""
+},
+
+30: {
+text: "<b><u>अभिशाप या विनाश का कारण</u></b><br>Bane means a cause of harm, ruin, or persistent trouble.<br><i>Rhyming trick:</i> pain ही pain—life का <b>bane</b>",
+image: ""
+},
+
+31: {
+text: "<b><u>प्रवेश कक्ष</u></b><br>Foyer refers to the entrance hall or lobby of a building.<br><i>Rhyming trick:</i> door के पास enjoy—<b>foyer</b>",
+image: ""
+},
+
+32: {
+text: "<b><u>रस्सी पर चलने वाला कलाकार</u></b><br>Funambulist is a performer who walks on a tightrope or rope.<br><i>Rhyming trick:</i> fun का balance-list—<b>funambulist</b>",
+image: ""
+},
+
+33: {
+text: "<b><u>लोककथा</u></b><br>Folktale is a traditional story passed down orally through generations.<br><i>Rhyming trick:</i> folk बोले tale—<b>folktale</b>",
+image: ""
+},
+
+34: {
+text: "<b><u>दीवारों पर लिखावट</u></b><br>Graffiti refers to writings or drawings made on walls or public surfaces.<br><i>Rhyming trick:</i> wall पे pity—art <b>graffiti</b>",
+image: ""
+},
+
+35: {
+text: "<b><u>उलझा हुआ</u></b><br>Tangled means twisted together in a confused or complicated manner.<br><i>Rhyming trick:</i> angle बिगड़ा, wires <b>tangled</b>",
+image: ""
+},
+  
+
 
 }
