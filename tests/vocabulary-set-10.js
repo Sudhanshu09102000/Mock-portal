@@ -1,507 +1,557 @@
 // placeholder
 const questions = {
     1: {
-text: "His rude comments showed his complete ____ toward the teacher.",
-options: ["impudence", "gratitude", "admiration", "obedience"],
+text: "His rude remarks showed clear <b>impudence</b> toward his elders.<br>Choose the correct meaning of <b>impudence</b>.",
+options: ["Rude or disrespectful behavior", "Deep gratitude", "Polite admiration", "Humble obedience"],
 correct: "1",
 image: ''
 },
+
 2: {
-text: "The ____ boxer never backed down from a challenge.",
-options: ["pugnacious", "timid", "gentle", "meek"],
+text: "The <b>pugnacious</b> fighter was always eager for a confrontation.<br>Choose the correct meaning of <b>pugnacious</b>.",
+options: ["Eager to fight or argue", "Timid and fearful", "Gentle by nature", "Peace-loving"],
 correct: "1",
 image: ''
 },
+
 3: {
-text: "Her ____ grip on her dreams helped her achieve success despite all odds.",
-options: ["tenacious", "careless", "lazy", "fragile"],
+text: "Her <b>tenacious</b> efforts finally led her to success.<br>Choose the correct meaning of <b>tenacious</b>.",
+options: ["Persisting firmly", "Careless", "Easily discouraged", "Fragile"],
 correct: "1",
 image: ''
 },
+
 4: {
-text: "He apologized in a sincere and ____ manner, showing no intent to harm.",
-options: ["unmalicious", "cruel", "harsh", "deceptive"],
+text: "He apologized in an <b>unmalicious</b> tone, showing no ill intent.<br>Choose the correct meaning of <b>unmalicious</b>.",
+options: ["Not intending harm", "Cruel in nature", "Deceptive", "Spiteful"],
 correct: "1",
 image: ''
 },
+
 5: {
-text: "The room looked dull and ____ after years without renovation.",
-options: ["drab", "vibrant", "colorful", "radiant"],
+text: "The office looked <b>drab</b> after years without renovation.<br>Choose the correct meaning of <b>drab</b>.",
+options: ["Dull and lifeless", "Bright and colorful", "Radiant", "Attractive"],
 correct: "1",
 image: ''
 },
+
 6: {
-text: "The refugees were in ____ need of food and shelter.",
-options: ["dire", "minor", "simple", "casual"],
+text: "The refugees were in <b>dire</b> need of medical help.<br>Choose the correct meaning of <b>dire</b>.",
+options: ["Extremely serious or urgent", "Minor", "Casual", "Unimportant"],
 correct: "1",
 image: ''
 },
+
 7: {
-text: "He wasted hours arguing over ____ matters that didn’t even matter.",
-options: ["trivial", "crucial", "important", "serious"],
+text: "He wasted time on <b>trivial</b> issues during the meeting.<br>Choose the correct meaning of <b>trivial</b>.",
+options: ["Of little importance", "Very serious", "Crucial", "Significant"],
 correct: "1",
 image: ''
 },
+
 8: {
-text: "The tumor was found to be ____, causing no threat to the patient’s life.",
-options: ["benign", "malignant", "fatal", "critical"],
+text: "Doctors confirmed the tumor was <b>benign</b>.<br>Choose the correct meaning of <b>benign</b>.",
+options: ["Not harmful", "Fatal", "Aggressive", "Malignant"],
 correct: "1",
 image: ''
 },
+
 9: {
-text: "The teacher walked ____ into the classroom, full of energy and enthusiasm.",
-options: ["briskly", "slowly", "lazily", "idly"],
+text: "The teacher walked <b>briskly</b> into the classroom.<br>Choose the correct meaning of <b>briskly</b>.",
+options: ["Quickly and energetically", "Slowly", "Lazily", "Idly"],
 correct: "1",
 image: ''
 },
+
 10: {
-text: "Her ____ behavior made it difficult for her parents to predict what she’d do next.",
-options: ["wayward", "obedient", "disciplined", "steady"],
+text: "His <b>wayward</b> behavior worried his parents.<br>Choose the correct meaning of <b>wayward</b>.",
+options: ["Unpredictable and difficult to control", "Obedient", "Disciplined", "Steady"],
 correct: "1",
 image: ''
 },
+
 11: {
-text: "He gave a ____ reply that ended the conversation abruptly.",
-options: ["terse", "lengthy", "flowery", "elaborate"],
+text: "He gave a <b>terse</b> reply and ended the discussion.<br>Choose the correct meaning of <b>terse</b>.",
+options: ["Brief and direct", "Long and detailed", "Flowery", "Elaborate"],
 correct: "1",
 image: ''
 },
+
 12: {
-text: "The poet’s ____ description of the sunset left the audience enchanted.",
-options: ["rhapsodic", "plain", "dull", "boring"],
+text: "The poet’s <b>rhapsodic</b> description enchanted the audience.<br>Choose the correct meaning of <b>rhapsodic</b>.",
+options: ["Highly emotional and enthusiastic", "Plain and dull", "Emotionless", "Boring"],
 correct: "1",
 image: ''
 },
+
 13: {
-text: "She was ____ with joy upon hearing the good news.",
-options: ["ecstatic", "miserable", "indifferent", "sullen"],
+text: "She was <b>ecstatic</b> after hearing the news.<br>Choose the correct meaning of <b>ecstatic</b>.",
+options: ["Overwhelmingly joyful", "Miserable", "Indifferent", "Gloomy"],
 correct: "1",
 image: ''
 },
+
 14: {
-text: "His constant refusal to cooperate was seen as a sign of ____.",
-options: ["recalcitrance", "obedience", "submission", "agreement"],
+text: "His refusal to obey showed sheer <b>recalcitrance</b>.<br>Choose the correct meaning of <b>recalcitrance</b>.",
+options: ["Stubborn resistance to authority", "Willing obedience", "Submission", "Agreement"],
 correct: "1",
 image: ''
 },
+
 15: {
-text: "Her ____ made it impossible for anyone to change her opinion.",
-options: ["obstinacy", "flexibility", "kindness", "patience"],
+text: "Her <b>obstinacy</b> made negotiation impossible.<br>Choose the correct meaning of <b>obstinacy</b>.",
+options: ["Stubbornness", "Flexibility", "Patience", "Kindness"],
 correct: "1",
 image: ''
 },
+
 16: {
-text: "The fortune teller’s ____ about the coming war frightened everyone.",
-options: ["prognostication", "story", "rumor", "compliment"],
+text: "The astrologer made a gloomy <b>prognostication</b> about the future.<br>Choose the correct meaning of <b>prognostication</b>.",
+options: ["Prediction of future events", "Compliment", "Rumor", "Praise"],
 correct: "1",
 image: ''
 },
+
 17: {
-text: "He felt sudden ____ of guilt after lying to his friend.",
-options: ["pangs", "waves", "moments", "ideas"],
+text: "He felt sharp <b>pangs</b> of guilt afterward.<br>Choose the correct meaning of <b>pangs</b>.",
+options: ["Sudden sharp feelings", "Long-lasting comfort", "Pleasure", "Calm thoughts"],
 correct: "1",
 image: ''
 },
+
 18: {
-text: "They survived on an ____ amount of food during the expedition.",
-options: ["exiguous", "abundant", "ample", "plentiful"],
+text: "They survived on an <b>exiguous</b> supply of food.<br>Choose the correct meaning of <b>exiguous</b>.",
+options: ["Very small in amount", "Plentiful", "Abundant", "Sufficient"],
 correct: "1",
 image: ''
 },
+
 19: {
-text: "The ____ fox managed to escape the hunter’s trap.",
-options: ["wily", "naive", "clumsy", "slow"],
+text: "The <b>wily</b> fox escaped the trap.<br>Choose the correct meaning of <b>wily</b>.",
+options: ["Clever and cunning", "Naive", "Clumsy", "Slow"],
 correct: "1",
 image: ''
 },
+
 20: {
-text: "The stock prices suddenly ____ after the company announced losses.",
-options: ["plummeted", "rose", "stabilized", "improved"],
+text: "Stock prices <b>plummeted</b> after the announcement.<br>Choose the correct meaning of <b>plummeted</b>.",
+options: ["Fell sharply", "Rose gradually", "Stabilized", "Improved"],
 correct: "1",
 image: ''
 },
+
 21: {
-text: "You can use a ____ to find synonyms and antonyms of any word.",
-options: ["thesaurus", "dictionary", "encyclopedia", "atlas"],
+text: "A <b>thesaurus</b> helps find similar words.<br>Choose the correct meaning of <b>thesaurus</b>.",
+options: ["Book of synonyms and antonyms", "History book", "Map collection", "Science manual"],
 correct: "1",
 image: ''
 },
+
 22: {
-text: "The city introduced an ____ ticket that covered buses, trains, and trams.",
-options: ["omnibus", "single", "exclusive", "limited"],
+text: "An <b>omnibus</b> edition contained several novels in one book.<br>Choose the correct meaning of <b>omnibus</b>.",
+options: ["Containing many items", "Single and separate", "Limited", "Exclusive"],
 correct: "1",
 image: ''
 },
+
 23: {
-text: "They sailed across the lake in a small ____.",
-options: ["dinghy", "cruise", "submarine", "canoe"],
+text: "They crossed the lake in a small <b>dinghy</b>.<br>Choose the correct meaning of <b>dinghy</b>.",
+options: ["Small boat", "Large ship", "Submarine", "Cruise liner"],
 correct: "1",
 image: ''
 },
+
 24: {
-text: "The large ____ transported goods across the ocean.",
-options: ["freighter", "boat", "raft", "canoe"],
+text: "The <b>freighter</b> carried cargo across the ocean.<br>Choose the correct meaning of <b>freighter</b>.",
+options: ["Cargo ship", "Fishing boat", "Raft", "Canoe"],
 correct: "1",
 image: ''
 },
+
 25: {
-text: "We took a ____ across the river to reach the island.",
-options: ["ferry", "car", "train", "airplane"],
+text: "A <b>ferry</b> carried passengers across the river.<br>Choose the correct meaning of <b>ferry</b>.",
+options: ["Boat for crossing water", "Train", "Car", "Airplane"],
 correct: "1",
 image: ''
 },
-26: {
-text: "The restaurant can easily ____ to parties of up to 200 guests.",
-options: ["cater", "ignore", "refuse", "delay"],
-correct: "1",
-image: ''
+
+    26: {
+text: "<b><u>खान-पान की व्यवस्था करना</u></b><br>Cater means to provide food or services for people or events.<br><b>Rhyming line:</b> party later, food cater – <b>cater</b>",
+image: ""
 },
+
 27: {
-text: "The praise from her teacher greatly served to ____ her pride.",
-options: ["gratify", "hurt", "diminish", "offend"],
-correct: "1",
-image: ''
+text: "<b><u>संतुष्ट करना</u></b><br>Gratify means to please or give satisfaction to someone.<br><b>Rhyming line:</b> great खुशी – <b>gratify</b>",
+image: ""
 },
+
 28: {
-text: "The ____ knight rescued the villagers from the bandits.",
-options: ["gallant", "cowardly", "selfish", "lazy"],
-correct: "1",
-image: ''
+text: "<b><u>वीर</u></b><br>Gallant refers to bravery, chivalry, or noble courage.<br><b>Rhyming line:</b> hero talent – <b>gallant</b>",
+image: ""
 },
+
 29: {
-text: "It was ____ to watch someone take credit for his hard work.",
-options: ["galling", "pleasant", "enjoyable", "rewarding"],
-correct: "1",
-image: ''
+text: "<b><u>कष्टदायक</u></b><br>Galling means extremely irritating, humiliating, or annoying.<br><b>Rhyming line:</b> pain calling – <b>galling</b>",
+image: ""
 },
+
 30: {
-text: "Children can be easily tricked because they are often ____.",
-options: ["gullible", "suspicious", "wise", "cautious"],
-correct: "1",
-image: ''
+text: "<b><u>आसानी से धोखा खाने वाला</u></b><br>Gullible means too ready to believe others; easily deceived.<br><b>Rhyming line:</b> full belief-able – <b>gullible</b>",
+image: ""
 },
+
 31: {
-text: "His ____ manners at the dinner offended everyone present.",
-options: ["boorish", "polite", "graceful", "courteous"],
-correct: "1",
-image: ''
+text: "<b><u>असभ्य</u></b><br>Boorish describes rude, ill-mannered, or uncultured behavior.<br><b>Rhyming line:</b> bad manners flourish – <b>boorish</b>",
+image: ""
 },
+
 32: {
-text: "The medicine helped to ____ the pain after the surgery.",
-options: ["assuage", "increase", "worsen", "prolong"],
-correct: "1",
-image: ''
+text: "<b><u>शांत करना</u></b><br>Assuage means to lessen pain, fear, or distress.<br><b>Rhyming line:</b> pain reduce-age – <b>assuage</b>",
+image: ""
 },
+
 33: {
-text: "He appeared ____ even in the face of danger, showing no fear.",
-options: ["nonchalant", "worried", "anxious", "excited"],
-correct: "1",
-image: ''
+text: "<b><u>निश्चिंत</u></b><br>Nonchalant means calm and unconcerned, showing no anxiety.<br><b>Rhyming line:</b> no worry talent – <b>nonchalant</b>",
+image: ""
 },
+
 34: {
-text: "She became ____ when asked unexpected questions during the interview.",
-options: ["flustered", "confident", "calm", "assured"],
-correct: "1",
-image: ''
+text: "<b><u>घबराया हुआ</u></b><br>Flustered means confused or agitated under pressure.<br><b>Rhyming line:</b> pressure busted – <b>flustered</b>",
+image: ""
 },
+
 35: {
-text: "He was visibly ____ by the sudden change in plans.",
-options: ["disconcerted", "pleased", "relieved", "delighted"],
-correct: "1",
-image: ''
+text: "<b><u>असमंजस में</u></b><br>Disconcerted means disturbed or thrown off balance mentally.<br><b>Rhyming line:</b> plan inverted – <b>disconcerted</b>",
+image: ""
 },
+
 36: {
-text: "The student looked ____ when the teacher asked a difficult question.",
-options: ["bewildered", "focused", "attentive", "certain"],
-correct: "1",
-image: ''
+text: "<b><u>हक्का-बक्का</u></b><br>Bewildered means completely confused or puzzled.<br><b>Rhyming line:</b> brain twirled – <b>bewildered</b>",
+image: ""
 },
+
 37: {
-text: "Due to budget cuts, the company started ____ several ongoing projects.",
-options: ["curtailing", "expanding", "launching", "promoting"],
-correct: "1",
-image: ''
+text: "<b><u>कम करना</u></b><br>Curtailing means reducing or cutting something short.<br><b>Rhyming line:</b> tail cut – <b>curtailing</b>",
+image: ""
 },
+
 38: {
-text: "The minister was arrested for accepting illegal money through ____.",
-options: ["graft", "charity", "donation", "fundraising"],
-correct: "1",
-image: ''
+text: "<b><u>भ्रष्टाचार</u></b><br>Graft refers to corrupt practices for personal gain, especially in politics.<br><b>Rhyming line:</b> power draft – <b>graft</b>",
+image: ""
 },
+
 39: {
-text: "Her explanation was clear and ____ enough to convince everyone.",
-options: ["credible", "doubtful", "unclear", "false"],
-correct: "1",
-image: ''
+text: "<b><u>विश्वसनीय</u></b><br>Credible means believable or worthy of trust.<br><b>Rhyming line:</b> credit able – <b>credible</b>",
+image: ""
 },
+
 40: {
-text: "The constant lying led to the ____ of their friendship.",
-options: ["vitiation", "strengthening", "growth", "revival"],
-correct: "1",
-image: ''
+text: "<b><u>दूषित करना</u></b><br>Vitiation is the act of spoiling or impairing something’s quality.<br><b>Rhyming line:</b> value degradation – <b>vitiation</b>",
+image: ""
 },
+
 41: {
-text: "He wasted his fortune in a life of luxury and ____.",
-options: ["debauch", "discipline", "devotion", "restraint"],
-correct: "1",
-image: ''
+text: "<b><u>अनैतिक भोग</u></b><br>Debauch means to corrupt morally or indulge excessively in pleasure.<br><b>Rhyming line:</b> bad conduct couch – <b>debauch</b>",
+image: ""
 },
+
 42: {
-text: "Thick smoke began to ____ from the burning building.",
-options: ["billow", "sink", "disappear", "collapse"],
-correct: "1",
-image: ''
+text: "<b><u>लहराना</u></b><br>Billow means to swell or rise outward like waves or smoke.<br><b>Rhyming line:</b> big flow – <b>billow</b>",
+image: ""
 },
+
 43: {
-text: "His constant ____ in sweets affected his health badly.",
-options: ["indulgence", "avoidance", "discipline", "abstinence"],
-correct: "1",
-image: ''
+text: "<b><u>अति-भोग</u></b><br>Indulgence refers to excessive enjoyment or leniency.<br><b>Rhyming line:</b> enjoy-in-dense – <b>indulgence</b>",
+image: ""
 },
+
 44: {
-text: "She remained ____ in her opinion despite everyone’s arguments.",
-options: ["obstinate", "flexible", "open-minded", "lenient"],
-correct: "1",
-image: ''
+text: "<b><u>हठी</u></b><br>Obstinate means stubbornly refusing to change one’s view.<br><b>Rhyming line:</b> opinion granite – <b>obstinate</b>",
+image: ""
 },
+
 45: {
-text: "Only an act of pure ____ could make someone behave so foolishly.",
-options: ["imbecility", "wisdom", "brilliance", "insight"],
-correct: "1",
-image: ''
+text: "<b><u>अत्यधिक मूर्खता</u></b><br>Imbecility refers to extreme foolishness or lack of sense.<br><b>Rhyming line:</b> empty ability – <b>imbecility</b>",
+image: ""
 },
+
 46: {
-text: "Young branches are more ____ and can be bent easily.",
-options: ["pliable", "rigid", "stiff", "hard"],
-correct: "1",
-image: ''
+text: "<b><u>लचीला</u></b><br>Pliable means easily bent or influenced.<br><b>Rhyming line:</b> bend-able style – <b>pliable</b>",
+image: ""
 },
+
 47: {
-text: "The government launched a campaign to ____ poverty from the country.",
-options: ["eradicate", "spread", "ignore", "preserve"],
-correct: "1",
-image: ''
+text: "<b><u>पूर्णतः समाप्त करना</u></b><br>Eradicate means to remove or destroy completely.<br><b>Rhyming line:</b> root से cut – <b>eradicate</b>",
+image: ""
 },
+
 48: {
-text: "He made a ____ protest against the unfair decision.",
-options: ["vehement", "mild", "weak", "gentle"],
-correct: "1",
-image: ''
+text: "<b><u>तीव्र भावनात्मक</u></b><br>Vehement means showing strong forceful feeling or passion.<br><b>Rhyming line:</b> very-eminent emotion – <b>vehement</b>",
+image: ""
 },
+
 49: {
-text: "The philosopher’s ideas were so ____ that only a few could understand them.",
-options: ["esoteric", "simple", "obvious", "plain"],
-correct: "1",
-image: ''
+text: "<b><u>गूढ़</u></b><br>Esoteric means understood by only a small, specialized group.<br><b>Rhyming line:</b> expert-only topic – <b>esoteric</b>",
+image: ""
 },
+
 50: {
-text: "He wasted money on ____ things instead of saving for essentials.",
-options: ["frivolous", "useful", "important", "necessary"],
-correct: "1",
-image: ''
-},
+text: "<b><u>तुच्छ</u></b><br>Frivolous means lacking seriousness or importance.<br><b>Rhyming line:</b> free-volley focus-less – <b>frivolous</b>",
+image: ""
+}
 };
 
 // placeholder
 const explanations = {
     1: {
-text: "<b>Answer:</b> impudence. <br><b>Definition:</b> Rude or disrespectful behavior. <br><b>Synonyms:</b> insolence, cheek, audacity, impertinence, rudeness. <br><b>Antonyms:</b> respect, politeness, humility, courtesy, modesty.",
+text: "<b><u>अशिष्टता</u></b><br>Impudence means rude, disrespectful, or insolent behavior toward someone, especially a superior.<br><b>Rhyming line:</b> rude attitude = <b>impudence</b>",
 image: ""
 },
+
 2: {
-text: "<b>Answer:</b> pugnacious. <br><b>Definition:</b> Eager or quick to argue or fight. <br><b>Synonyms:</b> combative, aggressive, quarrelsome, hostile, belligerent. <br><b>Antonyms:</b> peaceful, calm, gentle, friendly, passive.",
+text: "<b><u>लड़ाकू स्वभाव</u></b><br>Pugnacious describes someone who is eager or quick to fight or argue.<br><b>Rhyming line:</b> punch का passion – <b>pugnacious</b>",
 image: ""
 },
+
 3: {
-text: "<b>Answer:</b> tenacious. <br><b>Definition:</b> Holding firmly to something; persistent. <br><b>Synonyms:</b> persistent, determined, steadfast, resolute, stubborn. <br><b>Antonyms:</b> weak, yielding, irresolute, hesitant, loose.",
+text: "<b><u>दृढ़</u></b><br>Tenacious means holding firmly and not giving up easily despite difficulties.<br><b>Rhyming line:</b> tension में stick-ious – <b>tenacious</b>",
 image: ""
 },
+
 4: {
-text: "<b>Answer:</b> unmalicious. <br><b>Definition:</b> Not intended to harm; kind or harmless. <br><b>Synonyms:</b> kind, gentle, benevolent, forgiving, innocent. <br><b>Antonyms:</b> malicious, cruel, spiteful, hostile, vengeful.",
+text: "<b><u>अहानिकर</u></b><br>Unmalicious means not intended to harm; free from ill will.<br><b>Rhyming line:</b> no malice, no vicious – <b>unmalicious</b>",
 image: ""
 },
+
 5: {
-text: "<b>Answer:</b> drab. <br><b>Definition:</b> Dull, lacking brightness or interest. <br><b>Synonyms:</b> dull, bleak, colorless, lifeless, monotonous. <br><b>Antonyms:</b> bright, colorful, vivid, lively, cheerful.",
+text: "<b><u>निरस</u></b><br>Drab refers to something dull, colorless, or lacking interest.<br><b>Rhyming line:</b> no fab, all dull – <b>drab</b>",
 image: ""
 },
+
 6: {
-text: "<b>Answer:</b> dire. <br><b>Definition:</b> Extremely serious or urgent. <br><b>Synonyms:</b> dreadful, terrible, grave, desperate, severe. <br><b>Antonyms:</b> mild, calm, trivial, unimportant, easy.",
+text: "<b><u>अत्यंत गंभीर</u></b><br>Dire means extremely serious, urgent, or desperate.<br><b>Rhyming line:</b> danger on fire – <b>dire</b>",
 image: ""
 },
+
 7: {
-text: "<b>Answer:</b> trivial. <br><b>Definition:</b> Of little importance or value. <br><b>Synonyms:</b> insignificant, petty, minor, unimportant, negligible. <br><b>Antonyms:</b> important, serious, crucial, major, significant.",
+text: "<b><u>तुच्छ</u></b><br>Trivial means of little importance or value.<br><b>Rhyming line:</b> try-vial, small deal – <b>trivial</b>",
 image: ""
 },
+
 8: {
-text: "<b>Answer:</b> benign. <br><b>Definition:</b> Gentle and kind; not harmful. <br><b>Synonyms:</b> harmless, mild, gentle, benevolent, friendly. <br><b>Antonyms:</b> harmful, malignant, hostile, dangerous, unfriendly.",
+text: "<b><u>निर्दोष</u></b><br>Benign means harmless and not dangerous, especially medically.<br><b>Rhyming line:</b> be-nice sign – <b>benign</b>",
 image: ""
 },
+
 9: {
-text: "<b>Answer:</b> briskly. <br><b>Definition:</b> In an active, quick, or energetic way. <br><b>Synonyms:</b> quickly, rapidly, energetically, promptly, swiftly. <br><b>Antonyms:</b> slowly, lazily, sluggishly, idly, tardily.",
+text: "<b><u>तेज़ी से</u></b><br>Briskly means in a quick, energetic manner.<br><b>Rhyming line:</b> quick risk-free – <b>briskly</b>",
 image: ""
 },
+
 10: {
-text: "<b>Answer:</b> wayward. <br><b>Definition:</b> Difficult to control because of unpredictable behavior. <br><b>Synonyms:</b> unruly, headstrong, stubborn, erratic, willful. <br><b>Antonyms:</b> obedient, disciplined, steady, reliable, compliant.",
+text: "<b><u>उद्दंड</u></b><br>Wayward describes unpredictable or difficult-to-control behavior.<br><b>Rhyming line:</b> wrong way forward – <b>wayward</b>",
 image: ""
 },
+
 11: {
-text: "<b>Answer:</b> terse. <br><b>Definition:</b> Using few words; brief and direct. <br><b>Synonyms:</b> concise, brief, curt, succinct, laconic. <br><b>Antonyms:</b> lengthy, verbose, wordy, elaborate, long-winded.",
+text: "<b><u>संक्षिप्त</u></b><br>Terse means using very few words; brief and direct.<br><b>Rhyming line:</b> talk curse, cut short – <b>terse</b>",
 image: ""
 },
+
 12: {
-text: "<b>Answer:</b> rhapsodic. <br><b>Definition:</b> Extravagantly emotional or enthusiastic. <br><b>Synonyms:</b> ecstatic, euphoric, elated, passionate, enthusiastic. <br><b>Antonyms:</b> dull, indifferent, emotionless, lifeless, apathetic.",
+text: "<b><u>उत्साहपूर्ण</u></b><br>Rhapsodic means extravagantly emotional or enthusiastic.<br><b>Rhyming line:</b> rapture mode – <b>rhapsodic</b>",
 image: ""
 },
+
 13: {
-text: "<b>Answer:</b> ecstatic. <br><b>Definition:</b> Feeling or expressing overwhelming joy. <br><b>Synonyms:</b> overjoyed, elated, thrilled, euphoric, delighted. <br><b>Antonyms:</b> miserable, sad, gloomy, depressed, sorrowful.",
+text: "<b><u>अत्यंत प्रसन्न</u></b><br>Ecstatic means filled with overwhelming joy or happiness.<br><b>Rhyming line:</b> extra-happy state – <b>ecstatic</b>",
 image: ""
 },
+
 14: {
-text: "<b>Answer:</b> recalcitrance. <br><b>Definition:</b> A refusal to obey rules or authority. <br><b>Synonyms:</b> defiance, disobedience, resistance, stubbornness, insubordination. <br><b>Antonyms:</b> obedience, submission, compliance, cooperation, subservience.",
+text: "<b><u>हठधर्मिता</u></b><br>Recalcitrance means stubborn resistance to authority or rules.<br><b>Rhyming line:</b> rules cancel trance – <b>recalcitrance</b>",
 image: ""
 },
+
 15: {
-text: "<b>Answer:</b> obstinacy. <br><b>Definition:</b> Stubborn refusal to change one's opinion. <br><b>Synonyms:</b> stubbornness, rigidity, determination, persistence, inflexibility. <br><b>Antonyms:</b> flexibility, obedience, compliance, adaptability, agreement.",
+text: "<b><u>जिद</u></b><br>Obstinacy refers to stubborn refusal to change one’s opinion.<br><b>Rhyming line:</b> opinion fix-ity – <b>obstinacy</b>",
 image: ""
 },
+
 16: {
-text: "<b>Answer:</b> prognostication. <br><b>Definition:</b> A prediction of future events. <br><b>Synonyms:</b> prediction, forecast, prophecy, omen, augury. <br><b>Antonyms:</b> hindsight, ignorance, guess, uncertainty, doubt.",
+text: "<b><u>पूर्वानुमान</u></b><br>Prognostication means a prediction about future events.<br><b>Rhyming line:</b> future narration – <b>prognostication</b>",
 image: ""
 },
+
 17: {
-text: "<b>Answer:</b> pangs. <br><b>Definition:</b> Sudden sharp feelings of pain or emotion. <br><b>Synonyms:</b> twinges, aches, throbs, spasms, stabs. <br><b>Antonyms:</b> comfort, ease, relief, calm, peace.",
+text: "<b><u>तीव्र पीड़ा</u></b><br>Pangs are sudden sharp feelings of pain or emotion.<br><b>Rhyming line:</b> pain bangs – <b>pangs</b>",
 image: ""
 },
+
 18: {
-text: "<b>Answer:</b> exiguous. <br><b>Definition:</b> Very small in amount; meager. <br><b>Synonyms:</b> scanty, sparse, meager, insufficient, limited. <br><b>Antonyms:</b> abundant, ample, plentiful, copious, sufficient.",
+text: "<b><u>अत्यल्प</u></b><br>Exiguous means very small in amount or size.<br><b>Rhyming line:</b> extra-less, too small – <b>exiguous</b>",
 image: ""
 },
+
 19: {
-text: "<b>Answer:</b> wily. <br><b>Definition:</b> Skilled at gaining advantage, especially deceitfully. <br><b>Synonyms:</b> cunning, crafty, sly, shrewd, deceitful. <br><b>Antonyms:</b> naive, honest, simple, straightforward, innocent.",
+text: "<b><u>चालाक</u></b><br>Wily means clever and skilled at deception or strategy.<br><b>Rhyming line:</b> wise and sly – <b>wily</b>",
 image: ""
 },
+
 20: {
-text: "<b>Answer:</b> plummeted. <br><b>Definition:</b> Fell or dropped straight down rapidly. <br><b>Synonyms:</b> dropped, fell, sank, tumbled, dived. <br><b>Antonyms:</b> rose, increased, ascended, climbed, soared.",
+text: "<b><u>तेज़ी से गिरना</u></b><br>Plummeted means fell suddenly and sharply.<br><b>Rhyming line:</b> price tumbled – <b>plummeted</b>",
 image: ""
 },
+
 21: {
-text: "<b>Answer:</b> thesaurus. <br><b>Definition:</b> A reference book listing synonyms and antonyms. <br><b>Synonyms:</b> wordbook, lexicon, glossary, vocabulary, dictionary. <br><b>Antonyms:</b> none, (no direct opposites exist).",
+text: "<b><u>पर्यायवाची शब्दकोश</u></b><br>A thesaurus is a reference book of synonyms and antonyms.<br><b>Rhyming line:</b> this-saurus gives word chorus – <b>thesaurus</b>",
 image: ""
 },
+
 22: {
-text: "<b>Answer:</b> omnibus. <br><b>Definition:</b> A single volume containing several works or covering many items. <br><b>Synonyms:</b> anthology, collection, compilation, digest, volume. <br><b>Antonyms:</b> single, separate, individual, distinct, isolated.",
+text: "<b><u>सर्वसमावेशी</u></b><br>Omnibus means containing many items in one collection.<br><b>Rhyming line:</b> all-in bus – <b>omnibus</b>",
 image: ""
 },
+
 23: {
-text: "<b>Answer:</b> dinghy. <br><b>Definition:</b> A small boat often used for short trips or as a lifeboat. <br><b>Synonyms:</b> rowboat, skiff, canoe, lifeboat, tender. <br><b>Antonyms:</b> ship, vessel, freighter, cruiser, yacht.",
+text: "<b><u>छोटी नाव</u></b><br>Dinghy is a small boat used for short trips or support.<br><b>Rhyming line:</b> tiny thing-y – <b>dinghy</b>",
 image: ""
 },
+
 24: {
-text: "<b>Answer:</b> freighter. <br><b>Definition:</b> A ship or aircraft that carries cargo. <br><b>Synonyms:</b> cargo ship, merchantman, carrier, transport, vessel. <br><b>Antonyms:</b> passenger ship, boat, dinghy, yacht, cruiser.",
+text: "<b><u>मालवाहक जहाज़</u></b><br>Freighter is a ship used to transport cargo.<br><b>Rhyming line:</b> freight carrier – <b>freighter</b>",
 image: ""
 },
+
 25: {
-text: "<b>Answer:</b> ferry. <br><b>Definition:</b> A boat or ship used to carry people or goods across a body of water. <br><b>Synonyms:</b> boat, transporter, vessel, ship, shuttle. <br><b>Antonyms:</b> car, train, airplane, bus, vehicle.",
+text: "<b><u>नौका सेवा</u></b><br>Ferry is a boat used to carry people or goods across water.<br><b>Rhyming line:</b> very-hurry carry – <b>ferry</b>",
 image: ""
 },
-26: {
-text: "<b>Answer:</b> cater. <br><b>Definition:</b> To provide food or service for an event or group. <br><b>Synonyms:</b> serve, supply, provide, furnish, deliver. <br><b>Antonyms:</b> neglect, ignore, refuse, withhold, deny.",
+
+    26: {
+text: "<b><u>खान-पान की व्यवस्था करना</u></b><br>Cater means to provide food or services for people or events.<br><b>Rhyming line:</b> party later, food <b>cater</b>",
 image: ""
 },
+
 27: {
-text: "<b>Answer:</b> gratify. <br><b>Definition:</b> To give pleasure or satisfaction. <br><b>Synonyms:</b> please, satisfy, delight, content, indulge. <br><b>Antonyms:</b> displease, annoy, irritate, offend, disappoint.",
+text: "<b><u>संतुष्ट करना</u></b><br>Gratify means to please or give satisfaction.<br><b>Rhyming line:</b> great खुशी – <b>gratify</b>",
 image: ""
 },
+
 28: {
-text: "<b>Answer:</b> gallant. <br><b>Definition:</b> Brave, heroic, or chivalrous. <br><b>Synonyms:</b> brave, valiant, heroic, noble, bold. <br><b>Antonyms:</b> cowardly, timid, fearful, weak, humble.",
+text: "<b><u>वीर</u></b><br>Gallant refers to brave, noble, or chivalrous behavior.<br><b>Rhyming line:</b> hero talent – <b>gallant</b>",
 image: ""
 },
+
 29: {
-text: "<b>Answer:</b> galling. <br><b>Definition:</b> Annoying or humiliating. <br><b>Synonyms:</b> irritating, exasperating, infuriating, vexing, provoking. <br><b>Antonyms:</b> pleasing, soothing, calming, comforting, delightful.",
+text: "<b><u>कष्टदायक</u></b><br>Galling means extremely irritating or humiliating.<br><b>Rhyming line:</b> pain calling – <b>galling</b>",
 image: ""
 },
+
 30: {
-text: "<b>Answer:</b> gullible. <br><b>Definition:</b> Easily deceived or tricked. <br><b>Synonyms:</b> naive, trusting, innocent, unsuspecting, credulous. <br><b>Antonyms:</b> skeptical, cautious, suspicious, wary, shrewd.",
+text: "<b><u>आसानी से बहकने वाला</u></b><br>Gullible means easily deceived or tricked.<br><b>Rhyming line:</b> full belief-able – <b>gullible</b>",
 image: ""
 },
+
 31: {
-text: "<b>Answer:</b> boorish. <br><b>Definition:</b> Rude and insensitive; lacking manners. <br><b>Synonyms:</b> rude, uncouth, vulgar, crude, impolite. <br><b>Antonyms:</b> polite, courteous, refined, elegant, sophisticated.",
+text: "<b><u>असभ्य</u></b><br>Boorish describes rude or ill-mannered behavior.<br><b>Rhyming line:</b> bad manners flourish – <b>boorish</b>",
 image: ""
 },
+
 32: {
-text: "<b>Answer:</b> assuage. <br><b>Definition:</b> To make an unpleasant feeling less intense. <br><b>Synonyms:</b> relieve, ease, alleviate, soothe, mitigate. <br><b>Antonyms:</b> aggravate, worsen, intensify, increase, heighten.",
+text: "<b><u>पीड़ा कम करना</u></b><br>Assuage means to make pain or distress less severe.<br><b>Rhyming line:</b> pain reduce-age – <b>assuage</b>",
 image: ""
 },
+
 33: {
-text: "<b>Answer:</b> nonchalant. <br><b>Definition:</b> Calm and relaxed; not showing anxiety or enthusiasm. <br><b>Synonyms:</b> casual, unconcerned, composed, indifferent, cool. <br><b>Antonyms:</b> anxious, concerned, nervous, excited, tense.",
+text: "<b><u>बेपरवाह</u></b><br>Nonchalant means calm and unconcerned.<br><b>Rhyming line:</b> no worry talent – <b>nonchalant</b>",
 image: ""
 },
+
 34: {
-text: "<b>Answer:</b> flustered. <br><b>Definition:</b> Agitated or confused, especially by pressure. <br><b>Synonyms:</b> nervous, confused, upset, rattled, agitated. <br><b>Antonyms:</b> calm, composed, relaxed, collected, serene.",
+text: "<b><u>घबराया हुआ</u></b><br>Flustered means confused or agitated due to pressure.<br><b>Rhyming line:</b> pressure busted – <b>flustered</b>",
 image: ""
 },
+
 35: {
-text: "<b>Answer:</b> disconcerted. <br><b>Definition:</b> Disturbed or unsettled; thrown off balance. <br><b>Synonyms:</b> unsettled, disturbed, rattled, embarrassed, confused. <br><b>Antonyms:</b> composed, calm, assured, confident, relaxed.",
+text: "<b><u>असहज</u></b><br>Disconcerted means disturbed or unsettled mentally.<br><b>Rhyming line:</b> plan inverted – <b>disconcerted</b>",
 image: ""
 },
+
 36: {
-text: "<b>Answer:</b> bewildered. <br><b>Definition:</b> Completely puzzled or confused. <br><b>Synonyms:</b> perplexed, puzzled, confused, baffled, confounded. <br><b>Antonyms:</b> clear, certain, aware, understanding, composed.",
+text: "<b><u>हक्का-बक्का</u></b><br>Bewildered means completely confused or puzzled.<br><b>Rhyming line:</b> brain twirled – <b>bewildered</b>",
 image: ""
 },
+
 37: {
-text: "<b>Answer:</b> curtailing. <br><b>Definition:</b> Reducing or limiting something. <br><b>Synonyms:</b> reducing, cutting, decreasing, shortening, restricting. <br><b>Antonyms:</b> expanding, extending, increasing, enlarging, growing.",
+text: "<b><u>कम करना</u></b><br>Curtailing means reducing or limiting something.<br><b>Rhyming line:</b> tail cut – <b>curtailing</b>",
 image: ""
 },
+
 38: {
-text: "<b>Answer:</b> graft. <br><b>Definition:</b> Corrupt use of authority for personal gain. <br><b>Synonyms:</b> corruption, bribery, fraud, extortion, dishonesty. <br><b>Antonyms:</b> honesty, integrity, fairness, morality, righteousness.",
+text: "<b><u>भ्रष्टाचार</u></b><br>Graft refers to corruption for personal gain.<br><b>Rhyming line:</b> power draft – <b>graft</b>",
 image: ""
 },
+
 39: {
-text: "<b>Answer:</b> credible. <br><b>Definition:</b> Believable or convincing. <br><b>Synonyms:</b> believable, trustworthy, reliable, plausible, dependable. <br><b>Antonyms:</b> unbelievable, doubtful, false, unreliable, untrustworthy.",
+text: "<b><u>विश्वसनीय</u></b><br>Credible means believable or trustworthy.<br><b>Rhyming line:</b> credit-able – <b>credible</b>",
 image: ""
 },
+
 40: {
-text: "<b>Answer:</b> vitiation. <br><b>Definition:</b> The act of spoiling or impairing something. <br><b>Synonyms:</b> corruption, degradation, spoilage, tainting, weakening. <br><b>Antonyms:</b> purification, strengthening, improvement, renewal, restoration.",
+text: "<b><u>दूषित करना</u></b><br>Vitiation is the act of spoiling or impairing something.<br><b>Rhyming line:</b> value degradation – <b>vitiation</b>",
 image: ""
 },
+
 41: {
-text: "<b>Answer:</b> debauch. <br><b>Definition:</b> To corrupt morally; indulge in sensual pleasures. <br><b>Synonyms:</b> corrupt, degrade, defile, pervert, seduce. <br><b>Antonyms:</b> purify, discipline, restrain, uplift, improve.",
+text: "<b><u>नैतिक पतन</u></b><br>Debauch means to corrupt morally or indulge excessively.<br><b>Rhyming line:</b> bad conduct couch – <b>debauch</b>",
 image: ""
 },
+
 42: {
-text: "<b>Answer:</b> billow. <br><b>Definition:</b> To rise or swell outward like a wave. <br><b>Synonyms:</b> surge, swell, balloon, roll, puff. <br><b>Antonyms:</b> sink, deflate, collapse, subside, flatten.",
+text: "<b><u>लहराना</u></b><br>Billow means to swell or rise like waves or smoke.<br><b>Rhyming line:</b> big flow – <b>billow</b>",
 image: ""
 },
+
 43: {
-text: "<b>Answer:</b> indulgence. <br><b>Definition:</b> Allowing oneself to enjoy pleasures excessively. <br><b>Synonyms:</b> luxury, excess, gratification, leniency, tolerance. <br><b>Antonyms:</b> restraint, discipline, abstinence, denial, moderation.",
+text: "<b><u>अति-भोग</u></b><br>Indulgence refers to excessive enjoyment or leniency.<br><b>Rhyming line:</b> enjoy-in-dense – <b>indulgence</b>",
 image: ""
 },
+
 44: {
-text: "<b>Answer:</b> obstinate. <br><b>Definition:</b> Refusing to change one’s opinion or behavior. <br><b>Synonyms:</b> stubborn, unyielding, inflexible, headstrong, persistent. <br><b>Antonyms:</b> flexible, compliant, yielding, agreeable, open-minded.",
+text: "<b><u>हठी</u></b><br>Obstinate means stubborn and unwilling to change.<br><b>Rhyming line:</b> opinion granite – <b>obstinate</b>",
 image: ""
 },
+
 45: {
-text: "<b>Answer:</b> imbecility. <br><b>Definition:</b> Extreme foolishness or stupidity. <br><b>Synonyms:</b> stupidity, foolishness, idiocy, absurdity, ignorance. <br><b>Antonyms:</b> intelligence, wisdom, brilliance, sense, cleverness.",
+text: "<b><u>अत्यधिक मूर्खता</u></b><br>Imbecility means extreme foolishness or lack of sense.<br><b>Rhyming line:</b> empty ability – <b>imbecility</b>",
 image: ""
 },
+
 46: {
-text: "<b>Answer:</b> pliable. <br><b>Definition:</b> Easily bent or influenced. <br><b>Synonyms:</b> flexible, adaptable, malleable, bendable, supple. <br><b>Antonyms:</b> rigid, stiff, inflexible, hard, unyielding.",
+text: "<b><u>लचीला</u></b><br>Pliable means easily bent or influenced.<br><b>Rhyming line:</b> bend-able style – <b>pliable</b>",
 image: ""
 },
+
 47: {
-text: "<b>Answer:</b> eradicate. <br><b>Definition:</b> To destroy or remove completely. <br><b>Synonyms:</b> eliminate, abolish, exterminate, annihilate, remove. <br><b>Antonyms:</b> preserve, create, protect, maintain, sustain.",
+text: "<b><u>पूर्णतः मिटाना</u></b><br>Eradicate means to remove or destroy completely.<br><b>Rhyming line:</b> root से cut – <b>eradicate</b>",
 image: ""
 },
+
 48: {
-text: "<b>Answer:</b> vehement. <br><b>Definition:</b> Showing strong feeling or intensity. <br><b>Synonyms:</b> passionate, forceful, intense, fervent, powerful. <br><b>Antonyms:</b> mild, weak, gentle, indifferent, apathetic.",
+text: "<b><u>तीव्र भावनात्मक</u></b><br>Vehement means showing strong forceful feelings.<br><b>Rhyming line:</b> very-eminent emotion – <b>vehement</b>",
 image: ""
 },
+
 49: {
-text: "<b>Answer:</b> esoteric. <br><b>Definition:</b> Intended for or understood by only a small group. <br><b>Synonyms:</b> obscure, mysterious, cryptic, abstract, arcane. <br><b>Antonyms:</b> common, simple, familiar, obvious, clear.",
+text: "<b><u>गूढ़</u></b><br>Esoteric means understood by only a select few.<br><b>Rhyming line:</b> expert-only topic – <b>esoteric</b>",
 image: ""
 },
+
 50: {
-text: "<b>Answer:</b> frivolous. <br><b>Definition:</b> Not having any serious purpose or value. <br><b>Synonyms:</b> trivial, silly, petty, superficial, foolish. <br><b>Antonyms:</b> serious, important, meaningful, sensible, valuable.",
+text: "<b><u>तुच्छ</u></b><br>Frivolous means lacking seriousness or importance.<br><b>Rhyming line:</b> free-volley focus-less – <b>frivolous</b>",
 image: ""
-},
+}
+    
+
 };
