@@ -175,129 +175,179 @@ correct: "1",
 image: ''
 },
 
-    26: {
-text: "<b><u>खान-पान की व्यवस्था करना</u></b><br>Cater means to provide food or services for people or events.<br><b>Rhyming line:</b> party later, food cater – <b>cater</b>",
-image: ""
+ 26: {
+text: "The restaurant can easily <b>cater</b> to large wedding parties.<br>Choose the correct meaning of <b>cater</b>.",
+options: ["Provide food or services", "Refuse service", "Delay arrangements", "Ignore requests"],
+correct: "1",
+image: ''
 },
 
 27: {
-text: "<b><u>संतुष्ट करना</u></b><br>Gratify means to please or give satisfaction to someone.<br><b>Rhyming line:</b> great खुशी – <b>gratify</b>",
-image: ""
+text: "The praise from his mentor helped to <b>gratify</b> his efforts.<br>Choose the correct meaning of <b>gratify</b>.",
+options: ["Give pleasure or satisfaction", "Cause disappointment", "Offend deeply", "Reduce importance"],
+correct: "1",
+image: ''
 },
 
 28: {
-text: "<b><u>वीर</u></b><br>Gallant refers to bravery, chivalry, or noble courage.<br><b>Rhyming line:</b> hero talent – <b>gallant</b>",
-image: ""
+text: "The <b>gallant</b> soldier saved civilians during the attack.<br>Choose the correct meaning of <b>gallant</b>.",
+options: ["Brave and noble", "Cowardly", "Selfish", "Careless"],
+correct: "1",
+image: ''
 },
 
 29: {
-text: "<b><u>कष्टदायक</u></b><br>Galling means extremely irritating, humiliating, or annoying.<br><b>Rhyming line:</b> pain calling – <b>galling</b>",
-image: ""
+text: "It was <b>galling</b> to see someone else take credit for his work.<br>Choose the correct meaning of <b>galling</b>.",
+options: ["Highly irritating or humiliating", "Pleasant", "Rewarding", "Comforting"],
+correct: "1",
+image: ''
 },
 
 30: {
-text: "<b><u>आसानी से धोखा खाने वाला</u></b><br>Gullible means too ready to believe others; easily deceived.<br><b>Rhyming line:</b> full belief-able – <b>gullible</b>",
-image: ""
+text: "Children are often <b>gullible</b> and trust strangers easily.<br>Choose the correct meaning of <b>gullible</b>.",
+options: ["Easily deceived", "Highly suspicious", "Wise", "Cautious"],
+correct: "1",
+image: ''
 },
 
 31: {
-text: "<b><u>असभ्य</u></b><br>Boorish describes rude, ill-mannered, or uncultured behavior.<br><b>Rhyming line:</b> bad manners flourish – <b>boorish</b>",
-image: ""
+text: "His <b>boorish</b> behavior embarrassed everyone at dinner.<br>Choose the correct meaning of <b>boorish</b>.",
+options: ["Rude and ill-mannered", "Polite and refined", "Gentle", "Cultured"],
+correct: "1",
+image: ''
 },
 
 32: {
-text: "<b><u>शांत करना</u></b><br>Assuage means to lessen pain, fear, or distress.<br><b>Rhyming line:</b> pain reduce-age – <b>assuage</b>",
-image: ""
+text: "The medicine helped <b>assuage</b> her pain.<br>Choose the correct meaning of <b>assuage</b>.",
+options: ["Reduce or relieve", "Intensify", "Prolong", "Worsen"],
+correct: "1",
+image: ''
 },
 
 33: {
-text: "<b><u>निश्चिंत</u></b><br>Nonchalant means calm and unconcerned, showing no anxiety.<br><b>Rhyming line:</b> no worry talent – <b>nonchalant</b>",
-image: ""
+text: "He remained <b>nonchalant</b> even during the crisis.<br>Choose the correct meaning of <b>nonchalant</b>.",
+options: ["Calm and unconcerned", "Highly anxious", "Excited", "Panicked"],
+correct: "1",
+image: ''
 },
 
 34: {
-text: "<b><u>घबराया हुआ</u></b><br>Flustered means confused or agitated under pressure.<br><b>Rhyming line:</b> pressure busted – <b>flustered</b>",
-image: ""
+text: "She became <b>flustered</b> when questioned unexpectedly.<br>Choose the correct meaning of <b>flustered</b>.",
+options: ["Confused and agitated", "Calm and confident", "Relaxed", "Assured"],
+correct: "1",
+image: ''
 },
 
 35: {
-text: "<b><u>असमंजस में</u></b><br>Disconcerted means disturbed or thrown off balance mentally.<br><b>Rhyming line:</b> plan inverted – <b>disconcerted</b>",
-image: ""
+text: "He looked <b>disconcerted</b> by the sudden change of plans.<br>Choose the correct meaning of <b>disconcerted</b>.",
+options: ["Disturbed or unsettled", "Pleased", "Relieved", "Delighted"],
+correct: "1",
+image: ''
 },
 
 36: {
-text: "<b><u>हक्का-बक्का</u></b><br>Bewildered means completely confused or puzzled.<br><b>Rhyming line:</b> brain twirled – <b>bewildered</b>",
-image: ""
+text: "The complex instructions left him <b>bewildered</b>.<br>Choose the correct meaning of <b>bewildered</b>.",
+options: ["Completely confused", "Fully confident", "Certain", "Focused"],
+correct: "1",
+image: ''
 },
 
 37: {
-text: "<b><u>कम करना</u></b><br>Curtailing means reducing or cutting something short.<br><b>Rhyming line:</b> tail cut – <b>curtailing</b>",
-image: ""
+text: "Due to budget issues, the company began <b>curtailing</b> expenses.<br>Choose the correct meaning of <b>curtailing</b>.",
+options: ["Reducing or cutting short", "Increasing rapidly", "Expanding fully", "Launching new plans"],
+correct: "1",
+image: ''
 },
 
 38: {
-text: "<b><u>भ्रष्टाचार</u></b><br>Graft refers to corrupt practices for personal gain, especially in politics.<br><b>Rhyming line:</b> power draft – <b>graft</b>",
-image: ""
+text: "The politician was accused of accepting money through <b>graft</b>.<br>Choose the correct meaning of <b>graft</b>.",
+options: ["Corruption for personal gain", "Charitable donation", "Honest income", "Fundraising"],
+correct: "1",
+image: ''
 },
 
 39: {
-text: "<b><u>विश्वसनीय</u></b><br>Credible means believable or worthy of trust.<br><b>Rhyming line:</b> credit able – <b>credible</b>",
-image: ""
+text: "Her explanation sounded <b>credible</b> to the investigators.<br>Choose the correct meaning of <b>credible</b>.",
+options: ["Believable or trustworthy", "False", "Doubtful", "Unclear"],
+correct: "1",
+image: ''
 },
 
 40: {
-text: "<b><u>दूषित करना</u></b><br>Vitiation is the act of spoiling or impairing something’s quality.<br><b>Rhyming line:</b> value degradation – <b>vitiation</b>",
-image: ""
+text: "The constant lies led to the <b>vitiation</b> of trust.<br>Choose the correct meaning of <b>vitiation</b>.",
+options: ["Spoiling or impairing", "Strengthening", "Improving", "Purifying"],
+correct: "1",
+image: ''
 },
 
 41: {
-text: "<b><u>अनैतिक भोग</u></b><br>Debauch means to corrupt morally or indulge excessively in pleasure.<br><b>Rhyming line:</b> bad conduct couch – <b>debauch</b>",
-image: ""
+text: "He ruined his career through moral <b>debauch</b>.<br>Choose the correct meaning of <b>debauch</b>.",
+options: ["Moral corruption or excess", "Self-discipline", "Devotion", "Restraint"],
+correct: "1",
+image: ''
 },
 
 42: {
-text: "<b><u>लहराना</u></b><br>Billow means to swell or rise outward like waves or smoke.<br><b>Rhyming line:</b> big flow – <b>billow</b>",
-image: ""
+text: "Smoke began to <b>billow</b> from the burning warehouse.<br>Choose the correct meaning of <b>billow</b>.",
+options: ["Swell or rise outward", "Sink down", "Disappear", "Collapse"],
+correct: "1",
+image: ''
 },
 
 43: {
-text: "<b><u>अति-भोग</u></b><br>Indulgence refers to excessive enjoyment or leniency.<br><b>Rhyming line:</b> enjoy-in-dense – <b>indulgence</b>",
-image: ""
+text: "His constant <b>indulgence</b> in sweets harmed his health.<br>Choose the correct meaning of <b>indulgence</b>.",
+options: ["Excessive enjoyment", "Strict restraint", "Abstinence", "Discipline"],
+correct: "1",
+image: ''
 },
 
 44: {
-text: "<b><u>हठी</u></b><br>Obstinate means stubbornly refusing to change one’s view.<br><b>Rhyming line:</b> opinion granite – <b>obstinate</b>",
-image: ""
+text: "She remained <b>obstinate</b> despite all advice.<br>Choose the correct meaning of <b>obstinate</b>.",
+options: ["Stubborn and inflexible", "Open-minded", "Flexible", "Lenient"],
+correct: "1",
+image: ''
 },
 
 45: {
-text: "<b><u>अत्यधिक मूर्खता</u></b><br>Imbecility refers to extreme foolishness or lack of sense.<br><b>Rhyming line:</b> empty ability – <b>imbecility</b>",
-image: ""
+text: "Only sheer <b>imbecility</b> could explain such a decision.<br>Choose the correct meaning of <b>imbecility</b>.",
+options: ["Extreme foolishness", "Wisdom", "Insight", "Intelligence"],
+correct: "1",
+image: ''
 },
 
 46: {
-text: "<b><u>लचीला</u></b><br>Pliable means easily bent or influenced.<br><b>Rhyming line:</b> bend-able style – <b>pliable</b>",
-image: ""
+text: "Young branches are <b>pliable</b> and bend easily.<br>Choose the correct meaning of <b>pliable</b>.",
+options: ["Flexible and bendable", "Rigid", "Hard", "Stiff"],
+correct: "1",
+image: ''
 },
 
 47: {
-text: "<b><u>पूर्णतः समाप्त करना</u></b><br>Eradicate means to remove or destroy completely.<br><b>Rhyming line:</b> root से cut – <b>eradicate</b>",
-image: ""
+text: "The government aims to <b>eradicate</b> poverty completely.<br>Choose the correct meaning of <b>eradicate</b>.",
+options: ["Remove completely", "Preserve", "Spread", "Ignore"],
+correct: "1",
+image: ''
 },
 
 48: {
-text: "<b><u>तीव्र भावनात्मक</u></b><br>Vehement means showing strong forceful feeling or passion.<br><b>Rhyming line:</b> very-eminent emotion – <b>vehement</b>",
-image: ""
+text: "He made a <b>vehement</b> protest against the verdict.<br>Choose the correct meaning of <b>vehement</b>.",
+options: ["Forceful and intense", "Mild", "Weak", "Gentle"],
+correct: "1",
+image: ''
 },
 
 49: {
-text: "<b><u>गूढ़</u></b><br>Esoteric means understood by only a small, specialized group.<br><b>Rhyming line:</b> expert-only topic – <b>esoteric</b>",
-image: ""
+text: "The theory was too <b>esoteric</b> for beginners.<br>Choose the correct meaning of <b>esoteric</b>.",
+options: ["Understood by only a few", "Simple and common", "Obvious", "Clear"],
+correct: "1",
+image: ''
 },
 
 50: {
-text: "<b><u>तुच्छ</u></b><br>Frivolous means lacking seriousness or importance.<br><b>Rhyming line:</b> free-volley focus-less – <b>frivolous</b>",
-image: ""
+text: "He spent money on <b>frivolous</b> items instead of necessities.<br>Choose the correct meaning of <b>frivolous</b>.",
+options: ["Trivial or unimportant", "Essential", "Serious", "Necessary"],
+correct: "1",
+image: ''
 }
 };
 
@@ -555,3 +605,4 @@ image: ""
     
 
 };
+
