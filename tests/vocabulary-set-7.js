@@ -1,520 +1,613 @@
 // placeholder
 const questions = {
-
 1: {
-text: "Heavy taxes can often ____ the growth of small businesses.",
-options: ["encumber", "promote", "stimulate", "encourage"],
+text: "Heavy taxes can often <b>encumber</b> the growth of small businesses.<br>Choose the correct meaning of <b>encumber</b>.",
+options: ["To burden or hinder", "To promote rapidly", "To celebrate publicly", "To simplify completely"],
 correct: "1",
 image: ''
 },
+
 2: {
-text: "He was completely ____ by the unexpected turn of events.",
-options: ["nonplussed", "confident", "assured", "calm"],
+text: "He was completely <b>nonplussed</b> by the unexpected question.<br>Choose the correct meaning of <b>nonplussed</b>.",
+options: ["So surprised as to be unsure how to react", "Very confident and calm", "Angry and aggressive", "Highly enthusiastic"],
 correct: "1",
 image: ''
 },
+
 3: {
-text: "Corruption was spreading ____ throughout the system.",
-options: ["rampant", "limited", "scarce", "controlled"],
+text: "Corruption had become <b>rampant</b> throughout the department.<br>Choose the correct meaning of <b>rampant</b>.",
+options: ["Widespread and unchecked", "Carefully regulated", "Rare and limited", "Secret and hidden"],
 correct: "1",
 image: ''
 },
+
 4: {
-text: "It was a ____ drug that relieved pain instantly.",
-options: ["potent", "weak", "harmless", "diluted"],
+text: "The medicine proved <b>potent</b> even in small doses.<br>Choose the correct meaning of <b>potent</b>.",
+options: ["Highly powerful or effective", "Mild and harmless", "Outdated in use", "Slow in action"],
 correct: "1",
 image: ''
 },
+
 5: {
-text: "The exhausted worker lay ____ on the ground after the long shift.",
-options: ["prostrate", "upright", "seated", "restless"],
+text: "The injured man lay <b>prostrate</b> on the ground.<br>Choose the correct meaning of <b>prostrate</b>.",
+options: ["Lying flat or helpless", "Standing proudly", "Running swiftly", "Sitting comfortably"],
 correct: "1",
 image: ''
 },
+
 6: {
-text: "The farmer managed to ____ enough grain for the winter.",
-options: ["garner", "waste", "scatter", "spend"],
+text: "She managed to <b>garner</b> enough support for the proposal.<br>Choose the correct meaning of <b>garner</b>.",
+options: ["To collect or gather", "To reject firmly", "To destroy completely", "To question deeply"],
 correct: "1",
 image: ''
 },
+
 7: {
-text: "The enemy troops were put to a complete ____ by the allied forces.",
-options: ["rout", "victory", "retreat", "peace"],
+text: "The rebels were finally <b>rout</b>ed by the army.<br>Choose the correct meaning of <b>rout</b>.",
+options: ["To defeat decisively", "To negotiate peacefully", "To delay intentionally", "To observe silently"],
 correct: "1",
 image: ''
 },
+
 8: {
-text: "Her act of self-____ was admired by everyone who saw her sacrifice.",
-options: ["abnegation", "selfishness", "greed", "arrogance"],
+text: "His life of sacrifice showed true <b>abnegation</b>.<br>Choose the correct meaning of <b>abnegation</b>.",
+options: ["Self-denial and renunciation", "Extreme greed", "Public celebration", "Sudden aggression"],
 correct: "1",
 image: ''
 },
+
 9: {
-text: "Vultures feed on the ____ left behind by predators.",
-options: ["carrion", "grains", "berries", "nectar"],
+text: "Vultures feed on <b>carrion</b> in the wild.<br>Choose the correct meaning of <b>carrion</b>.",
+options: ["Dead and decaying flesh", "Fresh vegetation", "Living prey", "Stored grain"],
 correct: "1",
 image: ''
 },
+
 10: {
-text: "The tombstone bore an ____ in memory of the departed soul.",
-options: ["epitaph", "biography", "legend", "quote"],
+text: "The grave bore an <b>epitaph</b> in his memory.<br>Choose the correct meaning of <b>epitaph</b>.",
+options: ["Words inscribed on a tombstone", "A legal declaration", "A historical manuscript", "A religious sermon"],
 correct: "1",
 image: ''
 },
+
 11: {
-text: "The ____ escaped across the border before the police could catch him.",
-options: ["fugitive", "citizen", "officer", "merchant"],
+text: "The police were searching for a <b>fugitive</b> from justice.<br>Choose the correct meaning of <b>fugitive</b>.",
+options: ["A person who escapes custody", "A law-abiding citizen", "A government official", "A court witness"],
 correct: "1",
 image: ''
 },
+
 12: {
-text: "The project was delayed because the team had little ____ in their schedule.",
-options: ["leeway", "pressure", "tension", "strictness"],
+text: "The editor gave the writer some <b>leeway</b> to revise the article.<br>Choose the correct meaning of <b>leeway</b>.",
+options: ["Freedom or margin for action", "Strict limitation", "Severe punishment", "Official approval"],
 correct: "1",
 image: ''
 },
+
 13: {
-text: "The accountant was arrested for ____ of company funds.",
-options: ["embezzlement", "donation", "contribution", "payment"],
+text: "He was convicted of <b>embezzlement</b> of company funds.<br>Choose the correct meaning of <b>embezzlement</b>.",
+options: ["Misappropriation of entrusted money", "Lawful investment", "Charitable donation", "Tax collection"],
 correct: "1",
 image: ''
 },
+
 14: {
-text: "He tends to ____ between two opinions without deciding.",
-options: ["vacillate", "commit", "focus", "resolve"],
+text: "She began to <b>vacillate</b> between two career choices.<br>Choose the correct meaning of <b>vacillate</b>.",
+options: ["To waver or be indecisive", "To decide firmly", "To progress steadily", "To act impulsively"],
 correct: "1",
 image: ''
 },
+
 15: {
-text: "She was not easily ____ by public attention.",
-options: ["abashed", "motivated", "praised", "encouraged"],
+text: "He felt <b>abashed</b> by the unexpected praise.<br>Choose the correct meaning of <b>abashed</b>.",
+options: ["Embarrassed or ashamed", "Proud and boastful", "Angry and hostile", "Fearless and bold"],
 correct: "1",
 image: ''
 },
+
 16: {
-text: "Due to budget cuts, the school had to ____ several programs.",
-options: ["curtail", "expand", "extend", "increase"],
+text: "The government decided to <b>curtail</b> unnecessary expenses.<br>Choose the correct meaning of <b>curtail</b>.",
+options: ["To reduce or cut short", "To expand widely", "To delay indefinitely", "To approve fully"],
 correct: "1",
 image: ''
 },
+
 17: {
-text: "His ____ smile made it clear he was mocking, not admiring.",
-options: ["sardonic", "genuine", "gentle", "innocent"],
+text: "His <b>sardonic</b> smile suggested hidden mockery.<br>Choose the correct meaning of <b>sardonic</b>.",
+options: ["Grimly mocking or cynical", "Cheerful and friendly", "Innocent and naïve", "Emotional and sensitive"],
 correct: "1",
 image: ''
 },
+
 18: {
-text: "Their views were so ____ that no agreement could be reached.",
-options: ["discordant", "harmonious", "peaceful", "similar"],
+text: "The notes sounded <b>discordant</b> to the audience.<br>Choose the correct meaning of <b>discordant</b>.",
+options: ["Harsh and lacking harmony", "Soft and melodious", "Perfectly balanced", "Calm and soothing"],
 correct: "1",
 image: ''
 },
+
 19: {
-text: "Her voice was as ____ as the sound of a flute.",
-options: ["dulcet", "harsh", "shrill", "rough"],
+text: "Her voice was <b>dulcet</b> and soothing.<br>Choose the correct meaning of <b>dulcet</b>.",
+options: ["Sweet and pleasant to hear", "Loud and unpleasant", "Rough and harsh", "Flat and monotonous"],
 correct: "1",
 image: ''
 },
+
 20: {
-text: "She decorated the table with colorful ____ of spring flowers.",
-options: ["posies", "fruits", "books", "vases"],
-correct: "1",
-image: ''
-},
-21: {
-text: "The volcano had been ____ for centuries before suddenly erupting.",
-options: ["quiescent", "active", "erupting", "boiling"],
-correct: "1",
-image: ''
-},
-22: {
-text: "Without proper guidance, he began to ____ in his career.",
-options: ["flounder", "progress", "advance", "excel"],
-correct: "1",
-image: ''
-},
-23: {
-text: "Children often try to ____ their heroes by copying their actions.",
-options: ["emulate", "criticize", "ignore", "insult"],
-correct: "1",
-image: ''
-},
-24: {
-text: "The police were able to ____ the violent protest before it spread.",
-options: ["quell", "provoke", "intensify", "incite"],
-correct: "1",
-image: ''
-},
-25: {
-text: "The air was filled with the sweet ____ of blooming roses.",
-options: ["redolence", "staleness", "odor", "stench"],
-correct: "1",
-image: ''
-},
-26: {
-text: "They sat under a wooden ____ covered with vines for shade.",
-options: ["pergola", "tent", "hut", "balcony"],
-correct: "1",
-image: ''
-},
-27: {
-text: "He was fascinated by the old ____ and traditions of the village.",
-options: ["lore", "modernity", "inventions", "rumors"],
-correct: "1",
-image: ''
-},
-28: {
-text: "The town was filled with ____ selling fake medicines.",
-options: ["quacks", "doctors", "nurses", "healers"],
-correct: "1",
-image: ''
-},
-29: {
-text: "His stubborn ____ made it hard for others to work with him.",
-options: ["cussedness", "patience", "obedience", "humility"],
-correct: "1",
-image: ''
-},
-30: {
-text: "A ____ of ships left the harbor at sunrise.",
-options: ["fleet", "crew", "crowd", "batch"],
-correct: "1",
-image: ''
-},
-31: {
-text: "The travelers were left on a deserted ____ after the storm.",
-options: ["strand", "mountain", "forest", "valley"],
-correct: "1",
-image: ''
-},
-32: {
-text: "He loved to ____ around the park on lazy afternoons.",
-options: ["loaf", "work", "exercise", "study"],
-correct: "1",
-image: ''
-},
-33: {
-text: "A ____ of bees surrounded the hive after being disturbed.",
-options: ["swarm", "group", "team", "flock"],
-correct: "1",
-image: ''
-},
-34: {
-text: "The mountain looked too ____ for the climbers to conquer.",
-options: ["formidable", "easy", "gentle", "soft"],
-correct: "1",
-image: ''
-},
-35: {
-text: "The poet’s works were collected into an ____ of English verse.",
-options: ["anthology", "dictionary", "novel", "biography"],
-correct: "1",
-image: ''
-},
-36: {
-text: "He laughed ____ at the movie villain’s downfall.",
-options: ["maniacally", "softly", "kindly", "gently"],
-correct: "1",
-image: ''
-},
-37: {
-text: "He used a sharp ____ to chop the wood into pieces.",
-options: ["hatchet", "hammer", "screwdriver", "saw"],
+text: "She arranged fresh <b>posies</b> on the table.<br>Choose the correct meaning of <b>posies</b>.",
+options: ["Small bunches of flowers", "Decorative stones", "Written notes", "Food items"],
 correct: "1",
 image: ''
 },
     
+21: {
+text: "The volcano has remained <b>quiescent</b> for decades.<br>Choose the correct meaning of <b>quiescent</b>.",
+options: ["Inactive or dormant", "Highly explosive", "Rapidly changing", "Noisy and active"],
+correct: "1",
+image: ''
+},
+
+22: {
+text: "The new swimmer began to <b>flounder</b> in deep water.<br>Choose the correct meaning of <b>flounder</b>.",
+options: ["To struggle helplessly", "To move confidently", "To float calmly", "To succeed easily"],
+correct: "1",
+image: ''
+},
+
+23: {
+text: "Young officers are encouraged to <b>emulate</b> their seniors.<br>Choose the correct meaning of <b>emulate</b>.",
+options: ["To imitate with effort to match", "To openly criticize", "To completely reject", "To ignore deliberately"],
+correct: "1",
+image: ''
+},
+
+24: {
+text: "The police acted swiftly to <b>quell</b> the unrest.<br>Choose the correct meaning of <b>quell</b>.",
+options: ["To suppress or put an end to", "To provoke further", "To observe silently", "To delay action"],
+correct: "1",
+image: ''
+},
+
+25: {
+text: "The room had a <b>redolence</b> of fresh flowers.<br>Choose the correct meaning of <b>redolence</b>.",
+options: ["A pleasant smell or fragrance", "A loud noise", "A bright color", "A sharp taste"],
+correct: "1",
+image: ''
+},
+
+26: {
+text: "A wooden <b>pergola</b> shaded the garden walkway.<br>Choose the correct meaning of <b>pergola</b>.",
+options: ["A garden structure with open roof", "A water storage tank", "An underground tunnel", "A boundary wall"],
+correct: "1",
+image: ''
+},
+
+27: {
+text: "Ancient myths form an important part of cultural <b>lore</b>.<br>Choose the correct meaning of <b>lore</b>.",
+options: ["Traditional knowledge or stories", "Written legal rules", "Scientific experiments", "Personal opinions"],
+correct: "1",
+image: ''
+},
+
+28: {
+text: "The market was full of medical <b>quacks</b> selling fake cures.<br>Choose the correct meaning of <b>quacks</b>.",
+options: ["Fraudulent practitioners", "Certified specialists", "Hospital staff", "Medical researchers"],
+correct: "1",
+image: ''
+},
+
+29: {
+text: "His constant negativity showed deep <b>cussedness</b>.<br>Choose the correct meaning of <b>cussedness</b>.",
+options: ["Stubborn ill-temper", "Gentle kindness", "Cheerful optimism", "Careful reasoning"],
+correct: "1",
+image: ''
+},
+
+30: {
+text: "A <b>fleet</b> of ships guarded the coastline.<br>Choose the correct meaning of <b>fleet</b>.",
+options: ["A group of ships or vehicles", "A single vessel", "A repair dock", "A naval officer"],
+correct: "1",
+image: ''
+},
+
+31: {
+text: "Tourists were left <b>strand</b>ed due to heavy snowfall.<br>Choose the correct meaning of <b>strand</b>.",
+options: ["To leave helpless or isolated", "To rescue safely", "To guide carefully", "To transport quickly"],
+correct: "1",
+image: ''
+},
+
+32: {
+text: "He prefers to <b>loaf</b> around on weekends.<br>Choose the correct meaning of <b>loaf</b>.",
+options: ["To spend time idly", "To work diligently", "To travel rapidly", "To exercise regularly"],
+correct: "1",
+image: ''
+},
+
+33: {
+text: "A <b>swarm</b> of bees surrounded the hive.<br>Choose the correct meaning of <b>swarm</b>.",
+options: ["A large moving group", "A single insect", "A resting place", "A protective cover"],
+correct: "1",
+image: ''
+},
+
+34: {
+text: "The task appeared <b>formidable</b> to the beginners.<br>Choose the correct meaning of <b>formidable</b>.",
+options: ["Very difficult or intimidating", "Easy to perform", "Trivial in nature", "Barely noticeable"],
+correct: "1",
+image: ''
+},
+
+35: {
+text: "The library released an <b>anthology</b> of poems.<br>Choose the correct meaning of <b>anthology</b>.",
+options: ["A collection of selected writings", "A single long novel", "An official report", "A handwritten letter"],
+correct: "1",
+image: ''
+},
+
+36: {
+text: "He laughed <b>maniacally</b> during the scene.<br>Choose the correct meaning of <b>maniacally</b>.",
+options: ["In a wild or frenzied manner", "Calmly and gently", "Politely and formally", "Quietly and softly"],
+correct: "1",
+image: ''
+},
+
+37: {
+text: "They decided to bury the <b>hatchet</b> and reconcile.<br>Choose the correct meaning of <b>hatchet</b>.",
+options: ["A small axe", "A farming tool", "A cooking utensil", "A musical instrument"],
+correct: "1",
+image: ''
+},
 
 38: {
-text: "She tried to ____ her innocence despite all the accusations against her.",
-options: ["aver", "deny", "ignore", "doubt"],
+text: "Witnesses <b>aver</b>red that the statement was true.<br>Choose the correct meaning of <b>aver</b>.",
+options: ["To state firmly", "To doubt strongly", "To deny openly", "To whisper secretly"],
 correct: "1",
 image: ''
 },
+
 39: {
-text: "Don’t ____ over the decision; just pick one and move forward.",
-options: ["dither", "decide", "focus", "conclude"],
+text: "She continued to <b>dither</b> over a minor decision.<br>Choose the correct meaning of <b>dither</b>.",
+options: ["To hesitate nervously", "To act decisively", "To rush confidently", "To plan carefully"],
 correct: "1",
 image: ''
 },
+
 40: {
-text: "The manager chose to ____ some of his tasks to trusted assistants.",
-options: ["delegate", "retain", "ignore", "abandon"],
+text: "The manager chose to <b>delegate</b> tasks to the team.<br>Choose the correct meaning of <b>delegate</b>.",
+options: ["To assign authority or responsibility", "To perform alone", "To cancel duties", "To supervise strictly"],
 correct: "1",
 image: ''
 },
-41: {
-text: "The two companies secretly agreed to ____ in fixing the prices.",
-options: ["collude", "compete", "negotiate", "separate"],
+
+    41: {
+text: "The companies secretly agreed to <b>collude</b> to fix prices.<br>Choose the correct meaning of <b>collude</b>.",
+options: ["To cooperate secretly for deceitful ends", "To compete openly", "To disagree strongly", "To negotiate legally"],
 correct: "1",
 image: ''
 },
+
 42: {
-text: "The temple’s donation ____ was filled with offerings from devotees.",
-options: ["coffer", "basket", "drawer", "vault"],
+text: "The treasure was stored safely in a locked <b>coffer</b>.<br>Choose the correct meaning of <b>coffer</b>.",
+options: ["A strongbox for storing valuables", "A wooden shelf", "A public office", "A storage field"],
 correct: "1",
 image: ''
 },
+
 43: {
-text: "Her salary was ____ with her level of experience and responsibility.",
-options: ["commensurate", "less", "opposite", "unrelated"],
+text: "The punishment should be <b>commensurate</b> with the offense.<br>Choose the correct meaning of <b>commensurate</b>.",
+options: ["Proportionate or corresponding", "Excessively harsh", "Entirely unrelated", "Delayed indefinitely"],
 correct: "1",
 image: ''
 },
+
 44: {
-text: "The church bells rang during evening ____ as the sun went down.",
-options: ["vespers", "mass", "festival", "sermon"],
+text: "The church bells rang during <b>vespers</b>.<br>Choose the correct meaning of <b>vespers</b>.",
+options: ["Evening prayers", "Morning exercises", "Funeral rites", "Wedding rituals"],
 correct: "1",
 image: ''
 },
+
 45: {
-text: "A beautiful ____ of flowers was laid at the soldier’s memorial.",
-options: ["wreath", "bouquet", "garland", "basket"],
+text: "A floral <b>wreath</b> was placed on the memorial.<br>Choose the correct meaning of <b>wreath</b>.",
+options: ["A circular arrangement of flowers", "A single long stem", "A metal ornament", "A woven basket"],
 correct: "1",
 image: ''
 },
+
 46: {
-text: "Children began to ____ towards the playground when the bell rang.",
-options: ["scurry", "stroll", "wander", "pause"],
+text: "The children began to <b>scurry</b> across the playground.<br>Choose the correct meaning of <b>scurry</b>.",
+options: ["To move quickly with short steps", "To walk slowly", "To stand still", "To sit quietly"],
 correct: "1",
 image: ''
 },
+
 47: {
-text: "The bullet kept ____ off the walls before finally stopping.",
-options: ["ricocheting", "sticking", "falling", "breaking"],
+text: "The bullet went <b>ricocheting</b> off the metal surface.<br>Choose the correct meaning of <b>ricocheting</b>.",
+options: ["Bouncing off a surface", "Passing straight through", "Stopping immediately", "Melting away"],
 correct: "1",
 image: ''
 },
+
 48: {
-text: "His health has been ____ since the accident last year.",
-options: ["deteriorating", "improving", "recovering", "stabilizing"],
+text: "The building is rapidly <b>deteriorating</b> due to neglect.<br>Choose the correct meaning of <b>deteriorating</b>.",
+options: ["Becoming worse gradually", "Improving steadily", "Remaining unchanged", "Being repaired fully"],
 correct: "1",
 image: ''
 },
+
 49: {
-text: "The company reached its financial ____ during the crisis of 2008.",
-options: ["nadir", "peak", "summit", "apex"],
+text: "His career reached its <b>nadir</b> after the scandal.<br>Choose the correct meaning of <b>nadir</b>.",
+options: ["The lowest point", "The highest success", "A turning advantage", "A temporary pause"],
 correct: "1",
 image: ''
 },
+
 50: {
-text: "She repeated the speech almost ____ from memory.",
-options: ["verbatim", "vaguely", "roughly", "briefly"],
+text: "Please record the witness statement <b>verbatim</b>.<br>Choose the correct meaning of <b>verbatim</b>.",
+options: ["Word for word exactly", "Briefly summarized", "Roughly explained", "Partially altered"],
 correct: "1",
 image: ''
-},
+}
 
 
 };
 
 // placeholder
 const explanations = {
-    
-    
-1: {
-text: "<b>Answer:</b> encumber. <br><b>Definition:</b> To burden or weigh down something or someone. <br><b>Synonyms:</b> burden, hinder, obstruct, impede, overload. <br><b>Antonyms:</b> assist, aid, facilitate, help, relieve.",
+    1: {
+text: "<b><u>बोझ डालना</u></b><br>Encumber means to burden, restrict, or weigh down progress or movement, often making tasks harder to perform.<br><i>Rhyming trick:</i> burden में lumber, काम हो <b>encumber</b>",
 image: ""
 },
+
 2: {
-text: "<b>Answer:</b> nonplussed. <br><b>Definition:</b> So surprised and confused that one is unsure how to react. <br><b>Synonyms:</b> confused, bewildered, perplexed, puzzled, stunned. <br><b>Antonyms:</b> confident, composed, assured, clear, certain.",
+text: "<b><u>हक्का-बक्का</u></b><br>Nonplussed refers to being so surprised or confused that one does not know how to respond.<br><i>Rhyming trick:</i> shock से fussed, दिमाग <b>nonplussed</b>",
 image: ""
 },
+
 3: {
-text: "<b>Answer:</b> rampant. <br><b>Definition:</b> Flourishing or spreading unchecked. <br><b>Synonyms:</b> uncontrolled, unrestrained, widespread, excessive, raging. <br><b>Antonyms:</b> restrained, limited, confined, checked, contained.",
+text: "<b><u>बेकाबू रूप से फैला</u></b><br>Rampant describes something that spreads unchecked or grows without control.<br><i>Rhyming trick:</i> stamp-ant फैल गया – <b>rampant</b>",
 image: ""
 },
+
 4: {
-text: "<b>Answer:</b> potent. <br><b>Definition:</b> Having great power, influence, or effect. <br><b>Synonyms:</b> powerful, strong, effective, forceful, mighty. <br><b>Antonyms:</b> weak, powerless, ineffective, feeble, inert.",
+text: "<b><u>अत्यंत शक्तिशाली</u></b><br>Potent means having great power, influence, or effect even in small amounts.<br><i>Rhyming trick:</i> power बन गया patent – <b>potent</b>",
 image: ""
 },
+
 5: {
-text: "<b>Answer:</b> prostrate. <br><b>Definition:</b> Lying stretched out on the ground with face downward. <br><b>Synonyms:</b> flat, prone, lying, exhausted, overcome. <br><b>Antonyms:</b> upright, erect, standing, alert, active.",
+text: "<b><u>धराशायी</u></b><br>Prostrate means lying flat, helpless, or overcome physically or emotionally.<br><i>Rhyming trick:</i> ground पर straight – <b>prostrate</b>",
 image: ""
 },
+
 6: {
-text: "<b>Answer:</b> garner. <br><b>Definition:</b> To gather or collect something, especially information or approval. <br><b>Synonyms:</b> collect, gather, accumulate, amass, harvest. <br><b>Antonyms:</b> scatter, disperse, dissipate, waste, distribute.",
+text: "<b><u>इकट्ठा करना</u></b><br>Garner means to gather or collect something gradually, such as support or information.<br><i>Rhyming trick:</i> gather किया, jar-ner – <b>garner</b>",
 image: ""
 },
+
 7: {
-text: "<b>Answer:</b> rout. <br><b>Definition:</b> A disorderly retreat of defeated troops. <br><b>Synonyms:</b> defeat, overthrow, collapse, retreat, retreat. <br><b>Antonyms:</b> victory, triumph, success, win, conquest.",
+text: "<b><u>पूरी तरह हराना</u></b><br>Rout means to defeat an enemy completely and forcefully.<br><i>Rhyming trick:</i> doubt गया out – <b>rout</b>",
 image: ""
 },
+
 8: {
-text: "<b>Answer:</b> abnegation. <br><b>Definition:</b> The act of renouncing or rejecting something; self-denial. <br><b>Synonyms:</b> renunciation, denial, sacrifice, selflessness, rejection. <br><b>Antonyms:</b> indulgence, acceptance, self-interest, greed, desire.",
+text: "<b><u>आत्मत्याग</u></b><br>Abnegation refers to self-denial or giving up personal desires for a greater cause.<br><i>Rhyming trick:</i> self को negate – <b>abnegation</b>",
 image: ""
 },
+
 9: {
-text: "<b>Answer:</b> carrion. <br><b>Definition:</b> The decaying flesh of dead animals. <br><b>Synonyms:</b> carcass, remains, corpse, dead flesh, body. <br><b>Antonyms:</b> living flesh, fresh meat, vitality, life, organism.",
+text: "<b><u>सड़ा हुआ मांस</u></b><br>Carrion means the decaying flesh of dead animals used as food by scavengers.<br><i>Rhyming trick:</i> dead का ration – <b>carrion</b>",
 image: ""
 },
+
 10: {
-text: "<b>Answer:</b> epitaph. <br><b>Definition:</b> A short text honoring a deceased person, inscribed on a tombstone. <br><b>Synonyms:</b> inscription, memorial, commemoration, engraving, tribute. <br><b>Antonyms:</b> none, blank, erasure, omission, absence.",
+text: "<b><u>समाधिलेख</u></b><br>An epitaph is a short inscription written on a tombstone in memory of the dead.<br><i>Rhyming trick:</i> death का paragraph – <b>epitaph</b>",
 image: ""
 },
+
 11: {
-text: "<b>Answer:</b> fugitive. <br><b>Definition:</b> A person who has escaped from captivity or is in hiding. <br><b>Synonyms:</b> runaway, escapee, deserter, absconder, refugee. <br><b>Antonyms:</b> captive, prisoner, resident, native, citizen.",
+text: "<b><u>भगोड़ा</u></b><br>Fugitive refers to a person who escapes from custody or avoids arrest.<br><i>Rhyming trick:</i> police से negative – <b>fugitive</b>",
 image: ""
 },
+
 12: {
-text: "<b>Answer:</b> leeway. <br><b>Definition:</b> Freedom to act within particular limits; extra time or space. <br><b>Synonyms:</b> freedom, flexibility, margin, allowance, scope. <br><b>Antonyms:</b> restriction, limitation, constraint, rigidity, confinement.",
+text: "<b><u>छूट या गुंजाइश</u></b><br>Leeway means freedom or flexibility to act within limits.<br><i>Rhyming trick:</i> थोड़ी way दे – <b>leeway</b>",
 image: ""
 },
+
 13: {
-text: "<b>Answer:</b> embezzlement. <br><b>Definition:</b> Theft or misappropriation of funds placed in one’s trust. <br><b>Synonyms:</b> theft, fraud, misappropriation, pilfering, stealing. <br><b>Antonyms:</b> honesty, integrity, donation, contribution, repayment.",
+text: "<b><u>गबन</u></b><br>Embezzlement is the act of misusing money entrusted to one’s care.<br><i>Rhyming trick:</i> money में puzzle meant – <b>embezzlement</b>",
 image: ""
 },
+
 14: {
-text: "<b>Answer:</b> vacillate. <br><b>Definition:</b> To alternate between different opinions or actions; be indecisive. <br><b>Synonyms:</b> waver, hesitate, fluctuate, oscillate, dither. <br><b>Antonyms:</b> decide, determine, persist, resolve, commit.",
+text: "<b><u>डगमगाना</u></b><br>Vacillate means to waver between choices without firm decision.<br><i>Rhyming trick:</i> कभी yes कभी late – <b>vacillate</b>",
 image: ""
 },
+
 15: {
-text: "<b>Answer:</b> abash. <br><b>Definition:</b> To make someone feel embarrassed or ashamed. <br><b>Synonyms:</b> embarrass, disconcert, humiliate, mortify, unsettle. <br><b>Antonyms:</b> reassure, comfort, soothe, encourage, calm.",
+text: "<b><u>शर्मिंदा</u></b><br>Abashed means feeling embarrassed or ashamed due to attention or events.<br><i>Rhyming trick:</i> bash हुआ face – <b>abashed</b>",
 image: ""
 },
+
 16: {
-text: "<b>Answer:</b> curtail. <br><b>Definition:</b> To reduce or limit something. <br><b>Synonyms:</b> reduce, lessen, cut, diminish, restrict. <br><b>Antonyms:</b> extend, expand, lengthen, increase, prolong.",
+text: "<b><u>कम करना</u></b><br>Curtail means to reduce or cut short something deliberately.<br><i>Rhyming trick:</i> tail cut – <b>curtail</b>",
 image: ""
 },
+
 17: {
-text: "<b>Answer:</b> sardonic. <br><b>Definition:</b> Grimly mocking or cynical. <br><b>Synonyms:</b> mocking, scornful, cynical, derisive, sneering. <br><b>Antonyms:</b> sincere, genuine, kind, polite, honest.",
+text: "<b><u>व्यंग्यपूर्ण</u></b><br>Sardonic describes grim, mocking, or cynical humor or expression.<br><i>Rhyming trick:</i> sad का tonic – <b>sardonic</b>",
 image: ""
 },
+
 18: {
-text: "<b>Answer:</b> discordant. <br><b>Definition:</b> Disagreeing or incongruous; harsh in sound. <br><b>Synonyms:</b> conflicting, jarring, dissonant, clashing, opposing. <br><b>Antonyms:</b> harmonious, pleasant, agreeable, tuneful, peaceful.",
+text: "<b><u>असंगत</u></b><br>Discordant refers to lack of harmony, producing harsh or unpleasant sound.<br><i>Rhyming trick:</i> dis में chord ant – <b>discordant</b>",
 image: ""
 },
+
 19: {
-text: "<b>Answer:</b> dulcet. <br><b>Definition:</b> Sweet and soothing (often referring to sound). <br><b>Synonyms:</b> melodious, sweet, harmonious, tuneful, pleasing. <br><b>Antonyms:</b> harsh, grating, rough, unpleasant, discordant.",
+text: "<b><u>मधुर</u></b><br>Dulcet means sweet and pleasing to the ear or senses.<br><i>Rhyming trick:</i> dull cut, sweet – <b>dulcet</b>",
 image: ""
 },
+
 20: {
-text: "<b>Answer:</b> posies. <br><b>Definition:</b> Small bunches of flowers. <br><b>Synonyms:</b> bouquets, blossoms, nosegays, garlands, sprays. <br><b>Antonyms:</b> weeds, thorns, leaves, grass, stems.",
+text: "<b><u>फूलों का गुलदस्ता</u></b><br>Posies are small bunches of flowers, often carried or arranged decoratively.<br><i>Rhyming trick:</i> roses की cozy – <b>posies</b>",
 image: ""
 },
-21: {
-text: "<b>Answer:</b> quiescent. <br><b>Definition:</b> In a state or period of inactivity or dormancy. <br><b>Synonyms:</b> inactive, dormant, still, motionless, latent. <br><b>Antonyms:</b> active, lively, energetic, moving, dynamic.",
+
+    21: {
+text: "<b><u>निष्क्रिय</u></b><br>Quiescent means remaining inactive, calm, or dormant for a long time.<br><i>Rhyming trick:</i> quiet-सेंट, ज्वालामुखी <b>quiescent</b>",
 image: ""
 },
+
 22: {
-text: "<b>Answer:</b> flounder. <br><b>Definition:</b> To struggle or stagger helplessly or clumsily. <br><b>Synonyms:</b> struggle, stumble, falter, fumble, blunder. <br><b>Antonyms:</b> succeed, progress, advance, thrive, excel.",
+text: "<b><u>हाथ-पैर मारना</u></b><br>Flounder means to struggle helplessly without making progress.<br><i>Rhyming trick:</i> पानी में blunder – <b>flounder</b>",
 image: ""
 },
+
 23: {
-text: "<b>Answer:</b> emulate. <br><b>Definition:</b> To imitate or match a person or achievement. <br><b>Synonyms:</b> imitate, copy, mimic, follow, mirror. <br><b>Antonyms:</b> neglect, ignore, differ, oppose, contrast.",
+text: "<b><u>अनुकरण करना</u></b><br>Emulate means to try to match or equal someone by imitation.<br><i>Rhyming trick:</i> aimulate, copy-लेट – <b>emulate</b>",
 image: ""
 },
+
 24: {
-text: "<b>Answer:</b> quell. <br><b>Definition:</b> To put an end to something, typically by force. <br><b>Synonyms:</b> suppress, subdue, crush, extinguish, overcome. <br><b>Antonyms:</b> incite, provoke, encourage, inflame, agitate.",
+text: "<b><u>दबाना</u></b><br>Quell means to suppress or put an end to something forcefully.<br><i>Rhyming trick:</i> problem को kill – <b>quell</b>",
 image: ""
 },
+
 25: {
-text: "<b>Answer:</b> redolence. <br><b>Definition:</b> A pleasant smell or fragrance. <br><b>Synonyms:</b> fragrance, aroma, scent, perfume, sweetness. <br><b>Antonyms:</b> stench, odor, foulness, stink, reek.",
+text: "<b><u>सुगंध</u></b><br>Redolence refers to a pleasant smell or fragrance lingering in the air.<br><i>Rhyming trick:</i> rose की smell dense – <b>redolence</b>",
 image: ""
 },
+
 26: {
-text: "<b>Answer:</b> pergola. <br><b>Definition:</b> An outdoor structure with a framework covered by climbing plants. <br><b>Synonyms:</b> arbor, trellis, gazebo, pavilion, canopy. <br><b>Antonyms:</b> wall, fence, barrier, enclosure, block.",
+text: "<b><u>छायादार ढांचा</u></b><br>Pergola is an outdoor garden structure with pillars and an open roof.<br><i>Rhyming trick:</i> park में gola – <b>pergola</b>",
 image: ""
 },
+
 27: {
-text: "<b>Answer:</b> lore. <br><b>Definition:</b> Traditional knowledge or beliefs passed through generations. <br><b>Synonyms:</b> tradition, wisdom, myth, knowledge, learning. <br><b>Antonyms:</b> ignorance, forgetfulness, inexperience, unawareness, unfamiliarity.",
+text: "<b><u>लोककथा ज्ञान</u></b><br>Lore means traditional knowledge, beliefs, or stories passed through generations.<br><i>Rhyming trick:</i> old की store – <b>lore</b>",
 image: ""
 },
+
 28: {
-text: "<b>Answer:</b> quacks. <br><b>Definition:</b> Fraudulent or ignorant pretenders to medical skill. <br><b>Synonyms:</b> charlatans, impostors, fakes, frauds, deceivers. <br><b>Antonyms:</b> doctors, professionals, experts, specialists, healers.",
+text: "<b><u>झोलाछाप</u></b><br>Quacks are dishonest people who pretend to have medical skills.<br><i>Rhyming trick:</i> fake packs – <b>quacks</b>",
 image: ""
 },
+
 29: {
-text: "<b>Answer:</b> cussedness. <br><b>Definition:</b> Stubborn resistance or ill-natured obstinacy. <br><b>Synonyms:</b> stubbornness, obstinacy, defiance, perversity, obstinance. <br><b>Antonyms:</b> compliance, obedience, agreeableness, submission, flexibility.",
+text: "<b><u>जिद्दी स्वभाव</u></b><br>Cussedness refers to stubborn ill-temper or perverse behavior.<br><i>Rhyming trick:</i> गुस्सा plus-ness – <b>cussedness</b>",
 image: ""
 },
+
 30: {
-text: "<b>Answer:</b> fleet. <br><b>Definition:</b> A group of ships sailing together. <br><b>Synonyms:</b> armada, navy, convoy, flotilla, squadron. <br><b>Antonyms:</b> single ship, isolation, separation, individual, lone.",
+text: "<b><u>बेड़ा</u></b><br>Fleet refers to a group of ships or vehicles operating together.<br><i>Rhyming trick:</i> ships की meet – <b>fleet</b>",
 image: ""
 },
 
 31: {
-text: "<b>Answer:</b> strand. <br><b>Definition:</b> To leave someone or something in a helpless position. <br><b>Synonyms:</b> maroon, abandon, desert, leave, isolate. <br><b>Antonyms:</b> rescue, save, retrieve, recover, assist.",
+text: "<b><u>फंसा छोड़ देना</u></b><br>Strand means to leave someone isolated without help or transport.<br><i>Rhyming trick:</i> road बंद – <b>strand</b>",
 image: ""
 },
+
 32: {
-text: "<b>Answer:</b> loaf. <br><b>Definition:</b> To spend time idly; to lounge lazily. <br><b>Synonyms:</b> laze, lounge, idle, relax, dally. <br><b>Antonyms:</b> work, labor, hustle, strive, exert.",
+text: "<b><u>आवारा घूमना</u></b><br>Loaf means to spend time idly without work or purpose.<br><i>Rhyming trick:</i> no job, loaf – <b>loaf</b>",
 image: ""
 },
+
 33: {
-text: "<b>Answer:</b> swarm. <br><b>Definition:</b> A large or dense group of insects, people, or animals. <br><b>Synonyms:</b> horde, crowd, cluster, throng, mass. <br><b>Antonyms:</b> few, handful, scarcity, trickle, dispersion.",
+text: "<b><u>झुंड</u></b><br>Swarm means a large group moving together, especially insects or people.<br><i>Rhyming trick:</i> warm में arm – <b>swarm</b>",
 image: ""
 },
+
 34: {
-text: "<b>Answer:</b> formidable. <br><b>Definition:</b> Inspiring fear or respect through being large, powerful, or intense. <br><b>Synonyms:</b> intimidating, mighty, daunting, powerful, menacing. <br><b>Antonyms:</b> weak, easy, harmless, feeble, small.",
+text: "<b><u>भयावह</u></b><br>Formidable describes something very difficult or intimidating.<br><i>Rhyming trick:</i> डर middle – <b>formidable</b>",
 image: ""
 },
+
 35: {
-text: "<b>Answer:</b> anthology. <br><b>Definition:</b> A collection of literary works chosen by the compiler. <br><b>Synonyms:</b> collection, compilation, selection, album, assemblage. <br><b>Antonyms:</b> single work, individual, isolation, separation, edition.",
+text: "<b><u>संकलन</u></b><br>An anthology is a collection of selected literary works.<br><i>Rhyming trick:</i> many stories – <b>anthology</b>",
 image: ""
 },
+
 36: {
-text: "<b>Answer:</b> maniacally. <br><b>Definition:</b> In a way that shows excessive enthusiasm or madness. <br><b>Synonyms:</b> wildly, frantically, crazily, hysterically, insanely. <br><b>Antonyms:</b> calmly, peacefully, gently, sensibly, rationally.",
+text: "<b><u>पागलपन से</u></b><br>Maniacally means behaving in a wild or frenzied manner.<br><i>Rhyming trick:</i> brain mechanically – <b>maniacally</b>",
 image: ""
 },
+
 37: {
-text: "<b>Answer:</b> hatchet. <br><b>Definition:</b> A small axe with a short handle used for chopping. <br><b>Synonyms:</b> axe, chopper, cleaver, tomahawk, cutter. <br><b>Antonyms:</b> saw, knife, blade, hammer, drill.",
+text: "<b><u>कुल्हाड़ी</u></b><br>Hatchet is a small axe used for chopping or cutting.<br><i>Rhyming trick:</i> hat से cut – <b>hatchet</b>",
 image: ""
 },
-    
 
 38: {
-text: "<b>Answer:</b> aver. <br><b>Definition:</b> To state or assert to be the case with confidence. <br><b>Synonyms:</b> affirm, declare, assert, claim, state. <br><b>Antonyms:</b> deny, contradict, refute, reject, question.",
+text: "<b><u>दृढ़ता से कहना</u></b><br>Aver means to assert or state something firmly as true.<br><i>Rhyming trick:</i> I ever say – <b>aver</b>",
 image: ""
 },
+
 39: {
-text: "<b>Answer:</b> dither. <br><b>Definition:</b> To be indecisive or unable to make up one’s mind. <br><b>Synonyms:</b> hesitate, waver, vacillate, falter, stall. <br><b>Antonyms:</b> decide, resolve, determine, conclude, act.",
+text: "<b><u>हिचकिचाना</u></b><br>Dither means to hesitate nervously or be indecisive.<br><i>Rhyming trick:</i> delay with fear – <b>dither</b>",
 image: ""
 },
+
 40: {
-text: "<b>Answer:</b> delegate. <br><b>Definition:</b> To entrust a task or responsibility to another person. <br><b>Synonyms:</b> assign, entrust, designate, authorize, appoint. <br><b>Antonyms:</b> retain, withhold, keep, deny, refuse.",
+text: "<b><u>सौंपना</u></b><br>Delegate means to assign duties or authority to another person.<br><i>Rhyming trick:</i> दे late, काम – <b>delegate</b>",
 image: ""
 },
-41: {
-text: "<b>Answer:</b> collude. <br><b>Definition:</b> To cooperate secretly or illegally to deceive others. <br><b>Synonyms:</b> conspire, plot, scheme, connive, collaborate. <br><b>Antonyms:</b> oppose, compete, resist, confront, expose.",
+
+  41: {
+text: "<b><u>गुप्त मिलीभगत</u></b><br>Collude means to cooperate secretly, usually to deceive or gain unfair advantage.<br><i>Rhyming trick:</i> secret deal, include – <b>collude</b>",
 image: ""
 },
+
 42: {
-text: "<b>Answer:</b> coffer. <br><b>Definition:</b> A strongbox or chest for storing money or valuables. <br><b>Synonyms:</b> chest, strongbox, vault, treasury, box. <br><b>Antonyms:</b> bag, purse, pocket, sack, pouch.",
+text: "<b><u>तिजोरी</u></b><br>Coffer refers to a chest or strongbox used for storing money or valuables.<br><i>Rhyming trick:</i> gold का buffer – <b>coffer</b>",
 image: ""
 },
+
 43: {
-text: "<b>Answer:</b> commensurate. <br><b>Definition:</b> Corresponding in size, extent, or degree; proportionate. <br><b>Synonyms:</b> proportionate, equal, corresponding, equivalent, matching. <br><b>Antonyms:</b> unequal, disproportionate, unbalanced, mismatched, inconsistent.",
+text: "<b><u>अनुपात में</u></b><br>Commensurate means equal in size, degree, or proportion to something else.<br><i>Rhyming trick:</i> crime के rate के mate – <b>commensurate</b>",
 image: ""
 },
+
 44: {
-text: "<b>Answer:</b> vespers. <br><b>Definition:</b> Evening prayers or religious services in some Christian traditions. <br><b>Synonyms:</b> evening prayer, devotion, service, liturgy, mass. <br><b>Antonyms:</b> morning prayer, silence, work, activity, sermon.",
+text: "<b><u>संध्या प्रार्थना</u></b><br>Vespers are evening prayers traditionally held in churches.<br><i>Rhyming trick:</i> sunset whispers – <b>vespers</b>",
 image: ""
 },
+
 45: {
-text: "<b>Answer:</b> wreath. <br><b>Definition:</b> A circular arrangement of flowers or leaves used as decoration or tribute. <br><b>Synonyms:</b> garland, crown, circlet, ring, chaplet. <br><b>Antonyms:</b> bundle, heap, pile, bouquet, bunch.",
+text: "<b><u>पुष्पचक्र</u></b><br>Wreath is a circular arrangement of flowers or leaves used as decoration or tribute.<br><i>Rhyming trick:</i> flowers breathe – <b>wreath</b>",
 image: ""
 },
+
 46: {
-text: "<b>Answer:</b> scurry. <br><b>Definition:</b> To move quickly and with short, rapid steps. <br><b>Synonyms:</b> rush, dart, hurry, scamper, dash. <br><b>Antonyms:</b> stroll, walk, dawdle, amble, loiter.",
+text: "<b><u>तेजी से भागना</u></b><br>Scurry means to move quickly with small, hurried steps.<br><i>Rhyming trick:</i> hurry, furry – <b>scurry</b>",
 image: ""
 },
+
 47: {
-text: "<b>Answer:</b> ricocheting. <br><b>Definition:</b> Rebounding off a surface one or more times. <br><b>Synonyms:</b> rebounding, bouncing, deflecting, glancing, reflecting. <br><b>Antonyms:</b> sticking, falling, halting, absorbing, stopping.",
+text: "<b><u>टकराकर उछलना</u></b><br>Ricocheting refers to something bouncing off a surface at an angle.<br><i>Rhyming trick:</i> rock hit, go changing – <b>ricocheting</b>",
 image: ""
 },
+
 48: {
-text: "<b>Answer:</b> deteriorating. <br><b>Definition:</b> Becoming progressively worse in condition or quality. <br><b>Synonyms:</b> declining, worsening, degrading, decaying, weakening. <br><b>Antonyms:</b> improving, recovering, strengthening, developing, enhancing.",
+text: "<b><u>बिगड़ना</u></b><br>Deteriorating means gradually becoming worse in condition or quality.<br><i>Rhyming trick:</i> delay care, going – <b>deteriorating</b>",
 image: ""
 },
+
 49: {
-text: "<b>Answer:</b> nadir. <br><b>Definition:</b> The lowest point in a situation or state. <br><b>Synonyms:</b> bottom, depth, base, rock-bottom, trough. <br><b>Antonyms:</b> zenith, peak, summit, top, height.",
+text: "<b><u>सबसे निचला स्तर</u></b><br>Nadir means the lowest point in a situation, condition, or fortune.<br><i>Rhyming trick:</i> नीचे गिर – <b>nadir</b>",
 image: ""
 },
+
 50: {
-text: "<b>Answer:</b> verbatim. <br><b>Definition:</b> In exactly the same words as were used originally. <br><b>Synonyms:</b> word-for-word, exactly, literally, precisely, directly. <br><b>Antonyms:</b> loosely, freely, roughly, differently, inexactly.",
+text: "<b><u>शब्दशः</u></b><br>Verbatim means repeating or recording words exactly as spoken or written.<br><i>Rhyming trick:</i> word-by-word, same tone – <b>verbatim</b>",
 image: ""
-},
+}  
+    
+
     
     
     
+
 };
