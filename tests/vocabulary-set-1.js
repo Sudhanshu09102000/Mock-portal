@@ -3,173 +3,173 @@ const questions={
   text: "The sailors carefully checked the <b>rigging</b> of the ship before departure.<br>Choose the correct meaning of <b>rigging</b>.",
   options: ["System of ropes and cables on a ship", "Cargo stored in a ship", "Engine room mechanism", "Navigation instruments"],
   correct: "1",
-  image: ''
+  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
 },
 
 2: {
   text: "His plan to colonize Mars without resources sounded completely <b>quixotic</b>.<br>Choose the correct meaning of <b>quixotic</b>.",
   options: ["Unrealistically idealistic", "Highly practical", "Deeply pessimistic", "Carefully planned"],
   correct: "1",
-  image: ''
+  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
 },
 
 3: {
   text: "The blame was wrongly <b>imputed</b> to an innocent employee.<br>Choose the correct meaning of <b>imputed</b>.",
   options: ["Attributed or assigned", "Clearly proved", "Ignored completely", "Removed officially"],
   correct: "1",
-  image: ''
+  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
 },
 
 4: {
   text: "She was <b>fervent</b> in her support for the social cause.<br>Choose the correct meaning of <b>fervent</b>.",
   options: ["Having intense passion", "Mild and casual", "Doubtful in attitude", "Emotionally detached"],
   correct: "1",
-  image: ''
+  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
 },
 
 5: {
   text: "The speech was <b>imbued</b> with a sense of patriotism.<br>Choose the correct meaning of <b>imbued</b>.",
   options: ["Filled or saturated with", "Completely removed from", "Opposed strongly", "Briefly mentioned"],
   correct: "1",
-  image: ''
+  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
 },
 
 6: {
   text: "The company decided to <b>rejig</b> its marketing strategy.<br>Choose the correct meaning of <b>rejig</b>.",
   options: ["Rearrange or reorganize", "Cancel permanently", "Delay intentionally", "Reduce expenses"],
   correct: "1",
-  image: ''
+  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
 },
 
 7: {
   text: "Calling layoffs a <b>euphemism</b> for downsizing softens the harsh reality.<br>Choose the correct meaning of <b>euphemism</b>.",
   options: ["Mild or indirect expression", "Technical terminology", "Offensive remark", "Exact scientific term"],
   correct: "1",
-  image: ''
+  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
 },
 
 8: {
   text: "The <b>feisty</b> child argued fearlessly with elders.<br>Choose the correct meaning of <b>feisty</b>.",
   options: ["Aggressive and spirited", "Timid and fearful", "Lazy and indifferent", "Quiet and obedient"],
   correct: "1",
-  image: ''
+  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
 },
 
 9: {
   text: "He is a <b>diligent</b> student who completes all assignments on time.<br>Choose the correct meaning of <b>diligent</b>.",
   options: ["Hard-working and careful", "Careless and lazy", "Uninterested", "Easily distracted"],
   correct: "1",
-  image: ''
+  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
 },
 
 10: {
   text: "The two teams <b>contend</b> for the championship title every year.<br>Choose the correct meaning of <b>contend</b>.",
   options: ["Compete or argue", "Withdraw silently", "Accept defeat", "Avoid confrontation"],
   correct: "1",
-  image: ''
+  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
 },
 11: {
   text: "Cleaning floors and carrying files is considered <b>menial</b> work.<br>Choose the correct meaning of <b>menial</b>.",
   options: ["Low-status and routine", "Highly skilled", "Creative and intellectual", "Managerial"],
   correct: "1",
-  image: ''
+  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
 },
 
 12: {
   text: "Constant interruptions were <b>thwarting</b> his efforts to complete the task.<br>Choose the correct meaning of <b>thwarting</b>.",
   options: ["Preventing or obstructing", "Encouraging strongly", "Ignoring deliberately", "Completing successfully"],
   correct: "1",
-  image: ''
+  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
 },
 
 13: {
   text: "Climbing the mountain was an <b>arduous</b> journey.<br>Choose the correct meaning of <b>arduous</b>.",
   options: ["Extremely difficult and tiring", "Easy and pleasant", "Quickly finished", "Mentally relaxing"],
   correct: "1",
-  image: ''
+  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
 },
 
 14: {
   text: "Her trembling voice <b>evinced</b> fear.<br>Choose the correct meaning of <b>evince</b>.",
   options: ["Show clearly", "Hide deliberately", "Question repeatedly", "Deny firmly"],
   correct: "1",
-  image: ''
+  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
 },
 
 15: {
   text: "He is <b>amenable</b> to suggestions from his seniors.<br>Choose the correct meaning of <b>amenable</b>.",
   options: ["Willing to accept", "Strongly resistant", "Indifferent", "Unaware"],
   correct: "1",
-  image: ''
+  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
 },
 
 16: {
   text: "Despite failures, she continued her <b>endeavor</b> to succeed.<br>Choose the correct meaning of <b>endeavor</b>.",
   options: ["Serious effort or attempt", "Sudden decision", "Lucky opportunity", "Final achievement"],
   correct: "1",
-  image: ''
+  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
 },
 
 17: {
   text: "His silence was <b>construed</b> as agreement.<br>Choose the correct meaning of <b>construe</b>.",
   options: ["Interpret or understand", "Reject immediately", "Forget quickly", "Explain angrily"],
   correct: "1",
-  image: ''
+  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
 },
 
 18: {
   text: "The storm <b>lashed</b> the coastline throughout the night.<br>Choose the correct meaning of <b>lashed</b>.",
   options: ["Hit violently", "Touched gently", "Moved slowly", "Passed silently"],
   correct: "1",
-  image: ''
+  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
 },
 
 19: {
   text: "Good nutrition helps <b>bolster</b> immunity.<br>Choose the correct meaning of <b>bolster</b>.",
   options: ["Strengthen or support", "Weaken gradually", "Completely replace", "Ignore totally"],
   correct: "1",
-  image: ''
+  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
 },
 
 20: {
   text: "His performance has been <b>erratic</b> this season.<br>Choose the correct meaning of <b>erratic</b>.",
   options: ["Irregular and unpredictable", "Steady and consistent", "Improving gradually", "Carefully planned"],
   correct: "1",
-  image: ''
+  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
 },
 21: {
   text: "His display of <b>pragmatic</b> thinking helped solve the issue efficiently.<br>Choose the correct meaning of <b>pragmatic</b>.",
   options: ["Practical and realistic", "Highly emotional", "Idealistic and dreamy", "Theoretical only"],
   correct: "1",
-  image: ''
+  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
 },
 
 22: {
   text: "Her sense of <b>snobbery</b> made her avoid common people.<br>Choose the correct meaning of <b>snobbery</b>.",
   options: ["Feeling of superiority", "Sense of humility", "Friendly behavior", "Casual attitude"],
   correct: "1",
-  image: ''
+  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
 },
 
 23: {
   text: "He took <b>umbrage</b> at the unfair remarks.<br>Choose the correct meaning of <b>umbrage</b>.",
   options: ["Offence or resentment", "Praise or approval", "Confusion", "Amusement"],
   correct: "1",
-  image: ''
+  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
 },
 
 24: {
   text: "After the accident, the victims <b>weltered</b> in pain.<br>Choose the correct meaning of <b>weltered</b>.",
   options: ["Suffer or roll helplessly", "Celebrate joyfully", "Stand firmly", "Recover quickly"],
   correct: "1",
-  image: ''
+  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
 },
 
 25: {
   text: "Poor sanitation can <b>vitiate</b> public health.<br>Choose the correct meaning of <b>vitiate</b>.",
   options: ["Spoil or impair", "Improve greatly", "Preserve carefully", "Strengthen fully"],
   correct: "1",
-  image: ''
+  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
 },
 
 26: {
@@ -598,4 +598,5 @@ const explanations={
 
 
 }
+
 
