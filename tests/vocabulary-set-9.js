@@ -1,511 +1,606 @@
 // placeholder
 const questions = {
 1: {
-    text: "The textbook included a helpful ______ at the end to define technical terms used throughout the chapters.",
-    options: ["index", "appendix", "glossary", "preface"],
-    correct: "3",
-    image: ''
+text: "After years of investigation, the court finally decided to <b>exonerate</b> the wrongly accused man.<br>Choose the correct meaning of <b>exonerate</b>.",
+options: ["To officially clear from blame", "To punish severely", "To accuse formally", "To delay judgment"],
+correct: "1",
+image: ''
 },
+
 2: {
-    text: "In the ancient ritual, the fallen warrior was placed on a funeral ______ to be cremated with honor.",
-    options: ["altar", "tomb", "pyre", "grave"],
-    correct: "3",
-    image: ''
+text: "Her natural <b>volubility</b> made her a captivating speaker.<br>Choose the correct meaning of <b>volubility</b>.",
+options: ["Fluency in speech", "Complete silence", "Physical agility", "Emotional restraint"],
+correct: "1",
+image: ''
 },
+
 3: {
-    text: "A thick fog began to ______ the small coastal town, making it impossible to see more than a few feet ahead.",
-    options: ["shroud", "illuminate", "reveal", "expose"],
-    correct: "1",
-    image: ''
+text: "Some critics openly <b>deride</b> artists who experiment with new forms.<br>Choose the correct meaning of <b>deride</b>.",
+options: ["To mock or ridicule", "To admire deeply", "To assist actively", "To ignore politely"],
+correct: "1",
+image: ''
 },
+
 4: {
-    text: "The famous author lived in ______ for years, avoiding public appearances to focus on his writing.",
-    options: ["publicity", "company", "seclusion", "society"],
-    correct: "3",
-    image: ''
+text: "The protesters chose to <b>defy</b> the order despite threats.<br>Choose the correct meaning of <b>defy</b>.",
+options: ["To openly resist", "To willingly obey", "To quietly accept", "To formally approve"],
+correct: "1",
+image: ''
 },
+
 5: {
-    text: "After a long day of hiking, he fell into a deep and peaceful ______.",
-    options: ["frenzy", "slumber", "activity", "restlessness"],
-    correct: "2",
-    image: ''
+text: "Her <b>blithe</b> response to the crisis surprised everyone.<br>Choose the correct meaning of <b>blithe</b>.",
+options: ["Carefree and cheerful", "Deeply anxious", "Overly serious", "Bitter and resentful"],
+correct: "1",
+image: ''
 },
+
 6: {
-    text: "The lavish banquet provided a sense of ______ that left all the guests feeling completely full and satisfied.",
-    options: ["hunger", "satiety", "emptiness", "craving"],
-    correct: "2",
-    image: ''
+text: "She entered the hall calm and <b>poised</b>.<br>Choose the correct meaning of <b>poised</b>.",
+options: ["Composed and self-assured", "Extremely nervous", "Physically exhausted", "Confused and unsure"],
+correct: "1",
+image: ''
 },
+
 7: {
-    text: "The journey through the dense, unexplored jungle was extremely ______, with hidden dangers at every turn.",
-    options: ["safe", "secure", "perilous", "easy"],
-    correct: "3",
-    image: ''
+text: "After the loss, the team looked <b>dejected</b>.<br>Choose the correct meaning of <b>dejected</b>.",
+options: ["Sad and dispirited", "Excited and energetic", "Proud and confident", "Indifferent and calm"],
+correct: "1",
+image: ''
 },
+
 8: {
-    text: "As the tide began to ______, more of the sandy beach and its hidden shells were revealed.",
-    options: ["advance", "recede", "rise", "grow"],
-    correct: "2",
-    image: ''
+text: "The court moved to <b>annul</b> the outdated rule.<br>Choose the correct meaning of <b>annul</b>.",
+options: ["To cancel officially", "To enforce strictly", "To extend indefinitely", "To justify legally"],
+correct: "1",
+image: ''
 },
+
 9: {
-    text: "The thieves proceeded to ______ the house, turning everything upside down in their search for valuables.",
-    options: ["organize", "ransack", "tidy", "clean"],
-    correct: "2",
-    image: ''
+text: "With no evidence, officials could only <b>surmise</b> the cause.<br>Choose the correct meaning of <b>surmise</b>.",
+options: ["To guess without proof", "To prove conclusively", "To confirm officially", "To deny strongly"],
+correct: "1",
+image: ''
 },
+
 10: {
-    text: "After weeks of incubation, the tiny chick began to ______ from its shell.",
-    options: ["disappear", "emerge", "hide", "retreat"],
-    correct: "2",
-    image: ''
+text: "The nation plunged into political <b>turmoil</b>.<br>Choose the correct meaning of <b>turmoil</b>.",
+options: ["Great disorder or confusion", "Complete stability", "Peaceful agreement", "Careful planning"],
+correct: "1",
+image: ''
 },
+
 11: {
-    text: "The villain in the story had a ______ grin, hinting at the evil plans he was devising.",
-    options: ["benevolent", "kind", "malevolent", "friendly"],
-    correct: "3",
-    image: ''
+text: "His <b>clumsy</b> handling caused the device to fall.<br>Choose the correct meaning of <b>clumsy</b>.",
+options: ["Awkward and uncoordinated", "Smooth and skillful", "Fast and agile", "Graceful and balanced"],
+correct: "1",
+image: ''
 },
+
 12: {
-    text: "The soup was so ______ that it tasted like plain hot water; it desperately needed some salt and spices.",
-    options: ["flavorful", "delicious", "spicy", "insipid"],
-    correct: "4",
-    image: ''
+text: "The dancer’s <b>graceful</b> movements impressed everyone.<br>Choose the correct meaning of <b>graceful</b>.",
+options: ["Elegant and smooth", "Rough and jerky", "Careless and rushed", "Unstable and weak"],
+correct: "1",
+image: ''
 },
+
 13: {
-    text: "Despite the apology, he still felt a deep sense of ______ towards the person who had betrayed him.",
-    options: ["affection", "rancour", "friendship", "kindness"],
-    correct: "2",
-    image: ''
+text: "The unexpected question <b>flummoxed</b> him.<br>Choose the correct meaning of <b>flummoxed</b>.",
+options: ["Completely confused", "Highly confident", "Mentally relaxed", "Well prepared"],
+correct: "1",
+image: ''
 },
+
 14: {
-    text: "The ambitious general plotted to ______ the throne and declare himself the new king.",
-    options: ["defend", "support", "abdicate", "usurp"],
-    correct: "4",
-    image: ''
+text: "Her explanation sounded <b>plausible</b>.<br>Choose the correct meaning of <b>plausible</b>.",
+options: ["Seemingly believable", "Clearly false", "Highly absurd", "Entirely impossible"],
+correct: "1",
+image: ''
 },
+
 15: {
-    text: "His ______ decision to quit his job without having another one lined up was a source of great stress for his family.",
-    options: ["cautious", "considered", "impetuous", "planned"],
-    correct: "3",
-    image: ''
+text: "A hospital was built in the <b>vicinity</b> of the village.<br>Choose the correct meaning of <b>vicinity</b>.",
+options: ["Nearby area", "Far-off location", "Exact center", "Remote region"],
+correct: "1",
+image: ''
 },
+
 16: {
-    text: "The weather in the mountains is notoriously ______, changing from sunny to stormy in a matter of minutes.",
-    options: ["stable", "predictable", "capricious", "constant"],
-    correct: "3",
-    image: ''
+text: "Reporters must check the <b>veracity</b> of sources.<br>Choose the correct meaning of <b>veracity</b>.",
+options: ["Truthfulness or accuracy", "Speed of reporting", "Emotional appeal", "Complex wording"],
+correct: "1",
+image: ''
 },
+
 17: {
-    text: "Realizing he was late, he made a ______ breakfast and rushed out the door.",
-    options: ["leisurely", "slow", "hasty", "unhurried"],
-    correct: "3",
-    image: ''
+text: "His remarks were considered <b>outrageous</b>.<br>Choose the correct meaning of <b>outrageous</b>.",
+options: ["Shockingly offensive", "Politely expressed", "Mild and gentle", "Reasonable and fair"],
+correct: "1",
+image: ''
 },
+
 18: {
-    text: "The police caught the ______ trying to climb through a broken window of the house.",
-    options: ["resident", "guest", "owner", "burglar"],
-    correct: "4",
-    image: ''
+text: "After repairs, his hands were still <b>greasy</b>.<br>Choose the correct meaning of <b>greasy</b>.",
+options: ["Oily or slippery", "Dry and rough", "Clean and spotless", "Dusty and coarse"],
+correct: "1",
+image: ''
 },
+
 19: {
-    text: "He was a well-known ______ who had swindled many unsuspecting people out of their life savings.",
-    options: ["philanthropist", "hero", "benefactor", "crook"],
-    correct: "4",
-    image: ''
+text: "He was so <b>credulous</b> that he believed every rumor.<br>Choose the correct meaning of <b>credulous</b>.",
+options: ["Too ready to believe", "Highly skeptical", "Cautious and alert", "Critical and doubtful"],
+correct: "1",
+image: ''
 },
+
 20: {
-    text: "She often ______ between ordering pizza and getting a salad, unable to make a firm decision.",
-    options: ["vacillates", "decides", "commits", "chooses"],
-    correct: "1",
-    image: ''
+text: "Vegetation is <b>sparse</b> in the desert.<br>Choose the correct meaning of <b>sparse</b>.",
+options: ["Thinly scattered", "Thick and dense", "Richly abundant", "Closely packed"],
+correct: "1",
+image: ''
 },
+
 21: {
-    text: "The snow-capped mountains created a ______ backdrop for the small, peaceful village.",
-    options: ["ordinary", "dull", "majestic", "unimpressive"],
-    correct: "3",
-    image: ''
+text: "He remained <b>apathetic</b> to the suffering around him.<br>Choose the correct meaning of <b>apathetic</b>.",
+options: ["Showing little interest", "Deeply emotional", "Highly enthusiastic", "Overly sensitive"],
+correct: "1",
+image: ''
 },
+
 22: {
-    text: "The farmer stored the harvested wheat in a large ______ to keep it dry and safe from pests.",
-    options: ["stable", "granary", "pen", "field"],
-    correct: "2",
-    image: ''
+text: "The man looked <b>dapper</b> in his tailored suit.<br>Choose the correct meaning of <b>dapper</b>.",
+options: ["Neat and stylish", "Untidy and careless", "Old-fashioned", "Poorly dressed"],
+correct: "1",
+image: ''
 },
+
 23: {
-    text: "His speech was long and ______, wandering from one unrelated topic to another without a clear point.",
-    options: ["concise", "focused", "rambling", "direct"],
-    correct: "3",
-    image: ''
+text: "The child’s clothes were <b>filthy</b> after playing outside.<br>Choose the correct meaning of <b>filthy</b>.",
+options: ["Extremely dirty", "Slightly dusty", "Neatly washed", "Lightly stained"],
+correct: "1",
+image: ''
 },
+
 24: {
-    text: "The family lived in an ______ neighborhood filled with large houses and luxury cars.",
-    options: ["affluent", "poor", "impoverished", "destitute"],
-    correct: "1",
-    image: ''
+text: "Defacing the shrine was an act of <b>sacrilege</b>.<br>Choose the correct meaning of <b>sacrilege</b>.",
+options: ["Violation of something holy", "Act of worship", "Religious devotion", "Sacred ritual"],
+correct: "1",
+image: ''
 },
+
 25: {
-    text: "After a series of bad investments, the company was declared ______ and had to close down.",
-    options: ["profitable", "solvent", "insolvent", "wealthy"],
-    correct: "3",
-    image: ''
+text: "The priest offered a <b>benediction</b> at the end.<br>Choose the correct meaning of <b>benediction</b>.",
+options: ["A blessing", "A punishment", "A warning", "A complaint"],
+correct: "1",
+image: ''
 },
-26: {
-    text: "A student of ______ might spend their time studying the behavior of snakes and lizards in their natural habitat.",
-    options: ["ornithology", "botany", "entomology", "herpetology"],
-    correct: "4",
-    image: ''
+
+    26: {
+text: "Excessive stress is <b>detrimental</b> to overall health.<br>Choose the correct meaning of <b>detrimental</b>.",
+options: ["Harmful or damaging", "Helpful and beneficial", "Neutral in effect", "Protective in nature"],
+correct: "1",
+image: ''
 },
+
 27: {
-    text: "The field of ______ explores how we perceive and manipulate objects through the sense of touch.",
-    options: ["audiology", "optics", "haptology", "phonology"],
-    correct: "3",
-    image: ''
+text: "The disease spread in an <b>insidious</b> manner before detection.<br>Choose the correct meaning of <b>insidious</b>.",
+options: ["Gradually harmful and deceptive", "Sudden and obvious", "Completely harmless", "Open and transparent"],
+correct: "1",
+image: ''
 },
+
 28: {
-    text: "As a ______ person, she loved being the center of attention at parties and social gatherings.",
-    options: ["gregarious", "shy", "reclusive", "introverted"],
-    correct: "1",
-    image: ''
+text: "He is known for his <b>nasty</b> temper at the workplace.<br>Choose the correct meaning of <b>nasty</b>.",
+options: ["Very unpleasant or offensive", "Kind and gentle", "Friendly and warm", "Polite and courteous"],
+correct: "1",
+image: ''
 },
-    29: {
-    text: "He made a ______ glance at the answers on his neighbor's test paper, hoping the teacher wouldn't notice.",
-    options: ["obvious", "surreptitious", "open", "public"],
-    correct: "2",
-    image: ''
+
+29: {
+text: "The doctors confirmed that the tumor was <b>benign</b>.<br>Choose the correct meaning of <b>benign</b>.",
+options: ["Not harmful or dangerous", "Fatal in nature", "Aggressively spreading", "Extremely painful"],
+correct: "1",
+image: ''
 },
+
 30: {
-    text: "The spies held a ______ meeting in an abandoned warehouse to discuss their secret plans.",
-    options: ["public", "clandestine", "known", "open"],
-    correct: "2",
-    image: ''
+text: "His jealousy proved to be a <b>baneful</b> influence on his life.<br>Choose the correct meaning of <b>baneful</b>.",
+options: ["Causing harm or ruin", "Providing benefit", "Neutral in effect", "Supportive and helpful"],
+correct: "1",
+image: ''
 },
+
 31: {
-    text: "She had to ______ her gaze from the gruesome scene of the car crash.",
-    options: ["avert", "focus", "direct", "fixate"],
-    correct: "1",
-    image: ''
+text: "The official was held <b>culpable</b> for the serious error.<br>Choose the correct meaning of <b>culpable</b>.",
+options: ["Deserving blame", "Completely innocent", "Free from responsibility", "Highly commendable"],
+correct: "1",
+image: ''
 },
+
 32: {
-    text: "The poet wrote a series of ______ sonnets to his beloved, filled with passion and longing.",
-    options: ["hateful", "indifferent", "amorous", "platonic"],
-    correct: "3",
-    image: ''
+text: "She handled the issue with <b>pragmatism</b> rather than emotion.<br>Choose the correct meaning of <b>pragmatism</b>.",
+options: ["Practical approach", "Idealistic thinking", "Imaginative fantasy", "Emotional reaction"],
+correct: "1",
+image: ''
 },
+
 33: {
-    text: "Despite the chaos around him, the monk remained perfectly ______, maintaining his calm and meditative state.",
-    options: ["agitated", "placid", "turbulent", "excited"],
-    correct: "2",
-    image: ''
+text: "He replied with noticeable <b>asperity</b> during the debate.<br>Choose the correct meaning of <b>asperity</b>.",
+options: ["Harshness in tone or manner", "Gentle politeness", "Warm friendliness", "Soft-spoken calm"],
+correct: "1",
+image: ''
 },
+
 34: {
-    text: "The rooster crowed at the first light of ______, signaling the beginning of a new day.",
-    options: ["dusk", "noon", "midnight", "dawn"],
-    correct: "4",
-    image: ''
+text: "Dark clouds suggested that rain was <b>imminent</b>.<br>Choose the correct meaning of <b>imminent</b>.",
+options: ["About to happen", "Very unlikely", "Long delayed", "Already completed"],
+correct: "1",
+image: ''
 },
+
 35: {
-    text: "In ancient times, many people believed that seeing a flock of crows were bad ______ that foretold disaster.",
-    options: ["certainties", "facts", "omens", "truths"],
-    correct: "3",
-    image: ''
+text: "Interest will <b>accrue</b> on the investment over time.<br>Choose the correct meaning of <b>accrue</b>.",
+options: ["Accumulate gradually", "Decrease rapidly", "Disappear suddenly", "Remain unchanged"],
+correct: "1",
+image: ''
 },
+
 36: {
-    text: "We spent the weekend in a ______ little village with cobblestone streets and charming, old-fashioned houses.",
-    options: ["modern", "quaint", "contemporary", "futuristic"],
-    correct: "2",
-    image: ''
+text: "The boxers continued to <b>spar</b> during practice.<br>Choose the correct meaning of <b>spar</b>.",
+options: ["Engage in practice fighting", "Hide silently", "Surrender immediately", "Run away"],
+correct: "1",
+image: ''
 },
+
 37: {
-    text: "The spy's mission was to ______ the enemy's communication systems before the attack.",
-    options: ["repair", "enhance", "sabotage", "fortify"],
-    correct: "3",
-    image: ''
+text: "Greed is often described as a moral <b>vice</b>.<br>Choose the correct meaning of <b>vice</b>.",
+options: ["Immoral habit or behavior", "Moral excellence", "Personal achievement", "Social responsibility"],
+correct: "1",
+image: ''
 },
+
 38: {
-    text: "Skinny jeans were in ______ for over a decade, but now looser styles are becoming more popular.",
-    options: ["obscurity", "vogue", "disuse", "neglect"],
-    correct: "2",
-    image: ''
+text: "The article was a bitter <b>diatribe</b> against corruption.<br>Choose the correct meaning of <b>diatribe</b>.",
+options: ["A harsh verbal attack", "A calm explanation", "A neutral report", "A friendly suggestion"],
+correct: "1",
+image: ''
 },
+
 39: {
-    text: "The magician's act relied on clever ______ and misdirection to fool the audience.",
-    options: ["honesty", "openness", "deception", "truthfulness"],
-    correct: "3",
-    image: ''
+text: "His <b>wacky</b> ideas often shocked conservative thinkers.<br>Choose the correct meaning of <b>wacky</b>.",
+options: ["Odd or eccentric", "Serious and sensible", "Traditional", "Highly logical"],
+correct: "1",
+image: ''
 },
+
 40: {
-    text: "The author was praised for her ______ imagination, which produced a dozen novels in just ten years.",
-    options: ["barren", "unimaginative", "fecund", "limited"],
-    correct: "3",
-    image: ''
+text: "His comments only served to <b>exacerbate</b> the conflict.<br>Choose the correct meaning of <b>exacerbate</b>.",
+options: ["Make worse", "Calm down", "Resolve completely", "Reduce intensity"],
+correct: "1",
+image: ''
 },
+
 41: {
-    text: "The scientist had an ______ career, marked by numerous groundbreaking discoveries and awards.",
-    options: ["unknown", "obscure", "illustrious", "notorious"],
-    correct: "3",
-    image: ''
+text: "Teachers should <b>foster</b> creativity in students.<br>Choose the correct meaning of <b>foster</b>.",
+options: ["Encourage or promote growth", "Suppress completely", "Ignore deliberately", "Discourage actively"],
+correct: "1",
+image: ''
 },
+
 42: {
-    text: "Whether pineapple belongs on pizza is a ______ point that often sparks heated debate among friends.",
-    options: ["settled", "certain", "moot", "undisputed"],
-    correct: "3",
-    image: ''
+text: "Both sides decided to <b>reconcile</b> after the dispute.<br>Choose the correct meaning of <b>reconcile</b>.",
+options: ["Restore friendly relations", "Worsen the conflict", "Avoid discussion", "Separate permanently"],
+correct: "1",
+image: ''
 },
+
 43: {
-    text: "The soldier writhed in ______ after being wounded on the battlefield.",
-    options: ["ecstasy", "comfort", "pleasure", "agony"],
-    correct: "4",
-    image: ''
+text: "Efforts were made to <b>ameliorate</b> living standards.<br>Choose the correct meaning of <b>ameliorate</b>.",
+options: ["Improve or make better", "Damage severely", "Ignore completely", "Abandon intentionally"],
+correct: "1",
+image: ''
 },
+
 44: {
-    text: "The startled parrot let out a loud ______ when the cat suddenly jumped onto its cage.",
-    options: ["murmur", "whisper", "squawk", "song"],
-    correct: "3",
-    image: ''
+text: "He spoke <b>languidly</b> after the exhausting journey.<br>Choose the correct meaning of <b>languidly</b>.",
+options: ["In a slow, relaxed manner", "With high energy", "In a rushed way", "With aggression"],
+correct: "1",
+image: ''
 },
+
 45: {
-    text: "The color red is often used to ______ danger or a warning.",
-    options: ["denote", "connote", "state", "declare"],
-    correct: "2",
-    image: ''
+text: "The government granted <b>amnesty</b> to political prisoners.<br>Choose the correct meaning of <b>amnesty</b>.",
+options: ["Official pardon", "Severe punishment", "Legal accusation", "Permanent ban"],
+correct: "1",
+image: ''
 },
+
 46: {
-    text: "Cheating on the exam was a serious ______ that resulted in his expulsion from the school.",
-    options: ["virtue", "transgression", "good deed", "compliance"],
-    correct: "2",
-    image: ''
+text: "The two nations agreed to an <b>armistice</b> after years of war.<br>Choose the correct meaning of <b>armistice</b>.",
+options: ["Formal ceasefire", "Declaration of war", "Military alliance", "Victory celebration"],
+correct: "1",
+image: ''
 },
+
 47: {
-    text: "The caterpillar's ______ into a butterfly is one of the most fascinating processes in nature.",
-    options: ["stagnation", "stability", "metamorphosis", "constancy"],
-    correct: "3",
-    image: ''
+text: "He is only an <b>acquaintance</b>, not a close friend.<br>Choose the correct meaning of <b>acquaintance</b>.",
+options: ["A person known slightly", "A family member", "A trusted companion", "A lifelong friend"],
+correct: "1",
+image: ''
 },
+
 48: {
-    text: "When he said, 'The world is a stage,' he was speaking in a ______ sense.",
-    options: ["literal", "factual", "metaphoric", "historical"],
-    correct: "3",
-    image: ''
+text: "The tiger is a <b>denizen</b> of Indian forests.<br>Choose the correct meaning of <b>denizen</b>.",
+options: ["An inhabitant of a place", "A temporary visitor", "A foreign traveler", "A passing guest"],
+correct: "1",
+image: ''
 },
+
 49: {
-    text: "The smell of freshly baked bread was ______ of his grandmother's kitchen.",
-    options: ["unmemorable", "evocative", "forgettable", "bland"],
-    correct: "2",
-    image: ''
+text: "Medical <b>jargon</b> can confuse patients.<br>Choose the correct meaning of <b>jargon</b>.",
+options: ["Specialized professional language", "Everyday speech", "Poetic wording", "Regional accent"],
+correct: "1",
+image: ''
 },
+
 50: {
-    text: "The exhibition showcases the works of several ______ artists who are still actively creating today.",
-    options: ["ancient", "historical", "contemporary", "prehistoric"],
-    correct: "3",
-    image: ''
+text: "The travelers were attacked by mountain <b>brigands</b>.<br>Choose the correct meaning of <b>brigands</b>.",
+options: ["Bandits or robbers", "Soldiers on duty", "Local guides", "Merchants"],
+correct: "1",
+image: ''
 }
-
-
 };
 
 // placeholder
 const explanations = {
  1: {
-    text: "<b>Answer:</b> glossary. <br><b>Definition:</b> An alphabetical list of terms or words relating to a specific subject, with explanations. <br><b>Synonyms:</b> wordbook, lexicon, vocabulary list. <br><b>Antonyms:</b> main text, body.",
-    image: ""
+text: "<b><u>दोषमुक्त करना</u></b><br>Exonerate means to officially clear someone from blame or wrongdoing.<br><b>Rhyming line:</b> case clear, no rate – <b>exonerate</b>",
+image: ""
 },
+
 2: {
-    text: "<b>Answer:</b> pyre. <br><b>Definition:</b> A heap of combustible material, especially one for burning a corpse as part of a funeral ceremony. <br><b>Synonyms:</b> bonfire, fuel heap, combustible pile. <br><b>Antonyms:</b> grave, tomb, crypt.",
-    image: ""
+text: "<b><u>बोलने की प्रवाहिता</u></b><br>Volubility refers to ease and fluency in speech.<br><b>Rhyming line:</b> बोल-बोल ability – <b>volubility</b>",
+image: ""
 },
+
 3: {
-    text: "<b>Answer:</b> shroud. <br><b>Definition:</b> To cover or envelop so as to conceal from view. <br><b>Synonyms:</b> cover, conceal, envelop, veil. <br><b>Antonyms:</b> reveal, expose, uncover, unveil.",
-    image: ""
+text: "<b><u>उपहास करना</u></b><br>Deride means to mock or ridicule someone.<br><b>Rhyming line:</b> मज़ाक ride – <b>deride</b>",
+image: ""
 },
+
 4: {
-    text: "<b>Answer:</b> seclusion. <br><b>Definition:</b> The state of being private and away from other people. <br><b>Synonyms:</b> isolation, solitude, privacy, retreat. <br><b>Antonyms:</b> company, society, publicity.",
-    image: ""
+text: "<b><u>अवहेलना करना</u></b><br>Defy means to openly resist authority or rules.<br><b>Rhyming line:</b> rule deny – <b>defy</b>",
+image: ""
 },
+
 5: {
-    text: "<b>Answer:</b> slumber. <br><b>Definition:</b> A sleep; a state of inactivity or dormancy. <br><b>Synonyms:</b> sleep, doze, rest, nap. <br><b>Antonyms:</b> wakefulness, activity, restlessness.",
-    image: ""
+text: "<b><u>निश्चिंत</u></b><br>Blithe means carefree and cheerful.<br><b>Rhyming line:</b> smile bright – <b>blithe</b>",
+image: ""
 },
+
 6: {
-    text: "<b>Answer:</b> satiety. <br><b>Definition:</b> The feeling or state of being sated; the satisfaction of appetite or desire. <br><b>Synonyms:</b> fullness, satisfaction, repletion. <br><b>Antonyms:</b> hunger, emptiness, craving.",
-    image: ""
+text: "<b><u>संयमित</u></b><br>Poised describes calm confidence and balance.<br><b>Rhyming line:</b> calm noise-less – <b>poised</b>",
+image: ""
 },
+
 7: {
-    text: "<b>Answer:</b> perilous. <br><b>Definition:</b> Full of danger or risk. <br><b>Synonyms:</b> dangerous, hazardous, risky, treacherous. <br><b>Antonyms:</b> safe, secure, harmless.",
-    image: ""
+text: "<b><u>हताश</u></b><br>Dejected means sad or dispirited.<br><b>Rhyming line:</b> defeat rejected – <b>dejected</b>",
+image: ""
 },
+
 8: {
-    text: "<b>Answer:</b> recede. <br><b>Definition:</b> To go or move back or further away from a previous position. <br><b>Synonyms:</b> retreat, withdraw, ebb, subside. <br><b>Antonyms:</b> advance, approach, proceed.",
-    image: ""
+text: "<b><u>रद्द करना</u></b><br>Annul means to cancel officially.<br><b>Rhyming line:</b> rule null – <b>annul</b>",
+image: ""
 },
+
 9: {
-    text: "<b>Answer:</b> ransack. <br><b>Definition:</b> To go through a place stealing things and causing damage. <br><b>Synonyms:</b> plunder, pillage, loot, rummage. <br><b>Antonyms:</b> organize, arrange, tidy.",
-    image: ""
+text: "<b><u>अनुमान लगाना</u></b><br>Surmise means to guess without proof.<br><b>Rhyming line:</b> suppose-wise – <b>surmise</b>",
+image: ""
 },
+
 10: {
-    text: "<b>Answer:</b> emerge. <br><b>Definition:</b> To move out of or away from something and come into view. <br><b>Synonyms:</b> appear, surface, materialize, arise. <br><b>Antonyms:</b> disappear, vanish, fade.",
-    image: ""
+text: "<b><u>उथल-पुथल</u></b><br>Turmoil refers to chaos or disturbance.<br><b>Rhyming line:</b> trouble boil – <b>turmoil</b>",
+image: ""
 },
+
 11: {
-    text: "<b>Answer:</b> malevolent. <br><b>Definition:</b> Having or showing a wish to do evil to others. <br><b>Synonyms:</b> malicious, spiteful, hostile, evil-minded. <br><b>Antonyms:</b> benevolent, kind, friendly.",
-    image: ""
+text: "<b><u>भद्दा</u></b><br>Clumsy means awkward and uncoordinated.<br><b>Rhyming line:</b> slip-slip, clum-see – <b>clumsy</b>",
+image: ""
 },
+
 12: {
-    text: "<b>Answer:</b> insipid. <br><b>Definition:</b> Lacking flavor; weak or tasteless. <br><b>Synonyms:</b> tasteless, bland, unflavored, vapid. <br><b>Antonyms:</b> tasty, flavorful, delicious.",
-    image: ""
+text: "<b><u>सुगठित</u></b><br>Graceful means elegant and smooth.<br><b>Rhyming line:</b> smooth face-full – <b>graceful</b>",
+image: ""
 },
+
 13: {
-    text: "<b>Answer:</b> rancour. <br><b>Definition:</b> Bitterness or resentfulness, especially when long-standing. <br><b>Synonyms:</b> bitterness, spite, resentment, malice. <br><b>Antonyms:</b> friendliness, amity, goodwill.",
-    image: ""
+text: "<b><u>चकित</u></b><br>Flummoxed means completely confused.<br><b>Rhyming line:</b> mind boxed – <b>flummoxed</b>",
+image: ""
 },
+
 14: {
-    text: "<b>Answer:</b> usurp. <br><b>Definition:</b> To take a position of power or importance illegally or by force. <br><b>Synonyms:</b> seize, take over, commandeer. <br><b>Antonyms:</b> abdicate, relinquish, surrender.",
-    image: ""
+text: "<b><u>विश्वसनीय</u></b><br>Plausible means seemingly believable.<br><b>Rhyming line:</b> plus-able story – <b>plausible</b>",
+image: ""
 },
+
 15: {
-    text: "<b>Answer:</b> impetuous. <br><b>Definition:</b> Acting or done quickly and without thought or care. <br><b>Synonyms:</b> impulsive, rash, hasty, reckless. <br><b>Antonyms:</b> cautious, considered, thoughtful.",
-    image: ""
+text: "<b><u>आस-पास</u></b><br>Vicinity refers to a nearby area.<br><b>Rhyming line:</b> very-near city – <b>vicinity</b>",
+image: ""
 },
+
 16: {
-    text: "<b>Answer:</b> capricious. <br><b>Definition:</b> Given to sudden and unaccountable changes of mood or behavior. <br><b>Synonyms:</b> fickle, inconstant, changeable, unpredictable. <br><b>Antonyms:</b> stable, consistent, predictable.",
-    image: ""
+text: "<b><u>सत्यता</u></b><br>Veracity means truthfulness or accuracy.<br><b>Rhyming line:</b> very-true capacity – <b>veracity</b>",
+image: ""
 },
+
 17: {
-    text: "<b>Answer:</b> hasty. <br><b>Definition:</b> Done with excessive speed or urgency; hurried. <br><b>Synonyms:</b> rushed, hurried, quick, impetuous. <br><b>Antonyms:</b> leisurely, slow, cautious.",
-    image: ""
+text: "<b><u>अत्यंत आपत्तिजनक</u></b><br>Outrageous describes something shockingly offensive.<br><b>Rhyming line:</b> shock-full stage – <b>outrageous</b>",
+image: ""
 },
+
 18: {
-    text: "<b>Answer:</b> burglar. <br><b>Definition:</b> A person who illegally enters a building and steals things. <br><b>Synonyms:</b> thief, housebreaker, robber, intruder. <br><b>Antonyms:</b> resident, owner, guest.",
-    image: ""
+text: "<b><u>चिकना</u></b><br>Greasy means oily or slippery.<br><b>Rhyming line:</b> oil-easy – <b>greasy</b>",
+image: ""
 },
+
 19: {
-    text: "<b>Answer:</b> crook. <br><b>Definition:</b> A person who is dishonest or a criminal. <br><b>Synonyms:</b> criminal, swindler, cheat, fraudster. <br><b>Antonyms:</b> honest person, saint, philanthropist.",
-    image: ""
+text: "<b><u>आसानी से मानने वाला</u></b><br>Credulous means too ready to believe.<br><b>Rhyming line:</b> believe-less guard-less – <b>credulous</b>",
+image: ""
 },
+
 20: {
-    text: "<b>Answer:</b> vacillates. <br><b>Definition:</b> To alternate or waver between different opinions or actions; be indecisive. <br><b>Synonyms:</b> waver, dither, hesitate, oscillate. <br><b>Antonyms:</b> decide, commit, resolve.",
-    image: ""
+text: "<b><u>विरल</u></b><br>Sparse means thinly scattered.<br><b>Rhyming line:</b> space-space – <b>sparse</b>",
+image: ""
 },
+
 21: {
-    text: "<b>Answer:</b> majestic. <br><b>Definition:</b> Having or showing impressive beauty or scale. <br><b>Synonyms:</b> stately, grand, magnificent, awesome. <br><b>Antonyms:</b> unimpressive, humble, ordinary.",
-    image: ""
+text: "<b><u>उदासीन</u></b><br>Apathetic means showing little interest.<br><b>Rhyming line:</b> care का math-a-tic – <b>apathetic</b>",
+image: ""
 },
+
 22: {
-    text: "<b>Answer:</b> granary. <br><b>Definition:</b> A storehouse for threshed grain. <br><b>Synonyms:</b> grain store, silo, storehouse, garner. <br><b>Antonyms:</b> (not applicable).",
-    image: ""
+text: "<b><u>सुसज्जित</u></b><br>Dapper means neat and stylish.<br><b>Rhyming line:</b> suit snap-per – <b>dapper</b>",
+image: ""
 },
+
 23: {
-    text: "<b>Answer:</b> rambling. <br><b>Definition:</b> Lengthy and confused or inconsequential speech or writing. <br><b>Synonyms:</b> long-winded, disjointed, meandering. <br><b>Antonyms:</b> concise, direct, focused.",
-    image: ""
+text: "<b><u>बेहद गंदा</u></b><br>Filthy means extremely dirty.<br><b>Rhyming line:</b> dirt-y guilty – <b>filthy</b>",
+image: ""
 },
+
 24: {
-    text: "<b>Answer:</b> affluent. <br><b>Definition:</b> Having a great deal of money; wealthy. <br><b>Synonyms:</b> wealthy, rich, prosperous, well-off. <br><b>Antonyms:</b> poor, impoverished, destitute.",
-    image: ""
+text: "<b><u>अपवित्र कृत्य</u></b><br>Sacrilege is violation of something sacred.<br><b>Rhyming line:</b> sacred kill-edge – <b>sacrilege</b>",
+image: ""
 },
+
 25: {
-    text: "<b>Answer:</b> insolvent. <br><b>Definition:</b> Unable to pay debts owed. <br><b>Synonyms:</b> bankrupt, broke, penniless, ruined. <br><b>Antonyms:</b> solvent, wealthy, profitable.",
-    image: ""
+text: "<b><u>आशीर्वाद</u></b><br>Benediction means a blessing.<br><b>Rhyming line:</b> bless-ed diction – <b>benediction</b>",
+image: ""
 },
-26: {
-    text: "<b>Answer:</b> herpetology. <br><b>Definition:</b> The branch of zoology concerned with the study of amphibians and reptiles. <br><b>Synonyms:</b> reptile science, amphibian studies. <br><b>Antonyms:</b> (other fields like ornithology, botany).",
-    image: ""
+
+    26: {
+text: "<b><u>हानिकारक</u></b><br>Detrimental means causing damage or harm.<br><b>Rhyming line:</b> damage mental – <b>detrimental</b>",
+image: ""
 },
+
 27: {
-    text: "<b>Answer:</b> haptology. <br><b>Definition:</b> The science or study of the sense of touch. <br><b>Synonyms:</b> tactile science, study of touch. <br><b>Antonyms:</b> (studies of other senses like audiology, optics).",
-    image: ""
+text: "<b><u>छिपा हुआ नुकसानदेह</u></b><br>Insidious refers to gradual and harmful action that is not obvious.<br><b>Rhyming line:</b> silent vicious – <b>insidious</b>",
+image: ""
 },
+
 28: {
-    text: "<b>Answer:</b> gregarious. <br><b>Definition:</b> Fond of company; sociable. <br><b>Synonyms:</b> sociable, outgoing, extroverted, companionable. <br><b>Antonyms:</b> unsociable, reclusive, introverted.",
-    image: ""
+text: "<b><u>अप्रिय</u></b><br>Nasty means very unpleasant or offensive.<br><b>Rhyming line:</b> bad-y nasty – <b>nasty</b>",
+image: ""
 },
-   
-    29: {
-    text: "<b>Answer:</b> surreptitious. <br><b>Definition:</b> Kept secret, especially because it would not be approved of. <br><b>Synonyms:</b> stealthy, clandestine, secret, furtive. <br><b>Antonyms:</b> open, overt, public, unconcealed.",
-    image: ""
+
+29: {
+text: "<b><u>निर्दोष</u></b><br>Benign means not harmful or dangerous.<br><b>Rhyming line:</b> be-nice sign – <b>benign</b>",
+image: ""
 },
+
 30: {
-    text: "<b>Answer:</b> clandestine. <br><b>Definition:</b> Kept secret or done secretively, especially because illicit. <br><b>Synonyms:</b> secret, covert, furtive, surreptitious. <br><b>Antonyms:</b> open, overt, public, aboveboard.",
-    image: ""
+text: "<b><u>विनाशकारी</u></b><br>Baneful means causing harm or ruin.<br><b>Rhyming line:</b> bane-full pain – <b>baneful</b>",
+image: ""
 },
+
 31: {
-    text: "<b>Answer:</b> avert. <br><b>Definition:</b> To turn away (one's eyes or thoughts); to prevent or ward off (an undesirable occurrence). <br><b>Synonyms:</b> prevent, avoid, turn away, preclude. <br><b>Antonyms:</b> face, confront, seek, allow.",
-    image: ""
+text: "<b><u>दोषी</u></b><br>Culpable means deserving blame.<br><b>Rhyming line:</b> fault-able – <b>culpable</b>",
+image: ""
 },
+
 32: {
-    text: "<b>Answer:</b> amorous. <br><b>Definition:</b> Showing, feeling, or relating to sexual desire. <br><b>Synonyms:</b> romantic, passionate, lustful, ardent. <br><b>Antonyms:</b> cold, indifferent, frigid, platonic.",
-    image: ""
+text: "<b><u>व्यावहारिकता</u></b><br>Pragmatism is a practical approach.<br><b>Rhyming line:</b> practical-ism – <b>pragmatism</b>",
+image: ""
 },
+
 33: {
-    text: "<b>Answer:</b> placid. <br><b>Definition:</b> (of a person or animal) not easily upset or excited; (of a place or stretch of water) calm and peaceful, with little movement or activity. <br><b>Synonyms:</b> calm, tranquil, peaceful, serene. <br><b>Antonyms:</b> stormy, agitated, turbulent, rough.",
-    image: ""
+text: "<b><u>कटुता</u></b><br>Asperity means harshness in manner or tone.<br><b>Rhyming line:</b> sharp-perity – <b>asperity</b>",
+image: ""
 },
+
 34: {
-    text: "<b>Answer:</b> dawn. <br><b>Definition:</b> The first appearance of light in the sky before sunrise. <br><b>Synonyms:</b> daybreak, sunrise, morning, aurora. <br><b>Antonyms:</b> dusk, twilight, sunset, nightfall.",
-    image: ""
+text: "<b><u>शीघ्र होने वाला</u></b><br>Imminent means about to happen soon.<br><b>Rhyming line:</b> any-minute – <b>imminent</b>",
+image: ""
 },
+
 35: {
-    text: "<b>Answer:</b> omens. <br><b>Definition:</b> Events regarded as a portent of good or evil. <br><b>Synonyms:</b> portents, signs, auguries, premonitions. <br><b>Antonyms:</b> facts, certainties, realities.",
-    image: ""
+text: "<b><u>संचित होना</u></b><br>Accrue means to accumulate gradually.<br><b>Rhyming line:</b> money grew – <b>accrue</b>",
+image: ""
 },
+
 36: {
-    text: "<b>Answer:</b> quaint. <br><b>Definition:</b> Attractively unusual or old-fashioned. <br><b>Synonyms:</b> charming, picturesque, old-fashioned, sweet. <br><b>Antonyms:</b> modern, contemporary, conventional, new.",
-    image: ""
+text: "<b><u>अभ्यास में लड़ना</u></b><br>Spar means to engage in practice fighting.<br><b>Rhyming line:</b> box-ing star – <b>spar</b>",
+image: ""
 },
+
 37: {
-    text: "<b>Answer:</b> sabotage. <br><b>Definition:</b> To deliberately destroy, damage, or obstruct (something), especially for political or military advantage. <br><b>Synonyms:</b> wreck, vandalize, cripple, subvert. <br><b>Antonyms:</b> aid, assist, help, support.",
-    image: ""
+text: "<b><u>दुर्गुण</u></b><br>Vice refers to immoral behavior.<br><b>Rhyming line:</b> bad dice – <b>vice</b>",
+image: ""
 },
+
 38: {
-    text: "<b>Answer:</b> vogue. <br><b>Definition:</b> The prevailing fashion or style at a particular time. <br><b>Synonyms:</b> fashion, trend, style, craze. <br><b>Antonyms:</b> anachronism, old-fashion, outdatedness.",
-    image: ""
+text: "<b><u>कटु भाषण</u></b><br>Diatribe is a bitter verbal attack.<br><b>Rhyming line:</b> dry-a-tribe – <b>diatribe</b>",
+image: ""
 },
+
 39: {
-    text: "<b>Answer:</b> deception. <br><b>Definition:</b> The action of deceiving someone. <br><b>Synonyms:</b> deceit, trickery, duplicity, fraud. <br><b>Antonyms:</b> honesty, truth, openness, sincerity.",
-    image: ""
+text: "<b><u>अजीब</u></b><br>Wacky means odd or eccentric.<br><b>Rhyming line:</b> crack-y – <b>wacky</b>",
+image: ""
 },
+
 40: {
-    text: "<b>Answer:</b> fecund. <br><b>Definition:</b> Producing or capable of producing an abundance of offspring or new growth; highly fertile. <br><b>Synonyms:</b> fertile, fruitful, productive, prolific. <br><b>Antonyms:</b> barren, sterile, infertile, unproductive.",
-    image: ""
+text: "<b><u>बिगाड़ना</u></b><br>Exacerbate means to make worse.<br><b>Rhyming line:</b> extra-bad-rate – <b>exacerbate</b>",
+image: ""
 },
+
 41: {
-    text: "<b>Answer:</b> illustrious. <br><b>Definition:</b> Well known, respected, and admired for past achievements. <br><b>Synonyms:</b> eminent, distinguished, acclaimed, prominent. <br><b>Antonyms:</b> unknown, obscure, infamous, notorious.",
-    image: ""
+text: "<b><u>प्रोत्साहित करना</u></b><br>Foster means to encourage growth.<br><b>Rhyming line:</b> growth faster – <b>foster</b>",
+image: ""
 },
+
 42: {
-    text: "<b>Answer:</b> moot. <br><b>Definition:</b> Subject to debate, dispute, or uncertainty, and typically not admitting of a final decision. <br><b>Synonyms:</b> debatable, arguable, questionable, unresolved. <br><b>Antonyms:</b> certain, definite, settled, decided.",
-    image: ""
+text: "<b><u>मेल-मिलाप करना</u></b><br>Reconcile means to restore friendly relations.<br><b>Rhyming line:</b> fight cancel – <b>reconcile</b>",
+image: ""
 },
+
 43: {
-    text: "<b>Answer:</b> agony. <br><b>Definition:</b> Extreme physical or mental suffering. <br><b>Synonyms:</b> pain, torment, torture, suffering. <br><b>Antonyms:</b> comfort, pleasure, bliss, ecstasy.",
-    image: ""
+text: "<b><u>सुधार करना</u></b><br>Ameliorate means to make better.<br><b>Rhyming line:</b> a-mellow-rate – <b>ameliorate</b>",
+image: ""
 },
+
 44: {
-    text: "<b>Answer:</b> squawk. <br><b>Definition:</b> (of a bird) to make a loud, harsh noise. <br><b>Synonyms:</b> screech, shriek, cry, crow. <br><b>Antonyms:</b> whisper, murmur, chirp.",
-    image: ""
+text: "<b><u>सुस्ती से</u></b><br>Languidly means in a slow, relaxed way.<br><b>Rhyming line:</b> long-idly – <b>languidly</b>",
+image: ""
 },
+
 45: {
-    text: "<b>Answer:</b> connote. <br><b>Definition:</b> To imply or suggest (an idea or feeling) in addition to the literal or primary meaning. <br><b>Synonyms:</b> imply, suggest, indicate, signify. <br><b>Antonyms:</b> denote, state, define.",
-    image: ""
+text: "<b><u>सामूहिक क्षमा</u></b><br>Amnesty is an official pardon.<br><b>Rhyming line:</b> am-nice-ty – <b>amnesty</b>",
+image: ""
 },
+
 46: {
-    text: "<b>Answer:</b> transgression. <br><b>Definition:</b> An act that goes against a law, rule, or code of conduct; an offense. <br><b>Synonyms:</b> offense, sin, crime, wrongdoing. <br><b>Antonyms:</b> obedience, virtue, good deed, compliance.",
-    image: ""
+text: "<b><u>युद्धविराम</u></b><br>Armistice is a formal ceasefire.<br><b>Rhyming line:</b> arms rest – <b>armistice</b>",
+image: ""
 },
+
 47: {
-    text: "<b>Answer:</b> metamorphosis. <br><b>Definition:</b> A change of the form or nature of a thing or person into a completely different one. <br><b>Synonyms:</b> transformation, change, conversion, mutation. <br><b>Antonyms:</b> stasis, stability, stagnation.",
-    image: ""
+text: "<b><u>परिचित</u></b><br>Acquaintance means someone known casually.<br><b>Rhyming line:</b> a-know-tance – <b>acquaintance</b>",
+image: ""
 },
+
 48: {
-    text: "<b>Answer:</b> metaphoric. <br><b>Definition:</b> Characteristic of or relating to metaphor; figurative. <br><b>Synonyms:</b> figurative, symbolic, allegorical, nonliteral. <br><b>Antonyms:</b> literal, concrete, factual, actual.",
-    image: ""
+text: "<b><u>निवासी</u></b><br>Denizen means an inhabitant of a place.<br><b>Rhyming line:</b> den में citizen – <b>denizen</b>",
+image: ""
 },
+
 49: {
-    text: "<b>Answer:</b> evocative. <br><b>Definition:</b> Bringing strong images, memories, or feelings to mind. <br><b>Synonyms:</b> reminiscent, suggestive, expressive, redolent. <br><b>Antonyms:</b> unexpressive, meaningless, bland.",
-    image: ""
+text: "<b><u>पेशेवर शब्दावली</u></b><br>Jargon refers to specialized language.<br><b>Rhyming line:</b> job का lingo – <b>jargon</b>",
+image: ""
 },
+
 50: {
-    text: "<b>Answer:</b> contemporary. <br><b>Definition:</b> Belonging to or occurring in the present; living or occurring at the same time. <br><b>Synonyms:</b> modern, current, present-day. <br><b>Antonyms:</b> old, ancient, historical, past.",
-    image: ""
+text: "<b><u>डाकू</u></b><br>Brigands are robbers or bandits.<br><b>Rhyming line:</b> break-and-guard – <b>brigand</b>",
+image: ""
 }
-    
+
 };
