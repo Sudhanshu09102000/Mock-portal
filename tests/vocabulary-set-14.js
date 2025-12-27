@@ -352,257 +352,256 @@ image: ''
   
 };
 
-// placeholder
 const explanations = {
 1: {
 text: "<b><u>शब्द भूलने की स्थिति</u></b><br>Lethologica is a temporary inability to recall a familiar word, often felt as having the word “on the tip of the tongue.”<br><i>Rhyming trick:</i> word logic खोया, tongue पे आया – <b>lethologica</b> होया",
-image: ""
+image: "images/vocabulary-set-14/1to5.png"
 },
 
 2: {
 text: "<b><u>कटाई के बाद बचा डंठल</u></b><br>Stubble refers to the short stalks left standing in a field after crops are harvested.<br><i>Rhyming trick:</i> crop कटे, stump बचे – <b>stubble</b> सचे",
-image: ""
+image: "images/vocabulary-set-14/1to5.png"
 },
 
 3: {
 text: "<b><u>नैतिक कथा</u></b><br>A fable is a brief story, often involving animals, that conveys a moral lesson.<br><i>Rhyming trick:</i> animal बोले, moral खोले – <b>fable</b> बोले",
-image: ""
+image: "images/vocabulary-set-14/1to5.png"
 },
 
 4: {
 text: "<b><u>कर्तव्य</u></b><br>Obligation means a duty or responsibility that one is bound to perform.<br><i>Rhyming trick:</i> duty का relation – <b>obligation</b>",
-image: ""
+image: "images/vocabulary-set-14/1to5.png"
 },
 
 5: {
 text: "<b><u>बिल्ली से संबंधित</u></b><br>Feline refers to animals belonging to the cat family.<br><i>Rhyming trick:</i> cat की लाइन – <b>feline</b>",
-image: ""
+image: "images/vocabulary-set-14/1to5.png"
 },
 
 6: {
 text: "<b><u>गाय से संबंधित</u></b><br>Bovine relates to cattle or cows.<br><i>Rhyming trick:</i> cow divine – <b>bovine</b>",
-image: ""
+image: "images/vocabulary-set-14/6to11.png"
 },
 
 7: {
 text: "<b><u>मूर्खतापूर्ण</u></b><br>Asinine describes extremely foolish or stupid behavior.<br><i>Rhyming trick:</i> ass जैसा scene – <b>asinine</b>",
-image: ""
+image: "images/vocabulary-set-14/6to11.png"
 },
 
 8: {
 text: "<b><u>घोड़े से संबंधित</u></b><br>Equine refers to horses or horse-like animals.<br><i>Rhyming trick:</i> horse की लाइन – <b>equine</b>",
-image: ""
+image: "images/vocabulary-set-14/6to11.png"
 },
 
 9: {
 text: "<b><u>टालना</u></b><br>Fudgel means to evade or avoid giving a clear answer.<br><i>Rhyming trick:</i> answer dodge-ल – <b>fudgel</b>",
-image: ""
+image: "images/vocabulary-set-14/6to11.png"
 },
 
 10: {
 text: "<b><u>लंबा खोखला भाषण</u></b><br>Bloviation refers to verbose, empty talk with little substance.<br><i>Rhyming trick:</i> blow-ब्लो बात – <b>bloviation</b>",
-image: ""
+image: "images/vocabulary-set-14/6to11.png"
 },
 
 11: {
 text: "<b><u>मजबूत</u></b><br>Skookum means strong, sturdy, or reliable.<br><i>Rhyming trick:</i> strong बनूं कम – <b>skookum</b>",
-image: ""
+image: "images/vocabulary-set-14/6to11.png"
 },
 
 12: {
 text: "<b><u>पीला रंग</u></b><br>Xanthic describes a yellow or yellowish color.<br><i>Rhyming trick:</i> yellow दिखे – <b>xanthic</b>",
-image: ""
+image: "images/vocabulary-set-14/12to17.png"
 },
 
 13: {
 text: "<b><u>लापरवाही</u></b><br>Carelessness means lack of attention or caution.<br><i>Rhyming trick:</i> care ना लेस – <b>carelessness</b>",
-image: ""
+image: "images/vocabulary-set-14/12to17.png"
 },
 
 14: {
 text: "<b><u>अधखुला</u></b><br>Ajar means slightly open.<br><i>Rhyming trick:</i> door अध-जरा – <b>ajar</b>",
-image: ""
+image: "images/vocabulary-set-14/12to17.png"
 },
 
 15: {
 text: "<b><u>कम न हुआ</u></b><br>Undiminished means not reduced in size, strength, or intensity.<br><i>Rhyming trick:</i> diminish ना हुआ – <b>undiminished</b>",
-image: ""
+image: "images/vocabulary-set-14/12to17.png"
 },
 
 16: {
 text: "<b><u>अधिक पीना</u></b><br>Bibble means to drink alcohol excessively.<br><i>Rhyming trick:</i> bottle nibble – <b>bibble</b>",
-image: ""
+image: "images/vocabulary-set-14/12to17.png"
 },
 
 17: {
 text: "<b><u>पत्तों की सरसराहट</u></b><br>Psithurism is the soft rustling sound of leaves in the wind.<br><i>Rhyming trick:</i> पत्ते सरसरिस्म – <b>psithurism</b>",
-image: ""
+image: "images/vocabulary-set-14/12to17.png"
 },
 
 18: {
 text: "<b><u>छोटी झूठी बात</u></b><br>Taradiddle means a trivial lie or nonsense.<br><i>Rhyming trick:</i> झूठा fiddle – <b>taradiddle</b>",
-image: ""
+image: "images/vocabulary-set-14/18to22.png"
 },
 
 19: {
 text: "<b><u>इच्छाशक्ति की कमी</u></b><br>Abulia refers to loss of willpower or inability to make decisions.<br><i>Rhyming trick:</i> will भूला – <b>abulia</b>",
-image: ""
+image: "images/vocabulary-set-14/18to22.png"
 },
 
 20: {
 text: "<b><u>नकली</u></b><br>Phony means fake or not genuine.<br><i>Rhyming trick:</i> phone नहीं, copy – <b>phony</b>",
-image: ""
+image: "images/vocabulary-set-14/18to22.png"
 },
 
 21: {
 text: "<b><u>दयनीय</u></b><br>Pathetic describes something that arouses pity or sadness.<br><i>Rhyming trick:</i> pity aesthetic – <b>pathetic</b>",
-image: ""
+image: "images/vocabulary-set-14/18to22.png"
 },
 
 22: {
 text: "<b><u>गलत</u></b><br>Amiss means something is wrong or improper.<br><i>Rhyming trick:</i> सही नहीं, miss – <b>amiss</b>",
-image: ""
+image: "images/vocabulary-set-14/18to22.png"
 },
 
 23: {
 text: "<b><u>निर्दोष</u></b><br>Impeccable means completely flawless or without fault.<br><i>Rhyming trick:</i> peck नहीं able – <b>impeccable</b>",
-image: ""
+image: "images/vocabulary-set-14/23to25.png"
 },
 
 24: {
 text: "<b><u>खराब किया हुआ</u></b><br>Marred means damaged or spoiled.<br><i>Rhyming trick:</i> mark पड़ गया – <b>marred</b>",
-image: ""
+image: "images/vocabulary-set-14/23to25.png"
 },
 
 25: {
 text: "<b><u>दूषित</u></b><br>Vitiated means spoiled, corrupted, or impaired.<br><i>Rhyming trick:</i> vice ने hit किया – <b>vitiated</b>",
-image: ""
+image: "images/vocabulary-set-14/23to25.png"
 },
 
-  26: {
+26: {
 text: "<b><u>हँसते-खुशबु</u></b><br>Gaily means in a cheerful, light-hearted, or joyful manner.<br><i>Rhyming trick:</i> gay style में daily – <b>gaily</b>",
-image: ""
+image: "images/vocabulary-set-14/26to31.png"
 },
 
 27: {
 text: "<b><u>कड़ी फटकार</u></b><br>Objurgation refers to a strong verbal rebuke or scolding.<br><i>Rhyming trick:</i> objection पे narration – <b>objurgation</b>",
-image: ""
+image: "images/vocabulary-set-14/26to31.png"
 },
 
 28: {
 text: "<b><u>अनिवार्य भर्ती</u></b><br>Conscription means compulsory enrollment, especially for military service.<br><i>Rhyming trick:</i> constitution ने grip लिया – <b>conscription</b>",
-image: ""
+image: "images/vocabulary-set-14/26to31.png"
 },
 
 29: {
 text: "<b><u>रूपक कथा</u></b><br>Allegory is a story conveying deeper symbolic meanings beyond the literal sense.<br><i>Rhyming trick:</i> story में glory – <b>allegory</b>",
-image: ""
+image: "images/vocabulary-set-14/26to31.png"
 },
 
 30: {
 text: "<b><u>वार्षिक पंचांग</u></b><br>An almanac is a yearly publication containing calendars and useful data.<br><i>Rhyming trick:</i> साल का track – <b>almanac</b>",
-image: ""
+image: "images/vocabulary-set-14/26to31.png"
 },
 
 31: {
 text: "<b><u>विनाश का कारण</u></b><br>Bane means a cause of harm or ruin.<br><i>Rhyming trick:</i> pain का main – <b>bane</b>",
-image: ""
+image: "images/vocabulary-set-14/26to31.png"
 },
 
 32: {
 text: "<b><u>प्रवेश कक्ष</u></b><br>Foyer refers to an entrance hall or lobby of a building.<br><i>Rhyming trick:</i> door के foyer – <b>foyer</b>",
-image: ""
+image: "images/vocabulary-set-14/32to37.png"
 },
 
 33: {
 text: "<b><u>रस्सी पर चलने वाला</u></b><br>Funambulist is a person who walks on a tightrope.<br><i>Rhyming trick:</i> fun balance list – <b>funambulist</b>",
-image: ""
+image: "images/vocabulary-set-14/32to37.png"
 },
 
 34: {
 text: "<b><u>लोककथा</u></b><br>Folktale is a traditional story passed through generations.<br><i>Rhyming trick:</i> folk बोले tale – <b>folktale</b>",
-image: ""
+image: "images/vocabulary-set-14/32to37.png"
 },
 
 35: {
 text: "<b><u>दीवारों पर चित्र/लिखावट</u></b><br>Graffiti refers to drawings or writings made on public surfaces.<br><i>Rhyming trick:</i> wall पर crafty – <b>graffiti</b>",
-image: ""
+image: "images/vocabulary-set-14/32to37.png"
 },
 
 36: {
 text: "<b><u>इच्छाशक्ति का अभाव</u></b><br>Abulia is the loss of willpower or initiative.<br><i>Rhyming trick:</i> will गया भूलिया – <b>abulia</b>",
-image: ""
+image: "images/vocabulary-set-14/32to37.png"
 },
 
 37: {
 text: "<b><u>दयनीय</u></b><br>Widdiful means pitiable or miserable.<br><i>Rhyming trick:</i> widow-ful feeling – <b>widdiful</b>",
-image: ""
+image: "images/vocabulary-set-14/32to37.png"
 },
 
 38: {
 text: "<b><u>बाँसुरी का मुख</u></b><br>Fipple is the mouthpiece of certain wind instruments.<br><i>Rhyming trick:</i> flute की nipple – <b>fipple</b>",
-image: ""
+image: "images/vocabulary-set-14/38to43.png"
 },
 
 39: {
 text: "<b><u>लहराते बाल</u></b><br>Cymotrichous describes having wavy hair.<br><i>Rhyming trick:</i> wave-trick-ous – <b>cymotrichous</b>",
-image: ""
+image: "images/vocabulary-set-14/38to43.png"
 },
 
 40: {
 text: "<b><u>निर्णायक</u></b><br>Arbiter is a person who has authority to judge or decide disputes.<br><i>Rhyming trick:</i> argument hitter – <b>arbiter</b>",
-image: ""
+image: "images/vocabulary-set-14/38to43.png"
 },
 
 41: {
 text: "<b><u>मध्यस्थ</u></b><br>Mediator is someone who intervenes to bring agreement between parties.<br><i>Rhyming trick:</i> middle creator – <b>mediator</b>",
-image: ""
+image: "images/vocabulary-set-14/38to43.png"
 },
 
 42: {
 text: "<b><u>उकसाने वाला गुप्त एजेंट</u></b><br>An agent provocateur secretly incites others to commit wrongdoing.<br><i>Rhyming trick:</i> provoke करे operator – <b>agent provocateur</b>",
-image: ""
+image: "images/vocabulary-set-14/38to43.png"
 },
 
 43: {
 text: "<b><u>उलझा हुआ</u></b><br>Tangled means twisted, confused, or complicated.<br><i>Rhyming trick:</i> angle में fangled – <b>tangled</b>",
-image: ""
+image: "images/vocabulary-set-14/38to43.png"
 },
 
 44: {
 text: "<b><u>गौण</u></b><br>Incidental means minor or occurring as a secondary matter.<br><i>Rhyming trick:</i> incident का side-mental – <b>incidental</b>",
-image: ""
+image: "images/vocabulary-set-14/44to47.png"
 },
 
 45: {
 text: "<b><u>संयोगवश</u></b><br>Adventitious means happening by chance rather than design.<br><i>Rhyming trick:</i> adventure सेitious – <b>adventitious</b>",
-image: ""
+image: "images/vocabulary-set-14/44to47.png"
 },
 
 46: {
 text: "<b><u>सौभाग्य से घटित</u></b><br>Serendipitous describes a happy and unexpected occurrence.<br><i>Rhyming trick:</i> sudden happiness – <b>serendipitous</b>",
-image: ""
+image: "images/vocabulary-set-14/44to47.png"
 },
 
 47: {
 text: "<b><u>सहायक इकाई</u></b><br>Subsidiary is a secondary or supporting organization.<br><i>Rhyming trick:</i> side diary – <b>subsidiary</b>",
-image: ""
+image: "images/vocabulary-set-14/44to47.png"
 },
 
 48: {
 text: "<b><u>बेकार सामान</u></b><br>Gubbins refers to useless or unnecessary objects.<br><i>Rhyming trick:</i> garbage-bins – <b>gubbins</b>",
-image: ""
+image: "images/vocabulary-set-14/48to50.png"
 },
 
 49: {
 text: "<b><u>टहलना</u></b><br>Obambulate means to walk about or wander.<br><i>Rhyming trick:</i> घूमता jaa-late – <b>obambulate</b>",
-image: ""
+image: "images/vocabulary-set-14/48to50.png"
 },
 
 50: {
 text: "<b><u>बीमार महसूस करना</u></b><br>Wamblecropt means feeling sick or nauseated.<br><i>Rhyming trick:</i> stomach crop-up – <b>wamblecropt</b>",
-image: ""
+image: "images/vocabulary-set-14/48to50.png"
 }
-  
 };
+
 
