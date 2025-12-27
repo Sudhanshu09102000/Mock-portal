@@ -1,510 +1,612 @@
 // placeholder
 const questions = {
  1: {
-text: "The judge was admired for his unwavering ____ and honesty in all matters of law.",
-options: ["probity", "arrogance", "wealth", "influence"],
-correct: "1",
-image: ''
+  text: "The judge was admired for his unwavering <b>probity</b> in public office.<br>Choose the correct meaning of <b>probity</b>.",
+  options: ["Moral integrity and honesty", "Physical strength", "Social status", "Legal authority"],
+  correct: "1",
+  image: ''
 },
+
 2: {
-text: "The ____ young man interrupted everyone, convinced that he was always right.",
-options: ["bumptious", "humble", "modest", "timid"],
-correct: "1",
-image: ''
+  text: "The <b>bumptious</b> intern interrupted seniors repeatedly.<br>Choose the correct meaning of <b>bumptious</b>.",
+  options: ["Overconfident and rude", "Shy and reserved", "Quietly efficient", "Humbly polite"],
+  correct: "1",
+  image: ''
 },
+
 3: {
-text: "After winning the race, he walked around with a ____ attitude that irritated his teammates.",
-options: ["chesty", "quiet", "reserved", "melancholic"],
-correct: "1",
-image: ''
+  text: "After the victory, he adopted a <b>chesty</b> manner.<br>Choose the correct meaning of <b>chesty</b>.",
+  options: ["Arrogant and boastful", "Fearful and anxious", "Calm and composed", "Weak and timid"],
+  correct: "1",
+  image: ''
 },
+
 4: {
-text: "The politician’s speech was full of ____ rhetoric but lacked real substance.",
-options: ["fustian", "clarity", "simplicity", "precision"],
-correct: "1",
-image: ''
+  text: "The speech was full of <b>fustian</b> language.<br>Choose the correct meaning of <b>fustian</b>.",
+  options: ["Bombastic and empty rhetoric", "Clear and concise speech", "Technical accuracy", "Emotional sincerity"],
+  correct: "1",
+  image: ''
 },
+
 5: {
-text: "The general gave orders in an ____ tone that left no room for discussion.",
-options: ["imperious", "gentle", "submissive", "hesitant"],
-correct: "1",
-image: ''
+  text: "The officer spoke in an <b>imperious</b> tone.<br>Choose the correct meaning of <b>imperious</b>.",
+  options: ["Domineering and commanding", "Gentle and kind", "Indecisive", "Submissive"],
+  correct: "1",
+  image: ''
 },
+
 6: {
-text: "The film’s ending was so ____ that many in the audience were moved to tears.",
-options: ["pathetic", "joyful", "humorous", "thrilling"],
-correct: "1",
-image: ''
+  text: "The movie’s ending was overly <b>pathetic</b>.<br>Choose the correct meaning of <b>pathetic</b>.",
+  options: ["Arousing pity", "Highly impressive", "Amusing", "Inspiring confidence"],
+  correct: "1",
+  image: ''
 },
+
 7: {
-text: "Her ____ behavior made others uncomfortable as she looked down on everyone around her.",
-options: ["snobbish", "kind", "friendly", "generous"],
-correct: "1",
-image: ''
+  text: "Her <b>snobbish</b> behavior offended many colleagues.<br>Choose the correct meaning of <b>snobbish</b>.",
+  options: ["Looking down on others", "Friendly and inclusive", "Neutral", "Uncertain"],
+  correct: "1",
+  image: ''
 },
+
 8: {
-text: "After losing his job and home, he felt utterly ____ and hopeless.",
-options: ["miserable", "content", "cheerful", "grateful"],
-correct: "1",
-image: ''
+  text: "He lived a <b>miserable</b> life in poverty.<br>Choose the correct meaning of <b>miserable</b>.",
+  options: ["Extremely unhappy", "Comfortable", "Prosperous", "Carefree"],
+  correct: "1",
+  image: ''
 },
+
 9: {
-text: "The refugees lived in ____ poverty, struggling for even basic necessities.",
-options: ["abject", "moderate", "comfortable", "prosperous"],
-correct: "1",
-image: ''
+  text: "They were reduced to <b>abject</b> poverty.<br>Choose the correct meaning of <b>abject</b>.",
+  options: ["Extremely degraded", "Moderate", "Temporary", "Respectable"],
+  correct: "1",
+  image: ''
 },
+
 10: {
-text: "The wounded animal’s cries were so ____ that everyone nearby felt sympathy.",
-options: ["pitiful", "pleasant", "calm", "soothing"],
-correct: "1",
-image: ''
+  text: "The refugees were in a <b>pitiful</b> condition.<br>Choose the correct meaning of <b>pitiful</b>.",
+  options: ["Deserving pity", "Admirable", "Enviable", "Comfortable"],
+  correct: "1",
+  image: ''
 },
+
 11: {
-text: "The living conditions in the camp were ____ and shocked international observers.",
-options: ["appalling", "adequate", "pleasant", "comfortable"],
-correct: "1",
-image: ''
+  text: "The accident scene was <b>appalling</b>.<br>Choose the correct meaning of <b>appalling</b>.",
+  options: ["Shocking and horrifying", "Pleasant", "Ordinary", "Predictable"],
+  correct: "1",
+  image: ''
 },
+
 12: {
-text: "After days without food or sleep, the soldiers appeared tired and ____.",
-options: ["wretched", "energetic", "content", "jovial"],
-correct: "1",
-image: ''
+  text: "They lived in <b>wretched</b> conditions.<br>Choose the correct meaning of <b>wretched</b>.",
+  options: ["Very poor or miserable", "Luxurious", "Temporary", "Stable"],
+  correct: "1",
+  image: ''
 },
+
 13: {
-text: "His open act of ____ against the king inspired both fear and admiration.",
-options: ["defiance", "loyalty", "submission", "obedience"],
-correct: "1",
-image: ''
+  text: "He showed open <b>defiance</b> of the rules.<br>Choose the correct meaning of <b>defiance</b>.",
+  options: ["Open resistance", "Obedience", "Confusion", "Submission"],
+  correct: "1",
+  image: ''
 },
+
 14: {
-text: "The protesters refused to ____ the unjust laws imposed by the regime.",
-options: ["defy", "obey", "follow", "respect"],
-correct: "1",
-image: ''
+  text: "She chose to <b>defy</b> the unjust order.<br>Choose the correct meaning of <b>defy</b>.",
+  options: ["Resist openly", "Follow strictly", "Ignore silently", "Approve"],
+  correct: "1",
+  image: ''
 },
+
 15: {
-text: "The teacher stopped to ____ with the principal about the new policy.",
-options: ["remonstrate", "agree", "celebrate", "approve"],
-correct: "1",
-image: ''
+  text: "Citizens <b>remonstrated</b> against the policy.<br>Choose the correct meaning of <b>remonstrate</b>.",
+  options: ["Protest strongly", "Accept willingly", "Negotiate quietly", "Support actively"],
+  correct: "1",
+  image: ''
 },
+
 16: {
-text: "Out of ____ for his mentor, the young scholar always listened respectfully.",
-options: ["deference", "anger", "disgust", "defiance"],
-correct: "1",
-image: ''
+  text: "He bowed in <b>deference</b> to his seniors.<br>Choose the correct meaning of <b>deference</b>.",
+  options: ["Respectful submission", "Arrogant behavior", "Indifference", "Defiance"],
+  correct: "1",
+  image: ''
 },
+
 17: {
-text: "She gave an ____ welcome speech that overflowed with emotion and enthusiasm.",
-options: ["effusive", "cold", "reserved", "apathetic"],
-correct: "1",
-image: ''
+  text: "She gave an <b>effusive</b> welcome to the guests.<br>Choose the correct meaning of <b>effusive</b>.",
+  options: ["Excessively expressive", "Cold and distant", "Restrained", "Formal"],
+  correct: "1",
+  image: ''
 },
+
 18: {
-text: "Being a ____ person, he loved attending parties and meeting new people.",
-options: ["gregarious", "introverted", "shy", "withdrawn"],
-correct: "1",
-image: ''
+  text: "He is a <b>gregarious</b> person by nature.<br>Choose the correct meaning of <b>gregarious</b>.",
+  options: ["Sociable", "Solitary", "Hostile", "Withdrawn"],
+  correct: "1",
+  image: ''
 },
+
 19: {
-text: "Laughter is often ____; once one person starts, everyone joins in.",
-options: ["contagious", "awkward", "quiet", "rare"],
-correct: "1",
-image: ''
+  text: "The disease is highly <b>contagious</b>.<br>Choose the correct meaning of <b>contagious</b>.",
+  options: ["Easily spread", "Rare", "Non-infectious", "Controlled"],
+  correct: "1",
+  image: ''
 },
+
 20: {
-text: "Critics ____ the writer for his outstanding contribution to literature.",
-options: ["laud", "ignore", "demean", "blame"],
-correct: "1",
-image: ''
+  text: "The teacher chose to <b>laud</b> the best performer.<br>Choose the correct meaning of <b>laud</b>.",
+  options: ["Praise", "Criticize", "Ignore", "Punish"],
+  correct: "1",
+  image: ''
 },
+
 21: {
-text: "The coach would gently ____ players when they made minor mistakes during practice.",
-options: ["chide", "praise", "applaud", "encourage"],
-correct: "1",
-image: ''
+  text: "The coach had to <b>chide</b> the players.<br>Choose the correct meaning of <b>chide</b>.",
+  options: ["Scold mildly", "Reward", "Ignore", "Encourage"],
+  correct: "1",
+  image: ''
 },
+
 22: {
-text: "The diplomat tried to ____ the angry crowd with calm and reason.",
-options: ["placate", "agitate", "enrage", "offend"],
-correct: "1",
-image: ''
+  text: "The manager tried to <b>placate</b> the angry staff.<br>Choose the correct meaning of <b>placate</b>.",
+  options: ["Calm or appease", "Provoke", "Ignore", "Dismiss"],
+  correct: "1",
+  image: ''
 },
+
 23: {
-text: "The loud crash from next door was enough to ____ everyone in the house.",
-options: ["startle", "calm", "assure", "comfort"],
-correct: "1",
-image: ''
+  text: "The loud noise <b>startled</b> the child.<br>Choose the correct meaning of <b>startle</b>.",
+  options: ["Shock suddenly", "Comfort", "Entertain", "Soothe"],
+  correct: "1",
+  image: ''
 },
+
 24: {
-text: "Critics began to ____ the minister for his mishandling of public funds.",
-options: ["excoriate", "praise", "commend", "hail"],
-correct: "1",
-image: ''
+  text: "The critic <b>excoriate</b>d the poor performance.<br>Choose the correct meaning of <b>excoriate</b>.",
+  options: ["Criticize severely", "Praise highly", "Ignore", "Explain gently"],
+  correct: "1",
+  image: ''
 },
+
 25: {
-text: "Her ____ figure made her look elegant in the evening gown.",
-options: ["slender", "plump", "stout", "bulky"],
-correct: "1",
-image: ''
+  text: "She has a <b>slender</b> build.<br>Choose the correct meaning of <b>slender</b>.",
+  options: ["Thin and graceful", "Strong and bulky", "Short and heavy", "Weak and unhealthy"],
+  correct: "1",
+  image: ''
 },
+
 26: {
-text: "Despite his age, the farmer remained strong and ____ in his work.",
-options: ["sturdy", "frail", "delicate", "feeble"],
-correct: "1",
-image: ''
+  text: "The bridge is strong and <b>sturdy</b> enough to carry heavy vehicles.<br>Choose the correct meaning of <b>sturdy</b>.",
+  options: ["Strongly built", "Weak and fragile", "Thin and delicate", "Temporary"],
+  correct: "1",
+  image: ''
 },
+
 27: {
-text: "Prolonged ____ can lead to severe health damage due to lack of nutrition.",
-options: ["anorexia", "fitness", "obesity", "dieting"],
-correct: "1",
-image: ''
+  text: "She was diagnosed with <b>anorexia</b> at a young age.<br>Choose the correct meaning of <b>anorexia</b>.",
+  options: ["Eating disorder causing extreme weight loss", "Digestive infection", "Temporary loss of appetite", "Food allergy"],
+  correct: "1",
+  image: ''
 },
+
 28: {
-text: "The teacher had to ____ the students for cheating during the exam.",
-options: ["chastise", "reward", "thank", "ignore"],
-correct: "1",
-image: ''
+  text: "The teacher decided to <b>chastise</b> the student for misconduct.<br>Choose the correct meaning of <b>chastise</b>.",
+  options: ["Rebuke or punish", "Reward generously", "Ignore completely", "Advise politely"],
+  correct: "1",
+  image: ''
 },
+
 29: {
-text: "The monks chose to live in a remote ____ away from worldly pleasures.",
-options: ["cloister", "palace", "bazaar", "stadium"],
-correct: "1",
-image: ''
+  text: "The monk lived in a quiet <b>cloister</b>.<br>Choose the correct meaning of <b>cloister</b>.",
+  options: ["Secluded religious place", "Public market", "Military camp", "Royal court"],
+  correct: "1",
+  image: ''
 },
+
 30: {
-text: "Earthly or ____ matters should not distract one from spiritual goals.",
-options: ["temporal", "sacred", "divine", "eternal"],
-correct: "1",
-image: ''
+  text: "He faced <b>temporal</b> difficulties, not permanent ones.<br>Choose the correct meaning of <b>temporal</b>.",
+  options: ["Related to time", "Spiritual", "Eternal", "Imaginary"],
+  correct: "1",
+  image: ''
 },
+
 31: {
-text: "After long ____ and discussion, the committee reached a fair decision.",
-options: ["deliberation", "confusion", "argument", "haste"],
-correct: "1",
-image: ''
+  text: "After careful <b>deliberation</b>, the committee announced its decision.<br>Choose the correct meaning of <b>deliberation</b>.",
+  options: ["Careful consideration", "Sudden action", "Carelessness", "Confusion"],
+  correct: "1",
+  image: ''
 },
+
 32: {
-text: "The hospital received an urgent ____ of medicine from the government.",
-options: ["infusion", "shortage", "withdrawal", "ban"],
-correct: "1",
-image: ''
+  text: "The doctor gave an <b>infusion</b> to the patient.<br>Choose the correct meaning of <b>infusion</b>.",
+  options: ["Introduction of fluid into the body", "Removal of blood", "Surgical operation", "Physical exercise"],
+  correct: "1",
+  image: ''
 },
+
 33: {
-text: "His ____ act of helping an old enemy won everyone’s respect.",
-options: ["chivalrous", "selfish", "cowardly", "rude"],
-correct: "1",
-image: ''
+  text: "His <b>chivalrous</b> behavior impressed everyone.<br>Choose the correct meaning of <b>chivalrous</b>.",
+  options: ["Courteous and brave", "Rude and careless", "Selfish", "Cowardly"],
+  correct: "1",
+  image: ''
 },
+
 34: {
-text: "The army was forced to ____ after suffering heavy losses on the battlefield.",
-options: ["retreat", "advance", "charge", "attack"],
-correct: "1",
-image: ''
+  text: "The army ordered a strategic <b>retreat</b>.<br>Choose the correct meaning of <b>retreat</b>.",
+  options: ["Withdrawal", "Attack", "Advance", "Capture"],
+  correct: "1",
+  image: ''
 },
+
 35: {
-text: "He studied ____ to predict election results through data and trends.",
-options: ["psephology", "anthropology", "biology", "geology"],
-correct: "1",
-image: ''
+  text: "<b>Psephology</b> is often used during elections.<br>Choose the correct meaning of <b>psephology</b>.",
+  options: ["Study of voting and elections", "Study of psychology", "Study of rocks", "Study of population"],
+  correct: "1",
+  image: ''
 },
+
 36: {
-text: "She practiced beautiful ____ and could make each letter look like art.",
-options: ["calligraphy", "stenography", "cartography", "typography"],
-correct: "1",
-image: ''
+  text: "Her beautiful <b>calligraphy</b> won first prize.<br>Choose the correct meaning of <b>calligraphy</b>.",
+  options: ["Art of beautiful handwriting", "Stone engraving", "Map drawing", "Painting on canvas"],
+  correct: "1",
+  image: ''
 },
+
 37: {
-text: "The artist used ____ to make high-quality prints from engraved stones.",
-options: ["lithography", "photography", "sculpture", "mosaic"],
-correct: "1",
-image: ''
+  text: "<b>Lithography</b> revolutionized printing technology.<br>Choose the correct meaning of <b>lithography</b>.",
+  options: ["Printing from stone or metal plates", "Handwritten printing", "Digital printing", "Wood carving"],
+  correct: "1",
+  image: ''
 },
+
 38: {
-text: "Experts in ____ believe a person’s handwriting reveals their personality traits.",
-options: ["graphology", "neurology", "psychology", "sociology"],
-correct: "1",
-image: ''
+  text: "<b>Graphology</b> is sometimes used to analyze personality.<br>Choose the correct meaning of <b>graphology</b>.",
+  options: ["Study of handwriting", "Study of graphs", "Study of geography", "Study of grammar"],
+  correct: "1",
+  image: ''
 },
+
 39: {
-text: "The hikers drank from the ____ stream that sparkled under the sunlight.",
-options: ["pristine", "polluted", "muddy", "stagnant"],
-correct: "1",
-image: ''
+  text: "The forest remained in its <b>pristine</b> condition.<br>Choose the correct meaning of <b>pristine</b>.",
+  options: ["Pure and unspoiled", "Polluted", "Damaged", "Crowded"],
+  correct: "1",
+  image: ''
 },
+
 40: {
-text: "Running away in fear, the ____ soldier abandoned his duty during battle.",
-options: ["craven", "brave", "valiant", "heroic"],
-correct: "1",
-image: ''
+  text: "His <b>craven</b> act shocked his comrades.<br>Choose the correct meaning of <b>craven</b>.",
+  options: ["Cowardly", "Brave", "Bold", "Fearless"],
+  correct: "1",
+  image: ''
 },
+
 41: {
-text: "The professor’s ____ lectures attracted scholars from around the country.",
-options: ["erudite", "casual", "vague", "uninformed"],
-correct: "1",
-image: ''
+  text: "She is an <b>erudite</b> scholar of history.<br>Choose the correct meaning of <b>erudite</b>.",
+  options: ["Highly learned", "Illiterate", "Inexperienced", "Untrained"],
+  correct: "1",
+  image: ''
 },
+
 42: {
-text: "In a quick ____ to her opponent’s insult, she delivered a sharp remark.",
-options: ["riposte", "compliment", "pause", "gasp"],
-correct: "1",
-image: ''
+  text: "He gave a sharp <b>riposte</b> to the insult.<br>Choose the correct meaning of <b>riposte</b>.",
+  options: ["Quick reply", "Silent reaction", "Long speech", "Apology"],
+  correct: "1",
+  image: ''
 },
+
 43: {
-text: "The contractor’s ____ work led to numerous safety hazards at the site.",
-options: ["slipshod", "meticulous", "perfect", "careful"],
-correct: "1",
-image: ''
+  text: "The report was prepared in a <b>slipshod</b> manner.<br>Choose the correct meaning of <b>slipshod</b>.",
+  options: ["Careless and untidy", "Thorough and neat", "Detailed", "Systematic"],
+  correct: "1",
+  image: ''
 },
+
 44: {
-text: "He loved to ____ his friends with stories and delicious food.",
-options: ["regale", "ignore", "bore", "offend"],
-correct: "1",
-image: ''
+  text: "The host decided to <b>regale</b> the guests with stories.<br>Choose the correct meaning of <b>regale</b>.",
+  options: ["Entertain lavishly", "Ignore completely", "Scold harshly", "Lecture seriously"],
+  correct: "1",
+  image: ''
 },
+
 45: {
-text: "The ____ mushroom was known for its unusual bright red color.",
-options: ["mutinus", "amanita", "button", "oyster"],
-correct: "1",
-image: ''
+  text: "<b>Mutinus</b> created chaos in the ranks.<br>Choose the correct meaning of <b>mutinus</b>.",
+  options: ["Rebellion", "Peace treaty", "Agreement", "Celebration"],
+  correct: "1",
+  image: ''
 },
+
 46: {
-text: "The airplane was caught in a powerful ____ of wind and turbulence.",
-options: ["vortex", "stillness", "mist", "cloud"],
-correct: "1",
-image: ''
+  text: "Water formed a violent <b>vortex</b> near the drain.<br>Choose the correct meaning of <b>vortex</b>.",
+  options: ["Whirling mass", "Straight flow", "Still water", "Gentle wave"],
+  correct: "1",
+  image: ''
 },
+
 47: {
-text: "Leaves began to ____ as the autumn breeze danced through the garden.",
-options: ["swirl", "settle", "sink", "drop"],
-correct: "1",
-image: ''
+  text: "Leaves began to <b>swirl</b> in the wind.<br>Choose the correct meaning of <b>swirl</b>.",
+  options: ["Move in a twisting motion", "Fall straight down", "Remain still", "Scatter randomly"],
+  correct: "1",
+  image: ''
 },
+
 48: {
-text: "The ship was trapped in a violent ____ that tore it apart.",
-options: ["maelstrom", "lagoon", "bay", "oasis"],
-correct: "1",
-image: ''
+  text: "The ship was caught in a <b>maelstrom</b>.<br>Choose the correct meaning of <b>maelstrom</b>.",
+  options: ["Powerful whirlpool", "Calm sea", "Light breeze", "Small wave"],
+  correct: "1",
+  image: ''
 },
+
 49: {
-text: "The seagulls flew in a great circular ____ above the sea cliff.",
-options: ["gyre", "flock", "chain", "string"],
-correct: "1",
-image: ''
+  text: "The dancers moved in a perfect <b>gyre</b>.<br>Choose the correct meaning of <b>gyre</b>.",
+  options: ["Circular motion", "Straight line", "Sudden stop", "Random jump"],
+  correct: "1",
+  image: ''
 },
+
 50: {
-text: "The small state became the ____ for national reform movements that followed.",
-options: ["bellwether", "follower", "spectator", "bystander"],
-correct: "1",
-image: ''
+  text: "The town is considered a political <b>bellwether</b>.<br>Choose the correct meaning of <b>bellwether</b>.",
+  options: ["Indicator of future trends", "Follower", "Outdated symbol", "Minor event"],
+  correct: "1",
+  image: ''
 },
+
+ 
 }
 
 // placeholder
 const explanations = {
 
-
-
 1: {
-text: "<b>Answer:</b> probity. <br><b>Definition:</b> The quality of having strong moral principles; honesty and integrity. <br><b>Synonyms:</b> integrity, honesty, uprightness, rectitude, virtue. <br><b>Antonyms:</b> dishonesty, corruption, deceit, fraud, immorality.",
-image: ""
+  text: "<b><u>ईमानदारी</u></b><br>Probity means strict honesty and moral integrity in conduct, especially in public life.<br><i>Rhyming trick:</i> pro बनी duty, honesty की <b>probity</b>",
+  image: ""
 },
+
 2: {
-text: "<b>Answer:</b> bumptious. <br><b>Definition:</b> Self-assertive in a rude or overbearing way. <br><b>Synonyms:</b> arrogant, conceited, cocky, pushy, brash. <br><b>Antonyms:</b> humble, modest, meek, unassuming, reserved.",
-image: ""
+  text: "<b><u>घमंडी और बदतमीज़</u></b><br>Bumptious describes someone who is offensively self-assertive or arrogant.<br><i>Rhyming trick:</i> bump में attitude – <b>bumptious</b>",
+  image: ""
 },
+
 3: {
-text: "<b>Answer:</b> chesty. <br><b>Definition:</b> Overly proud or boastful. <br><b>Synonyms:</b> boastful, arrogant, conceited, cocky, self-important. <br><b>Antonyms:</b> humble, modest, unassuming, meek, unpretentious.",
-image: ""
+  text: "<b><u>अहंकारी</u></b><br>Chesty refers to an arrogant or boastful manner after success.<br><i>Rhyming trick:</i> chest फुलाया, ego बढ़ाया – <b>chesty</b>",
+  image: ""
 },
+
 4: {
-text: "<b>Answer:</b> fustian. <br><b>Definition:</b> Pretentious or pompous speech or writing. <br><b>Synonyms:</b> bombast, grandiloquence, verbosity, pomposity, rhetoric. <br><b>Antonyms:</b> simplicity, clarity, plainness, brevity, modesty.",
-image: ""
+  text: "<b><u>भड़कीली भाषा</u></b><br>Fustian means pompous speech that lacks real meaning or substance.<br><i>Rhyming trick:</i> fuss किया, meaning गया – <b>fustian</b>",
+  image: ""
 },
+
 5: {
-text: "<b>Answer:</b> imperious. <br><b>Definition:</b> Arrogant and domineering. <br><b>Synonyms:</b> domineering, authoritative, commanding, haughty, overbearing. <br><b>Antonyms:</b> humble, submissive, meek, gentle, modest.",
-image: ""
+  text: "<b><u>अधिकार जताने वाला</u></b><br>Imperious describes a commanding and domineering attitude.<br><i>Rhyming trick:</i> emperor tone – <b>imperious</b>",
+  image: ""
 },
+
 6: {
-text: "<b>Answer:</b> pathetic. <br><b>Definition:</b> Arousing pity, especially through vulnerability or sadness. <br><b>Synonyms:</b> pitiful, sorrowful, woeful, lamentable, heartbreaking. <br><b>Antonyms:</b> joyful, cheerful, happy, fortunate, uplifting.",
-image: ""
+  text: "<b><u>दयनीय</u></b><br>Pathetic refers to something that arouses pity or sadness.<br><i>Rhyming trick:</i> pity आया, hearthetic – <b>pathetic</b>",
+  image: ""
 },
+
 7: {
-text: "<b>Answer:</b> snobbish. <br><b>Definition:</b> Having or showing an exaggerated sense of one's own importance and looking down on others. <br><b>Synonyms:</b> arrogant, conceited, haughty, elitist, pretentious. <br><b>Antonyms:</b> humble, modest, egalitarian, unpretentious, friendly.",
-image: ""
+  text: "<b><u>अभिमानी</u></b><br>Snobbish means believing oneself superior to others.<br><i>Rhyming trick:</i> snob बना, ego चढ़ा – <b>snobbish</b>",
+  image: ""
 },
+
 8: {
-text: "<b>Answer:</b> miserable. <br><b>Definition:</b> Extremely unhappy or uncomfortable. <br><b>Synonyms:</b> wretched, pitiful, sorrowful, dejected, despondent. <br><b>Antonyms:</b> happy, joyful, content, cheerful, fortunate.",
-image: ""
+  text: "<b><u>दुखी</u></b><br>Miserable means extremely unhappy or uncomfortable.<br><i>Rhyming trick:</i> misery वाला life – <b>miserable</b>",
+  image: ""
 },
+
 9: {
-text: "<b>Answer:</b> abject. <br><b>Definition:</b> Extremely bad, miserable, or degrading. <br><b>Synonyms:</b> wretched, pitiful, deplorable, abominable, despicable. <br><b>Antonyms:</b> excellent, admirable, noble, fortunate, uplifting.",
-image: ""
+  text: "<b><u>अत्यंत दयनीय</u></b><br>Abject refers to a condition of extreme degradation or hopelessness.<br><i>Rhyming trick:</i> object नहीं, हालत <b>abject</b>",
+  image: ""
 },
+
 10: {
-text: "<b>Answer:</b> pitiful. <br><b>Definition:</b> Deserving pity, especially due to weakness or suffering. <br><b>Synonyms:</b> pathetic, sorrowful, woeful, lamentable, heartbreaking. <br><b>Antonyms:</b> joyful, fortunate, happy, cheerful, uplifting.",
-image: ""
+  text: "<b><u>तरस खाने योग्य</u></b><br>Pitiful describes something that deserves pity.<br><i>Rhyming trick:</i> pity full – <b>pitiful</b>",
+  image: ""
 },
+
 11: {
-text: "<b>Answer:</b> appalling. <br><b>Definition:</b> Shockingly bad or dreadful. <br><b>Synonyms:</b> terrible, dreadful, horrific, shocking, awful. <br><b>Antonyms:</b> wonderful, excellent, pleasant, delightful, admirable.",
-image: ""
+  text: "<b><u>भयानक</u></b><br>Appalling means causing shock or horror.<br><i>Rhyming trick:</i> डर से calling – <b>appalling</b>",
+  image: ""
 },
+
 12: {
-text: "<b>Answer:</b> wretched. <br><b>Definition:</b> Extremely unhappy or unfortunate. <br><b>Synonyms:</b> miserable, pitiful, deplorable, abject, woeful. <br><b>Antonyms:</b> happy, fortunate, joyful, content, cheerful.",
-image: ""
+  text: "<b><u>बेहद खराब</u></b><br>Wretched refers to very poor, unhappy, or unpleasant conditions.<br><i>Rhyming trick:</i> rough life stretched – <b>wretched</b>",
+  image: ""
 },
+
 13: {
-text: "<b>Answer:</b> defiance. <br><b>Definition:</b> Open resistance or bold disobedience. <br><b>Synonyms:</b> resistance, rebellion, opposition, disobedience, revolt. <br><b>Antonyms:</b> obedience, submission, compliance, surrender, acquiescence.",
-image: ""
+  text: "<b><u>अवज्ञा</u></b><br>Defiance means open resistance to authority or rules.<br><i>Rhyming trick:</i> define नहीं, oppose – <b>defiance</b>",
+  image: ""
 },
+
 14: {
-text: "<b>Answer:</b> defy. <br><b>Definition:</b> To openly resist or refuse to obey. <br><b>Synonyms:</b> resist, oppose, challenge, confront, rebel. <br><b>Antonyms:</b> obey, submit, comply, surrender, yield.",
-image: ""
+  text: "<b><u>खुला विरोध करना</u></b><br>Defy means to openly resist or challenge authority.<br><i>Rhyming trick:</i> deny किया rule को – <b>defy</b>",
+  image: ""
 },
+
 15: {
-text: "<b>Answer:</b> remonstrate. <br><b>Definition:</b> To protest or argue against something. <br><b>Synonyms:</b> protest, object, argue, complain, dispute. <br><b>Antonyms:</b> agree, accept, approve, consent, comply.",
-image: ""
+  text: "<b><u>जोरदार विरोध करना</u></b><br>Remonstrate means to protest strongly against something.<br><i>Rhyming trick:</i> monster जैसे shout – <b>remonstrate</b>",
+  image: ""
 },
+
 16: {
-text: "<b>Answer:</b> deference. <br><b>Definition:</b> Respectful submission or yielding to another's judgment. <br><b>Synonyms:</b> respect, reverence, regard, homage, submission. <br><b>Antonyms:</b> disrespect, contempt, defiance, rebellion, arrogance.",
-image: ""
+  text: "<b><u>आदरपूर्वक झुकना</u></b><br>Deference means showing respectful submission to others.<br><i>Rhyming trick:</i> difference नहीं, respect – <b>deference</b>",
+  image: ""
 },
+
 17: {
-text: "<b>Answer:</b> effusive. <br><b>Definition:</b> Expressing feelings of gratitude, pleasure, or approval in an unrestrained or heartfelt way. <br><b>Synonyms:</b> enthusiastic, gushing, exuberant, lavish, unrestrained. <br><b>Antonyms:</b> reserved, restrained, cold, indifferent, apathetic.",
-image: ""
+  text: "<b><u>अत्यधिक भावुक</u></b><br>Effusive refers to excessive emotional expression.<br><i>Rhyming trick:</i> emotion का juice – <b>effusive</b>",
+  image: ""
 },
+
 18: {
-text: "<b>Answer:</b> gregarious. <br><b>Definition:</b> Fond of company; sociable. <br><b>Synonyms:</b> sociable, outgoing, friendly, convivial, extroverted. <br><b>Antonyms:</b> solitary, introverted, shy, reserved, reclusive.",
-image: ""
+  text: "<b><u>मिलनसार</u></b><br>Gregarious means enjoying the company of others.<br><i>Rhyming trick:</i> group में joyous – <b>gregarious</b>",
+  image: ""
 },
+
 19: {
-text: "<b>Answer:</b> contagious. <br><b>Definition:</b> Capable of being transmitted from one person to another. <br><b>Synonyms:</b> infectious, communicable, transmissible, spreading, epidemic. <br><b>Antonyms:</b> noninfectious, isolated, contained, harmless, benign.",
-image: ""
+  text: "<b><u>संक्रामक</u></b><br>Contagious means capable of spreading easily from one to another.<br><i>Rhyming trick:</i> contact से serious – <b>contagious</b>",
+  image: ""
 },
+
 20: {
-text: "<b>Answer:</b> laud. <br><b>Definition:</b> To praise highly. <br><b>Synonyms:</b> praise, commend, applaud, extol, celebrate. <br><b>Antonyms:</b> criticize, condemn, denounce, blame, disparage.",
-image: ""
+  text: "<b><u>प्रशंसा करना</u></b><br>Laud means to praise highly or commend.<br><i>Rhyming trick:</i> loud praise – <b>laud</b>",
+  image: ""
 },
+
 21: {
-text: "<b>Answer:</b> chide. <br><b>Definition:</b> To scold or rebuke gently. <br><b>Synonyms:</b> reprimand, scold, rebuke, admonish, reproach. <br><b>Antonyms:</b> praise, commend, applaud, encourage, approve.",
-image: ""
+  text: "<b><u>हल्का डांटना</u></b><br>Chide means to scold mildly or gently rebuke.<br><i>Rhyming trick:</i> child को guide – <b>chide</b>",
+  image: ""
 },
+
 22: {
-text: "<b>Answer:</b> placate. <br><b>Definition:</b> To make someone less angry or hostile. <br><b>Synonyms:</b> appease, pacify, soothe, mollify, conciliate. <br><b>Antonyms:</b> provoke, irritate, anger, aggravate, incite.",
-image: ""
+  text: "<b><u>शांत करना</u></b><br>Placate means to calm or appease someone who is angry.<br><i>Rhyming trick:</i> place पर peace – <b>placate</b>",
+  image: ""
 },
+
 23: {
-text: "<b>Answer:</b> startle. <br><b>Definition:</b> To cause someone to feel sudden shock or alarm. <br><b>Synonyms:</b> surprise, alarm, shock, frighten, jolt. <br><b>Antonyms:</b> calm, reassure, soothe, comfort, pacify.",
-image: ""
+  text: "<b><u>चौंका देना</u></b><br>Startle means to shock or surprise suddenly.<br><i>Rhyming trick:</i> start में shock – <b>startle</b>",
+  image: ""
 },
+
 24: {
-text: "<b>Answer:</b> excoriate. <br><b>Definition:</b> To criticize severely. <br><b>Synonyms:</b> condemn, denounce, censure, rebuke, lambaste. <br><b>Antonyms:</b> praise, commend, applaud, approve, laud.",
-image: ""
+  text: "<b><u>कड़ी आलोचना करना</u></b><br>Excoriate means to criticize very harshly.<br><i>Rhyming trick:</i> extra criticize – <b>excoriate</b>",
+  image: ""
 },
+
 25: {
-text: "<b>Answer:</b> slender. <br><b>Definition:</b> Thin or narrow, especially in a graceful way. <br><b>Synonyms:</b> slim, thin, lean, delicate, graceful. <br><b>Antonyms:</b> thick, stout, heavy, bulky, fat.",
-image: ""
+  text: "<b><u>पतला</u></b><br>Slender means thin and delicately built.<br><i>Rhyming trick:</i> slim figure tender – <b>slender</b>",
+  image: ""
 },
+
 26: {
-text: "<b>Answer:</b> sturdy. <br><b>Definition:</b> Strongly built; robust. <br><b>Synonyms:</b> strong, robust, tough, solid, durable. <br><b>Antonyms:</b> weak, frail, delicate, flimsy, fragile.",
-image: ""
+  text: "<b><u>मजबूत</u></b><br>Sturdy means strongly built and able to withstand pressure or wear.<br><i>Rhyming trick:</i> study नहीं, body <b>sturdy</b>",
+  image: ""
 },
+
 27: {
-text: "<b>Answer:</b> anorexia. <br><b>Definition:</b> A mental disorder characterized by an intense fear of gaining weight and severe restriction of food intake. <br><b>Synonyms:</b> eating disorder, starvation, malnutrition, self-starvation, weight loss. <br><b>Antonyms:</b> obesity, overeating, gluttony, indulgence, health.",
-image: ""
+  text: "<b><u>भोजन विकार</u></b><br>Anorexia is an eating disorder marked by extreme weight loss due to lack of eating.<br><i>Rhyming trick:</i> खाना छोड़िया, body zero – <b>anorexia</b>",
+  image: ""
 },
+
 28: {
-text: "<b>Answer:</b> chastise. <br><b>Definition:</b> To rebuke or punish severely. <br><b>Synonyms:</b> scold, reprimand, rebuke, discipline, punish. <br><b>Antonyms:</b> praise, reward, commend, forgive, excuse.",
-image: ""
+  text: "<b><u>दंड देना</u></b><br>Chastise means to rebuke or punish for wrongdoing.<br><i>Rhyming trick:</i> गलती size, teacher <b>chastise</b>",
+  image: ""
 },
+
 29: {
-text: "<b>Answer:</b> cloister. <br><b>Definition:</b> A secluded or sheltered place, especially for religious purposes. <br><b>Synonyms:</b> monastery, convent, retreat, sanctuary, hermitage. <br><b>Antonyms:</b> public place, city, town, open space, secular area.",
-image: ""
+  text: "<b><u>एकांत धार्मिक स्थान</u></b><br>Cloister refers to a secluded religious place or life away from society.<br><i>Rhyming trick:</i> noise छोड़, silent <b>cloister</b>",
+  image: ""
 },
+
 30: {
-text: "<b>Answer:</b> temporal. <br><b>Definition:</b> Relating to worldly or earthly matters, not spiritual or eternal. <br><b>Synonyms:</b> earthly, secular, worldly, material, mundane. <br><b>Antonyms:</b> spiritual, eternal, divine, sacred, heavenly.",
-image: ""
+  text: "<b><u>सांसारिक / समय संबंधी</u></b><br>Temporal relates to time or worldly matters, not spiritual ones.<br><i>Rhyming trick:</i> time पर oral – <b>temporal</b>",
+  image: ""
 },
+
 31: {
-text: "<b>Answer:</b> deliberation. <br><b>Definition:</b> Careful consideration or discussion. <br><b>Synonyms:</b> consideration, thought, reflection, discussion, consultation. <br><b>Antonyms:</b> haste, impulsiveness, rashness, recklessness, spontaneity.",
-image: ""
+  text: "<b><u>विचार-विमर्श</u></b><br>Deliberation means careful and thoughtful consideration before deciding.<br><i>Rhyming trick:</i> decision slow – <b>deliberation</b>",
+  image: ""
 },
+
 32: {
-text: "<b>Answer:</b> infusion. <br><b>Definition:</b> The introduction of a substance into something, especially a liquid into the bloodstream. <br><b>Synonyms:</b> injection, introduction, addition, pouring, pouring in. <br><b>Antonyms:</b> withdrawal, removal, extraction, subtraction, elimination.",
-image: ""
+  text: "<b><u>द्रव का प्रवाह</u></b><br>Infusion is the introduction of fluid into the body, especially medically.<br><i>Rhyming trick:</i> fluid का fusion – <b>infusion</b>",
+  image: ""
 },
+
 33: {
-text: "<b>Answer:</b> chivalrous. <br><b>Definition:</b> Courteous, gallant, and honorable. <br><b>Synonyms:</b> gallant, courteous, noble, honorable, gentlemanly. <br><b>Antonyms:</b> rude, discourteous, dishonorable, mean, uncivil.",
-image: ""
+  text: "<b><u>वीर और विनम्र</u></b><br>Chivalrous describes courteous and brave behavior, especially toward others.<br><i>Rhyming trick:</i> knight का valour – <b>chivalrous</b>",
+  image: ""
 },
+
 34: {
-text: "<b>Answer:</b> retreat. <br><b>Definition:</b> To withdraw or move back, especially from danger or difficulty. <br><b>Synonyms:</b> withdraw, recede, back away, pull back, fall back. <br><b>Antonyms:</b> advance, approach, charge, attack, move forward.",
-image: ""
+  text: "<b><u>पीछे हटना</u></b><br>Retreat means withdrawing from a position or situation.<br><i>Rhyming trick:</i> defeat पर seat छोड़ – <b>retreat</b>",
+  image: ""
 },
+
 35: {
-text: "<b>Answer:</b> psephology. <br><b>Definition:</b> The study of elections and voting patterns. <br><b>Synonyms:</b> election science, voting analysis, political statistics, electoral research, poll analysis. <br><b>Antonyms:</b> apathy, ignorance, disinterest, non-participation, abstention.",
-image: ""
+  text: "<b><u>मतदान विज्ञान</u></b><br>Psephology is the study of voting behavior and elections.<br><i>Rhyming trick:</i> vote की technology – <b>psephology</b>",
+  image: ""
 },
+
 36: {
-text: "<b>Answer:</b> calligraphy. <br><b>Definition:</b> The art of beautiful handwriting. <br><b>Synonyms:</b> penmanship, script, handwriting, lettering, typography. <br><b>Antonyms:</b> scribble, scrawl, illegibility, messiness, incoherence.",
-image: ""
+  text: "<b><u>सुंदर लिखावट</u></b><br>Calligraphy is the art of decorative and elegant handwriting.<br><i>Rhyming trick:</i> कलम की photography – <b>calligraphy</b>",
+  image: ""
 },
+
 37: {
-text: "<b>Answer:</b> lithography. <br><b>Definition:</b> A method of printing using a flat stone or metal plate. <br><b>Synonyms:</b> printing, engraving, etching, plate printing, offset printing. <br><b>Antonyms:</b> handwriting, sketching, drawing, painting, digital art.",
-image: ""
+  text: "<b><u>पत्थर से छपाई</u></b><br>Lithography is a printing process using stone or metal plates.<br><i>Rhyming trick:</i> litho stone story – <b>lithography</b>",
+  image: ""
 },
+
 38: {
-text: "<b>Answer:</b> graphology. <br><b>Definition:</b> The study of handwriting to determine personality traits. <br><b>Synonyms:</b> handwriting analysis, penmanship study, script analysis, character analysis, personality assessment. <br><b>Antonyms:</b> typing, printing, digital communication, impersonal writing, standard script.",
-image: ""
+  text: "<b><u>हस्तलेखन विश्लेषण</u></b><br>Graphology is the study of handwriting to assess character traits.<br><i>Rhyming trick:</i> graph नहीं, hand story – <b>graphology</b>",
+  image: ""
 },
+
 39: {
-text: "<b>Answer:</b> pristine. <br><b>Definition:</b> In its original condition; unspoiled. <br><b>Synonyms:</b> pure, unspoiled, untouched, immaculate, spotless. <br><b>Antonyms:</b> polluted, dirty, spoiled, corrupted, contaminated.",
-image: ""
+  text: "<b><u>निर्मल</u></b><br>Pristine means remaining in original, pure, and unspoiled condition.<br><i>Rhyming trick:</i> fresh teen – <b>pristine</b>",
+  image: ""
 },
+
 40: {
-text: "<b>Answer:</b> craven. <br><b>Definition:</b> Cowardly or lacking courage. <br><b>Synonyms:</b> cowardly, timid, fearful, spineless, pusillanimous. <br><b>Antonyms:</b> brave, courageous, fearless, valiant, heroic.",
-image: ""
+  text: "<b><u>कायर</u></b><br>Craven refers to someone who is extremely cowardly.<br><i>Rhyming trick:</i> brave नहीं – <b>craven</b>",
+  image: ""
 },
+
 41: {
-text: "<b>Answer:</b> erudite. <br><b>Definition:</b> Having or showing great knowledge or learning. <br><b>Synonyms:</b> learned, scholarly, knowledgeable, intellectual, well-read. <br><b>Antonyms:</b> ignorant, uneducated, uninformed, illiterate, unlearned.",
-image: ""
+  text: "<b><u>विद्वान</u></b><br>Erudite means having deep and extensive knowledge.<br><i>Rhyming trick:</i> पढ़ाई का height – <b>erudite</b>",
+  image: ""
 },
+
 42: {
-text: "<b>Answer:</b> riposte. <br><b>Definition:</b> A quick, clever reply to an argument or accusation. <br><b>Synonyms:</b> retort, rejoinder, comeback, answer, response. <br><b>Antonyms:</b> silence, acceptance, agreement, submission, surrender.",
-image: ""
+  text: "<b><u>तुरंत जवाब</u></b><br>Riposte is a quick and witty reply, especially to an insult.<br><i>Rhyming trick:</i> reply fast – <b>riposte</b>",
+  image: ""
 },
+
 43: {
-text: "<b>Answer:</b> slipshod. <br><b>Definition:</b> Done carelessly or without attention to detail. <br><b>Synonyms:</b> careless, sloppy, negligent, haphazard, shoddy. <br><b>Antonyms:</b> careful, meticulous, thorough, precise, diligent.",
-image: ""
+  text: "<b><u>लापरवाह</u></b><br>Slipshod means careless and poorly done.<br><i>Rhyming trick:</i> slip किया job – <b>slipshod</b>",
+  image: ""
 },
+
 44: {
-text: "<b>Answer:</b> regale. <br><b>Definition:</b> To entertain or amuse with stories or food. <br><b>Synonyms:</b> entertain, amuse, delight, treat, feast. <br><b>Antonyms:</b> bore, annoy, irritate, disappoint, neglect.",
-image: ""
+  text: "<b><u>मनोरंजन करना</u></b><br>Regale means to entertain or delight someone with talk or food.<br><i>Rhyming trick:</i> royal tale – <b>regale</b>",
+  image: ""
 },
+
 45: {
-text: "<b>Answer:</b> mutinus. <br><b>Definition:</b> A type of fungus, often brightly colored. <br><b>Synonyms:</b> fungus, mushroom, toadstool, mycelium, spore. <br><b>Antonyms:</b> plant, animal, mineral, non-fungal, non-living.",
-image: ""
+  text: "<b><u>विद्रोह</u></b><br>Mutinus means rebellion or mutiny against authority.<br><i>Rhyming trick:</i> mutiny का cousin – <b>mutinus</b>",
+  image: ""
 },
+
 46: {
-text: "<b>Answer:</b> vortex. <br><b>Definition:</b> A whirling mass of fluid or air. <br><b>Synonyms:</b> whirlpool, whirlwind, eddy, maelstrom, gyre. <br><b>Antonyms:</b> stillness, calm, stagnation, peace, tranquility.",
-image: ""
+  text: "<b><u>भंवर</u></b><br>Vortex is a whirling mass of fluid or air.<br><i>Rhyming trick:</i> water का force – <b>vortex</b>",
+  image: ""
 },
+
 47: {
-text: "<b>Answer:</b> swirl. <br><b>Definition:</b> To move in a twisting or spiraling motion. <br><b>Synonyms:</b> whirl, twirl, spin, rotate, gyrate. <br><b>Antonyms:</b> settle, sink, stop, rest, remain still.",
-image: ""
+  text: "<b><u>घूमना</u></b><br>Swirl means to move in a twisting or circular motion.<br><i>Rhyming trick:</i> wind में curl – <b>swirl</b>",
+  image: ""
 },
+
 48: {
-text: "<b>Answer:</b> maelstrom. <br><b>Definition:</b> A powerful whirlpool or turbulent situation. <br><b>Synonyms:</b> vortex, whirlpool, tempest, storm, chaos. <br><b>Antonyms:</b> calm, peace, order, tranquility, stillness.",
-image: ""
+  text: "<b><u>महाभंवर</u></b><br>Maelstrom refers to a powerful and violent whirlpool.<br><i>Rhyming trick:</i> male strong storm – <b>maelstrom</b>",
+  image: ""
 },
+
 49: {
-text: "<b>Answer:</b> gyre. <br><b>Definition:</b> A circular or spiral movement, especially of water or air. <br><b>Synonyms:</b> vortex, whirlpool, eddy, swirl, spiral. <br><b>Antonyms:</b> straight line, stillness, calm, stagnation, peace.",
-image: ""
+  text: "<b><u>चक्राकार गति</u></b><br>Gyre means a circular or spiral movement.<br><i>Rhyming trick:</i> घूमे fire – <b>gyre</b>",
+  image: ""
 },
+
 50: {
-text: "<b>Answer:</b> bellwether. <b>Definition:</b> A person or thing that assumes a leadership role or takes initiative; an indicator of trends. <b>Synonyms:</b> leader, indicator, trendsetter, pioneer, forerunner. <b>Antonyms:</b> follower, laggard, imitator, subordinate, spectator.",
-image: ""
+  text: "<b><u>संकेतक</u></b><br>Bellwether means an indicator of future trends or changes.<br><i>Rhyming trick:</i> bell बजा, trend बताया – <b>bellwether</b>",
+  image: ""
 },
+
+
+ 
+
 };
