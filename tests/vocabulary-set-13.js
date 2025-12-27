@@ -1,514 +1,610 @@
 // placeholder
 const questions = {
+  1: {
+text: "The soldiers became <b>mutinous</b> after repeated denial of their demands.<br>Choose the correct meaning of <b>mutinous</b>.",
+options: ["Rebellious against authority", "Deeply loyal", "Highly disciplined", "Fearful and submissive"],
+correct: "1",
+image: ''
+},
 
-1: {
-text: "The sailors staged a ____ revolt against their harsh captain.",
-options: ["mutinous", "obedient", "calm", "faithful"],
-correct: "1",
-image: ''
-},
 2: {
-text: "She quickly ____ her laughter when the teacher entered the room.",
-options: ["stifled", "released", "shared", "echoed"],
+text: "His creativity was <b>stifled</b> by rigid rules and constant supervision.<br>Choose the correct meaning of <b>stifled</b>.",
+options: ["Suppressed or restrained", "Encouraged openly", "Expanded rapidly", "Expressed freely"],
 correct: "1",
 image: ''
 },
+
 3: {
-text: "An ____ dealer specialized in rare manuscripts and ancient books.",
-options: ["antiquarian", "modern", "futuristic", "common"],
+text: "The museum curator was an <b>antiquarian</b> with deep interest in ancient artifacts.<br>Choose the correct meaning of <b>antiquarian</b>.",
+options: ["Person who studies or collects antiques", "Modern art critic", "Book publisher", "Historical novelist"],
 correct: "1",
 image: ''
 },
+
 4: {
-text: "A ____ man is constantly worried about his health.",
-options: ["valetudinarian", "robust", "athletic", "energetic"],
+text: "The doctor described him as a <b>valetudinarian</b> who worried excessively about health.<br>Choose the correct meaning of <b>valetudinarian</b>.",
+options: ["Person overly concerned with health", "Physically strong person", "Medical professional", "Carefree individual"],
 correct: "1",
 image: ''
 },
+
 5: {
-text: "An ____ society believes in equality for all its citizens.",
-options: ["egalitarian", "aristocratic", "autocratic", "elitist"],
+text: "The leader promoted an <b>egalitarian</b> society with equal rights for all.<br>Choose the correct meaning of <b>egalitarian</b>.",
+options: ["Believing in equality", "Favoring hierarchy", "Supporting monarchy", "Encouraging privilege"],
 correct: "1",
 image: ''
 },
+
 6: {
-text: "The soldier was granted a three-month ____ to visit his family.",
-options: ["furlough", "penalty", "assignment", "summons"],
+text: "He was granted a short <b>furlough</b> from duty to visit his family.<br>Choose the correct meaning of <b>furlough</b>.",
+options: ["Temporary leave from work", "Permanent dismissal", "Extra workload", "Strict punishment"],
 correct: "1",
 image: ''
 },
+
 7: {
-text: "She felt ____ about moving abroad—excited yet nervous.",
-options: ["ambivalent", "certain", "confident", "decisive"],
+text: "She felt <b>ambivalent</b> about accepting the job offer abroad.<br>Choose the correct meaning of <b>ambivalent</b>.",
+options: ["Having mixed feelings", "Firmly decided", "Strongly opposed", "Completely indifferent"],
 correct: "1",
 image: ''
 },
+
 8: {
-text: "He decided to ____ the topic of promotion during lunch.",
-options: ["broach", "ignore", "avoid", "dismiss"],
+text: "The issue was <b>broached</b> carefully during the meeting.<br>Choose the correct meaning of <b>broach</b>.",
+options: ["To introduce a topic", "To close a discussion", "To finalize a deal", "To avoid speaking"],
 correct: "1",
 image: ''
 },
+
 9: {
-text: "Villagers feared the night raids of the ruthless ____.",
-options: ["marauder", "guardian", "defender", "savior"],
+text: "The village was attacked by a group of <b>marauders</b> at night.<br>Choose the correct meaning of <b>marauder</b>.",
+options: ["Raider or plunderer", "Peaceful traveler", "Local resident", "Government official"],
 correct: "1",
 image: ''
 },
+
 10: {
-text: "The narrator in the story is ____, knowing everyone’s thoughts.",
-options: ["omniscient", "ignorant", "limited", "biased"],
+text: "In mythology, gods are often depicted as <b>omniscient</b> beings.<br>Choose the correct meaning of <b>omniscient</b>.",
+options: ["All-knowing", "All-powerful", "All-present", "All-visible"],
 correct: "1",
 image: ''
 },
+
 11: {
-text: "Doctors tried to ____ the effects of the deadly virus.",
-options: ["attenuate", "increase", "spread", "encourage"],
+text: "The sound was <b>attenuated</b> by thick soundproof walls.<br>Choose the correct meaning of <b>attenuate</b>.",
+options: ["To reduce in force", "To intensify greatly", "To distort fully", "To repeat loudly"],
 correct: "1",
 image: ''
 },
+
 12: {
-text: "A thief managed to ____ the document from the safe.",
-options: ["purloin", "replace", "submit", "display"],
+text: "He was arrested for attempting to <b>purloin</b> confidential documents.<br>Choose the correct meaning of <b>purloin</b>.",
+options: ["To steal", "To protect", "To borrow legally", "To inspect closely"],
 correct: "1",
 image: ''
 },
+
 13: {
-text: "Employees were caught trying to ____ supplies from the office.",
-options: ["pilfer", "donate", "deliver", "store"],
+text: "The child tried to <b>pilfer</b> sweets from the shop.<br>Choose the correct meaning of <b>pilfer</b>.",
+options: ["To steal small items", "To buy secretly", "To exchange goods", "To waste carelessly"],
 correct: "1",
 image: ''
 },
+
 14: {
-text: "The company’s sudden collapse was a financial ____.",
-options: ["debacle", "success", "achievement", "miracle"],
+text: "The event turned into a complete <b>debacle</b> due to poor planning.<br>Choose the correct meaning of <b>debacle</b>.",
+options: ["Complete failure", "Minor success", "Unexpected gain", "Gradual improvement"],
 correct: "1",
 image: ''
 },
+
 15: {
-text: "He apologized for the ____ in his speech that offended some guests.",
-options: ["infelicity", "perfection", "virtue", "praise"],
+text: "His speech was marked by several <b>infelicities</b> of expression.<br>Choose the correct meaning of <b>infelicity</b>.",
+options: ["Inappropriate or awkward remark", "Fluent expression", "Poetic elegance", "Logical precision"],
 correct: "1",
 image: ''
 },
+
 16: {
-text: "The discovery of penicillin was a moment of pure ____.",
-options: ["serendipity", "planning", "negligence", "conflict"],
+text: "The meeting of old friends was a case of pure <b>serendipity</b>.<br>Choose the correct meaning of <b>serendipity</b>.",
+options: ["Pleasant accidental discovery", "Planned encounter", "Sudden disappointment", "Unlucky coincidence"],
 correct: "1",
 image: ''
 },
+
 17: {
-text: "They bowed deeply in ____ to the respected saint.",
-options: ["obeisance", "disrespect", "disregard", "mockery"],
+text: "He bowed in <b>obeisance</b> to the elder.<br>Choose the correct meaning of <b>obeisance</b>.",
+options: ["Gesture of respect", "Expression of anger", "Act of defiance", "Sign of indifference"],
 correct: "1",
 image: ''
 },
+
 18: {
-text: "It’s unfair to ____ someone based on false rumors.",
-options: ["denigrate", "praise", "admire", "applaud"],
+text: "The article sought to <b>denigrate</b> the reputation of the leader.<br>Choose the correct meaning of <b>denigrate</b>.",
+options: ["To defame or belittle", "To praise highly", "To describe neutrally", "To investigate fairly"],
 correct: "1",
 image: ''
 },
+
 19: {
-text: "Her success was the result of years of hard work and ____.",
-options: ["tenacity", "laziness", "hesitation", "indifference"],
+text: "Her <b>tenacity</b> helped her succeed despite obstacles.<br>Choose the correct meaning of <b>tenacity</b>.",
+options: ["Persistence and determination", "Sudden anger", "Careless attitude", "Physical strength"],
 correct: "1",
 image: ''
 },
+
 20: {
-text: "His ____ made him ignore urgent warnings of danger.",
-options: ["complacency", "awareness", "concern", "vigilance"],
+text: "The company's <b>complacency</b> led to its downfall.<br>Choose the correct meaning of <b>complacency</b>.",
+options: ["Self-satisfied lack of concern", "Active alertness", "Constructive criticism", "Urgent anxiety"],
 correct: "1",
 image: ''
 },
+
 21: {
-text: "After the scandal, public ____ with politics grew rapidly.",
-options: ["disillusionment", "admiration", "respect", "interest"],
+text: "He experienced deep <b>disillusionment</b> after the truth emerged.<br>Choose the correct meaning of <b>disillusionment</b>.",
+options: ["Realization after loss of false belief", "Renewed hope", "Sudden excitement", "Unjust criticism"],
 correct: "1",
 image: ''
 },
+
 22: {
-text: "Voter ____ often leads to poor election turnout.",
-options: ["apathy", "enthusiasm", "participation", "loyalty"],
+text: "Public <b>apathy</b> reduced voter turnout.<br>Choose the correct meaning of <b>apathy</b>.",
+options: ["Lack of interest or concern", "Strong enthusiasm", "Political activism", "Emotional distress"],
 correct: "1",
 image: ''
 },
+
 23: {
-text: "He faced the crisis with calm ____.",
-options: ["nonchalance", "panic", "anxiety", "fear"],
+text: "He answered the criticism with <b>nonchalance</b>.<br>Choose the correct meaning of <b>nonchalance</b>.",
+options: ["Casual lack of concern", "Visible anger", "Deep embarrassment", "Nervous excitement"],
 correct: "1",
 image: ''
 },
+
 24: {
-text: "The teacher should not have ____ the student’s rude behavior.",
-options: ["condoned", "punished", "criticized", "noticed"],
+text: "Such behavior was officially <b>condoned</b> by the authorities.<br>Choose the correct meaning of <b>condoned</b>.",
+options: ["Approved or overlooked", "Strictly punished", "Publicly condemned", "Legally challenged"],
 correct: "1",
 image: ''
 },
+
 25: {
-text: "Her natural ____ captivated everyone at the gathering.",
-options: ["pulchritude", "ugliness", "awkwardness", "harshness"],
+text: "Poets have often praised physical beauty as <b>pulchritude</b>.<br>Choose the correct meaning of <b>pulchritude</b>.",
+options: ["Physical beauty", "Moral virtue", "Mental strength", "Social status"],
 correct: "1",
 image: ''
 },
-26: {
-text: "His speech was full of pomp and ____.",
-options: ["grandiloquence", "simplicity", "clarity", "brevity"],
+
+
+  26: {
+text: "The politician’s speech was full of excessive <b>grandiloquence</b> but lacked substance.<br>Choose the correct meaning of <b>grandiloquence</b>.",
+options: ["Pompous or extravagant language", "Simple and clear speech", "Silent communication", "Emotional outburst"],
 correct: "1",
 image: ''
 },
+
 27: {
-text: "The rescue team acted with great ____ to save the trapped miners.",
-options: ["celerity", "delay", "slowness", "confusion"],
+text: "The emergency response team acted with remarkable <b>celerity</b>.<br>Choose the correct meaning of <b>celerity</b>.",
+options: ["Speed or swiftness", "Carelessness", "Delay", "Rigidity"],
 correct: "1",
 image: ''
 },
+
 28: {
-text: "Her ____ smile melted everyone’s heart.",
-options: ["winsome", "stern", "gloomy", "grim"],
+text: "Her <b>winsome</b> smile quickly won everyone’s trust.<br>Choose the correct meaning of <b>winsome</b>.",
+options: ["Charming and attractive", "Aggressive", "Arrogant", "Unfriendly"],
 correct: "1",
 image: ''
 },
+
 29: {
-text: "The movie’s ____ ending left the audience in tears.",
-options: ["lachrymose", "joyful", "comic", "cheerful"],
+text: "The film’s ending was overly <b>lachrymose</b>.<br>Choose the correct meaning of <b>lachrymose</b>.",
+options: ["Tearful or sorrowful", "Humorous", "Indifferent", "Violent"],
 correct: "1",
 image: ''
 },
+
 30: {
-text: "The air was ____ with the scent of blooming jasmine.",
-options: ["redolent", "empty", "odorless", "foul"],
+text: "The room was <b>redolent</b> of fresh flowers.<br>Choose the correct meaning of <b>redolent</b>.",
+options: ["Strongly scented", "Poorly lit", "Noisy", "Crowded"],
 correct: "1",
 image: ''
 },
+
 31: {
-text: "The room was illuminated by a ____ chandelier.",
-options: ["refulgent", "dim", "dusky", "shadowy"],
+text: "The sunrise was <b>refulgent</b> with golden light.<br>Choose the correct meaning of <b>refulgent</b>.",
+options: ["Radiant or shining brightly", "Dark and gloomy", "Ordinary", "Dull"],
 correct: "1",
 image: ''
 },
+
 32: {
-text: "His moral ____ led him to commit shameful crimes.",
-options: ["turpitude", "virtue", "honor", "integrity"],
+text: "The scandal revealed the moral <b>turpitude</b> of the official.<br>Choose the correct meaning of <b>turpitude</b>.",
+options: ["Moral corruption or depravity", "Honesty", "Inexperience", "Courage"],
 correct: "1",
 image: ''
 },
+
 33: {
-text: "The frontline soldiers bore the ____ of the enemy attack.",
-options: ["brunt", "praise", "reward", "comfort"],
+text: "She bore the <b>brunt</b> of the criticism alone.<br>Choose the correct meaning of <b>brunt</b>.",
+options: ["Main force or impact", "Minor effect", "Hidden cause", "Future consequence"],
 correct: "1",
 image: ''
 },
+
 34: {
-text: "He decided to ____ into the icy river without hesitation.",
-options: ["plunge", "withdraw", "escape", "retreat"],
+text: "Sales figures took a sudden <b>plunge</b> last quarter.<br>Choose the correct meaning of <b>plunge</b>.",
+options: ["Sharp fall", "Gradual rise", "Temporary pause", "Steady growth"],
 correct: "1",
 image: ''
 },
 
 35: {
-text: "A speech impediment can make communication difficult for some people.",
-options: ["impediment", "advantage", "strength", "support"],
-correct: "1",
-image: ''
-},
-36: {
-text: "Engineers try to ____ energy from natural resources efficiently.",
-options: ["harness", "waste", "ignore", "reject"],
-correct: "1",
-image: ''
-},
-37: {
-text: "Her ____ to certain foods caused unexpected allergic reactions.",
-options: ["idiosyncrasy", "likeness", "habit", "routine"],
-correct: "1",
-image: ''
-},
-38: {
-text: "The sports ____ was decorated with flags and banners for the event.",
-options: ["pavilion", "building", "stadium", "tower"],
-correct: "1",
-image: ''
-},
-39: {
-text: "The newer model will ____ the older version in functionality.",
-options: ["supersede", "follow", "assist", "ignore"],
-correct: "1",
-image: ''
-},
-40: {
-text: "Tourists enjoy visiting the ____ islands in the warm ocean.",
-options: ["Caribbean", "Siberian", "Mediterranean", "Arctic"],
-correct: "1",
-image: ''
-},
-41: {
-text: "The ____ gentleman charmed everyone with his elegance and wit.",
-options: ["debonair", "rude", "clumsy", "awkward"],
-correct: "1",
-image: ''
-},
-42: {
-text: "A ____ seeks pleasure as the highest good in life.",
-options: ["hedonist", "ascetic", "philosopher", "altruist"],
-correct: "1",
-image: ''
-},
-43: {
-text: "A ____ lives without moral restraint and pursues sensual pleasures.",
-options: ["libertine", "monk", "saint", "puritan"],
-correct: "1",
-image: ''
-},
-44: {
-text: "The ____ climate contributed to the health benefits of the area.",
-options: ["salubrious", "polluted", "damp", "toxic"],
-correct: "1",
-image: ''
-},
-45: {
-text: "They bought a small ____ to remember their trip abroad.",
-options: ["souvenir", "ticket", "passport", "map"],
-correct: "1",
-image: ''
-},
-46: {
-text: "He used a ____ to carry the injured arm comfortably.",
-options: ["sling", "belt", "strap", "cuff"],
-correct: "1",
-image: ''
-},
-47: {
-text: "The dessert looked ____ and was hard to resist tasting.",
-options: ["tempting", "disgusting", "bitter", "bland"],
-correct: "1",
-image: ''
-},
-48: {
-text: "The word 'apple' has three ____: a-p-p-le.",
-options: ["syllables", "letters", "phrases", "sounds"],
-correct: "1",
-image: ''
-},
-49: {
-text: "____ teaches that fate controls all events and outcomes.",
-options: ["Fatalism", "Optimism", "Pessimism", "Realism"],
-correct: "1",
-image: ''
-},
-50: {
-text: "____ is a political approach that seeks to represent common people's interests.",
-options: ["Populism", "Elitism", "Authoritarianism", "Socialism"],
+text: "Lack of funds became a serious <b>impediment</b> to the project.<br>Choose the correct meaning of <b>impediment</b>.",
+options: ["Obstacle or hindrance", "Support", "Advantage", "Incentive"],
 correct: "1",
 image: ''
 },
 
+36: {
+text: "The new policy aims to <b>harness</b> renewable energy efficiently.<br>Choose the correct meaning of <b>harness</b>.",
+options: ["Utilize effectively", "Destroy completely", "Ignore deliberately", "Store secretly"],
+correct: "1",
+image: ''
+},
+
+37: {
+text: "His habit of speaking loudly was an <b>idiosyncrasy</b>.<br>Choose the correct meaning of <b>idiosyncrasy</b>.",
+options: ["Peculiar personal trait", "Common behavior", "Cultural rule", "Social norm"],
+correct: "1",
+image: ''
+},
+
+38: {
+text: "The wedding guests gathered under a decorated <b>pavilion</b>.<br>Choose the correct meaning of <b>pavilion</b>.",
+options: ["Temporary open structure", "Permanent residence", "Underground shelter", "Watchtower"],
+correct: "1",
+image: ''
+},
+
+39: {
+text: "The new regulation will <b>supersede</b> the old one.<br>Choose the correct meaning of <b>supersede</b>.",
+options: ["Replace or take the place of", "Support strongly", "Delay implementation", "Partially modify"],
+correct: "1",
+image: ''
+},
+
+40: {
+text: "The cruise passed through the <b>Caribbean</b> Sea.<br>Choose the correct meaning of <b>Caribbean</b>.",
+options: ["Region of islands and sea in the Americas", "Desert region in Africa", "Mountain range in Europe", "River valley in Asia"],
+correct: "1",
+image: ''
+},
+
+41: {
+text: "He appeared <b>debonair</b> and confident at the reception.<br>Choose the correct meaning of <b>debonair</b>.",
+options: ["Suave and charming", "Shy and nervous", "Rude and harsh", "Careless"],
+correct: "1",
+image: ''
+},
+
+42: {
+text: "A <b>hedonist</b> seeks pleasure as the highest good.<br>Choose the correct meaning of <b>hedonist</b>.",
+options: ["Pleasure-seeker", "Spiritual ascetic", "Social reformer", "Political activist"],
+correct: "1",
+image: ''
+},
+
+43: {
+text: "The novel portrayed him as a reckless <b>libertine</b>.<br>Choose the correct meaning of <b>libertine</b>.",
+options: ["Morally unrestrained person", "Strict disciplinarian", "Religious devotee", "Law enforcer"],
+correct: "1",
+image: ''
+},
+
+44: {
+text: "Doctors recommended a <b>salubrious</b> climate for recovery.<br>Choose the correct meaning of <b>salubrious</b>.",
+options: ["Health-giving", "Dangerous", "Polluted", "Unstable"],
+correct: "1",
+image: ''
+},
+
+45: {
+text: "She kept the postcard as a <b>souvenir</b> of her trip.<br>Choose the correct meaning of <b>souvenir</b>.",
+options: ["Memento or keepsake", "Official document", "Travel expense", "Gift voucher"],
+correct: "1",
+image: ''
+},
+
+46: {
+text: "He used a rope to <b>sling</b> the bag over his shoulder.<br>Choose the correct meaning of <b>sling</b>.",
+options: ["Throw or hang loosely", "Cut sharply", "Fold carefully", "Hide securely"],
+correct: "1",
+image: ''
+},
+
+47: {
+text: "The offer was extremely <b>tempting</b>.<br>Choose the correct meaning of <b>tempting</b>.",
+options: ["Attractive or enticing", "Repulsive", "Uncertain", "Misleading"],
+correct: "1",
+image: ''
+},
+
+48: {
+text: "Each word consists of one or more <b>syllables</b>.<br>Choose the correct meaning of <b>syllable</b>.",
+options: ["Unit of pronunciation", "Written sentence", "Paragraph", "Letter group without sound"],
+correct: "1",
+image: ''
+},
+
+49: {
+text: "His belief in <b>fatalism</b> made him accept events passively.<br>Choose the correct meaning of <b>fatalism</b>.",
+options: ["Belief that events are predetermined", "Faith in hard work", "Optimistic outlook", "Scientific reasoning"],
+correct: "1",
+image: ''
+},
+
+50: {
+text: "The leader used <b>populism</b> to gain public support.<br>Choose the correct meaning of <b>populism</b>.",
+options: ["Appeal to ordinary people’s interests", "Rule by elites", "Strict authoritarianism", "Judicial governance"],
+correct: "1",
+image: ''
+}
+  
 }
 
 // placeholder
 const explanations = {
-1: {  
-text: "<b>Answer:</b> mutinous. <br><b>Definition:</b> Refusing to obey authority; rebellious. <br><b>Synonyms:</b> rebellious, insubordinate, defiant, disobedient, insurgent. <br><b>Antonyms:</b> obedient, loyal, compliant, submissive, faithful.",  
-image: ""  
-},  
-2: {  
-text: "<b>Answer:</b> stifled. <br><b>Definition:</b> To suppress or restrain an emotion or reaction. <br><b>Synonyms:</b> suppress, smother, restrain, silence, muffle. <br><b>Antonyms:</b> express, release, reveal, liberate, ventilate.",  
-image: ""  
-},  
-3: {  
-text: "<b>Answer:</b> antiquarian. <br><b>Definition:</b> Relating to the study or collection of antiques or rare books. <br><b>Synonyms:</b> collector, historian, archivist, curator, connoisseur. <br><b>Antonyms:</b> modernist, futurist, innovator, reformer, contemporary.",  
-image: ""  
-},  
-4: {  
-text: "<b>Answer:</b> valetudinarian. <br><b>Definition:</b> A person unduly anxious about their health. <br><b>Synonyms:</b> hypochondriac, invalid, weakling, patient, convalescent. <br><b>Antonyms:</b> healthy, vigorous, robust, hale, strong.",  
-image: ""  
-},  
-5: {  
-text: "<b>Answer:</b> egalitarian. <br><b>Definition:</b> Believing in or based on equality for all people. <br><b>Synonyms:</b> democratic, equal, fair, impartial, nonpartisan. <br><b>Antonyms:</b> elitist, unequal, biased, discriminatory, hierarchical.",  
-image: ""  
-},  
-6: {  
-text: "<b>Answer:</b> furlough. <br><b>Definition:</b> A leave of absence, especially granted to a soldier or employee. <br><b>Synonyms:</b> leave, break, recess, holiday, rest. <br><b>Antonyms:</b> duty, service, work, employment, labor.",  
-image: ""  
-},  
-7: {  
-text: "<b>Answer:</b> ambivalent. <br><b>Definition:</b> Having mixed feelings or contradictory ideas about something. <br><b>Synonyms:</b> uncertain, conflicted, hesitant, indecisive, equivocal. <br><b>Antonyms:</b> confident, sure, decisive, settled, clear.",  
-image: ""  
-},  
-8: {  
-text: "<b>Answer:</b> broach. <br><b>Definition:</b> To bring up a subject for discussion. <br><b>Synonyms:</b> introduce, propose, raise, mention, suggest. <br><b>Antonyms:</b> suppress, withhold, silence, conceal, ignore.",  
-image: ""  
-},  
-9: {  
-text: "<b>Answer:</b> marauder. <br><b>Definition:</b> A person who roams in search of things to steal or people to attack. <br><b>Synonyms:</b> pirate, raider, plunderer, bandit, robber. <br><b>Antonyms:</b> protector, guardian, defender, benefactor, savior.",  
-image: ""  
-},  
-10: {  
-text: "<b>Answer:</b> omniscient. <br><b>Definition:</b> Having complete or unlimited knowledge. <br><b>Synonyms:</b> all-knowing, wise, knowledgeable, omnipotent, insightful. <br><b>Antonyms:</b> ignorant, unaware, uninformed, unknowing, obtuse.",  
-image: ""  
-},  
-11: {  
-text: "<b>Answer:</b> attenuate. <br><b>Definition:</b> To reduce the force, effect, or value of something. <br><b>Synonyms:</b> weaken, diminish, lessen, dilute, mitigate. <br><b>Antonyms:</b> strengthen, intensify, increase, amplify, enhance.",  
-image: ""  
-},  
-12: {  
-text: "<b>Answer:</b> purloin. <br><b>Definition:</b> To steal something, often in a sly or secretive way. <br><b>Synonyms:</b> steal, pilfer, filch, thieve, swipe. <br><b>Antonyms:</b> give, donate, contribute, return, surrender.",  
-image: ""  
-},  
-13: {  
-text: "<b>Answer:</b> pilfer. <br><b>Definition:</b> To steal minor items, especially repeatedly. <br><b>Synonyms:</b> steal, snatch, swipe, filch, purloin. <br><b>Antonyms:</b> give, donate, offer, restore, return.",  
-image: ""  
-},  
-14: {  
-text: "<b>Answer:</b> debacle. <br><b>Definition:</b> A sudden and disastrous failure. <br><b>Synonyms:</b> disaster, catastrophe, fiasco, collapse, downfall. <br><b>Antonyms:</b> success, triumph, victory, achievement, accomplishment.",  
-image: ""  
-},  
-15: {  
-text: "<b>Answer:</b> infelicity. <br><b>Definition:</b> An inappropriate remark or unlucky quality. <br><b>Synonyms:</b> blunder, error, faux pas, awkwardness, misstep. <br><b>Antonyms:</b> grace, tact, propriety, suitability, elegance.",  
-image: ""  
-},  
-16: {  
-text: "<b>Answer:</b> serendipity. <br><b>Definition:</b> The occurrence of events by chance in a happy or beneficial way. <br><b>Synonyms:</b> coincidence, fluke, luck, providence, fortune. <br><b>Antonyms:</b> misfortune, mishap, bad luck, accident, tragedy.",  
-image: ""  
-},  
-17: {  
-text: "<b>Answer:</b> obeisance. <br><b>Definition:</b> A gesture of respect or submission, such as a bow or curtsy. <br><b>Synonyms:</b> respect, homage, reverence, deference, submission. <br><b>Antonyms:</b> disrespect, contempt, disdain, defiance, insolence.",  
-image: ""  
-},  
-18: {  
-text: "<b>Answer:</b> denigrate. <br><b>Definition:</b> To criticize unfairly or belittle. <br><b>Synonyms:</b> defame, malign, slander, disparage, belittle. <br><b>Antonyms:</b> praise, commend, applaud, glorify, honor.",  
-image: ""  
-},  
-19: {  
-text: "<b>Answer:</b> tenacity. <br><b>Definition:</b> Persistent determination in achieving a goal. <br><b>Synonyms:</b> perseverance, determination, diligence, persistence, grit. <br><b>Antonyms:</b> weakness, indecision, idleness, surrender, passivity.",  
-image: ""  
-},  
-20: {  
-text: "<b>Answer:</b> complacency. <br><b>Definition:</b> A feeling of uncritical satisfaction with oneself or one’s situation. <br><b>Synonyms:</b> self-satisfaction, smugness, contentment, indifference, ease. <br><b>Antonyms:</b> vigilance, concern, awareness, caution, curiosity.",  
-image: ""  
-},  
-21: {  
-text: "<b>Answer:</b> disillusionment. <br><b>Definition:</b> A feeling of disappointment after discovering something is not as good as believed. <br><b>Synonyms:</b> disappointment, dissatisfaction, disenchantment, regret, letdown. <br><b>Antonyms:</b> hope, trust, optimism, faith, satisfaction.",  
-image: ""  
-},  
-22: {  
-text: "<b>Answer:</b> apathy. <br><b>Definition:</b> Lack of interest, enthusiasm, or concern. <br><b>Synonyms:</b> indifference, unconcern, detachment, lethargy, disinterest. <br><b>Antonyms:</b> enthusiasm, passion, interest, energy, zeal.",  
-image: ""  
-},  
-23: {  
-text: "<b>Answer:</b> nonchalance. <br><b>Definition:</b> The state of appearing calm and unconcerned. <br><b>Synonyms:</b> indifference, composure, calmness, coolness, detachment. <br><b>Antonyms:</b> anxiety, agitation, excitement, nervousness, alarm.",  
-image: ""  
-},  
-24: {  
-text: "<b>Answer:</b> condoned. <br><b>Definition:</b> To accept or allow behavior considered morally wrong. <br><b>Synonyms:</b> overlook, excuse, forgive, tolerate, ignore. <br><b>Antonyms:</b> condemn, punish, censure, reject, criticize.",  
-image: ""  
-},  
-25: {  
-text: "<b>Answer:</b> pulchritude. <br><b>Definition:</b> Physical beauty or attractiveness. <br><b>Synonyms:</b> beauty, loveliness, charm, grace, elegance. <br><b>Antonyms:</b> ugliness, plainness, unattractiveness, coarseness, deformity.",  
-image: ""  
-},  
-26: {  
-text: "<b>Answer:</b> grandiloquence. <br><b>Definition:</b> Extravagant or pompous style in language. <br><b>Synonyms:</b> bombast, pomposity, rhetoric, verbosity, magniloquence. <br><b>Antonyms:</b> simplicity, plainness, brevity, modesty, clarity.",  
-image: ""  
-},  
-27: {  
-text: "<b>Answer:</b> celerity. <br><b>Definition:</b> Swiftness of movement. <br><b>Synonyms:</b> speed, swiftness, quickness, rapidity, haste. <br><b>Antonyms:</b> slowness, delay, sluggishness, lethargy, stagnation.",  
-image: ""  
-},  
-28: {  
-text: "<b>Answer:</b> winsome. <br><b>Definition:</b> Attractive or appealing in a fresh, innocent way. <br><b>Synonyms:</b> charming, sweet, delightful, engaging, endearing. <br><b>Antonyms:</b> unpleasant, unattractive, stern, forbidding, gloomy.",  
-image: ""  
-},  
-29: {  
-text: "<b>Answer:</b> lachrymose. <br><b>Definition:</b> Tearful or given to weeping. <br><b>Synonyms:</b> tearful, sad, mournful, weepy, emotional. <br><b>Antonyms:</b> cheerful, joyful, happy, jolly, lighthearted.",  
-image: ""  
-},  
-30: {  
-text: "<b>Answer:</b> redolent. <br><b>Definition:</b> Strongly reminiscent or suggestive of something; fragrant. <br><b>Synonyms:</b> aromatic, fragrant, suggestive, evocative, perfumed. <br><b>Antonyms:</b> odorless, bland, dull, forgetful, unscented.",  
-image: ""  
-},  
-31: {  
-text: "<b>Answer:</b> refulgent. <br><b>Definition:</b> Shining brightly or radiant. <br><b>Synonyms:</b> radiant, dazzling, gleaming, brilliant, luminous. <br><b>Antonyms:</b> dim, dull, dark, gloomy, obscure.",  
-image: ""  
-},  
-32: {  
-text: "<b>Answer:</b> turpitude. <br><b>Definition:</b> Depraved or wicked behavior. <br><b>Synonyms:</b> depravity, wickedness, corruption, immorality, vice. <br><b>Antonyms:</b> virtue, morality, righteousness, goodness, purity.",  
-image: ""  
-},  
-33: {  
-text: "<b>Answer:</b> brunt. <br><b>Definition:</b> The main impact or force of something. <br><b>Synonyms:</b> impact, force, shock, burden, pressure. <br><b>Antonyms:</b> relief, ease, support, comfort, aid.",  
-image: ""  
-},  
-34: {  
-text: "<b>Answer:</b> plunge. <br><b>Definition:</b> To jump or dive quickly and energetically. <br><b>Synonyms:</b> dive, jump, descend, rush, immerse. <br><b>Antonyms:</b> rise, climb, ascend, withdraw, retreat.",  
-image: ""  
-},  
+  1: {
+text: "<b><u>विद्रोही</u></b><br>Mutinous means showing rebellion or refusal to obey authority, especially by soldiers or sailors.<br><i>Rhyming trick:</i> mutiny mood आया, rule को <b>mutinous</b> ठुकराया",
+image: ""
+},
 
+2: {
+text: "<b><u>दबा दिया गया</u></b><br>Stifled means suppressed, restrained, or prevented from developing freely.<br><i>Rhyming trick:</i> style दबाया, breath भी <b>stifled</b> हो पाया",
+image: ""
+},
+
+3: {
+text: "<b><u>पुरावस्तु प्रेमी</u></b><br>Antiquarian refers to a person who studies or collects ancient objects and antiques.<br><i>Rhyming trick:</i> antique का fan, old चीज़ों का <b>antiquarian</b>",
+image: ""
+},
+
+4: {
+text: "<b><u>अति स्वास्थ्य-चिंतित व्यक्ति</u></b><br>Valetudinarian means a person excessively anxious about personal health.<br><i>Rhyming trick:</i> value health का भारी ध्यान, बना <b>valetudinarian</b>",
+image: ""
+},
+
+5: {
+text: "<b><u>समानता में विश्वास रखने वाला</u></b><br>Egalitarian describes belief in equality for all people.<br><i>Rhyming trick:</i> equal का गाना, <b>egalitarian</b> जमाना",
+image: ""
+},
+
+6: {
+text: "<b><u>अस्थायी अवकाश</u></b><br>Furlough means a temporary leave of absence from duty or work.<br><i>Rhyming trick:</i> work से दूर-लफ, मिला <b>furlough</b>",
+image: ""
+},
+
+7: {
+text: "<b><u>दुविधाग्रस्त</u></b><br>Ambivalent means having mixed or conflicting feelings about something.<br><i>Rhyming trick:</i> yes भी, no भी – mood <b>ambivalent</b> ही",
+image: ""
+},
+
+8: {
+text: "<b><u>विषय छेड़ना</u></b><br>Broach means to introduce a topic for discussion.<br><i>Rhyming trick:</i> बात को roach किया, topic <b>broach</b> किया",
+image: ""
+},
+
+9: {
+text: "<b><u>लुटेरा</u></b><br>Marauder refers to a person who roams about plundering or attacking.<br><i>Rhyming trick:</i> मार-काट mooder, बना <b>marauder</b>",
+image: ""
+},
+
+10: {
+text: "<b><u>सर्वज्ञ</u></b><br>Omniscient means having complete or unlimited knowledge.<br><i>Rhyming trick:</i> omni सब जानता, <b>omniscient</b> कहलाता",
+image: ""
+},
+
+11: {
+text: "<b><u>कमज़ोर करना</u></b><br>Attenuate means to reduce the strength, force, or intensity of something.<br><i>Rhyming trick:</i> sound को thin-uate, मतलब <b>attenuate</b>",
+image: ""
+},
+
+12: {
+text: "<b><u>चुराना</u></b><br>Purloin means to steal, especially secretly.<br><i>Rhyming trick:</i> purse loin से हटाया, <b>purloin</b> किया",
+image: ""
+},
+
+13: {
+text: "<b><u>छोटी-मोटी चोरी</u></b><br>Pilfer means to steal small items of little value.<br><i>Rhyming trick:</i> little-little fir, करता <b>pilfer</b>",
+image: ""
+},
+
+14: {
+text: "<b><u>पूर्ण असफलता</u></b><br>Debacle refers to a sudden and complete failure or collapse.<br><i>Rhyming trick:</i> big plan crackle, हुआ <b>debacle</b>",
+image: ""
+},
+
+15: {
+text: "<b><u>अभिव्यक्ति की त्रुटि</u></b><br>Infelicity means an inappropriate or awkward remark or expression.<br><i>Rhyming trick:</i> feeling खराब, word में <b>infelicity</b>",
+image: ""
+},
+
+16: {
+text: "<b><u>सुखद संयोग</u></b><br>Serendipity means the occurrence of pleasant discoveries by chance.<br><i>Rhyming trick:</i> suddenly pity नहीं, मिली <b>serendipity</b>",
+image: ""
+},
+
+17: {
+text: "<b><u>आदर-प्रदर्शन</u></b><br>Obeisance refers to a gesture showing respect or submission.<br><i>Rhyming trick:</i> obey stance में झुका, <b>obeisance</b> दिखा",
+image: ""
+},
+
+18: {
+text: "<b><u>बदनाम करना</u></b><br>Denigrate means to criticize unfairly or damage someone's reputation.<br><i>Rhyming trick:</i> dignity को down-grade, किया <b>denigrate</b>",
+image: ""
+},
+
+19: {
+text: "<b><u>दृढ़ता</u></b><br>Tenacity means persistence and determination in achieving something.<br><i>Rhyming trick:</i> tension नहीं, strength <b>tenacity</b>",
+image: ""
+},
+
+20: {
+text: "<b><u>आत्मसंतुष्टि</u></b><br>Complacency means self-satisfaction without awareness of danger or problems.<br><i>Rhyming trick:</i> complaint नहीं, बस <b>complacency</b>",
+image: ""
+},
+
+21: {
+text: "<b><u>भ्रम-भंग</u></b><br>Disillusionment means disappointment after discovering something is not as believed.<br><i>Rhyming trick:</i> illusion टूट गया, <b>disillusionment</b> छा गया",
+image: ""
+},
+
+22: {
+text: "<b><u>उदासीनता</u></b><br>Apathy means lack of interest, enthusiasm, or concern.<br><i>Rhyming trick:</i> app-a-tea नहीं पी, mood <b>apathy</b>",
+image: ""
+},
+
+23: {
+text: "<b><u>बेपरवाही</u></b><br>Nonchalance means casual indifference or lack of concern.<br><i>Rhyming trick:</i> no-chance worry, बस <b>nonchalance</b>",
+image: ""
+},
+
+24: {
+text: "<b><u>स्वीकृत या नज़रअंदाज़</u></b><br>Condoned means accepted or allowed to happen without punishment.<br><i>Rhyming trick:</i> crime को tone-down, किया <b>condoned</b>",
+image: ""
+},
+
+25: {
+text: "<b><u>शारीरिक सुंदरता</u></b><br>Pulchritude refers to physical beauty or attractiveness.<br><i>Rhyming trick:</i> pretty-attitude, है <b>pulchritude</b>",
+image: ""
+},
+
+  26: {
+text: "<b><u>आडंबरपूर्ण भाषा</u></b><br>Grandiloquence means pompous, high-sounding, or extravagant language used to impress others.<br><i>Rhyming trick:</i> grand बोल, heavy tone — <b>grandiloquence</b> shown",
+image: ""
+},
+
+27: {
+text: "<b><u>तीव्र गति</u></b><br>Celerity means swiftness or speed in movement or action.<br><i>Rhyming trick:</i> जल्दी-जल्दी, full <b>celerity</b>",
+image: ""
+},
+
+28: {
+text: "<b><u>आकर्षक</u></b><br>Winsome means charming in a sweet or appealing way.<br><i>Rhyming trick:</i> win किया some दिल — <b>winsome</b> smile",
+image: ""
+},
+
+29: {
+text: "<b><u>अत्यधिक भावुक</u></b><br>Lachrymose means tearful or inclined to weep.<br><i>Rhyming trick:</i> lacrima = tear dose — <b>lachrymose</b>",
+image: ""
+},
+
+30: {
+text: "<b><u>सुगंधित</u></b><br>Redolent means strongly smelling of something pleasant.<br><i>Rhyming trick:</i> rose की scent — <b>redolent</b>",
+image: ""
+},
+
+31: {
+text: "<b><u>दीप्तिमान</u></b><br>Refulgent means shining brightly or radiant.<br><i>Rhyming trick:</i> full चमक — <b>refulgent</b>",
+image: ""
+},
+
+32: {
+text: "<b><u>नैतिक पतन</u></b><br>Turpitude means moral corruption or depravity.<br><i>Rhyming trick:</i> dirty attitude — <b>turpitude</b>",
+image: ""
+},
+
+33: {
+text: "<b><u>मुख्य भार</u></b><br>Brunt refers to the main force or impact of something unpleasant.<br><i>Rhyming trick:</i> blunt hit का front — <b>brunt</b>",
+image: ""
+},
+
+34: {
+text: "<b><u>अचानक गिरावट</u></b><br>Plunge means to fall suddenly and sharply.<br><i>Rhyming trick:</i> jump नहीं, deep <b>plunge</b>",
+image: ""
+},
 
 35: {
-text: "<b>Answer:</b> impediment. <br><b>Definition:</b> Something that delays or obstructs progress. <br><b>Synonyms:</b> obstacle, barrier, hindrance, obstruction, handicap. <br><b>Antonyms:</b> aid, assistance, advantage, support, help.",
+text: "<b><u>बाधा</u></b><br>Impediment means an obstacle that hinders progress.<br><i>Rhyming trick:</i> speed में dent — <b>impediment</b>",
 image: ""
 },
+
 36: {
-text: "<b>Answer:</b> harness. <br><b>Definition:</b> To control and make use of natural resources or energy. <br><b>Synonyms:</b> utilize, control, employ, exploit, manage. <br><b>Antonyms:</b> waste, neglect, misuse, ignore, discard.",
+text: "<b><u>सही उपयोग करना</u></b><br>Harness means to make effective use of a resource.<br><i>Rhyming trick:</i> power को nurse — <b>harness</b>",
 image: ""
 },
+
 37: {
-text: "<b>Answer:</b> idiosyncrasy. <br><b>Definition:</b> A distinctive or peculiar feature or characteristic. <br><b>Synonyms:</b> quirk, peculiarity, eccentricity, oddity, mannerism. <br><b>Antonyms:</b> normality, regularity, conformity, sameness, usualness.",
+text: "<b><u>व्यक्तिगत विचित्रता</u></b><br>Idiosyncrasy means a peculiar habit or trait of an individual.<br><i>Rhyming trick:</i> idea अलग, habit fantasy — <b>idiosyncrasy</b>",
 image: ""
 },
+
 38: {
-text: "<b>Answer:</b> pavilion. <br><b>Definition:</b> A large tent or building used for events or shelter. <br><b>Synonyms:</b> tent, marquee, canopy, hall, shelter. <br><b>Antonyms:</b> open, exposed, bare, uncovered, field.",
+text: "<b><u>मंडप</u></b><br>Pavilion refers to a light, often open structure used for events or shelter.<br><i>Rhyming trick:</i> शादी का million — <b>pavilion</b>",
 image: ""
 },
+
 39: {
-text: "<b>Answer:</b> supersede. <br><b>Definition:</b> To take the place of something old or outdated. <br><b>Synonyms:</b> replace, overtake, displace, succeed, supplant. <br><b>Antonyms:</b> keep, maintain, retain, continue, remain.",
+text: "<b><u>स्थान लेना</u></b><br>Supersede means to replace or take the place of something older.<br><i>Rhyming trick:</i> super seed बोया — old को <b>supersede</b>",
 image: ""
 },
+
 40: {
-text: "<b>Answer:</b> Caribbean. <br><b>Definition:</b> The region of the Caribbean Sea known for its islands and culture. <br><b>Synonyms:</b> West Indies, islands, tropical region, archipelago, seaboard. <br><b>Antonyms:</b> continental, inland, mountainous, arctic, desert.",
+text: "<b><u>कैरेबियन क्षेत्र</u></b><br>Caribbean refers to the sea and island region between North and South America.<br><i>Rhyming trick:</i> carry bean नहीं — <b>Caribbean</b>",
 image: ""
 },
+
 41: {
-text: "<b>Answer:</b> debonair. <br><b>Definition:</b> Courteous, charming, and confident in manner. <br><b>Synonyms:</b> suave, elegant, charming, sophisticated, urbane. <br><b>Antonyms:</b> awkward, rude, clumsy, unsophisticated, uncouth.",
+text: "<b><u>सौम्य और आकर्षक</u></b><br>Debonair means confident, stylish, and charming in manner.<br><i>Rhyming trick:</i> दे-bone air, smooth <b>debonair</b>",
 image: ""
 },
+
 42: {
-text: "<b>Answer:</b> hedonist. <br><b>Definition:</b> A person who seeks pleasure as the main goal in life. <br><b>Synonyms:</b> pleasure-seeker, sybarite, voluptuary, epicurean, sensualist. <br><b>Antonyms:</b> ascetic, puritan, abstainer, minimalist, disciplined.",
+text: "<b><u>सुखवादी</u></b><br>Hedonist means a person who pursues pleasure as the main goal of life.<br><i>Rhyming trick:</i> he-done-ist, pleasure list — <b>hedonist</b>",
 image: ""
 },
+
 43: {
-text: "<b>Answer:</b> libertine. <br><b>Definition:</b> Someone who is morally or sexually unrestrained. <br><b>Synonyms:</b> debauchee, rake, profligate, dissolute, sybarite. <br><b>Antonyms:</b> puritan, moralist, ascetic, prudish, conformist.",
+text: "<b><u>उच्छृंखल व्यक्ति</u></b><br>Libertine refers to someone morally unrestrained in behavior.<br><i>Rhyming trick:</i> liberty line crossed — <b>libertine</b>",
 image: ""
 },
+
 44: {
-text: "<b>Answer:</b> salubrious. <br><b>Definition:</b> Health-giving; healthy or pleasant. <br><b>Synonyms:</b> wholesome, healthy, beneficial, salutary, nutritious. <br><b>Antonyms:</b> unhealthy, harmful, deleterious, toxic, noxious.",
+text: "<b><u>स्वास्थ्यप्रद</u></b><br>Salubrious means promoting health and well-being.<br><i>Rhyming trick:</i> salute health — <b>salubrious</b>",
 image: ""
 },
+
 45: {
-text: "<b>Answer:</b> souvenir. <br><b>Definition:</b> A keepsake or reminder of a place or event. <br><b>Synonyms:</b> memento, remembrance, token, relic, keepsake. <br><b>Antonyms:</b> souvenir, forget, neglect, discard, ignore.",
+text: "<b><u>स्मृति-चिह्न</u></b><br>Souvenir means an object kept as a reminder of a place or event.<br><i>Rhyming trick:</i> so-you-near memory — <b>souvenir</b>",
 image: ""
 },
+
 46: {
-text: "<b>Answer:</b> sling. <br><b>Definition:</b> A device used for supporting an injured arm or leg. <br><b>Synonyms:</b> bandage, support, brace, strap, holder. <br><b>Antonyms:</b> remove, loosen, detach, free, release.",
+text: "<b><u>लटकाकर फेंकना</u></b><br>Sling means to throw or hang something loosely.<br><i>Rhyming trick:</i> swing में fling — <b>sling</b>",
 image: ""
 },
+
 47: {
-text: "<b>Answer:</b> tempting. <br><b>Definition:</b> Appealing and attractive, causing desire. <br><b>Synonyms:</b> alluring, enticing, attractive, inviting, seductive. <br><b>Antonyms:</b> repulsive, unattractive, disgusting, unappealing, undesirable.",
+text: "<b><u>लुभावना</u></b><br>Tempting means attractive or enticing.<br><i>Rhyming trick:</i> taste में mint-ing — <b>tempting</b>",
 image: ""
 },
+
 48: {
-text: "<b>Answer:</b> syllable. <br><b>Definition:</b> A unit of pronunciation with a vowel sound. <br><b>Synonyms:</b> sound, beat, unit, segment, part. <br><b>Antonyms:</b> whole, entirety, sentence, phrase, paragraph.",
+text: "<b><u>अक्षर-खंड</u></b><br>Syllable is a unit of pronunciation containing a vowel sound.<br><i>Rhyming trick:</i> syllable table पर clap-able",
 image: ""
 },
+
 49: {
-text: "<b>Answer:</b> fatalism. <br><b>Definition:</b> The belief that all events are predetermined and inevitable. <br><b>Synonyms:</b> determinism, predestination, inevitability, destiny, fate. <br><b>Antonyms:</b> free will, choice, chance, randomness, possibility.",
+text: "<b><u>भाग्यवाद</u></b><br>Fatalism is the belief that events are fixed and inevitable.<br><i>Rhyming trick:</i> fate का prism — <b>fatalism</b>",
 image: ""
 },
+
 50: {
-text: "<b>Answer:</b> populism. <br><b>Definition:</b> Political approach targeting ordinary people often against elites. <br><b>Synonyms:</b> grassroots, democracy, nationalism, commonality, majority. <br><b>Antonyms:</b> elitism, aristocracy, oligarchy, authoritarianism, plutocracy.",
+text: "<b><u>जनवाद</u></b><br>Populism refers to political ideas that appeal to ordinary people against elites.<br><i>Rhyming trick:</i> popular prism — <b>populism</b>",
 image: ""
-},
+}
+  
 
 
 };
