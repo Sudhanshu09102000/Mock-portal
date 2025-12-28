@@ -357,254 +357,252 @@ image: ''
 const explanations = {
   1: {
 text: "<b><u>विद्रोही</u></b><br>Mutinous means showing rebellion or refusal to obey authority, especially by soldiers or sailors.<br><i>Rhyming trick:</i> mutiny mood आया, rule को <b>mutinous</b> ठुकराया",
-image: ""
+image: "images/vocabulary-set-13/1to6.png"
 },
 
 2: {
 text: "<b><u>दबा दिया गया</u></b><br>Stifled means suppressed, restrained, or prevented from developing freely.<br><i>Rhyming trick:</i> style दबाया, breath भी <b>stifled</b> हो पाया",
-image: ""
+image: "images/vocabulary-set-13/1to6.png"
 },
 
 3: {
 text: "<b><u>पुरावस्तु प्रेमी</u></b><br>Antiquarian refers to a person who studies or collects ancient objects and antiques.<br><i>Rhyming trick:</i> antique का fan, old चीज़ों का <b>antiquarian</b>",
-image: ""
+image: "images/vocabulary-set-13/1to6.png"
 },
 
 4: {
 text: "<b><u>अति स्वास्थ्य-चिंतित व्यक्ति</u></b><br>Valetudinarian means a person excessively anxious about personal health.<br><i>Rhyming trick:</i> value health का भारी ध्यान, बना <b>valetudinarian</b>",
-image: ""
+image: "images/vocabulary-set-13/1to6.png"
 },
 
 5: {
 text: "<b><u>समानता में विश्वास रखने वाला</u></b><br>Egalitarian describes belief in equality for all people.<br><i>Rhyming trick:</i> equal का गाना, <b>egalitarian</b> जमाना",
-image: ""
+image: "images/vocabulary-set-13/1to6.png"
 },
 
 6: {
 text: "<b><u>अस्थायी अवकाश</u></b><br>Furlough means a temporary leave of absence from duty or work.<br><i>Rhyming trick:</i> work से दूर-लफ, मिला <b>furlough</b>",
-image: ""
+image: "images/vocabulary-set-13/1to6.png"
 },
 
 7: {
 text: "<b><u>दुविधाग्रस्त</u></b><br>Ambivalent means having mixed or conflicting feelings about something.<br><i>Rhyming trick:</i> yes भी, no भी – mood <b>ambivalent</b> ही",
-image: ""
+image: "images/vocabulary-set-13/7to12.png"
 },
 
 8: {
 text: "<b><u>विषय छेड़ना</u></b><br>Broach means to introduce a topic for discussion.<br><i>Rhyming trick:</i> बात को roach किया, topic <b>broach</b> किया",
-image: ""
+image: "images/vocabulary-set-13/7to12.png"
 },
 
 9: {
 text: "<b><u>लुटेरा</u></b><br>Marauder refers to a person who roams about plundering or attacking.<br><i>Rhyming trick:</i> मार-काट mooder, बना <b>marauder</b>",
-image: ""
+image: "images/vocabulary-set-13/7to12.png"
 },
 
 10: {
 text: "<b><u>सर्वज्ञ</u></b><br>Omniscient means having complete or unlimited knowledge.<br><i>Rhyming trick:</i> omni सब जानता, <b>omniscient</b> कहलाता",
-image: ""
+image: "images/vocabulary-set-13/7to12.png"
 },
 
 11: {
 text: "<b><u>कमज़ोर करना</u></b><br>Attenuate means to reduce the strength, force, or intensity of something.<br><i>Rhyming trick:</i> sound को thin-uate, मतलब <b>attenuate</b>",
-image: ""
+image: "images/vocabulary-set-13/7to12.png"
 },
 
 12: {
 text: "<b><u>चुराना</u></b><br>Purloin means to steal, especially secretly.<br><i>Rhyming trick:</i> purse loin से हटाया, <b>purloin</b> किया",
-image: ""
+image: "images/vocabulary-set-13/7to12.png"
 },
 
 13: {
 text: "<b><u>छोटी-मोटी चोरी</u></b><br>Pilfer means to steal small items of little value.<br><i>Rhyming trick:</i> little-little fir, करता <b>pilfer</b>",
-image: ""
+image: "images/vocabulary-set-13/13to18.png"
 },
 
 14: {
 text: "<b><u>पूर्ण असफलता</u></b><br>Debacle refers to a sudden and complete failure or collapse.<br><i>Rhyming trick:</i> big plan crackle, हुआ <b>debacle</b>",
-image: ""
+image: "images/vocabulary-set-13/13to18.png"
 },
 
 15: {
 text: "<b><u>अभिव्यक्ति की त्रुटि</u></b><br>Infelicity means an inappropriate or awkward remark or expression.<br><i>Rhyming trick:</i> feeling खराब, word में <b>infelicity</b>",
-image: ""
+image: "images/vocabulary-set-13/13to18.png"
 },
 
 16: {
 text: "<b><u>सुखद संयोग</u></b><br>Serendipity means the occurrence of pleasant discoveries by chance.<br><i>Rhyming trick:</i> suddenly pity नहीं, मिली <b>serendipity</b>",
-image: ""
+image: "images/vocabulary-set-13/13to18.png"
 },
 
 17: {
 text: "<b><u>आदर-प्रदर्शन</u></b><br>Obeisance refers to a gesture showing respect or submission.<br><i>Rhyming trick:</i> obey stance में झुका, <b>obeisance</b> दिखा",
-image: ""
+image: "images/vocabulary-set-13/13to18.png"
 },
 
 18: {
 text: "<b><u>बदनाम करना</u></b><br>Denigrate means to criticize unfairly or damage someone's reputation.<br><i>Rhyming trick:</i> dignity को down-grade, किया <b>denigrate</b>",
-image: ""
+image: "images/vocabulary-set-13/13to18.png"
 },
 
 19: {
 text: "<b><u>दृढ़ता</u></b><br>Tenacity means persistence and determination in achieving something.<br><i>Rhyming trick:</i> tension नहीं, strength <b>tenacity</b>",
-image: ""
+image: "images/vocabulary-set-13/19to24.png"
 },
 
 20: {
 text: "<b><u>आत्मसंतुष्टि</u></b><br>Complacency means self-satisfaction without awareness of danger or problems.<br><i>Rhyming trick:</i> complaint नहीं, बस <b>complacency</b>",
-image: ""
+image: "images/vocabulary-set-13/19to24.png"
 },
 
 21: {
 text: "<b><u>भ्रम-भंग</u></b><br>Disillusionment means disappointment after discovering something is not as believed.<br><i>Rhyming trick:</i> illusion टूट गया, <b>disillusionment</b> छा गया",
-image: ""
+image: "images/vocabulary-set-13/19to24.png"
 },
 
 22: {
 text: "<b><u>उदासीनता</u></b><br>Apathy means lack of interest, enthusiasm, or concern.<br><i>Rhyming trick:</i> app-a-tea नहीं पी, mood <b>apathy</b>",
-image: ""
+image: "images/vocabulary-set-13/19to24.png"
 },
 
 23: {
 text: "<b><u>बेपरवाही</u></b><br>Nonchalance means casual indifference or lack of concern.<br><i>Rhyming trick:</i> no-chance worry, बस <b>nonchalance</b>",
-image: ""
+image: "images/vocabulary-set-13/19to24.png"
 },
 
 24: {
 text: "<b><u>स्वीकृत या नज़रअंदाज़</u></b><br>Condoned means accepted or allowed to happen without punishment.<br><i>Rhyming trick:</i> crime को tone-down, किया <b>condoned</b>",
-image: ""
+image: "images/vocabulary-set-13/19to24.png"
 },
 
 25: {
 text: "<b><u>शारीरिक सुंदरता</u></b><br>Pulchritude refers to physical beauty or attractiveness.<br><i>Rhyming trick:</i> pretty-attitude, है <b>pulchritude</b>",
-image: ""
+image: "images/vocabulary-set-13/25to30.png"
 },
 
-  26: {
+26: {
 text: "<b><u>आडंबरपूर्ण भाषा</u></b><br>Grandiloquence means pompous, high-sounding, or extravagant language used to impress others.<br><i>Rhyming trick:</i> grand बोल, heavy tone — <b>grandiloquence</b> shown",
-image: ""
+image: "images/vocabulary-set-13/25to30.png"
 },
 
 27: {
 text: "<b><u>तीव्र गति</u></b><br>Celerity means swiftness or speed in movement or action.<br><i>Rhyming trick:</i> जल्दी-जल्दी, full <b>celerity</b>",
-image: ""
+image: "images/vocabulary-set-13/25to30.png"
 },
 
 28: {
 text: "<b><u>आकर्षक</u></b><br>Winsome means charming in a sweet or appealing way.<br><i>Rhyming trick:</i> win किया some दिल — <b>winsome</b> smile",
-image: ""
+image: "images/vocabulary-set-13/25to30.png"
 },
 
 29: {
 text: "<b><u>अत्यधिक भावुक</u></b><br>Lachrymose means tearful or inclined to weep.<br><i>Rhyming trick:</i> lacrima = tear dose — <b>lachrymose</b>",
-image: ""
+image: "images/vocabulary-set-13/25to30.png"
 },
 
 30: {
 text: "<b><u>सुगंधित</u></b><br>Redolent means strongly smelling of something pleasant.<br><i>Rhyming trick:</i> rose की scent — <b>redolent</b>",
-image: ""
+image: "images/vocabulary-set-13/25to30.png"
 },
 
 31: {
 text: "<b><u>दीप्तिमान</u></b><br>Refulgent means shining brightly or radiant.<br><i>Rhyming trick:</i> full चमक — <b>refulgent</b>",
-image: ""
+image: "images/vocabulary-set-13/31to36.png"
 },
 
 32: {
 text: "<b><u>नैतिक पतन</u></b><br>Turpitude means moral corruption or depravity.<br><i>Rhyming trick:</i> dirty attitude — <b>turpitude</b>",
-image: ""
+image: "images/vocabulary-set-13/31to36.png"
 },
 
 33: {
 text: "<b><u>मुख्य भार</u></b><br>Brunt refers to the main force or impact of something unpleasant.<br><i>Rhyming trick:</i> blunt hit का front — <b>brunt</b>",
-image: ""
+image: "images/vocabulary-set-13/31to36.png"
 },
 
 34: {
 text: "<b><u>अचानक गिरावट</u></b><br>Plunge means to fall suddenly and sharply.<br><i>Rhyming trick:</i> jump नहीं, deep <b>plunge</b>",
-image: ""
+image: "images/vocabulary-set-13/31to36.png"
 },
 
 35: {
 text: "<b><u>बाधा</u></b><br>Impediment means an obstacle that hinders progress.<br><i>Rhyming trick:</i> speed में dent — <b>impediment</b>",
-image: ""
+image: "images/vocabulary-set-13/31to36.png"
 },
 
 36: {
 text: "<b><u>सही उपयोग करना</u></b><br>Harness means to make effective use of a resource.<br><i>Rhyming trick:</i> power को nurse — <b>harness</b>",
-image: ""
+image: "images/vocabulary-set-13/31to36.png"
 },
 
 37: {
 text: "<b><u>व्यक्तिगत विचित्रता</u></b><br>Idiosyncrasy means a peculiar habit or trait of an individual.<br><i>Rhyming trick:</i> idea अलग, habit fantasy — <b>idiosyncrasy</b>",
-image: ""
+image: "images/vocabulary-set-13/37to42.png"
 },
 
 38: {
 text: "<b><u>मंडप</u></b><br>Pavilion refers to a light, often open structure used for events or shelter.<br><i>Rhyming trick:</i> शादी का million — <b>pavilion</b>",
-image: ""
+image: "images/vocabulary-set-13/37to42.png"
 },
 
 39: {
 text: "<b><u>स्थान लेना</u></b><br>Supersede means to replace or take the place of something older.<br><i>Rhyming trick:</i> super seed बोया — old को <b>supersede</b>",
-image: ""
+image: "images/vocabulary-set-13/37to42.png"
 },
 
 40: {
 text: "<b><u>कैरेबियन क्षेत्र</u></b><br>Caribbean refers to the sea and island region between North and South America.<br><i>Rhyming trick:</i> carry bean नहीं — <b>Caribbean</b>",
-image: ""
+image: "images/vocabulary-set-13/37to42.png"
 },
 
 41: {
 text: "<b><u>सौम्य और आकर्षक</u></b><br>Debonair means confident, stylish, and charming in manner.<br><i>Rhyming trick:</i> दे-bone air, smooth <b>debonair</b>",
-image: ""
+image: "images/vocabulary-set-13/37to42.png"
 },
 
 42: {
 text: "<b><u>सुखवादी</u></b><br>Hedonist means a person who pursues pleasure as the main goal of life.<br><i>Rhyming trick:</i> he-done-ist, pleasure list — <b>hedonist</b>",
-image: ""
+image: "images/vocabulary-set-13/37to42.png"
 },
 
 43: {
 text: "<b><u>उच्छृंखल व्यक्ति</u></b><br>Libertine refers to someone morally unrestrained in behavior.<br><i>Rhyming trick:</i> liberty line crossed — <b>libertine</b>",
-image: ""
+image: "images/vocabulary-set-13/43to46.png"
 },
 
 44: {
 text: "<b><u>स्वास्थ्यप्रद</u></b><br>Salubrious means promoting health and well-being.<br><i>Rhyming trick:</i> salute health — <b>salubrious</b>",
-image: ""
+image: "images/vocabulary-set-13/43to46.png"
 },
 
 45: {
 text: "<b><u>स्मृति-चिह्न</u></b><br>Souvenir means an object kept as a reminder of a place or event.<br><i>Rhyming trick:</i> so-you-near memory — <b>souvenir</b>",
-image: ""
+image: "images/vocabulary-set-13/43to46.png"
 },
 
 46: {
 text: "<b><u>लटकाकर फेंकना</u></b><br>Sling means to throw or hang something loosely.<br><i>Rhyming trick:</i> swing में fling — <b>sling</b>",
-image: ""
+image: "images/vocabulary-set-13/43to46.png"
 },
 
 47: {
 text: "<b><u>लुभावना</u></b><br>Tempting means attractive or enticing.<br><i>Rhyming trick:</i> taste में mint-ing — <b>tempting</b>",
-image: ""
+image: "images/vocabulary-set-13/47to50.png"
 },
 
 48: {
 text: "<b><u>अक्षर-खंड</u></b><br>Syllable is a unit of pronunciation containing a vowel sound.<br><i>Rhyming trick:</i> syllable table पर clap-able",
-image: ""
+image: "images/vocabulary-set-13/47to50.png"
 },
 
 49: {
 text: "<b><u>भाग्यवाद</u></b><br>Fatalism is the belief that events are fixed and inevitable.<br><i>Rhyming trick:</i> fate का prism — <b>fatalism</b>",
-image: ""
+image: "images/vocabulary-set-13/47to50.png"
 },
 
 50: {
 text: "<b><u>जनवाद</u></b><br>Populism refers to political ideas that appeal to ordinary people against elites.<br><i>Rhyming trick:</i> popular prism — <b>populism</b>",
-image: ""
+image: "images/vocabulary-set-13/47to50.png"
 }
-  
-
-
 };
+
