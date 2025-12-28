@@ -807,6 +807,34 @@ body.darkmode .hover-help-box {
   backdrop-filter: blur(14px);
 }
 
+
+    /* ===============================
+   DARK MODE FIX – SUMMARY COLORS
+=============================== */
+
+/* DO NOT override bootstrap bg colors inside summary */
+body.darkmode #scoreContent .card.bg-success {
+  background-color: #198754 !important; /* bootstrap green */
+  color: #ffffff !important;
+}
+
+body.darkmode #scoreContent .card.bg-danger {
+  background-color: #dc3545 !important; /* bootstrap red */
+  color: #ffffff !important;
+}
+
+body.darkmode #scoreContent .card.bg-secondary {
+  background-color: #6c757d !important; /* skipped */
+  color: #ffffff !important;
+}
+
+/* keep text readable */
+body.darkmode #scoreContent .card p,
+body.darkmode #scoreContent .card strong {
+  color: #ffffff !important;
+}
+
+
   </style>
 </head>
 
@@ -2594,5 +2622,6 @@ hoverBox.addEventListener("mouseleave", () => {
   </script>
 
 </body>
+
 
 </html>
