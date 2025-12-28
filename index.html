@@ -37,30 +37,30 @@
    DESKTOP HOVER HELP BOX
 ================================ */
 
-/* Only enable on devices that truly support hover */
-@media (hover: hover) and (pointer: fine) {
-  .hover-help-box {
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: 16px;
-    padding: 18px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-    border: 1px solid #e6e6e6;
-    max-height: 75vh;
-    overflow-y: auto;
-    z-index: 50;
+    /* Only enable on devices that truly support hover */
+    @media (hover: hover) and (pointer: fine) {
+      .hover-help-box {
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        border: 1px solid #e6e6e6;
+        max-height: 75vh;
+        overflow-y: auto;
+        z-index: 50;
 
-    /* 🔥 important */
-    pointer-events: auto;
-  }
-}
+        /* 🔥 important */
+        pointer-events: auto;
+      }
+    }
 
 
-/* Mobile: always hidden */
-@media (hover: none) {
-  .hover-help-box {
-    display: none !important;
-  }
-}
+    /* Mobile: always hidden */
+    @media (hover: none) {
+      .hover-help-box {
+        display: none !important;
+      }
+    }
 
 
     @keyframes fadeIn {
@@ -777,64 +777,68 @@
    DARK MODE FIX FOR HOVER HELP BOX
 ================================ */
 
-body.darkmode .hover-help-box {
-  background: #ffffff !important;     /* force light box */
-  color: #111827 !important;          /* dark readable text */
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-}
+    body.darkmode .hover-help-box {
+      background: #ffffff !important;
+      /* force light box */
+      color: #111827 !important;
+      /* dark readable text */
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
 
-/* text inside */
-body.darkmode .hover-help-box p,
-body.darkmode .hover-help-box li,
-body.darkmode .hover-help-box strong,
-body.darkmode .hover-help-box div {
-  color: #111827 !important;
-}
+    /* text inside */
+    body.darkmode .hover-help-box p,
+    body.darkmode .hover-help-box li,
+    body.darkmode .hover-help-box strong,
+    body.darkmode .hover-help-box div {
+      color: #111827 !important;
+    }
 
-/* links & buttons inside hover box */
-body.darkmode .hover-help-box a.btn {
-  background: linear-gradient(90deg, #0d6efd, #6f42c1);
-  color: #ffffff !important;
-}
+    /* links & buttons inside hover box */
+    body.darkmode .hover-help-box a.btn {
+      background: linear-gradient(90deg, #0d6efd, #6f42c1);
+      color: #ffffff !important;
+    }
 
-/* horizontal rule visibility */
-body.darkmode .hover-help-box hr {
-  border-color: #e5e7eb;
-}
-body.darkmode .hover-help-box {
-  background: rgba(255,255,255,0.95) !important;
-  backdrop-filter: blur(14px);
-}
+    /* horizontal rule visibility */
+    body.darkmode .hover-help-box hr {
+      border-color: #e5e7eb;
+    }
+
+    body.darkmode .hover-help-box {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(14px);
+    }
 
 
     /* ===============================
    DARK MODE FIX – SUMMARY COLORS
 =============================== */
 
-/* DO NOT override bootstrap bg colors inside summary */
-body.darkmode #scoreContent .card.bg-success {
-  background-color: #198754 !important; /* bootstrap green */
-  color: #ffffff !important;
-}
+    /* DO NOT override bootstrap bg colors inside summary */
+    body.darkmode #scoreContent .card.bg-success {
+      background-color: #198754 !important;
+      /* bootstrap green */
+      color: #ffffff !important;
+    }
 
-body.darkmode #scoreContent .card.bg-danger {
-  background-color: #dc3545 !important; /* bootstrap red */
-  color: #ffffff !important;
-}
+    body.darkmode #scoreContent .card.bg-danger {
+      background-color: #dc3545 !important;
+      /* bootstrap red */
+      color: #ffffff !important;
+    }
 
-body.darkmode #scoreContent .card.bg-secondary {
-  background-color: #6c757d !important; /* skipped */
-  color: #ffffff !important;
-}
+    body.darkmode #scoreContent .card.bg-secondary {
+      background-color: #6c757d !important;
+      /* skipped */
+      color: #ffffff !important;
+    }
 
-/* keep text readable */
-body.darkmode #scoreContent .card p,
-body.darkmode #scoreContent .card strong {
-  color: #ffffff !important;
-}
-
-
+    /* keep text readable */
+    body.darkmode #scoreContent .card p,
+    body.darkmode #scoreContent .card strong {
+      color: #ffffff !important;
+    }
   </style>
 </head>
 
@@ -923,7 +927,7 @@ body.darkmode #scoreContent .card strong {
                 <button id="saveNextBtn" class="btn btn-primary">Save & Next</button>
                 <button id="helpBtn" class="btn btn-info">Help!</button>
 
-              
+
                 <button id="reviewNextBtn" class="btn btn-warning">Mark for Review & Next</button>
                 <button id="clearBtn" class="btn btn-outline-danger">Clear Response</button>
 
@@ -942,7 +946,7 @@ body.darkmode #scoreContent .card strong {
 
           <div class="col-lg-4">
             <!-- HOVER HELP BOX (DESKTOP ONLY) -->
-<div id="hoverHelpBox" class="hover-help-box hidden"></div>
+            <div id="hoverHelpBox" class="hover-help-box hidden"></div>
 
             <div class="d-grid mb-2">
               <button id="toggleNavBtn" class="btn btn-outline-primary">
@@ -1048,80 +1052,80 @@ body.darkmode #scoreContent .card strong {
       let cursorX = x;
       const lineHeight = 5.5;
 
-function renderNode(node) {
+      function renderNode(node) {
 
-  // LINE BREAK
-  if (node.nodeName === "BR") {
-    cursorY += lineHeight;
-    cursorX = x;
-    return;
-  }
+        // LINE BREAK
+        if (node.nodeName === "BR") {
+          cursorY += lineHeight;
+          cursorX = x;
+          return;
+        }
 
-  // PARAGRAPH / DIV
-  if (node.nodeName === "P" || node.nodeName === "DIV") {
-    cursorY += lineHeight;
-    cursorX = x;
-    node.childNodes.forEach(renderNode);
-    cursorY += lineHeight;
-    cursorX = x;
-    return;
-  }
+        // PARAGRAPH / DIV
+        if (node.nodeName === "P" || node.nodeName === "DIV") {
+          cursorY += lineHeight;
+          cursorX = x;
+          node.childNodes.forEach(renderNode);
+          cursorY += lineHeight;
+          cursorX = x;
+          return;
+        }
 
-  // BOLD
-  if (node.nodeName === "B" || node.nodeName === "STRONG") {
-    doc.setFont("times", "bold");
-    node.childNodes.forEach(renderNode);
-    doc.setFont("times", "normal");
-    return;
-  }
+        // BOLD
+        if (node.nodeName === "B" || node.nodeName === "STRONG") {
+          doc.setFont("times", "bold");
+          node.childNodes.forEach(renderNode);
+          doc.setFont("times", "normal");
+          return;
+        }
 
-  // UNDERLINE
-  if (node.nodeName === "U") {
-    const startX = cursorX;
-    const startY = cursorY;
+        // UNDERLINE
+        if (node.nodeName === "U") {
+          const startX = cursorX;
+          const startY = cursorY;
 
-    node.childNodes.forEach(renderNode);
+          node.childNodes.forEach(renderNode);
 
-    const textWidth = cursorX - startX;
-    doc.line(startX, startY + 1.5, startX + textWidth, startY + 1.5);
-    return;
-  }
+          const textWidth = cursorX - startX;
+          doc.line(startX, startY + 1.5, startX + textWidth, startY + 1.5);
+          return;
+        }
 
-  // LIST
-  if (node.nodeName === "UL") {
-    cursorY += lineHeight;
-    node.childNodes.forEach(renderNode);
-    cursorY += lineHeight;
-    cursorX = x;
-    return;
-  }
+        // LIST
+        if (node.nodeName === "UL") {
+          cursorY += lineHeight;
+          node.childNodes.forEach(renderNode);
+          cursorY += lineHeight;
+          cursorX = x;
+          return;
+        }
 
-  if (node.nodeName === "LI") {
-    cursorX = x + 4;
-    doc.text("•", x, cursorY);
-    node.childNodes.forEach(renderNode);
-    cursorY += lineHeight;
-    cursorX = x;
-    return;
-  }
+        if (node.nodeName === "LI") {
+          cursorX = x + 4;
+          doc.text("•", x, cursorY);
+          node.childNodes.forEach(renderNode);
+          cursorY += lineHeight;
+          cursorX = x;
+          return;
+        }
 
-  // TEXT NODE
-  if (node.nodeType === Node.TEXT_NODE) {
-    const words = node.textContent.split(" ");
-    words.forEach(word => {
-      const w = word + " ";
-      const wWidth = doc.getTextWidth(w);
+        // TEXT NODE
+        if (node.nodeType === Node.TEXT_NODE) {
+          const words = node.textContent.split(" ");
+          words.forEach(word => {
+            const w = word + " ";
+            const wWidth = doc.getTextWidth(w);
 
-      if (cursorX + wWidth > x + maxWidth) {
-        cursorY += lineHeight;
-        cursorX = x;
+            if (cursorX + wWidth > x + maxWidth) {
+              cursorY += lineHeight;
+              cursorX = x;
+            }
+
+            doc.text(w, cursorX, cursorY);
+            cursorX += wWidth;
+          });
+        }
       }
-
-      doc.text(w, cursorX, cursorY);
-      cursorX += wWidth;
-    });
-  }
-}
 
       temp.childNodes.forEach(renderNode);
 
@@ -1141,34 +1145,34 @@ function renderNode(node) {
       return y;
     }
 
-function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
+    function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
 
-  // clickable google search
-  const searchUrl =
-    "https://www.google.com/search?q=" +
-    encodeURIComponent(qHtml.replace(/<[^>]*>/g, ""));
+      // clickable google search
+      const searchUrl =
+        "https://www.google.com/search?q=" +
+        encodeURIComponent(qHtml.replace(/<[^>]*>/g, ""));
 
-  // draw Q number
-  doc.setFont("times", "bold");
-  doc.setFontSize(12.5);
-  doc.setTextColor(200, 0, 0); // red
+      // draw Q number
+      doc.setFont("times", "bold");
+      doc.setFontSize(12.5);
+      doc.setTextColor(200, 0, 0); // red
 
-  doc.textWithLink(`Q${qNo}.`, x, y, { url: searchUrl });
+      doc.textWithLink(`Q${qNo}.`, x, y, { url: searchUrl });
 
-  // render HTML question text properly
-  doc.setFont("times", "normal");
-  doc.setTextColor(0);
+      // render HTML question text properly
+      doc.setFont("times", "normal");
+      doc.setTextColor(0);
 
-  y = renderHtmlToPdf(
-    doc,
-    qHtml,
-    x + 10,
-    y,
-    width - 10
-  );
+      y = renderHtmlToPdf(
+        doc,
+        qHtml,
+        x + 10,
+        y,
+        width - 10
+      );
 
-  return y + 2;
-}
+      return y + 2;
+    }
 
     async function addImageToPDF(doc, imgSrc, x, y, maxWidth) {
       return new Promise((resolve) => {
@@ -1708,21 +1712,21 @@ function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
       }
 
       document.getElementById('questionText').innerHTML =
-  `<div><strong>Q${num}.</strong> ${q.text}</div>`;
+        `<div><strong>Q${num}.</strong> ${q.text}</div>`;
 
 
       const optionsWrap = document.getElementById('options');
       optionsWrap.innerHTML = s.meta.map((m, idx) => {
-  const pos = idx + 1;
-  const selected =
-    (answers[num] && answers[num].selectedMetaId === m.id) ? 'selected' : '';
+        const pos = idx + 1;
+        const selected =
+          (answers[num] && answers[num].selectedMetaId === m.id) ? 'selected' : '';
 
-  return `
+        return `
     <label class="option-label ${selected}" data-pos="${pos}" data-original-id="${m.id}">
       <div class="badge-pos bg-light text-muted">${pos}</div>
       <div>${m.text}</div>
     </label>`;
-}).join('');
+      }).join('');
 
 
       if (testSubmitted) {
@@ -1922,19 +1926,53 @@ function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
             (a.selectedMetaId === origCorrectId ? 'bg-success text-white' : 'bg-danger text-white') :
             'bg-secondary text-white';
 
-        scHtml += `<div class="card mb-2 ${bg}"><div class="card-body">
-    <p><strong>Q${i}.</strong> ${escapeHtml(q.text)}</p>
+        scHtml += `
+<div class="card mb-3 ${bg}">
+  <div class="card-body">
+
+    <!-- QUESTION NUMBER -->
+    <p><strong>Q${i}.</strong></p>
+
+    <!-- QUESTION TEXT (HTML ENABLED) -->
+    <div class="mb-2">
+      ${q.text}
+    </div>
+
+    <!-- QUESTION IMAGE (IF ANY) -->
+    ${q.image ? `
+      <div class="text-center my-2">
+        <img src="${q.image}"
+             class="img-fluid rounded shadow"
+             style="max-height:200px; object-fit:contain;">
+      </div>
+    ` : ''}
+
+    <!-- USER ANSWER -->
     <p><strong>Your Answer:</strong> ${escapeHtml(userAnsText)}</p>
+
+    <!-- CORRECT ANSWER -->
     <p><strong>Correct Answer ✅:</strong> ${escapeHtml(correctAnsText)}</p>
-  ${explanations[i] ? `<button class="btn btn-sm btn-light mt-2" onclick="showExplanation(${i})">View Explanation</button>` : ''}
-  <div class="mt-2">
-    <a href="https://www.google.com/search?q=${buildSearchQuery(i)}"
-       target="_blank"
-       class="btn btn-sm btn-primary">
-       🔍 Search it on Google
-    </a>
+
+    <!-- EXPLANATION BUTTON -->
+    ${explanations[i] ? `
+      <button class="btn btn-sm btn-light mt-2"
+              onclick="showExplanation(${i})">
+        View Explanation
+      </button>
+    ` : ''}
+
+    <!-- GOOGLE SEARCH -->
+    <div class="mt-2">
+      <a href="https://www.google.com/search?q=${buildSearchQuery(i)}"
+         target="_blank"
+         class="btn btn-sm btn-primary">
+         🔍 Search it on Google
+      </a>
+    </div>
+
   </div>
-      </div></div>`;
+</div>`;
+
       }
 
       document.getElementById('scoreContent').innerHTML = scHtml;
@@ -2058,13 +2096,13 @@ function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
 
 
     function renderHoverHelp() {
-  const box = document.getElementById("hoverHelpBox");
-  const q = questions[currentQuestion];
-  const e = explanations[currentQuestion];
+      const box = document.getElementById("hoverHelpBox");
+      const q = questions[currentQuestion];
+      const e = explanations[currentQuestion];
 
-  if (!q) return;
+      if (!q) return;
 
-  let html = `
+      let html = `
     <p><strong>Q${currentQuestion}.</strong> ${q.text}</p>
     <hr>
     <p style="color:#0d6efd;font-weight:600">
@@ -2072,18 +2110,18 @@ function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
     </p>
   `;
 
-  if (e && e.text) {
-    html += `<p>${e.text}</p>`;
-  }
+      if (e && e.text) {
+        html += `<p>${e.text}</p>`;
+      }
 
-  if (e && e.image) {
-    html += `
+      if (e && e.image) {
+        html += `
       <div class="text-center my-3">
         <img src="${e.image}" class="img-fluid shadow-sm">
       </div>`;
-  }
+      }
 
-  html += `
+      html += `
     <div class="text-center mt-3">
       <a href="https://www.google.com/search?q=${buildSearchQuery(currentQuestion)}"
          target="_blank"
@@ -2093,8 +2131,8 @@ function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
     </div>
   `;
 
-  box.innerHTML = html;
-}
+      box.innerHTML = html;
+    }
 
     document.getElementById('helpBtn').addEventListener('click', () => {
       showHelpForCurrentQuestion();
@@ -2204,40 +2242,40 @@ function drawGoogleClickableQuestion(doc, qNo, qHtml, x, y, width) {
       }
     });
 
-const helpBtn = document.getElementById("helpBtn");
-const hoverBox = document.getElementById("hoverHelpBox");
+    const helpBtn = document.getElementById("helpBtn");
+    const hoverBox = document.getElementById("hoverHelpBox");
 
-let hoverTimeout;
+    let hoverTimeout;
 
-/* SHOW when mouse enters help button */
-helpBtn.addEventListener("mouseenter", () => {
-  if (!window.matchMedia("(hover: hover)").matches) return;
+    /* SHOW when mouse enters help button */
+    helpBtn.addEventListener("mouseenter", () => {
+      if (!window.matchMedia("(hover: hover)").matches) return;
 
-  clearTimeout(hoverTimeout);
-  renderHoverHelp();
-  hoverBox.classList.remove("hidden");
-});
+      clearTimeout(hoverTimeout);
+      renderHoverHelp();
+      hoverBox.classList.remove("hidden");
+    });
 
-/* DO NOT hide immediately */
-helpBtn.addEventListener("mouseleave", () => {
-  hoverTimeout = setTimeout(() => {
-    if (!hoverBox.matches(":hover")) {
-      hoverBox.classList.add("hidden");
-    }
-  }, 200); // small delay = smooth transition
-});
+    /* DO NOT hide immediately */
+    helpBtn.addEventListener("mouseleave", () => {
+      hoverTimeout = setTimeout(() => {
+        if (!hoverBox.matches(":hover")) {
+          hoverBox.classList.add("hidden");
+        }
+      }, 200); // small delay = smooth transition
+    });
 
-/* KEEP OPEN when inside box */
-hoverBox.addEventListener("mouseenter", () => {
-  clearTimeout(hoverTimeout);
-});
+    /* KEEP OPEN when inside box */
+    hoverBox.addEventListener("mouseenter", () => {
+      clearTimeout(hoverTimeout);
+    });
 
-/* HIDE only when leaving both */
-hoverBox.addEventListener("mouseleave", () => {
-  hoverTimeout = setTimeout(() => {
-    hoverBox.classList.add("hidden");
-  }, 200);
-});
+    /* HIDE only when leaving both */
+    hoverBox.addEventListener("mouseleave", () => {
+      hoverTimeout = setTimeout(() => {
+        hoverBox.classList.add("hidden");
+      }, 200);
+    });
 
 
 
