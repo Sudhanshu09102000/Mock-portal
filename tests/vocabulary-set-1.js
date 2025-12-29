@@ -324,255 +324,254 @@ const questions={
 }
 
 
-const explanations={
+const explanations = {
 1: {
-  text: "<b><u>रस्सियों का जाल</u></b><br>Rigging means the system of ropes, cables, or chains used on a ship.<br><i>Rhyming trick:</i> ship की <b>rigging</b> देख, rope-rope लगging 😉",
-  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
+  text: "<b><u>रस्सियों का जाल</u></b><br>Rigging means the system of ropes, cables, or chains used on a ship.<br><b>Synonym:</b> tackle<br><b>Antonym:</b> detachment",
+  image: "images/vocabulary-set-1/1to5.png"
 },
 
 2: {
-  text: "<b><u>अव्यावहारिक आदर्शवादी</u></b><br>Quixotic means extremely idealistic but impractical.<br><i>Rhyming trick:</i> quick सोचा, logic खोया – <b>quixotic</b> होया 😄",
-  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
+  text: "<b><u>अव्यावहारिक आदर्शवादी</u></b><br>Quixotic means extremely idealistic but impractical.<br><b>Synonym:</b> impractical<br><b>Antonym:</b> realistic",
+  image: "images/vocabulary-set-1/1to5.png"
 },
 
 3: {
-  text: "<b><u>दोष मढ़ना</u></b><br>Imputed means to attribute something, usually blame, to someone.<br><i>Rhyming trick:</i> input नहीं, blame put किया – <b>imputed</b> किया 🔁",
-  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
+  text: "<b><u>दोष मढ़ना</u></b><br>Imputed means to attribute something, usually blame, to someone.<br><b>Synonym:</b> attribute<br><b>Antonym:</b> absolve",
+  image: "images/vocabulary-set-1/1to5.png"
 },
 
 4: {
-  text: "<b><u>उत्साही</u></b><br>Fervent means showing strong passion or intensity.<br><i>Rhyming trick:</i> fire-fire emotion – <b>fervent</b> devotion 🔥",
-  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
+  text: "<b><u>उत्साही</u></b><br>Fervent means showing strong passion or intensity.<br><b>Synonym:</b> passionate<br><b>Antonym:</b> indifferent",
+  image: "images/vocabulary-set-1/1to5.png"
 },
 
 5: {
-  text: "<b><u>से परिपूर्ण</u></b><br>Imbued means deeply filled with a quality or feeling.<br><i>Rhyming trick:</i> in-bhuya feeling – mind <b>imbued</b> dealing 💭",
-  image: 'images/d6240350-570f-42ac-8ffd-79eedad77918.png'
+  text: "<b><u>से परिपूर्ण</u></b><br>Imbued means deeply filled with a quality or feeling.<br><b>Synonym:</b> saturated<br><b>Antonym:</b> empty",
+  image: "images/vocabulary-set-1/1to5.png"
 },
 
 6: {
-  text: "<b><u>पुनर्गठित करना</u></b><br>Rejig means to reorganize or rearrange something.<br><i>Rhyming trick:</i> फिर से jig-jig – plan को <b>rejig</b> ⚙️",
-  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
+  text: "<b><u>पुनर्गठित करना</u></b><br>Rejig means to reorganize or rearrange something.<br><b>Synonym:</b> reorganize<br><b>Antonym:</b> disarrange",
+  image: "images/vocabulary-set-1/6to10.png"
 },
 
 7: {
-  text: "<b><u>मृदु शब्द</u></b><br>Euphemism means a polite or mild expression used instead of a harsh one.<br><i>Rhyming trick:</i> you-fame-ism, soft बोल – <b>euphemism</b> goal 🎭",
-  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
+  text: "<b><u>मृदु शब्द</u></b><br>Euphemism means a polite or mild expression used instead of a harsh one.<br><b>Synonym:</b> substitute<br><b>Antonym:</b> vulgarism",
+  image: "images/vocabulary-set-1/6to10.png"
 },
 
 8: {
-  text: "<b><u>लड़ाकू स्वभाव</u></b><br>Feisty means aggressive, energetic, and spirited.<br><i>Rhyming trick:</i> fighty-fighty mood – <b>feisty</b> dude 😤",
-  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
+  text: "<b><u>लड़ाकू स्वभाव</u></b><br>Feisty means aggressive, energetic, and spirited.<br><b>Synonym:</b> spirited<br><b>Antonym:</b> docile",
+  image: "images/vocabulary-set-1/6to10.png"
 },
 
 9: {
-  text: "<b><u>परिश्रमी</u></b><br>Diligent means hard-working and attentive.<br><i>Rhyming trick:</i> daily-daily effort – <b>diligent</b> student 📘",
-  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
+  text: "<b><u>परिश्रमी</u></b><br>Diligent means hard-working and attentive.<br><b>Synonym:</b> industrious<br><b>Antonym:</b> lazy",
+  image: "images/vocabulary-set-1/6to10.png"
 },
 
 10: {
-  text: "<b><u>प्रतिस्पर्धा करना</u></b><br>Contend means to compete or struggle for something.<br><i>Rhyming trick:</i> contest का end – teams <b>contend</b> 🏆",
-  image: 'images/b2db1d57-203e-459e-92b7-9b3fe6622ed2.png'
+  text: "<b><u>प्रतिस्पर्धा करना</u></b><br>Contend means to compete or struggle for something.<br><b>Synonym:</b> compete<br><b>Antonym:</b> surrender",
+  image: "images/vocabulary-set-1/6to10.png"
 },
+
 11: {
-  text: "<b><u>तुच्छ कार्य</u></b><br>Menial means low-status, routine work requiring little skill.<br><i>Rhyming trick:</i> me नीचा feel – job <b>menial</b> deal 😌",
-  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
+  text: "<b><u>तुच्छ कार्य</u></b><br>Menial means low-status, routine work requiring little skill.<br><b>Synonym:</b> trivial<br><b>Antonym:</b> skilled",
+  image: "images/vocabulary-set-1/11to15.png"
 },
 
 12: {
-  text: "<b><u>विफल करना</u></b><br>Thwarting means preventing someone from achieving a goal.<br><i>Rhyming trick:</i> thought में आया, block कर दिया – <b>thwarting</b> किया 🚫",
-  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
+  text: "<b><u>विफल करना</u></b><br>Thwarting means preventing someone from achieving a goal.<br><b>Synonym:</b> obstruct<br><b>Antonym:</b> assist",
+  image: "images/vocabulary-set-1/11to15.png"
 },
 
 13: {
-  text: "<b><u>कठिन</u></b><br>Arduous means very difficult and tiring.<br><i>Rhyming trick:</i> hard-hard रास्ता – <b>arduous</b> रास्ता 🏔️",
-  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
+  text: "<b><u>कठिन</u></b><br>Arduous means very difficult and tiring.<br><b>Synonym:</b> strenuous<br><b>Antonym:</b> easy",
+  image: "images/vocabulary-set-1/11to15.png"
 },
 
 14: {
-  text: "<b><u>प्रकट करना</u></b><br>Evince means to show something clearly.<br><i>Rhyming trick:</i> evidence बन गया – fear <b>evince</b> हो गया 👀",
-  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
+  text: "<b><u>प्रकट करना</u></b><br>Evince means to show something clearly.<br><b>Synonym:</b> demonstrate<br><b>Antonym:</b> conceal",
+  image: "images/vocabulary-set-1/11to15.png"
 },
 
 15: {
-  text: "<b><u>स्वीकार करने योग्य</u></b><br>Amenable means willing to agree or accept.<br><i>Rhyming trick:</i> amen बोला, मान लिया – <b>amenable</b> बन लिया ✔️",
-  image: 'images/393ce295-2ae2-4c5a-aba9-328471ffa285.png'
+  text: "<b><u>स्वीकार करने योग्य</u></b><br>Amenable means willing to agree or accept.<br><b>Synonym:</b> cooperative<br><b>Antonym:</b> resistant",
+  image: "images/vocabulary-set-1/11to15.png"
 },
 
 16: {
-  text: "<b><u>प्रयास</u></b><br>Endeavor means a serious and determined effort.<br><i>Rhyming trick:</i> end तक fight – <b>endeavor</b> right 💪",
-  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
+  text: "<b><u>प्रयास</u></b><br>Endeavor means a serious and determined effort.<br><b>Synonym:</b> attempt<br><b>Antonym:</b> neglect",
+  image: "images/vocabulary-set-1/16to20.png"
 },
 
 17: {
-  text: "<b><u>अर्थ निकालना</u></b><br>Construe means to interpret meaning.<br><i>Rhyming trick:</i> construct किया meaning – <b>construe</b> feeling 🧠",
-  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
+  text: "<b><u>अर्थ निकालना</u></b><br>Construe means to interpret meaning.<br><b>Synonym:</b> interpret<br><b>Antonym:</b> misinterpret",
+  image: "images/vocabulary-set-1/16to20.png"
 },
 
 18: {
-  text: "<b><u>जोर से प्रहार करना</u></b><br>Lashed means struck violently.<br><i>Rhyming trick:</i> lightning flashed, waves <b>lashed</b> 🌊",
-  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
+  text: "<b><u>जोर से प्रहार करना</u></b><br>Lashed means struck violently.<br><b>Synonym:</b> whipped<br><b>Antonym:</b> caressed",
+  image: "images/vocabulary-set-1/16to20.png"
 },
 
 19: {
-  text: "<b><u>मजबूत करना</u></b><br>Bolster means to support or strengthen.<br><i>Rhyming trick:</i> बल बढ़ाया – strength <b>bolster</b> कराया 🛡️",
-  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
+  text: "<b><u>मजबूत करना</u></b><br>Bolster means to support or strengthen.<br><b>Synonym:</b> reinforce<br><b>Antonym:</b> weaken",
+  image: "images/vocabulary-set-1/16to20.png"
 },
 
 20: {
-  text: "<b><u>अनियमित</u></b><br>Erratic means unpredictable or inconsistent.<br><i>Rhyming trick:</i> कभी सही, कभी गलत – <b>erratic</b> हालत 🔄",
-  image: 'images/3b93e6df-c767-414a-bbcb-7748d0cb71c3.png'
+  text: "<b><u>अनियमित</u></b><br>Erratic means unpredictable or inconsistent.<br><b>Synonym:</b> irregular<br><b>Antonym:</b> steady",
+  image: "images/vocabulary-set-1/16to20.png"
 },
+
 21: {
-  text: "<b><u>व्यावहारिक</u></b><br>Pragmatic means dealing with problems practically and realistically.<br><i>Rhyming trick:</i> practical magic – <b>pragmatic</b> logic 🧠",
-  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
+  text: "<b><u>व्यावहारिक</u></b><br>Pragmatic means dealing realistically with problems.<br><b>Synonym:</b> practical<br><b>Antonym:</b> idealistic",
+  image: "images/vocabulary-set-1/21to25.png"
 },
 
 22: {
-  text: "<b><u>घमंड</u></b><br>Snobbery means showing pride and feeling superior to others.<br><i>Rhyming trick:</i> snob का glow – <b>snobbery</b> show 😒",
-  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
+  text: "<b><u>घमंड</u></b><br>Snobbery means showing pride and superiority.<br><b>Synonym:</b> arrogance<br><b>Antonym:</b> humility",
+  image: "images/vocabulary-set-1/21to25.png"
 },
 
 23: {
-  text: "<b><u>नाराज़गी</u></b><br>Umbrage means feeling offended or resentful.<br><i>Rhyming trick:</i> rude का coverage – mood में <b>umbrage</b> 😠",
-  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
+  text: "<b><u>नाराज़गी</u></b><br>Umbrage means feeling offended.<br><b>Synonym:</b> resentment<br><b>Antonym:</b> approval",
+  image: "images/vocabulary-set-1/21to25.png"
 },
 
 24: {
-  text: "<b><u>तड़पना</u></b><br>Weltered means to suffer or move helplessly, often in pain.<br><i>Rhyming trick:</i> pain में shelter – body <b>welter</b> 🩸",
-  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
+  text: "<b><u>तड़पना</u></b><br>Weltered means to suffer helplessly.<br><b>Synonym:</b> writhe<br><b>Antonym:</b> recover",
+  image: "images/vocabulary-set-1/21to25.png"
 },
 
 25: {
-  text: "<b><u>खराब करना</u></b><br>Vitiate means to spoil or impair something.<br><i>Rhyming trick:</i> virus आया, health <b>vitiate</b> 🦠",
-  image: 'images/2fabfef4-98a6-48bd-bb1e-c2a11e76a026.png'
+  text: "<b><u>खराब करना</u></b><br>Vitiate means to spoil or impair.<br><b>Synonym:</b> corrupt<br><b>Antonym:</b> improve",
+  image: "images/vocabulary-set-1/21to25.png"
 },
 
 26: {
-  text: "<b><u>अतिक्रमण करना</u></b><br>Encroach means to intrude gradually on others' territory.<br><i>Rhyming trick:</i> inch by inch approach – <b>encroach</b> 🌱",
-  image: ""
+  text: "<b><u>अतिक्रमण करना</u></b><br>Encroach means to intrude gradually.<br><b>Synonym:</b> intrude<br><b>Antonym:</b> withdraw",
+  image: "images/vocabulary-set-1/26to30.png"
 },
 
 27: {
-  text: "<b><u>गहन</u></b><br>Profound means deep in meaning or insight.<br><i>Rhyming trick:</i> thought का sound – <b>profound</b> 👓",
-  image: ""
+  text: "<b><u>गहन</u></b><br>Profound means deep in meaning or insight.<br><b>Synonym:</b> deep<br><b>Antonym:</b> superficial",
+  image: "images/vocabulary-set-1/26to30.png"
 },
 
 28: {
-  text: "<b><u>भयानक</u></b><br>Hideous means extremely ugly or horrifying.<br><i>Rhyming trick:</i> horror का radius – <b>hideous</b> 😱",
-  image: ""
+  text: "<b><u>भयानक</u></b><br>Hideous means extremely ugly or horrifying.<br><b>Synonym:</b> grotesque<br><b>Antonym:</b> beautiful",
+  image: "images/vocabulary-set-1/26to30.png"
 },
 
 29: {
-  text: "<b><u>चंचल</u></b><br>Skittery means moving quickly and nervously.<br><i>Rhyming trick:</i> skip-skip hurry – <b>skittery</b> 🐭",
-  image: ""
+  text: "<b><u>चंचल</u></b><br>Skittery means nervous and quick-moving.<br><b>Synonym:</b> jittery<br><b>Antonym:</b> calm",
+  image: "images/vocabulary-set-1/26to30.png"
 },
 
 30: {
-  text: "<b><u>रोमिका संरचना</u></b><br>Ciliation means the presence of tiny hair-like projections.<br><i>Rhyming trick:</i> cilia का nation – <b>ciliation</b> 🔬",
-  image: ""
+  text: "<b><u>रोमिका संरचना</u></b><br>Ciliation means the presence of tiny hair-like structures.<br><b>Synonym:</b> hairiness<br><b>Antonym:</b> smoothness",
+  image: "images/vocabulary-set-1/26to30.png"
 },
+
 31: {
-  text: "<b><u>मुकदमा लड़ना</u></b><br>Litigate means to resolve a dispute by taking it to court.<br><i>Rhyming trick:</i> legal fight का gate – court में <b>litigate</b> ⚖️",
-  image: ""
+  text: "<b><u>मुकदमा लड़ना</u></b><br>Litigate means to take a dispute to court.<br><b>Synonym:</b> sue<br><b>Antonym:</b> settle",
+  image: "images/vocabulary-set-1/31to35.png"
 },
 
 32: {
-  text: "<b><u>अलग-थलग</u></b><br>Aloof means keeping distance emotionally or socially.<br><i>Rhyming trick:</i> alone mood proof – <b>aloof</b> attitude 🧊",
-  image: ""
+  text: "<b><u>अलग-थलग</u></b><br>Aloof means emotionally distant.<br><b>Synonym:</b> detached<br><b>Antonym:</b> friendly",
+  image: "images/vocabulary-set-1/31to35.png"
 },
 
 33: {
-  text: "<b><u>अधम</u></b><br>Depraved means morally corrupt or wicked.<br><i>Rhyming trick:</i> deprive हुआ value – <b>depraved</b> nature 😈",
-  image: ""
+  text: "<b><u>अधम</u></b><br>Depraved means morally corrupt.<br><b>Synonym:</b> wicked<br><b>Antonym:</b> virtuous",
+  image: "images/vocabulary-set-1/31to35.png"
 },
 
 34: {
-  text: "<b><u>नाराज़</u></b><br>Miffed means slightly annoyed or offended.<br><i>Rhyming trick:</i> little सा stiff mood – <b>miffed</b> 😤",
-  image: ""
+  text: "<b><u>नाराज़</u></b><br>Miffed means slightly annoyed.<br><b>Synonym:</b> irritated<br><b>Antonym:</b> pleased",
+  image: "images/vocabulary-set-1/31to35.png"
 },
 
 35: {
-  text: "<b><u>संकेत देना</u></b><br>Bode means to be a sign of something bad or good.<br><i>Rhyming trick:</i> future code – clouds <b>bode</b> ☁️",
-  image: ""
+  text: "<b><u>संकेत देना</u></b><br>Bode means to be an omen of something.<br><b>Synonym:</b> foretell<br><b>Antonym:</b> avert",
+  image: "images/vocabulary-set-1/31to35.png"
 },
 
 36: {
-  text: "<b><u>विश्राम</u></b><br>Repose means rest or relaxation, often peaceful.<br><i>Rhyming trick:</i> rest की pose – <b>repose</b> 🛌",
-  image: ""
+  text: "<b><u>विश्राम</u></b><br>Repose means rest or relaxation.<br><b>Synonym:</b> rest<br><b>Antonym:</b> exertion",
+  image: "images/vocabulary-set-1/36to40.png"
 },
 
 37: {
-  text: "<b><u>शारीरिक</u></b><br>Corporeal means relating to the physical body.<br><i>Rhyming trick:</i> core वाला real – <b>corporeal</b> body 🧍",
-  image: ""
+  text: "<b><u>शारीरिक</u></b><br>Corporeal means relating to the physical body.<br><b>Synonym:</b> bodily<br><b>Antonym:</b> spiritual",
+  image: "images/vocabulary-set-1/36to40.png"
 },
 
 38: {
-  text: "<b><u>खतरे में डालना</u></b><br>Imperil means to put someone or something in danger.<br><i>Rhyming trick:</i> improper drill – life <b>imperil</b> 🚨",
-  image: ""
+  text: "<b><u>खतरे में डालना</u></b><br>Imperil means to put in danger.<br><b>Synonym:</b> endanger<br><b>Antonym:</b> safeguard",
+  image: "images/vocabulary-set-1/36to40.png"
 },
 
 39: {
-  text: "<b><u>कड़ी मेहनत करना</u></b><br>Toil means to work extremely hard for long hours.<br><i>Rhyming trick:</i> soil में oil – farmers <b>toil</b> 🌾",
-  image: ""
+  text: "<b><u>कड़ी मेहनत करना</u></b><br>Toil means to work extremely hard.<br><b>Synonym:</b> labor<br><b>Antonym:</b> relax",
+  image: "images/vocabulary-set-1/36to40.png"
 },
 
 40: {
-  text: "<b><u>फुर्सत</u></b><br>Leisure means free time for rest or enjoyment.<br><i>Rhyming trick:</i> pleasure का measure – <b>leisure</b> time 🎵",
-  image: ""
+  text: "<b><u>फुर्सत</u></b><br>Leisure means free time for enjoyment.<br><b>Synonym:</b> recreation<br><b>Antonym:</b> work",
+  image: "images/vocabulary-set-1/36to40.png"
 },
+
 41: {
-  text: "<b><u>से परिपूर्ण</u></b><br>Replete means completely filled or well supplied.<br><i>Rhyming trick:</i> repeat-repeat भर गया plate – <b>replete</b> state 🍽️",
-  image: ""
+  text: "<b><u>से परिपूर्ण</u></b><br>Replete means completely filled.<br><b>Synonym:</b> full<br><b>Antonym:</b> empty",
+  image: "images/vocabulary-set-1/41to45.png"
 },
 
 42: {
-  text: "<b><u>पूरी तरह तल्लीन</u></b><br>Engrossed means fully absorbed in something.<br><i>Rhyming trick:</i> engross में loss – world भूल गया boss 🎬",
-  image: ""
+  text: "<b><u>पूरी तरह तल्लीन</u></b><br>Engrossed means fully absorbed.<br><b>Synonym:</b> absorbed<br><b>Antonym:</b> distracted",
+  image: "images/vocabulary-set-1/41to45.png"
 },
 
 43: {
-  text: "<b><u>कड़ी डाँट लगाना</u></b><br>Berate means to scold angrily or harshly.<br><i>Rhyming trick:</i> गुस्से का rate – boss <b>berate</b> 😡",
-  image: ""
+  text: "<b><u>कड़ी डाँट लगाना</u></b><br>Berate means to scold harshly.<br><b>Synonym:</b> reprimand<br><b>Antonym:</b> praise",
+  image: "images/vocabulary-set-1/41to45.png"
 },
 
 44: {
-  text: "<b><u>फँसा देना</u></b><br>Embroil means to involve someone deeply in conflict or trouble.<br><i>Rhyming trick:</i> problem का boil – खुद को <b>embroil</b> 🔥",
-  image: ""
+  text: "<b><u>फँसा देना</u></b><br>Embroil means to involve deeply in conflict.<br><b>Synonym:</b> entangle<br><b>Antonym:</b> disentangle",
+  image: "images/vocabulary-set-1/41to45.png"
 },
 
 45: {
-  text: "<b><u>विश्वसनीय</u></b><br>Plausible means appearing reasonable or believable.<br><i>Rhyming trick:</i> plus-able logic – story <b>plausible</b> ✔️",
-  image: ""
+  text: "<b><u>विश्वसनीय</u></b><br>Plausible means seemingly reasonable.<br><b>Synonym:</b> believable<br><b>Antonym:</b> implausible",
+  image: "images/vocabulary-set-1/41to45.png"
 },
 
 46: {
-  text: "<b><u>प्रभावशाली</u></b><br>Persuasive means able to convince others.<br><i>Rhyming trick:</i> pressure + wave – words <b>persuasive</b> 🌊",
-  image: ""
+  text: "<b><u>प्रभावशाली</u></b><br>Persuasive means able to convince.<br><b>Synonym:</b> convincing<br><b>Antonym:</b> unconvincing",
+  image: "images/vocabulary-set-1/46to50.png"
 },
 
 47: {
-  text: "<b><u>संघ</u></b><br>Sodality means an association or fellowship with a common purpose.<br><i>Rhyming trick:</i> साथ वाली quality – <b>sodality</b> 🤝",
-  image: ""
+  text: "<b><u>संघ</u></b><br>Sodality means an association or fellowship.<br><b>Synonym:</b> fraternity<br><b>Antonym:</b> isolation",
+  image: "images/vocabulary-set-1/46to50.png"
 },
 
 48: {
-  text: "<b><u>उलझन</u></b><br>Imbroglio means a complicated or confusing situation.<br><i>Rhyming trick:</i> in-broke-logic – total <b>imbroglio</b> 🌀",
-  image: ""
+  text: "<b><u>उलझन</u></b><br>Imbroglio means a complicated situation.<br><b>Synonym:</b> mess<br><b>Antonym:</b> simplicity",
+  image: "images/vocabulary-set-1/46to50.png"
 },
 
 49: {
-  text: "<b><u>छोटी नोक-झोंक</u></b><br>Tiff means a minor quarrel or disagreement.<br><i>Rhyming trick:</i> stiff mood shift – small <b>tiff</b> 😐",
-  image: ""
+  text: "<b><u>छोटी नोक-झोंक</u></b><br>Tiff means a minor quarrel.<br><b>Synonym:</b> spat<br><b>Antonym:</b> harmony",
+  image: "images/vocabulary-set-1/46to50.png"
 },
 
 50: {
-  text: "<b><u>मौज-मस्ती करना</u></b><br>Carouse means to drink and celebrate noisily.<br><i>Rhyming trick:</i> party spouse – night <b>carouse</b> 🎉",
-  image: ""
-},
-
-
+  text: "<b><u>मौज-मस्ती करना</u></b><br>Carouse means to drink and celebrate noisily.<br><b>Synonym:</b> revel<br><b>Antonym:</b> abstain",
+  image: "images/vocabulary-set-1/46to50.png"
 }
-
-
-
+};
