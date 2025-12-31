@@ -306,214 +306,66 @@ const questions={
 }
 
 const explanations = {
-1:{
-  text:"Ablution means ritual washing, especially for religious purposes.<br><b>Synonym:</b> cleansing<br><b>Antonym:</b> defilement",
-  image:"images/vocabulary-set-3/1to5.png"
-},
-2:{
-  text:"Bathos refers to an abrupt shift from serious to trivial tone.<br><b>Synonym:</b> anticlimax<br><b>Antonym:</b> elevation",
-  image:"images/vocabulary-set-3/1to5.png"
-},
-3:{
-  text:"Cupidity means extreme greed for wealth.<br><b>Synonym:</b> avarice<br><b>Antonym:</b> generosity",
-  image:"images/vocabulary-set-3/1to5.png"
-},
-4:{
-  text:"Perfidy means betrayal of trust.<br><b>Synonym:</b> treachery<br><b>Antonym:</b> loyalty",
-  image:"images/vocabulary-set-3/1to5.png"
-},
-5:{
-  text:"Revelry means noisy celebration or festivity.<br><b>Synonym:</b> merrymaking<br><b>Antonym:</b> mourning",
-  image:"images/vocabulary-set-3/1to5.png"
-},
+1:{text:"<b><u>हिंदी अर्थ</u></b> : धार्मिक शुद्धि हेतु स्नान <br> Ablution means ritual washing, especially for religious purposes.<br><b>Synonym:</b> purification<br><b>Antonym:</b> defilement",image:"images/vocabulary-set-3/1to5.png"},
+2:{text:"<b><u>हिंदी अर्थ</u></b> : गंभीर से तुच्छ गिरावट <br> Bathos refers to an abrupt drop from serious to trivial.<br><b>Synonym:</b> anticlimax<br><b>Antonym:</b> elevation",image:"images/vocabulary-set-3/1to5.png"},
+3:{text:"<b><u>हिंदी अर्थ</u></b> : लालच <br> Cupidity means extreme greed for wealth.<br><b>Synonym:</b> greed<br><b>Antonym:</b> generosity",image:"images/vocabulary-set-3/1to5.png"},
+4:{text:"<b><u>हिंदी अर्थ</u></b> : विश्वासघात <br> Perfidy means betrayal of trust.<br><b>Synonym:</b> treachery<br><b>Antonym:</b> loyalty",image:"images/vocabulary-set-3/1to5.png"},
+5:{text:"<b><u>हिंदी अर्थ</u></b> : मौज-मस्ती <br> Revelry means noisy celebration.<br><b>Synonym:</b> festivity<br><b>Antonym:</b> sobriety",image:"images/vocabulary-set-3/1to5.png"},
 
-6:{
-  text:"Euphony refers to pleasant or harmonious sound.<br><b>Synonym:</b> melody<br><b>Antonym:</b> cacophony",
-  image:"images/vocabulary-set-3/6to10.png"
-},
-7:{
-  text:"Monologue is a long speech by one person.<br><b>Synonym:</b> soliloquy<br><b>Antonym:</b> dialogue",
-  image:"images/vocabulary-set-3/6to10.png"
-},
-8:{
-  text:"Epilogue is the concluding part of a literary work.<br><b>Synonym:</b> conclusion<br><b>Antonym:</b> prologue",
-  image:"images/vocabulary-set-3/6to10.png"
-},
-9:{
-  text:"Subjugated means brought under control or domination.<br><b>Synonym:</b> subdued<br><b>Antonym:</b> liberated",
-  image:"images/vocabulary-set-3/6to10.png"
-},
-10:{
-  text:"Halting means hesitant or interrupted.<br><b>Synonym:</b> hesitant<br><b>Antonym:</b> fluent",
-  image:"images/vocabulary-set-3/6to10.png"
-},
+6:{text:"<b><u>हिंदी अर्थ</u></b> : मधुर ध्वनि <br> Euphony refers to pleasant sound.<br><b>Synonym:</b> harmony<br><b>Antonym:</b> cacophony",image:"images/vocabulary-set-3/6to10.png"},
+7:{text:"<b><u>हिंदी अर्थ</u></b> : एकल भाषण <br> Monologue is a speech by one person.<br><b>Synonym:</b> soliloquy<br><b>Antonym:</b> dialogue",image:"images/vocabulary-set-3/6to10.png"},
+8:{text:"<b><u>हिंदी अर्थ</u></b> : उपसंहार <br> Epilogue is the concluding section of a work.<br><b>Synonym:</b> conclusion<br><b>Antonym:</b> prologue",image:"images/vocabulary-set-3/6to10.png"},
+9:{text:"<b><u>हिंदी अर्थ</u></b> : अधीन करना <br> Subjugated means brought under control.<br><b>Synonym:</b> enslaved<br><b>Antonym:</b> liberated",image:"images/vocabulary-set-3/6to10.png"},
+10:{text:"<b><u>हिंदी अर्थ</u></b> : हिचकिचाता हुआ <br> Halting means hesitant or interrupted.<br><b>Synonym:</b> hesitant<br><b>Antonym:</b> fluent",image:"images/vocabulary-set-3/6to10.png"},
 
-11:{
-  text:"Ferocious means violently aggressive.<br><b>Synonym:</b> savage<br><b>Antonym:</b> gentle",
-  image:"images/vocabulary-set-3/11to15.png"
-},
-12:{
-  text:"Evade means to avoid cleverly or escape.<br><b>Synonym:</b> dodge<br><b>Antonym:</b> confront",
-  image:"images/vocabulary-set-3/11to15.png"
-},
-13:{
-  text:"Ominous suggests danger or threat.<br><b>Synonym:</b> threatening<br><b>Antonym:</b> reassuring",
-  image:"images/vocabulary-set-3/11to15.png"
-},
-14:{
-  text:"Loathe means to hate intensely.<br><b>Synonym:</b> detest<br><b>Antonym:</b> adore",
-  image:"images/vocabulary-set-3/11to15.png"
-},
-15:{
-  text:"Solidarity means unity and mutual support.<br><b>Synonym:</b> unity<br><b>Antonym:</b> division",
-  image:"images/vocabulary-set-3/11to15.png"
-},
+11:{text:"<b><u>हिंदी अर्थ</u></b> : उग्र <br> Ferocious means violently aggressive.<br><b>Synonym:</b> savage<br><b>Antonym:</b> gentle",image:"images/vocabulary-set-3/11to15.png"},
+12:{text:"<b><u>हिंदी अर्थ</u></b> : टालना <br> Evade means avoid cleverly.<br><b>Synonym:</b> dodge<br><b>Antonym:</b> confront",image:"images/vocabulary-set-3/11to15.png"},
+13:{text:"<b><u>हिंदी अर्थ</u></b> : अशुभ संकेत <br> Ominous suggests threat or danger.<br><b>Synonym:</b> menacing<br><b>Antonym:</b> reassuring",image:"images/vocabulary-set-3/11to15.png"},
+14:{text:"<b><u>हिंदी अर्थ</u></b> : घृणा करना <br> Loathe means to hate intensely.<br><b>Synonym:</b> detest<br><b>Antonym:</b> adore",image:"images/vocabulary-set-3/11to15.png"},
+15:{text:"<b><u>हिंदी अर्थ</u></b> : एकता <br> Solidarity means unity and support.<br><b>Synonym:</b> unity<br><b>Antonym:</b> division",image:"images/vocabulary-set-3/11to15.png"},
 
-16:{
-  text:"Vigil means staying awake to keep watch.<br><b>Synonym:</b> watchfulness<br><b>Antonym:</b> neglect",
-  image:"images/vocabulary-set-3/16to20.png"
-},
-17:{
-  text:"Hearse is a vehicle used to carry a coffin.<br><b>Synonym:</b> funeral car<br><b>Antonym:</b> ambulance",
-  image:"images/vocabulary-set-3/16to20.png"
-},
-18:{
-  text:"Cortege means a funeral procession.<br><b>Synonym:</b> procession<br><b>Antonym:</b> dispersal",
-  image:"images/vocabulary-set-3/16to20.png"
-},
-19:{
-  text:"Solemnly means seriously and formally.<br><b>Synonym:</b> gravely<br><b>Antonym:</b> cheerfully",
-  image:"images/vocabulary-set-3/16to20.png"
-},
-20:{
-  text:"Ignoble means dishonourable or base.<br><b>Synonym:</b> disgraceful<br><b>Antonym:</b> noble",
-  image:"images/vocabulary-set-3/16to20.png"
-},
+16:{text:"<b><u>हिंदी अर्थ</u></b> : जागरण <br> Vigil means staying awake for watch.<br><b>Synonym:</b> watchfulness<br><b>Antonym:</b> neglect",image:"images/vocabulary-set-3/16to20.png"},
+17:{text:"<b><u>हिंदी अर्थ</u></b> : शव वाहन <br> Hearse is a vehicle for carrying a coffin.<br><b>Synonym:</b> funeral car<br><b>Antonym:</b> ambulance",image:"images/vocabulary-set-3/16to20.png"},
+18:{text:"<b><u>हिंदी अर्थ</u></b> : शवयात्रा <br> Cortege means funeral procession.<br><b>Synonym:</b> procession<br><b>Antonym:</b> dispersal",image:"images/vocabulary-set-3/16to20.png"},
+19:{text:"<b><u>हिंदी अर्थ</u></b> : गंभीरता से <br> Solemnly means seriously and formally.<br><b>Synonym:</b> gravely<br><b>Antonym:</b> casually",image:"images/vocabulary-set-3/16to20.png"},
+20:{text:"<b><u>हिंदी अर्थ</u></b> : नीच <br> Ignoble means dishonourable.<br><b>Synonym:</b> shameful<br><b>Antonym:</b> honorable",image:"images/vocabulary-set-3/16to20.png"},
 
-21:{
-  text:"Pity means feeling sympathy for suffering.<br><b>Synonym:</b> compassion<br><b>Antonym:</b> cruelty",
-  image:"images/vocabulary-set-3/21to25.png"
-},
-22:{
-  text:"Aplomb means calm self-confidence.<br><b>Synonym:</b> confidence<br><b>Antonym:</b> diffidence",
-  image:"images/vocabulary-set-3/21to25.png"
-},
-23:{
-  text:"Diffidence means lack of self-confidence.<br><b>Synonym:</b> shyness<br><b>Antonym:</b> confidence",
-  image:"images/vocabulary-set-3/21to25.png"
-},
-24:{
-  text:"Feud means prolonged bitter conflict.<br><b>Synonym:</b> hostility<br><b>Antonym:</b> harmony",
-  image:"images/vocabulary-set-3/21to25.png"
-},
-25:{
-  text:"Corpulent means excessively fat.<br><b>Synonym:</b> obese<br><b>Antonym:</b> lean",
-  image:"images/vocabulary-set-3/21to25.png"
-},
+21:{text:"<b><u>हिंदी अर्थ</u></b> : दया <br> Pity means feeling sympathy for suffering.<br><b>Synonym:</b> compassion<br><b>Antonym:</b> cruelty",image:"images/vocabulary-set-3/21to25.png"},
+22:{text:"<b><u>हिंदी अर्थ</u></b> : आत्मविश्वास <br> Aplomb means calm self-confidence.<br><b>Synonym:</b> poise<br><b>Antonym:</b> diffidence",image:"images/vocabulary-set-3/21to25.png"},
+23:{text:"<b><u>हिंदी अर्थ</u></b> : संकोच <br> Diffidence means lack of confidence.<br><b>Synonym:</b> shyness<br><b>Antonym:</b> confidence",image:"images/vocabulary-set-3/21to25.png"},
+24:{text:"<b><u>हिंदी अर्थ</u></b> : झगड़ा <br> Feud means long conflict.<br><b>Synonym:</b> rivalry<br><b>Antonym:</b> harmony",image:"images/vocabulary-set-3/21to25.png"},
+25:{text:"<b><u>हिंदी अर्थ</u></b> : मोटा <br> Corpulent means excessively fat.<br><b>Synonym:</b> obese<br><b>Antonym:</b> lean",image:"images/vocabulary-set-3/21to25.png"},
 
-26:{
-  text:"Rotund means round in shape.<br><b>Synonym:</b> circular<br><b>Antonym:</b> angular",
-  image:"images/vocabulary-set-3/26to30.png"
-},
-27:{
-  text:"Scrawny means extremely thin and weak.<br><b>Synonym:</b> skinny<br><b>Antonym:</b> muscular",
-  image:"images/vocabulary-set-3/26to30.png"
-},
-28:{
-  text:"Harrowing means extremely distressing.<br><b>Synonym:</b> traumatic<br><b>Antonym:</b> comforting",
-  image:"images/vocabulary-set-3/26to30.png"
-},
-29:{
-  text:"Perishable means likely to spoil quickly.<br><b>Synonym:</b> fragile<br><b>Antonym:</b> durable",
-  image:"images/vocabulary-set-3/26to30.png"
-},
-30:{
-  text:"Besmirch means to damage reputation.<br><b>Synonym:</b> defame<br><b>Antonym:</b> honour",
-  image:"images/vocabulary-set-3/26to30.png"
-},
+  26:{text:"<b><u>हिंदी अर्थ</u></b> : गोल-मटोल <br> Rotund means round in shape or plump.<br><b>Synonym:</b> round<br><b>Antonym:</b> thin",image:"images/vocabulary-set-3/26to30.png"},
+27:{text:"<b><u>हिंदी अर्थ</u></b> : दुबला-पतला <br> Scrawny means extremely thin and weak.<br><b>Synonym:</b> skinny<br><b>Antonym:</b> sturdy",image:"images/vocabulary-set-3/26to30.png"},
+28:{text:"<b><u>हिंदी अर्थ</u></b> : पीड़ादायक <br> Harrowing means extremely distressing.<br><b>Synonym:</b> traumatic<br><b>Antonym:</b> comforting",image:"images/vocabulary-set-3/26to30.png"},
+29:{text:"<b><u>हिंदी अर्थ</u></b> : नाशवान <br> Perishable means easily spoiled.<br><b>Synonym:</b> fragile<br><b>Antonym:</b> durable",image:"images/vocabulary-set-3/26to30.png"},
+30:{text:"<b><u>हिंदी अर्थ</u></b> : बदनाम करना <br> Besmirch means to damage reputation.<br><b>Synonym:</b> defame<br><b>Antonym:</b> honor",image:"images/vocabulary-set-3/26to30.png"},
 
-31:{
-  text:"Bibliophile means a lover of books.<br><b>Synonym:</b> book lover<br><b>Antonym:</b> illiterate",
-  image:"images/vocabulary-set-3/31to35.png"
-},
-32:{
-  text:"Misologist is a person who hates reasoning.<br><b>Synonym:</b> anti-intellectual<br><b>Antonym:</b> logician",
-  image:"images/vocabulary-set-3/31to35.png"
-},
-33:{
-  text:"Perusal means careful reading.<br><b>Synonym:</b> examination<br><b>Antonym:</b> neglect",
-  image:"images/vocabulary-set-3/31to35.png"
-},
-34:{
-  text:"Pertain means to relate to.<br><b>Synonym:</b> concern<br><b>Antonym:</b> differ",
-  image:"images/vocabulary-set-3/31to35.png"
-},
-35:{
-  text:"Tame means not wild.<br><b>Synonym:</b> docile<br><b>Antonym:</b> wild",
-  image:"images/vocabulary-set-3/31to35.png"
-},
+31:{text:"<b><u>हिंदी अर्थ</u></b> : पुस्तक प्रेमी <br> Bibliophile means a lover of books.<br><b>Synonym:</b> booklover<br><b>Antonym:</b> illiterate",image:"images/vocabulary-set-3/31to35.png"},
+32:{text:"<b><u>हिंदी अर्थ</u></b> : तर्क से घृणा करने वाला <br> Misologist is a person who hates reasoning or logic.<br><b>Synonym:</b> anti-rationalist<br><b>Antonym:</b> logician",image:"images/vocabulary-set-3/31to35.png"},
+33:{text:"<b><u>हिंदी अर्थ</u></b> : सावधानीपूर्वक अध्ययन <br> Perusal means careful reading or examination.<br><b>Synonym:</b> scrutiny<br><b>Antonym:</b> neglect",image:"images/vocabulary-set-3/31to35.png"},
+34:{text:"<b><u>हिंदी अर्थ</u></b> : संबंधित होना <br> Pertain means to relate to something.<br><b>Synonym:</b> concern<br><b>Antonym:</b> differ",image:"images/vocabulary-set-3/31to35.png"},
+35:{text:"<b><u>हिंदी अर्थ</u></b> : पालतू <br> Tame means not wild or domesticated.<br><b>Synonym:</b> docile<br><b>Antonym:</b> feral",image:"images/vocabulary-set-3/31to35.png"},
 
-36:{
-  text:"Retain means to keep or hold back.<br><b>Synonym:</b> preserve<br><b>Antonym:</b> discard",
-  image:"images/vocabulary-set-3/36to40.png"
-},
-37:{
-  text:"Grapple means to struggle physically.<br><b>Synonym:</b> wrestle<br><b>Antonym:</b> release",
-  image:"images/vocabulary-set-3/36to40.png"
-},
-38:{
-  text:"Foist means to impose unfairly.<br><b>Synonym:</b> impose<br><b>Antonym:</b> remove",
-  image:"images/vocabulary-set-3/36to40.png"
-},
-39:{
-  text:"Stark means sharply clear or severe.<br><b>Synonym:</b> vivid<br><b>Antonym:</b> vague",
-  image:"images/vocabulary-set-3/36to40.png"
-},
-40:{
-  text:"Rebuff means rejection or refusal.<br><b>Synonym:</b> snub<br><b>Antonym:</b> accept",
-  image:"images/vocabulary-set-3/36to40.png"
-},
+36:{text:"<b><u>हिंदी अर्थ</u></b> : बनाए रखना <br> Retain means to keep or continue to have.<br><b>Synonym:</b> preserve<br><b>Antonym:</b> discard",image:"images/vocabulary-set-3/36to40.png"},
+37:{text:"<b><u>हिंदी अर्थ</u></b> : संघर्ष करना <br> Grapple means to struggle or wrestle.<br><b>Synonym:</b> struggle<br><b>Antonym:</b> surrender",image:"images/vocabulary-set-3/36to40.png"},
+38:{text:"<b><u>हिंदी अर्थ</u></b> : जबरन थोपना <br> Foist means to impose unfairly.<br><b>Synonym:</b> impose<br><b>Antonym:</b> withdraw",image:"images/vocabulary-set-3/36to40.png"},
+39:{text:"<b><u>हिंदी अर्थ</u></b> : तीव्र / स्पष्ट <br> Stark means sharply clear or harsh.<br><b>Synonym:</b> vivid<br><b>Antonym:</b> vague",image:"images/vocabulary-set-3/36to40.png"},
+40:{text:"<b><u>हिंदी अर्थ</u></b> : ठुकराना <br> Rebuff means to reject bluntly.<br><b>Synonym:</b> reject<br><b>Antonym:</b> accept",image:"images/vocabulary-set-3/36to40.png"},
 
-41:{
-  text:"Clamor means loud confused noise.<br><b>Synonym:</b> uproar<br><b>Antonym:</b> silence",
-  image:"images/vocabulary-set-3/41to45.png"
-},
-42:{
-  text:"Impede means to obstruct progress.<br><b>Synonym:</b> hinder<br><b>Antonym:</b> assist",
-  image:"images/vocabulary-set-3/41to45.png"
-},
-43:{
-  text:"Invigorate means to give energy or strength.<br><b>Synonym:</b> energize<br><b>Antonym:</b> weaken",
-  image:"images/vocabulary-set-3/41to45.png"
-},
-44:{
-  text:"Contravene means to violate a rule or law.<br><b>Synonym:</b> breach<br><b>Antonym:</b> obey",
-  image:"images/vocabulary-set-3/41to45.png"
-},
-45:{
-  text:"Mull means to think deeply.<br><b>Synonym:</b> ponder<br><b>Antonym:</b> ignore",
-  image:"images/vocabulary-set-3/41to45.png"
-},
+41:{text:"<b><u>हिंदी अर्थ</u></b> : शोर-शराबा <br> Clamor means loud confused noise.<br><b>Synonym:</b> uproar<br><b>Antonym:</b> silence",image:"images/vocabulary-set-3/41to45.png"},
+42:{text:"<b><u>हिंदी अर्थ</u></b> : बाधा डालना <br> Impede means to obstruct progress.<br><b>Synonym:</b> hinder<br><b>Antonym:</b> assist",image:"images/vocabulary-set-3/41to45.png"},
+43:{text:"<b><u>हिंदी अर्थ</u></b> : स्फूर्ति देना <br> Invigorate means to give energy or strength.<br><b>Synonym:</b> energize<br><b>Antonym:</b> weaken",image:"images/vocabulary-set-3/41to45.png"},
+44:{text:"<b><u>हिंदी अर्थ</u></b> : उल्लंघन करना <br> Contravene means to violate a rule or law.<br><b>Synonym:</b> violate<br><b>Antonym:</b> comply",image:"images/vocabulary-set-3/41to45.png"},
+45:{text:"<b><u>हिंदी अर्थ</u></b> : मनन करना <br> Mull means to think deeply.<br><b>Synonym:</b> ponder<br><b>Antonym:</b> ignore",image:"images/vocabulary-set-3/41to45.png"},
 
-46:{
-  text:"Vexed means annoyed or irritated.<br><b>Synonym:</b> irritated<br><b>Antonym:</b> pleased",
-  image:"images/vocabulary-set-3/46to50.png"
-},
-47:{
-  text:"Smear means to damage reputation.<br><b>Synonym:</b> defame<br><b>Antonym:</b> praise",
-  image:"images/vocabulary-set-3/46to50.png"
-},
-48:{
-  text:"Impetus means a driving force.<br><b>Synonym:</b> momentum<br><b>Antonym:</b> hindrance",
-  image:"images/vocabulary-set-3/46to50.png"
-},
-49:{
-  text:"Imbued means filled with a quality.<br><b>Synonym:</b> infused<br><b>Antonym:</b> emptied",
-  image:"images/vocabulary-set-3/46to50.png"
-},
-50:{
-  text:"Calumny means false accusation.<br><b>Synonym:</b> slander<br><b>Antonym:</b> praise",
-  image:"images/vocabulary-set-3/46to50.png"
-}
+46:{text:"<b><u>हिंदी अर्थ</u></b> : चिढ़ा हुआ <br> Vexed means irritated or annoyed.<br><b>Synonym:</b> annoyed<br><b>Antonym:</b> pleased",image:"images/vocabulary-set-3/46to50.png"},
+47:{text:"<b><u>हिंदी अर्थ</u></b> : बदनाम करना <br> Smear means to harm reputation falsely.<br><b>Synonym:</b> slander<br><b>Antonym:</b> praise",image:"images/vocabulary-set-3/46to50.png"},
+48:{text:"<b><u>हिंदी अर्थ</u></b> : प्रेरक शक्ति <br> Impetus means driving force.<br><b>Synonym:</b> momentum<br><b>Antonym:</b> hindrance",image:"images/vocabulary-set-3/46to50.png"},
+49:{text:"<b><u>हिंदी अर्थ</u></b> : से परिपूर्ण <br> Imbued means filled with a quality.<br><b>Synonym:</b> infused<br><b>Antonym:</b> empty",image:"images/vocabulary-set-3/46to50.png"},
+50:{text:"<b><u>हिंदी अर्थ</u></b> : मिथ्या आरोप <br> Calumny means false and malicious accusation.<br><b>Synonym:</b> defamation<br><b>Antonym:</b> praise",image:"images/vocabulary-set-3/46to50.png"}
+
+
+
 };
-
