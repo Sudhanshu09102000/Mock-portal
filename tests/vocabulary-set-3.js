@@ -308,211 +308,212 @@ const questions={
 const explanations = {
 1:{
   text:"Ablution means ritual washing, especially for religious purposes.<br><b>Synonym:</b> cleansing<br><b>Antonym:</b> defilement",
-  image:"/images/vocabulary-set-3/1to5.png"
+  image:"images/vocabulary-set-3/1to5.png"
 },
 2:{
   text:"Bathos refers to an abrupt shift from serious to trivial tone.<br><b>Synonym:</b> anticlimax<br><b>Antonym:</b> elevation",
-  image:"/images/vocabulary-set-3/1to5.png"
+  image:"images/vocabulary-set-3/1to5.png"
 },
 3:{
   text:"Cupidity means extreme greed for wealth.<br><b>Synonym:</b> avarice<br><b>Antonym:</b> generosity",
-  image:"/images/vocabulary-set-3/1to5.png"
+  image:"images/vocabulary-set-3/1to5.png"
 },
 4:{
   text:"Perfidy means betrayal of trust.<br><b>Synonym:</b> treachery<br><b>Antonym:</b> loyalty",
-  image:"/images/vocabulary-set-3/1to5.png"
+  image:"images/vocabulary-set-3/1to5.png"
 },
 5:{
   text:"Revelry means noisy celebration or festivity.<br><b>Synonym:</b> merrymaking<br><b>Antonym:</b> mourning",
-  image:"/images/vocabulary-set-3/1to5.png"
+  image:"images/vocabulary-set-3/1to5.png"
 },
 
 6:{
   text:"Euphony refers to pleasant or harmonious sound.<br><b>Synonym:</b> melody<br><b>Antonym:</b> cacophony",
-  image:"/images/vocabulary-set-3/6to10.png"
+  image:"images/vocabulary-set-3/6to10.png"
 },
 7:{
   text:"Monologue is a long speech by one person.<br><b>Synonym:</b> soliloquy<br><b>Antonym:</b> dialogue",
-  image:"/images/vocabulary-set-3/6to10.png"
+  image:"images/vocabulary-set-3/6to10.png"
 },
 8:{
   text:"Epilogue is the concluding part of a literary work.<br><b>Synonym:</b> conclusion<br><b>Antonym:</b> prologue",
-  image:"/images/vocabulary-set-3/6to10.png"
+  image:"images/vocabulary-set-3/6to10.png"
 },
 9:{
   text:"Subjugated means brought under control or domination.<br><b>Synonym:</b> subdued<br><b>Antonym:</b> liberated",
-  image:"/images/vocabulary-set-3/6to10.png"
+  image:"images/vocabulary-set-3/6to10.png"
 },
 10:{
   text:"Halting means hesitant or interrupted.<br><b>Synonym:</b> hesitant<br><b>Antonym:</b> fluent",
-  image:"/images/vocabulary-set-3/6to10.png"
+  image:"images/vocabulary-set-3/6to10.png"
 },
 
 11:{
   text:"Ferocious means violently aggressive.<br><b>Synonym:</b> savage<br><b>Antonym:</b> gentle",
-  image:"/images/vocabulary-set-3/11to15.png"
+  image:"images/vocabulary-set-3/11to15.png"
 },
 12:{
   text:"Evade means to avoid cleverly or escape.<br><b>Synonym:</b> dodge<br><b>Antonym:</b> confront",
-  image:"/images/vocabulary-set-3/11to15.png"
+  image:"images/vocabulary-set-3/11to15.png"
 },
 13:{
   text:"Ominous suggests danger or threat.<br><b>Synonym:</b> threatening<br><b>Antonym:</b> reassuring",
-  image:"/images/vocabulary-set-3/11to15.png"
+  image:"images/vocabulary-set-3/11to15.png"
 },
 14:{
   text:"Loathe means to hate intensely.<br><b>Synonym:</b> detest<br><b>Antonym:</b> adore",
-  image:"/images/vocabulary-set-3/11to15.png"
+  image:"images/vocabulary-set-3/11to15.png"
 },
 15:{
   text:"Solidarity means unity and mutual support.<br><b>Synonym:</b> unity<br><b>Antonym:</b> division",
-  image:"/images/vocabulary-set-3/11to15.png"
+  image:"images/vocabulary-set-3/11to15.png"
 },
 
 16:{
   text:"Vigil means staying awake to keep watch.<br><b>Synonym:</b> watchfulness<br><b>Antonym:</b> neglect",
-  image:"/images/vocabulary-set-3/16to20.png"
+  image:"images/vocabulary-set-3/16to20.png"
 },
 17:{
   text:"Hearse is a vehicle used to carry a coffin.<br><b>Synonym:</b> funeral car<br><b>Antonym:</b> ambulance",
-  image:"/images/vocabulary-set-3/16to20.png"
+  image:"images/vocabulary-set-3/16to20.png"
 },
 18:{
   text:"Cortege means a funeral procession.<br><b>Synonym:</b> procession<br><b>Antonym:</b> dispersal",
-  image:"/images/vocabulary-set-3/16to20.png"
+  image:"images/vocabulary-set-3/16to20.png"
 },
 19:{
   text:"Solemnly means seriously and formally.<br><b>Synonym:</b> gravely<br><b>Antonym:</b> cheerfully",
-  image:"/images/vocabulary-set-3/16to20.png"
+  image:"images/vocabulary-set-3/16to20.png"
 },
 20:{
   text:"Ignoble means dishonourable or base.<br><b>Synonym:</b> disgraceful<br><b>Antonym:</b> noble",
-  image:"/images/vocabulary-set-3/16to20.png"
+  image:"images/vocabulary-set-3/16to20.png"
 },
 
 21:{
   text:"Pity means feeling sympathy for suffering.<br><b>Synonym:</b> compassion<br><b>Antonym:</b> cruelty",
-  image:"/images/vocabulary-set-3/21to25.png"
+  image:"images/vocabulary-set-3/21to25.png"
 },
 22:{
   text:"Aplomb means calm self-confidence.<br><b>Synonym:</b> confidence<br><b>Antonym:</b> diffidence",
-  image:"/images/vocabulary-set-3/21to25.png"
+  image:"images/vocabulary-set-3/21to25.png"
 },
 23:{
   text:"Diffidence means lack of self-confidence.<br><b>Synonym:</b> shyness<br><b>Antonym:</b> confidence",
-  image:"/images/vocabulary-set-3/21to25.png"
+  image:"images/vocabulary-set-3/21to25.png"
 },
 24:{
   text:"Feud means prolonged bitter conflict.<br><b>Synonym:</b> hostility<br><b>Antonym:</b> harmony",
-  image:"/images/vocabulary-set-3/21to25.png"
+  image:"images/vocabulary-set-3/21to25.png"
 },
 25:{
   text:"Corpulent means excessively fat.<br><b>Synonym:</b> obese<br><b>Antonym:</b> lean",
-  image:"/images/vocabulary-set-3/21to25.png"
+  image:"images/vocabulary-set-3/21to25.png"
 },
 
 26:{
   text:"Rotund means round in shape.<br><b>Synonym:</b> circular<br><b>Antonym:</b> angular",
-  image:"/images/vocabulary-set-3/26to30.png"
+  image:"images/vocabulary-set-3/26to30.png"
 },
 27:{
   text:"Scrawny means extremely thin and weak.<br><b>Synonym:</b> skinny<br><b>Antonym:</b> muscular",
-  image:"/images/vocabulary-set-3/26to30.png"
+  image:"images/vocabulary-set-3/26to30.png"
 },
 28:{
   text:"Harrowing means extremely distressing.<br><b>Synonym:</b> traumatic<br><b>Antonym:</b> comforting",
-  image:"/images/vocabulary-set-3/26to30.png"
+  image:"images/vocabulary-set-3/26to30.png"
 },
 29:{
   text:"Perishable means likely to spoil quickly.<br><b>Synonym:</b> fragile<br><b>Antonym:</b> durable",
-  image:"/images/vocabulary-set-3/26to30.png"
+  image:"images/vocabulary-set-3/26to30.png"
 },
 30:{
   text:"Besmirch means to damage reputation.<br><b>Synonym:</b> defame<br><b>Antonym:</b> honour",
-  image:"/images/vocabulary-set-3/26to30.png"
+  image:"images/vocabulary-set-3/26to30.png"
 },
 
 31:{
   text:"Bibliophile means a lover of books.<br><b>Synonym:</b> book lover<br><b>Antonym:</b> illiterate",
-  image:"/images/vocabulary-set-3/31to35.png"
+  image:"images/vocabulary-set-3/31to35.png"
 },
 32:{
   text:"Misologist is a person who hates reasoning.<br><b>Synonym:</b> anti-intellectual<br><b>Antonym:</b> logician",
-  image:"/images/vocabulary-set-3/31to35.png"
+  image:"images/vocabulary-set-3/31to35.png"
 },
 33:{
   text:"Perusal means careful reading.<br><b>Synonym:</b> examination<br><b>Antonym:</b> neglect",
-  image:"/images/vocabulary-set-3/31to35.png"
+  image:"images/vocabulary-set-3/31to35.png"
 },
 34:{
   text:"Pertain means to relate to.<br><b>Synonym:</b> concern<br><b>Antonym:</b> differ",
-  image:"/images/vocabulary-set-3/31to35.png"
+  image:"images/vocabulary-set-3/31to35.png"
 },
 35:{
   text:"Tame means not wild.<br><b>Synonym:</b> docile<br><b>Antonym:</b> wild",
-  image:"/images/vocabulary-set-3/31to35.png"
+  image:"images/vocabulary-set-3/31to35.png"
 },
 
 36:{
   text:"Retain means to keep or hold back.<br><b>Synonym:</b> preserve<br><b>Antonym:</b> discard",
-  image:"/images/vocabulary-set-3/36to40.png"
+  image:"images/vocabulary-set-3/36to40.png"
 },
 37:{
   text:"Grapple means to struggle physically.<br><b>Synonym:</b> wrestle<br><b>Antonym:</b> release",
-  image:"/images/vocabulary-set-3/36to40.png"
+  image:"images/vocabulary-set-3/36to40.png"
 },
 38:{
   text:"Foist means to impose unfairly.<br><b>Synonym:</b> impose<br><b>Antonym:</b> remove",
-  image:"/images/vocabulary-set-3/36to40.png"
+  image:"images/vocabulary-set-3/36to40.png"
 },
 39:{
   text:"Stark means sharply clear or severe.<br><b>Synonym:</b> vivid<br><b>Antonym:</b> vague",
-  image:"/images/vocabulary-set-3/36to40.png"
+  image:"images/vocabulary-set-3/36to40.png"
 },
 40:{
   text:"Rebuff means rejection or refusal.<br><b>Synonym:</b> snub<br><b>Antonym:</b> accept",
-  image:"/images/vocabulary-set-3/36to40.png"
+  image:"images/vocabulary-set-3/36to40.png"
 },
 
 41:{
   text:"Clamor means loud confused noise.<br><b>Synonym:</b> uproar<br><b>Antonym:</b> silence",
-  image:"/images/vocabulary-set-3/41to45.png"
+  image:"images/vocabulary-set-3/41to45.png"
 },
 42:{
   text:"Impede means to obstruct progress.<br><b>Synonym:</b> hinder<br><b>Antonym:</b> assist",
-  image:"/images/vocabulary-set-3/41to45.png"
+  image:"images/vocabulary-set-3/41to45.png"
 },
 43:{
   text:"Invigorate means to give energy or strength.<br><b>Synonym:</b> energize<br><b>Antonym:</b> weaken",
-  image:"/images/vocabulary-set-3/41to45.png"
+  image:"images/vocabulary-set-3/41to45.png"
 },
 44:{
   text:"Contravene means to violate a rule or law.<br><b>Synonym:</b> breach<br><b>Antonym:</b> obey",
-  image:"/images/vocabulary-set-3/41to45.png"
+  image:"images/vocabulary-set-3/41to45.png"
 },
 45:{
   text:"Mull means to think deeply.<br><b>Synonym:</b> ponder<br><b>Antonym:</b> ignore",
-  image:"/images/vocabulary-set-3/41to45.png"
+  image:"images/vocabulary-set-3/41to45.png"
 },
 
 46:{
   text:"Vexed means annoyed or irritated.<br><b>Synonym:</b> irritated<br><b>Antonym:</b> pleased",
-  image:"/images/vocabulary-set-3/46to50.png"
+  image:"images/vocabulary-set-3/46to50.png"
 },
 47:{
   text:"Smear means to damage reputation.<br><b>Synonym:</b> defame<br><b>Antonym:</b> praise",
-  image:"/images/vocabulary-set-3/46to50.png"
+  image:"images/vocabulary-set-3/46to50.png"
 },
 48:{
   text:"Impetus means a driving force.<br><b>Synonym:</b> momentum<br><b>Antonym:</b> hindrance",
-  image:"/images/vocabulary-set-3/46to50.png"
+  image:"images/vocabulary-set-3/46to50.png"
 },
 49:{
   text:"Imbued means filled with a quality.<br><b>Synonym:</b> infused<br><b>Antonym:</b> emptied",
-  image:"/images/vocabulary-set-3/46to50.png"
+  image:"images/vocabulary-set-3/46to50.png"
 },
 50:{
   text:"Calumny means false accusation.<br><b>Synonym:</b> slander<br><b>Antonym:</b> praise",
-  image:"/images/vocabulary-set-3/46to50.png"
+  image:"images/vocabulary-set-3/46to50.png"
 }
 };
+
