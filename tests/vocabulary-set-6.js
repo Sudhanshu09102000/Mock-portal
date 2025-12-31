@@ -351,255 +351,254 @@ const questions={
 
 }
 
-const explanations={
-    1: {
-  text: "<b><u>संस्कृति से अनभिज्ञ व्यक्ति</u></b><br>Philistine refers to a person who shows indifference or hostility towards art, culture, or intellectual pursuits.<br><b>Rhyming trick:</b> कला seen? नहीं seen — <b>philistine</b> 😄",
-  image: ""
+const explanations = {
+1:{
+text:"<b><u>संस्कृति से अनभिज्ञ व्यक्ति</u></b><br>Philistine refers to a person who shows indifference or hostility towards art, culture, or intellectual pursuits.<br><b>Synonym:</b><br>boorish<br><b>Antonym:</b><br>cultured",
+image:"images/vocabulary-set-6/1to5.png"
 },
 
-2: {
-  text: "<b><u>शपथ लेकर झूठ बोलना</u></b><br>Perjury means deliberately giving false testimony while under oath in a court of law.<br><b>Rhyming trick:</b> oath लिया, झूठ बोला — <b>perjury</b> होला",
-  image: ""
+2:{
+text:"<b><u>शपथ लेकर झूठ बोलना</u></b><br>Perjury means deliberately giving false testimony while under oath in a court of law.<br><b>Synonym:</b><br>falsehood<br><b>Antonym:</b><br>truthfulness",
+image:"images/vocabulary-set-6/1to5.png"
 },
 
-3: {
-  text: "<b><u>मध्यस्थ निर्णायक</u></b><br>An arbitrator is a neutral third party who settles disputes outside the court.<br><b>Rhyming trick:</b> argue-rator आया — फैसला <b>arbitrator</b> लाया",
-  image: ""
+3:{
+text:"<b><u>मध्यस्थ निर्णायक</u></b><br>An arbitrator is a neutral third party who settles disputes outside the court.<br><b>Synonym:</b><br>mediator<br><b>Antonym:</b><br>partisan",
+image:"images/vocabulary-set-6/1to5.png"
 },
 
-4: {
-  text: "<b><u>पूर्व संकेत</u></b><br>An omen is a sign believed to indicate a future event, often bad.<br><b>Rhyming trick:</b> future hone — दिखा <b>omen</b>",
-  image: ""
+4:{
+text:"<b><u>पूर्व संकेत</u></b><br>An omen is a sign believed to indicate a future event, often bad.<br><b>Synonym:</b><br>portent<br><b>Antonym:</b><br>certainty",
+image:"images/vocabulary-set-6/1to5.png"
 },
 
-5: {
-  text: "<b><u>झूठा आरोप</u></b><br>Aspersion means a damaging or false accusation against someone.<br><b>Rhyming trick:</b> accusation version — <b>aspersion</b>",
-  image: ""
+5:{
+text:"<b><u>झूठा आरोप</u></b><br>Aspersion means a damaging or false accusation against someone.<br><b>Synonym:</b><br>slander<br><b>Antonym:</b><br>praise",
+image:"images/vocabulary-set-6/1to5.png"
 },
 
-6: {
-  text: "<b><u>आकर्षण</u></b><br>Allure means a strong attractive quality or charm.<br><b>Rhyming trick:</b> aao lure — है <b>allure</b>",
-  image: ""
+6:{
+text:"<b><u>आकर्षण</u></b><br>Allure means a strong attractive quality or charm.<br><b>Synonym:</b><br>appeal<br><b>Antonym:</b><br>repulsion",
+image:"images/vocabulary-set-6/6to10.png"
 },
 
-7: {
-  text: "<b><u>भोजन का विशेषज्ञ</u></b><br>A gourmet is a person who has refined taste in food and drink.<br><b>Rhyming trick:</b> good-meat rate — <b>gourmet</b>",
-  image: ""
+7:{
+text:"<b><u>भोजन का विशेषज्ञ</u></b><br>A gourmet is a person who has refined taste in food and drink.<br><b>Synonym:</b><br>epicure<br><b>Antonym:</b><br>glutton",
+image:"images/vocabulary-set-6/6to10.png"
 },
 
-8: {
-  text: "<b><u>अत्यधिक महँगा</u></b><br>Exorbitant describes something that is unreasonably high in cost.<br><b>Rhyming trick:</b> extra-बढ़ा rent — <b>exorbitant</b>",
-  image: ""
+8:{
+text:"<b><u>अत्यधिक महँगा</u></b><br>Exorbitant describes something that is unreasonably high in cost.<br><b>Synonym:</b><br>excessive<br><b>Antonym:</b><br>reasonable",
+image:"images/vocabulary-set-6/6to10.png"
 },
 
-9: {
-  text: "<b><u>व्यवस्था को कमजोर करना</u></b><br>Subvert means to undermine or overthrow an established system.<br><b>Rhyming trick:</b> system invert — <b>subvert</b>",
-  image: ""
+9:{
+text:"<b><u>व्यवस्था को कमजोर करना</u></b><br>Subvert means to undermine or overthrow an established system.<br><b>Synonym:</b><br>undermine<br><b>Antonym:</b><br>support",
+image:"images/vocabulary-set-6/6to10.png"
 },
 
-10: {
-  text: "<b><u>लापरवाह साहस</u></b><br>Temerity refers to reckless or overconfident boldness.<br><b>Rhyming trick:</b> tame नहीं, daring — <b>temerity</b>",
-  image: ""
+10:{
+text:"<b><u>लापरवाह साहस</u></b><br>Temerity refers to reckless or overconfident boldness.<br><b>Synonym:</b><br>audacity<br><b>Antonym:</b><br>caution",
+image:"images/vocabulary-set-6/6to10.png"
 },
 
-11: {
-  text: "<b><u>अहंकारी</u></b><br>Pompous means showing exaggerated self-importance.<br><b>Rhyming trick:</b> pump-up boss — <b>pompous</b>",
-  image: ""
+11:{
+text:"<b><u>अहंकारी</u></b><br>Pompous means showing exaggerated self-importance.<br><b>Synonym:</b><br>arrogant<br><b>Antonym:</b><br>modest",
+image:"images/vocabulary-set-6/11to15.png"
 },
 
-12: {
-  text: "<b><u>अत्यधिक सजाया हुआ</u></b><br>Ornate means elaborately decorated.<br><b>Rhyming trick:</b> decor-rate — <b>ornate</b>",
-  image: ""
+12:{
+text:"<b><u>अत्यधिक सजाया हुआ</u></b><br>Ornate means elaborately decorated.<br><b>Synonym:</b><br>decorative<br><b>Antonym:</b><br>plain",
+image:"images/vocabulary-set-6/11to15.png"
 },
 
-13: {
-  text: "<b><u>जब्त करना</u></b><br>Confiscate means to seize property officially, usually by authority.<br><b>Rhyming trick:</b> police ने seize किया — <b>confiscate</b>",
-  image: ""
+13:{
+text:"<b><u>जब्त करना</u></b><br>Confiscate means to seize property officially.<br><b>Synonym:</b><br>seize<br><b>Antonym:</b><br>return",
+image:"images/vocabulary-set-6/11to15.png"
 },
 
-14: {
-  text: "<b><u>कुछ लोगों का शासन</u></b><br>Oligarchy is a form of government ruled by a small group.<br><b>Rhyming trick:</b> only few की hierarchy — <b>oligarchy</b>",
-  image: ""
+14:{
+text:"<b><u>कुछ लोगों का शासन</u></b><br>Oligarchy is a form of government ruled by a small group.<br><b>Synonym:</b><br>clique-rule<br><b>Antonym:</b><br>democracy",
+image:"images/vocabulary-set-6/11to15.png"
 },
 
-15: {
-  text: "<b><u>एक व्यक्ति का शासन</u></b><br>Autocracy means absolute power held by a single ruler.<br><b>Rhyming trick:</b> auto चला अकेला — <b>autocracy</b>",
-  image: ""
+15:{
+text:"<b><u>एक व्यक्ति का शासन</u></b><br>Autocracy means absolute power held by a single ruler.<br><b>Synonym:</b><br>despotism<br><b>Antonym:</b><br>democracy",
+image:"images/vocabulary-set-6/11to15.png"
+},
+
+16:{
+text:"<b><u>सहायक</u></b><br>Ancillary refers to something that provides support to the main activity.<br><b>Synonym:</b><br>auxiliary<br><b>Antonym:</b><br>primary",
+image:"images/vocabulary-set-6/16to20.png"
+},
+
+17:{
+text:"<b><u>अनावश्यक दोहराव</u></b><br>Redundant means unnecessary because of repetition.<br><b>Synonym:</b><br>superfluous<br><b>Antonym:</b><br>essential",
+image:"images/vocabulary-set-6/16to20.png"
+},
+
+18:{
+text:"<b><u>अत्यधिक चापलूस</u></b><br>Obsequious means excessively obedient or flattering.<br><b>Synonym:</b><br>servile<br><b>Antonym:</b><br>assertive",
+image:"images/vocabulary-set-6/16to20.png"
+},
+
+19:{
+text:"<b><u>आदर्श योग्य</u></b><br>Exemplary means serving as a model worthy of imitation.<br><b>Synonym:</b><br>ideal<br><b>Antonym:</b><br>improper",
+image:"images/vocabulary-set-6/16to20.png"
+},
+
+20:{
+text:"<b><u>पेचीदा समस्या</u></b><br>Conundrum refers to a confusing problem.<br><b>Synonym:</b><br>puzzle<br><b>Antonym:</b><br>solution",
+image:"images/vocabulary-set-6/16to20.png"
+},
+
+21:{
+text:"<b><u>अनिश्चित</u></b><br>Precarious describes a risky or unstable situation.<br><b>Synonym:</b><br>unstable<br><b>Antonym:</b><br>secure",
+image:"images/vocabulary-set-6/21to25.png"
+},
+
+22:{
+text:"<b><u>क्षणभंगुर</u></b><br>Ephemeral means lasting for a very short time.<br><b>Synonym:</b><br>temporary<br><b>Antonym:</b><br>permanent",
+image:"images/vocabulary-set-6/21to25.png"
+},
+
+23:{
+text:"<b><u>सौभाग्यपूर्ण संयोग</u></b><br>Serendipity is a pleasant discovery by chance.<br><b>Synonym:</b><br>fortune<br><b>Antonym:</b><br>misfortune",
+image:"images/vocabulary-set-6/21to25.png"
+},
+
+24:{
+text:"<b><u>अत्यधिक जटिल</u></b><br>Convoluted means extremely complex.<br><b>Synonym:</b><br>complicated<br><b>Antonym:</b><br>simple",
+image:"images/vocabulary-set-6/21to25.png"
+},
+
+25:{
+text:"<b><u>बिगाड़ना</u></b><br>Aggravate means to make a bad situation worse.<br><b>Synonym:</b><br>worsen<br><b>Antonym:</b><br>alleviate",
+image:"images/vocabulary-set-6/21to25.png"
+},
+
+26:{
+text:"<b><u>कम करना</u></b><br>Mitigate means to reduce severity.<br><b>Synonym:</b><br>lessen<br><b>Antonym:</b><br>intensify",
+image:"images/vocabulary-set-6/26to30.png"
+},
+
+27:{
+text:"<b><u>शीघ्र</u></b><br>Expeditious means done quickly and efficiently.<br><b>Synonym:</b><br>swift<br><b>Antonym:</b><br>slow",
+image:"images/vocabulary-set-6/26to30.png"
+},
+
+28:{
+text:"<b><u>जल्दबाज़</u></b><br>Hasty means done with excessive speed.<br><b>Synonym:</b><br>rash<br><b>Antonym:</b><br>deliberate",
+image:"images/vocabulary-set-6/26to30.png"
+},
+
+29:{
+text:"<b><u>अथाह</u></b><br>Fathomless means immeasurably deep.<br><b>Synonym:</b><br>bottomless<br><b>Antonym:</b><br>shallow",
+image:"images/vocabulary-set-6/26to30.png"
+},
+
+30:{
+text:"<b><u>पक्षियों का घर</u></b><br>An aviary is an enclosure for birds.<br><b>Synonym:</b><br>birdhouse<br><b>Antonym:</b><br>cage",
+image:"images/vocabulary-set-6/26to30.png"
+},
+
+31:{
+text:"<b><u>मधुमक्खियों का छत्ता</u></b><br>A beehive is the structure where bees live.<br><b>Synonym:</b><br>hive<br><b>Antonym:</b><br>emptiness",
+image:"images/vocabulary-set-6/31to35.png"
+},
+
+32:{
+text:"<b><u>मधुमक्खी पालन स्थान</u></b><br>An apiary is a place where beehives are kept.<br><b>Synonym:</b><br>bee-farm<br><b>Antonym:</b><br>wilderness",
+image:"images/vocabulary-set-6/31to35.png"
+},
+
+33:{
+text:"<b><u>नैतिक ईमानदारी</u></b><br>Rectitude means moral uprightness.<br><b>Synonym:</b><br>integrity<br><b>Antonym:</b><br>corruption",
+image:"images/vocabulary-set-6/31to35.png"
+},
+
+34:{
+text:"<b><u>आँख मारना</u></b><br>Wink means closing one eye briefly.<br><b>Synonym:</b><br>blink<br><b>Antonym:</b><br>stare",
+image:"images/vocabulary-set-6/31to35.png"
+},
+
+35:{
+text:"<b><u>धर्मशास्त्र</u></b><br>Theology is the study of religion and God.<br><b>Synonym:</b><br>divinity<br><b>Antonym:</b><br>atheism",
+image:"images/vocabulary-set-6/31to35.png"
+},
+
+36:{
+text:"<b><u>सिकोड़ना</u></b><br>Constrict means to tighten or narrow.<br><b>Synonym:</b><br>compress<br><b>Antonym:</b><br>expand",
+image:"images/vocabulary-set-6/36to40.png"
+},
+
+37:{
+text:"<b><u>फैलना</u></b><br>Dilate means to widen or expand.<br><b>Synonym:</b><br>enlarge<br><b>Antonym:</b><br>contract",
+image:"images/vocabulary-set-6/36to40.png"
+},
+
+38:{
+text:"<b><u>काँपता हुआ</u></b><br>Tremulous means shaking with fear or weakness.<br><b>Synonym:</b><br>quivering<br><b>Antonym:</b><br>steady",
+image:"images/vocabulary-set-6/36to40.png"
+},
+
+39:{
+text:"<b><u>काँपना</u></b><br>Trembling means shaking involuntarily.<br><b>Synonym:</b><br>shivering<br><b>Antonym:</b><br>stillness",
+image:"images/vocabulary-set-6/36to40.png"
+},
+
+40:{
+text:"<b><u>औपचारिक आरोप लगाना</u></b><br>Indict means to formally accuse.<br><b>Synonym:</b><br>charge<br><b>Antonym:</b><br>acquit",
+image:"images/vocabulary-set-6/36to40.png"
+},
+
+41:{
+text:"<b><u>कड़ी निंदा करना</u></b><br>Denounce means to condemn publicly.<br><b>Synonym:</b><br>condemn<br><b>Antonym:</b><br>endorse",
+image:"images/vocabulary-set-6/41to45.png"
+},
+
+42:{
+text:"<b><u>जादू-टोना</u></b><br>Voodoo refers to magical practices.<br><b>Synonym:</b><br>sorcery<br><b>Antonym:</b><br>science",
+image:"images/vocabulary-set-6/41to45.png"
+},
+
+43:{
+text:"<b><u>रहस्यमय</u></b><br>Arcane means known by few.<br><b>Synonym:</b><br>mysterious<br><b>Antonym:</b><br>obvious",
+image:"images/vocabulary-set-6/41to45.png"
+},
+
+44:{
+text:"<b><u>अलग कर देना</u></b><br>Sever means to cut off completely.<br><b>Synonym:</b><br>detach<br><b>Antonym:</b><br>attach",
+image:"images/vocabulary-set-6/41to45.png"
+},
+
+45:{
+text:"<b><u>नीरस</u></b><br>Monotonous means repetitive and dull.<br><b>Synonym:</b><br>tedious<br><b>Antonym:</b><br>varied",
+image:"images/vocabulary-set-6/41to45.png"
+},
+
+46:{
+text:"<b><u>अल्प / बहुत कम</u></b><br>Scanty means insufficient in quantity.<br><b>Synonym:</b><br>meagre<br><b>Antonym:</b><br>abundant",
+image:"images/vocabulary-set-6/46to50.png"
+},
+
+47:{
+text:"<b><u>औपचारिक और लापरवाह</u></b><br>Perfunctory means done without interest.<br><b>Synonym:</b><br>careless<br><b>Antonym:</b><br>thorough",
+image:"images/vocabulary-set-6/46to50.png"
+},
+
+48:{
+text:"<b><u>दिखावटी</u></b><br>Ostensible means apparently true.<br><b>Synonym:</b><br>apparent<br><b>Antonym:</b><br>genuine",
+image:"images/vocabulary-set-6/46to50.png"
+},
+
+49:{
+text:"<b><u>सुप्त</u></b><br>Dormant means inactive for a time.<br><b>Synonym:</b><br>inactive<br><b>Antonym:</b><br>active",
+image:"images/vocabulary-set-6/46to50.png"
+},
+
+50:{
+text:"<b><u>लेटे हुए अवस्था में</u></b><br>Couchant describes an animal lying down.<br><b>Synonym:</b><br>reclining<br><b>Antonym:</b><br>upright",
+image:"images/vocabulary-set-6/46to50.png"
 }
-,
-    16: {
-  text: "<b><u>सहायक</u></b><br>Ancillary refers to something that provides support or assistance to the main activity.<br><b>Rhyming trick:</b> main के साथ salary — <b>ancillary</b>",
-  image: ""
-},
-
-17: {
-  text: "<b><u>अनावश्यक दोहराव</u></b><br>Redundant means unnecessary because it is repeated or no longer needed.<br><b>Rhyming trick:</b> repeat-abundant — <b>redundant</b>",
-  image: ""
-},
-
-18: {
-  text: "<b><u>अत्यधिक चापलूस</u></b><br>Obsequious describes excessive obedience or flattery to please others.<br><b>Rhyming trick:</b> boss को see-yes — <b>obsequious</b>",
-  image: ""
-},
-
-19: {
-  text: "<b><u>आदर्श योग्य</u></b><br>Exemplary means serving as a model worthy of imitation.<br><b>Rhyming trick:</b> example-worthy — <b>exemplary</b>",
-  image: ""
-},
-
-20: {
-  text: "<b><u>पेचीदा समस्या</u></b><br>Conundrum refers to a confusing or difficult problem.<br><b>Rhyming trick:</b> confuse-drum — <b>conundrum</b>",
-  image: ""
-},
-
-21: {
-  text: "<b><u>अनिश्चित</u></b><br>Precarious describes a situation that is unstable and risky.<br><b>Rhyming trick:</b> pressure-carry-us — <b>precarious</b>",
-  image: ""
-},
-
-22: {
-  text: "<b><u>क्षणभंगुर</u></b><br>Ephemeral means lasting for a very short time.<br><b>Rhyming trick:</b> पल में fair — <b>ephemeral</b>",
-  image: ""
-},
-
-23: {
-  text: "<b><u>सौभाग्यपूर्ण संयोग</u></b><br>Serendipity is the occurrence of pleasant discoveries by chance.<br><b>Rhyming trick:</b> suddenly-dip-happy — <b>serendipity</b>",
-  image: ""
-},
-
-24: {
-  text: "<b><u>अत्यधिक जटिल</u></b><br>Convoluted means very complex and difficult to follow.<br><b>Rhyming trick:</b> confuse-loaded — <b>convoluted</b>",
-  image: ""
-},
-
-25: {
-  text: "<b><u>बिगाड़ना</u></b><br>Aggravate means to make a bad situation worse.<br><b>Rhyming trick:</b> anger-rate बढ़े — <b>aggravate</b>",
-  image: ""
-},
-
-26: {
-  text: "<b><u>कम करना</u></b><br>Mitigate means to reduce the severity of something harmful.<br><b>Rhyming trick:</b> hit-igate कम — <b>mitigate</b>",
-  image: ""
-},
-
-27: {
-  text: "<b><u>शीघ्र</u></b><br>Expeditious refers to acting with speed and efficiency.<br><b>Rhyming trick:</b> fast-service-ious — <b>expeditious</b>",
-  image: ""
-},
-
-28: {
-  text: "<b><u>जल्दबाज़</u></b><br>Hasty means done too quickly without sufficient thought.<br><b>Rhyming trick:</b> haste में nasty — <b>hasty</b>",
-  image: ""
-},
-
-29: {
-  text: "<b><u>अथाह</u></b><br>Fathomless describes something extremely deep or immeasurable.<br><b>Rhyming trick:</b> depth-count-less — <b>fathomless</b>",
-  image: ""
-},
-
-30: {
-  text: "<b><u>पक्षियों का घर</u></b><br>An aviary is a large enclosure for keeping birds.<br><b>Rhyming trick:</b> avian का dairy — <b>aviary</b>",
-  image: ""
-}
-,
-    31: {
-  text: "<b><u>मधुमक्खियों का छत्ता</u></b><br>A beehive is the natural or artificial structure where bees live and produce honey.<br><b>Rhyming trick:</b> bee का live — <b>beehive</b>",
-  image: ""
-},
-
-32: {
-  text: "<b><u>मधुमक्खी पालन स्थान</u></b><br>An apiary is a place where multiple beehives are kept for honey production.<br><b>Rhyming trick:</b> api में diary — <b>apiary</b>",
-  image: ""
-},
-
-33: {
-  text: "<b><u>नैतिक ईमानदारी</u></b><br>Rectitude refers to strict moral integrity and upright behavior.<br><b>Rhyming trick:</b> right attitude — <b>rectitude</b>",
-  image: ""
-},
-
-34: {
-  text: "<b><u>आँख मारना</u></b><br>Winks are quick closures of one eye, often as a signal or joke.<br><b>Rhyming trick:</b> blink-sink — <b>winks</b>",
-  image: ""
-},
-
-35: {
-  text: "<b><u>धर्मशास्त्र</u></b><br>Theology is the systematic study of God, religion, and faith.<br><b>Rhyming trick:</b> theo-logy — भगवान की story",
-  image: ""
-},
-
-36: {
-  text: "<b><u>सिकोड़ना</u></b><br>Constrict means to make something tighter or narrower.<br><b>Rhyming trick:</b> tight-strict — <b>constrict</b>",
-  image: ""
-},
-
-37: {
-  text: "<b><u>फैलना</u></b><br>Dilate means to expand or widen in size or extent.<br><b>Rhyming trick:</b> light में wide-late — <b>dilate</b>",
-  image: ""
-},
-
-38: {
-  text: "<b><u>काँपता हुआ</u></b><br>Tremulous describes shaking due to fear, nervousness, or weakness.<br><b>Rhyming trick:</b> tremor वाला voice — <b>tremulous</b>",
-  image: ""
-},
-
-39: {
-  text: "<b><u>काँपना</u></b><br>Trembling means shaking involuntarily, often from fear or cold.<br><b>Rhyming trick:</b> डर में mumbling — <b>trembling</b>",
-  image: ""
-},
-
-40: {
-  text: "<b><u>औपचारिक आरोप लगाना</u></b><br>Indict means to formally accuse someone of a serious crime.<br><b>Rhyming trick:</b> charge लिखित — <b>indict</b>",
-  image: ""
-},
-
-41: {
-  text: "<b><u>कड़ी निंदा करना</u></b><br>Denounce means to publicly condemn or criticize strongly.<br><b>Rhyming trick:</b> announce करके bounce — <b>denounce</b>",
-  image: ""
-},
-
-42: {
-  text: "<b><u>जादू-टोना</u></b><br>Voodoo refers to practices involving magic or supernatural beliefs.<br><b>Rhyming trick:</b> woo-doo magic — <b>voodoo</b>",
-  image: ""
-},
-
-43: {
-  text: "<b><u>रहस्यमय</u></b><br>Arcane means known by only a few; mysterious or secret.<br><b>Rhyming trick:</b> rare-gain knowledge — <b>arcane</b>",
-  image: ""
-},
-
-44: {
-  text: "<b><u>अलग कर देना</u></b><br>Sever means to cut off or separate completely.<br><b>Rhyming trick:</b> sharp lever — <b>sever</b>",
-  image: ""
-},
-
-45: {
-  text: "<b><u>नीरस</u></b><br>Monotonous means dull, repetitive, and lacking variety.<br><b>Rhyming trick:</b> same-tone us — <b>monotonous</b>",
-  image: ""
-}
-,
-    46: {
-  text: "<b><u>अल्प / बहुत कम</u></b><br>Scanty means insufficient in quantity or lacking fullness.<br><b>Rhyming trick:</b> कम-quantity, scanty-ty",
-  image: ""
-},
-
-47: {
-  text: "<b><u>औपचारिक और लापरवाह</u></b><br>Perfunctory refers to doing something without care, interest, or enthusiasm.<br><b>Rhyming trick:</b> formality-factory — <b>perfunctory</b>",
-  image: ""
-},
-
-48: {
-  text: "<b><u>दिखावटी</u></b><br>Ostensible means appearing to be true on the surface but not actually so.<br><b>Rhyming trick:</b> outside-sensible — <b>ostensible</b>",
-  image: ""
-},
-
-49: {
-  text: "<b><u>सुप्त</u></b><br>Dormant means temporarily inactive but capable of becoming active again.<br><b>Rhyming trick:</b> door-man’t active — <b>dormant</b>",
-  image: ""
-},
-
-50: {
-  text: "<b><u>लेटे हुए अवस्था में</u></b><br>Couchant describes an animal lying down with the body resting on the ground.<br><b>Rhyming trick:</b> couch पर ant — <b>couchant</b>",
-  image: ""
-}
-
-}
+};
