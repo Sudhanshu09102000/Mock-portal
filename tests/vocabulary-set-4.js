@@ -575,5 +575,32 @@ const explanations = {
 45: {
   text: "<b><u>दुष्ट</u></b><br>Nefarious means wicked.<br><b>Synonym:</b><br>evil<br><b>Antonym:</b><br>virtuous",
   image: "images/vocabulary-set-4/41to45.png"
+},
+
+  46: {
+  text: "<b><u>क्षणभंगुर</u></b><br>Ephemeral means lasting for a very short time.<br><b>Synonym:</b><br>transient<br><b>Antonym:</b><br>permanent",
+  image: "images/vocabulary-set-4/46to50.png"
+},
+
+47: {
+  text: "<b><u>घिसी-पिटी बात</u></b><br>Platitude means an overused statement that lacks originality or meaning.<br><b>Synonym:</b><br>cliché<br><b>Antonym:</b><br>originality",
+  image: "images/vocabulary-set-4/46to50.png"
+},
+
+48: {
+  text: "<b><u>आत्मबल तोड़ने वाला</u></b><br>Emasculating means weakening someone’s confidence or sense of strength.<br><b>Synonym:</b><br>humiliating<br><b>Antonym:</b><br>empowering",
+  image: "images/vocabulary-set-4/46to50.png"
+},
+
+49: {
+  text: "<b><u>प्रस्तावना</u></b><br>Proem means an introductory preface or opening to a book or speech.<br><b>Synonym:</b><br>introduction<br><b>Antonym:</b><br>epilogue",
+  image: "images/vocabulary-set-4/46to50.png"
+},
+
+50: {
+  text: "<b><u>संग्रह करने की प्रवृत्ति</u></b><br>Acquisitive means eager to acquire or possess things, especially wealth.<br><b>Synonym:</b><br>greedy<br><b>Antonym:</b><br>content",
+  image: "images/vocabulary-set-4/46to50.png"
 }
+
 };
+
