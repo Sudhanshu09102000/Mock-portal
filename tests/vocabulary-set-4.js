@@ -351,257 +351,229 @@ const questions={
 
 }  
 
-const explanations={
-    1: {
-  text: "<b><u>मानहानि</u></b><br>Slander refers to making false spoken statements that harm a person's reputation.<br><b>Rhyming line:</b> झूठाander बोले — नाम का <b>slander</b> होले",
-  image: ""
+const explanations = {
+1: {
+  text: "<b><u>मानहानि</u></b><br>Slander refers to making false spoken statements that harm a person's reputation.<br><b>Synonym:</b><br>defamation<br><b>Antonym:</b><br>praise",
+  image: "images/vocabulary-set-4/1to5.png"
 },
 
 2: {
-  text: "<b><u>प्रशंसा करना</u></b><br>Acclaim means to praise someone publicly and enthusiastically.<br><b>Rhyming line:</b> stage पे claim, सबने <b>acclaim</b>",
-  image: ""
+  text: "<b><u>प्रशंसा करना</u></b><br>Acclaim means to praise someone publicly and enthusiastically.<br><b>Synonym:</b><br>praise<br><b>Antonym:</b><br>criticize",
+  image: "images/vocabulary-set-4/1to5.png"
 },
 
 3: {
-  text: "<b><u>स्वस्थ हो रहा</u></b><br>Convalescent describes a person recovering from illness or medical treatment.<br><b>Rhyming line:</b> control में patient, <b>convalescent</b>",
-  image: ""
+  text: "<b><u>स्वस्थ हो रहा</u></b><br>Convalescent describes a person recovering from illness.<br><b>Synonym:</b><br>recovering<br><b>Antonym:</b><br>ill",
+  image: "images/vocabulary-set-4/1to5.png"
 },
 
 4: {
-  text: "<b><u>परोपकारी व्यक्ति</u></b><br>An altruist is someone who shows selfless concern for others’ well-being.<br><b>Rhyming line:</b> all true list — <b>altruist</b>",
-  image: ""
+  text: "<b><u>परोपकारी व्यक्ति</u></b><br>An altruist is someone who shows selfless concern for others.<br><b>Synonym:</b><br>philanthropist<br><b>Antonym:</b><br>egoist",
+  image: "images/vocabulary-set-4/1to5.png"
 },
 
 5: {
-  text: "<b><u>विमान रखने का भवन</u></b><br>A hangar is a large building where aircraft are stored or maintained.<br><b>Rhyming line:</b> plane अंदर — <b>hangar</b>",
-  image: ""
+  text: "<b><u>विमान रखने का भवन</u></b><br>A hangar is a large building where aircraft are stored.<br><b>Synonym:</b><br>aircraft shed<br><b>Antonym:</b><br>—",
+  image: "images/vocabulary-set-4/1to5.png"
 },
 
 6: {
-  text: "<b><u>दया</u></b><br>Clemency means showing mercy or leniency, especially by a judge.<br><b>Rhyming line:</b> judge की tendency — <b>clemency</b>",
-  image: ""
+  text: "<b><u>दया</u></b><br>Clemency means mercy or leniency.<br><b>Synonym:</b><br>mercy<br><b>Antonym:</b><br>severity",
+  image: "images/vocabulary-set-4/6to10.png"
 },
 
 7: {
-  text: "<b><u>शारीरिक</u></b><br>Corporal refers to physical punishment involving bodily pain.<br><b>Rhyming line:</b> body oral — <b>corporal</b>",
-  image: ""
+  text: "<b><u>शारीरिक</u></b><br>Corporal relates to the physical body or bodily punishment.<br><b>Synonym:</b><br>physical<br><b>Antonym:</b><br>mental",
+  image: "images/vocabulary-set-4/6to10.png"
 },
 
 8: {
-  text: "<b><u>वाक्पटु</u></b><br>Eloquent describes clear, fluent, and persuasive speech or writing.<br><b>Rhyming line:</b> बोलता elegant — <b>eloquent</b>",
-  image: ""
+  text: "<b><u>वाक्पटु</u></b><br>Eloquent describes fluent and persuasive speech.<br><b>Synonym:</b><br>articulate<br><b>Antonym:</b><br>inarticulate",
+  image: "images/vocabulary-set-4/6to10.png"
 },
 
 9: {
-  text: "<b><u>मूर्खता</u></b><br>Folly means lack of good sense or foolish behavior.<br><b>Rhyming line:</b> full ही silly — <b>folly</b>",
-  image: ""
+  text: "<b><u>मूर्खता</u></b><br>Folly means lack of good sense.<br><b>Synonym:</b><br>foolishness<br><b>Antonym:</b><br>wisdom",
+  image: "images/vocabulary-set-4/6to10.png"
 },
 
 10: {
-  text: "<b><u>उत्साही</u></b><br>Fervent means having intense passion or enthusiasm.<br><b>Rhyming line:</b> fire वाला event — <b>fervent</b>",
-  image: ""
-}
-,
+  text: "<b><u>उत्साही</u></b><br>Fervent means having intense passion.<br><b>Synonym:</b><br>zealous<br><b>Antonym:</b><br>indifferent",
+  image: "images/vocabulary-set-4/6to10.png"
+},
+
 11: {
-  text: "<b><u>अस्थिर रोजगार वर्ग</u></b><br>Precariate refers to people living with insecure jobs, unstable income, and lack of employment protection.<br><b>Rhyming line:</b> नौकरी scare-rate — <b>precariate</b>",
-  image: ""
+  text: "<b><u>अस्थिर रोजगार वर्ग</u></b><br>Precariate refers to people with insecure employment.<br><b>Synonym:</b><br>unstable workforce<br><b>Antonym:</b><br>secure employees",
+  image: "images/vocabulary-set-4/11to15.png"
 },
 
 12: {
-  text: "<b><u>बहुत प्रशंसा करना</u></b><br>Extol means to praise someone or something highly and openly.<br><b>Rhyming line:</b> बोल-बोल goal — <b>extol</b>",
-  image: ""
+  text: "<b><u>बहुत प्रशंसा करना</u></b><br>Extol means to praise highly.<br><b>Synonym:</b><br>laud<br><b>Antonym:</b><br>condemn",
+  image: "images/vocabulary-set-4/11to15.png"
 },
 
 13: {
-  text: "<b><u>नीचा दिखाना</u></b><br>Disparage means to speak about someone in a belittling or disrespectful way.<br><b>Rhyming line:</b> disrespect का garage — <b>disparage</b>",
-  image: ""
+  text: "<b><u>नीचा दिखाना</u></b><br>Disparage means to belittle someone.<br><b>Synonym:</b><br>demean<br><b>Antonym:</b><br>commend",
+  image: "images/vocabulary-set-4/11to15.png"
 },
 
 14: {
-  text: "<b><u>आक्रामक</u></b><br>Belligerent describes a hostile, aggressive, or warlike attitude.<br><b>Rhyming line:</b> लड़ने intent — <b>belligerent</b>",
-  image: ""
+  text: "<b><u>आक्रामक</u></b><br>Belligerent describes aggressive behavior.<br><b>Synonym:</b><br>hostile<br><b>Antonym:</b><br>peaceful",
+  image: "images/vocabulary-set-4/11to15.png"
 },
 
 15: {
-  text: "<b><u>भयानक विनाश</u></b><br>Carnage refers to extensive death and destruction, especially in war.<br><b>Rhyming line:</b> war का damage — <b>carnage</b>",
-  image: ""
+  text: "<b><u>भयानक विनाश</u></b><br>Carnage refers to extensive destruction and death.<br><b>Synonym:</b><br>massacre<br><b>Antonym:</b><br>peace",
+  image: "images/vocabulary-set-4/11to15.png"
 },
 
 16: {
-  text: "<b><u>दाग</u></b><br>Blemish means a small mark or flaw that spoils appearance or quality.<br><b>Rhyming line:</b> beauty finish — <b>blemish</b>",
-  image: ""
+  text: "<b><u>दाग</u></b><br>Blemish means a minor flaw.<br><b>Synonym:</b><br>flaw<br><b>Antonym:</b><br>perfection",
+  image: "images/vocabulary-set-4/16to20.png"
 },
 
 17: {
-  text: "<b><u>कड़ी निंदा की गई</u></b><br>Deplored means strongly criticized or expressed deep disapproval.<br><b>Rhyming line:</b> deep-load bored — <b>deplored</b>",
-  image: ""
+  text: "<b><u>कड़ी निंदा की गई</u></b><br>Deplored means strongly disapproved.<br><b>Synonym:</b><br>condemned<br><b>Antonym:</b><br>approved",
+  image: "images/vocabulary-set-4/16to20.png"
 },
 
 18: {
-  text: "<b><u>पहुँचाया गया</u></b><br>Inflicted means to cause something unpleasant or painful to be suffered.<br><b>Rhyming line:</b> pain stricted — <b>inflicted</b>",
-  image: ""
+  text: "<b><u>पहुँचाया गया</u></b><br>Inflicted means caused suffering.<br><b>Synonym:</b><br>imposed<br><b>Antonym:</b><br>relieved",
+  image: "images/vocabulary-set-4/16to20.png"
 },
 
 19: {
-  text: "<b><u>अहंकार</u></b><br>Vanity means excessive pride in one’s appearance or abilities.<br><b>Rhyming line:</b> mirror की sanity — <b>vanity</b>",
-  image: ""
+  text: "<b><u>अहंकार</u></b><br>Vanity means excessive pride.<br><b>Synonym:</b><br>conceit<br><b>Antonym:</b><br>humility",
+  image: "images/vocabulary-set-4/16to20.png"
 },
 
 20: {
-  text: "<b><u>गहराई से सोचना</u></b><br>Ponder means to think carefully and deeply about something.<br><b>Rhyming line:</b> सोच longer — <b>ponder</b>",
-  image: ""
-}
-,
+  text: "<b><u>गहराई से सोचना</u></b><br>Ponder means to think deeply.<br><b>Synonym:</b><br>contemplate<br><b>Antonym:</b><br>ignore",
+  image: "images/vocabulary-set-4/16to20.png"
+},
+
 21: {
-  text: "<b><u>कम होना</u></b><br>Abate means to reduce in intensity, degree, or severity.<br><b>Rhyming line:</b> pain late — <b>abate</b>",
-  image: ""
+  text: "<b><u>कम होना</u></b><br>Abate means to reduce.<br><b>Synonym:</b><br>diminish<br><b>Antonym:</b><br>intensify",
+  image: "images/vocabulary-set-4/21to25.png"
 },
 
 22: {
-  text: "<b><u>मठ का प्रमुख</u></b><br>An abbot is the head of a monastery or religious community of monks.<br><b>Rhyming line:</b> monk का boss — <b>abbot</b>",
-  image: ""
+  text: "<b><u>मठ का प्रमुख</u></b><br>An abbot is the head of a monastery.<br><b>Synonym:</b><br>monk leader<br><b>Antonym:</b><br>—",
+  image: "images/vocabulary-set-4/21to25.png"
 },
 
 23: {
-  text: "<b><u>रद्द करना</u></b><br>Abrogate means to officially cancel or repeal a law or agreement.<br><b>Rhyming line:</b> law को separate — <b>abrogate</b>",
-  image: ""
+  text: "<b><u>रद्द करना</u></b><br>Abrogate means to cancel officially.<br><b>Synonym:</b><br>repeal<br><b>Antonym:</b><br>enact",
+  image: "images/vocabulary-set-4/21to25.png"
 },
 
 24: {
-  text: "<b><u>क्षमा</u></b><br>Absolution refers to formal forgiveness, especially for sins.<br><b>Rhyming line:</b> sin solution — <b>absolution</b>",
-  image: ""
+  text: "<b><u>क्षमा</u></b><br>Absolution means formal forgiveness.<br><b>Synonym:</b><br>pardon<br><b>Antonym:</b><br>punishment",
+  image: "images/vocabulary-set-4/21to25.png"
 },
 
 25: {
-  text: "<b><u>तीक्ष्ण बुद्धि</u></b><br>Acumen means keen insight, sharp judgment, or intelligence.<br><b>Rhyming line:</b> accurate मन — <b>acumen</b>",
-  image: ""
+  text: "<b><u>तीक्ष्ण बुद्धि</u></b><br>Acumen means sharp insight.<br><b>Synonym:</b><br>shrewdness<br><b>Antonym:</b><br>ignorance",
+  image: "images/vocabulary-set-4/21to25.png"
 },
 
 26: {
-  text: "<b><u>पालन करना</u></b><br>Adhere means to stick firmly to rules, beliefs, or instructions.<br><b>Rhyming line:</b> rules के nearer — <b>adhere</b>",
-  image: ""
+  text: "<b><u>पालन करना</u></b><br>Adhere means to stick firmly.<br><b>Synonym:</b><br>follow<br><b>Antonym:</b><br>violate",
+  image: "images/vocabulary-set-4/26to30.png"
 },
 
 27: {
-  text: "<b><u>चेतावनी देना</u></b><br>Admonish means to warn or gently reprimand someone.<br><b>Rhyming line:</b> warning polish — <b>admonish</b>",
-  image: ""
+  text: "<b><u>चेतावनी देना</u></b><br>Admonish means to warn gently.<br><b>Synonym:</b><br>reprimand<br><b>Antonym:</b><br>praise",
+  image: "images/vocabulary-set-4/26to30.png"
 },
 
 28: {
-  text: "<b><u>ईश्वर के अस्तित्व पर अनिश्चित</u></b><br>Agnostic refers to a person who is unsure about the existence of God.<br><b>Rhyming line:</b> yes-no log stick — <b>agnostic</b>",
-  image: ""
+  text: "<b><u>ईश्वर के अस्तित्व पर अनिश्चित</u></b><br>Agnostic means uncertain about God’s existence.<br><b>Synonym:</b><br>doubter<br><b>Antonym:</b><br>believer",
+  image: "images/vocabulary-set-4/26to30.png"
 },
 
 29: {
-  text: "<b><u>अत्यंत खराब</u></b><br>Abysmal describes something extremely bad or of very poor quality.<br><b>Rhyming line:</b> bad is mall — <b>abysmal</b>",
-  image: ""
+  text: "<b><u>अत्यंत खराब</u></b><br>Abysmal means extremely bad.<br><b>Synonym:</b><br>dreadful<br><b>Antonym:</b><br>excellent",
+  image: "images/vocabulary-set-4/26to30.png"
 },
 
 30: {
-  text: "<b><u>बिना विरोध स्वीकार करना</u></b><br>Acquiesce means to accept something quietly without protest.<br><b>Rhyming line:</b> agree yes — <b>acquiesce</b>",
-  image: ""
-}
-,
+  text: "<b><u>बिना विरोध स्वीकार करना</u></b><br>Acquiesce means accept quietly.<br><b>Synonym:</b><br>consent<br><b>Antonym:</b><br>resist",
+  image: "images/vocabulary-set-4/26to30.png"
+},
 
 31: {
-  text: "<b><u>रूपरेखा देना</u></b><br>Adumbrate means to give a vague or preliminary outline of something.<br><b>Rhyming line:</b> future का shadow rate — <b>adumbrate</b>",
-  image: ""
+  text: "<b><u>रूपरेखा देना</u></b><br>Adumbrate means outline vaguely.<br><b>Synonym:</b><br>sketch<br><b>Antonym:</b><br>detail",
+  image: "images/vocabulary-set-4/31to35.png"
 },
 
 32: {
-  text: "<b><u>अत्यधिक प्रशंसा करना</u></b><br>Adulate means to praise someone excessively or flatteringly.<br><b>Rhyming line:</b> star को salute — <b>adulate</b>",
-  image: ""
+  text: "<b><u>अत्यधिक प्रशंसा करना</u></b><br>Adulate means flatter excessively.<br><b>Synonym:</b><br>idolize<br><b>Antonym:</b><br>criticize",
+  image: "images/vocabulary-set-4/31to35.png"
 },
 
 33: {
-  text: "<b><u>निपुण</u></b><br>Adroit means skillful, clever, and quick in action or thought.<br><b>Rhyming line:</b> हाथ right — <b>adroit</b>",
-  image: ""
+  text: "<b><u>निपुण</u></b><br>Adroit means skillful.<br><b>Synonym:</b><br>dexterous<br><b>Antonym:</b><br>clumsy",
+  image: "images/vocabulary-set-4/31to35.png"
 },
 
 34: {
-  text: "<b><u>संयमी</u></b><br>Abstemious refers to moderation, especially in eating or habits.<br><b>Rhyming line:</b> less-less delicious — <b>abstemious</b>",
-  image: ""
+  text: "<b><u>संयमी</u></b><br>Abstemious means moderate.<br><b>Synonym:</b><br>temperate<br><b>Antonym:</b><br>indulgent",
+  image: "images/vocabulary-set-4/31to35.png"
 },
 
 35: {
-  text: "<b><u>उदास</u></b><br>Melancholic describes a feeling of deep sadness or depression.<br><b>Rhyming line:</b> मन कॉल करे — <b>melancholic</b>",
-  image: ""
+  text: "<b><u>उदास</u></b><br>Melancholic means deeply sad.<br><b>Synonym:</b><br>gloomy<br><b>Antonym:</b><br>cheerful",
+  image: "images/vocabulary-set-4/31to35.png"
 },
 
 36: {
-  text: "<b><u>घोषणा करना</u></b><br>Profess means to openly declare or state a belief or feeling.<br><b>Rhyming line:</b> open confess — <b>profess</b>",
-  image: ""
+  text: "<b><u>घोषणा करना</u></b><br>Profess means declare openly.<br><b>Synonym:</b><br>declare<br><b>Antonym:</b><br>deny",
+  image: "images/vocabulary-set-4/36to40.png"
 },
 
 37: {
-  text: "<b><u>औपचारिक घोषणा</u></b><br>Promulgate means to officially announce or make known publicly.<br><b>Rhyming line:</b> public gate — <b>promulgate</b>",
-  image: ""
+  text: "<b><u>औपचारिक घोषणा</u></b><br>Promulgate means officially announce.<br><b>Synonym:</b><br>proclaim<br><b>Antonym:</b><br>conceal",
+  image: "images/vocabulary-set-4/36to40.png"
 },
 
 38: {
-  text: "<b><u>रोका जा सकने वाला</u></b><br>Avertible means capable of being prevented or avoided.<br><b>Rhyming line:</b> action जल्दी — <b>avertible</b>",
-  image: ""
+  text: "<b><u>रोका जा सकने वाला</u></b><br>Avertible means preventable.<br><b>Synonym:</b><br>avoidable<br><b>Antonym:</b><br>inevitable",
+  image: "images/vocabulary-set-4/36to40.png"
 },
 
 39: {
-  text: "<b><u>अनुकूल</u></b><br>Conducive means helpful in producing a positive result.<br><b>Rhyming line:</b> success inclusive — <b>conducive</b>",
-  image: ""
+  text: "<b><u>अनुकूल</u></b><br>Conducive means helpful.<br><b>Synonym:</b><br>favorable<br><b>Antonym:</b><br>harmful",
+  image: "images/vocabulary-set-4/36to40.png"
 },
 
 40: {
-  text: "<b><u>दयालु</u></b><br>Benevolent means kind, charitable, and well-intentioned.<br><b>Rhyming line:</b> good will lent — <b>benevolent</b>",
-  image: ""
-}
-,
+  text: "<b><u>दयालु</u></b><br>Benevolent means kind-hearted.<br><b>Synonym:</b><br>kind<br><b>Antonym:</b><br>cruel",
+  image: "images/vocabulary-set-4/36to40.png"
+},
+
 41: {
-  text: "<b><u>द्विअर्थी</u></b><br>Ambiguous means having more than one possible meaning or interpretation.<br><b>Rhyming line:</b> meaning big-us — <b>ambiguous</b>",
-  image: ""
+  text: "<b><u>द्विअर्थी</u></b><br>Ambiguous means unclear or multiple meanings.<br><b>Synonym:</b><br>unclear<br><b>Antonym:</b><br>definite",
+  image: "images/vocabulary-set-4/41to45.png"
 },
 
 42: {
-  text: "<b><u>अजीब</u></b><br>Eccentric describes someone who behaves in an unusual or unconventional way.<br><b>Rhyming line:</b> center से distant — <b>eccentric</b>",
-  image: ""
+  text: "<b><u>अजीब</u></b><br>Eccentric means unconventional.<br><b>Synonym:</b><br>odd<br><b>Antonym:</b><br>normal",
+  image: "images/vocabulary-set-4/41to45.png"
 },
 
 43: {
-  text: "<b><u>रहस्यमय</u></b><br>Enigmatic means mysterious or hard to understand fully.<br><b>Rhyming line:</b> puzzlematic — <b>enigmatic</b>",
-  image: ""
+  text: "<b><u>रहस्यमय</u></b><br>Enigmatic means mysterious.<br><b>Synonym:</b><br>cryptic<br><b>Antonym:</b><br>clear",
+  image: "images/vocabulary-set-4/41to45.png"
 },
 
 44: {
-  text: "<b><u>उत्साहपूर्ण</u></b><br>Effervescent refers to a lively, bubbly, and energetic nature.<br><b>Rhyming line:</b> soda present — <b>effervescent</b>",
-  image: ""
+  text: "<b><u>उत्साहपूर्ण</u></b><br>Effervescent means lively.<br><b>Synonym:</b><br>animated<br><b>Antonym:</b><br>dull",
+  image: "images/vocabulary-set-4/41to45.png"
 },
 
 45: {
-  text: "<b><u>दुष्ट</u></b><br>Nefarious means wicked, criminal, or morally wrong.<br><b>Rhyming line:</b> crime various — <b>nefarious</b>",
-  image: ""
-},
-
-46: {
-  text: "<b><u>क्षणिक</u></b><br>Ephemeral describes something that lasts for a very short time.<br><b>Rhyming line:</b> evening mera — <b>ephemeral</b>",
-  image: ""
-},
-
-47: {
-  text: "<b><u>घिसी-पिटी बात</u></b><br>Platitude means a remark that is overused and lacks originality.<br><b>Rhyming line:</b> flat attitude — <b>platitude</b>",
-  image: ""
-},
-
-48: {
-  text: "<b><u>कमज़ोर करने वाला</u></b><br>Emasculating refers to something that undermines confidence or strength.<br><b>Rhyming line:</b> ego cut-in — <b>emasculating</b>",
-  image: ""
-},
-
-49: {
-  text: "<b><u>प्रस्तावना</u></b><br>Proem means an introductory section or preface of a book or speech.<br><b>Rhyming line:</b> poem से पहले — <b>proem</b>",
-  image: ""
-},
-
-50: {
-  text: "<b><u>लालची</u></b><br>Acquisitive describes a strong desire to acquire possessions or wealth.<br><b>Rhyming line:</b> acquire positive — <b>acquisitive</b>",
-  image: ""
+  text: "<b><u>दुष्ट</u></b><br>Nefarious means wicked.<br><b>Synonym:</b><br>evil<br><b>Antonym:</b><br>virtuous",
+  image: "images/vocabulary-set-4/41to45.png"
 }
-
-
-}
+};
