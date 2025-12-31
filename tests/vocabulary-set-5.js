@@ -352,254 +352,64 @@ image: ''
 
 }
 
-const explanations={
-    1: {
-text: "<b><u>हालाँकि</u></b><br>Albeit means although or even though, used to introduce a contrast within a sentence.<br><i>Rhyming trick:</i> all सही, <b>albeit</b> फिर भी 😌",
-image: ""
-},
+const explanations = {
+1:{text:"<b><u>हालाँकि</u></b><br>Albeit means although or even though, used to introduce a contrast within a sentence.<br><b><u>Synonym</u></b> : though<br><b><u>Antonym</u></b> : because",image:"images/vocabulary-set-5/1to5.png"},
+2:{text:"<b><u>मोहित या छल करना</u></b><br>Beguile means to charm or deceive someone pleasantly or cleverly.<br><b><u>Synonym</u></b> : deceive<br><b><u>Antonym</u></b> : bore",image:"images/vocabulary-set-5/1to5.png"},
+3:{text:"<b><u>बेकार चिंता करना</u></b><br>Fussing refers to worrying excessively about small or unimportant matters.<br><b><u>Synonym</u></b> : worry<br><b><u>Antonym</u></b> : ignore",image:"images/vocabulary-set-5/1to5.png"},
+4:{text:"<b><u>बेकार बकबक</u></b><br>Prattle means to talk foolishly or at unnecessary length.<br><b><u>Synonym</u></b> : chatter<br><b><u>Antonym</u></b> : silence",image:"images/vocabulary-set-5/1to5.png"},
+5:{text:"<b><u>दृढ़ निश्चयी</u></b><br>Tenacious describes someone who does not give up easily.<br><b><u>Synonym</u></b> : persistent<br><b><u>Antonym</u></b> : weak",image:"images/vocabulary-set-5/1to5.png"},
 
-2: {
-text: "<b><u>मोहित या छल करना</u></b><br>Beguile means to charm or deceive someone, often pleasantly or cleverly.<br><i>Rhyming trick:</i> sweet smile में <b>beguile</b> style 😏",
-image: ""
-},
+6:{text:"<b><u>अत्यधिक भूखा</u></b><br>Ravenous means extremely hungry.<br><b><u>Synonym</u></b> : famished<br><b><u>Antonym</u></b> : full",image:"images/vocabulary-set-5/6to10.png"},
+7:{text:"<b><u>रूठकर चुप रहना</u></b><br>Sulked means remaining silent due to anger or disappointment.<br><b><u>Synonym</u></b> : brood<br><b><u>Antonym</u></b> : cheer",image:"images/vocabulary-set-5/6to10.png"},
+8:{text:"<b><u>नाराज़गी दिखाना</u></b><br>Frowned means showing displeasure through facial expression.<br><b><u>Synonym</u></b> : scowl<br><b><u>Antonym</u></b> : smile",image:"images/vocabulary-set-5/6to10.png"},
+9:{text:"<b><u>चमकती मुस्कान</u></b><br>Beamed means smiling brightly with happiness.<br><b><u>Synonym</u></b> : grin<br><b><u>Antonym</u></b> : frown",image:"images/vocabulary-set-5/6to10.png"},
+10:{text:"<b><u>क्रोधित दृष्टि</u></b><br>Glowered means staring angrily or menacingly.<br><b><u>Synonym</u></b> : glare<br><b><u>Antonym</u></b> : gaze",image:"images/vocabulary-set-5/6to10.png"},
 
-3: {
-text: "<b><u>बेकार चिंता करना</u></b><br>Fussing refers to worrying excessively about small or unimportant matters.<br><i>Rhyming trick:</i> छोटी बात पर <b>fussing</b> fussing 😣",
-image: ""
-},
+11:{text:"<b><u>तिरस्कार करना</u></b><br>Disdained means treating something as unworthy of respect.<br><b><u>Synonym</u></b> : despise<br><b><u>Antonym</u></b> : respect",image:"images/vocabulary-set-5/11to15.png"},
+12:{text:"<b><u>स्त्रीसुलभ</u></b><br>Effeminate refers to traits traditionally considered feminine.<br><b><u>Synonym</u></b> : delicate<br><b><u>Antonym</u></b> : masculine",image:"images/vocabulary-set-5/11to15.png"},
+13:{text:"<b><u>घोर नफ़रत</u></b><br>Detesting means feeling intense dislike.<br><b><u>Synonym</u></b> : hate<br><b><u>Antonym</u></b> : adore",image:"images/vocabulary-set-5/11to15.png"},
+14:{text:"<b><u>उपद्रवी प्रवृत्ति</u></b><br>Hooliganism means violent or rowdy behaviour.<br><b><u>Synonym</u></b> : vandalism<br><b><u>Antonym</u></b> : discipline",image:"images/vocabulary-set-5/11to15.png"},
+15:{text:"<b><u>निराशावादी अविश्वास</u></b><br>Cynicism means doubting sincerity of others.<br><b><u>Synonym</u></b> : skepticism<br><b><u>Antonym</u></b> : faith",image:"images/vocabulary-set-5/11to15.png"},
 
-4: {
-text: "<b><u>बेकार बकबक</u></b><br>Prattle means to talk foolishly or at unnecessary length.<br><i>Rhyming trick:</i> prattle-prattle, nonstop chatter 🗣️",
-image: ""
-},
+16:{text:"<b><u>यातायात के साधन</u></b><br>Conveyances refers to means of transport.<br><b><u>Synonym</u></b> : transport<br><b><u>Antonym</u></b> : immobility",image:"images/vocabulary-set-5/16to20.png"},
+17:{text:"<b><u>नवजीवन देना</u></b><br>Rejuvenate means to restore energy or freshness.<br><b><u>Synonym</u></b> : revive<br><b><u>Antonym</u></b> : exhaust",image:"images/vocabulary-set-5/16to20.png"},
+18:{text:"<b><u>गारंटी देना</u></b><br>Vouch means to confirm or guarantee.<br><b><u>Synonym</u></b> : assure<br><b><u>Antonym</u></b> : deny",image:"images/vocabulary-set-5/16to20.png"},
+19:{text:"<b><u>पीड़ा या कष्ट</u></b><br>Affliction refers to prolonged suffering.<br><b><u>Synonym</u></b> : misery<br><b><u>Antonym</u></b> : comfort",image:"images/vocabulary-set-5/16to20.png"},
+20:{text:"<b><u>दुविधाजनक स्थिति</u></b><br>Predicament means a difficult situation.<br><b><u>Synonym</u></b> : dilemma<br><b><u>Antonym</u></b> : solution",image:"images/vocabulary-set-5/16to20.png"},
 
-5: {
-text: "<b><u>दृढ़ निश्चयी</u></b><br>Tenacious describes someone who does not give up easily and holds firmly to goals.<br><i>Rhyming trick:</i> never छोड़ो – <b>tenacious</b> bro 💪",
-image: ""
-},
+21:{text:"<b><u>गिरवी ऋण</u></b><br>Mortgage is a loan secured against property.<br><b><u>Synonym</u></b> : loan<br><b><u>Antonym</u></b> : repayment",image:"images/vocabulary-set-5/21to25.png"},
+22:{text:"<b><u>खतरे में</u></b><br>Jeopardy means exposure to danger.<br><b><u>Synonym</u></b> : risk<br><b><u>Antonym</u></b> : safety",image:"images/vocabulary-set-5/21to25.png"},
+23:{text:"<b><u>सांत्वना</u></b><br>Consolation means comfort after loss.<br><b><u>Synonym</u></b> : solace<br><b><u>Antonym</u></b> : distress",image:"images/vocabulary-set-5/21to25.png"},
+24:{text:"<b><u>तीव्र दुर्गंध</u></b><br>Stench means strong unpleasant smell.<br><b><u>Synonym</u></b> : odor<br><b><u>Antonym</u></b> : fragrance",image:"images/vocabulary-set-5/21to25.png"},
+25:{text:"<b><u>निर्लज्ज साहस</u></b><br>Brazen means bold without shame.<br><b><u>Synonym</u></b> : shameless<br><b><u>Antonym</u></b> : modest",image:"images/vocabulary-set-5/21to25.png"},
 
-6: {
-text: "<b><u>अत्यधिक भूखा</u></b><br>Ravenous means extremely hungry or eager for food.<br><i>Rhyming trick:</i> भूख dangerous – <b>ravenous</b> 😋",
-image: ""
-},
+26:{text:"<b><u>फूलना-फलना</u></b><br>Thrive means to grow successfully.<br><b><u>Synonym</u></b> : prosper<br><b><u>Antonym</u></b> : fail",image:"images/vocabulary-set-5/26to30.png"},
+27:{text:"<b><u>उदार</u></b><br>Lenient means not strict.<br><b><u>Synonym</u></b> : merciful<br><b><u>Antonym</u></b> : strict",image:"images/vocabulary-set-5/26to30.png"},
+28:{text:"<b><u>संगीत क्षमता की हानि</u></b><br>Amusia is loss of musical ability.<br><b><u>Synonym</u></b> : tone-deafness<br><b><u>Antonym</u></b> : musicality",image:"images/vocabulary-set-5/26to30.png"},
+29:{text:"<b><u>कटु रोष</u></b><br>Resentment means bitter anger.<br><b><u>Synonym</u></b> : bitterness<br><b><u>Antonym</u></b> : goodwill",image:"images/vocabulary-set-5/26to30.png"},
+30:{text:"<b><u>जिम्मेदार संरक्षण</u></b><br>Stewardship means responsible management.<br><b><u>Synonym</u></b> : guardianship<br><b><u>Antonym</u></b> : neglect",image:"images/vocabulary-set-5/26to30.png"},
 
-7: {
-text: "<b><u>रूठकर चुप रहना</u></b><br>Sulked means to remain silent and moody due to anger or disappointment.<br><i>Rhyming trick:</i> mood bulked – <b>sulked</b> 😒",
-image: ""
-},
+31:{text:"<b><u>आक्रामक</u></b><br>Bellicose means warlike or aggressive.<br><b><u>Synonym</u></b> : hostile<br><b><u>Antonym</u></b> : peaceful",image:"images/vocabulary-set-5/31to35.png"},
+32:{text:"<b><u>गुट</u></b><br>Clique means exclusive group.<br><b><u>Synonym</u></b> : faction<br><b><u>Antonym</u></b> : openness",image:"images/vocabulary-set-5/31to35.png"},
+33:{text:"<b><u>सभा</u></b><br>Congregation means gathering of people.<br><b><u>Synonym</u></b> : assembly<br><b><u>Antonym</u></b> : dispersal",image:"images/vocabulary-set-5/31to35.png"},
+34:{text:"<b><u>अल्पभाषी</u></b><br>Reticent means reserved in speech.<br><b><u>Synonym</u></b> : taciturn<br><b><u>Antonym</u></b> : talkative",image:"images/vocabulary-set-5/31to35.png"},
+35:{text:"<b><u>अत्यधिक बोलने वाला</u></b><br>Garrulous means excessively talkative.<br><b><u>Synonym</u></b> : loquacious<br><b><u>Antonym</u></b> : silent",image:"images/vocabulary-set-5/31to35.png"},
 
-8: {
-text: "<b><u>नाराज़गी दिखाना</u></b><br>Frowned means showing displeasure or disapproval through facial expression.<br><i>Rhyming trick:</i> wrong पाया, face <b>frowned</b> 😠",
-image: ""
-},
+36:{text:"<b><u>विवाद</u></b><br>Contention means disagreement.<br><b><u>Synonym</u></b> : dispute<br><b><u>Antonym</u></b> : agreement",image:"images/vocabulary-set-5/36to40.png"},
+37:{text:"<b><u>अदृश्य-सा</u></b><br>Inconspicuous means not easily noticed.<br><b><u>Synonym</u></b> : unnoticed<br><b><u>Antonym</u></b> : obvious",image:"images/vocabulary-set-5/36to40.png"},
+38:{text:"<b><u>प्रसिद्ध</u></b><br>Prominent means well-known.<br><b><u>Synonym</u></b> : notable<br><b><u>Antonym</u></b> : obscure",image:"images/vocabulary-set-5/36to40.png"},
+39:{text:"<b><u>गंभीर</u></b><br>Grim means harsh or serious.<br><b><u>Synonym</u></b> : severe<br><b><u>Antonym</u></b> : cheerful",image:"images/vocabulary-set-5/36to40.png"},
+40:{text:"<b><u>उदास</u></b><br>Gloomy means sad or dark.<br><b><u>Synonym</u></b> : bleak<br><b><u>Antonym</u></b> : bright",image:"images/vocabulary-set-5/36to40.png"},
 
-9: {
-text: "<b><u>चमकती मुस्कान</u></b><br>Beamed means smiling brightly with happiness or pride.<br><i>Rhyming trick:</i> dream fulfilled, face <b>beamed</b> 😄",
-image: ""
-},
+41:{text:"<b><u>धोखा देना</u></b><br>Bluff means to mislead.<br><b><u>Synonym</u></b> : deceive<br><b><u>Antonym</u></b> : reveal",image:"images/vocabulary-set-5/41to45.png"},
+42:{text:"<b><u>चिड़चिड़ा</u></b><br>Peevish means easily irritated.<br><b><u>Synonym</u></b> : irritable<br><b><u>Antonym</u></b> : calm",image:"images/vocabulary-set-5/41to45.png"},
+43:{text:"<b><u>असहमति</u></b><br>Discord means lack of harmony.<br><b><u>Synonym</u></b> : conflict<br><b><u>Antonym</u></b> : harmony",image:"images/vocabulary-set-5/41to45.png"},
+44:{text:"<b><u>सामंजस्य</u></b><br>Harmony means pleasant agreement.<br><b><u>Synonym</u></b> : accord<br><b><u>Antonym</u></b> : discord",image:"images/vocabulary-set-5/41to45.png"},
+45:{text:"<b><u>अनुरूपता</u></b><br>Conformity means following rules.<br><b><u>Synonym</u></b> : compliance<br><b><u>Antonym</u></b> : rebellion",image:"images/vocabulary-set-5/41to45.png"},
 
-10: {
-text: "<b><u>क्रोधित दृष्टि</u></b><br>Glowered means staring angrily or menacingly at someone.<br><i>Rhyming trick:</i> anger powered – <b>glowered</b> 👿",
-image: ""
-},
-
-11: {
-text: "<b><u>तिरस्कार करना</u></b><br>Disdained means treating something as unworthy of respect.<br><i>Rhyming trick:</i> cheap gain – <b>disdain</b> 😤",
-image: ""
-},
-
-12: {
-text: "<b><u>स्त्रीसुलभ</u></b><br>Effeminate refers to having traits traditionally considered feminine.<br><i>Rhyming trick:</i> soft tone – <b>effeminate</b> zone 🎭",
-image: ""
-},
-
-13: {
-text: "<b><u>घोर नफ़रत</u></b><br>Detesting means feeling intense dislike or hatred for something.<br><i>Rhyming trick:</i> hate testing – <b>detesting</b> 😡",
-image: ""
-},
-
-14: {
-text: "<b><u>उपद्रवी प्रवृत्ति</u></b><br>Hooliganism means violent or rowdy behavior, often in public places.<br><i>Rhyming trick:</i> school नहीं, <b>hooliganism</b> rule 🧨",
-image: ""
-},
-
-15: {
-text: "<b><u>निराशावादी अविश्वास</u></b><br>Cynicism is the tendency to doubt sincerity and expect selfish motives.<br><i>Rhyming trick:</i> trust missing – <b>cynicism</b> 😐",
-image: ""
-},
-
-16: {
-text: "<b><u>यातायात के साधन</u></b><br>Conveyances refers to vehicles or means used to transport people or goods from one place to another.<br><i>Rhyming trick:</i> bus–van chances, <b>conveyances</b> 🚍",
-image: ""
-},
-
-17: {
-text: "<b><u>नवजीवन देना</u></b><br>Rejuvenate means to restore energy, strength, or youthful freshness.<br><i>Rhyming trick:</i> juice पिया, <b>rejuvenate</b> किया 🍹",
-image: ""
-},
-
-18: {
-text: "<b><u>गारंटी देना</u></b><br>Vouch means to confirm the truth or reliability of someone or something.<br><i>Rhyming trick:</i> doubt couch, I <b>vouch</b> 👍",
-image: ""
-},
-
-19: {
-text: "<b><u>पीड़ा या कष्ट</u></b><br>Affliction refers to something that causes prolonged suffering or distress.<br><i>Rhyming trick:</i> pain restriction – <b>affliction</b> 😖",
-image: ""
-},
-
-20: {
-text: "<b><u>दुविधाजनक स्थिति</u></b><br>Predicament means a difficult, unpleasant, or embarrassing situation.<br><i>Rhyming trick:</i> problem packet – <b>predicament</b> 🤔",
-image: ""
-},
-
-21: {
-text: "<b><u>गिरवी ऋण</u></b><br>Mortgage is a loan in which property is kept as security until repayment.<br><i>Rhyming trick:</i> more cash – <b>mortgage</b> 🏠",
-image: ""
-},
-
-22: {
-text: "<b><u>खतरे में</u></b><br>Jeopardy means exposure to danger, risk, or harm.<br><i>Rhyming trick:</i> danger ready – <b>jeopardy</b> ⚠️",
-image: ""
-},
-
-23: {
-text: "<b><u>सांत्वना</u></b><br>Consolation refers to comfort received after disappointment or loss.<br><i>Rhyming trick:</i> loss sensation – <b>consolation</b> 🤍",
-image: ""
-},
-
-24: {
-text: "<b><u>तीव्र दुर्गंध</u></b><br>Stench means a strong, offensive, and unpleasant smell.<br><i>Rhyming trick:</i> nose wrench – <b>stench</b> 🤢",
-image: ""
-},
-
-25: {
-text: "<b><u>निर्लज्ज साहस</u></b><br>Brazen describes bold behavior without shame or embarrassment.<br><i>Rhyming trick:</i> shame frozen – <b>brazen</b> 😎",
-image: ""
-},
-
-26: {
-text: "<b><u>फूलना-फलना</u></b><br>Thrive means to grow strongly, prosper, or succeed.<br><i>Rhyming trick:</i> survive to <b>thrive</b> 🌱",
-image: ""
-},
-
-27: {
-text: "<b><u>उदार</u></b><br>Lenient means showing mercy or being less strict in judgment or punishment.<br><i>Rhyming trick:</i> rule light – <b>lenient</b> 🙂",
-image: ""
-},
-
-28: {
-text: "<b><u>संगीत क्षमता की हानि</u></b><br>Amusia is a neurological condition involving loss of musical ability.<br><i>Rhyming trick:</i> no tune – <b>amusia</b> 🎵❌",
-image: ""
-},
-
-29: {
-text: "<b><u>कटु रोष</u></b><br>Resentment is a deep feeling of anger caused by unfair treatment.<br><i>Rhyming trick:</i> pain payment – <b>resentment</b> 😠",
-image: ""
-},
-
-30: {
-text: "<b><u>जिम्मेदार संरक्षण</u></b><br>Stewardship means responsible care, management, or guardianship of resources.<br><i>Rhyming trick:</i> care leadership – <b>stewardship</b> 🌍",
-image: ""
-},
-
-31: {
-text: "<b><u>आक्रामक</u></b><br>Bellicose describes aggressive or war-like behavior and attitude.<br><i>Rhyming trick:</i> fight close – <b>bellicose</b> 🔥",
-image: ""
-},
-
-32: {
-text: "<b><u>गुट</u></b><br>Clique means a small, exclusive group that does not easily allow outsiders.<br><i>Rhyming trick:</i> group sleek – <b>clique</b> 🤝",
-image: ""
-},
-
-33: {
-text: "<b><u>सभा</u></b><br>Congregation refers to a group of people assembled together, especially for a purpose.<br><i>Rhyming trick:</i> crowd nation – <b>congregation</b> 👥",
-image: ""
-},
-
-34: {
-text: "<b><u>अल्पभाषी</u></b><br>Reticent means unwilling to speak freely or reveal thoughts.<br><i>Rhyming trick:</i> silent intent – <b>reticent</b> 🤐",
-image: ""
-},
-
-35: {
-text: "<b><u>अत्यधिक बोलने वाला</u></b><br>Garrulous describes someone who talks excessively.<br><i>Rhyming trick:</i> talk surplus – <b>garrulous</b> 🗣️",
-image: ""
-},
-
-36: {
-text: "<b><u>विवाद</u></b><br>Contention means a disagreement or argument over an issue.<br><i>Rhyming trick:</i> fight mention – <b>contention</b> ⚖️",
-image: ""
-},
-
-37: {
-text: "<b><u>अदृश्य-सा</u></b><br>Inconspicuous means not attracting attention or easily noticed.<br><i>Rhyming trick:</i> hidden focus – <b>inconspicuous</b> 🕵️",
-image: ""
-},
-
-38: {
-text: "<b><u>प्रसिद्ध</u></b><br>Prominent refers to someone well-known or important.<br><i>Rhyming trick:</i> shine eminent – <b>prominent</b> ⭐",
-image: ""
-},
-
-39: {
-text: "<b><u>गंभीर</u></b><br>Grim describes a situation that is serious, harsh, or depressing.<br><i>Rhyming trick:</i> smile dim – <b>grim</b> 😔",
-image: ""
-},
-
-40: {
-text: "<b><u>उदास</u></b><br>Gloomy means dark, sad, or depressing in mood or atmosphere.<br><i>Rhyming trick:</i> sad room – <b>gloomy</b> 🌧️",
-image: ""
-},
-
-41: {
-text: "<b><u>धोखा देना</u></b><br>Bluff means to deceive someone by pretending or misleading.<br><i>Rhyming trick:</i> fake stuff – <b>bluff</b> 🎭",
-image: ""
-},
-
-42: {
-text: "<b><u>चिड़चिड़ा</u></b><br>Peevish describes someone who is easily irritated or annoyed.<br><i>Rhyming trick:</i> sleep-less wish – <b>peevish</b> 😣",
-image: ""
-},
-
-43: {
-text: "<b><u>असहमति</u></b><br>Discord refers to lack of harmony or agreement.<br><i>Rhyming trick:</i> peace cord cut – <b>discord</b> ⚡",
-image: ""
-},
-
-44: {
-text: "<b><u>सामंजस्य</u></b><br>Harmony means pleasant agreement or balance among people or sounds.<br><i>Rhyming trick:</i> calm melody – <b>harmony</b> 🎶",
-image: ""
-},
-
-45: {
-text: "<b><u>अनुरूपता</u></b><br>Conformity means behaving according to accepted rules or standards.<br><i>Rhyming trick:</i> norm-formity – <b>conformity</b> 📏",
-image: ""
-},
-46: {
-text: "<b><u>तेज़ और फुर्तीला</u></b><br>Brisk means quick, energetic, and active in movement or manner.<br><i>Rhyming trick:</i> fast risk – <b>brisk</b> 🚶‍♂️",
-image: ""
-},
-
-47: {
-text: "<b><u>जोशीला</u></b><br>Vivacious describes someone who is lively, animated, and full of enthusiasm.<br><i>Rhyming trick:</i> vibe delicious – <b>vivacious</b> 💃",
-image: ""
-},
-
-48: {
-text: "<b><u>निराशाजनक</u></b><br>Dismal refers to something that is gloomy, depressing, or hopeless.<br><i>Rhyming trick:</i> hope fissile – <b>dismal</b> 🌫️",
-image: ""
-},
-
-49: {
-text: "<b><u>हँसमुख</u></b><br>Jovial means cheerful, friendly, and good-humored.<br><i>Rhyming trick:</i> joy viral – <b>jovial</b> 😄",
-image: ""
-},
-
-50: {
-text: "<b><u>जनभावनाओं से खेलने वाला नेता</u></b><br>Demagogue is a leader who gains power by appealing to emotions rather than reason.<br><i>Rhyming trick:</i> drama vogue – <b>demagogue</b> 🎤",
-image: ""
-}
-
-}
+46:{text:"<b><u>तेज़ और फुर्तीला</u></b><br>Brisk means energetic.<br><b><u>Synonym</u></b> : lively<br><b><u>Antonym</u></b> : sluggish",image:"images/vocabulary-set-5/46to50.png"},
+47:{text:"<b><u>जोशीला</u></b><br>Vivacious means full of energy.<br><b><u>Synonym</u></b> : animated<br><b><u>Antonym</u></b> : dull",image:"images/vocabulary-set-5/46to50.png"},
+48:{text:"<b><u>निराशाजनक</u></b><br>Dismal means depressing.<br><b><u>Synonym</u></b> : gloomy<br><b><u>Antonym</u></b> : hopeful",image:"images/vocabulary-set-5/46to50.png"},
+49:{text:"<b><u>हँसमुख</u></b><br>Jovial means cheerful.<br><b><u>Synonym</u></b> : merry<br><b><u>Antonym</u></b> : gloomy",image:"images/vocabulary-set-5/46to50.png"},
+50:{text:"<b><u>जनभावनाओं से खेलने वाला नेता</u></b><br>Demagogue is a leader who manipulates emotions.<br><b><u>Synonym</u></b> : agitator<br><b><u>Antonym</u></b> : statesman",image:"images/vocabulary-set-5/46to50.png"}
+};
