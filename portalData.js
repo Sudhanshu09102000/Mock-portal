@@ -255,7 +255,6 @@ const PORTAL_DATA = [
           { name: "Set 13", file: "vocabulary-set-13" },
           { name: "Set 14", file: "vocabulary-set-14" },
           { name: "Set 15", file: "vocabulary-set-15" },
-          { name: "Set 16", file: "vocabulary-set-16" },
         ]
       },
 
@@ -330,10 +329,9 @@ const PORTAL_DATA = [
     colorClass: "others",
     topics: [
       {
-        name: "Coming Soon...",
+        name: "The Brook – Class 8 ICSE",
         subtopics: [
-          { name: "Coming Soon...", file: "number-analogy" },
-          { name: "Coming Soon...", file: "alphabet-analogy" }
+          { name: "Vocabulary", file: "The-Brook" },
         ]
       }
     ]
