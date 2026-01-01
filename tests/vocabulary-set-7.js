@@ -355,259 +355,255 @@ image: ''
 
 // placeholder
 const explanations = {
-    1: {
-text: "<b><u>बोझ डालना</u></b><br>Encumber means to burden, restrict, or weigh down progress or movement, often making tasks harder to perform.<br><i>Rhyming trick:</i> burden में lumber, काम हो <b>encumber</b>",
-image: ""
+
+1:{
+text:"<b><u>बोझ डालना</u></b><br>Encumber means to burden or restrict movement or progress.<br><b>Synonym:</b><br>burden<br><b>Antonym:</b><br>relieve",
+image:"images/vocabulary-set-7/1to5.png"
 },
 
-2: {
-text: "<b><u>हक्का-बक्का</u></b><br>Nonplussed refers to being so surprised or confused that one does not know how to respond.<br><i>Rhyming trick:</i> shock से fussed, दिमाग <b>nonplussed</b>",
-image: ""
+2:{
+text:"<b><u>हक्का-बक्का</u></b><br>Nonplussed means extremely confused or unsure how to react.<br><b>Synonym:</b><br>bewildered<br><b>Antonym:</b><br>composed",
+image:"images/vocabulary-set-7/1to5.png"
 },
 
-3: {
-text: "<b><u>बेकाबू रूप से फैला</u></b><br>Rampant describes something that spreads unchecked or grows without control.<br><i>Rhyming trick:</i> stamp-ant फैल गया – <b>rampant</b>",
-image: ""
+3:{
+text:"<b><u>बेकाबू रूप से फैला</u></b><br>Rampant means spreading unchecked or uncontrolled.<br><b>Synonym:</b><br>uncontrolled<br><b>Antonym:</b><br>restricted",
+image:"images/vocabulary-set-7/1to5.png"
 },
 
-4: {
-text: "<b><u>अत्यंत शक्तिशाली</u></b><br>Potent means having great power, influence, or effect even in small amounts.<br><i>Rhyming trick:</i> power बन गया patent – <b>potent</b>",
-image: ""
+4:{
+text:"<b><u>अत्यंत शक्तिशाली</u></b><br>Potent means having great power or effect.<br><b>Synonym:</b><br>powerful<br><b>Antonym:</b><br>weak",
+image:"images/vocabulary-set-7/1to5.png"
 },
 
-5: {
-text: "<b><u>धराशायी</u></b><br>Prostrate means lying flat, helpless, or overcome physically or emotionally.<br><i>Rhyming trick:</i> ground पर straight – <b>prostrate</b>",
-image: ""
+5:{
+text:"<b><u>धराशायी</u></b><br>Prostrate means lying flat or completely helpless.<br><b>Synonym:</b><br>helpless<br><b>Antonym:</b><br>upright",
+image:"images/vocabulary-set-7/1to5.png"
 },
 
-6: {
-text: "<b><u>इकट्ठा करना</u></b><br>Garner means to gather or collect something gradually, such as support or information.<br><i>Rhyming trick:</i> gather किया, jar-ner – <b>garner</b>",
-image: ""
+6:{
+text:"<b><u>इकट्ठा करना</u></b><br>Garner means to collect something gradually.<br><b>Synonym:</b><br>collect<br><b>Antonym:</b><br>scatter",
+image:"images/vocabulary-set-7/6to10.png"
 },
 
-7: {
-text: "<b><u>पूरी तरह हराना</u></b><br>Rout means to defeat an enemy completely and forcefully.<br><i>Rhyming trick:</i> doubt गया out – <b>rout</b>",
-image: ""
+7:{
+text:"<b><u>पूरी तरह हराना</u></b><br>Rout means to defeat completely and decisively.<br><b>Synonym:</b><br>defeat<br><b>Antonym:</b><br>surrender",
+image:"images/vocabulary-set-7/6to10.png"
 },
 
-8: {
-text: "<b><u>आत्मत्याग</u></b><br>Abnegation refers to self-denial or giving up personal desires for a greater cause.<br><i>Rhyming trick:</i> self को negate – <b>abnegation</b>",
-image: ""
+8:{
+text:"<b><u>आत्मत्याग</u></b><br>Abnegation means giving up personal desires.<br><b>Synonym:</b><br>sacrifice<br><b>Antonym:</b><br>indulgence",
+image:"images/vocabulary-set-7/6to10.png"
 },
 
-9: {
-text: "<b><u>सड़ा हुआ मांस</u></b><br>Carrion means the decaying flesh of dead animals used as food by scavengers.<br><i>Rhyming trick:</i> dead का ration – <b>carrion</b>",
-image: ""
+9:{
+text:"<b><u>सड़ा हुआ मांस</u></b><br>Carrion means decaying flesh of dead animals.<br><b>Synonym:</b><br>decay<br><b>Antonym:</b><br>freshness",
+image:"images/vocabulary-set-7/6to10.png"
 },
 
-10: {
-text: "<b><u>समाधिलेख</u></b><br>An epitaph is a short inscription written on a tombstone in memory of the dead.<br><i>Rhyming trick:</i> death का paragraph – <b>epitaph</b>",
-image: ""
+10:{
+text:"<b><u>समाधिलेख</u></b><br>Epitaph means an inscription on a tombstone.<br><b>Synonym:</b><br>inscription<br><b>Antonym:</b><br>silence",
+image:"images/vocabulary-set-7/6to10.png"
 },
 
-11: {
-text: "<b><u>भगोड़ा</u></b><br>Fugitive refers to a person who escapes from custody or avoids arrest.<br><i>Rhyming trick:</i> police से negative – <b>fugitive</b>",
-image: ""
+11:{
+text:"<b><u>भगोड़ा</u></b><br>Fugitive means a person who escapes from custody.<br><b>Synonym:</b><br>escapee<br><b>Antonym:</b><br>captive",
+image:"images/vocabulary-set-7/11to15.png"
 },
 
-12: {
-text: "<b><u>छूट या गुंजाइश</u></b><br>Leeway means freedom or flexibility to act within limits.<br><i>Rhyming trick:</i> थोड़ी way दे – <b>leeway</b>",
-image: ""
+12:{
+text:"<b><u>छूट या गुंजाइश</u></b><br>Leeway means freedom to act within limits.<br><b>Synonym:</b><br>flexibility<br><b>Antonym:</b><br>restriction",
+image:"images/vocabulary-set-7/11to15.png"
 },
 
-13: {
-text: "<b><u>गबन</u></b><br>Embezzlement is the act of misusing money entrusted to one’s care.<br><i>Rhyming trick:</i> money में puzzle meant – <b>embezzlement</b>",
-image: ""
+13:{
+text:"<b><u>गबन</u></b><br>Embezzlement means misuse of entrusted money.<br><b>Synonym:</b><br>misappropriation<br><b>Antonym:</b><br>honesty",
+image:"images/vocabulary-set-7/11to15.png"
 },
 
-14: {
-text: "<b><u>डगमगाना</u></b><br>Vacillate means to waver between choices without firm decision.<br><i>Rhyming trick:</i> कभी yes कभी late – <b>vacillate</b>",
-image: ""
+14:{
+text:"<b><u>डगमगाना</u></b><br>Vacillate means to waver between choices.<br><b>Synonym:</b><br>waver<br><b>Antonym:</b><br>decide",
+image:"images/vocabulary-set-7/11to15.png"
 },
 
-15: {
-text: "<b><u>शर्मिंदा</u></b><br>Abashed means feeling embarrassed or ashamed due to attention or events.<br><i>Rhyming trick:</i> bash हुआ face – <b>abashed</b>",
-image: ""
+15:{
+text:"<b><u>शर्मिंदा</u></b><br>Abashed means feeling embarrassed.<br><b>Synonym:</b><br>embarrassed<br><b>Antonym:</b><br>confident",
+image:"images/vocabulary-set-7/11to15.png"
 },
 
-16: {
-text: "<b><u>कम करना</u></b><br>Curtail means to reduce or cut short something deliberately.<br><i>Rhyming trick:</i> tail cut – <b>curtail</b>",
-image: ""
+16:{
+text:"<b><u>कम करना</u></b><br>Curtail means to reduce deliberately.<br><b>Synonym:</b><br>reduce<br><b>Antonym:</b><br>expand",
+image:"images/vocabulary-set-7/16to20.png"
 },
 
-17: {
-text: "<b><u>व्यंग्यपूर्ण</u></b><br>Sardonic describes grim, mocking, or cynical humor or expression.<br><i>Rhyming trick:</i> sad का tonic – <b>sardonic</b>",
-image: ""
+17:{
+text:"<b><u>व्यंग्यपूर्ण</u></b><br>Sardonic means grimly mocking.<br><b>Synonym:</b><br>cynical<br><b>Antonym:</b><br>sincere",
+image:"images/vocabulary-set-7/16to20.png"
 },
 
-18: {
-text: "<b><u>असंगत</u></b><br>Discordant refers to lack of harmony, producing harsh or unpleasant sound.<br><i>Rhyming trick:</i> dis में chord ant – <b>discordant</b>",
-image: ""
+18:{
+text:"<b><u>असंगत</u></b><br>Discordant means lacking harmony.<br><b>Synonym:</b><br>harsh<br><b>Antonym:</b><br>harmonious",
+image:"images/vocabulary-set-7/16to20.png"
 },
 
-19: {
-text: "<b><u>मधुर</u></b><br>Dulcet means sweet and pleasing to the ear or senses.<br><i>Rhyming trick:</i> dull cut, sweet – <b>dulcet</b>",
-image: ""
+19:{
+text:"<b><u>मधुर</u></b><br>Dulcet means sweet and soothing.<br><b>Synonym:</b><br>melodious<br><b>Antonym:</b><br>harsh",
+image:"images/vocabulary-set-7/16to20.png"
 },
 
-20: {
-text: "<b><u>फूलों का गुलदस्ता</u></b><br>Posies are small bunches of flowers, often carried or arranged decoratively.<br><i>Rhyming trick:</i> roses की cozy – <b>posies</b>",
-image: ""
+20:{
+text:"<b><u>फूलों का गुलदस्ता</u></b><br>Posies are small bunches of flowers.<br><b>Synonym:</b><br>bouquet<br><b>Antonym:</b><br>weeds",
+image:"images/vocabulary-set-7/16to20.png"
 },
 
-    21: {
-text: "<b><u>निष्क्रिय</u></b><br>Quiescent means remaining inactive, calm, or dormant for a long time.<br><i>Rhyming trick:</i> quiet-सेंट, ज्वालामुखी <b>quiescent</b>",
-image: ""
+21:{
+text:"<b><u>निष्क्रिय</u></b><br>Quiescent means inactive or dormant.<br><b>Synonym:</b><br>dormant<br><b>Antonym:</b><br>active",
+image:"images/vocabulary-set-7/21to25.png"
 },
 
-22: {
-text: "<b><u>हाथ-पैर मारना</u></b><br>Flounder means to struggle helplessly without making progress.<br><i>Rhyming trick:</i> पानी में blunder – <b>flounder</b>",
-image: ""
+22:{
+text:"<b><u>हाथ-पैर मारना</u></b><br>Flounder means to struggle helplessly.<br><b>Synonym:</b><br>struggle<br><b>Antonym:</b><br>succeed",
+image:"images/vocabulary-set-7/21to25.png"
 },
 
-23: {
-text: "<b><u>अनुकरण करना</u></b><br>Emulate means to try to match or equal someone by imitation.<br><i>Rhyming trick:</i> aimulate, copy-लेट – <b>emulate</b>",
-image: ""
+23:{
+text:"<b><u>अनुकरण करना</u></b><br>Emulate means to imitate to match or equal.<br><b>Synonym:</b><br>imitate<br><b>Antonym:</b><br>ignore",
+image:"images/vocabulary-set-7/21to25.png"
 },
 
-24: {
-text: "<b><u>दबाना</u></b><br>Quell means to suppress or put an end to something forcefully.<br><i>Rhyming trick:</i> problem को kill – <b>quell</b>",
-image: ""
+24:{
+text:"<b><u>दबाना</u></b><br>Quell means to suppress forcefully.<br><b>Synonym:</b><br>suppress<br><b>Antonym:</b><br>encourage",
+image:"images/vocabulary-set-7/21to25.png"
 },
 
-25: {
-text: "<b><u>सुगंध</u></b><br>Redolence refers to a pleasant smell or fragrance lingering in the air.<br><i>Rhyming trick:</i> rose की smell dense – <b>redolence</b>",
-image: ""
+25:{
+text:"<b><u>सुगंध</u></b><br>Redolence means a pleasant lingering smell.<br><b>Synonym:</b><br>fragrance<br><b>Antonym:</b><br>stench",
+image:"images/vocabulary-set-7/21to25.png"
 },
 
-26: {
-text: "<b><u>छायादार ढांचा</u></b><br>Pergola is an outdoor garden structure with pillars and an open roof.<br><i>Rhyming trick:</i> park में gola – <b>pergola</b>",
-image: ""
+26:{
+text:"<b><u>छायादार ढांचा</u></b><br>Pergola is an outdoor garden structure.<br><b>Synonym:</b><br>arbor<br><b>Antonym:</b><br>void",
+image:"images/vocabulary-set-7/26to30.png"
 },
 
-27: {
-text: "<b><u>लोककथा ज्ञान</u></b><br>Lore means traditional knowledge, beliefs, or stories passed through generations.<br><i>Rhyming trick:</i> old की store – <b>lore</b>",
-image: ""
+27:{
+text:"<b><u>लोककथा ज्ञान</u></b><br>Lore means traditional knowledge.<br><b>Synonym:</b><br>folklore<br><b>Antonym:</b><br>ignorance",
+image:"images/vocabulary-set-7/26to30.png"
 },
 
-28: {
-text: "<b><u>झोलाछाप</u></b><br>Quacks are dishonest people who pretend to have medical skills.<br><i>Rhyming trick:</i> fake packs – <b>quacks</b>",
-image: ""
+28:{
+text:"<b><u>झोलाछाप</u></b><br>Quacks are fake medical practitioners.<br><b>Synonym:</b><br>charlatans<br><b>Antonym:</b><br>experts",
+image:"images/vocabulary-set-7/26to30.png"
 },
 
-29: {
-text: "<b><u>जिद्दी स्वभाव</u></b><br>Cussedness refers to stubborn ill-temper or perverse behavior.<br><i>Rhyming trick:</i> गुस्सा plus-ness – <b>cussedness</b>",
-image: ""
+29:{
+text:"<b><u>जिद्दी स्वभाव</u></b><br>Cussedness means stubborn ill temper.<br><b>Synonym:</b><br>obstinacy<br><b>Antonym:</b><br>compliance",
+image:"images/vocabulary-set-7/26to30.png"
 },
 
-30: {
-text: "<b><u>बेड़ा</u></b><br>Fleet refers to a group of ships or vehicles operating together.<br><i>Rhyming trick:</i> ships की meet – <b>fleet</b>",
-image: ""
+30:{
+text:"<b><u>बेड़ा</u></b><br>Fleet means a group of ships or vehicles.<br><b>Synonym:</b><br>armada<br><b>Antonym:</b><br>single",
+image:"images/vocabulary-set-7/26to30.png"
 },
 
-31: {
-text: "<b><u>फंसा छोड़ देना</u></b><br>Strand means to leave someone isolated without help or transport.<br><i>Rhyming trick:</i> road बंद – <b>strand</b>",
-image: ""
+31:{
+text:"<b><u>फंसा छोड़ देना</u></b><br>Strand means to leave isolated.<br><b>Synonym:</b><br>abandon<br><b>Antonym:</b><br>rescue",
+image:"images/vocabulary-set-7/31to35.png"
 },
 
-32: {
-text: "<b><u>आवारा घूमना</u></b><br>Loaf means to spend time idly without work or purpose.<br><i>Rhyming trick:</i> no job, loaf – <b>loaf</b>",
-image: ""
+32:{
+text:"<b><u>आवारा घूमना</u></b><br>Loaf means to waste time idly.<br><b>Synonym:</b><br>idle<br><b>Antonym:</b><br>work",
+image:"images/vocabulary-set-7/31to35.png"
 },
 
-33: {
-text: "<b><u>झुंड</u></b><br>Swarm means a large group moving together, especially insects or people.<br><i>Rhyming trick:</i> warm में arm – <b>swarm</b>",
-image: ""
+33:{
+text:"<b><u>झुंड</u></b><br>Swarm means a large moving group.<br><b>Synonym:</b><br>crowd<br><b>Antonym:</b><br>scatter",
+image:"images/vocabulary-set-7/31to35.png"
 },
 
-34: {
-text: "<b><u>भयावह</u></b><br>Formidable describes something very difficult or intimidating.<br><i>Rhyming trick:</i> डर middle – <b>formidable</b>",
-image: ""
+34:{
+text:"<b><u>भयावह</u></b><br>Formidable means inspiring fear or respect.<br><b>Synonym:</b><br>daunting<br><b>Antonym:</b><br>easy",
+image:"images/vocabulary-set-7/31to35.png"
 },
 
-35: {
-text: "<b><u>संकलन</u></b><br>An anthology is a collection of selected literary works.<br><i>Rhyming trick:</i> many stories – <b>anthology</b>",
-image: ""
+35:{
+text:"<b><u>संकलन</u></b><br>An anthology is a collection of works.<br><b>Synonym:</b><br>collection<br><b>Antonym:</b><br>fragment",
+image:"images/vocabulary-set-7/31to35.png"
 },
 
-36: {
-text: "<b><u>पागलपन से</u></b><br>Maniacally means behaving in a wild or frenzied manner.<br><i>Rhyming trick:</i> brain mechanically – <b>maniacally</b>",
-image: ""
+36:{
+text:"<b><u>पागलपन से</u></b><br>Maniacally means wildly or frenziedly.<br><b>Synonym:</b><br>frantically<br><b>Antonym:</b><br>calmly",
+image:"images/vocabulary-set-7/36to40.png"
 },
 
-37: {
-text: "<b><u>कुल्हाड़ी</u></b><br>Hatchet is a small axe used for chopping or cutting.<br><i>Rhyming trick:</i> hat से cut – <b>hatchet</b>",
-image: ""
+37:{
+text:"<b><u>कुल्हाड़ी</u></b><br>Hatchet is a small axe.<br><b>Synonym:</b><br>axe<br><b>Antonym:</b><br>shield",
+image:"images/vocabulary-set-7/36to40.png"
 },
 
-38: {
-text: "<b><u>दृढ़ता से कहना</u></b><br>Aver means to assert or state something firmly as true.<br><i>Rhyming trick:</i> I ever say – <b>aver</b>",
-image: ""
+38:{
+text:"<b><u>दृढ़ता से कहना</u></b><br>Aver means to state firmly.<br><b>Synonym:</b><br>assert<br><b>Antonym:</b><br>deny",
+image:"images/vocabulary-set-7/36to40.png"
 },
 
-39: {
-text: "<b><u>हिचकिचाना</u></b><br>Dither means to hesitate nervously or be indecisive.<br><i>Rhyming trick:</i> delay with fear – <b>dither</b>",
-image: ""
+39:{
+text:"<b><u>हिचकिचाना</u></b><br>Dither means to hesitate nervously.<br><b>Synonym:</b><br>hesitate<br><b>Antonym:</b><br>decide",
+image:"images/vocabulary-set-7/36to40.png"
 },
 
-40: {
-text: "<b><u>सौंपना</u></b><br>Delegate means to assign duties or authority to another person.<br><i>Rhyming trick:</i> दे late, काम – <b>delegate</b>",
-image: ""
+40:{
+text:"<b><u>सौंपना</u></b><br>Delegate means to assign authority.<br><b>Synonym:</b><br>assign<br><b>Antonym:</b><br>retain",
+image:"images/vocabulary-set-7/36to40.png"
 },
 
-  41: {
-text: "<b><u>गुप्त मिलीभगत</u></b><br>Collude means to cooperate secretly, usually to deceive or gain unfair advantage.<br><i>Rhyming trick:</i> secret deal, include – <b>collude</b>",
-image: ""
+41:{
+text:"<b><u>गुप्त मिलीभगत</u></b><br>Collude means to cooperate secretly.<br><b>Synonym:</b><br>conspire<br><b>Antonym:</b><br>oppose",
+image:"images/vocabulary-set-7/41to45.png"
 },
 
-42: {
-text: "<b><u>तिजोरी</u></b><br>Coffer refers to a chest or strongbox used for storing money or valuables.<br><i>Rhyming trick:</i> gold का buffer – <b>coffer</b>",
-image: ""
+42:{
+text:"<b><u>तिजोरी</u></b><br>Coffer means a strongbox for valuables.<br><b>Synonym:</b><br>chest<br><b>Antonym:</b><br>poverty",
+image:"images/vocabulary-set-7/41to45.png"
 },
 
-43: {
-text: "<b><u>अनुपात में</u></b><br>Commensurate means equal in size, degree, or proportion to something else.<br><i>Rhyming trick:</i> crime के rate के mate – <b>commensurate</b>",
-image: ""
+43:{
+text:"<b><u>अनुपात में</u></b><br>Commensurate means equal in proportion.<br><b>Synonym:</b><br>proportional<br><b>Antonym:</b><br>unequal",
+image:"images/vocabulary-set-7/41to45.png"
 },
 
-44: {
-text: "<b><u>संध्या प्रार्थना</u></b><br>Vespers are evening prayers traditionally held in churches.<br><i>Rhyming trick:</i> sunset whispers – <b>vespers</b>",
-image: ""
+44:{
+text:"<b><u>संध्या प्रार्थना</u></b><br>Vespers are evening prayers.<br><b>Synonym:</b><br>prayers<br><b>Antonym:</b><br>silence",
+image:"images/vocabulary-set-7/41to45.png"
 },
 
-45: {
-text: "<b><u>पुष्पचक्र</u></b><br>Wreath is a circular arrangement of flowers or leaves used as decoration or tribute.<br><i>Rhyming trick:</i> flowers breathe – <b>wreath</b>",
-image: ""
+45:{
+text:"<b><u>पुष्पचक्र</u></b><br>Wreath is a circular flower arrangement.<br><b>Synonym:</b><br>garland<br><b>Antonym:</b><br>disorder",
+image:"images/vocabulary-set-7/41to45.png"
 },
 
-46: {
-text: "<b><u>तेजी से भागना</u></b><br>Scurry means to move quickly with small, hurried steps.<br><i>Rhyming trick:</i> hurry, furry – <b>scurry</b>",
-image: ""
+46:{
+text:"<b><u>तेजी से भागना</u></b><br>Scurry means to move quickly with short steps.<br><b>Synonym:</b><br>hurry<br><b>Antonym:</b><br>linger",
+image:"images/vocabulary-set-7/46to50.png"
 },
 
-47: {
-text: "<b><u>टकराकर उछलना</u></b><br>Ricocheting refers to something bouncing off a surface at an angle.<br><i>Rhyming trick:</i> rock hit, go changing – <b>ricocheting</b>",
-image: ""
+47:{
+text:"<b><u>टकराकर उछलना</u></b><br>Ricocheting means bouncing off a surface.<br><b>Synonym:</b><br>rebound<br><b>Antonym:</b><br>absorb",
+image:"images/vocabulary-set-7/46to50.png"
 },
 
-48: {
-text: "<b><u>बिगड़ना</u></b><br>Deteriorating means gradually becoming worse in condition or quality.<br><i>Rhyming trick:</i> delay care, going – <b>deteriorating</b>",
-image: ""
+48:{
+text:"<b><u>बिगड़ना</u></b><br>Deteriorating means becoming worse gradually.<br><b>Synonym:</b><br>decline<br><b>Antonym:</b><br>improve",
+image:"images/vocabulary-set-7/46to50.png"
 },
 
-49: {
-text: "<b><u>सबसे निचला स्तर</u></b><br>Nadir means the lowest point in a situation, condition, or fortune.<br><i>Rhyming trick:</i> नीचे गिर – <b>nadir</b>",
-image: ""
+49:{
+text:"<b><u>सबसे निचला स्तर</u></b><br>Nadir means the lowest point.<br><b>Synonym:</b><br>low point<br><b>Antonym:</b><br>peak",
+image:"images/vocabulary-set-7/46to50.png"
 },
 
-50: {
-text: "<b><u>शब्दशः</u></b><br>Verbatim means repeating or recording words exactly as spoken or written.<br><i>Rhyming trick:</i> word-by-word, same tone – <b>verbatim</b>",
-image: ""
-}  
-    
-
-    
-    
-    
+50:{
+text:"<b><u>शब्दशः</u></b><br>Verbatim means word for word exactly.<br><b>Synonym:</b><br>exact<br><b>Antonym:</b><br>paraphrased",
+image:"images/vocabulary-set-7/46to50.png"
+}
 
 };
