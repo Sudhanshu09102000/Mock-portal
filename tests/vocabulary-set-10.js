@@ -353,256 +353,63 @@ image: ''
 
 // placeholder
 const explanations = {
-    1: {
-text: "<b><u>अशिष्टता</u></b><br>Impudence means rude, disrespectful, or insolent behavior toward someone, especially a superior.<br><b>Rhyming line:</b> rude attitude = <b>impudence</b>",
-image: ""
-},
+  1:{text:"<b><u>अशिष्टता</u></b><br>Impudence means rude, disrespectful, or insolent behavior.<br><b>Synonym:</b><br>insolence<br><b>Antonym:</b><br>politeness",image:"images/vocabulary-set-10/1to5.png"},
+  2:{text:"<b><u>लड़ाकू स्वभाव</u></b><br>Pugnacious describes someone eager to fight or argue.<br><b>Synonym:</b><br>belligerent<br><b>Antonym:</b><br>peaceful",image:"images/vocabulary-set-10/1to5.png"},
+  3:{text:"<b><u>दृढ़</u></b><br>Tenacious means holding firmly and not giving up easily.<br><b>Synonym:</b><br>persistent<br><b>Antonym:</b><br>yielding",image:"images/vocabulary-set-10/1to5.png"},
+  4:{text:"<b><u>अहानिकर</u></b><br>Unmalicious means free from harmful intent.<br><b>Synonym:</b><br>harmless<br><b>Antonym:</b><br>malicious",image:"images/vocabulary-set-10/1to5.png"},
+  5:{text:"<b><u>निरस</u></b><br>Drab means dull or lacking interest.<br><b>Synonym:</b><br>dull<br><b>Antonym:</b><br>vibrant",image:"images/vocabulary-set-10/1to5.png"},
 
-2: {
-text: "<b><u>लड़ाकू स्वभाव</u></b><br>Pugnacious describes someone who is eager or quick to fight or argue.<br><b>Rhyming line:</b> punch का passion – <b>pugnacious</b>",
-image: ""
-},
+  6:{text:"<b><u>अत्यंत गंभीर</u></b><br>Dire means extremely serious or urgent.<br><b>Synonym:</b><br>grave<br><b>Antonym:</b><br>minor",image:"images/vocabulary-set-10/6to10.png"},
+  7:{text:"<b><u>तुच्छ</u></b><br>Trivial means of little importance.<br><b>Synonym:</b><br>insignificant<br><b>Antonym:</b><br>important",image:"images/vocabulary-set-10/6to10.png"},
+  8:{text:"<b><u>निर्दोष</u></b><br>Benign means harmless in nature.<br><b>Synonym:</b><br>harmless<br><b>Antonym:</b><br>harmful",image:"images/vocabulary-set-10/6to10.png"},
+  9:{text:"<b><u>तेज़ी से</u></b><br>Briskly means quickly and energetically.<br><b>Synonym:</b><br>rapidly<br><b>Antonym:</b><br>slowly",image:"images/vocabulary-set-10/6to10.png"},
+  10:{text:"<b><u>उद्दंड</u></b><br>Wayward means difficult to control.<br><b>Synonym:</b><br>unruly<br><b>Antonym:</b><br>obedient",image:"images/vocabulary-set-10/6to10.png"},
 
-3: {
-text: "<b><u>दृढ़</u></b><br>Tenacious means holding firmly and not giving up easily despite difficulties.<br><b>Rhyming line:</b> tension में stick-ious – <b>tenacious</b>",
-image: ""
-},
+  11:{text:"<b><u>संक्षिप्त</u></b><br>Terse means brief and direct.<br><b>Synonym:</b><br>concise<br><b>Antonym:</b><br>verbose",image:"images/vocabulary-set-10/11to15.png"},
+  12:{text:"<b><u>उत्साहपूर्ण</u></b><br>Rhapsodic means highly enthusiastic.<br><b>Synonym:</b><br>ecstatic<br><b>Antonym:</b><br>indifferent",image:"images/vocabulary-set-10/11to15.png"},
+  13:{text:"<b><u>अत्यंत प्रसन्न</u></b><br>Ecstatic means extremely joyful.<br><b>Synonym:</b><br>overjoyed<br><b>Antonym:</b><br>miserable",image:"images/vocabulary-set-10/11to15.png"},
+  14:{text:"<b><u>हठधर्मिता</u></b><br>Recalcitrance means stubborn resistance.<br><b>Synonym:</b><br>defiance<br><b>Antonym:</b><br>obedience",image:"images/vocabulary-set-10/11to15.png"},
+  15:{text:"<b><u>जिद</u></b><br>Obstinacy means refusal to change views.<br><b>Synonym:</b><br>stubbornness<br><b>Antonym:</b><br>flexibility",image:"images/vocabulary-set-10/11to15.png"},
 
-4: {
-text: "<b><u>अहानिकर</u></b><br>Unmalicious means not intended to harm; free from ill will.<br><b>Rhyming line:</b> no malice, no vicious – <b>unmalicious</b>",
-image: ""
-},
+  16:{text:"<b><u>पूर्वानुमान</u></b><br>Prognostication means prediction of future events.<br><b>Synonym:</b><br>forecast<br><b>Antonym:</b><br>certainty",image:"images/vocabulary-set-10/16to20.png"},
+  17:{text:"<b><u>तीव्र पीड़ा</u></b><br>Pangs are sudden sharp pains.<br><b>Synonym:</b><br>spasms<br><b>Antonym:</b><br>comfort",image:"images/vocabulary-set-10/16to20.png"},
+  18:{text:"<b><u>अत्यल्प</u></b><br>Exiguous means very small in amount.<br><b>Synonym:</b><br>scanty<br><b>Antonym:</b><br>ample",image:"images/vocabulary-set-10/16to20.png"},
+  19:{text:"<b><u>चालाक</u></b><br>Wily means clever and deceptive.<br><b>Synonym:</b><br>cunning<br><b>Antonym:</b><br>naive",image:"images/vocabulary-set-10/16to20.png"},
+  20:{text:"<b><u>तेज़ी से गिरना</u></b><br>Plummeted means fell sharply.<br><b>Synonym:</b><br>collapsed<br><b>Antonym:</b><br>rose",image:"images/vocabulary-set-10/16to20.png"},
 
-5: {
-text: "<b><u>निरस</u></b><br>Drab refers to something dull, colorless, or lacking interest.<br><b>Rhyming line:</b> no fab, all dull – <b>drab</b>",
-image: ""
-},
+  21:{text:"<b><u>पर्यायवाची शब्दकोश</u></b><br>Thesaurus is a book of synonyms and antonyms.<br><b>Synonym:</b><br>lexicon<br><b>Antonym:</b><br>—",image:"images/vocabulary-set-10/21to25.png"},
+  22:{text:"<b><u>सर्वसमावेशी</u></b><br>Omnibus means containing many items.<br><b>Synonym:</b><br>comprehensive<br><b>Antonym:</b><br>limited",image:"images/vocabulary-set-10/21to25.png"},
+  23:{text:"<b><u>छोटी नाव</u></b><br>Dinghy is a small boat.<br><b>Synonym:</b><br>skiff<br><b>Antonym:</b><br>ship",image:"images/vocabulary-set-10/21to25.png"},
+  24:{text:"<b><u>मालवाहक जहाज़</u></b><br>Freighter is a cargo ship.<br><b>Synonym:</b><br>cargo ship<br><b>Antonym:</b><br>—",image:"images/vocabulary-set-10/21to25.png"},
+  25:{text:"<b><u>नौका सेवा</u></b><br>Ferry carries people or goods across water.<br><b>Synonym:</b><br>shuttle<br><b>Antonym:</b><br>—",image:"images/vocabulary-set-10/21to25.png"},
 
-6: {
-text: "<b><u>अत्यंत गंभीर</u></b><br>Dire means extremely serious, urgent, or desperate.<br><b>Rhyming line:</b> danger on fire – <b>dire</b>",
-image: ""
-},
+  26:{text:"<b><u>खान-पान की व्यवस्था करना</u></b><br>Cater means to provide food or services.<br><b>Synonym:</b><br>serve<br><b>Antonym:</b><br>neglect",image:"images/vocabulary-set-10/26to30.png"},
+  27:{text:"<b><u>संतुष्ट करना</u></b><br>Gratify means to please.<br><b>Synonym:</b><br>delight<br><b>Antonym:</b><br>displease",image:"images/vocabulary-set-10/26to30.png"},
+  28:{text:"<b><u>वीर</u></b><br>Gallant means brave and noble.<br><b>Synonym:</b><br>valiant<br><b>Antonym:</b><br>cowardly",image:"images/vocabulary-set-10/26to30.png"},
+  29:{text:"<b><u>कष्टदायक</u></b><br>Galling means very irritating.<br><b>Synonym:</b><br>annoying<br><b>Antonym:</b><br>pleasant",image:"images/vocabulary-set-10/26to30.png"},
+  30:{text:"<b><u>आसानी से बहकने वाला</u></b><br>Gullible means easily deceived.<br><b>Synonym:</b><br>credulous<br><b>Antonym:</b><br>skeptical",image:"images/vocabulary-set-10/26to30.png"},
 
-7: {
-text: "<b><u>तुच्छ</u></b><br>Trivial means of little importance or value.<br><b>Rhyming line:</b> try-vial, small deal – <b>trivial</b>",
-image: ""
-},
+  31:{text:"<b><u>असभ्य</u></b><br>Boorish means rude and unmannered.<br><b>Synonym:</b><br>uncouth<br><b>Antonym:</b><br>courteous",image:"images/vocabulary-set-10/31to35.png"},
+  32:{text:"<b><u>पीड़ा कम करना</u></b><br>Assuage means to relieve pain.<br><b>Synonym:</b><br>ease<br><b>Antonym:</b><br>aggravate",image:"images/vocabulary-set-10/31to35.png"},
+  33:{text:"<b><u>बेपरवाह</u></b><br>Nonchalant means unconcerned.<br><b>Synonym:</b><br>casual<br><b>Antonym:</b><br>anxious",image:"images/vocabulary-set-10/31to35.png"},
+  34:{text:"<b><u>घबराया हुआ</u></b><br>Flustered means confused due to stress.<br><b>Synonym:</b><br>agitated<br><b>Antonym:</b><br>calm",image:"images/vocabulary-set-10/31to35.png"},
+  35:{text:"<b><u>असहज</u></b><br>Disconcerted means mentally disturbed.<br><b>Synonym:</b><br>unsettled<br><b>Antonym:</b><br>composed",image:"images/vocabulary-set-10/31to35.png"},
 
-8: {
-text: "<b><u>निर्दोष</u></b><br>Benign means harmless and not dangerous, especially medically.<br><b>Rhyming line:</b> be-nice sign – <b>benign</b>",
-image: ""
-},
+  36:{text:"<b><u>हक्का-बक्का</u></b><br>Bewildered means completely confused.<br><b>Synonym:</b><br>perplexed<br><b>Antonym:</b><br>clear-headed",image:"images/vocabulary-set-10/36to40.png"},
+  37:{text:"<b><u>कम करना</u></b><br>Curtailing means reducing something.<br><b>Synonym:</b><br>cutback<br><b>Antonym:</b><br>expand",image:"images/vocabulary-set-10/36to40.png"},
+  38:{text:"<b><u>भ्रष्टाचार</u></b><br>Graft means corruption for personal gain.<br><b>Synonym:</b><br>bribery<br><b>Antonym:</b><br>honesty",image:"images/vocabulary-set-10/36to40.png"},
+  39:{text:"<b><u>विश्वसनीय</u></b><br>Credible means believable.<br><b>Synonym:</b><br>reliable<br><b>Antonym:</b><br>dubious",image:"images/vocabulary-set-10/36to40.png"},
+  40:{text:"<b><u>दूषित करना</u></b><br>Vitiation means spoiling something.<br><b>Synonym:</b><br>corruption<br><b>Antonym:</b><br>purification",image:"images/vocabulary-set-10/36to40.png"},
 
-9: {
-text: "<b><u>तेज़ी से</u></b><br>Briskly means in a quick, energetic manner.<br><b>Rhyming line:</b> quick risk-free – <b>briskly</b>",
-image: ""
-},
+  41:{text:"<b><u>नैतिक पतन</u></b><br>Debauch means moral corruption.<br><b>Synonym:</b><br>corrupt<br><b>Antonym:</b><br>purify",image:"images/vocabulary-set-10/41to45.png"},
+  42:{text:"<b><u>लहराना</u></b><br>Billow means swell like waves.<br><b>Synonym:</b><br>surge<br><b>Antonym:</b><br>flatten",image:"images/vocabulary-set-10/41to45.png"},
+  43:{text:"<b><u>अति-भोग</u></b><br>Indulgence means excessive enjoyment.<br><b>Synonym:</b><br>excess<br><b>Antonym:</b><br>restraint",image:"images/vocabulary-set-10/41to45.png"},
+  44:{text:"<b><u>हठी</u></b><br>Obstinate means stubborn.<br><b>Synonym:</b><br>adamant<br><b>Antonym:</b><br>pliant",image:"images/vocabulary-set-10/41to45.png"},
+  45:{text:"<b><u>अत्यधिक मूर्खता</u></b><br>Imbecility means extreme foolishness.<br><b>Synonym:</b><br>idiocy<br><b>Antonym:</b><br>wisdom",image:"images/vocabulary-set-10/41to45.png"},
 
-10: {
-text: "<b><u>उद्दंड</u></b><br>Wayward describes unpredictable or difficult-to-control behavior.<br><b>Rhyming line:</b> wrong way forward – <b>wayward</b>",
-image: ""
-},
-
-11: {
-text: "<b><u>संक्षिप्त</u></b><br>Terse means using very few words; brief and direct.<br><b>Rhyming line:</b> talk curse, cut short – <b>terse</b>",
-image: ""
-},
-
-12: {
-text: "<b><u>उत्साहपूर्ण</u></b><br>Rhapsodic means extravagantly emotional or enthusiastic.<br><b>Rhyming line:</b> rapture mode – <b>rhapsodic</b>",
-image: ""
-},
-
-13: {
-text: "<b><u>अत्यंत प्रसन्न</u></b><br>Ecstatic means filled with overwhelming joy or happiness.<br><b>Rhyming line:</b> extra-happy state – <b>ecstatic</b>",
-image: ""
-},
-
-14: {
-text: "<b><u>हठधर्मिता</u></b><br>Recalcitrance means stubborn resistance to authority or rules.<br><b>Rhyming line:</b> rules cancel trance – <b>recalcitrance</b>",
-image: ""
-},
-
-15: {
-text: "<b><u>जिद</u></b><br>Obstinacy refers to stubborn refusal to change one’s opinion.<br><b>Rhyming line:</b> opinion fix-ity – <b>obstinacy</b>",
-image: ""
-},
-
-16: {
-text: "<b><u>पूर्वानुमान</u></b><br>Prognostication means a prediction about future events.<br><b>Rhyming line:</b> future narration – <b>prognostication</b>",
-image: ""
-},
-
-17: {
-text: "<b><u>तीव्र पीड़ा</u></b><br>Pangs are sudden sharp feelings of pain or emotion.<br><b>Rhyming line:</b> pain bangs – <b>pangs</b>",
-image: ""
-},
-
-18: {
-text: "<b><u>अत्यल्प</u></b><br>Exiguous means very small in amount or size.<br><b>Rhyming line:</b> extra-less, too small – <b>exiguous</b>",
-image: ""
-},
-
-19: {
-text: "<b><u>चालाक</u></b><br>Wily means clever and skilled at deception or strategy.<br><b>Rhyming line:</b> wise and sly – <b>wily</b>",
-image: ""
-},
-
-20: {
-text: "<b><u>तेज़ी से गिरना</u></b><br>Plummeted means fell suddenly and sharply.<br><b>Rhyming line:</b> price tumbled – <b>plummeted</b>",
-image: ""
-},
-
-21: {
-text: "<b><u>पर्यायवाची शब्दकोश</u></b><br>A thesaurus is a reference book of synonyms and antonyms.<br><b>Rhyming line:</b> this-saurus gives word chorus – <b>thesaurus</b>",
-image: ""
-},
-
-22: {
-text: "<b><u>सर्वसमावेशी</u></b><br>Omnibus means containing many items in one collection.<br><b>Rhyming line:</b> all-in bus – <b>omnibus</b>",
-image: ""
-},
-
-23: {
-text: "<b><u>छोटी नाव</u></b><br>Dinghy is a small boat used for short trips or support.<br><b>Rhyming line:</b> tiny thing-y – <b>dinghy</b>",
-image: ""
-},
-
-24: {
-text: "<b><u>मालवाहक जहाज़</u></b><br>Freighter is a ship used to transport cargo.<br><b>Rhyming line:</b> freight carrier – <b>freighter</b>",
-image: ""
-},
-
-25: {
-text: "<b><u>नौका सेवा</u></b><br>Ferry is a boat used to carry people or goods across water.<br><b>Rhyming line:</b> very-hurry carry – <b>ferry</b>",
-image: ""
-},
-
-    26: {
-text: "<b><u>खान-पान की व्यवस्था करना</u></b><br>Cater means to provide food or services for people or events.<br><b>Rhyming line:</b> party later, food <b>cater</b>",
-image: ""
-},
-
-27: {
-text: "<b><u>संतुष्ट करना</u></b><br>Gratify means to please or give satisfaction.<br><b>Rhyming line:</b> great खुशी – <b>gratify</b>",
-image: ""
-},
-
-28: {
-text: "<b><u>वीर</u></b><br>Gallant refers to brave, noble, or chivalrous behavior.<br><b>Rhyming line:</b> hero talent – <b>gallant</b>",
-image: ""
-},
-
-29: {
-text: "<b><u>कष्टदायक</u></b><br>Galling means extremely irritating or humiliating.<br><b>Rhyming line:</b> pain calling – <b>galling</b>",
-image: ""
-},
-
-30: {
-text: "<b><u>आसानी से बहकने वाला</u></b><br>Gullible means easily deceived or tricked.<br><b>Rhyming line:</b> full belief-able – <b>gullible</b>",
-image: ""
-},
-
-31: {
-text: "<b><u>असभ्य</u></b><br>Boorish describes rude or ill-mannered behavior.<br><b>Rhyming line:</b> bad manners flourish – <b>boorish</b>",
-image: ""
-},
-
-32: {
-text: "<b><u>पीड़ा कम करना</u></b><br>Assuage means to make pain or distress less severe.<br><b>Rhyming line:</b> pain reduce-age – <b>assuage</b>",
-image: ""
-},
-
-33: {
-text: "<b><u>बेपरवाह</u></b><br>Nonchalant means calm and unconcerned.<br><b>Rhyming line:</b> no worry talent – <b>nonchalant</b>",
-image: ""
-},
-
-34: {
-text: "<b><u>घबराया हुआ</u></b><br>Flustered means confused or agitated due to pressure.<br><b>Rhyming line:</b> pressure busted – <b>flustered</b>",
-image: ""
-},
-
-35: {
-text: "<b><u>असहज</u></b><br>Disconcerted means disturbed or unsettled mentally.<br><b>Rhyming line:</b> plan inverted – <b>disconcerted</b>",
-image: ""
-},
-
-36: {
-text: "<b><u>हक्का-बक्का</u></b><br>Bewildered means completely confused or puzzled.<br><b>Rhyming line:</b> brain twirled – <b>bewildered</b>",
-image: ""
-},
-
-37: {
-text: "<b><u>कम करना</u></b><br>Curtailing means reducing or limiting something.<br><b>Rhyming line:</b> tail cut – <b>curtailing</b>",
-image: ""
-},
-
-38: {
-text: "<b><u>भ्रष्टाचार</u></b><br>Graft refers to corruption for personal gain.<br><b>Rhyming line:</b> power draft – <b>graft</b>",
-image: ""
-},
-
-39: {
-text: "<b><u>विश्वसनीय</u></b><br>Credible means believable or trustworthy.<br><b>Rhyming line:</b> credit-able – <b>credible</b>",
-image: ""
-},
-
-40: {
-text: "<b><u>दूषित करना</u></b><br>Vitiation is the act of spoiling or impairing something.<br><b>Rhyming line:</b> value degradation – <b>vitiation</b>",
-image: ""
-},
-
-41: {
-text: "<b><u>नैतिक पतन</u></b><br>Debauch means to corrupt morally or indulge excessively.<br><b>Rhyming line:</b> bad conduct couch – <b>debauch</b>",
-image: ""
-},
-
-42: {
-text: "<b><u>लहराना</u></b><br>Billow means to swell or rise like waves or smoke.<br><b>Rhyming line:</b> big flow – <b>billow</b>",
-image: ""
-},
-
-43: {
-text: "<b><u>अति-भोग</u></b><br>Indulgence refers to excessive enjoyment or leniency.<br><b>Rhyming line:</b> enjoy-in-dense – <b>indulgence</b>",
-image: ""
-},
-
-44: {
-text: "<b><u>हठी</u></b><br>Obstinate means stubborn and unwilling to change.<br><b>Rhyming line:</b> opinion granite – <b>obstinate</b>",
-image: ""
-},
-
-45: {
-text: "<b><u>अत्यधिक मूर्खता</u></b><br>Imbecility means extreme foolishness or lack of sense.<br><b>Rhyming line:</b> empty ability – <b>imbecility</b>",
-image: ""
-},
-
-46: {
-text: "<b><u>लचीला</u></b><br>Pliable means easily bent or influenced.<br><b>Rhyming line:</b> bend-able style – <b>pliable</b>",
-image: ""
-},
-
-47: {
-text: "<b><u>पूर्णतः मिटाना</u></b><br>Eradicate means to remove or destroy completely.<br><b>Rhyming line:</b> root से cut – <b>eradicate</b>",
-image: ""
-},
-
-48: {
-text: "<b><u>तीव्र भावनात्मक</u></b><br>Vehement means showing strong forceful feelings.<br><b>Rhyming line:</b> very-eminent emotion – <b>vehement</b>",
-image: ""
-},
-
-49: {
-text: "<b><u>गूढ़</u></b><br>Esoteric means understood by only a select few.<br><b>Rhyming line:</b> expert-only topic – <b>esoteric</b>",
-image: ""
-},
-
-50: {
-text: "<b><u>तुच्छ</u></b><br>Frivolous means lacking seriousness or importance.<br><b>Rhyming line:</b> free-volley focus-less – <b>frivolous</b>",
-image: ""
-}
-    
-
+  46:{text:"<b><u>लचीला</u></b><br>Pliable means easily bent.<br><b>Synonym:</b><br>flexible<br><b>Antonym:</b><br>rigid",image:"images/vocabulary-set-10/46to50.png"},
+  47:{text:"<b><u>पूर्णतः मिटाना</u></b><br>Eradicate means remove completely.<br><b>Synonym:</b><br>eliminate<br><b>Antonym:</b><br>preserve",image:"images/vocabulary-set-10/46to50.png"},
+  48:{text:"<b><u>तीव्र भावनात्मक</u></b><br>Vehement means forceful in expression.<br><b>Synonym:</b><br>intense<br><b>Antonym:</b><br>mild",image:"images/vocabulary-set-10/46to50.png"},
+  49:{text:"<b><u>गूढ़</u></b><br>Esoteric means understood by few.<br><b>Synonym:</b><br>obscure<br><b>Antonym:</b><br>common",image:"images/vocabulary-set-10/46to50.png"},
+  50:{text:"<b><u>तुच्छ</u></b><br>Frivolous means not serious or important.<br><b>Synonym:</b><br>trivial<br><b>Antonym:</b><br>serious",image:"images/vocabulary-set-10/46to50.png"}
 };
-
