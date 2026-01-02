@@ -353,253 +353,255 @@ image: ''
 
 // placeholder
 const explanations = {
-  1: {
-text: "<b><u>दोषमुक्त करना</u></b><br>Exonerate means to officially clear someone from blame or wrongdoing.<br><b>Rhyming line:</b> case clear, no rate – <b>exonerate</b>",
-image: ""
+
+1: {
+  text: "<b><u>दोषमुक्त करना</u></b><br>Exonerate means to officially clear someone from blame or wrongdoing.<br><b>Synonym:</b><br>absolve<br><b>Antonym:</b><br>accuse",
+  image: "images/vocabulary-set-8/1to5.png"
 },
 
 2: {
-text: "<b><u>बोलने की प्रवाहिता</u></b><br>Volubility refers to ease and fluency in speech.<br><b>Rhyming line:</b> बोल-बोल ability – <b>volubility</b>",
-image: ""
+  text: "<b><u>बोलने की प्रवाहिता</u></b><br>Volubility refers to ease and fluency in speech.<br><b>Synonym:</b><br>eloquence<br><b>Antonym:</b><br>reticence",
+  image: "images/vocabulary-set-8/1to5.png"
 },
 
 3: {
-text: "<b><u>उपहास करना</u></b><br>Deride means to mock or ridicule someone.<br><b>Rhyming line:</b> मज़ाक ride – <b>deride</b>",
-image: ""
+  text: "<b><u>उपहास करना</u></b><br>Deride means to mock or ridicule someone.<br><b>Synonym:</b><br>mock<br><b>Antonym:</b><br>praise",
+  image: "images/vocabulary-set-8/1to5.png"
 },
 
 4: {
-text: "<b><u>अवहेलना करना</u></b><br>Defy means to openly resist authority or rules.<br><b>Rhyming line:</b> rule deny – <b>defy</b>",
-image: ""
+  text: "<b><u>अवहेलना करना</u></b><br>Defy means to openly resist authority or rules.<br><b>Synonym:</b><br>resist<br><b>Antonym:</b><br>obey",
+  image: "images/vocabulary-set-8/1to5.png"
 },
 
 5: {
-text: "<b><u>निश्चिंत</u></b><br>Blithe means carefree and cheerful, often casually so.<br><b>Rhyming line:</b> smile bright – <b>blithe</b>",
-image: ""
+  text: "<b><u>निश्चिंत</u></b><br>Blithe means carefree and cheerful.<br><b>Synonym:</b><br>lighthearted<br><b>Antonym:</b><br>anxious",
+  image: "images/vocabulary-set-8/1to5.png"
 },
 
 6: {
-text: "<b><u>संयमित</u></b><br>Poised describes calm confidence and balance.<br><b>Rhyming line:</b> calm noise-less – <b>poised</b>",
-image: ""
+  text: "<b><u>संयमित</u></b><br>Poised describes calm confidence and balance.<br><b>Synonym:</b><br>composed<br><b>Antonym:</b><br>flustered",
+  image: "images/vocabulary-set-8/6to10.png"
 },
 
 7: {
-text: "<b><u>हताश</u></b><br>Dejected means sad and dispirited after disappointment.<br><b>Rhyming line:</b> defeat rejected – <b>dejected</b>",
-image: ""
+  text: "<b><u>हताश</u></b><br>Dejected means sad and dispirited.<br><b>Synonym:</b><br>disheartened<br><b>Antonym:</b><br>cheerful",
+  image: "images/vocabulary-set-8/6to10.png"
 },
 
 8: {
-text: "<b><u>रद्द करना</u></b><br>Annul means to cancel something officially.<br><b>Rhyming line:</b> rule null – <b>annul</b>",
-image: ""
+  text: "<b><u>रद्द करना</u></b><br>Annul means to cancel officially.<br><b>Synonym:</b><br>nullify<br><b>Antonym:</b><br>validate",
+  image: "images/vocabulary-set-8/6to10.png"
 },
 
 9: {
-text: "<b><u>अनुमान लगाना</u></b><br>Surmise means to guess without firm evidence.<br><b>Rhyming line:</b> suppose-wise – <b>surmise</b>",
-image: ""
+  text: "<b><u>अनुमान लगाना</u></b><br>Surmise means to guess without firm evidence.<br><b>Synonym:</b><br>infer<br><b>Antonym:</b><br>know",
+  image: "images/vocabulary-set-8/6to10.png"
 },
 
 10: {
-text: "<b><u>उथल-पुथल</u></b><br>Turmoil refers to a state of chaos or disturbance.<br><b>Rhyming line:</b> trouble boil – <b>turmoil</b>",
-image: ""
+  text: "<b><u>उथल-पुथल</u></b><br>Turmoil refers to a state of chaos or disturbance.<br><b>Synonym:</b><br>chaos<br><b>Antonym:</b><br>calm",
+  image: "images/vocabulary-set-8/6to10.png"
 },
 
 11: {
-text: "<b><u>भद्दा</u></b><br>Clumsy means awkward and lacking coordination.<br><b>Rhyming line:</b> slip-slip, clum-see – <b>clumsy</b>",
-image: ""
+  text: "<b><u>भद्दा</u></b><br>Clumsy means awkward and lacking coordination.<br><b>Synonym:</b><br>awkward<br><b>Antonym:</b><br>graceful",
+  image: "images/vocabulary-set-8/11to15.png"
 },
 
 12: {
-text: "<b><u>सुगठित</u></b><br>Graceful means elegant and smooth in movement.<br><b>Rhyming line:</b> smooth face-full – <b>graceful</b>",
-image: ""
+  text: "<b><u>सुगठित</u></b><br>Graceful means elegant and smooth in movement.<br><b>Synonym:</b><br>elegant<br><b>Antonym:</b><br>awkward",
+  image: "images/vocabulary-set-8/11to15.png"
 },
 
 13: {
-text: "<b><u>चकित</u></b><br>Flummoxed means completely confused or puzzled.<br><b>Rhyming line:</b> mind boxed – <b>flummoxed</b>",
-image: ""
+  text: "<b><u>चकित</u></b><br>Flummoxed means completely confused.<br><b>Synonym:</b><br>bewildered<br><b>Antonym:</b><br>certain",
+  image: "images/vocabulary-set-8/11to15.png"
 },
 
 14: {
-text: "<b><u>विश्वसनीय</u></b><br>Plausible means seemingly reasonable or believable.<br><b>Rhyming line:</b> plus-able story – <b>plausible</b>",
-image: ""
+  text: "<b><u>विश्वसनीय</u></b><br>Plausible means seemingly reasonable or believable.<br><b>Synonym:</b><br>credible<br><b>Antonym:</b><br>implausible",
+  image: "images/vocabulary-set-8/11to15.png"
 },
 
 15: {
-text: "<b><u>आस-पास का क्षेत्र</u></b><br>Vicinity refers to the nearby surrounding area.<br><b>Rhyming line:</b> very-near city – <b>vicinity</b>",
-image: ""
+  text: "<b><u>आस-पास का क्षेत्र</u></b><br>Vicinity refers to the nearby surrounding area.<br><b>Synonym:</b><br>neighborhood<br><b>Antonym:</b><br>distance",
+  image: "images/vocabulary-set-8/11to15.png"
 },
 
 16: {
-text: "<b><u>सत्यता</u></b><br>Veracity means truthfulness or accuracy of facts.<br><b>Rhyming line:</b> very-true capacity – <b>veracity</b>",
-image: ""
+  text: "<b><u>सत्यता</u></b><br>Veracity means truthfulness or accuracy.<br><b>Synonym:</b><br>truthfulness<br><b>Antonym:</b><br>falsehood",
+  image: "images/vocabulary-set-8/16to20.png"
 },
 
 17: {
-text: "<b><u>अत्यंत आपत्तिजनक</u></b><br>Outrageous describes something shockingly offensive.<br><b>Rhyming line:</b> shock-full stage – <b>outrageous</b>",
-image: ""
+  text: "<b><u>अत्यंत आपत्तिजनक</u></b><br>Outrageous describes something shockingly offensive.<br><b>Synonym:</b><br>shocking<br><b>Antonym:</b><br>acceptable",
+  image: "images/vocabulary-set-8/16to20.png"
 },
 
 18: {
-text: "<b><u>चिकना</u></b><br>Greasy means oily or slippery to touch.<br><b>Rhyming line:</b> oil-easy – <b>greasy</b>",
-image: ""
+  text: "<b><u>चिकना</u></b><br>Greasy means oily or slippery.<br><b>Synonym:</b><br>oily<br><b>Antonym:</b><br>dry",
+  image: "images/vocabulary-set-8/16to20.png"
 },
 
 19: {
-text: "<b><u>अंधविश्वासी</u></b><br>Credulous means too ready to believe others.<br><b>Rhyming line:</b> believe-less guard-less – <b>credulous</b>",
-image: ""
+  text: "<b><u>अंधविश्वासी</u></b><br>Credulous means too ready to believe others.<br><b>Synonym:</b><br>gullible<br><b>Antonym:</b><br>skeptical",
+  image: "images/vocabulary-set-8/16to20.png"
 },
 
 20: {
-text: "<b><u>विरल</u></b><br>Sparse means thinly scattered or not dense.<br><b>Rhyming line:</b> space-space – <b>sparse</b>",
-image: ""
+  text: "<b><u>विरल</u></b><br>Sparse means thinly scattered.<br><b>Synonym:</b><br>scanty<br><b>Antonym:</b><br>dense",
+  image: "images/vocabulary-set-8/16to20.png"
 },
+
 21: {
-text: "<b><u>उदासीन</u></b><br>Apathetic means showing little or no interest or concern.<br><b>Rhyming line:</b> care का math-a-tic – <b>apathetic</b>",
-image: ""
+  text: "<b><u>उदासीन</u></b><br>Apathetic means showing little interest.<br><b>Synonym:</b><br>indifferent<br><b>Antonym:</b><br>enthusiastic",
+  image: "images/vocabulary-set-8/21to25.png"
 },
 
 22: {
-text: "<b><u>सुसज्जित</u></b><br>Dapper describes someone neat and stylish in appearance.<br><b>Rhyming line:</b> suit snap-per – <b>dapper</b>",
-image: ""
+  text: "<b><u>सुसज्जित</u></b><br>Dapper describes someone neat and stylish.<br><b>Synonym:</b><br>smart<br><b>Antonym:</b><br>slovenly",
+  image: "images/vocabulary-set-8/21to25.png"
 },
 
 23: {
-text: "<b><u>बेहद गंदा</u></b><br>Filthy means extremely dirty or unclean.<br><b>Rhyming line:</b> dirt-y guilty – <b>filthy</b>",
-image: ""
+  text: "<b><u>बेहद गंदा</u></b><br>Filthy means extremely dirty.<br><b>Synonym:</b><br>dirty<br><b>Antonym:</b><br>clean",
+  image: "images/vocabulary-set-8/21to25.png"
 },
 
 24: {
-text: "<b><u>अपवित्र कृत्य</u></b><br>Sacrilege is the violation of something sacred or holy.<br><b>Rhyming line:</b> sacred kill-edge – <b>sacrilege</b>",
-image: ""
+  text: "<b><u>अपवित्र कृत्य</u></b><br>Sacrilege is violation of something sacred.<br><b>Synonym:</b><br>desecration<br><b>Antonym:</b><br>reverence",
+  image: "images/vocabulary-set-8/21to25.png"
 },
 
 25: {
-text: "<b><u>आशीर्वाद</u></b><br>Benediction refers to a blessing, especially religious.<br><b>Rhyming line:</b> bless-ed diction – <b>benediction</b>",
-image: ""
+  text: "<b><u>आशीर्वाद</u></b><br>Benediction refers to a blessing.<br><b>Synonym:</b><br>blessing<br><b>Antonym:</b><br>curse",
+  image: "images/vocabulary-set-8/21to25.png"
 },
 
 26: {
-text: "<b><u>हानिकारक</u></b><br>Detrimental means causing harm or damage.<br><b>Rhyming line:</b> health rent-a-mental – <b>detrimental</b>",
-image: ""
+  text: "<b><u>हानिकारक</u></b><br>Detrimental means causing harm.<br><b>Synonym:</b><br>harmful<br><b>Antonym:</b><br>beneficial",
+  image: "images/vocabulary-set-8/26to30.png"
 },
 
 27: {
-text: "<b><u>छिपा हुआ नुकसानदेह</u></b><br>Insidious describes something harmful that spreads gradually.<br><b>Rhyming line:</b> silent danger-ous – <b>insidious</b>",
-image: ""
+  text: "<b><u>छिपा हुआ नुकसानदेह</u></b><br>Insidious means spreading harm gradually.<br><b>Synonym:</b><br>stealthy<br><b>Antonym:</b><br>obvious",
+  image: "images/vocabulary-set-8/26to30.png"
 },
 
 28: {
-text: "<b><u>घिनौना</u></b><br>Nasty means very unpleasant or offensive.<br><b>Rhyming line:</b> bad-y nasty – <b>nasty</b>",
-image: ""
+  text: "<b><u>घिनौना</u></b><br>Nasty means very unpleasant.<br><b>Synonym:</b><br>disgusting<br><b>Antonym:</b><br>pleasant",
+  image: "images/vocabulary-set-8/26to30.png"
 },
 
 29: {
-text: "<b><u>निर्दोष</u></b><br>Benign means not harmful or dangerous.<br><b>Rhyming line:</b> be-nice sign – <b>benign</b>",
-image: ""
+  text: "<b><u>निर्दोष</u></b><br>Benign means not harmful.<br><b>Synonym:</b><br>harmless<br><b>Antonym:</b><br>malignant",
+  image: "images/vocabulary-set-8/26to30.png"
 },
 
 30: {
-text: "<b><u>विनाशकारी</u></b><br>Baneful means causing harm or ruin.<br><b>Rhyming line:</b> bane-full pain – <b>baneful</b>",
-image: ""
+  text: "<b><u>विनाशकारी</u></b><br>Baneful means destructive or harmful.<br><b>Synonym:</b><br>deadly<br><b>Antonym:</b><br>harmless",
+  image: "images/vocabulary-set-8/26to30.png"
 },
 
 31: {
-text: "<b><u>दोषी</u></b><br>Culpable means deserving blame or responsibility.<br><b>Rhyming line:</b> fault-able – <b>culpable</b>",
-image: ""
+  text: "<b><u>दोषी</u></b><br>Culpable means deserving blame.<br><b>Synonym:</b><br>guilty<br><b>Antonym:</b><br>innocent",
+  image: "images/vocabulary-set-8/31to35.png"
 },
 
 32: {
-text: "<b><u>व्यावहारिकता</u></b><br>Pragmatism is a practical approach to problems.<br><b>Rhyming line:</b> practical-ism – <b>pragmatism</b>",
-image: ""
+  text: "<b><u>व्यावहारिकता</u></b><br>Pragmatism is a practical approach.<br><b>Synonym:</b><br>realism<br><b>Antonym:</b><br>idealism",
+  image: "images/vocabulary-set-8/31to35.png"
 },
 
 33: {
-text: "<b><u>कटुता</u></b><br>Asperity refers to harshness in tone or manner.<br><b>Rhyming line:</b> sharp-perity – <b>asperity</b>",
-image: ""
+  text: "<b><u>कटुता</u></b><br>Asperity refers to harshness.<br><b>Synonym:</b><br>severity<br><b>Antonym:</b><br>gentleness",
+  image: "images/vocabulary-set-8/31to35.png"
 },
 
 34: {
-text: "<b><u>शीघ्र होने वाला</u></b><br>Imminent means about to happen very soon.<br><b>Rhyming line:</b> any-minute – <b>imminent</b>",
-image: ""
+  text: "<b><u>शीघ्र होने वाला</u></b><br>Imminent means about to happen soon.<br><b>Synonym:</b><br>impending<br><b>Antonym:</b><br>distant",
+  image: "images/vocabulary-set-8/31to35.png"
 },
 
 35: {
-text: "<b><u>संचित होना</u></b><br>Accrue means to accumulate over time.<br><b>Rhyming line:</b> money grew – <b>accrue</b>",
-image: ""
+  text: "<b><u>संचित होना</u></b><br>Accrue means to accumulate.<br><b>Synonym:</b><br>accumulate<br><b>Antonym:</b><br>diminish",
+  image: "images/vocabulary-set-8/31to35.png"
 },
 
 36: {
-text: "<b><u>अभ्यास में लड़ना</u></b><br>Spar means to engage in practice fighting.<br><b>Rhyming line:</b> box-ing star – <b>spar</b>",
-image: ""
+  text: "<b><u>अभ्यास में लड़ना</u></b><br>Spar means to engage in practice fighting.<br><b>Synonym:</b><br>box<br><b>Antonym:</b><br>avoid",
+  image: "images/vocabulary-set-8/36to40.png"
 },
 
 37: {
-text: "<b><u>दुर्गुण</u></b><br>Vice is immoral or bad behavior.<br><b>Rhyming line:</b> bad dice – <b>vice</b>",
-image: ""
+  text: "<b><u>दुर्गुण</u></b><br>Vice refers to immoral behavior.<br><b>Synonym:</b><br>evil<br><b>Antonym:</b><br>virtue",
+  image: "images/vocabulary-set-8/36to40.png"
 },
 
 38: {
-text: "<b><u>तीखा भाषण</u></b><br>Diatribe is a bitter verbal attack.<br><b>Rhyming line:</b> dry-a-tribe – <b>diatribe</b>",
-image: ""
+  text: "<b><u>तीखा भाषण</u></b><br>Diatribe is a bitter verbal attack.<br><b>Synonym:</b><br>tirade<br><b>Antonym:</b><br>praise",
+  image: "images/vocabulary-set-8/36to40.png"
 },
 
 39: {
-text: "<b><u>अजीब</u></b><br>Wacky means odd or eccentric.<br><b>Rhyming line:</b> crack-y – <b>wacky</b>",
-image: ""
+  text: "<b><u>अजीब</u></b><br>Wacky means eccentric or odd.<br><b>Synonym:</b><br>quirky<br><b>Antonym:</b><br>normal",
+  image: "images/vocabulary-set-8/36to40.png"
 },
 
 40: {
-text: "<b><u>बिगाड़ना</u></b><br>Exacerbate means to make a problem worse.<br><b>Rhyming line:</b> extra-bad-rate – <b>exacerbate</b>",
-image: ""
+  text: "<b><u>बिगाड़ना</u></b><br>Exacerbate means to make worse.<br><b>Synonym:</b><br>worsen<br><b>Antonym:</b><br>improve",
+  image: "images/vocabulary-set-8/36to40.png"
 },
+
 41: {
-text: "<b><u>प्रोत्साहित करना</u></b><br>Foster means to encourage the development or growth of something.<br><b>Rhyming line:</b> growth को faster – <b>foster</b>",
-image: ""
+  text: "<b><u>प्रोत्साहित करना</u></b><br>Foster means to encourage growth.<br><b>Synonym:</b><br>promote<br><b>Antonym:</b><br>discourage",
+  image: "images/vocabulary-set-8/41to45.png"
 },
 
 42: {
-text: "<b><u>मेल-मिलाप करना</u></b><br>Reconcile means to restore friendly relations after disagreement.<br><b>Rhyming line:</b> fight cancel – <b>reconcile</b>",
-image: ""
+  text: "<b><u>मेल-मिलाप करना</u></b><br>Reconcile means to restore harmony.<br><b>Synonym:</b><br>harmonize<br><b>Antonym:</b><br>alienate",
+  image: "images/vocabulary-set-8/41to45.png"
 },
 
 43: {
-text: "<b><u>सुधार करना</u></b><br>Ameliorate means to make a situation better or improve it.<br><b>Rhyming line:</b> a little more rate – <b>ameliorate</b>",
-image: ""
+  text: "<b><u>सुधार करना</u></b><br>Ameliorate means to improve.<br><b>Synonym:</b><br>enhance<br><b>Antonym:</b><br>aggravate",
+  image: "images/vocabulary-set-8/41to45.png"
 },
 
 44: {
-text: "<b><u>सुस्ती से</u></b><br>Languidly describes doing something in a slow, relaxed manner.<br><b>Rhyming line:</b> long-idly – <b>languidly</b>",
-image: ""
+  text: "<b><u>सुस्ती से</u></b><br>Languidly means in a slow manner.<br><b>Synonym:</b><br>slowly<br><b>Antonym:</b><br>energetically",
+  image: "images/vocabulary-set-8/41to45.png"
 },
 
 45: {
-text: "<b><u>सामूहिक क्षमा</u></b><br>Amnesty is an official pardon granted to offenders, often political.<br><b>Rhyming line:</b> am-nice-ty – <b>amnesty</b>",
-image: ""
+  text: "<b><u>सामूहिक क्षमा</u></b><br>Amnesty is an official pardon.<br><b>Synonym:</b><br>pardon<br><b>Antonym:</b><br>punishment",
+  image: "images/vocabulary-set-8/41to45.png"
 },
 
 46: {
-text: "<b><u>युद्धविराम</u></b><br>Armistice is a formal agreement to stop fighting temporarily.<br><b>Rhyming line:</b> arms rest – <b>armistice</b>",
-image: ""
+  text: "<b><u>युद्धविराम</u></b><br>Armistice is a formal ceasefire agreement.<br><b>Synonym:</b><br>ceasefire<br><b>Antonym:</b><br>hostilities",
+  image: "images/vocabulary-set-8/46to50.png"
 },
 
 47: {
-text: "<b><u>जान-पहचान वाला</u></b><br>An acquaintance is someone known casually, not closely.<br><b>Rhyming line:</b> a-know-tance – <b>acquaintance</b>",
-image: ""
+  text: "<b><u>जान-पहचान वाला</u></b><br>An acquaintance is someone known casually.<br><b>Synonym:</b><br>associate<br><b>Antonym:</b><br>intimate",
+  image: "images/vocabulary-set-8/46to50.png"
 },
 
 48: {
-text: "<b><u>निवासी</u></b><br>Denizen refers to an inhabitant or regular occupant of a place.<br><b>Rhyming line:</b> den में citizen – <b>denizen</b>",
-image: ""
+  text: "<b><u>निवासी</u></b><br>Denizen means an inhabitant.<br><b>Synonym:</b><br>resident<br><b>Antonym:</b><br>outsider",
+  image: "images/vocabulary-set-8/46to50.png"
 },
 
 49: {
-text: "<b><u>पेशेवर शब्दावली</u></b><br>Jargon means specialized words used by a particular profession or group.<br><b>Rhyming line:</b> job का lingo – <b>jargon</b>",
-image: ""
+  text: "<b><u>पेशेवर शब्दावली</u></b><br>Jargon is specialized professional language.<br><b>Synonym:</b><br>terminology<br><b>Antonym:</b><br>plain language",
+  image: "images/vocabulary-set-8/46to50.png"
 },
 
 50: {
-text: "<b><u>डाकू</u></b><br>Brigands are bandits who rob travelers, often in remote areas.<br><b>Rhyming line:</b> break-and-guard – <b>brigand</b>",
-image: ""
+  text: "<b><u>डाकू</u></b><br>Brigands are bandits or robbers.<br><b>Synonym:</b><br>bandits<br><b>Antonym:</b><br>lawman",
+  image: "images/vocabulary-set-8/46to50.png"
 }
-
 
 };
