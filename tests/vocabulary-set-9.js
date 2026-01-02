@@ -72,54 +72,54 @@ image: ''
 },
 }
 
-const explanations={
+const explanations = {
   1: {
-text: "<b><u>लटका हुआ</u></b><br>Dangled means hanging or swinging loosely without firm support, often moving freely in the air.<br><i>Rhyming trick:</i> wire ने <b>dangled</b> किया, हवा में angle-angle लिया",
-image: ""
-},
+    text: "<b><u>लटका हुआ</u></b><br>Dangled means hanging or swinging loosely without firm support, often moving freely in the air.<br><b>Synonym:</b><br>hanging<br><b>Antonym:</b><br>secured",
+    image: "images/vocabulary-set-9/1to5.png"
+  },
 
-2: {
-text: "<b><u>अत्यंत कुशल कलाकार</u></b><br>Virtuoso refers to a person who has exceptional technical skill, especially in music or art.<br><i>Rhyming trick:</i> बहुत ही pro-show, वही है <b>virtuoso</b>",
-image: ""
-},
+  2: {
+    text: "<b><u>अत्यंत कुशल कलाकार</u></b><br>Virtuoso refers to a person who has exceptional technical skill, especially in music or art.<br><b>Synonym:</b><br>expert<br><b>Antonym:</b><br>novice",
+    image: "images/vocabulary-set-9/1to5.png"
+  },
 
-3: {
-text: "<b><u>नैतिक और सदाचारी</u></b><br>Virtuous describes a person who behaves according to high moral standards and righteousness.<br><i>Rhyming trick:</i> value से भरपूर us, वही कहलाया <b>virtuous</b>",
-image: ""
-},
+  3: {
+    text: "<b><u>नैतिक और सदाचारी</u></b><br>Virtuous describes a person who behaves according to high moral standards.<br><b>Synonym:</b><br>moral<br><b>Antonym:</b><br>immoral",
+    image: "images/vocabulary-set-9/1to5.png"
+  },
 
-4: {
-text: "<b><u>जनमत संग्रह</u></b><br>Referendum is a direct vote in which the entire electorate is asked to decide on a specific proposal.<br><i>Rhyming trick:</i> people ने vote-um दिया, नाम पड़ा <b>referendum</b>",
-image: ""
-},
+  4: {
+    text: "<b><u>जनमत संग्रह</u></b><br>Referendum is a direct vote in which the entire electorate decides a specific proposal.<br><b>Synonym:</b><br>plebiscite<br><b>Antonym:</b><br>dictatorship",
+    image: "images/vocabulary-set-9/1to5.png"
+  },
 
-5: {
-text: "<b><u>क्षेत्रीय भाषा रूप</u></b><br>Dialect is a particular form of a language spoken in a specific region or by a particular group.<br><i>Rhyming trick:</i> local tone-act, वही कहलाया <b>dialect</b>",
-image: ""
-},
+  5: {
+    text: "<b><u>क्षेत्रीय भाषा रूप</u></b><br>Dialect is a particular form of a language spoken in a specific region or group.<br><b>Synonym:</b><br>vernacular<br><b>Antonym:</b><br>standard language",
+    image: "images/vocabulary-set-9/1to5.png"
+  },
 
-6: {
-text: "<b><u>हास्यास्पद</u></b><br>Ludicrous means so unreasonable or absurd that it provokes laughter or disbelief.<br><i>Rhyming trick:</i> laugh-rus आया, बात लगी <b>ludicrous</b>",
-image: ""
-},
+  6: {
+    text: "<b><u>हास्यास्पद</u></b><br>Ludicrous means extremely absurd or unreasonable.<br><b>Synonym:</b><br>ridiculous<br><b>Antonym:</b><br>serious",
+    image: "images/vocabulary-set-9/6to10.png"
+  },
 
-7: {
-text: "<b><u>अस्त-व्यस्त</u></b><br>Disheveled describes a state of being untidy, disordered, or messy in appearance.<br><i>Rhyming trick:</i> dish हिली-डुली level, look हुआ <b>disheveled</b>",
-image: ""
-},
+  7: {
+    text: "<b><u>अस्त-व्यस्त</u></b><br>Disheveled describes someone who looks untidy or messy.<br><b>Synonym:</b><br>untidy<br><b>Antonym:</b><br>neat",
+    image: "images/vocabulary-set-9/6to10.png"
+  },
 
-8: {
-text: "<b><u>दूषित</u></b><br>Tainted means contaminated, spoiled, or damaged in quality or reputation.<br><i>Rhyming trick:</i> paint-ed नहीं, image हुई <b>tainted</b>",
-image: ""
-},
+  8: {
+    text: "<b><u>दूषित</u></b><br>Tainted means spoiled or damaged in quality or reputation.<br><b>Synonym:</b><br>contaminated<br><b>Antonym:</b><br>pure",
+    image: "images/vocabulary-set-9/6to10.png"
+  },
 
-9: {
-text: "<b><u>ध्यान से पढ़ना</u></b><br>Peruse means to read, examine, or study something carefully and thoroughly.<br><i>Rhyming trick:</i> पढ़-use किया, नाम पड़ा <b>peruse</b>",
-image: ""
-},
+  9: {
+    text: "<b><u>ध्यान से पढ़ना</u></b><br>Peruse means to read or examine something carefully.<br><b>Synonym:</b><br>examine<br><b>Antonym:</b><br>ignore",
+    image: "images/vocabulary-set-9/6to10.png"
+  },
 
-10: {
-text: "<b><u>पूर्व-उत्सुकता</u></b><br>Anticipation refers to the feeling of excitement or expectation about something that is going to happen.<br><i>Rhyming trick:</i> future-station में tension, वही <b>anticipation</b>",
-image: ""
-}
-}
+  10: {
+    text: "<b><u>पूर्व-उत्सुकता</u></b><br>Anticipation refers to the feeling of expectation about a future event.<br><b>Synonym:</b><br>expectation<br><b>Antonym:</b><br>certainty",
+    image: "images/vocabulary-set-9/6to10.png"
+  }
+};
