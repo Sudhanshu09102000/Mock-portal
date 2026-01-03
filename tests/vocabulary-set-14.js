@@ -354,254 +354,255 @@ image: ''
 
 const explanations = {
 1: {
-text: "<b><u>शब्द भूलने की स्थिति</u></b><br>Lethologica is a temporary inability to recall a familiar word, often felt as having the word “on the tip of the tongue.”<br><i>Rhyming trick:</i> word logic खोया, tongue पे आया – <b>lethologica</b> होया",
+text: "<b><u>शब्द भूलने की स्थिति</u></b><br>Lethologica is a temporary inability to recall a familiar word, often felt as having the word “on the tip of the tongue.”<br><b>Synonym:</b><br>forgetfulness<br><b>Antonym:</b><br>recall",
 image: "images/vocabulary-set-14/1to5.png"
 },
 
 2: {
-text: "<b><u>कटाई के बाद बचा डंठल</u></b><br>Stubble refers to the short stalks left standing in a field after crops are harvested.<br><i>Rhyming trick:</i> crop कटे, stump बचे – <b>stubble</b> सचे",
+text: "<b><u>कटाई के बाद बचा डंठल</u></b><br>Stubble refers to the short stalks left standing in a field after crops are harvested.<br><b>Synonym:</b><br>stalk<br><b>Antonym:</b><br>harvest",
 image: "images/vocabulary-set-14/1to5.png"
 },
 
 3: {
-text: "<b><u>नैतिक कथा</u></b><br>A fable is a brief story, often involving animals, that conveys a moral lesson.<br><i>Rhyming trick:</i> animal बोले, moral खोले – <b>fable</b> बोले",
+text: "<b><u>नैतिक कथा</u></b><br>A fable is a brief story, often involving animals, that conveys a moral lesson.<br><b>Synonym:</b><br>parable<br><b>Antonym:</b><br>fact",
 image: "images/vocabulary-set-14/1to5.png"
 },
 
 4: {
-text: "<b><u>कर्तव्य</u></b><br>Obligation means a duty or responsibility that one is bound to perform.<br><i>Rhyming trick:</i> duty का relation – <b>obligation</b>",
+text: "<b><u>कर्तव्य</u></b><br>Obligation means a duty or responsibility that one is bound to perform.<br><b>Synonym:</b><br>duty<br><b>Antonym:</b><br>choice",
 image: "images/vocabulary-set-14/1to5.png"
 },
 
 5: {
-text: "<b><u>बिल्ली से संबंधित</u></b><br>Feline refers to animals belonging to the cat family.<br><i>Rhyming trick:</i> cat की लाइन – <b>feline</b>",
+text: "<b><u>बिल्ली से संबंधित</u></b><br>Feline refers to animals belonging to the cat family.<br><b>Synonym:</b><br>catlike<br><b>Antonym:</b><br>canine",
 image: "images/vocabulary-set-14/1to5.png"
 },
 
 6: {
-text: "<b><u>गाय से संबंधित</u></b><br>Bovine relates to cattle or cows.<br><i>Rhyming trick:</i> cow divine – <b>bovine</b>",
+text: "<b><u>गाय से संबंधित</u></b><br>Bovine relates to cattle or cows.<br><b>Synonym:</b><br>cattle-related<br><b>Antonym:</b><br>human",
 image: "images/vocabulary-set-14/6to11.png"
 },
 
 7: {
-text: "<b><u>मूर्खतापूर्ण</u></b><br>Asinine describes extremely foolish or stupid behavior.<br><i>Rhyming trick:</i> ass जैसा scene – <b>asinine</b>",
+text: "<b><u>मूर्खतापूर्ण</u></b><br>Asinine describes extremely foolish or stupid behavior.<br><b>Synonym:</b><br>foolish<br><b>Antonym:</b><br>wise",
 image: "images/vocabulary-set-14/6to11.png"
 },
 
 8: {
-text: "<b><u>घोड़े से संबंधित</u></b><br>Equine refers to horses or horse-like animals.<br><i>Rhyming trick:</i> horse की लाइन – <b>equine</b>",
+text: "<b><u>घोड़े से संबंधित</u></b><br>Equine refers to horses or horse-like animals.<br><b>Synonym:</b><br>horse-related<br><b>Antonym:</b><br>bovine",
 image: "images/vocabulary-set-14/6to11.png"
 },
 
 9: {
-text: "<b><u>टालना</u></b><br>Fudgel means to evade or avoid giving a clear answer.<br><i>Rhyming trick:</i> answer dodge-ल – <b>fudgel</b>",
+text: "<b><u>टालना</u></b><br>Fudgel means to evade or avoid giving a clear answer.<br><b>Synonym:</b><br>evade<br><b>Antonym:</b><br>confront",
 image: "images/vocabulary-set-14/6to11.png"
 },
 
 10: {
-text: "<b><u>लंबा खोखला भाषण</u></b><br>Bloviation refers to verbose, empty talk with little substance.<br><i>Rhyming trick:</i> blow-ब्लो बात – <b>bloviation</b>",
+text: "<b><u>लंबा खोखला भाषण</u></b><br>Bloviation refers to verbose, empty talk with little substance.<br><b>Synonym:</b><br>verbosity<br><b>Antonym:</b><br>brevity",
 image: "images/vocabulary-set-14/6to11.png"
 },
 
 11: {
-text: "<b><u>मजबूत</u></b><br>Skookum means strong, sturdy, or reliable.<br><i>Rhyming trick:</i> strong बनूं कम – <b>skookum</b>",
+text: "<b><u>मजबूत</u></b><br>Skookum means strong, sturdy, or reliable.<br><b>Synonym:</b><br>robust<br><b>Antonym:</b><br>weak",
 image: "images/vocabulary-set-14/6to11.png"
 },
 
 12: {
-text: "<b><u>पीला रंग</u></b><br>Xanthic describes a yellow or yellowish color.<br><i>Rhyming trick:</i> yellow दिखे – <b>xanthic</b>",
+text: "<b><u>पीला रंग</u></b><br>Xanthic describes a yellow or yellowish color.<br><b>Synonym:</b><br>yellowish<br><b>Antonym:</b><br>dark",
 image: "images/vocabulary-set-14/12to17.png"
 },
 
 13: {
-text: "<b><u>लापरवाही</u></b><br>Carelessness means lack of attention or caution.<br><i>Rhyming trick:</i> care ना लेस – <b>carelessness</b>",
+text: "<b><u>लापरवाही</u></b><br>Carelessness means lack of attention or caution.<br><b>Synonym:</b><br>negligence<br><b>Antonym:</b><br>carefulness",
 image: "images/vocabulary-set-14/12to17.png"
 },
 
 14: {
-text: "<b><u>अधखुला</u></b><br>Ajar means slightly open.<br><i>Rhyming trick:</i> door अध-जरा – <b>ajar</b>",
+text: "<b><u>अधखुला</u></b><br>Ajar means slightly open.<br><b>Synonym:</b><br>partly open<br><b>Antonym:</b><br>closed",
 image: "images/vocabulary-set-14/12to17.png"
 },
 
 15: {
-text: "<b><u>कम न हुआ</u></b><br>Undiminished means not reduced in size, strength, or intensity.<br><i>Rhyming trick:</i> diminish ना हुआ – <b>undiminished</b>",
+text: "<b><u>कम न हुआ</u></b><br>Undiminished means not reduced in size, strength, or intensity.<br><b>Synonym:</b><br>intact<br><b>Antonym:</b><br>reduced",
 image: "images/vocabulary-set-14/12to17.png"
 },
 
 16: {
-text: "<b><u>अधिक पीना</u></b><br>Bibble means to drink alcohol excessively.<br><i>Rhyming trick:</i> bottle nibble – <b>bibble</b>",
+text: "<b><u>अधिक पीना</u></b><br>Bibble means to drink alcohol excessively.<br><b>Synonym:</b><br>drink heavily<br><b>Antonym:</b><br>abstain",
 image: "images/vocabulary-set-14/12to17.png"
 },
 
 17: {
-text: "<b><u>पत्तों की सरसराहट</u></b><br>Psithurism is the soft rustling sound of leaves in the wind.<br><i>Rhyming trick:</i> पत्ते सरसरिस्म – <b>psithurism</b>",
+text: "<b><u>पत्तों की सरसराहट</u></b><br>Psithurism is the soft rustling sound of leaves in the wind.<br><b>Synonym:</b><br>rustle<br><b>Antonym:</b><br>silence",
 image: "images/vocabulary-set-14/12to17.png"
 },
 
 18: {
-text: "<b><u>छोटी झूठी बात</u></b><br>Taradiddle means a trivial lie or nonsense.<br><i>Rhyming trick:</i> झूठा fiddle – <b>taradiddle</b>",
+text: "<b><u>छोटी झूठी बात</u></b><br>Taradiddle means a trivial lie or nonsense.<br><b>Synonym:</b><br>fib<br><b>Antonym:</b><br>truth",
 image: "images/vocabulary-set-14/18to22.png"
 },
 
 19: {
-text: "<b><u>इच्छाशक्ति की कमी</u></b><br>Abulia refers to loss of willpower or inability to make decisions.<br><i>Rhyming trick:</i> will भूला – <b>abulia</b>",
+text: "<b><u>इच्छाशक्ति की कमी</u></b><br>Abulia refers to loss of willpower or inability to make decisions.<br><b>Synonym:</b><br>apathy<br><b>Antonym:</b><br>determination",
 image: "images/vocabulary-set-14/18to22.png"
 },
 
 20: {
-text: "<b><u>नकली</u></b><br>Phony means fake or not genuine.<br><i>Rhyming trick:</i> phone नहीं, copy – <b>phony</b>",
+text: "<b><u>नकली</u></b><br>Phony means fake or not genuine.<br><b>Synonym:</b><br>fake<br><b>Antonym:</b><br>genuine",
 image: "images/vocabulary-set-14/18to22.png"
 },
 
-21: {
-text: "<b><u>दयनीय</u></b><br>Pathetic describes something that arouses pity or sadness.<br><i>Rhyming trick:</i> pity aesthetic – <b>pathetic</b>",
+  21: {
+text: "<b><u>दयनीय</u></b><br>Pathetic describes something that arouses pity or sadness.<br><b>Synonym:</b><br>pitiful<br><b>Antonym:</b><br>admirable",
 image: "images/vocabulary-set-14/18to22.png"
 },
 
 22: {
-text: "<b><u>गलत</u></b><br>Amiss means something is wrong or improper.<br><i>Rhyming trick:</i> सही नहीं, miss – <b>amiss</b>",
+text: "<b><u>गलत</u></b><br>Amiss means something is wrong or improper.<br><b>Synonym:</b><br>wrong<br><b>Antonym:</b><br>proper",
 image: "images/vocabulary-set-14/18to22.png"
 },
 
 23: {
-text: "<b><u>निर्दोष</u></b><br>Impeccable means completely flawless or without fault.<br><i>Rhyming trick:</i> peck नहीं able – <b>impeccable</b>",
+text: "<b><u>निर्दोष</u></b><br>Impeccable means completely flawless or without fault.<br><b>Synonym:</b><br>flawless<br><b>Antonym:</b><br>faulty",
 image: "images/vocabulary-set-14/23to25.png"
 },
 
 24: {
-text: "<b><u>खराब किया हुआ</u></b><br>Marred means damaged or spoiled.<br><i>Rhyming trick:</i> mark पड़ गया – <b>marred</b>",
+text: "<b><u>खराब किया हुआ</u></b><br>Marred means damaged or spoiled.<br><b>Synonym:</b><br>spoiled<br><b>Antonym:</b><br>perfected",
 image: "images/vocabulary-set-14/23to25.png"
 },
 
 25: {
-text: "<b><u>दूषित</u></b><br>Vitiated means spoiled, corrupted, or impaired.<br><i>Rhyming trick:</i> vice ने hit किया – <b>vitiated</b>",
+text: "<b><u>दूषित</u></b><br>Vitiated means spoiled, corrupted, or impaired.<br><b>Synonym:</b><br>corrupted<br><b>Antonym:</b><br>purified",
 image: "images/vocabulary-set-14/23to25.png"
 },
 
 26: {
-text: "<b><u>हँसते-खुशबु</u></b><br>Gaily means in a cheerful, light-hearted, or joyful manner.<br><i>Rhyming trick:</i> gay style में daily – <b>gaily</b>",
+text: "<b><u>हँसते-खुशी</u></b><br>Gaily means in a cheerful or joyful manner.<br><b>Synonym:</b><br>cheerfully<br><b>Antonym:</b><br>sadly",
 image: "images/vocabulary-set-14/26to31.png"
 },
 
 27: {
-text: "<b><u>कड़ी फटकार</u></b><br>Objurgation refers to a strong verbal rebuke or scolding.<br><i>Rhyming trick:</i> objection पे narration – <b>objurgation</b>",
+text: "<b><u>कड़ी फटकार</u></b><br>Objurgation refers to a strong verbal rebuke.<br><b>Synonym:</b><br>scolding<br><b>Antonym:</b><br>praise",
 image: "images/vocabulary-set-14/26to31.png"
 },
 
 28: {
-text: "<b><u>अनिवार्य भर्ती</u></b><br>Conscription means compulsory enrollment, especially for military service.<br><i>Rhyming trick:</i> constitution ने grip लिया – <b>conscription</b>",
+text: "<b><u>अनिवार्य भर्ती</u></b><br>Conscription means compulsory enrollment, especially for military service.<br><b>Synonym:</b><br>draft<br><b>Antonym:</b><br>volunteering",
 image: "images/vocabulary-set-14/26to31.png"
 },
 
 29: {
-text: "<b><u>रूपक कथा</u></b><br>Allegory is a story conveying deeper symbolic meanings beyond the literal sense.<br><i>Rhyming trick:</i> story में glory – <b>allegory</b>",
+text: "<b><u>रूपक कथा</u></b><br>Allegory is a story with symbolic meaning.<br><b>Synonym:</b><br>symbolism<br><b>Antonym:</b><br>literalism",
 image: "images/vocabulary-set-14/26to31.png"
 },
 
 30: {
-text: "<b><u>वार्षिक पंचांग</u></b><br>An almanac is a yearly publication containing calendars and useful data.<br><i>Rhyming trick:</i> साल का track – <b>almanac</b>",
+text: "<b><u>वार्षिक पंचांग</u></b><br>An almanac is a yearly publication with calendars and data.<br><b>Synonym:</b><br>calendar<br><b>Antonym:</b><br>novel",
 image: "images/vocabulary-set-14/26to31.png"
 },
 
 31: {
-text: "<b><u>विनाश का कारण</u></b><br>Bane means a cause of harm or ruin.<br><i>Rhyming trick:</i> pain का main – <b>bane</b>",
+text: "<b><u>विनाश का कारण</u></b><br>Bane means a cause of harm or ruin.<br><b>Synonym:</b><br>curse<br><b>Antonym:</b><br>blessing",
 image: "images/vocabulary-set-14/26to31.png"
 },
 
 32: {
-text: "<b><u>प्रवेश कक्ष</u></b><br>Foyer refers to an entrance hall or lobby of a building.<br><i>Rhyming trick:</i> door के foyer – <b>foyer</b>",
+text: "<b><u>प्रवेश कक्ष</u></b><br>Foyer is an entrance hall of a building.<br><b>Synonym:</b><br>lobby<br><b>Antonym:</b><br>exit",
 image: "images/vocabulary-set-14/32to37.png"
 },
 
 33: {
-text: "<b><u>रस्सी पर चलने वाला</u></b><br>Funambulist is a person who walks on a tightrope.<br><i>Rhyming trick:</i> fun balance list – <b>funambulist</b>",
+text: "<b><u>रस्सी पर चलने वाला</u></b><br>Funambulist is a person who walks on a tightrope.<br><b>Synonym:</b><br>tightrope walker<br><b>Antonym:</b><br>spectator",
 image: "images/vocabulary-set-14/32to37.png"
 },
 
 34: {
-text: "<b><u>लोककथा</u></b><br>Folktale is a traditional story passed through generations.<br><i>Rhyming trick:</i> folk बोले tale – <b>folktale</b>",
+text: "<b><u>लोककथा</u></b><br>Folktale is a traditional story passed through generations.<br><b>Synonym:</b><br>legend<br><b>Antonym:</b><br>history",
 image: "images/vocabulary-set-14/32to37.png"
 },
 
 35: {
-text: "<b><u>दीवारों पर चित्र/लिखावट</u></b><br>Graffiti refers to drawings or writings made on public surfaces.<br><i>Rhyming trick:</i> wall पर crafty – <b>graffiti</b>",
+text: "<b><u>दीवारों पर चित्र/लिखावट</u></b><br>Graffiti refers to writings or drawings on public surfaces.<br><b>Synonym:</b><br>scribble<br><b>Antonym:</b><br>cleanliness",
 image: "images/vocabulary-set-14/32to37.png"
 },
 
 36: {
-text: "<b><u>इच्छाशक्ति का अभाव</u></b><br>Abulia is the loss of willpower or initiative.<br><i>Rhyming trick:</i> will गया भूलिया – <b>abulia</b>",
+text: "<b><u>इच्छाशक्ति का अभाव</u></b><br>Abulia is the loss of willpower or initiative.<br><b>Synonym:</b><br>apathy<br><b>Antonym:</b><br>resolve",
 image: "images/vocabulary-set-14/32to37.png"
 },
 
 37: {
-text: "<b><u>दयनीय</u></b><br>Widdiful means pitiable or miserable.<br><i>Rhyming trick:</i> widow-ful feeling – <b>widdiful</b>",
+text: "<b><u>दयनीय</u></b><br>Widdiful means pitiable or miserable.<br><b>Synonym:</b><br>miserable<br><b>Antonym:</b><br>fortunate",
 image: "images/vocabulary-set-14/32to37.png"
 },
 
 38: {
-text: "<b><u>बाँसुरी का मुख</u></b><br>Fipple is the mouthpiece of certain wind instruments.<br><i>Rhyming trick:</i> flute की nipple – <b>fipple</b>",
+text: "<b><u>बाँसुरी का मुख</u></b><br>Fipple is the mouthpiece of some wind instruments.<br><b>Synonym:</b><br>mouthpiece<br><b>Antonym:</b><br>silencer",
 image: "images/vocabulary-set-14/38to43.png"
 },
 
 39: {
-text: "<b><u>लहराते बाल</u></b><br>Cymotrichous describes having wavy hair.<br><i>Rhyming trick:</i> wave-trick-ous – <b>cymotrichous</b>",
+text: "<b><u>लहराते बाल</u></b><br>Cymotrichous describes having wavy hair.<br><b>Synonym:</b><br>wavy-haired<br><b>Antonym:</b><br>straight-haired",
 image: "images/vocabulary-set-14/38to43.png"
 },
 
 40: {
-text: "<b><u>निर्णायक</u></b><br>Arbiter is a person who has authority to judge or decide disputes.<br><i>Rhyming trick:</i> argument hitter – <b>arbiter</b>",
+text: "<b><u>निर्णायक</u></b><br>Arbiter is a person with authority to judge disputes.<br><b>Synonym:</b><br>judge<br><b>Antonym:</b><br>participant",
 image: "images/vocabulary-set-14/38to43.png"
 },
 
 41: {
-text: "<b><u>मध्यस्थ</u></b><br>Mediator is someone who intervenes to bring agreement between parties.<br><i>Rhyming trick:</i> middle creator – <b>mediator</b>",
+text: "<b><u>मध्यस्थ</u></b><br>Mediator helps opposing sides reach agreement.<br><b>Synonym:</b><br>intermediary<br><b>Antonym:</b><br>instigator",
 image: "images/vocabulary-set-14/38to43.png"
 },
 
 42: {
-text: "<b><u>उकसाने वाला गुप्त एजेंट</u></b><br>An agent provocateur secretly incites others to commit wrongdoing.<br><i>Rhyming trick:</i> provoke करे operator – <b>agent provocateur</b>",
+text: "<b><u>उकसाने वाला गुप्त एजेंट</u></b><br>An agent provocateur secretly incites wrongdoing.<br><b>Synonym:</b><br>instigator<br><b>Antonym:</b><br>peacemaker",
 image: "images/vocabulary-set-14/38to43.png"
 },
 
 43: {
-text: "<b><u>उलझा हुआ</u></b><br>Tangled means twisted, confused, or complicated.<br><i>Rhyming trick:</i> angle में fangled – <b>tangled</b>",
+text: "<b><u>उलझा हुआ</u></b><br>Tangled means twisted or complicated.<br><b>Synonym:</b><br>confused<br><b>Antonym:</b><br>clear",
 image: "images/vocabulary-set-14/38to43.png"
 },
 
 44: {
-text: "<b><u>गौण</u></b><br>Incidental means minor or occurring as a secondary matter.<br><i>Rhyming trick:</i> incident का side-mental – <b>incidental</b>",
+text: "<b><u>गौण</u></b><br>Incidental means minor or secondary.<br><b>Synonym:</b><br>minor<br><b>Antonym:</b><br>essential",
 image: "images/vocabulary-set-14/44to47.png"
 },
 
 45: {
-text: "<b><u>संयोगवश</u></b><br>Adventitious means happening by chance rather than design.<br><i>Rhyming trick:</i> adventure सेitious – <b>adventitious</b>",
+text: "<b><u>संयोगवश</u></b><br>Adventitious means occurring by chance.<br><b>Synonym:</b><br>accidental<br><b>Antonym:</b><br>intentional",
 image: "images/vocabulary-set-14/44to47.png"
 },
 
 46: {
-text: "<b><u>सौभाग्य से घटित</u></b><br>Serendipitous describes a happy and unexpected occurrence.<br><i>Rhyming trick:</i> sudden happiness – <b>serendipitous</b>",
+text: "<b><u>सौभाग्य से घटित</u></b><br>Serendipitous means pleasantly unexpected.<br><b>Synonym:</b><br>fortunate<br><b>Antonym:</b><br>unlucky",
 image: "images/vocabulary-set-14/44to47.png"
 },
 
 47: {
-text: "<b><u>सहायक इकाई</u></b><br>Subsidiary is a secondary or supporting organization.<br><i>Rhyming trick:</i> side diary – <b>subsidiary</b>",
+text: "<b><u>सहायक इकाई</u></b><br>Subsidiary is a secondary or supporting organization.<br><b>Synonym:</b><br>auxiliary<br><b>Antonym:</b><br>parent",
 image: "images/vocabulary-set-14/44to47.png"
 },
 
 48: {
-text: "<b><u>बेकार सामान</u></b><br>Gubbins refers to useless or unnecessary objects.<br><i>Rhyming trick:</i> garbage-bins – <b>gubbins</b>",
+text: "<b><u>बेकार सामान</u></b><br>Gubbins refers to useless objects.<br><b>Synonym:</b><br>junk<br><b>Antonym:</b><br>necessity",
 image: "images/vocabulary-set-14/48to50.png"
 },
 
 49: {
-text: "<b><u>टहलना</u></b><br>Obambulate means to walk about or wander.<br><i>Rhyming trick:</i> घूमता jaa-late – <b>obambulate</b>",
+text: "<b><u>टहलना</u></b><br>Obambulate means to walk about or wander.<br><b>Synonym:</b><br>stroll<br><b>Antonym:</b><br>remain",
 image: "images/vocabulary-set-14/48to50.png"
 },
 
 50: {
-text: "<b><u>बीमार महसूस करना</u></b><br>Wamblecropt means feeling sick or nauseated.<br><i>Rhyming trick:</i> stomach crop-up – <b>wamblecropt</b>",
+text: "<b><u>बीमार महसूस करना</u></b><br>Wamblecropt means feeling sick or nauseated.<br><b>Synonym:</b><br>nauseated<br><b>Antonym:</b><br>healthy",
 image: "images/vocabulary-set-14/48to50.png"
 }
+
+
+  
 };
-
-
