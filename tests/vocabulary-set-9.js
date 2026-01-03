@@ -70,6 +70,83 @@ options: ["Expectation or excitement", "Complete surprise", "Total confusion", "
 correct: "1",
 image: ''
 },
+
+11: {
+text: "She received an <b>honorary</b> degree for her contribution to education.<br>Choose the correct meaning of <b>honorary</b>.",
+options: ["Given as an honor without duties", "Earned through examination", "Related to money", "Temporary punishment"],
+correct: "1",
+image: ''
+},
+
+12: {
+text: "He enjoyed a comfortable <b>sinecure</b> with high pay and little work.<br>Choose the correct meaning of <b>sinecure</b>.",
+options: ["A job with little responsibility", "A risky occupation", "A low-paid job", "A temporary assignment"],
+correct: "1",
+image: ''
+},
+
+13: {
+text: "There is a <b>dearth</b> of clean drinking water in the village.<br>Choose the correct meaning of <b>dearth</b>.",
+options: ["Severe shortage", "Large supply", "Equal distribution", "Sudden increase"],
+correct: "1",
+image: ''
+},
+
+14: {
+text: "His <b>glossophobia</b> prevented him from speaking on stage.<br>Choose the correct meaning of <b>glossophobia</b>.",
+options: ["Fear of public speaking", "Fear of darkness", "Fear of heights", "Fear of crowds"],
+correct: "1",
+image: ''
+},
+
+15: {
+text: "The old man looked <b>yonderly</b> while answering the questions.<br>Choose the correct meaning of <b>yonderly</b>.",
+options: ["Confused or absent-minded", "Angry and violent", "Energetic and alert", "Overconfident"],
+correct: "1",
+image: ''
+},
+
+16: {
+text: "His sentence was a funny <b>malaphor</b> that mixed two expressions.<br>Choose the correct meaning of <b>malaphor</b>.",
+options: ["A mixed or confused metaphor", "A false statement", "A proverb", "A formal quotation"],
+correct: "1",
+image: ''
+},
+
+17: {
+text: "Stop being an <b>ultracrepidarian</b> and commenting on matters you don’t know.<br>Choose the correct meaning of <b>ultracrepidarian</b>.",
+options: ["One who gives opinions beyond expertise", "A skilled expert", "A silent observer", "A professional critic"],
+correct: "1",
+image: ''
+},
+
+18: {
+text: "His speech was full of <b>fanfaronade</b> about his achievements.<br>Choose the correct meaning of <b>fanfaronade</b>.",
+options: ["Loud boasting or bragging", "Quiet humility", "Sad confession", "Formal announcement"],
+correct: "1",
+image: ''
+},
+
+19: {
+text: "The corrupt leader was called a <b>snollygoster</b> by the public.<br>Choose the correct meaning of <b>snollygoster</b>.",
+options: ["A dishonest or unprincipled person", "A brave hero", "A wise leader", "A loyal follower"],
+correct: "1",
+image: ''
+},
+
+  20: {
+text: "She gave a <b>wistful</b> smile while recalling her childhood memories.<br>Choose the correct meaning of <b>wistful</b>.",
+options: ["Full of sad longing or regret", "Extremely happy", "Angry and aggressive", "Careless and casual"],
+correct: "1",
+image: ''
+},
+
+21: {
+text: "He handled the sensitive issue in a very <b>tactful</b> manner.<br>Choose the correct meaning of <b>tactful</b>.",
+options: ["Careful not to offend others", "Rude and blunt", "Dishonest", "Indifferent"],
+correct: "1",
+image: ''
+},
 }
 
 const explanations = {
@@ -121,5 +198,61 @@ const explanations = {
   10: {
     text: "<b><u>पूर्व-उत्सुकता</u></b><br>Anticipation refers to the feeling of expectation about a future event.<br><b>Synonym:</b><br>expectation<br><b>Antonym:</b><br>certainty",
     image: "images/vocabulary-set-9/6to10.png"
-  }
+  },
+
+  11: {
+text: "<b><u>मानद</u></b><br>Honorary means given as an honor, without normal duties or payment.<br><b>Synonym:</b><br>ceremonial<br><b>Antonym:</b><br>earned",
+image: "images/vocabulary-set-9/11to15.png"
+},
+
+12: {
+text: "<b><u>बिना काम की नौकरी</u></b><br>Sinecure refers to a job that pays well but requires little or no work.<br><b>Synonym:</b><br>easy job<br><b>Antonym:</b><br>laborious work",
+image: "images/vocabulary-set-9/11to15.png"
+},
+
+13: {
+text: "<b><u>अभाव</u></b><br>Dearth means a severe shortage of something important.<br><b>Synonym:</b><br>scarcity<br><b>Antonym:</b><br>abundance",
+image: "images/vocabulary-set-9/11to15.png"
+},
+
+14: {
+text: "<b><u>भाषण का डर</u></b><br>Glossophobia is the fear of speaking in public.<br><b>Synonym:</b><br>stage fright<br><b>Antonym:</b><br>confidence",
+image: "images/vocabulary-set-9/11to15.png"
+},
+
+15: {
+text: "<b><u>भटका हुआ</u></b><br>Yonderly describes a person who appears confused or absent-minded.<br><b>Synonym:</b><br>dazed<br><b>Antonym:</b><br>alert",
+image: "images/vocabulary-set-9/11to15.png"
+},
+
+16: {
+text: "<b><u>मिला-जुला मुहावरा</u></b><br>Malaphor is a humorous mix of two idioms or metaphors.<br><b>Synonym:</b><br>mixed metaphor<br><b>Antonym:</b><br>clear expression",
+image: "images/vocabulary-set-9/16to20.png"
+},
+
+17: {
+text: "<b><u>बिना ज्ञान राय देने वाला</u></b><br>Ultracrepidarian refers to someone who gives opinions beyond their knowledge.<br><b>Synonym:</b><br>know-it-all<br><b>Antonym:</b><br>expert",
+image: "images/vocabulary-set-9/16to20.png"
+},
+
+18: {
+text: "<b><u>डींग मारना</u></b><br>Fanfaronade means loud or exaggerated boasting.<br><b>Synonym:</b><br>bragging<br><b>Antonym:</b><br>modesty",
+image: "images/vocabulary-set-9/16to20.png"
+},
+
+19: {
+text: "<b><u>बेईमान व्यक्ति</u></b><br>Snollygoster refers to a dishonest, self-seeking person, especially in politics.<br><b>Synonym:</b><br>rogue<br><b>Antonym:</b><br>honest person",
+image: "images/vocabulary-set-9/16to20.png"
+},
+
+  20: {
+text: "<b><u>उदास स्मृति से भरा</u></b><br>Wistful describes a feeling of gentle sadness or longing for something in the past.<br><b>Synonym:</b><br>nostalgic<br><b>Antonym:</b><br>cheerful",
+image: "images/vocabulary-set-9/21to25.png"
+},
+
+21: {
+text: "<b><u>समझदारी से बोलने वाला</u></b><br>Tactful means speaking or behaving carefully so as not to hurt or offend others.<br><b>Synonym:</b><br>diplomatic<br><b>Antonym:</b><br>blunt",
+image: "images/vocabulary-set-9/21to25.png"
+},
 };
+
