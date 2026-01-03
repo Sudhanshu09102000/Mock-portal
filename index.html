@@ -1632,16 +1632,35 @@
       })[c]);
     }
 
+
+
+function stripHtml(html) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return div.textContent || div.innerText || "";
+}
+ 
     // Build Google search query: question + all options
     function buildSearchQuery(index) {
-      const q = questions[index];
-      if (!q) return "";
-      let combined = q.text + " ";
-      if (Array.isArray(q.options)) {
-        combined += q.options.join(" ");
-      }
-      return encodeURIComponent(combined);
-    }
+  const q = questions[index];
+  if (!q) return "";
+
+  // 1️⃣ clean question text (remove HTML)
+  const questionText = stripHtml(q.text).trim();
+
+  // 2️⃣ clean all options
+  const optionsText = Array.isArray(q.options)
+    ? q.options.map(opt => stripHtml(opt).trim()).join(", ")
+    : "";
+
+  // 3️⃣ final required format
+  const finalText =
+    questionText + ". options are " + optionsText;
+
+  return encodeURIComponent(finalText);
+}
+
+
 
     // Question Nav
     function buildQuestionNav() {
