@@ -355,254 +355,254 @@ image: ''
 
 // placeholder
 const explanations = {
-    1: {
-text: "<b><u>प्राचीन</u></b><br>Archaic means something very old-fashioned or no longer in common use in modern times.<br><i>Rhyming trick:</i> old ज़माने का <b>archaic</b>, modern बोले – bye-ye-k 😄",
-image: ""
-},
+  1: {
+    text: "<b><u>प्राचीन</u></b><br>Archaic means something very old-fashioned or no longer in common use in modern times.<br><b>Synonym:</b><br>ancient<br><b>Antonym:</b><br>modern",
+    image: "images/vocabulary-set-11/1to5.png"
+  },
 
-2: {
-text: "<b><u>चोरी की मानसिक बीमारी</u></b><br>Kleptomania is a psychological disorder marked by an irresistible urge to steal items not needed.<br><i>Rhyming trick:</i> clip किया सामान, mind बोले – <b>klepto</b> man 😄",
-image: ""
-},
+  2: {
+    text: "<b><u>चोरी की मानसिक बीमारी</u></b><br>Kleptomania is a psychological disorder marked by an irresistible urge to steal items not needed.<br><b>Synonym:</b><br>compulsion<br><b>Antonym:</b><br>self-control",
+    image: "images/vocabulary-set-11/1to5.png"
+  },
 
-3: {
-text: "<b><u>मानसिक विकार</u></b><br>Schizophrenia is a severe mental disorder affecting thinking, emotions, and perception of reality.<br><i>Rhyming trick:</i> mind में scene बना – <b>schizo</b> frame बना 😄",
-image: ""
-},
+  3: {
+    text: "<b><u>मानसिक विकार</u></b><br>Schizophrenia is a severe mental disorder affecting thinking, emotions, and perception of reality.<br><b>Synonym:</b><br>psychosis<br><b>Antonym:</b><br>sanity",
+    image: "images/vocabulary-set-11/1to5.png"
+  },
 
-4: {
-text: "<b><u>महान बनने का भ्रम</u></b><br>Megalomania is an obsession with power, importance, or greatness beyond reality.<br><i>Rhyming trick:</i> mega बने राजा, <b>mania</b> ने बजाया बाजा 😄",
-image: ""
-},
+  4: {
+    text: "<b><u>महान बनने का भ्रम</u></b><br>Megalomania is an obsession with power, importance, or greatness beyond reality.<br><b>Synonym:</b><br>delusion<br><b>Antonym:</b><br>humility",
+    image: "images/vocabulary-set-11/1to5.png"
+  },
 
-5: {
-text: "<b><u>चूल्हे का फर्श</u></b><br>Hearth refers to the floor or area in front of a fireplace used for warmth and cooking.<br><i>Rhyming trick:</i> आग की बात, घर का <b>hearth</b> साथ 😄",
-image: ""
-},
+  5: {
+    text: "<b><u>चूल्हे का फर्श</u></b><br>Hearth refers to the floor or area in front of a fireplace used for warmth and cooking.<br><b>Synonym:</b><br>fireside<br><b>Antonym:</b><br>exterior",
+    image: "images/vocabulary-set-11/1to5.png"
+  },
 
-6: {
-text: "<b><u>नन का निवास</u></b><br>A convent is a religious residence where nuns live and worship together.<br><i>Rhyming trick:</i> calm life event – nun का <b>convent</b> 😄",
-image: ""
-},
+  6: {
+    text: "<b><u>नन का निवास</u></b><br>A convent is a religious residence where nuns live and worship together.<br><b>Synonym:</b><br>monastery<br><b>Antonym:</b><br>worldliness",
+    image: "images/vocabulary-set-11/6to10.png"
+  },
 
-7: {
-text: "<b><u>पहले से मौजूद</u></b><br>Predate means to exist or occur before something else in time.<br><i>Rhyming trick:</i> पहले की date – <b>predate</b> 😄",
-image: ""
-},
+  7: {
+    text: "<b><u>पहले से मौजूद</u></b><br>Predate means to exist or occur before something else in time.<br><b>Synonym:</b><br>precede<br><b>Antonym:</b><br>follow",
+    image: "images/vocabulary-set-11/6to10.png"
+  },
 
-8: {
-text: "<b><u>स्थान लेना</u></b><br>Supplant means to replace or take the place of something else.<br><i>Rhyming trick:</i> old को plant किया, new ने <b>supplant</b> किया 😄",
-image: ""
-},
+  8: {
+    text: "<b><u>स्थान लेना</u></b><br>Supplant means to replace or take the place of something else.<br><b>Synonym:</b><br>replace<br><b>Antonym:</b><br>retain",
+    image: "images/vocabulary-set-11/6to10.png"
+  },
 
-9: {
-text: "<b><u>जीविका</u></b><br>Subsistence refers to the minimum resources required for basic survival.<br><i>Rhyming trick:</i> survive का sense – <b>subsistence</b> 😄",
-image: ""
-},
+  9: {
+    text: "<b><u>जीविका</u></b><br>Subsistence refers to the minimum resources required for basic survival.<br><b>Synonym:</b><br>survival<br><b>Antonym:</b><br>luxury",
+    image: "images/vocabulary-set-11/6to10.png"
+  },
 
-10: {
-text: "<b><u>बुदबुदाना</u></b><br>Grumble means to complain quietly or in a low, discontented voice.<br><i>Rhyming trick:</i> गुस्सा मुँह में – <b>grumble</b> 😄",
-image: ""
-},
+  10: {
+    text: "<b><u>बुदबुदाना</u></b><br>Grumble means to complain quietly or in a low, discontented voice.<br><b>Synonym:</b><br>complain<br><b>Antonym:</b><br>praise",
+    image: "images/vocabulary-set-11/6to10.png"
+  },
 
-11: {
-text: "<b><u>लटकना</u></b><br>Dangle means to hang or swing loosely from a point.<br><i>Rhyming trick:</i> danger angle – <b>dangle</b> 😄",
-image: ""
-},
+  11: {
+    text: "<b><u>लटकना</u></b><br>Dangle means to hang or swing loosely from a point.<br><b>Synonym:</b><br>hang<br><b>Antonym:</b><br>fix",
+    image: "images/vocabulary-set-11/11to15.png"
+  },
 
-12: {
-text: "<b><u>जिज्ञासु</u></b><br>Inquisitive describes a person who is curious and eager to gain knowledge.<br><i>Rhyming trick:</i> question spree – <b>inquisitive</b> 😄",
-image: ""
-},
+  12: {
+    text: "<b><u>जिज्ञासु</u></b><br>Inquisitive describes a person who is curious and eager to gain knowledge.<br><b>Synonym:</b><br>curious<br><b>Antonym:</b><br>indifferent",
+    image: "images/vocabulary-set-11/11to15.png"
+  },
 
-13: {
-text: "<b><u>अंधेरे का डर</u></b><br>Nytophobia is an intense fear of darkness or night.<br><i>Rhyming trick:</i> night का phobia – <b>nyto</b> phobia 😄",
-image: ""
-},
+  13: {
+    text: "<b><u>अंधेरे का डर</u></b><br>Nytophobia is an intense fear of darkness or night.<br><b>Synonym:</b><br>fearfulness<br><b>Antonym:</b><br>confidence",
+    image: "images/vocabulary-set-11/11to15.png"
+  },
 
-14: {
-text: "<b><u>लिखने का डर</u></b><br>Graphophobia is the fear of writing, often linked with anxiety disorders.<br><i>Rhyming trick:</i> graph से डर – <b>graphophobia</b> 😄",
-image: ""
-},
+  14: {
+    text: "<b><u>लिखने का डर</u></b><br>Graphophobia is the fear of writing, often linked with anxiety disorders.<br><b>Synonym:</b><br>writing fear<br><b>Antonym:</b><br>ease",
+    image: "images/vocabulary-set-11/11to15.png"
+  },
 
-15: {
-text: "<b><u>शादी का डर</u></b><br>Gamophobia refers to an abnormal fear of marriage or commitment.<br><i>Rhyming trick:</i> game नहीं, shaadi no – <b>gamophobia</b> 😄",
-image: ""
-},
+  15: {
+    text: "<b><u>शादी का डर</u></b><br>Gamophobia refers to an abnormal fear of marriage or commitment.<br><b>Synonym:</b><br>commitment fear<br><b>Antonym:</b><br>acceptance",
+    image: "images/vocabulary-set-11/11to15.png"
+  },
 
-16: {
-text: "<b><u>चर्बी का डर</u></b><br>Lipophobia is the fear or avoidance of fat or fatty foods.<br><i>Rhyming trick:</i> lip पे fat आया – <b>lipophobia</b> 😄",
-image: ""
-},
+    16: {
+    text: "<b><u>चर्बी का डर</u></b><br>Lipophobia is the fear or avoidance of fat or fatty foods.<br><b>Synonym:</b><br>fat aversion<br><b>Antonym:</b><br>acceptance",
+    image: "images/vocabulary-set-11/16to20.png"
+  },
 
-17: {
-text: "<b><u>झुका हुआ</u></b><br>Hunched describes a bent-forward posture, often due to age or strain.<br><i>Rhyming trick:</i> punch से body bent – <b>hunched</b> 😄",
-image: ""
-},
+  17: {
+    text: "<b><u>झुका हुआ</u></b><br>Hunched describes a bent-forward posture, often due to age or strain.<br><b>Synonym:</b><br>bent<br><b>Antonym:</b><br>upright",
+    image: "images/vocabulary-set-11/16to20.png"
+  },
 
-18: {
-text: "<b><u>साधारण</u></b><br>Homespun means simple, plain, and homemade in appearance or style.<br><i>Rhyming trick:</i> home में spun – simple <b>homespun</b> 😄",
-image: ""
-},
+  18: {
+    text: "<b><u>साधारण</u></b><br>Homespun means simple, plain, and homemade in appearance or style.<br><b>Synonym:</b><br>simple<br><b>Antonym:</b><br>ornate",
+    image: "images/vocabulary-set-11/16to20.png"
+  },
 
-19: {
-text: "<b><u>पुनर्जागरण</u></b><br>Renaissance means a revival or renewed interest in art, culture, or learning.<br><i>Rhyming trick:</i> rebirth dance – <b>renaissance</b> 😄",
-image: ""
-},
+  19: {
+    text: "<b><u>पुनर्जागरण</u></b><br>Renaissance means a revival or renewed interest in art, culture, or learning.<br><b>Synonym:</b><br>revival<br><b>Antonym:</b><br>decline",
+    image: "images/vocabulary-set-11/16to20.png"
+  },
 
-20: {
-text: "<b><u>पढ़ने की समस्या</u></b><br>Dyslexia is a learning disorder characterized by difficulty in reading and spelling.<br><i>Rhyming trick:</i> पढ़ाई में stress ya – <b>dyslexia</b> 😄",
-image: ""
-},
+  20: {
+    text: "<b><u>पढ़ने की समस्या</u></b><br>Dyslexia is a learning disorder characterized by difficulty in reading and spelling.<br><b>Synonym:</b><br>reading disorder<br><b>Antonym:</b><br>fluency",
+    image: "images/vocabulary-set-11/16to20.png"
+  },
 
-21: {
-text: "<b><u>नैतिक घमंडी</u></b><br>Priggish refers to someone who is self-righteous and excessively proper.<br><i>Rhyming trick:</i> preach करे biggish – <b>priggish</b> 😄",
-image: ""
-},
+  21: {
+    text: "<b><u>नैतिक घमंडी</u></b><br>Priggish refers to someone who is self-righteous and excessively proper.<br><b>Synonym:</b><br>self-righteous<br><b>Antonym:</b><br>humble",
+    image: "images/vocabulary-set-11/21to25.png"
+  },
 
-22: {
-text: "<b><u>घमंडी</u></b><br>Coxcombical describes foolish vanity or excessive self-admiration.<br><i>Rhyming trick:</i> cock सा comb देख – <b>coxcombical</b> 😄",
-image: ""
-},
+  22: {
+    text: "<b><u>घमंडी</u></b><br>Coxcombical describes foolish vanity or excessive self-admiration.<br><b>Synonym:</b><br>vain<br><b>Antonym:</b><br>modest",
+    image: "images/vocabulary-set-11/21to25.png"
+  },
 
-23: {
-text: "<b><u>अति सभ्य</u></b><br>Prim means very formal, proper, and restrained in behavior.<br><i>Rhyming trick:</i> strict rim – <b>prim</b> 😄",
-image: ""
-},
+  23: {
+    text: "<b><u>अति सभ्य</u></b><br>Prim means very formal, proper, and restrained in behavior.<br><b>Synonym:</b><br>formal<br><b>Antonym:</b><br>casual",
+    image: "images/vocabulary-set-11/21to25.png"
+  },
 
-24: {
-text: "<b><u>अडिग</u></b><br>Unbending means rigid, firm, and unwilling to change one's stance.<br><i>Rhyming trick:</i> bend ना हुआ ending – <b>unbending</b> 😄",
-image: ""
-},
+  24: {
+    text: "<b><u>अडिग</u></b><br>Unbending means rigid, firm, and unwilling to change one's stance.<br><b>Synonym:</b><br>rigid<br><b>Antonym:</b><br>flexible",
+    image: "images/vocabulary-set-11/21to25.png"
+  },
 
-25: {
-text: "<b><u>सामान</u></b><br>Ware refers to manufactured goods or items offered for sale.<br><i>Rhyming trick:</i> bazaar में care – <b>ware</b> 😄",
-image: ""
-},
+  25: {
+    text: "<b><u>सामान</u></b><br>Ware refers to manufactured goods or items offered for sale.<br><b>Synonym:</b><br>goods<br><b>Antonym:</b><br>services",
+    image: "images/vocabulary-set-11/21to25.png"
+  },
 
- 26: {
-text: "<b><u>गाली देना</u></b><br>Revile means to criticize or abuse someone in strong and harsh language.<br><i>Rhyming trick:</i> rival से vile बात – <b>revile</b> 😄",
-image: ""
-},
+  26: {
+    text: "<b><u>गाली देना</u></b><br>Revile means to criticize or abuse someone in strong and harsh language.<br><b>Synonym:</b><br>abuse<br><b>Antonym:</b><br>praise",
+    image: "images/vocabulary-set-11/26to30.png"
+  },
 
-27: {
-text: "<b><u>तंग गली</u></b><br>An alley is a narrow passage or lane between buildings.<br><i>Rhyming trick:</i> rally नहीं, tight <b>alley</b> 😄",
-image: ""
-},
+  27: {
+    text: "<b><u>तंग गली</u></b><br>An alley is a narrow passage or lane between buildings.<br><b>Synonym:</b><br>lane<br><b>Antonym:</b><br>boulevard",
+    image: "images/vocabulary-set-11/26to30.png"
+  },
 
-28: {
-text: "<b><u>डाक टिकट संग्रह</u></b><br>Philately is the hobby or study of collecting postage stamps.<br><i>Rhyming trick:</i> phila-daily stamp – <b>philately</b> 😄",
-image: ""
-},
+  28: {
+    text: "<b><u>डाक टिकट संग्रह</u></b><br>Philately is the hobby or study of collecting postage stamps.<br><b>Synonym:</b><br>stamp collecting<br><b>Antonym:</b><br>neglect",
+    image: "images/vocabulary-set-11/26to30.png"
+  },
 
-29: {
-text: "<b><u>विकृत प्रस्तुति</u></b><br>Travesty refers to a false, absurd, or distorted representation of something serious.<br><i>Rhyming trick:</i> tragedy को nasty – <b>travesty</b> 😄",
-image: ""
-},
+  29: {
+    text: "<b><u>विकृत प्रस्तुति</u></b><br>Travesty refers to a distorted or false representation of something serious.<br><b>Synonym:</b><br>mockery<br><b>Antonym:</b><br>honor",
+    image: "images/vocabulary-set-11/26to30.png"
+  },
 
-30: {
-text: "<b><u>परहेज करना</u></b><br>Eschew means to deliberately avoid or stay away from something.<br><i>Rhyming trick:</i> issue से दूर – <b>eschew</b> 😄",
-image: ""
-},
+  30: {
+    text: "<b><u>परहेज करना</u></b><br>Eschew means to deliberately avoid something.<br><b>Synonym:</b><br>avoid<br><b>Antonym:</b><br>embrace",
+    image: "images/vocabulary-set-11/26to30.png"
+  },
 
-31: {
-text: "<b><u>अत्यधिक संदेहग्रस्त</u></b><br>Paranoid describes a state of excessive suspicion and mistrust of others.<br><i>Rhyming trick:</i> पराया-noid – <b>paranoid</b> 😄",
-image: ""
-},
+  31: {
+    text: "<b><u>अत्यधिक संदेहग्रस्त</u></b><br>Paranoid means excessively suspicious or mistrustful.<br><b>Synonym:</b><br>skeptical<br><b>Antonym:</b><br>trusting",
+    image: "images/vocabulary-set-11/31to35.png"
+  },
 
-32: {
-text: "<b><u>बधाई देना</u></b><br>Felicitating means congratulating someone warmly on success or achievement.<br><i>Rhyming trick:</i> felicity के gate – <b>felicitating</b> 😄",
-image: ""
-},
+  32: {
+    text: "<b><u>बधाई देना</u></b><br>Felicitating means congratulating warmly.<br><b>Synonym:</b><br>congratulate<br><b>Antonym:</b><br>condemn",
+    image: "images/vocabulary-set-11/31to35.png"
+  },
 
-33: {
-text: "<b><u>सावधान</u></b><br>Prudent means wise, careful, and showing good judgment in decisions.<br><i>Rhyming trick:</i> profit student – <b>prudent</b> 😄",
-image: ""
-},
+  33: {
+    text: "<b><u>सावधान</u></b><br>Prudent means wise and careful in decision-making.<br><b>Synonym:</b><br>cautious<br><b>Antonym:</b><br>reckless",
+    image: "images/vocabulary-set-11/31to35.png"
+  },
 
-34: {
-text: "<b><u>कानून का सिद्धांत</u></b><br>Jurisprudence is the study and philosophy of law and legal systems.<br><i>Rhyming trick:</i> jury की presence – <b>jurisprudence</b> 😄",
-image: ""
-},
+  34: {
+    text: "<b><u>कानून का सिद्धांत</u></b><br>Jurisprudence is the study and philosophy of law.<br><b>Synonym:</b><br>legal theory<br><b>Antonym:</b><br>lawlessness",
+    image: "images/vocabulary-set-11/31to35.png"
+  },
 
-35: {
-text: "<b><u>उपद्रव</u></b><br>Nuisance is something that causes inconvenience, annoyance, or discomfort.<br><i>Rhyming trick:</i> noise की dance – <b>nuisance</b> 😄",
-image: ""
-},
+  35: {
+    text: "<b><u>उपद्रव</u></b><br>Nuisance is something that causes annoyance or inconvenience.<br><b>Synonym:</b><br>irritation<br><b>Antonym:</b><br>comfort",
+    image: "images/vocabulary-set-11/31to35.png"
+  },
 
-36: {
-text: "<b><u>शिखर सम्मेलन</u></b><br>Summit refers to the highest point or a meeting of top leaders.<br><i>Rhyming trick:</i> top limit – <b>summit</b> 😄",
-image: ""
-},
+  36: {
+    text: "<b><u>शिखर सम्मेलन</u></b><br>Summit refers to the highest point or a meeting of leaders.<br><b>Synonym:</b><br>peak<br><b>Antonym:</b><br>base",
+    image: "images/vocabulary-set-11/36to40.png"
+  },
 
-37: {
-text: "<b><u>निर्बाध</u></b><br>Seamless means smooth and continuous without gaps or interruptions.<br><i>Rhyming trick:</i> seam नहीं less – <b>seamless</b> 😄",
-image: ""
-},
+  37: {
+    text: "<b><u>निर्बाध</u></b><br>Seamless means smooth and without interruption.<br><b>Synonym:</b><br>smooth<br><b>Antonym:</b><br>rough",
+    image: "images/vocabulary-set-11/36to40.png"
+  },
 
-38: {
-text: "<b><u>बिल्कुल साफ</u></b><br>Immaculate means perfectly clean, neat, or flawless.<br><i>Rhyming trick:</i> I’m a clean cat – <b>immaculate</b> 😄",
-image: ""
-},
+  38: {
+    text: "<b><u>बिल्कुल साफ</u></b><br>Immaculate means perfectly clean or flawless.<br><b>Synonym:</b><br>spotless<br><b>Antonym:</b><br>dirty",
+    image: "images/vocabulary-set-11/36to40.png"
+  },
 
-39: {
-text: "<b><u>आग लगाने वाला</u></b><br>An arsonist is a person who deliberately sets property on fire.<br><i>Rhyming trick:</i> आग की artist – <b>arsonist</b> 😄",
-image: ""
-},
+  39: {
+    text: "<b><u>आग लगाने वाला</u></b><br>An arsonist is someone who deliberately sets fire to property.<br><b>Synonym:</b><br>fire-raiser<br><b>Antonym:</b><br>protector",
+    image: "images/vocabulary-set-11/36to40.png"
+  },
 
-40: {
-text: "<b><u>धर्मत्यागी</u></b><br>An apostate is someone who abandons or renounces their religion or beliefs.<br><i>Rhyming trick:</i> आस्था से late – <b>apostate</b> 😄",
-image: ""
-},
+  40: {
+    text: "<b><u>धर्मत्यागी</u></b><br>An apostate is a person who renounces religious belief.<br><b>Synonym:</b><br>defector<br><b>Antonym:</b><br>believer",
+    image: "images/vocabulary-set-11/36to40.png"
+  },
 
-41: {
-text: "<b><u>घूमना</u></b><br>Swivel means to turn or rotate around a fixed point.<br><i>Rhyming trick:</i> switch और level – <b>swivel</b> 😄",
-image: ""
-},
+  41: {
+    text: "<b><u>घूमना</u></b><br>Swivel means to rotate around a fixed point.<br><b>Synonym:</b><br>rotate<br><b>Antonym:</b><br>freeze",
+    image: "images/vocabulary-set-11/41to45.png"
+  },
 
-42: {
-text: "<b><u>न्यायाधीश की हथौड़ी</u></b><br>A gavel is a small hammer used by judges to maintain order in court.<br><i>Rhyming trick:</i> law की travel – <b>gavel</b> 😄",
-image: ""
-},
+  42: {
+    text: "<b><u>न्यायाधीश की हथौड़ी</u></b><br>A gavel is a small hammer used by a judge in court.<br><b>Synonym:</b><br>mallet<br><b>Antonym:</b><br>silence",
+    image: "images/vocabulary-set-11/41to45.png"
+  },
 
-43: {
-text: "<b><u>आज्ञाकारी</u></b><br>Docile describes someone who is gentle, calm, and easy to control.<br><i>Rhyming trick:</i> dogile नहीं – <b>docile</b> 😄",
-image: ""
-},
+  43: {
+    text: "<b><u>आज्ञाकारी</u></b><br>Docile means gentle and easy to control.<br><b>Synonym:</b><br>obedient<br><b>Antonym:</b><br>rebellious",
+    image: "images/vocabulary-set-11/41to45.png"
+  },
 
-44: {
-text: "<b><u>महँगी जीत</u></b><br>Pyrrhic refers to a victory gained at such a heavy cost that it is almost a defeat.<br><i>Rhyming trick:</i> जीत मिली, loss horrific – <b>pyrrhic</b> 😄",
-image: ""
-},
+  44: {
+    text: "<b><u>महँगी जीत</u></b><br>Pyrrhic victory is one gained at great loss.<br><b>Synonym:</b><br>costly<br><b>Antonym:</b><br>decisive",
+    image: "images/vocabulary-set-11/41to45.png"
+  },
 
-45: {
-text: "<b><u>निर्दोष सिद्ध करना</u></b><br>Vindicate means to clear someone from blame or suspicion.<br><i>Rhyming trick:</i> win का gate – <b>vindicate</b> 😄",
-image: ""
-},
+  45: {
+    text: "<b><u>निर्दोष सिद्ध करना</u></b><br>Vindicate means to clear someone from blame.<br><b>Synonym:</b><br>justify<br><b>Antonym:</b><br>condemn",
+    image: "images/vocabulary-set-11/41to45.png"
+  },
 
-46: {
-text: "<b><u>अवर्णनीय</u></b><br>Ineffable describes something too great or intense to be expressed in words.<br><i>Rhyming trick:</i> feel इतना stable – <b>ineffable</b> 😄",
-image: ""
-},
+  46: {
+    text: "<b><u>अवर्णनीय</u></b><br>Ineffable means too great to be expressed in words.<br><b>Synonym:</b><br>indescribable<br><b>Antonym:</b><br>expressible",
+    image: "images/vocabulary-set-11/46to50.png"
+  },
 
-47: {
-text: "<b><u>अनिवार्य</u></b><br>Indispensable means absolutely necessary or essential.<br><i>Rhyming trick:</i> bin नहीं usable – <b>indispensable</b> 😄",
-image: ""
-},
+  47: {
+    text: "<b><u>अनिवार्य</u></b><br>Indispensable means absolutely necessary.<br><b>Synonym:</b><br>essential<br><b>Antonym:</b><br>optional",
+    image: "images/vocabulary-set-11/46to50.png"
+  },
 
-48: {
-text: "<b><u>सामान्य मानसिक स्थिति</u></b><br>Sane means mentally healthy and able to think rationally.<br><i>Rhyming trick:</i> brain ठीक plane – <b>sane</b> 😄",
-image: ""
-},
+  48: {
+    text: "<b><u>सामान्य मानसिक स्थिति</u></b><br>Sane means mentally sound and rational.<br><b>Synonym:</b><br>rational<br><b>Antonym:</b><br>insane",
+    image: "images/vocabulary-set-11/46to50.png"
+  },
 
-49: {
-text: "<b><u>बुद्धिमान</u></b><br>Sagacious means having keen judgment and wisdom.<br><i>Rhyming trick:</i> sage का vision – <b>sagacious</b> 😄",
-image: ""
-},
+  49: {
+    text: "<b><u>बुद्धिमान</u></b><br>Sagacious means having keen judgment.<br><b>Synonym:</b><br>wise<br><b>Antonym:</b><br>foolish",
+    image: "images/vocabulary-set-11/46to50.png"
+  },
 
-50: {
-text: "<b><u>सावधानीपूर्ण</u></b><br>Prudent means acting with care, foresight, and good judgment.<br><i>Rhyming trick:</i> future student – <b>prudent</b> 😄",
-image: ""
-}   
+  50: {
+    text: "<b><u>सावधानीपूर्ण</u></b><br>Prudent means acting with care and foresight.<br><b>Synonym:</b><br>careful<br><b>Antonym:</b><br>careless",
+    image: "images/vocabulary-set-11/46to50.png"
+  }
 
 };
