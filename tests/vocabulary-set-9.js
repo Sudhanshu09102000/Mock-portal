@@ -247,7 +247,7 @@ image: "images/vocabulary-set-9/16to20.png"
 
   20: {
 text: "<b><u>उदास स्मृति से भरा</u></b><br>Wistful describes a feeling of gentle sadness or longing for something in the past.<br><b>Synonym:</b><br>nostalgic<br><b>Antonym:</b><br>cheerful",
-image: "images/vocabulary-set-9/21to25.png"
+image: "images/vocabulary-set-9/16to20.png"
 },
 
 21: {
@@ -255,4 +255,5 @@ text: "<b><u>समझदारी से बोलने वाला</u></b><b
 image: "images/vocabulary-set-9/21to25.png"
 },
 };
+
 
