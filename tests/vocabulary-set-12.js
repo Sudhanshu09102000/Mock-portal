@@ -355,258 +355,213 @@ const questions = {
 
 // placeholder
 const explanations = {
-
-1: {
-  text: "<b><u>ईमानदारी</u></b><br>Probity means strict honesty and moral integrity in conduct, especially in public life.<br><i>Rhyming trick:</i> pro बनी duty, honesty की <b>probity</b>",
-  image: ""
+1:{
+text:"<b><u>ईमानदारी</u></b><br>Probity means strict honesty and moral integrity in conduct, especially in public life.<br><b>Synonym</b><br>integrity<br><b>Antonym</b><br>corruption",
+image:"images/vocabulary-set-12/1to5.png"
+},
+2:{
+text:"<b><u>घमंडी और बदतमीज़</u></b><br>Bumptious describes someone who is offensively self-assertive or arrogant.<br><b>Synonym</b><br>arrogant<br><b>Antonym</b><br>modest",
+image:"images/vocabulary-set-12/1to5.png"
+},
+3:{
+text:"<b><u>अहंकारी</u></b><br>Chesty refers to an arrogant or boastful manner after success.<br><b>Synonym</b><br>boastful<br><b>Antonym</b><br>humble",
+image:"images/vocabulary-set-12/1to5.png"
+},
+4:{
+text:"<b><u>भड़कीली भाषा</u></b><br>Fustian means pompous speech that lacks real meaning or substance.<br><b>Synonym</b><br>bombastic<br><b>Antonym</b><br>plain",
+image:"images/vocabulary-set-12/1to5.png"
+},
+5:{
+text:"<b><u>अधिकार जताने वाला</u></b><br>Imperious describes a commanding and domineering attitude.<br><b>Synonym</b><br>domineering<br><b>Antonym</b><br>submissive",
+image:"images/vocabulary-set-12/1to5.png"
 },
 
-2: {
-  text: "<b><u>घमंडी और बदतमीज़</u></b><br>Bumptious describes someone who is offensively self-assertive or arrogant.<br><i>Rhyming trick:</i> bump में attitude – <b>bumptious</b>",
-  image: ""
+6:{
+text:"<b><u>दयनीय</u></b><br>Pathetic refers to something that arouses pity or sadness.<br><b>Synonym</b><br>pitiful<br><b>Antonym</b><br>admirable",
+image:"images/vocabulary-set-12/6to10.png"
+},
+7:{
+text:"<b><u>अभिमानी</u></b><br>Snobbish means believing oneself superior to others.<br><b>Synonym</b><br>elitist<br><b>Antonym</b><br>friendly",
+image:"images/vocabulary-set-12/6to10.png"
+},
+8:{
+text:"<b><u>दुखी</u></b><br>Miserable means extremely unhappy or uncomfortable.<br><b>Synonym</b><br>unhappy<br><b>Antonym</b><br>joyful",
+image:"images/vocabulary-set-12/6to10.png"
+},
+9:{
+text:"<b><u>अत्यंत दयनीय</u></b><br>Abject refers to a condition of extreme degradation or hopelessness.<br><b>Synonym</b><br>deplorable<br><b>Antonym</b><br>honorable",
+image:"images/vocabulary-set-12/6to10.png"
+},
+10:{
+text:"<b><u>तरस खाने योग्य</u></b><br>Pitiful describes something that deserves pity.<br><b>Synonym</b><br>lamentable<br><b>Antonym</b><br>praiseworthy",
+image:"images/vocabulary-set-12/6to10.png"
 },
 
-3: {
-  text: "<b><u>अहंकारी</u></b><br>Chesty refers to an arrogant or boastful manner after success.<br><i>Rhyming trick:</i> chest फुलाया, ego बढ़ाया – <b>chesty</b>",
-  image: ""
+11:{
+text:"<b><u>भयानक</u></b><br>Appalling means causing shock or horror.<br><b>Synonym</b><br>shocking<br><b>Antonym</b><br>pleasant",
+image:"images/vocabulary-set-12/11to15.png"
+},
+12:{
+text:"<b><u>बेहद खराब</u></b><br>Wretched refers to very poor, unhappy, or unpleasant conditions.<br><b>Synonym</b><br>miserable<br><b>Antonym</b><br>comfortable",
+image:"images/vocabulary-set-12/11to15.png"
+},
+13:{
+text:"<b><u>अवज्ञा</u></b><br>Defiance means open resistance to authority or rules.<br><b>Synonym</b><br>resistance<br><b>Antonym</b><br>obedience",
+image:"images/vocabulary-set-12/11to15.png"
+},
+14:{
+text:"<b><u>खुला विरोध करना</u></b><br>Defy means to openly resist or challenge authority.<br><b>Synonym</b><br>oppose<br><b>Antonym</b><br>comply",
+image:"images/vocabulary-set-12/11to15.png"
+},
+15:{
+text:"<b><u>जोरदार विरोध करना</u></b><br>Remonstrate means to protest strongly against something.<br><b>Synonym</b><br>protest<br><b>Antonym</b><br>approve",
+image:"images/vocabulary-set-12/11to15.png"
 },
 
-4: {
-  text: "<b><u>भड़कीली भाषा</u></b><br>Fustian means pompous speech that lacks real meaning or substance.<br><i>Rhyming trick:</i> fuss किया, meaning गया – <b>fustian</b>",
-  image: ""
+16:{
+text:"<b><u>आदरपूर्वक झुकना</u></b><br>Deference means showing respectful submission to others.<br><b>Synonym</b><br>respect<br><b>Antonym</b><br>disrespect",
+image:"images/vocabulary-set-12/16to20.png"
+},
+17:{
+text:"<b><u>अत्यधिक भावुक</u></b><br>Effusive refers to excessive emotional expression.<br><b>Synonym</b><br>emotional<br><b>Antonym</b><br>reserved",
+image:"images/vocabulary-set-12/16to20.png"
+},
+18:{
+text:"<b><u>मिलनसार</u></b><br>Gregarious means enjoying the company of others.<br><b>Synonym</b><br>sociable<br><b>Antonym</b><br>introverted",
+image:"images/vocabulary-set-12/16to20.png"
+},
+19:{
+text:"<b><u>संक्रामक</u></b><br>Contagious means capable of spreading easily.<br><b>Synonym</b><br>infectious<br><b>Antonym</b><br>noncontagious",
+image:"images/vocabulary-set-12/16to20.png"
+},
+20:{
+text:"<b><u>प्रशंसा करना</u></b><br>Laud means to praise highly.<br><b>Synonym</b><br>commend<br><b>Antonym</b><br>criticize",
+image:"images/vocabulary-set-12/16to20.png"
 },
 
-5: {
-  text: "<b><u>अधिकार जताने वाला</u></b><br>Imperious describes a commanding and domineering attitude.<br><i>Rhyming trick:</i> emperor tone – <b>imperious</b>",
-  image: ""
+21:{
+text:"<b><u>हल्का डांटना</u></b><br>Chide means to scold mildly.<br><b>Synonym</b><br>rebuke<br><b>Antonym</b><br>praise",
+image:"images/vocabulary-set-12/21to25.png"
+},
+22:{
+text:"<b><u>शांत करना</u></b><br>Placate means to calm someone who is angry.<br><b>Synonym</b><br>appease<br><b>Antonym</b><br>agitate",
+image:"images/vocabulary-set-12/21to25.png"
+},
+23:{
+text:"<b><u>चौंका देना</u></b><br>Startle means to surprise suddenly.<br><b>Synonym</b><br>shock<br><b>Antonym</b><br>calm",
+image:"images/vocabulary-set-12/21to25.png"
+},
+24:{
+text:"<b><u>कड़ी आलोचना करना</u></b><br>Excoriate means to criticize harshly.<br><b>Synonym</b><br>condemn<br><b>Antonym</b><br>praise",
+image:"images/vocabulary-set-12/21to25.png"
+},
+25:{
+text:"<b><u>पतला</u></b><br>Slender means thin and delicately built.<br><b>Synonym</b><br>slim<br><b>Antonym</b><br>fat",
+image:"images/vocabulary-set-12/21to25.png"
 },
 
-6: {
-  text: "<b><u>दयनीय</u></b><br>Pathetic refers to something that arouses pity or sadness.<br><i>Rhyming trick:</i> pity आया, hearthetic – <b>pathetic</b>",
-  image: ""
+26:{
+text:"<b><u>मजबूत</u></b><br>Sturdy means strongly built.<br><b>Synonym</b><br>robust<br><b>Antonym</b><br>fragile",
+image:"images/vocabulary-set-12/26to30.png"
+},
+27:{
+text:"<b><u>भोजन विकार</u></b><br>Anorexia is an eating disorder marked by extreme weight loss.<br><b>Synonym</b><br>starvation<br><b>Antonym</b><br>overeating",
+image:"images/vocabulary-set-12/26to30.png"
+},
+28:{
+text:"<b><u>दंड देना</u></b><br>Chastise means to punish or rebuke.<br><b>Synonym</b><br>punish<br><b>Antonym</b><br>forgive",
+image:"images/vocabulary-set-12/26to30.png"
+},
+29:{
+text:"<b><u>एकांत धार्मिक स्थान</u></b><br>Cloister refers to a secluded religious place.<br><b>Synonym</b><br>monastery<br><b>Antonym</b><br>worldliness",
+image:"images/vocabulary-set-12/26to30.png"
+},
+30:{
+text:"<b><u>सांसारिक / समय संबंधी</u></b><br>Temporal relates to time or worldly matters.<br><b>Synonym</b><br>worldly<br><b>Antonym</b><br>spiritual",
+image:"images/vocabulary-set-12/26to30.png"
 },
 
-7: {
-  text: "<b><u>अभिमानी</u></b><br>Snobbish means believing oneself superior to others.<br><i>Rhyming trick:</i> snob बना, ego चढ़ा – <b>snobbish</b>",
-  image: ""
+31:{
+text:"<b><u>विचार-विमर्श</u></b><br>Deliberation means careful consideration.<br><b>Synonym</b><br>discussion<br><b>Antonym</b><br>haste",
+image:"images/vocabulary-set-12/31to35.png"
+},
+32:{
+text:"<b><u>द्रव का प्रवाह</u></b><br>Infusion is the introduction of fluid into the body.<br><b>Synonym</b><br>injection<br><b>Antonym</b><br>withdrawal",
+image:"images/vocabulary-set-12/31to35.png"
+},
+33:{
+text:"<b><u>वीर और विनम्र</u></b><br>Chivalrous describes courteous bravery.<br><b>Synonym</b><br>gallant<br><b>Antonym</b><br>rude",
+image:"images/vocabulary-set-12/31to35.png"
+},
+34:{
+text:"<b><u>पीछे हटना</u></b><br>Retreat means withdrawing from a position.<br><b>Synonym</b><br>withdraw<br><b>Antonym</b><br>advance",
+image:"images/vocabulary-set-12/31to35.png"
+},
+35:{
+text:"<b><u>मतदान विज्ञान</u></b><br>Psephology is the study of voting behaviour.<br><b>Synonym</b><br>electoral study<br><b>Antonym</b><br>—",
+image:"images/vocabulary-set-12/31to35.png"
 },
 
-8: {
-  text: "<b><u>दुखी</u></b><br>Miserable means extremely unhappy or uncomfortable.<br><i>Rhyming trick:</i> misery वाला life – <b>miserable</b>",
-  image: ""
+36:{
+text:"<b><u>सुंदर लिखावट</u></b><br>Calligraphy is decorative handwriting.<br><b>Synonym</b><br>penmanship<br><b>Antonym</b><br>scrawl",
+image:"images/vocabulary-set-12/36to40.png"
+},
+37:{
+text:"<b><u>पत्थर से छपाई</u></b><br>Lithography is a stone-based printing method.<br><b>Synonym</b><br>printing<br><b>Antonym</b><br>—",
+image:"images/vocabulary-set-12/36to40.png"
+},
+38:{
+text:"<b><u>हस्तलेखन विश्लेषण</u></b><br>Graphology studies handwriting traits.<br><b>Synonym</b><br>handwriting analysis<br><b>Antonym</b><br>—",
+image:"images/vocabulary-set-12/36to40.png"
+},
+39:{
+text:"<b><u>निर्मल</u></b><br>Pristine means pure and unspoiled.<br><b>Synonym</b><br>pure<br><b>Antonym</b><br>tainted",
+image:"images/vocabulary-set-12/36to40.png"
+},
+40:{
+text:"<b><u>कायर</u></b><br>Craven means extremely cowardly.<br><b>Synonym</b><br>cowardly<br><b>Antonym</b><br>brave",
+image:"images/vocabulary-set-12/36to40.png"
 },
 
-9: {
-  text: "<b><u>अत्यंत दयनीय</u></b><br>Abject refers to a condition of extreme degradation or hopelessness.<br><i>Rhyming trick:</i> object नहीं, हालत <b>abject</b>",
-  image: ""
+41:{
+text:"<b><u>विद्वान</u></b><br>Erudite means deeply learned.<br><b>Synonym</b><br>scholarly<br><b>Antonym</b><br>ignorant",
+image:"images/vocabulary-set-12/41to45.png"
+},
+42:{
+text:"<b><u>तुरंत जवाब</u></b><br>Riposte is a quick reply.<br><b>Synonym</b><br>retort<br><b>Antonym</b><br>silence",
+image:"images/vocabulary-set-12/41to45.png"
+},
+43:{
+text:"<b><u>लापरवाह</u></b><br>Slipshod means careless.<br><b>Synonym</b><br>negligent<br><b>Antonym</b><br>careful",
+image:"images/vocabulary-set-12/41to45.png"
+},
+44:{
+text:"<b><u>मनोरंजन करना</u></b><br>Regale means to entertain.<br><b>Synonym</b><br>delight<br><b>Antonym</b><br>bore",
+image:"images/vocabulary-set-12/41to45.png"
+},
+45:{
+text:"<b><u>विद्रोह</u></b><br>Mutinus means rebellion.<br><b>Synonym</b><br>mutiny<br><b>Antonym</b><br>loyalty",
+image:"images/vocabulary-set-12/41to45.png"
 },
 
-10: {
-  text: "<b><u>तरस खाने योग्य</u></b><br>Pitiful describes something that deserves pity.<br><i>Rhyming trick:</i> pity full – <b>pitiful</b>",
-  image: ""
+46:{
+text:"<b><u>भंवर</u></b><br>Vortex is a whirling mass.<br><b>Synonym</b><br>whirlpool<br><b>Antonym</b><br>stillness",
+image:"images/vocabulary-set-12/46to50.png"
 },
-
-11: {
-  text: "<b><u>भयानक</u></b><br>Appalling means causing shock or horror.<br><i>Rhyming trick:</i> डर से calling – <b>appalling</b>",
-  image: ""
+47:{
+text:"<b><u>घूमना</u></b><br>Swirl means circular motion.<br><b>Synonym</b><br>spin<br><b>Antonym</b><br>halt",
+image:"images/vocabulary-set-12/46to50.png"
 },
-
-12: {
-  text: "<b><u>बेहद खराब</u></b><br>Wretched refers to very poor, unhappy, or unpleasant conditions.<br><i>Rhyming trick:</i> rough life stretched – <b>wretched</b>",
-  image: ""
+48:{
+text:"<b><u>महाभंवर</u></b><br>Maelstrom is a violent whirlpool.<br><b>Synonym</b><br>turmoil<br><b>Antonym</b><br>calm",
+image:"images/vocabulary-set-12/46to50.png"
 },
-
-13: {
-  text: "<b><u>अवज्ञा</u></b><br>Defiance means open resistance to authority or rules.<br><i>Rhyming trick:</i> define नहीं, oppose – <b>defiance</b>",
-  image: ""
+49:{
+text:"<b><u>चक्राकार गति</u></b><br>Gyre means circular movement.<br><b>Synonym</b><br>spiral<br><b>Antonym</b><br>line",
+image:"images/vocabulary-set-12/46to50.png"
 },
-
-14: {
-  text: "<b><u>खुला विरोध करना</u></b><br>Defy means to openly resist or challenge authority.<br><i>Rhyming trick:</i> deny किया rule को – <b>defy</b>",
-  image: ""
-},
-
-15: {
-  text: "<b><u>जोरदार विरोध करना</u></b><br>Remonstrate means to protest strongly against something.<br><i>Rhyming trick:</i> monster जैसे shout – <b>remonstrate</b>",
-  image: ""
-},
-
-16: {
-  text: "<b><u>आदरपूर्वक झुकना</u></b><br>Deference means showing respectful submission to others.<br><i>Rhyming trick:</i> difference नहीं, respect – <b>deference</b>",
-  image: ""
-},
-
-17: {
-  text: "<b><u>अत्यधिक भावुक</u></b><br>Effusive refers to excessive emotional expression.<br><i>Rhyming trick:</i> emotion का juice – <b>effusive</b>",
-  image: ""
-},
-
-18: {
-  text: "<b><u>मिलनसार</u></b><br>Gregarious means enjoying the company of others.<br><i>Rhyming trick:</i> group में joyous – <b>gregarious</b>",
-  image: ""
-},
-
-19: {
-  text: "<b><u>संक्रामक</u></b><br>Contagious means capable of spreading easily from one to another.<br><i>Rhyming trick:</i> contact से serious – <b>contagious</b>",
-  image: ""
-},
-
-20: {
-  text: "<b><u>प्रशंसा करना</u></b><br>Laud means to praise highly or commend.<br><i>Rhyming trick:</i> loud praise – <b>laud</b>",
-  image: ""
-},
-
-21: {
-  text: "<b><u>हल्का डांटना</u></b><br>Chide means to scold mildly or gently rebuke.<br><i>Rhyming trick:</i> child को guide – <b>chide</b>",
-  image: ""
-},
-
-22: {
-  text: "<b><u>शांत करना</u></b><br>Placate means to calm or appease someone who is angry.<br><i>Rhyming trick:</i> place पर peace – <b>placate</b>",
-  image: ""
-},
-
-23: {
-  text: "<b><u>चौंका देना</u></b><br>Startle means to shock or surprise suddenly.<br><i>Rhyming trick:</i> start में shock – <b>startle</b>",
-  image: ""
-},
-
-24: {
-  text: "<b><u>कड़ी आलोचना करना</u></b><br>Excoriate means to criticize very harshly.<br><i>Rhyming trick:</i> extra criticize – <b>excoriate</b>",
-  image: ""
-},
-
-25: {
-  text: "<b><u>पतला</u></b><br>Slender means thin and delicately built.<br><i>Rhyming trick:</i> slim figure tender – <b>slender</b>",
-  image: ""
-},
-
-26: {
-  text: "<b><u>मजबूत</u></b><br>Sturdy means strongly built and able to withstand pressure or wear.<br><i>Rhyming trick:</i> study नहीं, body <b>sturdy</b>",
-  image: ""
-},
-
-27: {
-  text: "<b><u>भोजन विकार</u></b><br>Anorexia is an eating disorder marked by extreme weight loss due to lack of eating.<br><i>Rhyming trick:</i> खाना छोड़िया, body zero – <b>anorexia</b>",
-  image: ""
-},
-
-28: {
-  text: "<b><u>दंड देना</u></b><br>Chastise means to rebuke or punish for wrongdoing.<br><i>Rhyming trick:</i> गलती size, teacher <b>chastise</b>",
-  image: ""
-},
-
-29: {
-  text: "<b><u>एकांत धार्मिक स्थान</u></b><br>Cloister refers to a secluded religious place or life away from society.<br><i>Rhyming trick:</i> noise छोड़, silent <b>cloister</b>",
-  image: ""
-},
-
-30: {
-  text: "<b><u>सांसारिक / समय संबंधी</u></b><br>Temporal relates to time or worldly matters, not spiritual ones.<br><i>Rhyming trick:</i> time पर oral – <b>temporal</b>",
-  image: ""
-},
-
-31: {
-  text: "<b><u>विचार-विमर्श</u></b><br>Deliberation means careful and thoughtful consideration before deciding.<br><i>Rhyming trick:</i> decision slow – <b>deliberation</b>",
-  image: ""
-},
-
-32: {
-  text: "<b><u>द्रव का प्रवाह</u></b><br>Infusion is the introduction of fluid into the body, especially medically.<br><i>Rhyming trick:</i> fluid का fusion – <b>infusion</b>",
-  image: ""
-},
-
-33: {
-  text: "<b><u>वीर और विनम्र</u></b><br>Chivalrous describes courteous and brave behavior, especially toward others.<br><i>Rhyming trick:</i> knight का valour – <b>chivalrous</b>",
-  image: ""
-},
-
-34: {
-  text: "<b><u>पीछे हटना</u></b><br>Retreat means withdrawing from a position or situation.<br><i>Rhyming trick:</i> defeat पर seat छोड़ – <b>retreat</b>",
-  image: ""
-},
-
-35: {
-  text: "<b><u>मतदान विज्ञान</u></b><br>Psephology is the study of voting behavior and elections.<br><i>Rhyming trick:</i> vote की technology – <b>psephology</b>",
-  image: ""
-},
-
-36: {
-  text: "<b><u>सुंदर लिखावट</u></b><br>Calligraphy is the art of decorative and elegant handwriting.<br><i>Rhyming trick:</i> कलम की photography – <b>calligraphy</b>",
-  image: ""
-},
-
-37: {
-  text: "<b><u>पत्थर से छपाई</u></b><br>Lithography is a printing process using stone or metal plates.<br><i>Rhyming trick:</i> litho stone story – <b>lithography</b>",
-  image: ""
-},
-
-38: {
-  text: "<b><u>हस्तलेखन विश्लेषण</u></b><br>Graphology is the study of handwriting to assess character traits.<br><i>Rhyming trick:</i> graph नहीं, hand story – <b>graphology</b>",
-  image: ""
-},
-
-39: {
-  text: "<b><u>निर्मल</u></b><br>Pristine means remaining in original, pure, and unspoiled condition.<br><i>Rhyming trick:</i> fresh teen – <b>pristine</b>",
-  image: ""
-},
-
-40: {
-  text: "<b><u>कायर</u></b><br>Craven refers to someone who is extremely cowardly.<br><i>Rhyming trick:</i> brave नहीं – <b>craven</b>",
-  image: ""
-},
-
-41: {
-  text: "<b><u>विद्वान</u></b><br>Erudite means having deep and extensive knowledge.<br><i>Rhyming trick:</i> पढ़ाई का height – <b>erudite</b>",
-  image: ""
-},
-
-42: {
-  text: "<b><u>तुरंत जवाब</u></b><br>Riposte is a quick and witty reply, especially to an insult.<br><i>Rhyming trick:</i> reply fast – <b>riposte</b>",
-  image: ""
-},
-
-43: {
-  text: "<b><u>लापरवाह</u></b><br>Slipshod means careless and poorly done.<br><i>Rhyming trick:</i> slip किया job – <b>slipshod</b>",
-  image: ""
-},
-
-44: {
-  text: "<b><u>मनोरंजन करना</u></b><br>Regale means to entertain or delight someone with talk or food.<br><i>Rhyming trick:</i> royal tale – <b>regale</b>",
-  image: ""
-},
-
-45: {
-  text: "<b><u>विद्रोह</u></b><br>Mutinus means rebellion or mutiny against authority.<br><i>Rhyming trick:</i> mutiny का cousin – <b>mutinus</b>",
-  image: ""
-},
-
-46: {
-  text: "<b><u>भंवर</u></b><br>Vortex is a whirling mass of fluid or air.<br><i>Rhyming trick:</i> water का force – <b>vortex</b>",
-  image: ""
-},
-
-47: {
-  text: "<b><u>घूमना</u></b><br>Swirl means to move in a twisting or circular motion.<br><i>Rhyming trick:</i> wind में curl – <b>swirl</b>",
-  image: ""
-},
-
-48: {
-  text: "<b><u>महाभंवर</u></b><br>Maelstrom refers to a powerful and violent whirlpool.<br><i>Rhyming trick:</i> male strong storm – <b>maelstrom</b>",
-  image: ""
-},
-
-49: {
-  text: "<b><u>चक्राकार गति</u></b><br>Gyre means a circular or spiral movement.<br><i>Rhyming trick:</i> घूमे fire – <b>gyre</b>",
-  image: ""
-},
-
-50: {
-  text: "<b><u>संकेतक</u></b><br>Bellwether means an indicator of future trends or changes.<br><i>Rhyming trick:</i> bell बजा, trend बताया – <b>bellwether</b>",
-  image: ""
-},
-
-
- 
-
+50:{
+text:"<b><u>संकेतक</u></b><br>Bellwether means trend indicator.<br><b>Synonym</b><br>indicator<br><b>Antonym</b><br>follower",
+image:"images/vocabulary-set-12/46to50.png"
+}
 };
