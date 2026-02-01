@@ -224,9 +224,9 @@ const PORTAL_DATA = [
     colorClass: "quant",
     topics: [
       {
-        name: "Coming Soon...",
+        name: "Exam Specific Mathematics",
         subtopics: [
-          { name: "Coming Soon...", file: "number-analogy" },
+          { name: "SSC-CGL 2025 Mains Mathematics", file: "SSC-CGL-2025-Mains-Mathematics" },
           { name: "Coming Soon...", file: "alphabet-analogy" }
         ]
       }

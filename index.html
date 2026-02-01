@@ -643,7 +643,7 @@
     }
 
     /* ✅ CLASSIC PREMIUM FONT + LOOK FOR ANSWER MODAL / HELP BOX */
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+    /* @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap'); */
 
     /* Whole modal body look */
     #answerModal .modal-content,
@@ -1194,6 +1194,8 @@
     }
   </style>
 
+
+
  <style>
 /* Light centered background watermark */
 body::before {
@@ -1215,7 +1217,66 @@ body::before {
 }
 </style>
 
+<style>
+/* ===============================
+   SSC CGL EXAM FONT STANDARD
+   =============================== */
 
+/* Use pure system fonts (same feel as SSC CBT) */
+html, body, * {
+  font-family: Arial, Helvetica, "Nimbus Sans", "Liberation Sans", sans-serif !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+}
+
+/* Question text */
+#questionText,
+.qbox,
+.opt-text {
+  font-size: 16px !important;
+  line-height: 1.45 !important;
+  font-weight: 400 !important;
+}
+
+/* Options */
+.option {
+  font-size: 15.5px !important;
+  line-height: 1.45 !important;
+}
+
+/* Buttons & labels */
+button,
+.btn,
+.badge,
+.pill,
+input,
+select,
+textarea {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+/* Headings toned down (no decorative font) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+}
+
+/* Remove premium / decorative font effects */
+.brand-title,
+.modal-title {
+  text-shadow: none !important;
+}
+
+/* Numbers look like exam timer */
+#timerText,
+.kbd {
+  font-variant-numeric: tabular-nums;
+}
+</style>
 
 </head>
 
@@ -3488,6 +3549,7 @@ body::before {
 
 })();
 </script>
+
 
 
 
