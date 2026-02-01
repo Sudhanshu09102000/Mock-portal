@@ -3375,6 +3375,119 @@ body::before {
       })();
     </script>
 
+    <script>
+(() => {
+
+  let active = false;
+
+  /* ===== MAIN TOGGLE BUTTON ===== */
+  const toggleBtn = document.createElement("button");
+  toggleBtn.textContent = "Blackboard";
+  Object.assign(toggleBtn.style, {
+    position: "fixed",
+    right: "16px",
+    bottom: "80px",
+    zIndex: 100000,
+    padding: "6px 14px",
+    borderRadius: "14px",
+    border: "1px solid rgba(255,255,255,.25)",
+    background: "rgba(0,0,0,.35)",
+    color: "#fff",
+    fontSize: "13px",
+    cursor: "grab",
+    backdropFilter: "blur(8px)"
+  });
+  document.body.appendChild(toggleBtn);
+
+  /* ===== OVERLAY ===== */
+  const overlay = document.createElement("div");
+  overlay.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    pointer-events: none;
+  `;
+  document.body.appendChild(overlay);
+
+  /* ===== TEST UI ROOT ===== */
+  const testUI = document.querySelector(".page-wrap");
+
+  /* ===== TOGGLE LOGIC ===== */
+  function openBoard() {
+    active = true;
+    toggleBtn.textContent = "Back to Test";
+    overlay.style.display = "block";
+    testUI.style.visibility = "hidden";
+  }
+
+  function closeBoard() {
+    active = false;
+    toggleBtn.textContent = "Blackboard";
+    overlay.style.display = "none";
+    testUI.style.visibility = "";
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    if (dragging) return; // prevent click after drag
+    active ? closeBoard() : openBoard();
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && active) closeBoard();
+  });
+
+  /* ===== DRAG LOGIC (MOUSE + TOUCH) ===== */
+  let dragging = false;
+  let startX = 0, startY = 0, btnX = 0, btnY = 0;
+
+  function startDrag(e) {
+    dragging = false;
+    toggleBtn.style.cursor = "grabbing";
+
+    const rect = toggleBtn.getBoundingClientRect();
+    btnX = rect.left;
+    btnY = rect.top;
+
+    const t = e.touches ? e.touches[0] : e;
+    startX = t.clientX;
+    startY = t.clientY;
+
+    document.addEventListener("mousemove", onDrag);
+    document.addEventListener("mouseup", stopDrag);
+    document.addEventListener("touchmove", onDrag, { passive: false });
+    document.addEventListener("touchend", stopDrag);
+  }
+
+  function onDrag(e) {
+    dragging = true;
+    const t = e.touches ? e.touches[0] : e;
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    toggleBtn.style.left = btnX + dx + "px";
+    toggleBtn.style.top = btnY + dy + "px";
+    toggleBtn.style.right = "auto";
+    toggleBtn.style.bottom = "auto";
+
+    if (e.touches) e.preventDefault();
+  }
+
+  function stopDrag() {
+    toggleBtn.style.cursor = "grab";
+
+    document.removeEventListener("mousemove", onDrag);
+    document.removeEventListener("mouseup", stopDrag);
+    document.removeEventListener("touchmove", onDrag);
+    document.removeEventListener("touchend", stopDrag);
+  }
+
+  toggleBtn.addEventListener("mousedown", startDrag);
+  toggleBtn.addEventListener("touchstart", startDrag, { passive: true });
+
+})();
+</script>
+
 
 
 </body>
