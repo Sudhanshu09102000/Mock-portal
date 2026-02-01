@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Typing Test Engine</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body{
+      min-height:100vh;
+      background: linear-gradient(120deg, #0b1020, #1a0b2e);
+      color:#eaf0ff;
+    }
+    .glass{
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      box-shadow: 0 14px 35px rgba(0,0,0,.35);
+    }
+    .reading{
+      white-space: pre-wrap;
+      line-height: 1.7;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 15px;
+    }
+    .ch-ok{ color:#22c55e; }
+    .ch-bad{ color:#ef4444; text-decoration: underline; }
+    .ch-pend{ color: rgba(234,240,255,.75); }
+
+    .drag-box{
+      position: fixed;
+      right: 16px;
+      top: 16px;
+      z-index: 1000;
+      width: 260px;
+      cursor: grab;
+      user-select:none;
+    }
+    .drag-box:active{ cursor: grabbing; }
+    .btn-glass{
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.18);
+      color:#eaf0ff;
+      border-radius: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <h2 class="mb-0">Typing Test Engine</h2>
+    <div class="d-flex gap-2">
+      <a href="index.html" class="btn btn-glass">Back to portal</a>
+    </div>
+  </div>
+
+  <div class="glass p-3 p-md-4 mb-3">
+    <label class="form-label">Paste passage (editable before start)</label>
+    <textarea id="passageInput" class="form-control" rows="6" placeholder="Paste passage here..."></textarea>
+    <div class="d-flex gap-2 flex-wrap mt-3">
+      <button id="startBtn" class="btn btn-success">Start test</button>
+      <button id="submitBtn" class="btn btn-danger" disabled>Submit</button>
+    </div>
+    <div class="small mt-2" style="color:rgba(234,240,255,.75)">
+      After start: passage input is disabled; typing area becomes active with live green/red highlights.
+    </div>
+  </div>
+
+  <div id="readingWrap" class="glass p-3 p-md-4 mb-3 d-none">
+    <div class="fw-semibold mb-2">Reading area</div>
+    <div id="readingArea" class="reading"></div>
+  </div>
+
+  <div class="glass p-3 p-md-4">
+    <label class="form-label">Typing area</label>
+    <textarea id="typingArea" class="form-control" rows="6" disabled placeholder="Start test to enable typing..."></textarea>
+  </div>
+</div>
+
+<div id="statsBox" class="glass p-3 drag-box">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="fw-semibold">Stats</div>
+    <span class="small" style="color:rgba(234,240,255,.75)">Drag</span>
+  </div>
+  <hr class="border-white border-opacity-10 my-2">
+  <div class="small">Time (s): <span id="tSec">0</span></div>
+  <div class="small">Keys count: <span id="keysCount">0</span></div>
+  <div class="small">WPM: <span id="wpm">0</span></div>
+  <div class="small">Full mistakes: <span id="fullMist">0</span></div>
+  <div class="small">Half mistakes: <span id="halfMist">0</span></div>
+  <div class="small">Error %: <span id="errPct">0</span></div>
+</div>
+
+<script>
+const $ = (id)=>document.getElementById(id);
+
+let running=false;
+let t=0;
+let timer=null;
+let keys=0;
+let passage="";
+let submitted=false;
+
+function start(){
+  passage = $('passageInput').value || '';
+  if(!passage.trim()){
+    alert('Paste a passage first.');
+    return;
+  }
+  running=true; submitted=false;
+  $('passageInput').disabled = true;
+  $('typingArea').disabled = false;
+  $('typingArea').value = '';
+  $('typingArea').focus();
+  $('readingWrap').classList.remove('d-none');
+  $('submitBtn').disabled = false;
+
+  t=0; keys=0;
+  tickStats();
+
+  clearInterval(timer);
+  timer = setInterval(()=>{
+    if(!running) return;
+    t++;
+    tickStats();
+  }, 1000);
+
+  renderReading('');
+}
+
+function submit(){
+  if(!running) return;
+  running=false; submitted=true;
+  clearInterval(timer);
+  $('typingArea').disabled = true;
+  $('submitBtn').disabled = true;
+  tickStats();
+}
+
+function renderReading(typed){
+  const maxLen = Math.max(passage.length, typed.length);
+  let html='';
+  for(let i=0;i<maxLen;i++){
+    const p = passage[i] ?? '';
+    const c = typed[i] ?? '';
+
+    if(p === '' && c !== ''){
+      html += `<span class="ch-bad">${escapeHtml(c)}</span>`;
+      continue;
+    }
+    if(c === ''){
+      html += `<span class="ch-pend">${escapeHtml(p)}</span>`;
+      continue;
+    }
+    if(c === p){
+      html += `<span class="ch-ok">${escapeHtml(p)}</span>`;
+    }else{
+      html += `<span class="ch-bad">${escapeHtml(p)}</span>`;
+    }
+  }
+  $('readingArea').innerHTML = html;
+}
+
+function computeMistakes(typed){
+  // Full mistake: incorrect character where passage has a char.
+  // Half mistake: extra characters beyond passage length.
+  let full=0, half=0;
+  const min = Math.min(passage.length, typed.length);
+  for(let i=0;i<min;i++){
+    if(typed[i] !== passage[i]) full++;
+  }
+  if(typed.length > passage.length) half = typed.length - passage.length;
+  return { full, half };
+}
+
+function tickStats(){
+  $('tSec').textContent = String(t);
+  $('keysCount').textContent = String(keys);
+
+  const typed = $('typingArea').value || '';
+  const words = typed.length / 5; // 5 chars = 1 word
+  const wpm = (t>0) ? Math.round((words / t) * 60) : 0;
+  $('wpm').textContent = String(wpm);
+
+  const m = computeMistakes(typed);
+  $('fullMist').textContent = String(m.full);
+  $('halfMist').textContent = String(m.half);
+
+  const err = typed.length ? Math.round(((m.full + m.half) / typed.length) * 100) : 0;
+  $('errPct').textContent = String(err);
+
+  renderReading(typed);
+}
+
+$('startBtn').addEventListener('click', start);
+$('submitBtn').addEventListener('click', submit);
+
+$('typingArea').addEventListener('keydown', (e)=>{
+  if(!running) return;
+  keys++;
+});
+
+$('typingArea').addEventListener('input', ()=>{
+  if(!running) return;
+  tickStats();
+});
+
+/* Drag stats box */
+(function(){
+  const box = $('statsBox');
+  let dragging=false, sx=0, sy=0, ox=0, oy=0;
+
+  box.addEventListener('mousedown', (e)=>{
+    dragging=true;
+    sx=e.clientX; sy=e.clientY;
+    const r = box.getBoundingClientRect();
+    ox=r.left; oy=r.top;
+  });
+  window.addEventListener('mousemove', (e)=>{
+    if(!dragging) return;
+    const dx=e.clientX-sx, dy=e.clientY-sy;
+    box.style.left = (ox+dx)+'px';
+    box.style.top = (oy+dy)+'px';
+    box.style.right = 'auto';
+  });
+  window.addEventListener('mouseup', ()=>dragging=false);
+})();
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, (m)=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+  }[m]));
+}
+</script>
+</body>
+</html>
