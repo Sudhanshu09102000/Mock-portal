@@ -347,7 +347,7 @@ window.TEST_DATA = {
   ],
   "correct": "2",
   "quesimage": "",
-  "exptext": "<b>Explanation:</b><br>Numbers divisible by 6 up to 120 = 120 / 6 = 20<br>Numbers divisible by 8 up to 120 = 120 / 8 = 15<br>Numbers divisible by both 6 and 8 (i.e. by LCM 24) = 120 / 24 = 5<br><br>Numbers divisible by 6 or 8 = 20 + 15 − 5 = 30<br><br>Exclude numbers divisible by 24:<br>Required favourable outcomes = 30 − 5 = <b>25</b><br><br>Total outcomes = 120<br><br>Probability = 25 / 120 = <b><sup>23</sup>/<sub>120</sub></b>",
+  "exptext": "<b>Explanation:</b><br>Numbers divisible by 6 up to 120 = 120 / 6 = 20<br>Numbers divisible by 8 up to 120 = 120 / 8 = 15<br>Numbers divisible by both 6 and 8 (i.e. by LCM 24) = 120 / 24 = 5<br><br>Numbers divisible by 6 or 8 = 20 + 15 − 5 = 30<br><br>Exclude numbers divisible by 24:<br>Required favourable outcomes = 30 − 5 = <b>25</b><br><br>Total outcomes = 120<br><br>Probability = 25 / 120",
   "expimage": ""
 },
 "28": {
@@ -389,5 +389,6 @@ window.TEST_DATA = {
   "exptext": "<b>Explanation:</b><br>Total expenditure = 250 + 400 + 350 + 500 + 300 = 1800<br><br>Average expenditure = 1800 / 5 = <b>$360</b><br><br>Families spending above average (>360):<br>Family B = 400, Family D = 500<br><br>Highest expenditure = 500<br>Lowest expenditure = 250<br><br>Difference = 500 − 250 = <b>$250</b>",
   "expimage": ""
 },
+
 
 };
