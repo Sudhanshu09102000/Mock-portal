@@ -3375,10 +3375,22 @@ body::before {
       })();
     </script>
 
-    <script>
+<script>
 (() => {
 
+  /* ===== SHOW ONLY ON LAPTOP / PC ===== */
+  const isTouchDevice =
+    ('ontouchstart' in window) ||
+    navigator.maxTouchPoints > 0 ||
+    window.matchMedia("(pointer: coarse)").matches;
+
+  if (isTouchDevice) {
+    // ❌ mobile / tablet → do nothing
+    return;
+  }
+
   let active = false;
+  let dragging = false;
 
   /* ===== MAIN TOGGLE BUTTON ===== */
   const toggleBtn = document.createElement("button");
@@ -3437,8 +3449,7 @@ body::before {
     if (e.key === "Escape" && active) closeBoard();
   });
 
-  /* ===== DRAG LOGIC (MOUSE + TOUCH) ===== */
-  let dragging = false;
+  /* ===== DRAG LOGIC (DESKTOP ONLY) ===== */
   let startX = 0, startY = 0, btnX = 0, btnY = 0;
 
   function startDrag(e) {
@@ -3449,41 +3460,31 @@ body::before {
     btnX = rect.left;
     btnY = rect.top;
 
-    const t = e.touches ? e.touches[0] : e;
-    startX = t.clientX;
-    startY = t.clientY;
+    startX = e.clientX;
+    startY = e.clientY;
 
     document.addEventListener("mousemove", onDrag);
     document.addEventListener("mouseup", stopDrag);
-    document.addEventListener("touchmove", onDrag, { passive: false });
-    document.addEventListener("touchend", stopDrag);
   }
 
   function onDrag(e) {
     dragging = true;
-    const t = e.touches ? e.touches[0] : e;
-    const dx = t.clientX - startX;
-    const dy = t.clientY - startY;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
 
     toggleBtn.style.left = btnX + dx + "px";
     toggleBtn.style.top = btnY + dy + "px";
     toggleBtn.style.right = "auto";
     toggleBtn.style.bottom = "auto";
-
-    if (e.touches) e.preventDefault();
   }
 
   function stopDrag() {
     toggleBtn.style.cursor = "grab";
-
     document.removeEventListener("mousemove", onDrag);
     document.removeEventListener("mouseup", stopDrag);
-    document.removeEventListener("touchmove", onDrag);
-    document.removeEventListener("touchend", stopDrag);
   }
 
   toggleBtn.addEventListener("mousedown", startDrag);
-  toggleBtn.addEventListener("touchstart", startDrag, { passive: true });
 
 })();
 </script>
