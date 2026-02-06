@@ -3436,6 +3436,192 @@ h1, h2, h3, h4, h5, h6 {
       })();
     </script>
 
+
+<script>
+/* ======================================
+   CUSTOM COLOR PICKER – FULL CONTROL
+   ====================================== */
+(function () {
+
+  /* ---------- Floating Button ---------- */
+  const btn = document.createElement("div");
+  btn.innerHTML = "🎨";
+  Object.assign(btn.style, {
+    position: "fixed",
+    left: "14px",
+    bottom: "14px",
+    width: "38px",
+    height: "38px",
+    borderRadius: "50%",
+    background: "rgba(0,0,0,0.35)",
+    color: "#fff",
+    display: "grid",
+    placeItems: "center",
+    cursor: "pointer",
+    zIndex: 9999,
+    backdropFilter: "blur(10px)",
+    border: "1px solid rgba(255,255,255,0.25)",
+    boxShadow: "0 8px 22px rgba(0,0,0,0.45)",
+    fontSize: "18px"
+  });
+
+  /* ---------- Control Panel ---------- */
+  const panel = document.createElement("div");
+  Object.assign(panel.style, {
+    position: "fixed",
+    left: "14px",
+    bottom: "60px",
+    padding: "10px",
+    borderRadius: "14px",
+    background: "rgba(10,12,20,0.85)",
+    backdropFilter: "blur(14px)",
+    border: "1px solid rgba(255,255,255,0.2)",
+    boxShadow: "0 14px 35px rgba(0,0,0,0.5)",
+    zIndex: 9999,
+    display: "none",
+    width: "160px"
+  });
+
+  panel.innerHTML = `
+    <div style="font-size:12px;color:#aaa;margin-bottom:6px">Background</div>
+    <input type="color" id="bgPick" style="width:100%;margin-bottom:8px">
+
+    <div style="font-size:12px;color:#aaa;margin-bottom:6px">Question Box</div>
+    <input type="color" id="boxPick" style="width:100%;margin-bottom:8px">
+
+    <div style="font-size:12px;color:#aaa;margin-bottom:6px">Text</div>
+    <input type="color" id="textPick" style="width:100%">
+  `;
+
+  document.body.appendChild(btn);
+  document.body.appendChild(panel);
+
+  /* ---------- Toggle Panel ---------- */
+  btn.onclick = (e) => {
+    e.stopPropagation();
+    panel.style.display = panel.style.display === "none" ? "block" : "none";
+  };
+
+  document.addEventListener("click", () => panel.style.display = "none");
+  panel.onclick = (e) => e.stopPropagation();
+
+  /* ---------- Color Logic ---------- */
+  const bgPick = panel.querySelector("#bgPick");
+  const boxPick = panel.querySelector("#boxPick");
+  const textPick = panel.querySelector("#textPick");
+
+  bgPick.oninput = () => {
+    document.body.style.background =
+      `linear-gradient(120deg, ${bgPick.value}, ${bgPick.value})`;
+  };
+
+  boxPick.oninput = () => {
+    document.querySelectorAll(".glass").forEach(el => {
+      el.style.background =
+        `linear-gradient(135deg, ${boxPick.value}cc, ${boxPick.value}99)`;
+    });
+  };
+
+  textPick.oninput = () => {
+    document.documentElement.style.setProperty("--txt", textPick.value);
+  };
+
+})();
+</script>
+
+<script>
+/* ==========================================
+   GRAND BOX – WRAP EXISTING BUTTONS (REAL)
+   ========================================== */
+
+(function () {
+
+  function findBlackboardBtn() {
+    return [...document.querySelectorAll('button.btn-glass')]
+      .find(b => b.textContent.trim() === 'Blackboard');
+  }
+
+  function buildGrandBox() {
+
+    const timer = document.querySelector('.timer-pill');
+    const blackboard = findBlackboardBtn();
+
+    if (!timer || !blackboard) return false;
+
+    /* 🔁 prevent double wrapping */
+    if (document.getElementById('grandControlBox')) return true;
+
+    /* 📦 CREATE BOX */
+    const box = document.createElement('div');
+    box.id = 'grandControlBox';
+
+    /* 🧲 MOVE EXISTING ELEMENTS */
+    box.appendChild(blackboard);
+    box.appendChild(timer);
+
+    document.body.appendChild(box);
+
+    /* 🎨 STYLE */
+    const style = document.createElement('style');
+    style.innerHTML = `
+      #grandControlBox{
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+        border-radius: 22px;
+        background: rgba(0,0,0,.45);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255,255,255,.18);
+        box-shadow: 0 18px 45px rgba(0,0,0,.45);
+        z-index: 99999;
+        cursor: grab;
+      }
+
+      #grandControlBox:active{ cursor: grabbing; }
+
+      #grandControlBox > *{
+        position: static !important;
+        margin: 0 !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    /* 🖱 DRAG */
+    let drag = false, dx = 0, dy = 0;
+
+    box.addEventListener('mousedown', e => {
+      drag = true;
+      dx = e.clientX - box.offsetLeft;
+      dy = e.clientY - box.offsetTop;
+    });
+
+    document.addEventListener('mousemove', e => {
+      if (!drag) return;
+      box.style.left = (e.clientX - dx) + 'px';
+      box.style.top  = (e.clientY - dy) + 'px';
+      box.style.right = 'auto';
+      box.style.bottom = 'auto';
+    });
+
+    document.addEventListener('mouseup', () => drag = false);
+
+    return true;
+  }
+
+  /* 🔁 OBSERVE VIEW CHANGES (engine loads dynamically) */
+  const obs = new MutationObserver(() => {
+    if (buildGrandBox()) obs.disconnect();
+  });
+
+  obs.observe(document.body, { childList: true, subtree: true });
+
+})();
+</script>
+
 <script>
 (() => {
 
@@ -3549,7 +3735,6 @@ h1, h2, h3, h4, h5, h6 {
 
 })();
 </script>
-
 
 
 
