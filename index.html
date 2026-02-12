@@ -3736,6 +3736,69 @@ h1, h2, h3, h4, h5, h6 {
 })();
 </script>
 
+<script>
+/* ===== AUTO HIDE OPTIONS IF EMPTY ===== */
+
+function renderQuestion(index) {
+  state.currentIndex = Math.max(0, Math.min(index, state.qCount - 1));
+  const qid = state.qIds[state.currentIndex];
+  state.qState[qid].visited = true;
+
+  const q = state.questionsMap[qid];
+  const currentQNo = state.currentIndex + 1;
+  const totalQ = state.qIds.length;
+
+  $('questionText').innerHTML =
+    `<span class="badge bg-dark me-2">Q${currentQNo}/${totalQ}</span> ${q.text}`;
+
+  // ===== IMAGE =====
+  if (q.image) {
+    $('questionImageWrap').classList.remove('d-none');
+    $('questionImage').src = q.image;
+  } else {
+    $('questionImageWrap').classList.add('d-none');
+    $('questionImage').removeAttribute('src');
+  }
+
+  const area = $('optionsArea');
+
+  // ===== CHECK IF OPTIONS EXIST =====
+  if (!q.options || 
+      !Array.isArray(q.options) || 
+      q.options.every(opt => !opt || opt.trim() === "")) {
+
+    // Hide options container completely
+    area.innerHTML = "";
+    area.classList.add("d-none");
+  } 
+  else {
+    // Show options container
+    area.classList.remove("d-none");
+
+    const sh = getOrBuildShuffle(qid);
+    const opts = sh.order.map(i => q.options[i]);
+
+    area.innerHTML = "";
+
+    opts.forEach((optHtml, i) => {
+      if (!optHtml || optHtml.trim() === "") return;
+
+      const metaId = String(i + 1);
+      const div = document.createElement('div');
+      div.className = 'option';
+      div.setAttribute('data-meta', metaId);
+      div.innerHTML =
+        `<span class="kbd">${metaId}</span>
+         <span class="opt-text">${optHtml}</span>`;
+
+      div.addEventListener('click', () => selectOption(metaId));
+      area.appendChild(div);
+    });
+  }
+
+  updateNavigator();
+}
+</script>
 
 
 </body>
