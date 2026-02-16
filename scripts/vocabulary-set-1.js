@@ -2,10 +2,10 @@ window.TEST_DATA = {
   "1": {
     "questext": "The sailors carefully checked the <b>rigging</b> of the ship before departure.<br>Choose the correct meaning of <b>rigging</b>.",
     "options": [
-      "System of ropes and cables on a ship",
-      "Cargo stored in a ship",
-      "Engine room mechanism",
-      "Navigation instruments"
+      "",
+      "",
+      "",
+      ""
     ],
     "correct": "1",
     "quesimage": "",
@@ -649,4 +649,5 @@ window.TEST_DATA = {
     "exptext": "<b><u>मौज-मस्ती करना</u></b><br>Carouse means to drink and celebrate noisily.<br><b>Synonym:</b> revel<br><b>Antonym:</b> abstain",
     "expimage": "images/vocabulary-set-1/46to50.png"
   }
+
 };
