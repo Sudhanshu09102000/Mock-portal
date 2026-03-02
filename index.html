@@ -2105,7 +2105,7 @@ h1, h2, h3, h4, h5, h6 {
           div.addEventListener('click', () => selectOption(metaId));
 
           area.appendChild(div);
-        });
+        });zz
 
         // restore selection
         const qs = state.qState[qid];
@@ -3738,63 +3738,90 @@ h1, h2, h3, h4, h5, h6 {
 
 <script>
 /* ===== AUTO HIDE OPTIONS IF EMPTY ===== */
-
 function renderQuestion(index) {
   state.currentIndex = Math.max(0, Math.min(index, state.qCount - 1));
   const qid = state.qIds[state.currentIndex];
-  state.qState[qid].visited = true;
+  const qs = state.qState[qid];
+
+  qs.visited = true;
+
+  // Question header
+  $('qCounterBadge').textContent = `Q ${state.currentIndex + 1}/${state.qCount}`;
 
   const q = state.questionsMap[qid];
-  const currentQNo = state.currentIndex + 1;
-  const totalQ = state.qIds.length;
-
   $('questionText').innerHTML =
-    `<span class="badge bg-dark me-2">Q${currentQNo}/${totalQ}</span> ${q.text}`;
+    `<span class="badge bg-dark me-2">Q${state.currentIndex + 1}/${state.qCount}</span> ${q.text}`;
 
-  // ===== IMAGE =====
+  // Image
   if (q.image) {
     $('questionImageWrap').classList.remove('d-none');
     $('questionImage').src = q.image;
   } else {
     $('questionImageWrap').classList.add('d-none');
-    $('questionImage').removeAttribute('src');
   }
 
+  // OPTIONS (rebuild)
+  const sh = getOrBuildShuffle(qid);
+  const opts = sh.order.map(i => q.options[i]);
   const area = $('optionsArea');
+  area.innerHTML = '';
 
-  // ===== CHECK IF OPTIONS EXIST =====
-  if (!q.options || 
-      !Array.isArray(q.options) || 
-      q.options.every(opt => !opt || opt.trim() === "")) {
+  opts.forEach((optHtml, i) => {
+    const metaId = String(i + 1);
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.dataset.meta = metaId;
 
-    // Hide options container completely
-    area.innerHTML = "";
-    area.classList.add("d-none");
-  } 
-  else {
-    // Show options container
-    area.classList.remove("d-none");
+    div.innerHTML = `
+      <span class="kbd">${metaId}</span>
+      <span class="opt-text">${optHtml}</span>
+    `;
 
+    // ✅ CLICK = SAVE + BLUE
+div.onclick = () => {
+  qs.selectedMetaId = metaId;
+
+  document.querySelectorAll('.option').forEach(o =>
+    o.classList.remove('selected', 'correct', 'wrong')
+  );
+
+  div.classList.add('selected');
+
+  if (!state.examMode) {
     const sh = getOrBuildShuffle(qid);
-    const opts = sh.order.map(i => q.options[i]);
+    const correctMeta = sh.correctMetaId;
 
-    area.innerHTML = "";
+    if (metaId === correctMeta) {
+      div.classList.add('correct');
+    } else {
+      div.classList.add('wrong');
+      document.querySelectorAll('.option').forEach(o => {
+        if (o.dataset.meta === correctMeta) {
+          o.classList.add('correct');
+        }
+      });
+    }
 
-    opts.forEach((optHtml, i) => {
-      if (!optHtml || optHtml.trim() === "") return;
+    // 🔊 SOUND FIX (THIS WAS MISSING)
+    if (state.soundEnabled) {
+      const audio = metaId === correctMeta
+        ? document.getElementById("audCorrect")
+        : document.getElementById("audWrong");
 
-      const metaId = String(i + 1);
-      const div = document.createElement('div');
-      div.className = 'option';
-      div.setAttribute('data-meta', metaId);
-      div.innerHTML =
-        `<span class="kbd">${metaId}</span>
-         <span class="opt-text">${optHtml}</span>`;
-
-      div.addEventListener('click', () => selectOption(metaId));
-      area.appendChild(div);
-    });
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+    }
   }
+};
+    // ✅ RESTORE BLUE WHEN REVISITING
+    if (qs.selectedMetaId === metaId) {
+      div.classList.add('selected');
+    }
+
+    area.appendChild(div);
+  });
 
   updateNavigator();
 }
