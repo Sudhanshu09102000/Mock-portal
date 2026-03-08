@@ -3358,39 +3358,39 @@ h1, h2, h3, h4, h5, h6 {
 
       })();
     </script>
-    <!-- <script>
-(() => {
-  const topBar = document.querySelector('.engine-topbar');
-  if (!topBar) return;
+    <script>
+      (() => {
+        const topBar = document.querySelector('.engine-topbar');
+        if (!topBar) return;
 
-  // initial hidden state
-  topBar.style.transition = 'height 0.25s ease, opacity 0.25s ease';
-  topBar.style.height = '0px';
-  topBar.style.opacity = '0';
-  topBar.style.overflow = 'hidden';
+        // initial hidden state
+        topBar.style.transition = 'height 0.25s ease, opacity 0.25s ease';
+        topBar.style.height = '0px';
+        topBar.style.opacity = '0';
+        topBar.style.overflow = 'hidden';
 
-  // hover zone (top 18px of screen)
-  const hoverZone = document.createElement('div');
-  hoverZone.style.position = 'fixed';
-  hoverZone.style.top = '0';
-  hoverZone.style.left = '0';
-  hoverZone.style.width = '100%';
-  hoverZone.style.height = '18px';
-  hoverZone.style.zIndex = '99999';
-  hoverZone.style.background = 'transparent';
-  document.body.appendChild(hoverZone);
+        // hover zone (top 18px of screen)
+        const hoverZone = document.createElement('div');
+        hoverZone.style.position = 'fixed';
+        hoverZone.style.top = '0';
+        hoverZone.style.left = '0';
+        hoverZone.style.width = '100%';
+        hoverZone.style.height = '18px';
+        hoverZone.style.zIndex = '99999';
+        hoverZone.style.background = 'transparent';
+        document.body.appendChild(hoverZone);
 
-  hoverZone.addEventListener('mouseenter', () => {
-    topBar.style.height = '';
-    topBar.style.opacity = '1';
-  });
+        hoverZone.addEventListener('mouseenter', () => {
+          topBar.style.height = '';
+          topBar.style.opacity = '1';
+        });
 
-  topBar.addEventListener('mouseleave', () => {
-    topBar.style.height = '0px';
-    topBar.style.opacity = '0';
-  });
-})();
-</script> -->
+        topBar.addEventListener('mouseleave', () => {
+          topBar.style.height = '0px';
+          topBar.style.opacity = '0';
+        });
+      })();
+    </script>
 
 
     <script>
@@ -3437,133 +3437,43 @@ h1, h2, h3, h4, h5, h6 {
     </script>
 
 
-<script>
-/* ======================================
-   CUSTOM COLOR PICKER – FULL CONTROL
-   ====================================== */
-(function () {
 
-  /* ---------- Floating Button ---------- */
-  const btn = document.createElement("div");
-  btn.innerHTML = "🎨";
-  Object.assign(btn.style, {
-    position: "fixed",
-    left: "14px",
-    bottom: "14px",
-    width: "38px",
-    height: "38px",
-    borderRadius: "50%",
-    background: "rgba(0,0,0,0.35)",
-    color: "#fff",
-    display: "grid",
-    placeItems: "center",
-    cursor: "pointer",
-    zIndex: 9999,
-    backdropFilter: "blur(10px)",
-    border: "1px solid rgba(255,255,255,0.25)",
-    boxShadow: "0 8px 22px rgba(0,0,0,0.45)",
-    fontSize: "18px"
-  });
 
-  /* ---------- Control Panel ---------- */
-  const panel = document.createElement("div");
-  Object.assign(panel.style, {
-    position: "fixed",
-    left: "14px",
-    bottom: "60px",
-    padding: "10px",
-    borderRadius: "14px",
-    background: "rgba(10,12,20,0.85)",
-    backdropFilter: "blur(14px)",
-    border: "1px solid rgba(255,255,255,0.2)",
-    boxShadow: "0 14px 35px rgba(0,0,0,0.5)",
-    zIndex: 9999,
-    display: "none",
-    width: "160px"
-  });
+    <script>
+      /* ==========================================
+         GRAND BOX – WRAP EXISTING BUTTONS (REAL)
+         ========================================== */
 
-  panel.innerHTML = `
-    <div style="font-size:12px;color:#aaa;margin-bottom:6px">Background</div>
-    <input type="color" id="bgPick" style="width:100%;margin-bottom:8px">
+      (function () {
 
-    <div style="font-size:12px;color:#aaa;margin-bottom:6px">Question Box</div>
-    <input type="color" id="boxPick" style="width:100%;margin-bottom:8px">
+        function findBlackboardBtn() {
+          return [...document.querySelectorAll('button.btn-glass')]
+            .find(b => b.textContent.trim() === 'Blackboard');
+        }
 
-    <div style="font-size:12px;color:#aaa;margin-bottom:6px">Text</div>
-    <input type="color" id="textPick" style="width:100%">
-  `;
+        function buildGrandBox() {
 
-  document.body.appendChild(btn);
-  document.body.appendChild(panel);
+          const timer = document.querySelector('.timer-pill');
+          const blackboard = findBlackboardBtn();
 
-  /* ---------- Toggle Panel ---------- */
-  btn.onclick = (e) => {
-    e.stopPropagation();
-    panel.style.display = panel.style.display === "none" ? "block" : "none";
-  };
+          if (!timer || !blackboard) return false;
 
-  document.addEventListener("click", () => panel.style.display = "none");
-  panel.onclick = (e) => e.stopPropagation();
+          /* 🔁 prevent double wrapping */
+          if (document.getElementById('grandControlBox')) return true;
 
-  /* ---------- Color Logic ---------- */
-  const bgPick = panel.querySelector("#bgPick");
-  const boxPick = panel.querySelector("#boxPick");
-  const textPick = panel.querySelector("#textPick");
+          /* 📦 CREATE BOX */
+          const box = document.createElement('div');
+          box.id = 'grandControlBox';
 
-  bgPick.oninput = () => {
-    document.body.style.background =
-      `linear-gradient(120deg, ${bgPick.value}, ${bgPick.value})`;
-  };
+          /* 🧲 MOVE EXISTING ELEMENTS */
+          box.appendChild(blackboard);
+          box.appendChild(timer);
 
-  boxPick.oninput = () => {
-    document.querySelectorAll(".glass").forEach(el => {
-      el.style.background =
-        `linear-gradient(135deg, ${boxPick.value}cc, ${boxPick.value}99)`;
-    });
-  };
+          document.body.appendChild(box);
 
-  textPick.oninput = () => {
-    document.documentElement.style.setProperty("--txt", textPick.value);
-  };
-
-})();
-</script>
-
-<script>
-/* ==========================================
-   GRAND BOX – WRAP EXISTING BUTTONS (REAL)
-   ========================================== */
-
-(function () {
-
-  function findBlackboardBtn() {
-    return [...document.querySelectorAll('button.btn-glass')]
-      .find(b => b.textContent.trim() === 'Blackboard');
-  }
-
-  function buildGrandBox() {
-
-    const timer = document.querySelector('.timer-pill');
-    const blackboard = findBlackboardBtn();
-
-    if (!timer || !blackboard) return false;
-
-    /* 🔁 prevent double wrapping */
-    if (document.getElementById('grandControlBox')) return true;
-
-    /* 📦 CREATE BOX */
-    const box = document.createElement('div');
-    box.id = 'grandControlBox';
-
-    /* 🧲 MOVE EXISTING ELEMENTS */
-    box.appendChild(blackboard);
-    box.appendChild(timer);
-
-    document.body.appendChild(box);
-
-    /* 🎨 STYLE */
-    const style = document.createElement('style');
-    style.innerHTML = `
+          /* 🎨 STYLE */
+          const style = document.createElement('style');
+          style.innerHTML = `
       #grandControlBox{
         position: fixed;
         right: 16px;
@@ -3588,243 +3498,466 @@ h1, h2, h3, h4, h5, h6 {
         margin: 0 !important;
       }
     `;
-    document.head.appendChild(style);
+          document.head.appendChild(style);
 
-    /* 🖱 DRAG */
-    let drag = false, dx = 0, dy = 0;
+          /* 🖱 DRAG */
+          let drag = false, dx = 0, dy = 0;
 
-    box.addEventListener('mousedown', e => {
-      drag = true;
-      dx = e.clientX - box.offsetLeft;
-      dy = e.clientY - box.offsetTop;
-    });
+          box.addEventListener('mousedown', e => {
+            drag = true;
+            dx = e.clientX - box.offsetLeft;
+            dy = e.clientY - box.offsetTop;
+          });
 
-    document.addEventListener('mousemove', e => {
-      if (!drag) return;
-      box.style.left = (e.clientX - dx) + 'px';
-      box.style.top  = (e.clientY - dy) + 'px';
-      box.style.right = 'auto';
-      box.style.bottom = 'auto';
-    });
+          document.addEventListener('mousemove', e => {
+            if (!drag) return;
+            box.style.left = (e.clientX - dx) + 'px';
+            box.style.top = (e.clientY - dy) + 'px';
+            box.style.right = 'auto';
+            box.style.bottom = 'auto';
+          });
 
-    document.addEventListener('mouseup', () => drag = false);
+          document.addEventListener('mouseup', () => drag = false);
 
-    return true;
-  }
+          return true;
+        }
 
-  /* 🔁 OBSERVE VIEW CHANGES (engine loads dynamically) */
-  const obs = new MutationObserver(() => {
-    if (buildGrandBox()) obs.disconnect();
-  });
+        /* 🔁 OBSERVE VIEW CHANGES (engine loads dynamically) */
+        const obs = new MutationObserver(() => {
+          if (buildGrandBox()) obs.disconnect();
+        });
 
-  obs.observe(document.body, { childList: true, subtree: true });
+        obs.observe(document.body, { childList: true, subtree: true });
+
+      })();
+    </script>
+
+
+
+    <script>
+      /* ===== AUTO HIDE OPTIONS IF EMPTY ===== */
+      function renderQuestion(index) {
+        state.currentIndex = Math.max(0, Math.min(index, state.qCount - 1));
+        const qid = state.qIds[state.currentIndex];
+        const qs = state.qState[qid];
+
+        qs.visited = true;
+
+        // Question header
+        $('qCounterBadge').textContent = `Q ${state.currentIndex + 1}/${state.qCount}`;
+
+        const q = state.questionsMap[qid];
+        $('questionText').innerHTML =
+          `<span class="badge bg-dark me-2">Q${state.currentIndex + 1}/${state.qCount}</span> ${q.text}`;
+
+        // Image
+        if (q.image) {
+          $('questionImageWrap').classList.remove('d-none');
+          $('questionImage').src = q.image;
+        } else {
+          $('questionImageWrap').classList.add('d-none');
+        }
+
+        // OPTIONS (rebuild)
+        const sh = getOrBuildShuffle(qid);
+        const opts = sh.order.map(i => q.options[i]);
+        const area = $('optionsArea');
+        area.innerHTML = '';
+
+        opts.forEach((optHtml, i) => {
+          const metaId = String(i + 1);
+          const div = document.createElement('div');
+          div.className = 'option';
+          div.dataset.meta = metaId;
+
+          div.innerHTML = `
+      <span class="kbd">${metaId}</span>
+      <span class="opt-text">${optHtml}</span>
+    `;
+
+          // ✅ CLICK = SAVE + BLUE
+          div.onclick = () => {
+            qs.selectedMetaId = metaId;
+
+            document.querySelectorAll('.option').forEach(o =>
+              o.classList.remove('selected', 'correct', 'wrong')
+            );
+
+            div.classList.add('selected');
+
+            if (!state.examMode) {
+              const sh = getOrBuildShuffle(qid);
+              const correctMeta = sh.correctMetaId;
+
+              if (metaId === correctMeta) {
+                div.classList.add('correct');
+              } else {
+                div.classList.add('wrong');
+                document.querySelectorAll('.option').forEach(o => {
+                  if (o.dataset.meta === correctMeta) {
+                    o.classList.add('correct');
+                  }
+                });
+              }
+
+              // 🔊 SOUND FIX (THIS WAS MISSING)
+              if (state.soundEnabled) {
+                const audio = metaId === correctMeta
+                  ? document.getElementById("audCorrect")
+                  : document.getElementById("audWrong");
+
+                if (audio) {
+                  audio.currentTime = 0;
+                  audio.play().catch(() => { });
+                }
+              }
+            }
+          };
+          // ✅ RESTORE BLUE WHEN REVISITING
+          if (qs.selectedMetaId === metaId) {
+            div.classList.add('selected');
+          }
+
+          area.appendChild(div);
+        });
+
+        updateNavigator();
+      }
+    </script>
+<script>
+(function(){
+
+/* ===== Load Google Fonts ===== */
+const fontLink=document.createElement("link");
+fontLink.rel="stylesheet";
+fontLink.href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Inter:wght@400;500&family=Roboto:wght@400;500&family=Nunito:wght@400;600&family=Merriweather:wght@400;700&display=swap";
+document.head.appendChild(fontLink);
+
+/* ===== Create style controller ===== */
+const styleTag=document.createElement("style");
+document.head.appendChild(styleTag);
+
+/* ===== Floating Panel ===== */
+const panel=document.createElement("div");
+
+panel.style.cssText=`
+position:fixed;
+top:90px;
+right:20px;
+z-index:999999;
+background:rgba(10,12,20,.9);
+border:1px solid rgba(255,255,255,.2);
+border-radius:14px;
+padding:14px;
+width:220px;
+color:white;
+display:none;
+backdrop-filter:blur(12px);
+box-shadow:0 10px 40px rgba(0,0,0,.5);
+`;
+
+panel.innerHTML=`
+
+<div style="font-weight:600;margin-bottom:8px;">Font Style</div>
+
+<select id="fontSelect" style="width:100%;padding:6px;border-radius:8px;background:#111;color:white;border:1px solid rgba(255,255,255,.3);margin-bottom:12px;">
+
+<option value="Arial, Helvetica, sans-serif">SSC Default</option>
+<option value="'Poppins', sans-serif">Poppins</option>
+<option value="'Inter', sans-serif">Inter</option>
+<option value="'Roboto', sans-serif">Roboto</option>
+<option value="'Nunito', sans-serif">Nunito</option>
+<option value="'Merriweather', serif">Merriweather</option>
+
+</select>
+
+<div style="font-weight:600;margin-bottom:4px;">Font Size</div>
+
+<input id="fontSizeSlider" type="range" min="14" max="28" value="16" style="width:100%">
+
+<div id="fontSizeValue" style="text-align:center;margin-top:5px;">16px</div>
+
+`;
+
+document.body.appendChild(panel);
+
+/* ===== Apply font ===== */
+function applyFont(font){
+
+styleTag.innerHTML=`
+html, body, *{
+font-family:${font} !important;
+}
+`;
+
+}
+
+/* ===== Apply size ===== */
+function applySize(size){
+
+styleTag.innerHTML+=`
+#questionText,
+.option,
+.qbox,
+body{
+font-size:${size}px !important;
+}
+`;
+
+}
+
+/* ===== Controls ===== */
+const fontSelect=document.getElementById("fontSelect");
+const slider=document.getElementById("fontSizeSlider");
+const sizeValue=document.getElementById("fontSizeValue");
+
+fontSelect.addEventListener("change",()=>{
+applyFont(fontSelect.value);
+});
+
+slider.addEventListener("input",()=>{
+sizeValue.innerText=slider.value+"px";
+applySize(slider.value);
+});
+
+/* ===== Toggle panel with "/" key ===== */
+document.addEventListener("keydown",(e)=>{
+
+if(e.key==="/" || e.code==="Slash"){
+
+panel.style.display=
+panel.style.display==="none"
+? "block"
+: "none";
+
+}
+
+});
 
 })();
 </script>
 
 <script>
 (() => {
+  'use strict';
+  
+  /* ===== ENHANCE YOUR EXISTING GLOBAL STATE ===== */
+  if (typeof window.state === 'undefined') {
+    window.state = {};
+  }
+  
+  const state = window.state;
+  state.toolsVisible = state.toolsVisible || false;
+  state.blackboardActive = state.blackboardActive || false;
+  state.dragging = state.dragging || false;
 
-  /* ===== SHOW ONLY ON LAPTOP / PC ===== */
-  const isTouchDevice =
+  // Disable on mobile
+  const isTouchDevice = 
     ('ontouchstart' in window) ||
     navigator.maxTouchPoints > 0 ||
     window.matchMedia("(pointer: coarse)").matches;
+  if (isTouchDevice) return;
 
-  if (isTouchDevice) {
-    // ❌ mobile / tablet → do nothing
-    return;
+  function $(selector) {
+    return document.querySelector(selector);
   }
 
-  let active = false;
-  let dragging = false;
+  /* ===== TOOLS PANEL ===== */
+  let panel = $("#tools-panel");
+  if (!panel) {
+    panel = document.createElement("div");
+    panel.id = "tools-panel";
+    panel.innerHTML = `
+      <div style="margin-bottom:12px;font-weight:600;font-size:14px;">🛠️ Tools</div>
+      <button id="blackboard-btn" style="width:100%;margin-bottom:8px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff;cursor:pointer;font-size:13px;">
+        📱 Blackboard
+      </button>
+      <button id="color-btn" style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff;cursor:pointer;font-size:13px;">
+        🎨 Colors
+      </button>
+      <div style="font-size:11px;color:#aaa;text-align:center;padding-top:8px;border-top:1px solid rgba(255,255,255,0.1);">
+        SPACE to hide
+      </div>
+    `;
+    Object.assign(panel.style, {
+      position: "fixed", right: "16px", bottom: "80px", width: "200px", padding: "12px",
+      borderRadius: "16px", background: "rgba(10,12,20,0.95)", backdropFilter: "blur(20px)",
+      border: "1px solid rgba(255,255,255,0.25)", boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
+      zIndex: 100001, display: "none", fontFamily: "system-ui, sans-serif", color: "#fff",
+      userSelect: "none", transition: "all 0.2s ease"
+    });
+    document.body.appendChild(panel);
+  }
 
-  /* ===== MAIN TOGGLE BUTTON ===== */
-  const toggleBtn = document.createElement("button");
-  toggleBtn.textContent = "Blackboard";
-  Object.assign(toggleBtn.style, {
-    position: "fixed",
-    right: "16px",
-    bottom: "80px",
-    zIndex: 100000,
-    padding: "6px 14px",
-    borderRadius: "14px",
-    border: "1px solid rgba(255,255,255,.25)",
-    background: "rgba(0,0,0,.35)",
-    color: "#fff",
-    fontSize: "13px",
-    cursor: "grab",
-    backdropFilter: "blur(8px)"
+  /* ===== BLACKBOARD OVERLAY ===== */
+  let overlay = $("#blackboard-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "blackboard-overlay";
+    Object.assign(overlay.style, {
+      position: "fixed", inset: "0", zIndex: 99999, display: "none",
+      pointerEvents: "none", background: "rgba(0,0,0,0.1)"
+    });
+    document.body.appendChild(overlay);
+  }
+
+  const testUI = $(".page-wrap") || document.body;
+
+  /* ===== SPACEBAR TOGGLE ===== */
+  let spacePressed = false;
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Space" && !spacePressed) {
+      spacePressed = true; e.preventDefault(); toggleTools();
+    }
+    if (e.code === "Escape" && state.blackboardActive) closeBlackboard();
   });
-  document.body.appendChild(toggleBtn);
+  document.addEventListener("keyup", (e) => {
+    if (e.code === "Space") spacePressed = false;
+  });
 
-  /* ===== OVERLAY ===== */
-  const overlay = document.createElement("div");
-  overlay.style.cssText = `
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    display: none;
-    pointer-events: none;
-  `;
-  document.body.appendChild(overlay);
+  function toggleTools() {
+    state.toolsVisible = !state.toolsVisible;
+    if (state.toolsVisible) {
+      panel.style.display = "block"; 
+      panel.style.opacity = "1"; 
+      panel.style.transform = "scale(1)";
+    } else {
+      panel.style.opacity = "0"; 
+      panel.style.transform = "scale(0.95)";
+      setTimeout(() => {
+        if (!state.toolsVisible) {
+          panel.style.display = "none"; 
+          panel.style.opacity = ""; 
+          panel.style.transform = "";
+        }
+      }, 200);
+    }
+  }
 
-  /* ===== TEST UI ROOT ===== */
-  const testUI = document.querySelector(".page-wrap");
+  /* ===== BLACKBOARD ===== */
+  const blackboardBtn = $("#blackboard-btn");
+  if (blackboardBtn) {
+    blackboardBtn.onclick = (e) => {
+      e.stopPropagation();
+      state.blackboardActive ? closeBlackboard() : openBlackboard();
+    };
+  }
 
-  /* ===== TOGGLE LOGIC ===== */
-  function openBoard() {
-    active = true;
-    toggleBtn.textContent = "Back to Test";
+  function openBlackboard() {
+    state.blackboardActive = true;
+    blackboardBtn.textContent = "📱 Back to Test";
     overlay.style.display = "block";
     testUI.style.visibility = "hidden";
   }
 
-  function closeBoard() {
-    active = false;
-    toggleBtn.textContent = "Blackboard";
+  function closeBlackboard() {
+    state.blackboardActive = false;
+    blackboardBtn.textContent = "📱 Blackboard";
     overlay.style.display = "none";
     testUI.style.visibility = "";
   }
 
-  toggleBtn.addEventListener("click", () => {
-    if (dragging) return; // prevent click after drag
-    active ? closeBoard() : openBoard();
-  });
+  /* ===== DRAG PANEL ===== */
+  let startX = 0, startY = 0, panelX = 0, panelY = 0;
 
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && active) closeBoard();
-  });
-
-  /* ===== DRAG LOGIC (DESKTOP ONLY) ===== */
-  let startX = 0, startY = 0, btnX = 0, btnY = 0;
-
-  function startDrag(e) {
-    dragging = false;
-    toggleBtn.style.cursor = "grabbing";
-
-    const rect = toggleBtn.getBoundingClientRect();
-    btnX = rect.left;
-    btnY = rect.top;
-
-    startX = e.clientX;
+  panel.onmousedown = (e) => {
+    if (e.target.tagName === "BUTTON") return;
+    const rect = panel.getBoundingClientRect();
+    panelX = rect.left; 
+    panelY = rect.top; 
+    startX = e.clientX; 
     startY = e.clientY;
 
-    document.addEventListener("mousemove", onDrag);
-    document.addEventListener("mouseup", stopDrag);
-  }
+    document.onmousemove = onDrag;
+    document.onmouseup = stopDrag;
+  };
 
   function onDrag(e) {
-    dragging = true;
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
 
-    toggleBtn.style.left = btnX + dx + "px";
-    toggleBtn.style.top = btnY + dy + "px";
-    toggleBtn.style.right = "auto";
-    toggleBtn.style.bottom = "auto";
+    panel.style.left = (panelX + dx) + "px";
+    panel.style.top = (panelY + dy) + "px";
+    panel.style.right = "auto";
+    panel.style.bottom = "auto";
   }
 
   function stopDrag() {
-    toggleBtn.style.cursor = "grab";
-    document.removeEventListener("mousemove", onDrag);
-    document.removeEventListener("mouseup", stopDrag);
+    document.onmousemove = null;
+    document.onmouseup = null;
   }
 
-  toggleBtn.addEventListener("mousedown", startDrag);
-
-})();
-</script>
-
-<script>
-/* ===== AUTO HIDE OPTIONS IF EMPTY ===== */
-function renderQuestion(index) {
-  state.currentIndex = Math.max(0, Math.min(index, state.qCount - 1));
-  const qid = state.qIds[state.currentIndex];
-  const qs = state.qState[qid];
-
-  qs.visited = true;
-
-  // Question header
-  $('qCounterBadge').textContent = `Q ${state.currentIndex + 1}/${state.qCount}`;
-
-  const q = state.questionsMap[qid];
-  $('questionText').innerHTML =
-    `<span class="badge bg-dark me-2">Q${state.currentIndex + 1}/${state.qCount}</span> ${q.text}`;
-
-  // Image
-  if (q.image) {
-    $('questionImageWrap').classList.remove('d-none');
-    $('questionImage').src = q.image;
-  } else {
-    $('questionImageWrap').classList.add('d-none');
+  /* ===== COLOR PICKER ===== */
+  const colorBtn = $("#color-btn");
+  if (colorBtn) {
+    colorBtn.onclick = (e) => {
+      e.stopPropagation();
+      showColorPicker();
+    };
   }
 
-  // OPTIONS (rebuild)
-  const sh = getOrBuildShuffle(qid);
-  const opts = sh.order.map(i => q.options[i]);
-  const area = $('optionsArea');
-  area.innerHTML = '';
+  function showColorPicker() {
+    let colorPanel = $("#color-picker-panel");
+    if (colorPanel) colorPanel.remove();
 
-  opts.forEach((optHtml, i) => {
-    const metaId = String(i + 1);
-    const div = document.createElement('div');
-    div.className = 'option';
-    div.dataset.meta = metaId;
+    colorPanel = document.createElement("div");
+    colorPanel.id = "color-picker-panel";
 
-    div.innerHTML = `
-      <span class="kbd">${metaId}</span>
-      <span class="opt-text">${optHtml}</span>
+    colorPanel.innerHTML = `
+      <div style="margin-bottom:8px;font-weight:500;">Background</div>
+      <input type="color" id="bgPick" value="#000000" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
+      <div style="margin-bottom:8px;font-weight:500;">Question Box</div>
+      <input type="color" id="boxPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
+      <div style="margin-bottom:8px;font-weight:500;">Text</div>
+      <input type="color" id="textPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;">
     `;
 
-    // ✅ CLICK = SAVE + BLUE
-div.onclick = () => {
-  qs.selectedMetaId = metaId;
+    Object.assign(colorPanel.style, {
+      position: "fixed",
+      left: "14px",
+      bottom: "60px",
+      padding: "16px",
+      borderRadius: "14px",
+      background: "rgba(10,12,20,0.98)",
+      backdropFilter: "blur(25px)",
+      border: "1px solid rgba(255,255,255,0.3)",
+      boxShadow: "0 25px 50px rgba(0,0,0,0.6)",
+      zIndex: 100002,
+      width: "170px",
+      color: "#fff",
+      fontSize: "12px",
+      fontFamily: "system-ui, sans-serif"
+    });
 
-  document.querySelectorAll('.option').forEach(o =>
-    o.classList.remove('selected', 'correct', 'wrong')
-  );
+    document.body.appendChild(colorPanel);
 
-  div.classList.add('selected');
+    $("#bgPick").oninput = (e) => {
+      document.body.style.background = `linear-gradient(120deg, ${e.target.value}, ${e.target.value})`;
+    };
 
-  if (!state.examMode) {
-    const sh = getOrBuildShuffle(qid);
-    const correctMeta = sh.correctMetaId;
+    $("#boxPick").oninput = (e) => {
+      document.querySelectorAll(".glass").forEach(el =>
+        el.style.background = `linear-gradient(135deg, ${e.target.value}cc, ${e.target.value}99)`
+      );
+    };
 
-    if (metaId === correctMeta) {
-      div.classList.add('correct');
-    } else {
-      div.classList.add('wrong');
-      document.querySelectorAll('.option').forEach(o => {
-        if (o.dataset.meta === correctMeta) {
-          o.classList.add('correct');
+    $("#textPick").oninput = (e) => {
+      document.documentElement.style.setProperty("--txt", e.target.value);
+    };
+
+    setTimeout(() => {
+      const closeHandler = (ev) => {
+        if (!colorPanel.contains(ev.target)) {
+          colorPanel.remove();
+          document.removeEventListener("click", closeHandler);
         }
-      });
-    }
-
-    // 🔊 SOUND FIX (THIS WAS MISSING)
-    if (state.soundEnabled) {
-      const audio = metaId === correctMeta
-        ? document.getElementById("audCorrect")
-        : document.getElementById("audWrong");
-
-      if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(() => {});
-      }
-    }
+      };
+      document.addEventListener("click", closeHandler);
+    }, 50);
   }
-};
-    // ✅ RESTORE BLUE WHEN REVISITING
-    if (qs.selectedMetaId === metaId) {
-      div.classList.add('selected');
-    }
 
-    area.appendChild(div);
-  });
-
-  updateNavigator();
-}
+  console.log("✅ Tools Panel Ready!");
+})();
 </script>
 
 
@@ -3832,3 +3965,6 @@ div.onclick = () => {
 
 
 </html>
+
+
+   
