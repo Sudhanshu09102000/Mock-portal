@@ -3737,229 +3737,291 @@ panel.style.display==="none"
 })();
 </script>
 
+
 <script>
-(() => {
+(function () {
   'use strict';
-  
-  /* ===== ENHANCE YOUR EXISTING GLOBAL STATE ===== */
-  if (typeof window.state === 'undefined') {
-    window.state = {};
-  }
-  
-  const state = window.state;
-  state.toolsVisible = state.toolsVisible || false;
-  state.blackboardActive = state.blackboardActive || false;
-  state.dragging = state.dragging || false;
 
-  // Disable on mobile
-  const isTouchDevice = 
-    ('ontouchstart' in window) ||
-    navigator.maxTouchPoints > 0 ||
-    window.matchMedia("(pointer: coarse)").matches;
-  if (isTouchDevice) return;
+  function startTools() {
 
-  function $(selector) {
-    return document.querySelector(selector);
-  }
-
-  /* ===== TOOLS PANEL ===== */
-  let panel = $("#tools-panel");
-  if (!panel) {
-    panel = document.createElement("div");
-    panel.id = "tools-panel";
-    panel.innerHTML = `
-      <div style="margin-bottom:12px;font-weight:600;font-size:14px;">🛠️ Tools</div>
-      <button id="blackboard-btn" style="width:100%;margin-bottom:8px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff;cursor:pointer;font-size:13px;">
-        📱 Blackboard
-      </button>
-      <button id="color-btn" style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff;cursor:pointer;font-size:13px;">
-        🎨 Colors
-      </button>
-      <div style="font-size:11px;color:#aaa;text-align:center;padding-top:8px;border-top:1px solid rgba(255,255,255,0.1);">
-        SPACE to hide
-      </div>
-    `;
-    Object.assign(panel.style, {
-      position: "fixed", right: "16px", bottom: "80px", width: "200px", padding: "12px",
-      borderRadius: "16px", background: "rgba(10,12,20,0.95)", backdropFilter: "blur(20px)",
-      border: "1px solid rgba(255,255,255,0.25)", boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
-      zIndex: 100001, display: "none", fontFamily: "system-ui, sans-serif", color: "#fff",
-      userSelect: "none", transition: "all 0.2s ease"
-    });
-    document.body.appendChild(panel);
-  }
-
-  /* ===== BLACKBOARD OVERLAY ===== */
-  let overlay = $("#blackboard-overlay");
-  if (!overlay) {
-    overlay = document.createElement("div");
-    overlay.id = "blackboard-overlay";
-    Object.assign(overlay.style, {
-      position: "fixed", inset: "0", zIndex: 99999, display: "none",
-      pointerEvents: "none", background: "rgba(0,0,0,0.1)"
-    });
-    document.body.appendChild(overlay);
-  }
-
-  const testUI = $(".page-wrap") || document.body;
-
-  /* ===== SPACEBAR TOGGLE ===== */
-  let spacePressed = false;
-  document.addEventListener("keydown", (e) => {
-    if (e.code === "Space" && !spacePressed) {
-      spacePressed = true; e.preventDefault(); toggleTools();
+    /* ===== ENHANCE YOUR EXISTING GLOBAL STATE ===== */
+    if (typeof window.state === 'undefined') {
+      window.state = {};
     }
-    if (e.code === "Escape" && state.blackboardActive) closeBlackboard();
-  });
-  document.addEventListener("keyup", (e) => {
-    if (e.code === "Space") spacePressed = false;
-  });
 
-  function toggleTools() {
-    state.toolsVisible = !state.toolsVisible;
-    if (state.toolsVisible) {
-      panel.style.display = "block"; 
-      panel.style.opacity = "1"; 
-      panel.style.transform = "scale(1)";
-    } else {
-      panel.style.opacity = "0"; 
-      panel.style.transform = "scale(0.95)";
-      setTimeout(() => {
-        if (!state.toolsVisible) {
-          panel.style.display = "none"; 
-          panel.style.opacity = ""; 
-          panel.style.transform = "";
-        }
-      }, 200);
+    const state = window.state;
+    state.toolsVisible = state.toolsVisible || false;
+    state.blackboardActive = state.blackboardActive || false;
+    state.dragging = state.dragging || false;
+
+    // Disable on mobile
+    const isTouchDevice =
+      ('ontouchstart' in window) ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia("(pointer: coarse)").matches;
+    if (isTouchDevice) return;
+
+    function $(selector) {
+      return document.querySelector(selector);
     }
-  }
 
-  /* ===== BLACKBOARD ===== */
-  const blackboardBtn = $("#blackboard-btn");
-  if (blackboardBtn) {
-    blackboardBtn.onclick = (e) => {
-      e.stopPropagation();
-      state.blackboardActive ? closeBlackboard() : openBlackboard();
-    };
-  }
+    /* ===== TOOLS PANEL ===== */
+    let panel = $("#tools-panel");
+    if (!panel) {
+      panel = document.createElement("div");
+      panel.id = "tools-panel";
+      panel.innerHTML = `
+        <div style="margin-bottom:12px;font-weight:600;font-size:14px;">🛠️ Tools</div>
+        <button id="blackboard-btn" style="width:100%;margin-bottom:8px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff;cursor:pointer;font-size:13px;">
+          📱 Blackboard
+        </button>
+        <button id="color-btn" style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.3);color:#fff;cursor:pointer;font-size:13px;">
+          🎨 Colors
+        </button>
+        <div style="font-size:11px;color:#aaa;text-align:center;padding-top:8px;border-top:1px solid rgba(255,255,255,0.1);">
+          SPACE to hide
+        </div>
+      `;
 
-  function openBlackboard() {
-    state.blackboardActive = true;
-    blackboardBtn.textContent = "📱 Back to Test";
-    overlay.style.display = "block";
-    testUI.style.visibility = "hidden";
-  }
+      Object.assign(panel.style, {
+        position: "fixed",
+        right: "16px",
+        bottom: "80px",
+        width: "200px",
+        padding: "12px",
+        borderRadius: "16px",
+        background: "rgba(10,12,20,0.95)",
+        backdropFilter: "blur(20px)",
+        border: "1px solid rgba(255,255,255,0.25)",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
+        zIndex: 100001,
+        display: "none",
+        fontFamily: "system-ui, sans-serif",
+        color: "#fff",
+        userSelect: "none",
+        transition: "all 0.2s ease"
+      });
 
-  function closeBlackboard() {
-    state.blackboardActive = false;
-    blackboardBtn.textContent = "📱 Blackboard";
-    overlay.style.display = "none";
-    testUI.style.visibility = "";
-  }
+      document.body.appendChild(panel);
+    }
 
-  /* ===== DRAG PANEL ===== */
-  let startX = 0, startY = 0, panelX = 0, panelY = 0;
+    /* ===== BLACKBOARD OVERLAY ===== */
+    let overlay = $("#blackboard-overlay");
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.id = "blackboard-overlay";
+      Object.assign(overlay.style, {
+        position: "fixed",
+        inset: "0",
+        zIndex: 99999,
+        display: "none",
+        pointerEvents: "none",
+        background: "rgba(0,0,0,0.1)"
+      });
+      document.body.appendChild(overlay);
+    }
 
-  panel.onmousedown = (e) => {
-    if (e.target.tagName === "BUTTON") return;
-    const rect = panel.getBoundingClientRect();
-    panelX = rect.left; 
-    panelY = rect.top; 
-    startX = e.clientX; 
-    startY = e.clientY;
+    const testUI = $(".page-wrap") || document.body;
 
-    document.onmousemove = onDrag;
-    document.onmouseup = stopDrag;
-  };
+    /* ===== SPACEBAR TOGGLE ===== */
+    let spacePressed = false;
 
-  function onDrag(e) {
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space" && !spacePressed) {
+        spacePressed = true;
+        e.preventDefault();
+        toggleTools();
+      }
 
-    panel.style.left = (panelX + dx) + "px";
-    panel.style.top = (panelY + dy) + "px";
-    panel.style.right = "auto";
-    panel.style.bottom = "auto";
-  }
-
-  function stopDrag() {
-    document.onmousemove = null;
-    document.onmouseup = null;
-  }
-
-  /* ===== COLOR PICKER ===== */
-  const colorBtn = $("#color-btn");
-  if (colorBtn) {
-    colorBtn.onclick = (e) => {
-      e.stopPropagation();
-      showColorPicker();
-    };
-  }
-
-  function showColorPicker() {
-    let colorPanel = $("#color-picker-panel");
-    if (colorPanel) colorPanel.remove();
-
-    colorPanel = document.createElement("div");
-    colorPanel.id = "color-picker-panel";
-
-    colorPanel.innerHTML = `
-      <div style="margin-bottom:8px;font-weight:500;">Background</div>
-      <input type="color" id="bgPick" value="#000000" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
-      <div style="margin-bottom:8px;font-weight:500;">Question Box</div>
-      <input type="color" id="boxPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
-      <div style="margin-bottom:8px;font-weight:500;">Text</div>
-      <input type="color" id="textPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;">
-    `;
-
-    Object.assign(colorPanel.style, {
-      position: "fixed",
-      left: "14px",
-      bottom: "60px",
-      padding: "16px",
-      borderRadius: "14px",
-      background: "rgba(10,12,20,0.98)",
-      backdropFilter: "blur(25px)",
-      border: "1px solid rgba(255,255,255,0.3)",
-      boxShadow: "0 25px 50px rgba(0,0,0,0.6)",
-      zIndex: 100002,
-      width: "170px",
-      color: "#fff",
-      fontSize: "12px",
-      fontFamily: "system-ui, sans-serif"
+      if (e.code === "Escape" && state.blackboardActive) {
+        closeBlackboard();
+      }
     });
 
-    document.body.appendChild(colorPanel);
+    document.addEventListener("keyup", (e) => {
+      if (e.code === "Space") spacePressed = false;
+    });
 
-    $("#bgPick").oninput = (e) => {
-      document.body.style.background = `linear-gradient(120deg, ${e.target.value}, ${e.target.value})`;
-    };
+    function toggleTools() {
+      state.toolsVisible = !state.toolsVisible;
 
-    $("#boxPick").oninput = (e) => {
-      document.querySelectorAll(".glass").forEach(el =>
-        el.style.background = `linear-gradient(135deg, ${e.target.value}cc, ${e.target.value}99)`
-      );
-    };
+      if (state.toolsVisible) {
+        panel.style.display = "block";
+        panel.style.opacity = "1";
+        panel.style.transform = "scale(1)";
+      } else {
+        panel.style.opacity = "0";
+        panel.style.transform = "scale(0.95)";
 
-    $("#textPick").oninput = (e) => {
-      document.documentElement.style.setProperty("--txt", e.target.value);
-    };
+        setTimeout(() => {
+          if (!state.toolsVisible) {
+            panel.style.display = "none";
+            panel.style.opacity = "";
+            panel.style.transform = "";
+          }
+        }, 200);
+      }
+    }
 
-    setTimeout(() => {
-      const closeHandler = (ev) => {
-        if (!colorPanel.contains(ev.target)) {
-          colorPanel.remove();
-          document.removeEventListener("click", closeHandler);
-        }
+    /* ===== BLACKBOARD ===== */
+    const blackboardBtn = $("#blackboard-btn");
+
+    if (blackboardBtn) {
+      blackboardBtn.onclick = (e) => {
+        e.stopPropagation();
+        state.blackboardActive ? closeBlackboard() : openBlackboard();
       };
-      document.addEventListener("click", closeHandler);
-    }, 50);
+    }
+
+    function openBlackboard() {
+      state.blackboardActive = true;
+      blackboardBtn.textContent = "📱 Back to Test";
+      overlay.style.display = "block";
+      testUI.style.visibility = "hidden";
+    }
+
+    function closeBlackboard() {
+      state.blackboardActive = false;
+      blackboardBtn.textContent = "📱 Blackboard";
+      overlay.style.display = "none";
+      testUI.style.visibility = "";
+    }
+
+    /* ===== DRAG PANEL ===== */
+    let startX = 0,
+      startY = 0,
+      panelX = 0,
+      panelY = 0;
+
+    panel.onmousedown = (e) => {
+      if (e.target.tagName === "BUTTON") return;
+
+      const rect = panel.getBoundingClientRect();
+      panelX = rect.left;
+      panelY = rect.top;
+      startX = e.clientX;
+      startY = e.clientY;
+
+      document.onmousemove = onDrag;
+      document.onmouseup = stopDrag;
+    };
+
+    function onDrag(e) {
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      panel.style.left = panelX + dx + "px";
+      panel.style.top = panelY + dy + "px";
+      panel.style.right = "auto";
+      panel.style.bottom = "auto";
+    }
+
+    function stopDrag() {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    }
+
+    /* ===== COLOR PICKER ===== */
+    const colorBtn = $("#color-btn");
+
+    if (colorBtn) {
+      colorBtn.onclick = (e) => {
+        e.stopPropagation();
+        showColorPicker();
+      };
+    }
+
+    function showColorPicker() {
+      let colorPanel = $("#color-picker-panel");
+      if (colorPanel) colorPanel.remove();
+
+      colorPanel = document.createElement("div");
+      colorPanel.id = "color-picker-panel";
+
+      colorPanel.innerHTML = `
+        <div style="margin-bottom:8px;font-weight:500;">Background</div>
+        <input type="color" id="bgPick" value="#000000" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
+        <div style="margin-bottom:8px;font-weight:500;">Question Box</div>
+        <input type="color" id="boxPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
+        <div style="margin-bottom:8px;font-weight:500;">Text</div>
+        <input type="color" id="textPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;">
+      `;
+
+      Object.assign(colorPanel.style, {
+        position: "fixed",
+        left: "14px",
+        bottom: "60px",
+        padding: "16px",
+        borderRadius: "14px",
+        background: "rgba(10,12,20,0.98)",
+        backdropFilter: "blur(25px)",
+        border: "1px solid rgba(255,255,255,0.3)",
+        boxShadow: "0 25px 50px rgba(0,0,0,0.6)",
+        zIndex: 100002,
+        width: "170px",
+        color: "#fff",
+        fontSize: "12px",
+        fontFamily: "system-ui, sans-serif"
+      });
+
+      document.body.appendChild(colorPanel);
+
+      $("#bgPick").oninput = (e) => {
+        document.body.style.background = `linear-gradient(120deg, ${e.target.value}, ${e.target.value})`;
+      };
+
+      $("#boxPick").oninput = (e) => {
+        document.querySelectorAll(".glass").forEach(el =>
+          el.style.background = `linear-gradient(135deg, ${e.target.value}cc, ${e.target.value}99)`
+        );
+      };
+
+      $("#textPick").oninput = (e) => {
+        document.documentElement.style.setProperty("--txt", e.target.value);
+      };
+
+      setTimeout(() => {
+        const closeHandler = (ev) => {
+          if (!colorPanel.contains(ev.target)) {
+            colorPanel.remove();
+            document.removeEventListener("click", closeHandler);
+          }
+        };
+        document.addEventListener("click", closeHandler);
+      }, 50);
+    }
+
+    console.log("✅ Tools Panel Ready!");
   }
 
-  console.log("✅ Tools Panel Ready!");
+  /* ===== WAIT FOR initEngine TO RUN ===== */
+
+  const waitForEngine = setInterval(() => {
+
+    if (typeof window.initEngine === "function") {
+
+      clearInterval(waitForEngine);
+
+      const originalInitEngine = window.initEngine;
+
+      window.initEngine = function (...args) {
+
+        const result = originalInitEngine.apply(this, args);
+
+        if (!window.__toolsStarted) {
+          window.__toolsStarted = true;
+          startTools();
+        }
+
+        return result;
+      };
+
+    }
+
+  }, 50);
+
 })();
 </script>
-
 
 </body>
 
