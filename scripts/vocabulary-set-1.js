@@ -2,13 +2,13 @@ window.TEST_DATA = {
   "1": {
     "questext": "The sailors carefully checked the <b>rigging</b> of the ship before departure.<br>Choose the correct meaning of <b>rigging</b>.",
     "options": [
-      "",
-      "",
-      "",
-      ""
+      "the system of ropes, cables, or chains used on a ship.",
+      "the main engine of the ship",
+      "the navigation system of the ship",
+      "the communication system of the ship"
     ],
     "correct": "1",
-    "quesimage": "",
+    "quesimage": "images/sample.png",
     "exptext": "<b><u>रस्सियों का जाल</u></b><br>Rigging means the system of ropes, cables, or chains used on a ship.<br><b>Synonym:</b> tackle<br><b>Antonym:</b> detachment",
     "expimage": "images/vocabulary-set-1/1to5.png"
   },
@@ -649,5 +649,4 @@ window.TEST_DATA = {
     "exptext": "<b><u>मौज-मस्ती करना</u></b><br>Carouse means to drink and celebrate noisily.<br><b>Synonym:</b> revel<br><b>Antonym:</b> abstain",
     "expimage": "images/vocabulary-set-1/46to50.png"
   }
-
 };
