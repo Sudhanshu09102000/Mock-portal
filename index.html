@@ -4022,7 +4022,126 @@ panel.style.display==="none"
 
 })();
 </script>
+<script>
+(function(){
 
+function cleanOptions(){
+
+  const area = document.getElementById("optionsArea");
+  if(!area) return;
+
+  const options = area.querySelectorAll(".option");
+
+  let visible = 0;
+
+  options.forEach(opt=>{
+
+    let text = opt.innerText.replace(/\s/g,"");
+
+    // remove keyboard label like "1"
+    const kbd = opt.querySelector(".kbd");
+    if(kbd){
+        text = text.replace(kbd.innerText.trim(),"");
+    }
+
+    if(text.trim()===""){
+        opt.style.display="none";
+    }else{
+        opt.style.display="";
+        visible++;
+    }
+
+  });
+
+  if(visible===0){
+      area.style.display="none";
+  }else{
+      area.style.display="grid";
+  }
+
+}
+
+// observe dynamic updates
+const observer = new MutationObserver(cleanOptions);
+
+observer.observe(document.body,{
+  childList:true,
+  subtree:true
+});
+
+cleanOptions();
+
+})();
+</script>
+
+<script>
+(function(){
+
+let pdfMode=false;
+let savedContent=null;
+
+function enablePDF(){
+
+  if(pdfMode) return;
+
+  const area=document.querySelector(".question-scroll-area");
+  if(!area) return;
+
+  savedContent=area.innerHTML;
+
+  area.innerHTML=`
+    <div style="height:600px;display:flex;flex-direction:column;gap:10px">
+      <input type="file" id="pdfLoader" accept="application/pdf">
+      <iframe id="pdfFrame" style="flex:1;border:none"></iframe>
+    </div>
+  `;
+
+  const loader=document.getElementById("pdfLoader");
+  const frame=document.getElementById("pdfFrame");
+
+  loader.onchange=function(){
+
+    const file=this.files[0];
+    if(!file) return;
+
+    frame.src=URL.createObjectURL(file);
+
+    // hide file selector after choosing pdf
+    loader.style.display="none";
+
+  };
+
+  pdfMode=true;
+
+}
+
+function disablePDF(){
+
+  if(!pdfMode) return;
+
+  const area=document.querySelector(".question-scroll-area");
+  if(!area) return;
+
+  area.innerHTML=savedContent;
+
+  pdfMode=false;
+
+}
+
+document.addEventListener("keydown",function(e){
+
+  if(e.key==="+"){
+    enablePDF();
+  }
+
+  if(e.key==="-" ){
+    disablePDF();
+  }
+
+});
+
+})();
+</script>
 </body>
 
 
