@@ -1377,7 +1377,7 @@ h1, h2, h3, h4, h5, h6 {
       <div class="container-fluid py-3">
         <div class="row g-3 engine-shell">
           <div class="col-12 col-lg-8">
-            <div class="glass p-3 p-md-4 resizable-question-box">
+            <div class="glass p-3 p-md-4 resizable-question-box" id="A4">
 
               <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
                 <div class="subtle" id="qMetaLine" style="display: none;">Status: -</div>
@@ -1405,7 +1405,7 @@ h1, h2, h3, h4, h5, h6 {
               <!-- ✅ FIXED FOOTER (always visible) -->
               <hr class="border-white border-opacity-10 my-3">
 
-              <div class="d-flex flex-wrap gap-2">
+              <div class="d-flex flex-wrap gap-2" id="A1">
                 <button id="prevBtn" class="btn btn-glass">◀ Previous </button>
                 <button id="saveNextBtn" class="btn btn-glass">Save & Next ▶</button>
                 <button id="reviewNextBtn" class="btn btn-glass">Mark for Review & Next</button>
@@ -1413,7 +1413,7 @@ h1, h2, h3, h4, h5, h6 {
                 <button id="showSummaryBtn" class="btn btn-glass d-none">Show summary</button>
               </div>
 
-              <div class="top-toolbar ms-auto mobile-move-toolbar">
+              <div class="top-toolbar ms-auto mobile-move-toolbar" id="A2">
                 <!-- ✅ Answer / Explanation (?) button (ONLY Practice Mode) -->
                 <button id="qmarkBtn" class="btn btn-glass btn-sm" title="Answer & Explanation">
                   &nbsp;&nbsp;&nbsp;Hint?&nbsp;&nbsp;&nbsp;
@@ -1474,7 +1474,7 @@ h1, h2, h3, h4, h5, h6 {
       </div>
 
 
-      <div class="timer-pill glass">
+      <div class="timer-pill glass" id="A3">
         <div class="d-flex align-items-center gap-2">
           <!-- <div class="fw-semibold">Time</div> -->
           <div id="timerText">00:00</div>
@@ -4091,7 +4091,7 @@ function enablePDF(){
   savedContent=area.innerHTML;
 
   area.innerHTML=`
-    <div style="height:600px;display:flex;flex-direction:column;gap:10px">
+    <div style="height:650px;display:flex;flex-direction:column;gap:10px">
       <input type="file" id="pdfLoader" accept="application/pdf">
       <iframe id="pdfFrame" style="flex:1;border:none"></iframe>
     </div>
@@ -4132,11 +4132,24 @@ function disablePDF(){
 document.addEventListener("keydown",function(e){
 
   if(e.key==="+"){
+    document.getElementById("A1").style.setProperty("display","none","important");
+    document.getElementById("A2").style.setProperty("display","none","important");
+    document.getElementById("A3").style.setProperty("display","none","important");
+    document.getElementById("A4").style.setProperty("padding","0.5rem","important");
+
     enablePDF();
+    
+    
   }
 
   if(e.key==="-" ){
+    document.getElementById("A1").style.setProperty("display","","important");
+    document.getElementById("A2").style.setProperty("display","","important");
+    document.getElementById("A3").style.setProperty("display","","important");
+    document.getElementById("A4").style.removeProperty("padding");
     disablePDF();
+    
+    
   }
 
 });
