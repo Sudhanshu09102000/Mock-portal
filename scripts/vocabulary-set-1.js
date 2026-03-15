@@ -8,9 +8,9 @@ window.TEST_DATA = {
       "the communication system of the ship"
     ],
     "correct": "1",
-    "quesimage": "images/sample.png",
+    "quesimage": "",
     "exptext": "<b><u>रस्सियों का जाल</u></b><br>Rigging means the system of ropes, cables, or chains used on a ship.<br><b>Synonym:</b> tackle<br><b>Antonym:</b> detachment",
-    "expimage": "images/vocabulary-set-1/1to5.png"
+    "expimage": ""
   },
   "2": {
     "questext": "His plan to colonize Mars without resources sounded completely <b>quixotic</b>.<br>Choose the correct meaning of <b>quixotic</b>.",
