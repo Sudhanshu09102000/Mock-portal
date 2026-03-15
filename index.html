@@ -4091,9 +4091,9 @@ function enablePDF(){
   savedContent=area.innerHTML;
 
   area.innerHTML=`
-    <div style="height:650px;display:flex;flex-direction:column;gap:10px">
-      <input type="file" id="pdfLoader" accept="application/pdf">
-      <iframe id="pdfFrame" style="flex:1;border:none"></iframe>
+    <div style="height:100%;display:flex;flex-direction:column;gap:10px">
+      <input type="file" id="pdfLoader" accept="application/pdf" style="height:100%;"">
+      <iframe id="pdfFrame" style="flex:1;border:none;height:100%"></iframe>
     </div>
   `;
 
