@@ -329,9 +329,9 @@ const PORTAL_DATA = [
     colorClass: "others",
     topics: [
       {
-        name: "The Brook – Class 8 ICSE",
+        name: "Guest",
         subtopics: [
-          { name: "Vocabulary", file: "The-Brook" },
+          { name: "Guest", file: "guest" },
         ]
       }
     ]
