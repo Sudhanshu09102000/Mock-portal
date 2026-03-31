@@ -4157,6 +4157,25 @@ document.addEventListener("keydown",function(e){
 })();
 </script>
 
+<script>
+  let isHidden = false;
+
+  document.addEventListener("keydown", function (e) {
+    // Detect '*' key (Shift + 8 OR Numpad *)
+    if (e.key === "*" || e.code === "NumpadMultiply") {
+      const box = document.getElementById("A4");
+      if (!box) return;
+
+      isHidden = !isHidden;
+
+      if (isHidden) {
+        box.style.display = "none";
+      } else {
+        box.style.display = "flex"; // because your container uses flex
+      }
+    }
+  });
+</script>
 
 </body>
 
