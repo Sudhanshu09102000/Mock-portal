@@ -9,6 +9,8 @@
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+
+
   <style>
     :root {
       --bg1: #0b1020;
@@ -338,80 +340,94 @@
     }
 
 
+    /* ── Navigator dot base ── */
     .qdot {
       width: 48px;
       height: 48px;
       border-radius: 50%;
       display: grid;
       place-items: center;
+      border: 1.5px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.04);
+      color: rgba(234,240,255,.7);
+      font-size: 13px;
+      font-weight: 600;
+      transition: transform .14s ease, box-shadow .14s ease, background .14s ease, border-color .14s ease;
+      cursor: pointer;
     }
-
 
     .qdot:hover {
-      transform: translateY(-2px);
+      transform: translateY(-2px) scale(1.08);
+      border-color: rgba(6,182,212,.6);
+      box-shadow: 0 0 12px rgba(6,182,212,.25);
     }
 
+    /* ── Current (active) question ── */
     .qdot.current {
-      border-color: rgba(139, 92, 246, .85);
-      box-shadow: 0 0 0 2px rgba(139, 92, 246, .22) inset, 0 0 20px rgba(139, 92, 246, .25);
-      background: rgba(139, 92, 246, .18);
+      border-color: rgba(139, 92, 246, .95) !important;
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, .28) inset, 0 0 22px rgba(139, 92, 246, .4) !important;
+      background: rgba(139, 92, 246, .22) !important;
+      color: #e0d4ff !important;
     }
 
-    .st-attempted {
-      background: rgba(34, 197, 94, .18);
-      border-color: rgba(34, 197, 94, .55);
+    /* ── BEFORE SUBMIT states ── */
+
+    /* Visited but NO answer selected = orange/amber */
+    .qdot.st-notanswered {
+      background: rgba(251, 146, 60, .22) !important;
+      border-color: rgba(251, 146, 60, .75) !important;
+      color: #fcd34d !important;
     }
 
-    .st-notanswered {
-      background: rgba(239, 68, 68, .18);
-      border-color: rgba(239, 68, 68, .55);
+    /* Answer selected = solid green */
+    .qdot.st-attempted {
+      background: rgba(34, 197, 94, .30) !important;
+      border-color: rgba(34, 197, 94, .90) !important;
+      color: #bbf7d0 !important;
+      box-shadow: 0 0 10px rgba(34,197,94,.25) !important;
     }
 
-    .st-review {
-      background: rgba(250, 204, 21, .18);
-      border-color: rgba(250, 204, 21, .55);
-      color: #111827;
+    /* Marked for review only (no answer) = yellow */
+    .qdot.st-review {
+      background: rgba(250, 204, 21, .22) !important;
+      border-color: rgba(250, 204, 21, .85) !important;
+      color: #fef08a !important;
     }
 
-    .st-skipped {
-      background: rgba(100, 116, 139, .16);
-      border-color: rgba(100, 116, 139, .45);
+    /* Marked for review AND answered = half green half red */
+    .qdot.st-reviewanswered {
+      background: linear-gradient(135deg, rgba(34,197,94,.40) 0% 50%, rgba(239,68,68,.35) 50% 100%) !important;
+      border-color: rgba(34,197,94,.80) !important;
+      color: #fff !important;
     }
 
-    /* Half yellow/half green for review+answered */
-    .st-reviewanswered {
-      border-color: rgba(255, 255, 255, .18);
-      background: linear-gradient(90deg, rgba(250, 204, 21, .35) 0 50%, rgba(34, 197, 94, .28) 50% 100%);
-      color: #0b1020;
+    /* Explicitly skipped = grey */
+    .qdot.st-skipped {
+      background: rgba(100, 116, 139, .18) !important;
+      border-color: rgba(100, 116, 139, .5) !important;
+      color: rgba(234,240,255,.45) !important;
     }
 
-    /* ===== Final Result Colors (AFTER SUBMIT) ===== */
-    /* ✅ FINAL RESULT NAV COLORS (AFTER SUBMIT) */
-    .st-final-correct {
-      background: rgba(34, 197, 94, .30);
-      border-color: rgba(34, 197, 94, .95);
+    /* ── AFTER SUBMIT final result colors ── */
+    .qdot.st-final-correct {
+      background: rgba(34, 197, 94, .40) !important;
+      border-color: rgba(34, 197, 94, 1) !important;
+      color: #bbf7d0 !important;
+      box-shadow: 0 0 12px rgba(34,197,94,.45) !important;
     }
 
-    .st-final-wrong {
-      background: rgba(239, 68, 68, .30);
-      border-color: rgba(239, 68, 68, .95);
+    .qdot.st-final-wrong {
+      background: rgba(239, 68, 68, .38) !important;
+      border-color: rgba(239, 68, 68, 1) !important;
+      color: #fecaca !important;
+      box-shadow: 0 0 12px rgba(239,68,68,.45) !important;
     }
 
-    .st-final-unattempted {
-      background: rgba(78, 68, 51, 0.35);
-      /* strong brown */
-      border-color: rgba(255, 170, 50, .95);
-      /* golden border */
-      color: #fff;
+    .qdot.st-final-unattempted {
+      background: rgba(100, 116, 139, .20) !important;
+      border-color: rgba(148, 163, 184, .55) !important;
+      color: rgba(234,240,255,.4) !important;
     }
-
-
-    .st-final-wrong {
-      background: rgba(239, 68, 68, .28);
-      border-color: rgba(239, 68, 68, .85);
-    }
-
-
 
 
     /* Timer */
@@ -420,12 +436,12 @@
       right: 14px;
       bottom: 14px;
       z-index: 99;
-      padding: .65rem .85rem;
-      border-radius: 16px;
+      padding: .3rem .55rem;
+      border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, .18);
       background: rgba(0, 0, 0, .30);
       backdrop-filter: blur(10px);
-      box-shadow: 0 14px 35px rgba(0, 0, 0, .35);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
       font-variant-numeric: tabular-nums;
     }
 
@@ -1472,13 +1488,15 @@ body {
   background: rgba(5,7,25,.85) !important;
   box-shadow: var(--glow-cyan) !important;
   font-family: 'Courier New', monospace !important;
-  letter-spacing: 2px !important;
+  letter-spacing: 1px !important;
+  padding: .3rem .55rem !important;
+  border-radius: 10px !important;
 }
 #timerText {
   color: #06b6d4 !important;
   font-weight: 800 !important;
-  font-size: 18px !important;
-  text-shadow: 0 0 12px rgba(6,182,212,.6) !important;
+  font-size: 13px !important;
+  text-shadow: 0 0 10px rgba(6,182,212,.5) !important;
 }
 
 /* ── Navigator dots ── */
@@ -1635,8 +1653,322 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(6,182,212,.6), rgba(124,58,237,.6), transparent);
 }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE + VISUAL POLISH LAYER
+   ═══════════════════════════════════════════ */
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,.04); border-radius: 99px; }
+::-webkit-scrollbar-thumb { background: rgba(6,182,212,.35); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(6,182,212,.65); }
+
+/* ── Selection ── */
+::selection { background: rgba(124,58,237,.4); color: #fff; }
+
+/* ── Portal header responsive ── */
+@media (max-width: 576px) {
+  .brand-title { font-size: 1.5rem !important; }
+  .container { padding-left: 12px !important; padding-right: 12px !important; }
+  .subject-card { min-height: 110px; }
+  .action-btn-row { justify-content: center; }
+}
+
+/* ── Subject cards responsive grid ── */
+@media (max-width: 400px) {
+  #subjectsGrid .col-12 { padding: 6px !important; }
+}
+
+/* ── Topic group card polish ── */
+.topic-group-card {
+  transition: border-color .2s, box-shadow .2s !important;
+}
+.topic-group-card:hover {
+  border-color: rgba(6,182,212,.4) !important;
+  box-shadow: 0 0 30px rgba(6,182,212,.1) !important;
+}
+
+/* ── Topic toggle button ── */
+.topic-toggle-btn {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  padding: 0 !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 10px !important;
+  flex-shrink: 0;
+  transition: all .18s ease !important;
+  color: rgba(6,182,212,.9) !important;
+  border-color: rgba(6,182,212,.35) !important;
+  background: rgba(6,182,212,.08) !important;
+}
+.topic-toggle-btn:hover {
+  background: rgba(6,182,212,.18) !important;
+  border-color: rgba(6,182,212,.7) !important;
+  box-shadow: 0 0 14px rgba(6,182,212,.25) !important;
+  transform: scale(1.1) !important;
+}
+
+/* ── PDF upload area ── */
+.pdf-upload-box {
+  background: rgba(6,182,212,.04) !important;
+  transition: all .2s ease !important;
+}
+.pdf-upload-box:hover {
+  border-color: rgba(6,182,212,.7) !important;
+  background: rgba(6,182,212,.08) !important;
+  box-shadow: 0 0 20px rgba(6,182,212,.12) !important;
+}
+
+/* ── Engine view responsive ── */
+@media (max-width: 991px) {
+  .engine-shell { min-height: auto !important; }
+  .resizable-question-box { resize: none !important; }
+  .nav-wrap { position: static; max-height: none; }
+}
+@media (max-width: 576px) {
+  .resizable-question-box { padding: 12px !important; border-radius: 14px !important; }
+  #optionsArea .option { padding: .6rem .7rem !important; font-size: 14px !important; }
+  .engine-topbar .container-fluid { padding: 6px 10px !important; }
+  .timer-pill { padding: .45rem .6rem !important; font-size: 13px !important; }
+  #timerText { font-size: 15px !important; }
+}
+
+/* ── Search input ── */
+#searchInput {
+  background: rgba(6,182,212,.06) !important;
+  border: 1px solid rgba(6,182,212,.25) !important;
+  padding: .65rem 1rem !important;
+  font-size: 15px !important;
+  transition: all .2s !important;
+}
+#searchInput:focus {
+  border-color: rgba(6,182,212,.7) !important;
+  box-shadow: 0 0 0 3px rgba(6,182,212,.12), 0 0 20px rgba(6,182,212,.08) !important;
+  outline: none !important;
+}
+
+/* ── Candidate modal improvements ── */
+#candidateModal .modal-content {
+  border: 1px solid rgba(124,58,237,.4) !important;
+  box-shadow: 0 0 60px rgba(124,58,237,.25) !important;
+}
+
+/* ── Summary cards responsive ── */
+@media (max-width: 576px) {
+  #summaryStats .col-12 { padding: 4px !important; }
+  .modal-xl { max-width: 95vw !important; }
+  #summaryCards .col-12 { padding: 4px !important; }
+}
+
+/* ── Grand control box fix for mobile ── */
+@media (max-width: 576px) {
+  #grandControlBox {
+    bottom: 8px !important;
+    right: 8px !important;
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+}
+
+/* ── Nav panel backdrop ── */
+#navPanel.open::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  z-index: -1;
+  backdrop-filter: blur(2px);
+}
+
+/* ── Subtopic btn hover ── */
+.subtopic-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+.subtopic-btn .pill {
+  flex-shrink: 0;
+  font-size: .75rem !important;
+  padding: .18rem .5rem !important;
+  background: rgba(6,182,212,.12) !important;
+  border-color: rgba(6,182,212,.3) !important;
+  color: #06b6d4 !important;
+  transition: all .15s !important;
+}
+.subtopic-btn:hover .pill {
+  background: rgba(6,182,212,.25) !important;
+  color: #fff !important;
+}
+
+/* ── Progress bar glow ── */
+.progress { overflow: visible !important; }
+.progress-bar { border-radius: 0 !important; }
+
+/* ── qMetaLine ── */
+#qMetaLine {
+  font-size: 12px !important;
+  color: rgba(6,182,212,.7) !important;
+  letter-spacing: .3px;
+}
+
+/* ── Mode indicator badge ── */
+.hud-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+.hud-mode-exam {
+  background: rgba(239,68,68,.15);
+  border: 1px solid rgba(239,68,68,.4);
+  color: #f87171;
+}
+.hud-mode-practice {
+  background: rgba(34,197,94,.12);
+  border: 1px solid rgba(34,197,94,.35);
+  color: #4ade80;
+}
+
+/* ── Animate question card entry ── */
+@keyframes questionFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.resizable-question-box {
+  animation: questionFadeIn .3s ease;
+}
+
+/* ── Search result buttons ── */
+#searchResults .btn-glass {
+  border-radius: 12px !important;
+  padding: .55rem .85rem !important;
+  transition: all .15s !important;
+}
+#searchResults .btn-glass:hover {
+  transform: translateX(4px) !important;
+}
+
+/* ── Keyboard shortcut pills ── */
+.pill {
+  font-size: .78rem !important;
+}
+
+/* ── Back to portal button ── */
+#engineBackBtn {
+  font-size: 12px !important;
+  padding: 5px 10px !important;
+}
+
+/* ── PDF Tutor Panel ── */
+#pdfTutorPanel {
+  flex-direction: column;
+  min-height: 360px;
+}
+#pdfDropZone {
+  flex: 1;
+  min-height: 260px;
+  user-select: none;
+}
+#pdfViewerWrap {
+  flex: 1;
+  min-height: 320px;
+  flex-direction: column;
+}
+#pdfCanvasArea {
+  flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#pdfRenderCanvas {
+  display: block;
+  max-width: 100%;
+  height: auto !important;
+}
+#pdfTutorToggleBtn {
+  background: linear-gradient(135deg, rgba(6,182,212,.1), rgba(124,58,237,.08)) !important;
+  border-color: rgba(6,182,212,.35) !important;
+  color: #06b6d4 !important;
+  font-weight: 700 !important;
+  transition: all .18s !important;
+}
+#pdfTutorToggleBtn:hover {
+  background: rgba(6,182,212,.2) !important;
+  border-color: rgba(6,182,212,.7) !important;
+  box-shadow: 0 0 18px rgba(6,182,212,.25) !important;
+}
+@media (max-width: 576px) {
+  #pdfViewerWrap { min-height: 260px; }
+  #pdfDropZone   { min-height: 200px; padding: 1.2rem; }
+}
+
 </style>
 
+
+<style>
+/* ── FINAL OVERRIDE: navigator state colors always win ── */
+.qdot.st-attempted,
+.qdot.st-attempted:hover {
+  background: rgba(34,197,94,.32) !important;
+  border-color: rgba(34,197,94,.95) !important;
+  color: #bbf7d0 !important;
+  box-shadow: 0 0 12px rgba(34,197,94,.3) !important;
+}
+.qdot.st-notanswered,
+.qdot.st-notanswered:hover {
+  background: rgba(251,146,60,.28) !important;
+  border-color: rgba(251,146,60,.85) !important;
+  color: #fcd34d !important;
+}
+.qdot.st-review,
+.qdot.st-review:hover {
+  background: rgba(250,204,21,.28) !important;
+  border-color: rgba(250,204,21,.9) !important;
+  color: #fef08a !important;
+}
+.qdot.st-reviewanswered,
+.qdot.st-reviewanswered:hover {
+  background: linear-gradient(135deg, rgba(34,197,94,.42) 0% 50%, rgba(239,68,68,.38) 50% 100%) !important;
+  border-color: rgba(34,197,94,.85) !important;
+  color: #fff !important;
+}
+.qdot.st-skipped,
+.qdot.st-skipped:hover {
+  background: rgba(100,116,139,.22) !important;
+  border-color: rgba(100,116,139,.55) !important;
+  color: rgba(234,240,255,.5) !important;
+}
+.qdot.st-final-correct,
+.qdot.st-final-correct:hover {
+  background: rgba(34,197,94,.42) !important;
+  border-color: rgba(34,197,94,1) !important;
+  color: #bbf7d0 !important;
+  box-shadow: 0 0 14px rgba(34,197,94,.5) !important;
+}
+.qdot.st-final-wrong,
+.qdot.st-final-wrong:hover {
+  background: rgba(239,68,68,.40) !important;
+  border-color: rgba(239,68,68,1) !important;
+  color: #fecaca !important;
+  box-shadow: 0 0 14px rgba(239,68,68,.5) !important;
+}
+.qdot.st-final-unattempted,
+.qdot.st-final-unattempted:hover {
+  background: rgba(100,116,139,.22) !important;
+  border-color: rgba(148,163,184,.55) !important;
+  color: rgba(234,240,255,.4) !important;
+}
+</style>
 </head>
 
 <body>
@@ -1650,29 +1982,31 @@ body {
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
           <div>
             <h1 class="brand-title mb-1">Mock Test Portal</h1>
-
+            <div class="subtle" style="font-size:.95rem;margin-top:4px;">Select a subject to explore topics &amp; start a test</div>
           </div>
           <div class="d-flex gap-2 flex-wrap mt-3 action-btn-row">
-
-            <button id="typingBtn" class="btn btn-glass">Typing Test Engine</button>
+            <button id="typingBtn" class="btn btn-glass">⌨️ Typing Test Engine</button>
           </div>
         </div>
 
         <div class="glass p-3 p-md-4 mb-4">
           <div class="row g-3 align-items-center">
             <div class="col-12 col-lg-6">
-              <label class="form-label subtle mb-1">Search chapters/subtopics</label>
+              <label class="form-label subtle mb-1">🔍 Search chapters / subtopics</label>
               <input id="searchInput" class="form-control"
                 placeholder="Type e.g. 'Number System', 'Synonyms', 'demo'..." />
               <div class="small subtle mt-2">Search results open the selected test directly.</div>
             </div>
             <div class="col-12 col-lg-6">
               <div class="glass p-3">
+                <div class="small subtle mb-2 fw-semibold" style="color:rgba(6,182,212,.8);">⌨️ Keyboard shortcuts</div>
                 <div class="d-flex flex-wrap gap-2">
-                  <span class="pill">Keyboard: 1-4 select</span>
-                  <span class="pill">Enter: save & next</span>
-                  <span class="pill">Arrows: prev/next</span>
-                  <span class="pill">Navigator: toggle</span>
+                  <span class="pill">1–4: select option</span>
+                  <span class="pill">Enter: save &amp; next</span>
+                  <span class="pill">← →: prev/next</span>
+                  <span class="pill">☰: navigator</span>
+                  <span class="pill">0: hint toggle</span>
+                  <span class="pill">Space: tools</span>
                 </div>
               </div>
             </div>
@@ -1715,12 +2049,24 @@ body {
           <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
             <div class="d-flex align-items-center gap-2 flex-wrap right-top-actions">
 
-              <button id="engineBackBtn" class="btn btn-glass btn-sm">Back to portal</button>
+              <button id="engineBackBtn" class="btn btn-glass btn-sm">← Portal</button>
               <span class="badge-soft" id="testInfoTop">Topic • Subtopic • Test</span>
 
               <span class="badge-soft" id="qCounterBadge" style="display: none;">Q 1/0</span>
+              <span id="modeBadge" class="hud-mode-badge hud-mode-exam">🔒 EXAM</span>
+              <!-- PDF Tutor toggle -->
+              <button id="pdfTutorToggleBtn" class="btn btn-glass btn-sm" title="Open PDF Tutor panel" style="display:none;gap:5px;align-items:center;">
+                📄 PDF Tutor
+              </button>
 
-              
+              <!-- ⏱ Timer restore button (shown when timer is hidden) -->
+              <button id="timerShowBtn" title="Show timer" onclick="
+                document.getElementById('timerPill').style.display='';
+                document.getElementById('timerShowBtn').style.display='none';
+              " style="display:none;align-items:center;gap:4px;font-size:12px;padding:4px 8px;border-radius:8px;border:1px solid rgba(6,182,212,.35);background:rgba(6,182,212,.08);color:#06b6d4;cursor:pointer;">
+                ⏱ Timer
+              </button>
+
               <!-- ✅ NAV ICON (Top Right) -->
               <button id="navToggleIcon" class="nav-toggle-icon" aria-label="Open Navigator">
                 <span></span><span></span><span></span>
@@ -1737,7 +2083,49 @@ body {
       <div class="container-fluid py-3">
         <div class="row g-3 engine-shell">
           <div class="col-12 col-lg-8">
-            <div class="glass p-3 p-md-4 resizable-question-box">
+            <!-- PDF TUTOR PANEL (replaces question box when active) -->
+            <div id="pdfTutorPanel" class="glass p-3 p-md-4 resizable-question-box" style="display:none;flex-direction:column;">
+              <div class="d-flex align-items-center justify-content-between mb-3" style="flex-shrink:0;">
+                <div class="d-flex align-items-center gap-2">
+                  <span style="font-size:1.3rem;">📄</span>
+                  <div>
+                    <div class="fw-bold" style="font-size:.95rem;color:#06b6d4;" id="pdfTutorTitle">PDF Tutor</div>
+                    
+                  </div>
+                </div>
+                <button id="pdfTutorCloseBtn" class="btn btn-glass btn-sm" title="Back to test">✕ Close</button>
+              </div>
+
+              <!-- Drop zone (shown when no PDF loaded) -->
+              <div id="pdfDropZone" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed rgba(6,182,212,.4);border-radius:16px;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(6,182,212,.03);">
+                <input type="file" id="pdfFileInput" accept=".pdf" style="display:none;">
+                <div style="font-size:3.5rem;margin-bottom:.75rem;">📄</div>
+                <div class="fw-semibold mb-1" style="color:#06b6d4;font-size:1.1rem;">Drop your PDF here</div>
+                <div class="subtle mb-3" style="font-size:.85rem;">or click to choose a file</div>
+                <button class="btn btn-glass" id="pdfChooseBtn" style="padding:.45rem 1.2rem;border-color:rgba(6,182,212,.5);color:#06b6d4;">Choose PDF</button>
+              </div>
+
+              <!-- PDF viewer (shown after load) -->
+              <div id="pdfViewerWrap" style="display:none;flex:1;flex-direction:column;overflow:hidden;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid rgba(6,182,212,.2);">
+                <!-- toolbar -->
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(0,0,0,.35);border-bottom:1px solid rgba(6,182,212,.18);flex-shrink:0;flex-wrap:wrap;">
+                  <button class="btn btn-glass btn-sm" id="pdfPrevPage">◀</button>
+                  <span style="font-size:.82rem;color:rgba(234,240,255,.7);">Page <span id="pdfPageNum">1</span> / <span id="pdfPageTotal">?</span></span>
+                  <button class="btn btn-glass btn-sm" id="pdfNextPage">▶</button>
+                  <button class="btn btn-glass btn-sm" id="pdfZoomOut" style="margin-left:auto;">−</button>
+                  <span style="font-size:.78rem;color:rgba(234,240,255,.5);" id="pdfZoomLabel">100%</span>
+                  <button class="btn btn-glass btn-sm" id="pdfZoomIn">+</button>
+                  <button class="btn btn-glass btn-sm" id="pdfChangePdf" style="font-size:.75rem;padding:4px 8px;margin-left:6px;">📂 Change</button>
+                </div>
+                <!-- canvas area -->
+                <div style="flex:1;overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:10px;" id="pdfCanvasArea">
+                  <canvas id="pdfRenderCanvas" style="border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);max-width:100%;height:auto;"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- QUESTION BOX (normal test mode) -->
+            <div class="glass p-3 p-md-4 resizable-question-box" id="questionBox">
 
               <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
                 <div class="subtle" id="qMetaLine" style="display: none;">Status: -</div>
@@ -1798,8 +2186,8 @@ body {
                 <button id="helpBtn" class="btn btn-glass btn-sm" style="display: none;">Help</button>
 
               </div>
-            </div>
-          </div>
+            </div><!-- end #questionBox -->
+          </div><!-- end col-lg-8 -->
 
           <!-- ✅ RIGHT SLIDE NAVIGATOR PANEL -->
           <div id="navPanel" class="nav-panel">
@@ -1814,6 +2202,15 @@ body {
               <span class="subtle small" id="navLegend"></span>
 
               <div id="qNav" class="qnav mt-2"></div>
+
+              <!-- Legend -->
+              <div class="mt-3" style="font-size:10px;color:rgba(234,240,255,.5);line-height:1.9;">
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.2);margin-right:5px;"></span>Not visited</div>
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(251,146,60,.22);border:1.5px solid rgba(251,146,60,.75);margin-right:5px;"></span>Visited, no answer</div>
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(34,197,94,.25);border:1.5px solid rgba(34,197,94,.85);margin-right:5px;"></span>Answered</div>
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(250,204,21,.22);border:1.5px solid rgba(250,204,21,.85);margin-right:5px;"></span>Review (no answer)</div>
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,rgba(250,204,21,.35) 0 50%,rgba(34,197,94,.3) 50% 100%);border:1.5px solid rgba(250,204,21,.75);margin-right:5px;"></span>Review + answered</div>
+              </div>
 
               <!-- ✅ Buttons under Navigator -->
               <div class="nav-actions-vertical mt-3">
@@ -1834,12 +2231,21 @@ body {
       </div>
 
 
-      <div class="timer-pill glass">
-        <div class="d-flex align-items-center gap-2">
-          <!-- <div class="fw-semibold">Time</div> -->
+      <div class="timer-pill glass" id="timerPill">
+        <div class="d-flex align-items-center gap-1">
           <div id="timerText">00:00</div>
+          <button id="timerCloseBtn" title="Hide timer" onclick="
+            document.getElementById('timerPill').style.display='none';
+            document.getElementById('timerShowBtn').style.display='flex';
+          " style="
+            background:none;border:none;padding:0 0 0 3px;cursor:pointer;
+            color:rgba(255,255,255,.45);font-size:10px;line-height:1;
+            display:flex;align-items:center;transition:color .15s;
+          " onmouseover="this.style.color='rgba(255,255,255,.9)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">✕</button>
         </div>
       </div>
+
+
     </div>
 
   </div>
@@ -1951,6 +2357,9 @@ body {
       <source src="b.mp3" type="audio/mpeg">
     </audio>
 
+
+    
+    
     <!-- Bootstrap + jsPDF -->
     
 <script>
@@ -1969,19 +2378,21 @@ body {
 
   const colors = ['rgba(6,182,212,', 'rgba(124,58,237,', 'rgba(59,130,246,'];
 
-  for (let i = 0; i < 60; i++) {
+  for (let i = 0; i < 35; i++) {
     particles.push({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      r: Math.random() * 1.8 + 0.5,
-      dx: (Math.random() - 0.5) * 0.35,
-      dy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 1.6 + 0.4,
+      dx: (Math.random() - 0.5) * 0.28,
+      dy: (Math.random() - 0.5) * 0.28,
       color: colors[Math.floor(Math.random() * colors.length)],
-      alpha: Math.random() * 0.5 + 0.2
+      alpha: Math.random() * 0.45 + 0.15
     });
   }
 
+  let frameCount = 0;
   function draw() {
+    frameCount++;
     ctx.clearRect(0, 0, W, H);
     particles.forEach(p => {
       ctx.beginPath();
@@ -1996,19 +2407,21 @@ body {
       if (p.y > H) p.y = 0;
     });
 
-    // draw connection lines
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i+1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx*dx+dy*dy);
-        if (dist < 120) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = 'rgba(6,182,212,' + (0.08 * (1 - dist/120)) + ')';
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
+    // draw connection lines every other frame for perf
+    if (frameCount % 2 === 0) {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i+1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx+dy*dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = 'rgba(6,182,212,' + (0.07 * (1 - dist/100)) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
         }
       }
     }
@@ -2018,8 +2431,19 @@ body {
 })();
 </script>
 
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <!-- PDF.js for PDF Tutor panel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      // Set PDF.js worker
+      if (window.pdfjsLib) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+          'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+    </script>
 
     <!-- Google Translate widget (top right) -->
     <script type="text/javascript">
@@ -2085,18 +2509,33 @@ body {
         const grid = $('subjectsGrid');
         grid.innerHTML = '';
 
+        const subjectIcons = {
+          'c-reasoning': '🧩',
+          'c-gk': '🌍',
+          'c-math': '📐',
+          'c-english': '📚',
+          'c-computer': '💻',
+          'c-others': '⭐',
+        };
+
         PORTAL_DATA.forEach((s, idx) => {
           const col = document.createElement('div');
           col.className = 'col-12 col-md-6 col-lg-4';
+          const icon = subjectIcons[s.colorClass] || '📖';
+          const totalSubs = (s.topics || []).reduce((acc, t) => acc + (t.subtopics ? t.subtopics.length : 0), 0);
           col.innerHTML = `
       <div class="glass subject-card ${s.colorClass} p-3 p-md-4 h-100" role="button" tabindex="0">
         <div class="d-flex align-items-start gap-3">
-          <div class="subject-accent"></div>
+          <div class="subject-accent">
+            <span style="position:relative;z-index:1;font-size:18px;">${icon}</span>
+          </div>
           <div class="flex-grow-1">
             <div class="fs-5 fw-bold">${escapeHtml(s.title)}</div>
-            <div class="subtle mt-1">Topic groups: ${s.topics?.length || 0}</div>
+            <div class="subtle mt-1" style="font-size:.82rem;">
+              ${s.topics?.length || 0} topic groups &nbsp;·&nbsp; ${totalSubs} subtopics
+            </div>
           </div>
-          <span class="pill">Open</span>
+          <span class="pill" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:#06b6d4;">Open →</span>
         </div>
       </div>
     `;
@@ -2118,19 +2557,34 @@ body {
         subject.topics.forEach((tg, i) => {
           const topicCol = document.createElement('div');
           topicCol.className = 'col-12 col-lg-6';
+
           const subBtns = tg.subtopics.map(st => `
       <button class="subtopic-btn mt-2" data-file="${st.file}">
         ${escapeHtml(st.name)} <span class="pill float-end">Start</span>
       </button>
     `).join('');
+
           topicCol.innerHTML = `
-      <div class="glass p-3 h-100">
-        <button class="topic-btn fw-semibold" type="button" data-topic="${escapeHtml(tg.name)}">
-          ${escapeHtml(tg.name)}
-        </button>
-        <div class="mt-2">${subBtns}</div>
+      <div class="glass p-3 h-100 topic-group-card">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <button class="topic-btn fw-semibold flex-grow-1" type="button" data-topic="${escapeHtml(tg.name)}">
+            ${escapeHtml(tg.name)}
+          </button>
+
+        </div>
+        <div class="subtopic-area mt-2">${subBtns}</div>
+        <div class="pdf-upload-area mt-2" style="display:none;">
+          <div class="pdf-upload-box glass p-3 text-center" style="border:2px dashed rgba(6,182,212,.4);border-radius:14px;cursor:pointer;transition:all .2s;">
+            <input type="file" accept=".pdf" class="chapter-pdf-input" style="display:none;">
+            <div class="pdf-upload-icon" style="font-size:2.5rem;margin-bottom:.5rem;">📄</div>
+            <div class="fw-semibold mb-1" style="color:#06b6d4;">Drop PDF here or click to choose</div>
+            <div class="small subtle">Upload a PDF for <strong>${escapeHtml(tg.name)}</strong></div>
+            <div class="pdf-chosen-name mt-2 small" style="color:#22c55e;display:none;"></div>
+          </div>
+        </div>
       </div>
     `;
+
           // subtopic clicks
           topicCol.querySelectorAll('.subtopic-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -2144,6 +2598,65 @@ body {
               });
             });
           });
+
+          // + / - toggle button (removed from UI — guard against null)
+          const toggleBtn = topicCol.querySelector('.topic-toggle-btn');
+          const subtopicArea = topicCol.querySelector('.subtopic-area');
+          const pdfArea = topicCol.querySelector('.pdf-upload-area');
+          let pdfOpen = false;
+
+          if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+              pdfOpen = !pdfOpen;
+              if (pdfOpen) {
+                subtopicArea.style.display = 'none';
+                pdfArea.style.display = 'block';
+                toggleBtn.textContent = '−';
+                toggleBtn.style.color = '#ef4444';
+                toggleBtn.style.borderColor = 'rgba(239,68,68,.5)';
+              } else {
+                subtopicArea.style.display = '';
+                pdfArea.style.display = 'none';
+                toggleBtn.textContent = '+';
+                toggleBtn.style.color = '';
+                toggleBtn.style.borderColor = '';
+              }
+            });
+          }
+
+          // PDF drop/click handling
+          const pdfBox = topicCol.querySelector('.pdf-upload-box');
+          const pdfInput = topicCol.querySelector('.chapter-pdf-input');
+          const pdfChosen = topicCol.querySelector('.pdf-chosen-name');
+
+          pdfBox.addEventListener('click', () => pdfInput.click());
+
+          pdfBox.addEventListener('dragover', e => {
+            e.preventDefault();
+            pdfBox.style.borderColor = 'rgba(34,197,94,.8)';
+            pdfBox.style.background = 'rgba(34,197,94,.07)';
+          });
+          pdfBox.addEventListener('dragleave', () => {
+            pdfBox.style.borderColor = 'rgba(6,182,212,.4)';
+            pdfBox.style.background = '';
+          });
+          pdfBox.addEventListener('drop', e => {
+            e.preventDefault();
+            pdfBox.style.borderColor = 'rgba(6,182,212,.4)';
+            pdfBox.style.background = '';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/pdf') {
+              pdfChosen.textContent = '✅ ' + file.name;
+              pdfChosen.style.display = 'block';
+            }
+          });
+          pdfInput.addEventListener('change', () => {
+            if (pdfInput.files[0]) {
+              pdfChosen.textContent = '✅ ' + pdfInput.files[0].name;
+              pdfChosen.style.display = 'block';
+            }
+          });
+
           topicsArea.appendChild(topicCol);
         });
 
@@ -2399,72 +2912,62 @@ body {
         const dots = [...$('qNav').children];
         dots.forEach((dot, idx) => {
           const qid = state.qIds[idx];
-          const qs = state.qState[qid];
+          const qs  = state.qState[qid];
+
+          // Remove all state classes first
           dot.classList.remove(
             'current',
-            'st-attempted', 'st-notanswered', 'st-review', 'st-reviewanswered', 'st-skipped',
+            'st-attempted', 'st-notanswered', 'st-review',
+            'st-reviewanswered', 'st-skipped',
             'st-final-correct', 'st-final-wrong', 'st-final-unattempted'
           );
 
-
-
-          // current
+          // Current question always gets purple glow
           if (idx === state.currentIndex) dot.classList.add('current');
 
-          // status coloring rules
           const hasSelected = !!qs.selectedMetaId;
-          const visited = qs.visited;
-          const review = qs.review;
-          const skipped = qs.skipped;
+          const visited     = qs.visited;
+          const review      = qs.review;
+          const skipped     = qs.skipped;
 
-          // ✅ AFTER SUBMIT: show final colors only
           if (state.submitted) {
+            // ── AFTER SUBMIT: show correct/wrong/unattempted ──
             const sh = getOrBuildShuffle(qid);
-            const correctMeta = sh.correctMetaId;
-
-            if (hasSelected && qs.selectedMetaId === correctMeta) {
-              dot.classList.add('st-final-correct'); // green
+            if (hasSelected && qs.selectedMetaId === sh.correctMetaId) {
+              dot.classList.add('st-final-correct');
+            } else if (hasSelected) {
+              dot.classList.add('st-final-wrong');
+            } else {
+              dot.classList.add('st-final-unattempted');
             }
-            else if (hasSelected && qs.selectedMetaId !== correctMeta) {
-              dot.classList.add('st-final-wrong'); // red
-            }
-            else {
-              dot.classList.add('st-final-unattempted'); // brown
-            }
+          } else {
+            // ── BEFORE SUBMIT: status colors ──
+            // Priority: review+answered > review > answered > visited > skipped > untouched
+            if (review && hasSelected)  dot.classList.add('st-reviewanswered');
+            else if (review)            dot.classList.add('st-review');
+            else if (hasSelected)       dot.classList.add('st-attempted');
+            else if (skipped)           dot.classList.add('st-skipped');
+            else if (visited)           dot.classList.add('st-notanswered');
+            // else: untouched — no class, shows default white/transparent
           }
-          else {
-            // ✅ AFTER SUBMIT: Show only Result colors
-            if (state.submitted) {
-
-              const sh = getOrBuildShuffle(qid);
-              const correctMeta = sh.correctMetaId;
-
-              if (hasSelected && qs.selectedMetaId === correctMeta) {
-                dot.classList.add('st-final-correct');     // ✅ green
-              }
-              else if (hasSelected && qs.selectedMetaId !== correctMeta) {
-                dot.classList.add('st-final-wrong');       // ❌ red
-              }
-              else {
-                dot.classList.add('st-final-unattempted'); // 🤎 brown (even if visited)
-              }
-
-            }
-            else {
-
-              // ✅ BEFORE SUBMIT: your old status logic
-              if (review && hasSelected) dot.classList.add('st-reviewanswered');
-              else if (review) dot.classList.add('st-review');
-              else if (skipped) dot.classList.add('st-skipped');
-              else if (hasSelected) dot.classList.add('st-attempted');
-              else if (visited) dot.classList.add('st-notanswered');
-
-            }
-
-          }
-
-
         });
+
+        // Update legend
+        if (!state.submitted) {
+          const attempted = state.qIds.filter(qid => !!state.qState[qid].selectedMetaId).length;
+          $('navLegend').innerHTML =
+            `<span style="color:#22c55e;">●</span> ${attempted} answered &nbsp;` +
+            `<span style="color:rgba(255,255,255,.3);">●</span> ${state.qCount - attempted} left`;
+        } else {
+          const correct = state.qIds.filter(qid => {
+            const qs = state.qState[qid];
+            if (!qs.selectedMetaId) return false;
+            return qs.selectedMetaId === getOrBuildShuffle(qid).correctMetaId;
+          }).length;
+          $('navLegend').innerHTML =
+            `<span style="color:#22c55e;">●</span> ${correct} correct &nbsp;` +
+            `<span style="color:#ef4444;">●</span> ${state.qIds.filter(qid=>{const qs=state.qState[qid];return qs.selectedMetaId && qs.selectedMetaId!==getOrBuildShuffle(qid).correctMetaId;}).length} wrong`;
+        }
       }
 
       function getOrBuildShuffle(qid) {
@@ -2532,7 +3035,7 @@ body {
           div.addEventListener('click', () => selectOption(metaId));
 
           area.appendChild(div);
-        });zz
+        });
 
         // restore selection
         const qs = state.qState[qid];
@@ -2813,6 +3316,32 @@ body {
         $('reviewNextBtn').onclick = markReviewAndNext;
         $('clearBtn').onclick = clearResponse;
 
+        // ── PDF Tutor toggle ──
+        const pdfTutorBtn  = $('pdfTutorToggleBtn');
+        const pdfPanel     = $('pdfTutorPanel');
+        const questionBox  = $('questionBox');
+        const pdfCloseBtn  = $('pdfTutorCloseBtn');
+
+        if (pdfTutorBtn) {
+          pdfTutorBtn.style.display = 'inline-flex';
+          pdfTutorBtn.onclick = () => {
+            pdfPanel.style.display    = 'flex';
+            questionBox.style.display = 'none';
+            pdfTutorBtn.style.background = 'rgba(6,182,212,.2)';
+            pdfTutorBtn.style.borderColor = 'rgba(6,182,212,.7)';
+          };
+        }
+        if (pdfCloseBtn) {
+          pdfCloseBtn.onclick = () => {
+            pdfPanel.style.display   = 'none';
+            questionBox.style.display = '';
+            if (pdfTutorBtn) {
+              pdfTutorBtn.style.background = '';
+              pdfTutorBtn.style.borderColor = '';
+            }
+          };
+        }
+
         // ✅ Navigator Slide Panel Toggle (Hamburger icon)
         const navPanel = $('navPanel');
         const navIcon = $('navToggleIcon');
@@ -2939,6 +3468,15 @@ body {
 
       function updateExamModeUI() {
         $('examModeBtn').textContent = `Exam mode: ${state.examMode ? 'On' : 'Off'}`;
+
+        // Update mode badge
+        const badge = $('modeBadge');
+        if (badge) {
+          badge.className = state.examMode
+            ? 'hud-mode-badge hud-mode-exam'
+            : 'hud-mode-badge hud-mode-practice';
+          badge.textContent = state.examMode ? '🔒 EXAM' : '💡 PRACTICE';
+        }
 
         // Show ? button ONLY in practice mode
         const qbtn = $('qmarkBtn');
@@ -3119,46 +3657,45 @@ body {
         }
 
         $('summaryStats').innerHTML = `
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Total questions</div>
-      <div class="fs-4 fw-bold">${st.total}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">TOTAL</div>
+      <div class="fs-3 fw-bold" style="color:#06b6d4;">${st.total}</div>
     </div>
   </div>
 
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Attempted</div>
-      <div class="fs-4 fw-bold">${st.attempted}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">ATTEMPTED</div>
+      <div class="fs-3 fw-bold" style="color:#a78bfa;">${st.attempted}</div>
     </div>
   </div>
 
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Marked for review</div>
-      <div class="fs-4 fw-bold">${st.review}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">CORRECT ✅</div>
+      <div class="fs-3 fw-bold" style="color:#22c55e;">${st.correct}</div>
     </div>
   </div>
 
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Correct</div>
-      <div class="fs-4 fw-bold">${st.correct}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">WRONG ❌</div>
+      <div class="fs-3 fw-bold" style="color:#ef4444;">${st.wrong}</div>
     </div>
   </div>
 
-  <!-- ✅ NEW WRONG BOX -->
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Wrong</div>
-      <div class="fs-4 fw-bold">${st.wrong}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">FOR REVIEW</div>
+      <div class="fs-3 fw-bold" style="color:#facc15;">${st.review}</div>
     </div>
   </div>
 
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Score</div>
-      <div class="fs-4 fw-bold">${st.score}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center" style="background:linear-gradient(135deg,rgba(6,182,212,.12),rgba(124,58,237,.12))!important;border-color:rgba(6,182,212,.4)!important;">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">SCORE 🏆</div>
+      <div class="fs-3 fw-bold" style="color:#06b6d4;text-shadow:0 0 16px rgba(6,182,212,.5);">${st.score}</div>
     </div>
   </div>
 `;
@@ -3571,19 +4108,8 @@ body {
       function toggleCenterHintBox() {
         // ✅ only in practice mode
         if (state.examMode) return;
-
-        const box = document.getElementById("hintCorrectOptionBox");
-
-        // if hint box is open -> close it, else open it
-        if (box && box.style.display === "block") {
-          closeHintCorrectOption();
-        } else {
-          const yourText = getOptionText(qid, userAnswers[qid]);
-          doc.text(`Answer: ${yourText}`, margin, y);
-
-
-          showHintCorrectOption();
-        }
+        // Delegate to the center help modal
+        openCenterHelpModal();
       }
       function getOptionText(qid, optionIndex) {
         const q = questions[qid];
@@ -3635,6 +4161,171 @@ body {
         window.open(url, "_blank");
       }
 
+    </script>
+
+    <!-- ═══════════════════════════════════════════════════
+         PDF TUTOR ENGINE
+         ═══════════════════════════════════════════════════ -->
+    <script>
+    (function() {
+      'use strict';
+
+      // State
+      let pdfDoc      = null;
+      let currentPage = 1;
+      let totalPages  = 0;
+      let zoom        = 1.0;
+      let renderTask  = null;
+
+      const ZOOM_STEP = 0.2;
+      const ZOOM_MIN  = 0.4;
+      const ZOOM_MAX  = 3.0;
+
+      function el(id) { return document.getElementById(id); }
+
+      // ── Wait for DOM ──
+      function init() {
+        const dropZone   = el('pdfDropZone');
+        const fileInput  = el('pdfFileInput');
+        const chooseBtn  = el('pdfChooseBtn');
+        const changePdf  = el('pdfChangePdf');
+        const prevPage   = el('pdfPrevPage');
+        const nextPage   = el('pdfNextPage');
+        const zoomIn     = el('pdfZoomIn');
+        const zoomOut    = el('pdfZoomOut');
+
+        if (!dropZone) return; // not in DOM yet
+
+        // Click to choose
+        chooseBtn.onclick = () => fileInput.click();
+        if (changePdf) changePdf.onclick = () => {
+          fileInput.value = '';
+          fileInput.click();
+        };
+
+        // File chosen
+        fileInput.onchange = () => {
+          if (fileInput.files && fileInput.files[0]) loadPdfFile(fileInput.files[0]);
+        };
+
+        // Drag & drop
+        dropZone.addEventListener('dragover', e => {
+          e.preventDefault();
+          dropZone.style.borderColor = 'rgba(34,197,94,.8)';
+          dropZone.style.background  = 'rgba(34,197,94,.06)';
+        });
+        dropZone.addEventListener('dragleave', () => {
+          dropZone.style.borderColor = 'rgba(6,182,212,.4)';
+          dropZone.style.background  = 'rgba(6,182,212,.03)';
+        });
+        dropZone.addEventListener('drop', e => {
+          e.preventDefault();
+          dropZone.style.borderColor = 'rgba(6,182,212,.4)';
+          dropZone.style.background  = 'rgba(6,182,212,.03)';
+          const file = e.dataTransfer.files[0];
+          if (file && file.type === 'application/pdf') loadPdfFile(file);
+        });
+        dropZone.onclick = (e) => {
+          if (e.target !== chooseBtn) fileInput.click();
+        };
+
+        // Navigation
+        if (prevPage)  prevPage.onclick  = () => goToPage(currentPage - 1);
+        if (nextPage)  nextPage.onclick  = () => goToPage(currentPage + 1);
+        if (zoomIn)    zoomIn.onclick    = () => { zoom = Math.min(ZOOM_MAX, zoom + ZOOM_STEP); renderPage(currentPage); };
+        if (zoomOut)   zoomOut.onclick   = () => { zoom = Math.max(ZOOM_MIN, zoom - ZOOM_STEP); renderPage(currentPage); };
+
+        // Keyboard in PDF panel
+        document.addEventListener('keydown', (e) => {
+          const panel = el('pdfTutorPanel');
+          if (!panel || panel.style.display === 'none') return;
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goToPage(currentPage + 1); }
+          if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); goToPage(currentPage - 1); }
+          if (e.key === '+' || e.key === '=') { zoom = Math.min(ZOOM_MAX, zoom + ZOOM_STEP); renderPage(currentPage); }
+          if (e.key === '-') { zoom = Math.max(ZOOM_MIN, zoom - ZOOM_STEP); renderPage(currentPage); }
+        });
+      }
+
+      function loadPdfFile(file) {
+        if (!window.pdfjsLib) {
+          alert('PDF.js library not loaded yet. Please wait a moment and try again.');
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          try {
+            const typedArr = new Uint8Array(e.target.result);
+            pdfDoc = await pdfjsLib.getDocument({ data: typedArr }).promise;
+            totalPages  = pdfDoc.numPages;
+            currentPage = 1;
+            zoom        = 1.0;
+
+            // Show viewer, hide drop zone
+            el('pdfDropZone').style.display   = 'none';
+            el('pdfViewerWrap').style.display = 'flex';
+
+            // Update title
+            const titleEl = el('pdfTutorTitle');
+            if (titleEl) titleEl.textContent = '📄 ' + file.name.replace(/\.pdf$/i, '');
+
+            renderPage(1);
+          } catch (err) {
+            console.error('PDF load error:', err);
+            alert('Could not read PDF. Make sure it is a valid PDF file.');
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      }
+
+      async function renderPage(pageNum) {
+        if (!pdfDoc) return;
+        pageNum = Math.max(1, Math.min(totalPages, pageNum));
+        currentPage = pageNum;
+
+        // Update UI
+        const numEl   = el('pdfPageNum');
+        const totEl   = el('pdfPageTotal');
+        const zoomLbl = el('pdfZoomLabel');
+        if (numEl)   numEl.textContent   = pageNum;
+        if (totEl)   totEl.textContent   = totalPages;
+        if (zoomLbl) zoomLbl.textContent = Math.round(zoom * 100) + '%';
+
+        // Button states
+        const prev = el('pdfPrevPage');
+        const next = el('pdfNextPage');
+        if (prev) prev.disabled = pageNum <= 1;
+        if (next) next.disabled = pageNum >= totalPages;
+
+        // Cancel previous render
+        if (renderTask) { try { renderTask.cancel(); } catch(_){} }
+
+        const page     = await pdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale: zoom });
+
+        const canvas  = el('pdfRenderCanvas');
+        const ctx     = canvas.getContext('2d');
+        canvas.width  = viewport.width;
+        canvas.height = viewport.height;
+
+        renderTask = page.render({ canvasContext: ctx, viewport });
+        try { await renderTask.promise; } catch(e) { if (e.name !== 'RenderingCancelledException') console.warn(e); }
+      }
+
+      function goToPage(n) { renderPage(n); }
+
+      // Init on DOMContentLoaded or immediately if already loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        // Retry a few times in case elements aren't rendered yet
+        let tries = 0;
+        const tryInit = () => {
+          if (el('pdfDropZone')) { init(); }
+          else if (++tries < 20) { setTimeout(tryInit, 200); }
+        };
+        tryInit();
+      }
+    })();
     </script>
 
     <script>
@@ -3703,9 +4394,30 @@ body {
 
         /* ---------- SCREENSHOT ---------- */
         async function captureScreen() {
+          // Inject a style that kills all animations + scan line for clean PPT capture
+          let captureStyle = document.getElementById('pptCaptureStyle');
+          if (!captureStyle) {
+            captureStyle = document.createElement('style');
+            captureStyle.id = 'pptCaptureStyle';
+            document.head.appendChild(captureStyle);
+          }
+          captureStyle.textContent = `
+            *, *::before, *::after {
+              animation: none !important;
+              transition: none !important;
+            }
+            .resizable-question-box::after { display: none !important; }
+            body { animation: none !important; background-size: 100% 100% !important; }
+            .progress-bar { animation: none !important; }
+            #particleCanvas { display: none !important; }
+          `;
+
+          // Small delay so browser repaints without animations
+          await new Promise(r => setTimeout(r, 80));
+
           const canvas = await html2canvas(document.documentElement, {
             scale: 2,
-            backgroundColor: "#ffffff",
+            backgroundColor: "#0b1020",
             useCORS: true,
             width: window.innerWidth,
             height: window.innerHeight,
@@ -3713,6 +4425,9 @@ body {
             windowHeight: window.innerHeight
           });
           SHOTS.push(canvas.toDataURL("image/png"));
+
+          // Restore animations after capture
+          captureStyle.textContent = '';
         }
 
         /* ---------- PPT ---------- */
@@ -3959,106 +4674,6 @@ body {
       })();
     </script>
 
-
-
-    <script>
-      /* ===== FIXED renderQuestion — navigator colors + submit state + lock ===== */
-      function renderQuestion(index) {
-        state.currentIndex = Math.max(0, Math.min(index, state.qCount - 1));
-        const qid = state.qIds[state.currentIndex];
-        const qs = state.qState[qid];
-
-        qs.visited = true;
-
-        // Question header
-        $('qCounterBadge').textContent = `Q ${state.currentIndex + 1}/${state.qCount}`;
-
-        const q = state.questionsMap[qid];
-        $('questionText').innerHTML =
-          `<span class="badge bg-dark me-2">Q${state.currentIndex + 1}/${state.qCount}</span> ${q.text}`;
-
-        // Image
-        if (q.image) {
-          $('questionImageWrap').classList.remove('d-none');
-          $('questionImage').src = q.image;
-          $('questionImage').onerror = () => $('questionImageWrap').classList.add('d-none');
-        } else {
-          $('questionImageWrap').classList.add('d-none');
-        }
-
-        // OPTIONS (rebuild)
-        const sh = getOrBuildShuffle(qid);
-        const opts = sh.order.map(i => q.options[i]);
-        const area = $('optionsArea');
-        area.innerHTML = '';
-
-        opts.forEach((optHtml, i) => {
-          const metaId = String(i + 1);
-          const div = document.createElement('div');
-          div.className = 'option';
-          div.dataset.meta = metaId;
-          div.innerHTML = `<span class="kbd">${metaId}</span><span class="opt-text">${optHtml}</span>`;
-
-          div.onclick = () => {
-            if (state.submitted || qs.locked) return;   // ← locked after submit
-            qs.selectedMetaId = metaId;
-            qs.skipped = false;
-
-            // visually select
-            document.querySelectorAll('.option').forEach(o =>
-              o.classList.remove('selected', 'correct', 'wrong'));
-            div.classList.add('selected');
-
-            // instant feedback in practice mode
-            if (!state.examMode) {
-              const correctMeta = sh.correctMetaId;
-              if (metaId === correctMeta) {
-                div.classList.add('correct');
-              } else {
-                div.classList.add('wrong');
-                document.querySelectorAll('.option').forEach(o => {
-                  if (o.dataset.meta === correctMeta) o.classList.add('correct');
-                });
-              }
-              if (state.soundEnabled) {
-                const audio = metaId === correctMeta
-                  ? document.getElementById('audCorrect')
-                  : document.getElementById('audWrong');
-                if (audio) { audio.currentTime = 0; audio.play().catch(() => {}); }
-              }
-            }
-
-            // ✅ Update navigator immediately on click
-            updateNavigator();
-          };
-
-          // ✅ RESTORE selection colour on revisit
-          if (qs.selectedMetaId === metaId) {
-            div.classList.add('selected');
-          }
-
-          area.appendChild(div);
-        });
-
-        // ✅ After submit: always show correct/wrong colours
-        if (state.submitted) {
-          const correctMeta = sh.correctMetaId;
-          [...area.children].forEach(el => {
-            const m = el.dataset.meta;
-            el.classList.remove('correct', 'wrong');
-            if (m === correctMeta) el.classList.add('correct');
-            if (qs.selectedMetaId && m === qs.selectedMetaId && m !== correctMeta)
-              el.classList.add('wrong');
-          });
-        }
-
-        // ✅ meta status line
-        $('qMetaLine').textContent = buildStatusLine(qid);
-
-        // ✅ Navigator dots refresh — THIS is what drives the colour change
-        updateNavigator();
-      }
-    </script>
 <script>
 (function(){
 
@@ -4373,27 +4988,37 @@ panel.style.display==="none"
       colorPanel = document.createElement("div");
       colorPanel.id = "color-picker-panel";
 
+      // Read current applied colors as best-guess defaults
+      const curBg    = "#0b1020";
+      const curBox   = "#131830";
+      const curText  = "#eaf0ff";
+
       colorPanel.innerHTML = `
-        <div style="margin-bottom:8px;font-weight:500;">Background</div>
-        <input type="color" id="bgPick" value="#000000" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
-        <div style="margin-bottom:8px;font-weight:500;">Question Box</div>
-        <input type="color" id="boxPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
-        <div style="margin-bottom:8px;font-weight:500;">Text</div>
-        <input type="color" id="textPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <span style="font-weight:600;font-size:13px;">🎨 Colors</span>
+          <button id="colorPickerClose" style="background:none;border:none;color:#aaa;font-size:16px;cursor:pointer;padding:0 2px;line-height:1;">✕</button>
+        </div>
+        <div style="margin-bottom:6px;font-weight:500;font-size:11px;color:#aaa;">BACKGROUND</div>
+        <input type="color" id="bgPick" value="${curBg}" style="width:100%;height:32px;border-radius:6px;border:none;margin-bottom:10px;cursor:pointer;">
+        <div style="margin-bottom:6px;font-weight:500;font-size:11px;color:#aaa;">QUESTION BOX</div>
+        <input type="color" id="boxPick" value="${curBox}" style="width:100%;height:32px;border-radius:6px;border:none;margin-bottom:10px;cursor:pointer;">
+        <div style="margin-bottom:6px;font-weight:500;font-size:11px;color:#aaa;">TEXT COLOR</div>
+        <input type="color" id="textPick" value="${curText}" style="width:100%;height:32px;border-radius:6px;border:none;margin-bottom:10px;cursor:pointer;">
+        <button id="colorPickerReset" style="width:100%;padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#aaa;cursor:pointer;font-size:11px;margin-top:2px;">↺ Reset defaults</button>
       `;
 
       Object.assign(colorPanel.style, {
         position: "fixed",
         left: "14px",
         bottom: "60px",
-        padding: "16px",
+        padding: "14px",
         borderRadius: "14px",
         background: "rgba(10,12,20,0.98)",
         backdropFilter: "blur(25px)",
-        border: "1px solid rgba(255,255,255,0.3)",
+        border: "1px solid rgba(255,255,255,0.25)",
         boxShadow: "0 25px 50px rgba(0,0,0,0.6)",
         zIndex: 100002,
-        width: "170px",
+        width: "180px",
         color: "#fff",
         fontSize: "12px",
         fontFamily: "system-ui, sans-serif"
@@ -4401,29 +5026,52 @@ panel.style.display==="none"
 
       document.body.appendChild(colorPanel);
 
-      $("#bgPick").oninput = (e) => {
-        document.body.style.background = `linear-gradient(120deg, ${e.target.value}, ${e.target.value})`;
-      };
+      // Create or reuse a persistent override style tag
+      let overrideStyle = document.getElementById("colorPickerOverride");
+      if (!overrideStyle) {
+        overrideStyle = document.createElement("style");
+        overrideStyle.id = "colorPickerOverride";
+        document.head.appendChild(overrideStyle);
+      }
 
-      $("#boxPick").oninput = (e) => {
-        document.querySelectorAll(".glass").forEach(el =>
-          el.style.background = `linear-gradient(135deg, ${e.target.value}cc, ${e.target.value}99)`
-        );
-      };
-
-      $("#textPick").oninput = (e) => {
-        document.documentElement.style.setProperty("--txt", e.target.value);
-      };
-
-      setTimeout(() => {
-        const closeHandler = (ev) => {
-          if (!colorPanel.contains(ev.target)) {
-            colorPanel.remove();
-            document.removeEventListener("click", closeHandler);
+      function applyColors(bg, box, txt) {
+        overrideStyle.textContent = `
+          body, body * { animation: none !important; }
+          body {
+            background: ${bg} !important;
+            background-image: none !important;
           }
-        };
-        document.addEventListener("click", closeHandler);
-      }, 50);
+          .glass, .resizable-question-box, .engine-topbar, .nav-panel .glass, #questionBox {
+            background: ${box}cc !important;
+            background-image: none !important;
+          }
+          body, body p, body div, body span, body button, body label,
+          #questionText, .opt-text, .subtle, .qbox, .option, .btn-glass,
+          #qMetaLine, #navLegend, .badge-soft, .pill {
+            color: ${txt} !important;
+          }
+          :root { --txt: ${txt} !important; }
+        `;
+      }
+
+      // Read current pickers and apply immediately
+      let bgVal   = curBg;
+      let boxVal  = curBox;
+      let txtVal  = curText;
+
+      $("#bgPick").oninput   = (e) => { bgVal  = e.target.value; applyColors(bgVal, boxVal, txtVal); };
+      $("#boxPick").oninput  = (e) => { boxVal = e.target.value; applyColors(bgVal, boxVal, txtVal); };
+      $("#textPick").oninput = (e) => { txtVal = e.target.value; applyColors(bgVal, boxVal, txtVal); };
+
+      $("#colorPickerClose").onclick = () => colorPanel.remove();
+
+      $("#colorPickerReset").onclick = () => {
+        overrideStyle.textContent = "";
+        bgVal  = curBg;  boxVal = curBox;  txtVal = curText;
+        $("#bgPick").value   = curBg;
+        $("#boxPick").value  = curBox;
+        $("#textPick").value = curText;
+      };
     }
 
     console.log("✅ Tools Panel Ready!");
@@ -5484,6 +6132,8 @@ setTimeout(addBattleButtons, 1800);
 
 })(); // end IIFE
 </script>
+
+
 
 
 </body>
