@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mock Test Portal</title>
 
+  <!-- Google Fonts: Merriweather + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -1234,62 +1239,46 @@ body::before {
 </style>
 
 <style>
-/* ===============================
-   SSC CGL EXAM FONT STANDARD
-   =============================== */
+/* ============================================================
+   DEFAULT FONT: MERRIWEATHER
+   ============================================================ */
 
-/* Use pure system fonts (same feel as SSC CBT) */
-html, body, * {
-  font-family: Arial, Helvetica, "Nimbus Sans", "Liberation Sans", sans-serif !important;
-  letter-spacing: 0 !important;
-  word-spacing: 0 !important;
-  font-weight: 400 !important;
-  text-transform: none !important;
+/* Base — Merriweather for body reading text */
+html, body {
+  font-family: 'Merriweather', Georgia, 'Times New Roman', serif !important;
 }
 
-/* Question text */
-#questionText,
-.qbox,
-.opt-text {
-  font-size: 16px !important;
-  line-height: 1.45 !important;
-  font-weight: 400 !important;
-}
-
-/* Options */
-.option {
+/* Question & option text — Merriweather for exam feel */
+#questionText, .qbox, .opt-text, .bm-qtext {
+  font-family: 'Merriweather', Georgia, serif !important;
   font-size: 15.5px !important;
-  line-height: 1.45 !important;
-}
-
-/* Buttons & labels */
-button,
-.btn,
-.badge,
-.pill,
-input,
-select,
-textarea {
-  font-size: 14px !important;
+  line-height: 1.68 !important;
   font-weight: 400 !important;
 }
 
-/* Headings toned down (no decorative font) */
+.option, .bm-opt {
+  font-family: 'Merriweather', Georgia, serif !important;
+  font-size: 14.5px !important;
+  line-height: 1.5 !important;
+}
+
+/* UI chrome — Inter for clarity */
+button, .btn, .badge, .pill, input, select, textarea,
+.badge-soft, .bm-btn, .bm-label, .bm-input,
+.engine-topbar *, .nav-panel *, .timer-pill,
+#timerText, .kbd, .bm-qbar *, .bm-sb-head, .bm-fin-title {
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+/* Headings — Inter bold */
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, sans-serif !important;
-  font-weight: 600 !important;
-  letter-spacing: 0 !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.3px !important;
 }
 
-/* Remove premium / decorative font effects */
-.brand-title,
-.modal-title {
-  text-shadow: none !important;
-}
-
-/* Numbers look like exam timer */
-#timerText,
-.kbd {
+/* Numeric elements */
+#timerText, .kbd, .bm-qbar-timer {
   font-variant-numeric: tabular-nums;
 }
 </style>
@@ -1979,13 +1968,55 @@ body {
     <!-- PORTAL VIEW -->
     <div id="portalView" class="view active">
       <div class="container py-4 py-md-5">
-        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
-          <div>
-            <h1 class="brand-title mb-1">Mock Test Portal</h1>
-            <div class="subtle" style="font-size:.95rem;margin-top:4px;">Select a subject to explore topics &amp; start a test</div>
-          </div>
-          <div class="d-flex gap-2 flex-wrap mt-3 action-btn-row">
-            <button id="typingBtn" class="btn btn-glass">⌨️ Typing Test Engine</button>
+
+        <!-- ✨ HERO HEADER BOX -->
+        <div style="
+          position: relative;
+          margin-bottom: 2.2rem;
+          border-radius: 24px;
+          overflow: hidden;
+          background: linear-gradient(135deg, rgba(6,182,212,.10) 0%, rgba(124,58,237,.14) 50%, rgba(59,130,246,.10) 100%);
+          border: 1px solid rgba(6,182,212,.30);
+          box-shadow: 0 0 60px rgba(124,58,237,.12), 0 20px 60px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08);
+          padding: clamp(1.4rem, 4vw, 2.4rem) clamp(1.4rem, 4vw, 2.6rem);
+        ">
+          <!-- animated corner accents -->
+          <div style="position:absolute;top:0;left:0;width:80px;height:80px;background:conic-gradient(from 180deg at 0% 0%, rgba(6,182,212,.5), transparent 45%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:0;right:0;width:80px;height:80px;background:conic-gradient(from 0deg at 100% 100%, rgba(124,58,237,.5), transparent 45%);pointer-events:none;"></div>
+          <!-- glow orbs -->
+          <div style="position:absolute;top:-40px;right:80px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle, rgba(124,58,237,.18), transparent 70%);pointer-events:none;animation:orb1 6s ease-in-out infinite;"></div>
+          <div style="position:absolute;bottom:-30px;left:60px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle, rgba(6,182,212,.14), transparent 70%);pointer-events:none;animation:orb2 8s ease-in-out infinite;"></div>
+          <style>
+            @keyframes orb1 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-14px) scale(1.08)} }
+            @keyframes orb2 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(12px) scale(1.06)} }
+          </style>
+
+          <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3" style="position:relative;z-index:1;">
+            <div>
+              <!-- small eyebrow label -->
+              <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:999px;padding:3px 12px;margin-bottom:12px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#06b6d4;box-shadow:0 0 8px #06b6d4;display:inline-block;animation:pulse-dot 1.4s ease-in-out infinite;"></span>
+                <span style="font-size:11px;font-weight:700;letter-spacing:1.2px;color:#06b6d4;">MOCK TEST PLATFORM</span>
+              </div>
+              <style>@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.85)} }</style>
+
+              <h1 class="brand-title mb-0" style="line-height:1.1;">Mock Test Portal</h1>
+              <div style="font-size:1rem;color:rgba(180,210,255,.75);margin-top:8px;max-width:480px;line-height:1.5;">
+                Practice smarter with AI-powered tests, battle mode, and instant feedback.
+              </div>
+
+              <!-- stat pills -->
+              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;">
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#4ade80;">✅ Exam Mode</span>
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#a78bfa;">⚔️ Battle Mode</span>
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(250,204,21,.10);border:1px solid rgba(250,204,21,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#facc15;">📄 PDF Tutor</span>
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(6,182,212,.10);border:1px solid rgba(6,182,212,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#06b6d4;">⌨️ Typing Test</span>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap action-btn-row" style="flex-shrink:0;">
+              <button id="typingBtn" class="btn btn-glass" style="border-color:rgba(6,182,212,.4);color:#06b6d4;font-weight:600;">⌨️ Typing Test Engine</button>
+            </div>
           </div>
         </div>
 
@@ -5327,8 +5358,8 @@ function injectStyles() {
   .bm-bonus-badge.bm-bonus-correct { color:#22c55e;background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.5); }
   .bm-bonus-badge.bm-bonus-wrong   { color:#ef4444;background:rgba(239,68,68,.16);border:1px solid rgba(239,68,68,.45); }
   .bm-qcard-wrap {
-    flex:1;display:flex;flex-direction:column;justify-content:center;
-    padding:18px 18px 10px;overflow-y:auto;
+    flex:1;display:flex;flex-direction:column;justify-content:flex-start;
+    padding:18px 18px 200px;overflow-y:auto;
   }
   .bm-qtext { font-size:17px;line-height:1.55;font-weight:500;color:#eaf0ff;margin-bottom:18px; }
   .bm-qimage {
@@ -5364,13 +5395,22 @@ function injectStyles() {
   #bmScoreboard {
     display:none;position:fixed;bottom:0;left:0;right:0;z-index:99991;
     background:rgba(4,6,22,.97);border-top:1px solid rgba(124,58,237,.38);
-    backdrop-filter:blur(14px);padding:8px 14px 10px;max-height:36vh;overflow-y:auto;
+    backdrop-filter:blur(14px);padding:0;max-height:160px;overflow:hidden;
+    transition:max-height .3s ease;
   }
   #bmScoreboard.bm-sb-active { display:block; }
+  #bmScoreboard.bm-sb-expanded { max-height:40vh; }
+  .bm-sb-topbar {
+    display:flex;align-items:center;justify-content:space-between;
+    padding:5px 14px 3px;cursor:pointer;user-select:none;
+  }
   .bm-sb-head {
     font-size:10px;font-weight:800;letter-spacing:2px;
-    color:#06b6d4;text-align:center;margin-bottom:6px;
+    color:#06b6d4;
   }
+  .bm-sb-toggle { font-size:11px;color:rgba(6,182,212,.6);padding:2px 7px;border-radius:6px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2); }
+  #bmSbRows { padding:0 14px 8px;overflow-y:auto;max-height:calc(160px - 28px); }
+  #bmScoreboard.bm-sb-expanded #bmSbRows { max-height:calc(40vh - 28px); }
   .bm-sb-row {
     display:flex;align-items:center;gap:7px;padding:4px 7px;
     border-radius:9px;margin-bottom:4px;
@@ -5505,6 +5545,8 @@ function buildUI() {
       <span class="bm-qbar-label" id="bmQLabel">Q 1/?</span>
       <span class="bm-qbar-timer" id="bmQTimer">0.0s</span>
       <span class="bm-qbar-score" id="bmMyScore">Score: 0</span>
+      <span style="font-size:9px;color:rgba(180,200,255,.4);letter-spacing:.5px;display:none;" class="bm-kbd-hint d-none d-sm-inline">⌨ 1-4 to select</span>
+      <button id="bmSkipBtn" onclick="bmSkipQuestion()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.1);color:#facc15;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Skip this question (no penalty)">⏭ Skip</button>
     </div>
     <div class="bm-bonus-badge" id="bmBonusBadge"></div>
     <div class="bm-qcard-wrap" id="bmQCardWrap">
@@ -5518,7 +5560,10 @@ function buildUI() {
   const sb = document.createElement('div');
   sb.id = 'bmScoreboard';
   sb.innerHTML = `
-    <div class="bm-sb-head">⚡ LIVE LEADERBOARD</div>
+    <div class="bm-sb-topbar" onclick="this.closest('#bmScoreboard').classList.toggle('bm-sb-expanded')">
+      <div class="bm-sb-head">⚡ LIVE LEADERBOARD</div>
+      <span class="bm-sb-toggle" id="bmSbToggleLabel">▲ expand</span>
+    </div>
     <div id="bmSbRows"></div>
   `;
   document.body.appendChild(sb);
@@ -5678,15 +5723,23 @@ function listenRoom() {
     renderPlayerList();
     if (B.active) renderRace();
 
-    // Update waiting list if we're on waiting screen
+    // Check if ALL players are done — works whether we're on waiting screen OR just finished last
+    const playerList = Object.values(B.players);
+    const allDone = playerList.length > 0 && playerList.every(p => p.done);
+
     const waitEl = document.getElementById('bmWaiting');
+    const finEl  = document.getElementById('bmFinished');
+    const isFinished = finEl && finEl.classList.contains('bm-fin-active');
+
+    if (allDone && !isFinished && !B.active) {
+      // All done and we're not still answering questions → show scoreboard
+      bmShowFinished();
+      return;
+    }
+
+    // Update waiting list if we're on waiting screen
     if (waitEl && waitEl.classList.contains('bm-wait-active')) {
       bmRenderWaitList();
-      // Check if ALL players are done → show final scoreboard
-      const playerList = Object.values(B.players);
-      if (playerList.length > 0 && playerList.every(p => p.done)) {
-        bmShowFinished();
-      }
     }
   });
 
@@ -5842,12 +5895,13 @@ function bmShowQuestion(idx) {
 
   // Options
   const keys = ['A','B','C','D'];
+  const nums = ['1','2','3','4'];
   sh.order.forEach((origIdx, displayPos) => {
     const metaId  = String(displayPos + 1);
     const optHtml = q.options[origIdx] || '';
     const btn = document.createElement('button');
     btn.className = 'bm-opt';
-    btn.innerHTML = `<span class="bm-opt-key">${keys[displayPos]}</span><span>${optHtml}</span>`;
+    btn.innerHTML = `<span class="bm-opt-key" title="Press ${nums[displayPos]}">${nums[displayPos]}</span><span class="bm-opt-letter" style="font-size:10px;opacity:.5;margin-right:4px;">${keys[displayPos]}</span><span>${optHtml}</span>`;
     btn.onclick = () => bmSelectOption(metaId, sh.correctMetaId, idx);
     wrap.appendChild(btn);
   });
@@ -5875,9 +5929,8 @@ function bmSelectOption(metaId, correctMetaId, qIdx) {
 
   // Color options
   const opts = document.querySelectorAll('#bmQCardWrap .bm-opt');
-  opts.forEach(btn => {
-    const pos = btn.querySelector('.bm-opt-key').textContent;
-    const m   = String('ABCD'.indexOf(pos) + 1);
+  opts.forEach((btn, i) => {
+    const m = String(i + 1);
     if (m === correctMetaId) btn.classList.add('bm-correct');
     else if (m === metaId)   btn.classList.add('bm-wrong');
     else                     btn.classList.add('bm-disabled');
@@ -5933,6 +5986,39 @@ function bmSelectOption(metaId, correctMetaId, qIdx) {
   setTimeout(() => bmShowQuestion(qIdx + 1), 700);
 }
 
+// ── BATTLE SKIP QUESTION ──────────────────────────────────────────────────────
+function bmSkipQuestion() {
+  if (B.answered) return;
+  B.answered = true;
+
+  if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+
+  // Show "Skipped" badge
+  const badge = document.getElementById('bmBonusBadge');
+  if (badge) {
+    badge.textContent = '⏭ Skipped';
+    badge.className = 'bm-bonus-badge show';
+    badge.style.color = '#facc15';
+    badge.style.background = 'rgba(250,204,21,.14)';
+    badge.style.border = '1px solid rgba(250,204,21,.4)';
+    badge.style.transform = 'translateY(0px)';
+    badge.style.opacity = '1';
+    setTimeout(() => { badge.style.transform = 'translateY(-28px)'; badge.style.opacity = '0'; }, 80);
+    setTimeout(() => {
+      badge.className = 'bm-bonus-badge';
+      badge.style.transform = '';
+      badge.style.opacity = '';
+      badge.style.color = '';
+      badge.style.background = '';
+      badge.style.border = '';
+    }, 700);
+  }
+
+  // No score change — just advance
+  setTimeout(() => { B.answered = false; bmShowQuestion((B.battleIndex || 0) + 1); }, 500);
+}
+window.bmSkipQuestion = bmSkipQuestion;
+
 // ── FALLBACK SHUFFLE (in case engine function not ready) ──────────────────────
 function bmBuildShuffle(qid) {
   if (window.getOrBuildShuffle) return window.getOrBuildShuffle(qid);
@@ -5968,15 +6054,46 @@ function bmPlayerDone() {
   B.active = false;
   if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
 
+  // Mark ourselves done locally FIRST so allDone check is accurate
+  if (!B.players[B.myId]) B.players[B.myId] = {};
+  B.players[B.myId].done = true;
+
   // Mark ourselves done in Firebase
   dbSet(`battle_rooms/${B.roomCode}/players/${B.myId}/done`, true);
 
-  // Hide question overlay, keep scoreboard, show waiting screen
+  // Hide question overlay
   document.getElementById('bmQuestionOverlay').classList.remove('bm-active');
-  document.getElementById('bmWaiting').classList.add('bm-wait-active');
 
-  // Render waiting list immediately with current state
+  // Check if ALL players (including us) are already done → skip waiting screen
+  const playerList = Object.values(B.players);
+  if (playerList.length > 0 && playerList.every(p => p.done)) {
+    bmShowFinished();
+    return;
+  }
+
+  // Show waiting screen
+  document.getElementById('bmWaiting').classList.add('bm-wait-active');
   bmRenderWaitList();
+
+  // Fallback: poll Firebase every 1.5s in case listener misses the final update
+  if (B._pollInterval) clearInterval(B._pollInterval);
+  B._pollInterval = setInterval(async () => {
+    if (!B.db || !B.roomCode) { clearInterval(B._pollInterval); return; }
+    const finEl = document.getElementById('bmFinished');
+    if (finEl && finEl.classList.contains('bm-fin-active')) {
+      clearInterval(B._pollInterval); return;
+    }
+    try {
+      const snap = await B.db.ref(`battle_rooms/${B.roomCode}/players`).once('value');
+      const players = snap.val() || {};
+      const vals = Object.values(players);
+      if (vals.length > 0 && vals.every(p => p.done)) {
+        clearInterval(B._pollInterval);
+        B.players = players;
+        bmShowFinished();
+      }
+    } catch(_) {}
+  }, 1500);
 }
 
 function bmRenderWaitList() {
@@ -5993,6 +6110,7 @@ function bmRenderWaitList() {
 
 // ── SHOW FINAL SCOREBOARD (called when ALL players are done) ──────────────────
 function bmShowFinished() {
+  if (B._pollInterval) { clearInterval(B._pollInterval); B._pollInterval = null; }
   document.getElementById('bmQuestionOverlay').classList.remove('bm-active');
   document.getElementById('bmWaiting').classList.remove('bm-wait-active');
   document.getElementById('bmScoreboard').classList.remove('bm-sb-active');
@@ -6020,6 +6138,7 @@ function bmShowFinished() {
 }
 
 window.bmExitBattle = function() {
+  if (B._pollInterval) { clearInterval(B._pollInterval); B._pollInterval = null; }
   document.getElementById('bmFinished').classList.remove('bm-fin-active');
   document.getElementById('bmQuestionOverlay').classList.remove('bm-active');
   document.getElementById('bmScoreboard').classList.remove('bm-sb-active');
@@ -6112,6 +6231,22 @@ function showFbHelp() {
     'Done! Battle works across all devices.'
   );
 }
+
+// ── KEYBOARD SHORTCUTS IN BATTLE MODE ────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+  // Only active during battle question phase
+  if (!B.active || B.answered) return;
+  const key = e.key;
+  if (!['1','2','3','4'].includes(key)) return;
+
+  // Find the option buttons
+  const opts = document.querySelectorAll('#bmQCardWrap .bm-opt');
+  const idx = parseInt(key) - 1;
+  if (opts[idx]) {
+    e.preventDefault();
+    opts[idx].click();
+  }
+});
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 function boot() {
