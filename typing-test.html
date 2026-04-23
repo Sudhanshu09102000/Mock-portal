@@ -1,238 +1,1147 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="amber">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Typing Test Engine</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TYPEFORCE — Elite Typing Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#08080f;--bg2:#0f0f1a;--bg3:#17172a;
+  --border:#22223a;--muted:#2e2e50;--sub:#5a5a8a;
+  --text:#c0c0e0;--accent:#f5a623;--correct:#52e3a1;
+  --incorrect:#ff5b6b;--inc-bg:rgba(255,91,107,.13);
+  --caret:#fff;--glow:rgba(245,166,35,.45);
+  --font-mono:'JetBrains Mono',monospace;
+  --font-display:'Orbitron',sans-serif;
+  --font-ui:'Rajdhani',sans-serif;
+}
+[data-theme="green"]{--accent:#00e676;--glow:rgba(0,230,118,.4);--correct:#b9f6ca;}
+[data-theme="blue"]{--accent:#40c4ff;--glow:rgba(64,196,255,.4);--correct:#80d8ff;}
+[data-theme="rose"]{--accent:#ff4081;--glow:rgba(255,64,129,.4);--correct:#ff80ab;}
 
-  <style>
-    body{
-      min-height:100vh;
-      background: linear-gradient(120deg, #0b1020, #1a0b2e);
-      color:#eaf0ff;
-    }
-    .glass{
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(14px);
-      border-radius: 18px;
-      box-shadow: 0 14px 35px rgba(0,0,0,.35);
-    }
-    .reading{
-      white-space: pre-wrap;
-      line-height: 1.7;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 15px;
-    }
-    .ch-ok{ color:#22c55e; }
-    .ch-bad{ color:#ef4444; text-decoration: underline; }
-    .ch-pend{ color: rgba(234,240,255,.75); }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--font-ui);
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  overflow-x:hidden;
+}
 
-    .drag-box{
-      position: fixed;
-      right: 16px;
-      top: 16px;
-      z-index: 1000;
-      width: 260px;
-      cursor: grab;
-      user-select:none;
-    }
-    .drag-box:active{ cursor: grabbing; }
-    .btn-glass{
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.18);
-      color:#eaf0ff;
-      border-radius: 14px;
-    }
-  </style>
+/* scanlines */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:998;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);
+}
+
+.app{width:100%;max-width:920px;padding:0 28px;display:flex;flex-direction:column;min-height:100vh;}
+
+/* ── HEADER ── */
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:26px 0 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px;
+}
+.logo{
+  font-family:var(--font-display);font-size:1.45rem;font-weight:900;
+  color:var(--accent);letter-spacing:.18em;text-shadow:0 0 24px var(--glow);
+  text-decoration:none;user-select:none;
+}
+.logo span{color:var(--sub);}
+
+.hcontrols{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.tlabel{font-family:var(--font-ui);font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-right:3px;}
+
+.tbtn{
+  width:20px;height:20px;border-radius:50%;border:2px solid transparent;
+  cursor:pointer;transition:border-color .2s,transform .2s;flex-shrink:0;
+}
+.tbtn:hover,.tbtn.active{border-color:#fff;transform:scale(1.2);}
+.tbtn[data-t="amber"]{background:#f5a623;}
+.tbtn[data-t="green"]{background:#00e676;}
+.tbtn[data-t="blue"]{background:#40c4ff;}
+.tbtn[data-t="rose"]{background:#ff4081;}
+
+.hdiv{width:1px;height:18px;background:var(--border);margin:0 4px;}
+
+.ibtn{
+  background:var(--bg2);border:1px solid var(--border);color:var(--sub);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:var(--font-ui);
+  font-size:.82rem;font-weight:600;letter-spacing:.06em;
+  transition:all .2s;display:flex;align-items:center;gap:5px;white-space:nowrap;
+}
+.ibtn:hover{color:var(--accent);border-color:var(--accent);}
+.ibtn.active{color:var(--accent);border-color:var(--accent);background:rgba(245,166,35,.07);}
+
+/* ── CONFIG BAR ── */
+.cbar{
+  display:flex;align-items:center;gap:20px;padding:18px 0 14px;
+  border-bottom:1px solid var(--border);flex-wrap:wrap;
+}
+.cgroup{display:flex;align-items:center;gap:3px;}
+.clabel{
+  font-family:var(--font-ui);font-size:.7rem;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.1em;margin-right:5px;white-space:nowrap;
+}
+.pill{
+  background:transparent;border:1px solid var(--border);color:var(--sub);
+  padding:4px 13px;border-radius:2px;cursor:pointer;font-family:var(--font-ui);
+  font-size:.82rem;font-weight:600;letter-spacing:.06em;transition:all .16s;white-space:nowrap;
+}
+.pill:hover{color:var(--text);border-color:var(--muted);}
+.pill.active{background:var(--accent);color:#000;border-color:var(--accent);box-shadow:0 0 14px var(--glow);}
+.sep{width:1px;height:18px;background:var(--border);flex-shrink:0;}
+
+/* ── STATS BAR ── */
+.sbar{display:flex;gap:28px;padding:16px 0 12px;flex-wrap:wrap;align-items:flex-start;}
+.stat{display:flex;flex-direction:column;gap:1px;}
+.slabel{font-family:var(--font-ui);font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:var(--sub);}
+.sval{
+  font-family:var(--font-display);font-size:1.65rem;font-weight:700;
+  color:var(--accent);line-height:1.05;text-shadow:0 0 16px var(--glow);
+  transition:color .15s;
+}
+.sval.dim{color:var(--text);text-shadow:none;font-size:1.15rem;margin-top:5px;}
+.sval.err{color:var(--incorrect);text-shadow:none;font-size:1.15rem;margin-top:5px;}
+
+.pbar{width:100%;min-width:150px;}
+.ptrack{height:3px;background:var(--border);border-radius:1px;overflow:hidden;margin-top:10px;}
+.pfill{height:100%;background:var(--accent);transition:width .25s;box-shadow:0 0 8px var(--glow);}
+.ptxt{font-family:var(--font-mono);font-size:.68rem;color:var(--sub);margin-top:3px;}
+
+/* ── TYPING AREA ── */
+.tsec{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 0 20px;position:relative;}
+
+#text-display{
+  font-family:var(--font-mono);font-size:1.35rem;line-height:1.9;
+  letter-spacing:.02em;color:var(--muted);cursor:text;
+  position:relative;overflow:hidden;
+  height:calc(1.35rem * 1.9 * 3 + 4px);
+  border-left:3px solid transparent;
+  transition:border-color .3s;
+}
+#text-display:focus-within{border-left-color:var(--accent);}
+#text-display.active-test{border-left-color:var(--accent);}
+
+#text-inner{position:relative;transition:transform 120ms ease;will-change:transform;}
+
+.ch{position:relative;}
+.ch.correct{color:var(--correct);}
+.ch.incorrect{color:var(--incorrect);background:var(--inc-bg);}
+.ch.extra{color:var(--incorrect);text-decoration:underline;}
+
+#caret-el{
+  position:absolute;width:2.5px;background:var(--accent);
+  box-shadow:0 0 10px var(--glow),0 0 2px var(--accent);
+  border-radius:1px;pointer-events:none;
+  transition:left .04s,top .07s;
+  animation:cblink .55s step-end infinite;
+  z-index:10;
+}
+@keyframes cblink{0%,100%{opacity:1;}50%{opacity:0;}}
+#caret-el.solid{animation:none;opacity:1;}
+
+/* idle overlay */
+#idle-o{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(to bottom,transparent 0%,var(--bg) 85%);
+  font-family:var(--font-ui);color:var(--sub);font-size:.9rem;letter-spacing:.1em;
+  pointer-events:none;transition:opacity .35s;
+}
+#idle-o.gone{opacity:0;}
+
+/* hidden input */
+#ghost{
+  position:fixed;top:-9999px;left:-9999px;opacity:0;width:1px;height:1px;
+}
+
+.caps-warn{
+  display:none;align-items:center;gap:8px;
+  color:#f59e0b;font-family:var(--font-ui);font-size:.82rem;font-weight:600;
+  margin-top:10px;letter-spacing:.06em;
+}
+.caps-warn.show{display:flex;}
+
+.rhints{
+  margin-top:18px;font-family:var(--font-ui);font-size:.76rem;
+  color:var(--muted);display:flex;gap:18px;flex-wrap:wrap;
+}
+.hk{
+  background:var(--bg3);border:1px solid var(--border);
+  padding:2px 7px;border-radius:3px;font-family:var(--font-mono);
+  font-size:.7rem;color:var(--sub);
+}
+
+/* shake */
+@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-5px);}40%{transform:translateX(5px);}60%{transform:translateX(-3px);}80%{transform:translateX(3px);}
+}
+.shake{animation:shake .28s ease;}
+
+/* ── LIVE MINI GRAPH ── */
+.live-g{position:absolute;right:0;top:0;opacity:.45;pointer-events:none;}
+#live-cv{display:block;}
+
+/* ── FOOTER ── */
+footer{
+  padding:14px 0 22px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+}
+.ftxt{font-family:var(--font-ui);font-size:.72rem;color:var(--muted);letter-spacing:.05em;}
+
+/* ── MODAL BASE ── */
+.overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);
+  backdrop-filter:blur(5px);z-index:100;align-items:center;justify-content:center;padding:20px;
+}
+.overlay.show{display:flex;}
+.modal{
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:30px;width:100%;max-width:600px;
+  box-shadow:0 28px 70px rgba(0,0,0,.7);
+}
+.mtitle{
+  font-family:var(--font-display);font-size:.9rem;color:var(--accent);
+  letter-spacing:.12em;margin-bottom:18px;text-shadow:0 0 14px var(--glow);
+}
+.modal textarea{
+  width:100%;height:190px;background:var(--bg);border:1px solid var(--border);
+  border-radius:4px;color:var(--text);font-family:var(--font-mono);font-size:.88rem;
+  padding:14px;resize:vertical;outline:none;line-height:1.65;transition:border-color .2s;
+}
+.modal textarea:focus{border-color:var(--accent);}
+.macts{display:flex;justify-content:flex-end;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.btn{
+  font-family:var(--font-ui);font-size:.88rem;font-weight:600;letter-spacing:.08em;
+  padding:8px 22px;border-radius:4px;cursor:pointer;border:1px solid var(--border);transition:all .18s;
+}
+.btn-g{background:transparent;color:var(--sub);}
+.btn-g:hover{color:var(--text);border-color:var(--muted);}
+.btn-p{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+.btn-p:hover{opacity:.9;box-shadow:0 0 18px var(--glow);}
+
+/* ── RESULTS OVERLAY ── */
+.results-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);
+  backdrop-filter:blur(10px);z-index:200;
+  align-items:center;justify-content:center;padding:20px;
+}
+.results-overlay.show{display:flex;}
+.rcard{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:36px;width:100%;max-width:720px;
+  box-shadow:0 36px 90px rgba(0,0,0,.75);
+  animation:slideUp .38s cubic-bezier(.34,1.56,.64,1);
+  max-height:92vh;overflow-y:auto;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(28px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+.rtitle{font-family:var(--font-display);font-size:.7rem;letter-spacing:.22em;color:var(--sub);text-transform:uppercase;margin-bottom:20px;}
+
+.pbadge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(245,166,35,.1);border:1px solid var(--accent);
+  border-radius:2px;padding:4px 14px;font-family:var(--font-ui);
+  font-size:.78rem;color:var(--accent);font-weight:700;margin-bottom:16px;letter-spacing:.06em;
+}
+
+.rmain{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:22px;}
+.ri{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:6px;padding:16px;text-align:center;
+}
+.ri.hl{border-color:var(--accent);background:rgba(245,166,35,.05);grid-column:span 2;}
+.rlabel{font-family:var(--font-ui);font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:var(--sub);margin-bottom:8px;}
+.rval{font-family:var(--font-display);font-size:1.9rem;font-weight:700;color:var(--accent);text-shadow:0 0 18px var(--glow);line-height:1;}
+.ri.hl .rval{font-size:2.8rem;}
+.rsub{font-family:var(--font-ui);font-size:.72rem;color:var(--sub);margin-top:5px;}
+
+.cdetail{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:22px;}
+.cdi{font-family:var(--font-ui);font-size:.82rem;color:var(--sub);display:flex;align-items:center;gap:5px;}
+.cdi strong{color:var(--text);}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;}
+
+.csec{margin-bottom:22px;}
+.clbl{font-family:var(--font-ui);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px;}
+#wpm-chart{width:100%;height:110px;border-radius:6px;background:var(--bg);border:1px solid var(--border);display:block;}
+
+.racts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+/* ── HISTORY MODAL ── */
+.hlist{max-height:300px;overflow-y:auto;}
+.hrow{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:9px 0;border-bottom:1px solid var(--border);
+}
+.hrow:last-child{border-bottom:none;}
+.hmeta{font-family:var(--font-ui);font-size:.72rem;color:var(--sub);}
+.hspd{font-family:var(--font-display);color:var(--accent);font-size:1.35rem;text-shadow:0 0 10px var(--glow);}
+.hemp{font-family:var(--font-ui);font-size:.85rem;color:var(--sub);text-align:center;padding:24px 0;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* responsive */
+@media(max-width:620px){
+  #text-display{font-size:1.1rem;}
+  .rmain{grid-template-columns:1fr 1fr;}
+  .ri.hl{grid-column:span 2;}
+  .ri.hl .rval{font-size:2.2rem;}
+  .sval{font-size:1.3rem;}
+}
+</style>
 </head>
 <body>
-<div class="container py-4">
-  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-    <h2 class="mb-0">Typing Test Engine</h2>
-    <div class="d-flex gap-2">
-      <a href="index.html" class="btn btn-glass">Back to portal</a>
-    </div>
-  </div>
+<div class="app">
 
-  <div class="glass p-3 p-md-4 mb-3">
-    <label class="form-label">Paste passage (editable before start)</label>
-    <textarea id="passageInput" class="form-control" rows="6" placeholder="Paste passage here..."></textarea>
-    <div class="d-flex gap-2 flex-wrap mt-3">
-      <button id="startBtn" class="btn btn-success">Start test</button>
-      <button id="submitBtn" class="btn btn-danger" disabled>Submit</button>
-    </div>
-    <div class="small mt-2" style="color:rgba(234,240,255,.75)">
-      After start: passage input is disabled; typing area becomes active with live green/red highlights.
-    </div>
+<!-- HEADER -->
+<header>
+  <div class="logo">TYPE<span>FORCE</span></div>
+  <div class="hcontrols">
+    <span class="tlabel">THEME</span>
+    <button class="tbtn active" data-t="amber" title="Amber" onclick="setTheme('amber')"></button>
+    <button class="tbtn" data-t="green" title="Matrix" onclick="setTheme('green')"></button>
+    <button class="tbtn" data-t="blue" title="Ocean" onclick="setTheme('blue')"></button>
+    <button class="tbtn" data-t="rose" title="Cherry" onclick="setTheme('rose')"></button>
+    <div class="hdiv"></div>
+    <button class="ibtn" id="sound-btn" onclick="toggleSound()"><span id="sicon">🔇</span> SFX</button>
+    <button class="ibtn" onclick="showHistory()">📊 BEST</button>
+    <button class="ibtn" onclick="openCustomModal()">✏ CUSTOM</button>
   </div>
+</header>
 
-  <div id="readingWrap" class="glass p-3 p-md-4 mb-3 d-none">
-    <div class="fw-semibold mb-2">Reading area</div>
-    <div id="readingArea" class="reading"></div>
+<!-- CONFIG BAR -->
+<div class="cbar">
+  <div class="cgroup">
+    <span class="clabel">MODE</span>
+    <button class="pill active" data-mode="time" onclick="setMode('time')">⏱ TIME</button>
+    <button class="pill" data-mode="words" onclick="setMode('words')">📝 WORDS</button>
+    <button class="pill" data-mode="quote" onclick="setMode('quote')">💬 QUOTE</button>
   </div>
-
-  <div class="glass p-3 p-md-4">
-    <label class="form-label">Typing area</label>
-    <textarea id="typingArea" class="form-control" rows="6" disabled placeholder="Start test to enable typing..."></textarea>
+  <div class="sep"></div>
+  <div class="cgroup" id="time-opts">
+    <span class="clabel">SECONDS</span>
+    <button class="pill active" data-time="15" onclick="setTime(15)">15</button>
+    <button class="pill" data-time="30" onclick="setTime(30)">30</button>
+    <button class="pill" data-time="60" onclick="setTime(60)">60</button>
+    <button class="pill" data-time="120" onclick="setTime(120)">120</button>
+  </div>
+  <div class="cgroup" id="word-opts" style="display:none">
+    <span class="clabel">WORDS</span>
+    <button class="pill active" data-words="10" onclick="setWords(10)">10</button>
+    <button class="pill" data-words="25" onclick="setWords(25)">25</button>
+    <button class="pill" data-words="50" onclick="setWords(50)">50</button>
+    <button class="pill" data-words="100" onclick="setWords(100)">100</button>
+  </div>
+  <div class="cgroup" id="cat-opts" style="display:none">
+    <span class="clabel">CATEGORY</span>
+    <button class="pill active" data-cat="tech" onclick="setCat('tech')">TECH</button>
+    <button class="pill" data-cat="lit" onclick="setCat('lit')">LIT</button>
+    <button class="pill" data-cat="phil" onclick="setCat('phil')">PHIL</button>
+    <button class="pill" data-cat="quotes" onclick="setCat('quotes')">QUOTES</button>
+    <button class="pill" data-cat="code" onclick="setCat('code')">CODE</button>
   </div>
 </div>
 
-<div id="statsBox" class="glass p-3 drag-box">
-  <div class="d-flex justify-content-between align-items-center">
-    <div class="fw-semibold">Stats</div>
-    <span class="small" style="color:rgba(234,240,255,.75)">Drag</span>
+<!-- STATS BAR -->
+<div class="sbar">
+  <div class="stat">
+    <div class="slabel">WPM</div>
+    <div class="sval" id="s-wpm">0</div>
   </div>
-  <hr class="border-white border-opacity-10 my-2">
-  <div class="small">Time (s): <span id="tSec">0</span></div>
-  <div class="small">Keys count: <span id="keysCount">0</span></div>
-  <div class="small">WPM: <span id="wpm">0</span></div>
-  <div class="small">Full mistakes: <span id="fullMist">0</span></div>
-  <div class="small">Half mistakes: <span id="halfMist">0</span></div>
-  <div class="small">Error %: <span id="errPct">0</span></div>
+  <div class="stat">
+    <div class="slabel">RAW</div>
+    <div class="sval dim" id="s-raw">0</div>
+  </div>
+  <div class="stat">
+    <div class="slabel">ACCURACY</div>
+    <div class="sval" id="s-acc">—</div>
+  </div>
+  <div class="stat">
+    <div class="slabel" id="counter-lbl">TIME</div>
+    <div class="sval" id="s-counter">—</div>
+  </div>
+  <div class="stat">
+    <div class="slabel">ERRORS</div>
+    <div class="sval err" id="s-err">0</div>
+  </div>
+  <div class="stat pbar">
+    <div class="slabel">PROGRESS</div>
+    <div class="ptrack"><div class="pfill" id="pfill" style="width:0%"></div></div>
+    <div class="ptxt" id="ptxt">0 / 0</div>
+  </div>
+</div>
+
+<!-- TYPING SECTION -->
+<div class="tsec">
+  <div style="position:relative">
+    <div id="text-display" tabindex="0" onclick="focusGhost()">
+      <div id="text-inner"></div>
+      <div id="caret-el"></div>
+    </div>
+    <div id="idle-o">— CLICK OR START TYPING —</div>
+    <div class="live-g"><canvas id="live-cv" width="130" height="46"></canvas></div>
+  </div>
+  <div class="caps-warn" id="caps-w">⚠ CAPS LOCK IS ON</div>
+  <div class="rhints">
+    <span><span class="hk">Tab</span> restart</span>
+    <span><span class="hk">Esc</span> restart</span>
+    <span><span class="hk">Backspace</span> correct</span>
+    <span><span class="hk">Ctrl+K</span> custom text</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftxt">TYPEFORCE v3.0 &mdash; Elite Typing Engine &mdash; <span id="best-inline" style="color:var(--accent)"></span></div>
+  <div class="ftxt" style="color:var(--muted)">Tab / Esc = new test</div>
+</footer>
+</div>
+
+<!-- Ghost Input -->
+<input id="ghost" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+
+<!-- Custom Modal -->
+<div class="overlay" id="custom-modal">
+  <div class="modal">
+    <div class="mtitle">✏ CUSTOM TEXT</div>
+    <textarea id="custom-ta" placeholder="Paste or type your custom text here... (minimum 20 characters)&#10;&#10;Tip: paste a paragraph from any book, article, code snippet or anything you want to practice!"></textarea>
+    <div style="font-family:var(--font-ui);font-size:.75rem;color:var(--sub);margin-top:7px;" id="ccount">0 characters</div>
+    <div class="macts">
+      <button class="btn btn-g" onclick="closeCustomModal()">CANCEL</button>
+      <button class="btn btn-p" onclick="applyCustom()">START TEST →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Results Overlay -->
+<div class="results-overlay" id="results-o">
+  <div class="rcard">
+    <div class="rtitle">TEST COMPLETE</div>
+    <div class="pbadge" id="pbadge" style="display:none">🏆 NEW PERSONAL BEST!</div>
+    <div class="rmain">
+      <div class="ri hl">
+        <div class="rlabel">NET WPM</div>
+        <div class="rval" id="r-wpm">0</div>
+        <div class="rsub">words per minute</div>
+      </div>
+      <div class="ri">
+        <div class="rlabel">ACCURACY</div>
+        <div class="rval" id="r-acc">0%</div>
+        <div class="rsub">precision</div>
+      </div>
+      <div class="ri">
+        <div class="rlabel">RAW WPM</div>
+        <div class="rval" id="r-raw" style="font-size:1.65rem">0</div>
+        <div class="rsub">gross speed</div>
+      </div>
+    </div>
+    <div class="cdetail">
+      <div class="cdi"><span class="dot" style="background:var(--correct)"></span>Correct <strong id="r-cor">0</strong></div>
+      <div class="cdi"><span class="dot" style="background:var(--incorrect)"></span>Incorrect <strong id="r-inc">0</strong></div>
+      <div class="cdi"><span class="dot" style="background:var(--accent)"></span>Consistency <strong id="r-con">0%</strong></div>
+      <div class="cdi"><span class="dot" style="background:var(--sub)"></span>Time <strong id="r-time">0s</strong></div>
+      <div class="cdi"><span class="dot" style="background:var(--sub)"></span>Chars/min <strong id="r-cpm">0</strong></div>
+    </div>
+    <div class="csec">
+      <div class="clbl">WPM OVER TIME (net / raw)</div>
+      <canvas id="wpm-chart"></canvas>
+    </div>
+    <div class="racts">
+      <button class="btn btn-g" onclick="closeResults()">✕ CLOSE</button>
+      <button class="btn btn-p" onclick="restartTest()">⟳ RETRY SAME</button>
+      <button class="btn btn-g" onclick="nextTest()">→ NEW TEST</button>
+    </div>
+  </div>
+</div>
+
+<!-- History Modal -->
+<div class="overlay" id="hist-modal">
+  <div class="modal" style="max-width:480px">
+    <div class="mtitle">📊 SCORE HISTORY</div>
+    <div class="hlist" id="hlist"></div>
+    <div class="macts">
+      <button class="btn btn-g" onclick="clearHist()">🗑 CLEAR ALL</button>
+      <button class="btn btn-p" onclick="closeHistory()">CLOSE</button>
+    </div>
+  </div>
 </div>
 
 <script>
-const $ = (id)=>document.getElementById(id);
+/* ════════════════════════════════════════════════════
+   TYPEFORCE v3.0 — God-Level Typing Engine
+════════════════════════════════════════════════════ */
 
-let running=false;
-let t=0;
-let timer=null;
-let keys=0;
-let passage="";
-let submitted=false;
+// ──────────────────────────────────────────────
+// TEXT LIBRARY
+// ──────────────────────────────────────────────
+const DB = {
+  tech:[
+    "Software engineering is the application of systematic, disciplined, and quantifiable approaches to the development, operation, and maintenance of software. Every line of code is a decision, a trade-off between clarity and performance, between today's deadline and tomorrow's maintainability.",
+    "The terminal is the programmer's native habitat. Commands like ls, cd, grep, and awk form the vocabulary of system interaction. Piping output between programs embodies the Unix philosophy of doing one thing and doing it well, building complex workflows from simple composable tools.",
+    "Version control with Git enables teams to collaborate without collision. Branching creates parallel universes of code. Merging brings them back together. Rebasing rewrites history. The commit graph is a directed acyclic testimony to every decision ever made on a project.",
+    "APIs define the contracts between systems. RESTful endpoints speak in HTTP verbs: GET retrieves, POST creates, PUT replaces, PATCH modifies, DELETE removes. Status codes like 200, 404, and 500 tell the story of every interaction between client and server.",
+    "Docker containers solve the ancient problem of environment drift. Package your application, its runtime, its dependencies, its configuration into a single reproducible artifact. What runs on your laptop will run identically in production, in testing, on any machine anywhere on earth.",
+    "React changed how we think about user interfaces. Components are the atoms of UI, composable and reusable. Props flow down, events bubble up. The virtual DOM reconciles what is with what should be, batching updates for maximum efficiency and minimal repaint.",
+    "Database indices are the difference between a query that takes milliseconds and one that scans every row. B-trees organize data so lookups are fast. Composite indices serve multiple query patterns. Covering indices eliminate table lookups entirely. Schema design is performance design.",
+    "Asynchronous programming with async and await transforms callback hell into linear, readable code. Promises represent future values. The event loop processes one task at a time but never blocks on IO. JavaScript's concurrency model is single-threaded but never idle.",
+    "Machine learning models learn patterns from data rather than following explicit rules. Neural networks with millions of parameters are trained via gradient descent, iteratively adjusting weights to minimize prediction error across vast datasets of examples.",
+    "Kubernetes orchestrates containers at scale, scheduling workloads across clusters of machines, healing failed pods, scaling deployments up and down based on load, managing secrets and configuration, providing service discovery and load balancing out of the box."
+  ],
+  lit:[
+    "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope.",
+    "Call me Ishmael. Some years ago, never mind how long precisely, having little money in my pocket and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen.",
+    "All happy families are alike; each unhappy family is unhappy in its own way. Everything was in confusion in the Oblonsky household. The wife had found out that the husband was having an affair with their former French governess, and had declared that she could not go on living in the same house.",
+    "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife. However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families.",
+    "The sky above the port was the color of television, tuned to a dead channel. In my younger and more vulnerable years my father gave me some advice that I have been turning over in my mind ever since. Whenever you feel like criticizing anyone, he told me, just remember that all the people in this world haven't had the advantages that you've had.",
+    "To be, or not to be, that is the question: whether it is nobler in the mind to suffer the slings and arrows of outrageous fortune, or to take arms against a sea of troubles and by opposing end them. To die, to sleep, no more; and by a sleep to say we end the heartache.",
+    "Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice. At that time Macondo was a village of twenty adobe houses, built on the bank of a river of clear water.",
+    "The man in black fled across the desert, and the gunslinger followed. The desert was the apotheosis of all deserts, huge, standing to the sky for what looked like eternity in all directions. It was white and blinding and waterless and without feature save for the faint, cloudy haze of the mountains."
+  ],
+  phil:[
+    "I think, therefore I am. This is the one truth Descartes could not doubt, for even in the act of doubting, he proved his existence as a thinking being. From this foundation he reconstructed an entire epistemological framework, proving God's existence and the reality of the external world.",
+    "The unexamined life is not worth living, Socrates declared at his trial. Philosophy was not mere academic exercise but a way of being, a commitment to questioning every assumption, every inherited belief, every comfortable certainty. To philosophize is to court discomfort in pursuit of truth.",
+    "We are what we repeatedly do. Excellence, then, is not an act but a habit. Aristotle understood that virtue is not simply knowledge of the good but the reliable disposition to act well, formed through deliberate practice and sustained over a lifetime of moral cultivation.",
+    "God is dead and we have killed him. Nietzsche was not celebrating atheism but mourning the collapse of the moral framework that had organized Western civilization. Without God as the foundation, who would supply the values? This was the challenge he called nihilism, and the task was the revaluation of all values.",
+    "Man is condemned to be free. Sartre argued that existence precedes essence, that we are not born with a predetermined nature or purpose. We are thrown into existence and must create ourselves through our choices. There is no excuse, no escape from this radical, terrifying freedom.",
+    "The limits of my language are the limits of my world. Wittgenstein saw that philosophical problems often arise not from deep metaphysical mysteries but from the misuse of language, from allowing words to run idle, freed from the language games that give them their meaning.",
+    "In the beginning was the logos, and the logos was with God, and the logos was God. Reason is the structure of reality itself. Hegel's Absolute Spirit unfolds through history in a dialectical dance of thesis, antithesis, and synthesis, each contradiction resolved at a higher level of understanding.",
+    "The greatest happiness of the greatest number is the foundation of morals and legislation. Bentham's utilitarian calculus reduces every ethical decision to a single metric: net pleasure. Mill refined this to account for quality as well as quantity, distinguishing higher from lower pleasures."
+  ],
+  quotes:[
+    "The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle. As with all matters of the heart, you'll know when you find it. Stay hungry. Stay foolish. Your time is limited, so don't waste it living someone else's life.",
+    "Success is not final, failure is not fatal: it is the courage to continue that counts. The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty. Never, never, never give up. We make a living by what we get, but we make a life by what we give.",
+    "In the middle of every difficulty lies opportunity. Logic will get you from A to B but imagination will take you everywhere. Two things are infinite: the universe and human stupidity; and I am not sure about the universe. Try not to become a man of success but rather try to become a man of value.",
+    "The future belongs to those who believe in the beauty of their dreams. You must be the change you wish to see in the world. In the end, it is not the years in your life that count, it is the life in your years. It always seems impossible until it is done.",
+    "Whether you think you can or you think you cannot, you are right. The secret of getting ahead is getting started. The only place where success comes before work is in the dictionary. Genius is one percent inspiration and ninety-nine percent perspiration.",
+    "Two roads diverged in a wood, and I took the one less traveled by, and that has made all the difference. Not all those who wander are lost. All we have to decide is what to do with the time that is given us. Even the smallest person can change the course of the future.",
+    "I have not failed. I have just found ten thousand ways that will not work. Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time. Many of life's failures are people who did not realize how close they were to success when they gave up.",
+    "Do not go gentle into that good night. Rage, rage against the dying of the light. Old age should burn and rave at close of day. The road not taken makes all the difference. Because I could not stop for Death, he kindly stopped for me. I heard a Fly buzz when I died."
+  ],
+  code:[
+    "function fibonacci(n) { if (n <= 1) return n; return fibonacci(n - 1) + fibonacci(n - 2); } const memoize = fn => { const cache = {}; return (...args) => { const key = JSON.stringify(args); return cache[key] ?? (cache[key] = fn(...args)); }; };",
+    "const fetchData = async (url) => { try { const response = await fetch(url); if (!response.ok) throw new Error(`HTTP error: ${response.status}`); const data = await response.json(); return data; } catch (error) { console.error('Fetch failed:', error); throw error; } };",
+    "class EventEmitter { constructor() { this.events = {}; } on(event, listener) { (this.events[event] = this.events[event] || []).push(listener); return this; } emit(event, ...args) { (this.events[event] || []).forEach(fn => fn(...args)); return this; } }",
+    "const debounce = (fn, delay) => { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); }; }; const throttle = (fn, limit) => { let inThrottle; return (...args) => { if (!inThrottle) { fn(...args); inThrottle = true; setTimeout(() => inThrottle = false, limit); } }; };",
+    "SELECT u.name, COUNT(o.id) AS order_count, SUM(o.total) AS revenue FROM users u LEFT JOIN orders o ON u.id = o.user_id WHERE o.created_at >= NOW() - INTERVAL '30 days' GROUP BY u.id, u.name HAVING COUNT(o.id) > 5 ORDER BY revenue DESC LIMIT 20;",
+    "def binary_search(arr, target): left, right = 0, len(arr) - 1; while left <= right: mid = (left + right) // 2; if arr[mid] == target: return mid; elif arr[mid] < target: left = mid + 1; else: right = mid - 1; return -1",
+    "const createStore = (reducer, initialState) => { let state = initialState; const listeners = []; return { getState: () => state, dispatch: action => { state = reducer(state, action); listeners.forEach(fn => fn()); }, subscribe: fn => { listeners.push(fn); return () => listeners.filter(l => l !== fn); } }; };",
+    "git checkout -b feature/new-component && git add -A && git commit -m 'feat: add responsive navigation component with mobile menu' && git push origin feature/new-component && gh pr create --title 'Add responsive navigation' --body 'Closes #42'"
+  ]
+};
 
-function start(){
-  passage = $('passageInput').value || '';
-  if(!passage.trim()){
-    alert('Paste a passage first.');
+// Common word pool for time/words mode
+const WORDS = "the be to of and a in that have it for not on with he as you do at this but his by from they we say her she or an will my one all would there their what so up out if about who get which go me when make can like time no just him know take people into year your good some could them see other than then now look only come its over think also back after use two how our work first well way even new want because any these give day most us great between need large often turn move play spell air away animal house point page letter mother answer found study still learn should world high every near add food between own below country plant last school father keep tree never start city earth eye light thought head under story saw left few while along might close something seem next hard open example begin life always those both paper together got group often run important until children side feet car mile night walk white sea began grow took river four carry state once book hear stop without late miss idea body eat face watch far Indian real almost let above girl sometimes mountain cut young talk soon list song leave family body music color stand sun questions fish area mark dog horse birds problem complete room knew since ever piece told usually didn't friend easy heard order red door sure become top ship across today during short better best however low hours black products happened whole measure remember early waves reached listen wind rock space covered fast several hold himself toward five step morning passed vowel war lay against pattern slow center love person money serve appear road map rain rule govern pull cold notice voice fall power town fine drive spoke instead contain front teach week final gave green oh quick develop ocean warm free minute strong special mind behind clear tail produce fact street inch lot nothing course stay wheel full force blue object decide surface deep moon island foot system busy test record boat common gold possible plane stead dry wonder laugh thousand ago ran check game shape equate hot miss brought heat snow tire bring yes distant fill east paint language among grand ball yet wave drop heart".split(" ");
+
+// ──────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────
+const S = {
+  mode:'time', timeLimit:15, wordCount:10, category:'tech', theme:'amber',
+  sound:false, customText:null, savedText:null,
+  text:'', typed:[], caretPos:0,
+  startTime:null, endTime:null, status:'idle',
+  timerInt:null, timeLeft:15,
+  wpmHist:[], rawHist:[], totalKeys:0, errorCount:0,
+  lineMap:[], lineHeight:40,
+};
+
+// ──────────────────────────────────────────────
+// AUDIO
+// ──────────────────────────────────────────────
+let aCtx=null;
+function getACtx(){return aCtx||(aCtx=new(window.AudioContext||window.webkitAudioContext)());}
+function beep(freq,dur,vol=0.07,type='square'){
+  if(!S.sound) return;
+  try{
+    const c=getACtx(),o=c.createOscillator(),g=c.createGain();
+    o.connect(g);g.connect(c.destination);
+    o.type=type;o.frequency.value=freq;
+    g.gain.setValueAtTime(vol,c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dur);
+    o.start(c.currentTime);o.stop(c.currentTime+dur);
+  }catch(e){}
+}
+function playKey(ok){beep(ok?900:220, ok?.04:.06, ok?.06:.09);}
+function playDone(){
+  if(!S.sound) return;
+  [523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18,.09,'sine'),i*80));
+}
+function playBackspace(){beep(400,.03,.04,'sine');}
+
+// ──────────────────────────────────────────────
+// TEXT GENERATION
+// ──────────────────────────────────────────────
+function genText(){
+  if(S.customText) return S.customText;
+  if(S.mode==='time'){
+    const n=300; // enough words
+    let w=[];for(let i=0;i<n;i++) w.push(WORDS[Math.floor(Math.random()*WORDS.length)]);
+    return w.join(' ');
+  }
+  if(S.mode==='words'){
+    let w=[];for(let i=0;i<S.wordCount;i++) w.push(WORDS[Math.floor(Math.random()*WORDS.length)]);
+    return w.join(' ');
+  }
+  if(S.mode==='quote'){
+    const pool=DB[S.category]||DB.tech;
+    return pool[Math.floor(Math.random()*pool.length)];
+  }
+  return DB.tech[0];
+}
+
+function extendText(){
+  let w=[];for(let i=0;i<100;i++) w.push(WORDS[Math.floor(Math.random()*WORDS.length)]);
+  S.text+=' '+w.join(' ');
+  renderText();
+}
+
+// ──────────────────────────────────────────────
+// RENDER
+// ──────────────────────────────────────────────
+function renderText(){
+  const inner=document.getElementById('text-inner');
+  inner.innerHTML='';
+  inner.style.transform='translateY(0)';
+  S._scrollY=0;
+
+  S.text.split('').forEach((ch,i)=>{
+    const s=document.createElement('span');
+    s.className='ch';
+    s.dataset.i=i;
+    s.textContent=ch==='\n'?' ':ch;
+    inner.appendChild(s);
+  });
+
+  buildLineMap();
+  updateDisplay();
+  positionCaret();
+}
+
+function buildLineMap(){
+  const inner=document.getElementById('text-inner');
+  const spans=inner.querySelectorAll('.ch');
+  const map={};
+  spans.forEach((sp,i)=>{
+    const top=sp.offsetTop;
+    if(!map[top]) map[top]=[];
+    map[top].push(i);
+  });
+  const sorted=Object.keys(map).sort((a,b)=>+a-+b);
+  S.lineMap=sorted.map(t=>({top:+t,chars:map[t]}));
+  S.lineHeight=S.lineMap.length>1?(S.lineMap[1].top-S.lineMap[0].top):40;
+}
+
+function updateDisplay(){
+  const spans=document.querySelectorAll('#text-inner .ch');
+  spans.forEach((sp,i)=>{
+    sp.className='ch';
+    if(i<S.caretPos){
+      sp.classList.add(S.typed[i]===S.text[i]?'correct':'incorrect');
+    }
+  });
+}
+
+function getCaretLine(){
+  for(let i=0;i<S.lineMap.length;i++){
+    const line=S.lineMap[i];
+    if(S.caretPos<=line.chars[line.chars.length-1]) return i;
+  }
+  return S.lineMap.length-1;
+}
+
+function positionCaret(){
+  const display=document.getElementById('text-display');
+  const inner=document.getElementById('text-inner');
+  const caret=document.getElementById('caret-el');
+  const spans=inner.querySelectorAll('.ch');
+  if(!spans.length||!caret) return;
+
+  // Scroll
+  const cLine=getCaretLine();
+  if(cLine>1){
+    S._scrollY=-(cLine-1)*S.lineHeight;
+  } else {
+    S._scrollY=0;
+  }
+  inner.style.transform=`translateY(${S._scrollY}px)`;
+
+  // Position caret
+  const target=S.caretPos<spans.length?spans[S.caretPos]:spans[spans.length-1];
+  const dRect=display.getBoundingClientRect();
+  const tRect=target.getBoundingClientRect();
+  const left=(S.caretPos<spans.length?tRect.left:tRect.right)-dRect.left;
+  const top=tRect.top-dRect.top;
+
+  caret.style.left=Math.max(0,left-1)+'px';
+  caret.style.top=top+'px';
+  caret.style.height=tRect.height+'px';
+}
+
+// ──────────────────────────────────────────────
+// INPUT
+// ──────────────────────────────────────────────
+function focusGhost(){document.getElementById('ghost').focus();}
+document.getElementById('text-display').addEventListener('click',focusGhost);
+document.getElementById('ghost').addEventListener('keydown',onKeydown);
+document.getElementById('ghost').addEventListener('input',onInput);
+
+function onKeydown(e){
+  // Caps lock
+  const caps=document.getElementById('caps-w');
+  e.getModifierState&&e.getModifierState('CapsLock')?caps.classList.add('show'):caps.classList.remove('show');
+
+  if(e.key==='Tab'||e.key==='Escape'){e.preventDefault();restartTest();return;}
+  if(e.ctrlKey&&e.key==='k'){e.preventDefault();openCustomModal();return;}
+
+  if(e.key==='Backspace'){
+    e.preventDefault();
+    if(S.caretPos>0&&S.status!=='finished'){
+      S.caretPos--;S.typed.pop();
+      playBackspace();
+      updateDisplay();positionCaret();
+      if(S.status==='running'){updateStats();updateLiveGraph();}
+    }
     return;
   }
-  running=true; submitted=false;
-  $('passageInput').disabled = true;
-  $('typingArea').disabled = false;
-  $('typingArea').value = '';
-  $('typingArea').focus();
-  $('readingWrap').classList.remove('d-none');
-  $('submitBtn').disabled = false;
-
-  t=0; keys=0;
-  tickStats();
-
-  clearInterval(timer);
-  timer = setInterval(()=>{
-    if(!running) return;
-    t++;
-    tickStats();
-  }, 1000);
-
-  renderReading('');
 }
 
-function submit(){
-  if(!running) return;
-  running=false; submitted=true;
-  clearInterval(timer);
-  $('typingArea').disabled = true;
-  $('submitBtn').disabled = true;
-  tickStats();
-}
+function onInput(e){
+  const gh=document.getElementById('ghost');
+  const val=gh.value; gh.value='';
+  if(!val||S.status==='finished') return;
 
-function renderReading(typed){
-  const maxLen = Math.max(passage.length, typed.length);
-  let html='';
-  for(let i=0;i<maxLen;i++){
-    const p = passage[i] ?? '';
-    const c = typed[i] ?? '';
+  const ch=val[val.length-1];
+  if(!ch) return;
 
-    if(p === '' && c !== ''){
-      html += `<span class="ch-bad">${escapeHtml(c)}</span>`;
-      continue;
-    }
-    if(c === ''){
-      html += `<span class="ch-pend">${escapeHtml(p)}</span>`;
-      continue;
-    }
-    if(c === p){
-      html += `<span class="ch-ok">${escapeHtml(p)}</span>`;
-    }else{
-      html += `<span class="ch-bad">${escapeHtml(p)}</span>`;
-    }
+  if(S.status==='idle') startTest();
+  if(S.status!=='running') return;
+
+  const expected=S.text[S.caretPos];
+  const ok=ch===expected;
+
+  S.typed.push(ch);
+  S.totalKeys++;
+  if(!ok){
+    S.errorCount++;
+    playKey(false);
+    const d=document.getElementById('text-display');
+    d.classList.add('shake');setTimeout(()=>d.classList.remove('shake'),280);
+  } else {
+    playKey(true);
   }
-  $('readingArea').innerHTML = html;
-}
 
-function computeMistakes(typed){
-  // Full mistake: incorrect character where passage has a char.
-  // Half mistake: extra characters beyond passage length.
-  let full=0, half=0;
-  const min = Math.min(passage.length, typed.length);
-  for(let i=0;i<min;i++){
-    if(typed[i] !== passage[i]) full++;
+  S.caretPos++;
+  updateDisplay();positionCaret();
+  updateStats();updateLiveGraph();
+
+  // Word/quote/custom end condition
+  if(S.mode!=='time'||S.customText){
+    if(S.caretPos>=S.text.length) finishTest();
   }
-  if(typed.length > passage.length) half = typed.length - passage.length;
-  return { full, half };
+
+  // Extend for time mode
+  if(S.mode==='time'&&!S.customText&&S.caretPos>=S.text.length-50) extendText();
 }
 
-function tickStats(){
-  $('tSec').textContent = String(t);
-  $('keysCount').textContent = String(keys);
-
-  const typed = $('typingArea').value || '';
-  const words = typed.length / 5; // 5 chars = 1 word
-  const wpm = (t>0) ? Math.round((words / t) * 60) : 0;
-  $('wpm').textContent = String(wpm);
-
-  const m = computeMistakes(typed);
-  $('fullMist').textContent = String(m.full);
-  $('halfMist').textContent = String(m.half);
-
-  const err = typed.length ? Math.round(((m.full + m.half) / typed.length) * 100) : 0;
-  $('errPct').textContent = String(err);
-
-  renderReading(typed);
+// ──────────────────────────────────────────────
+// TEST LIFECYCLE
+// ──────────────────────────────────────────────
+function startTest(){
+  S.status='running';S.startTime=Date.now();
+  S.wpmHist=[];S.rawHist=[];S.totalKeys=0;S.errorCount=0;
+  document.getElementById('idle-o').classList.add('gone');
+  document.getElementById('text-display').classList.add('active-test');
+  document.getElementById('caret-el').classList.add('solid');
+  if(S.mode==='time'){
+    S.timeLeft=S.timeLimit;
+    S.timerInt=setInterval(tick,1000);
+  }
 }
 
-$('startBtn').addEventListener('click', start);
-$('submitBtn').addEventListener('click', submit);
+function tick(){
+  S.timeLeft--;
+  document.getElementById('s-counter').textContent=S.timeLeft;
+  recordWPM();
+  if(S.timeLeft<=0) finishTest();
+}
 
-$('typingArea').addEventListener('keydown', (e)=>{
-  if(!running) return;
-  keys++;
+function recordWPM(){
+  if(!S.startTime) return;
+  const min=(Date.now()-S.startTime)/60000;
+  if(min<=0) return;
+  const cor=S.typed.filter((c,i)=>c===S.text[i]).length;
+  const raw=Math.round((S.totalKeys/5)/min);
+  const net=Math.max(0,Math.round((cor/5)/min));
+  S.wpmHist.push(net);S.rawHist.push(raw);
+}
+
+function finishTest(){
+  if(S.status==='finished') return;
+  S.status='finished';S.endTime=Date.now();
+  clearInterval(S.timerInt);
+  recordWPM();playDone();
+  document.getElementById('caret-el').classList.remove('solid');
+  const stats=computeStats();
+  saveHist(stats);
+  showResults(stats);
+}
+
+function computeStats(){
+  const elapsed=(S.endTime-S.startTime)/1000;
+  const min=elapsed/60;
+  const cor=S.typed.filter((c,i)=>c===S.text[i]).length;
+  const inc=S.typed.length-cor;
+  const raw=Math.round((S.totalKeys/5)/min);
+  const net=Math.max(0,Math.round((cor/5)/min));
+  const acc=S.typed.length>0?Math.round(cor/S.typed.length*100):100;
+  const cpm=Math.round(cor/min);
+
+  const wpms=S.wpmHist.filter(w=>w>0);
+  let con=100;
+  if(wpms.length>1){
+    const mean=wpms.reduce((a,b)=>a+b,0)/wpms.length;
+    const sd=Math.sqrt(wpms.reduce((a,b)=>a+Math.pow(b-mean,2),0)/wpms.length);
+    con=Math.max(0,Math.round(100-(sd/mean)*100));
+  }
+  return{net,raw,acc,cor,inc,elapsed,con,cpm};
+}
+
+// ──────────────────────────────────────────────
+// STATS UPDATE
+// ──────────────────────────────────────────────
+function updateStats(){
+  if(!S.startTime) return;
+  const min=(Date.now()-S.startTime)/60000;
+  if(min<=0) return;
+  const cor=S.typed.filter((c,i)=>c===S.text[i]).length;
+  const raw=Math.round((S.totalKeys/5)/min);
+  const net=Math.max(0,Math.round((cor/5)/min));
+  const acc=S.typed.length>0?Math.round(cor/S.typed.length*100):100;
+  document.getElementById('s-wpm').textContent=net;
+  document.getElementById('s-raw').textContent=raw;
+  document.getElementById('s-acc').textContent=acc+'%';
+  document.getElementById('s-err').textContent=S.errorCount;
+  const pct=Math.min(100,Math.round(S.caretPos/S.text.length*100));
+  document.getElementById('pfill').style.width=pct+'%';
+  document.getElementById('ptxt').textContent=S.caretPos+' / '+S.text.length;
+  if(S.mode==='words'){
+    const wTyped=S.text.substring(0,S.caretPos).split(' ').length;
+    document.getElementById('s-counter').textContent=Math.max(0,S.wordCount-wTyped+1);
+  }
+}
+
+// ──────────────────────────────────────────────
+// LIVE MINI GRAPH
+// ──────────────────────────────────────────────
+function updateLiveGraph(){
+  if(S.wpmHist.length<2) return;
+  const cv=document.getElementById('live-cv');
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  const d=S.wpmHist;
+  const mx=Math.max(...d,1);
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#f5a623';
+  ctx.beginPath();
+  ctx.strokeStyle=accent;ctx.lineWidth=1.5;ctx.globalAlpha=.8;
+  d.forEach((v,i)=>{
+    const x=(i/(d.length-1||1))*W;
+    const y=H-(v/mx)*H;
+    i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+  });
+  ctx.stroke();ctx.globalAlpha=1;
+}
+
+// ──────────────────────────────────────────────
+// RESULTS
+// ──────────────────────────────────────────────
+function showResults(s){
+  document.getElementById('r-wpm').textContent=s.net;
+  document.getElementById('r-raw').textContent=s.raw;
+  document.getElementById('r-acc').textContent=s.acc+'%';
+  document.getElementById('r-cor').textContent=s.cor;
+  document.getElementById('r-inc').textContent=s.inc;
+  document.getElementById('r-con').textContent=s.con+'%';
+  document.getElementById('r-time').textContent=Math.round(s.elapsed)+'s';
+  document.getElementById('r-cpm').textContent=s.cpm;
+
+  const key=`pb_${S.mode}_${S.mode==='time'?S.timeLimit:S.mode==='words'?S.wordCount:S.category}`;
+  const prev=parseInt(localStorage.getItem(key)||'0');
+  document.getElementById('pbadge').style.display=s.net>prev?'inline-flex':'none';
+  if(s.net>prev) localStorage.setItem(key,s.net);
+
+  const bestKey='pb_all';
+  const best=parseInt(localStorage.getItem(bestKey)||'0');
+  if(s.net>best) localStorage.setItem(bestKey,s.net);
+  const bi=document.getElementById('best-inline');
+  const allBest=parseInt(localStorage.getItem('pb_all')||'0');
+  if(allBest>0) bi.textContent='PB: '+allBest+' WPM';
+
+  document.getElementById('results-o').classList.add('show');
+  setTimeout(()=>drawResultChart(),80);
+}
+
+function drawResultChart(){
+  const cv=document.getElementById('wpm-chart');
+  const W=cv.offsetWidth;const H=110;
+  cv.width=W;cv.height=H;
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+
+  const net=S.wpmHist,raw=S.rawHist;
+  if(net.length<2){
+    ctx.fillStyle='#5a5a8a';ctx.font='12px JetBrains Mono,monospace';
+    ctx.textAlign='center';ctx.fillText('Not enough data',W/2,H/2);
+    return;
+  }
+  const mx=Math.max(...raw,1);
+  const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#f5a623';
+  const pad=8;
+
+  // Grid
+  ctx.strokeStyle='#22223a';ctx.lineWidth=1;ctx.setLineDash([3,4]);
+  [.25,.5,.75,1].forEach(p=>{
+    const y=H-p*(H-pad*2)-pad;
+    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+    ctx.fillStyle='#2e2e50';ctx.font='9px JetBrains Mono,monospace';
+    ctx.textAlign='left';ctx.fillText(Math.round(p*mx),2,y-2);
+  });
+  ctx.setLineDash([]);
+
+  const pts=(arr)=>arr.map((v,i)=>({
+    x:(i/(arr.length-1||1))*W,
+    y:H-pad-(v/mx)*(H-pad*2)
+  }));
+
+  const drawLine=(pts,color,lw,alpha=1)=>{
+    ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=lw;ctx.globalAlpha=alpha;
+    pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));
+    ctx.stroke();ctx.globalAlpha=1;
+  };
+
+  const np=pts(net),rp=pts(raw);
+
+  // Raw (faint)
+  drawLine(rp,'rgba(255,255,255,0.18)',1.2);
+
+  // Net fill
+  const g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,accent+'50');g.addColorStop(1,accent+'00');
+  ctx.beginPath();
+  np.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));
+  ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();
+  ctx.fillStyle=g;ctx.fill();
+
+  // Net line
+  drawLine(np,accent,2.2);
+
+  // Dots
+  ctx.fillStyle=accent;
+  np.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,2.5,0,Math.PI*2);ctx.fill();});
+
+  // Labels
+  ctx.fillStyle='#5a5a8a';ctx.font='9px JetBrains Mono,monospace';
+  ctx.textAlign='right';
+  ctx.fillText('NET',W-4,H-20);ctx.fillStyle='rgba(255,255,255,0.3)';
+  ctx.fillText('RAW',W-4,H-8);
+}
+
+function closeResults(){document.getElementById('results-o').classList.remove('show');}
+
+// ──────────────────────────────────────────────
+// INIT / RESTART
+// ──────────────────────────────────────────────
+function initTest(){
+  S.typed=[];S.caretPos=0;S.startTime=null;S.endTime=null;
+  S.status='idle';S.wpmHist=[];S.rawHist=[];S.totalKeys=0;S.errorCount=0;
+  S._scrollY=0;clearInterval(S.timerInt);
+
+  S.text=genText();
+
+  document.getElementById('s-wpm').textContent='0';
+  document.getElementById('s-raw').textContent='0';
+  document.getElementById('s-acc').textContent='—';
+  document.getElementById('s-err').textContent='0';
+  document.getElementById('pfill').style.width='0%';
+  document.getElementById('ptxt').textContent='0 / '+S.text.length;
+  document.getElementById('idle-o').classList.remove('gone');
+  document.getElementById('text-display').classList.remove('active-test');
+
+  if(S.mode==='time'){
+    document.getElementById('s-counter').textContent=S.timeLimit;
+    document.getElementById('counter-lbl').textContent='TIME';
+  } else {
+    const wc=S.text.split(' ').length;
+    document.getElementById('s-counter').textContent=S.mode==='words'?S.wordCount:wc;
+    document.getElementById('counter-lbl').textContent='WORDS';
+  }
+
+  const lc=document.getElementById('live-cv').getContext('2d');
+  lc.clearRect(0,0,130,46);
+
+  renderText();focusGhost();
+}
+
+function restartTest(){
+  closeResults();
+  initTest();
+}
+
+function nextTest(){
+  closeResults();
+  S.customText=null;
+  // Remove custom pills active state
+  document.querySelectorAll('[data-mode]').forEach(el=>el.classList.toggle('active',el.dataset.mode===S.mode));
+  initTest();
+}
+
+// ──────────────────────────────────────────────
+// MODE CONTROLS
+// ──────────────────────────────────────────────
+function setMode(m){
+  S.mode=m;S.customText=null;
+  document.querySelectorAll('[data-mode]').forEach(el=>el.classList.toggle('active',el.dataset.mode===m));
+  document.getElementById('time-opts').style.display=m==='time'?'flex':'none';
+  document.getElementById('word-opts').style.display=m==='words'?'flex':'none';
+  document.getElementById('cat-opts').style.display=m==='quote'?'flex':'none';
+  initTest();
+}
+function setTime(t){
+  S.timeLimit=t;
+  document.querySelectorAll('[data-time]').forEach(el=>el.classList.toggle('active',+el.dataset.time===t));
+  initTest();
+}
+function setWords(n){
+  S.wordCount=n;
+  document.querySelectorAll('[data-words]').forEach(el=>el.classList.toggle('active',+el.dataset.words===n));
+  initTest();
+}
+function setCat(c){
+  S.category=c;
+  document.querySelectorAll('[data-cat]').forEach(el=>el.classList.toggle('active',el.dataset.cat===c));
+  initTest();
+}
+
+// ──────────────────────────────────────────────
+// THEME
+// ──────────────────────────────────────────────
+function setTheme(t){
+  S.theme=t;
+  document.documentElement.dataset.theme=t;
+  document.querySelectorAll('.tbtn').forEach(el=>el.classList.toggle('active',el.dataset.t===t));
+  localStorage.setItem('tf_theme',t);
+}
+
+// ──────────────────────────────────────────────
+// SOUND
+// ──────────────────────────────────────────────
+function toggleSound(){
+  S.sound=!S.sound;
+  document.getElementById('sicon').textContent=S.sound?'🔊':'🔇';
+  document.getElementById('sound-btn').classList.toggle('active',S.sound);
+  if(S.sound){getACtx();beep(600,.08,.07,'sine');}
+  localStorage.setItem('tf_sound',S.sound);
+}
+
+// ──────────────────────────────────────────────
+// CUSTOM TEXT
+// ──────────────────────────────────────────────
+function openCustomModal(){
+  document.getElementById('custom-modal').classList.add('show');
+  setTimeout(()=>document.getElementById('custom-ta').focus(),50);
+}
+function closeCustomModal(){
+  document.getElementById('custom-modal').classList.remove('show');
+  focusGhost();
+}
+document.getElementById('custom-ta').addEventListener('input',function(){
+  const n=this.value.trim().length;
+  document.getElementById('ccount').textContent=n+' characters'+(n<20?' (need at least 20)':' ✓');
+});
+document.getElementById('custom-modal').addEventListener('click',function(e){
+  if(e.target===this) closeCustomModal();
+});
+function applyCustom(){
+  const txt=document.getElementById('custom-ta').value.trim();
+  if(txt.length<20){
+    document.getElementById('custom-ta').style.borderColor='var(--incorrect)';
+    setTimeout(()=>document.getElementById('custom-ta').style.borderColor='',1000);
+    return;
+  }
+  S.customText=txt;S.mode='custom';
+  document.querySelectorAll('[data-mode]').forEach(el=>el.classList.remove('active'));
+  document.getElementById('time-opts').style.display='none';
+  document.getElementById('word-opts').style.display='none';
+  document.getElementById('cat-opts').style.display='none';
+  closeCustomModal();initTest();
+}
+
+// ──────────────────────────────────────────────
+// HISTORY
+// ──────────────────────────────────────────────
+function saveHist(s){
+  const h=JSON.parse(localStorage.getItem('tf_hist')||'[]');
+  h.unshift({
+    date:new Date().toLocaleDateString(),
+    mode:S.mode,tl:S.timeLimit,wc:S.wordCount,
+    net:s.net,raw:s.raw,acc:s.acc,con:s.con
+  });
+  localStorage.setItem('tf_hist',JSON.stringify(h.slice(0,100)));
+}
+function showHistory(){
+  const h=JSON.parse(localStorage.getItem('tf_hist')||'[]');
+  const el=document.getElementById('hlist');
+  if(!h.length){
+    el.innerHTML='<div class="hemp">No history yet. Complete a test!</div>';
+  } else {
+    el.innerHTML=h.map((r,i)=>`
+      <div class="hrow">
+        <div>
+          <div class="hmeta">#${i+1} &middot; ${r.date} &middot; ${r.mode.toUpperCase()}${r.mode==='time'?' '+r.tl+'s':r.mode==='words'?' '+r.wc+'w':''}</div>
+          <div style="color:var(--text);font-family:var(--font-ui);font-size:.82rem;margin-top:1px;">${r.acc}% acc &middot; ${r.raw} raw</div>
+        </div>
+        <div class="hspd">${r.net}</div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('hist-modal').classList.add('show');
+}
+function closeHistory(){document.getElementById('hist-modal').classList.remove('show');}
+function clearHist(){localStorage.removeItem('tf_hist');showHistory();}
+document.getElementById('hist-modal').addEventListener('click',function(e){if(e.target===this)closeHistory();});
+
+// ──────────────────────────────────────────────
+// GLOBAL KEYBOARD
+// ──────────────────────────────────────────────
+document.addEventListener('keydown',function(e){
+  if(document.getElementById('custom-modal').classList.contains('show')) return;
+  if(document.getElementById('hist-modal').classList.contains('show')) return;
+  if(document.getElementById('results-o').classList.contains('show')){
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();restartTest();}
+    return;
+  }
+  const gh=document.getElementById('ghost');
+  if(document.activeElement!==gh&&!e.ctrlKey&&!e.altKey&&!e.metaKey){
+    if(e.key.length===1||e.key==='Backspace') gh.focus();
+  }
 });
 
-$('typingArea').addEventListener('input', ()=>{
-  if(!running) return;
-  tickStats();
-});
+// ──────────────────────────────────────────────
+// BOOT
+// ──────────────────────────────────────────────
+(function boot(){
+  const t=localStorage.getItem('tf_theme')||'amber';
+  setTheme(t);
+  if(localStorage.getItem('tf_sound')==='true') toggleSound();
 
-/* Drag stats box */
-(function(){
-  const box = $('statsBox');
-  let dragging=false, sx=0, sy=0, ox=0, oy=0;
+  document.getElementById('time-opts').style.display='flex';
 
-  box.addEventListener('mousedown', (e)=>{
-    dragging=true;
-    sx=e.clientX; sy=e.clientY;
-    const r = box.getBoundingClientRect();
-    ox=r.left; oy=r.top;
-  });
-  window.addEventListener('mousemove', (e)=>{
-    if(!dragging) return;
-    const dx=e.clientX-sx, dy=e.clientY-sy;
-    box.style.left = (ox+dx)+'px';
-    box.style.top = (oy+dy)+'px';
-    box.style.right = 'auto';
-  });
-  window.addEventListener('mouseup', ()=>dragging=false);
+  const pb=parseInt(localStorage.getItem('pb_all')||'0');
+  if(pb>0) document.getElementById('best-inline').textContent='PB: '+pb+' WPM';
+
+  initTest();
+  setTimeout(focusGhost,150);
 })();
-
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, (m)=>({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
-  }[m]));
-}
 </script>
 </body>
 </html>
