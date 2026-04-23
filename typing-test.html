@@ -319,12 +319,22 @@ footer{
   </div>
   <div class="sep"></div>
   <div class="cgroup" id="time-opts">
-    <span class="clabel">SECONDS</span>
-    <button class="pill active" data-time="15" onclick="setTime(15)">15</button>
-    <button class="pill" data-time="30" onclick="setTime(30)">30</button>
-    <button class="pill" data-time="60" onclick="setTime(60)">60</button>
-    <button class="pill" data-time="120" onclick="setTime(120)">120</button>
-  </div>
+  <span class="clabel">SECONDS</span>
+  <button class="pill active" data-time="15" onclick="setTime(15)">15</button>
+  <button class="pill" data-time="30" onclick="setTime(30)">30</button>
+  <button class="pill" data-time="60" onclick="setTime(60)">60</button>
+  <button class="pill" data-time="120" onclick="setTime(120)">120</button>
+  <button class="pill" data-time="180" onclick="setTime(180)">180</button>
+  <button class="pill" data-time="240" onclick="setTime(240)">240</button>
+  <button class="pill" data-time="360" onclick="setTime(360)">360</button>
+  <button class="pill" data-time="480" onclick="setTime(480)">480</button>
+  <button class="pill" data-time="600" onclick="setTime(600)">600</button>
+  <button class="pill" data-time="720" onclick="setTime(720)">720</button>
+  <button class="pill" data-time="840" onclick="setTime(840)">840</button>
+  <button class="pill" data-time="960" onclick="setTime(960)">960</button>
+  <button class="pill" data-time="1080" onclick="setTime(1080)">1080</button>
+  <button class="pill" data-time="0" onclick="setTime(0)">∞</button>
+</div>
   <div class="cgroup" id="word-opts" style="display:none">
     <span class="clabel">WORDS</span>
     <button class="pill active" data-words="10" onclick="setWords(10)">10</button>
@@ -753,9 +763,14 @@ function startTest(){
   document.getElementById('text-display').classList.add('active-test');
   document.getElementById('caret-el').classList.add('solid');
   if(S.mode==='time'){
-    S.timeLeft=S.timeLimit;
-    S.timerInt=setInterval(tick,1000);
+  if(S.timeLimit === 0){
+    S.timeLeft = Infinity;
+    document.getElementById('s-counter').textContent = '∞';
+  } else {
+    S.timeLeft = S.timeLimit;
+    S.timerInt = setInterval(tick,1000);
   }
+}
 }
 
 function tick(){
@@ -1007,8 +1022,12 @@ function setMode(m){
   initTest();
 }
 function setTime(t){
-  S.timeLimit=t;
-  document.querySelectorAll('[data-time]').forEach(el=>el.classList.toggle('active',+el.dataset.time===t));
+  S.timeLimit = t;
+
+  document.querySelectorAll('[data-time]').forEach(el=>{
+    el.classList.toggle('active', +el.dataset.time === t);
+  });
+
   initTest();
 }
 function setWords(n){
@@ -1143,5 +1162,7 @@ document.addEventListener('keydown',function(e){
   setTimeout(focusGhost,150);
 })();
 </script>
+
+
 </body>
 </html>
