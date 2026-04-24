@@ -435,7 +435,6 @@
     }
 
 
-    /* Timer */
     .timer-pill {
       position: fixed;
       right: 14px;
@@ -448,6 +447,13 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
       font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 640px) {
+      .timer-pill {
+        right: 80px !important;  /* shift left of FAB on mobile */
+        bottom: 16px !important;
+      }
     }
 
     /* Hover help box (desktop only) */
@@ -1983,6 +1989,258 @@ body {
   }
 }
 
+/* ════════════════════════════════════════════════════════════
+   📱 MOBILE FAB DROP-UP RIBBON  — bottom-right corner
+   ════════════════════════════════════════════════════════════ */
+
+/* Hide the old swipe handle entirely */
+#topbarSwipeHandle { display: none !important; }
+#topbarBackdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: opacity 0.25s ease;
+  opacity: 0;
+}
+#topbarBackdrop.show { display: block; opacity: 1; }
+
+/* On mobile engine view: keep topbar hidden (we use FAB ribbon instead) */
+@media (max-width: 576px) {
+  .engine-topbar {
+    position: fixed !important;
+    top: 0 !important; left: 0 !important; right: 0 !important;
+    z-index: 200 !important;
+  }
+  /* Always push content below the fixed topbar */
+  #engineView > .container-fluid {
+    padding-top: calc(var(--topbar-h, 88px) + 6px) !important;
+  }
+}
+
+/* ════════ FAB BUTTON ════════ */
+#mobileFab {
+  display: none; /* shown by JS only on mobile + engine active */
+  position: fixed;
+  bottom: 80px;   /* above timer pill */
+  right: 16px;
+  z-index: 500;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(6,182,212,.65);
+  background: linear-gradient(135deg, rgba(6,182,212,.22), rgba(124,58,237,.28));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 8px 32px rgba(6,182,212,.35),
+    0 0 0 1px rgba(6,182,212,.12),
+    inset 0 1px 0 rgba(255,255,255,.12);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+#mobileFab:active {
+  transform: scale(0.92);
+  box-shadow: 0 4px 18px rgba(6,182,212,.4), 0 0 0 2px rgba(6,182,212,.3);
+}
+#mobileFab.fab-open {
+  background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.22));
+  box-shadow: 0 8px 36px rgba(124,58,237,.45), 0 0 0 2px rgba(124,58,237,.22);
+  border-color: rgba(124,58,237,.7);
+}
+
+/* FAB Icon bars */
+.fab-bar {
+  display: block;
+  height: 2.5px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #06b6d4, #7c3aed);
+  box-shadow: 0 0 6px rgba(6,182,212,.5);
+  transition: all .3s cubic-bezier(0.34, 1.45, 0.64, 1);
+  position: relative;
+}
+.fab-bar:nth-child(1) { width: 20px; }
+.fab-bar:nth-child(2) { width: 14px; margin-left: 3px; }
+.fab-bar:nth-child(3) { width: 18px; margin-left: 1px; }
+
+/* Open state: morph to X */
+#mobileFab.fab-open .fab-bar:nth-child(1) {
+  width: 20px; margin-left: 0;
+  transform: translateY(6.5px) rotate(45deg);
+  background: linear-gradient(90deg, #7c3aed, #06b6d4);
+}
+#mobileFab.fab-open .fab-bar:nth-child(2) {
+  opacity: 0; transform: scaleX(0);
+}
+#mobileFab.fab-open .fab-bar:nth-child(3) {
+  width: 20px; margin-left: 0;
+  transform: translateY(-6.5px) rotate(-45deg);
+  background: linear-gradient(90deg, #06b6d4, #7c3aed);
+}
+
+/* Glow pulse on closed state */
+@keyframes fabPulse {
+  0%,100% { box-shadow: 0 8px 32px rgba(6,182,212,.35), 0 0 0 1px rgba(6,182,212,.12); }
+  50%      { box-shadow: 0 8px 40px rgba(6,182,212,.55), 0 0 0 3px rgba(6,182,212,.2); }
+}
+#mobileFab:not(.fab-open) { animation: fabPulse 2.5s ease-in-out infinite; }
+#mobileFab.fab-open        { animation: none; }
+
+/* ════════ DROP-UP RIBBON ════════ */
+#fabRibbon {
+  display: none; /* toggled by JS */
+  position: fixed;
+  bottom: 144px; /* above FAB + timer */
+  right: 10px;
+  z-index: 499;
+  min-width: 200px;
+  max-width: min(280px, 88vw);
+  border-radius: 20px;
+  border: 1px solid rgba(6,182,212,.35);
+  background: linear-gradient(160deg,
+    rgba(5,7,20,.92) 0%,
+    rgba(12,6,30,.94) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.65),
+    0 0 0 1px rgba(6,182,212,.1),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  padding: 12px 10px;
+  transform-origin: bottom right;
+  transform: scale(0.88) translateY(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.45, 0.64, 1),
+    opacity   0.22s ease;
+}
+#fabRibbon.ribbon-open {
+  display: block;
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+/* Force display block before animation */
+#fabRibbon.ribbon-animating {
+  display: block;
+}
+
+/* Ribbon section label */
+.ribbon-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: rgba(6,182,212,.65);
+  padding: 4px 8px 2px 8px;
+  margin-top: 4px;
+}
+.ribbon-label:first-child { margin-top: 0; }
+
+/* Ribbon divider */
+.ribbon-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(6,182,212,.25), transparent);
+  margin: 6px 8px;
+}
+
+/* Ribbon buttons */
+.ribbon-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 13px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(234,240,255,.88);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .18s ease;
+  text-align: left;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+.ribbon-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 13px;
+  background: rgba(6,182,212,.0);
+  transition: background .18s ease;
+}
+.ribbon-btn:active::before,
+.ribbon-btn:hover::before {
+  background: rgba(6,182,212,.10);
+}
+.ribbon-btn:active {
+  transform: scale(0.97);
+  border-color: rgba(6,182,212,.3);
+}
+.ribbon-btn .rb-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  transition: all .18s ease;
+}
+.ribbon-btn:active .rb-icon {
+  background: rgba(6,182,212,.18);
+  border-color: rgba(6,182,212,.4);
+}
+.ribbon-btn .rb-text { position: relative; z-index: 1; }
+.ribbon-btn .rb-badge {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(6,182,212,.15);
+  border: 1px solid rgba(6,182,212,.3);
+  color: #06b6d4;
+  flex-shrink: 0;
+}
+
+/* Danger ribbon btn */
+.ribbon-btn.rb-danger .rb-icon {
+  background: rgba(239,68,68,.12);
+  border-color: rgba(239,68,68,.3);
+}
+.ribbon-btn.rb-danger:active .rb-icon {
+  background: rgba(239,68,68,.25);
+  border-color: rgba(239,68,68,.6);
+}
+.ribbon-btn.rb-danger { color: #fca5a5; }
+
+/* Success ribbon btn */
+.ribbon-btn.rb-success .rb-icon {
+  background: rgba(34,197,94,.12);
+  border-color: rgba(34,197,94,.3);
+}
+.ribbon-btn.rb-success { color: #86efac; }
+
 </style>
 
 
@@ -2038,120 +2296,6 @@ body {
   background: rgba(100,116,139,.22) !important;
   border-color: rgba(148,163,184,.55) !important;
   color: rgba(234,240,255,.4) !important;
-}
-</style>
-
-<style>
-/* ══════════════════════════════════════════════════════════════
-   MOBILE VIEWPORT FIX v2 — topbar always visible, buttons never off-screen
-   ══════════════════════════════════════════════════════════════ */
-@media (max-width: 767px) {
-
-  /* ── 1. Engine view = exact viewport height, flex column ── */
-  #engineView {
-    height: 100svh !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-  }
-
-  /* ── 2. Topbar: never shrink, always on top ── */
-  #engineView .engine-topbar {
-    flex-shrink: 0 !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 100 !important;
-  }
-
-  /* ── 3. Content area below topbar: fill remaining height ── */
-  #engineView > .container-fluid {
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 8px 10px !important;
-    overflow: hidden !important;
-  }
-
-  /* ── 4. Bootstrap row: fill container, stretch all children to same height ── */
-  #engineView > .container-fluid > .row.engine-shell {
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    align-items: stretch !important;   /* KEY: children stretch to row height */
-    flex-wrap: nowrap !important;
-  }
-
-  /* ── 5. Bootstrap col: grow to fill row height ── */
-  #engineView > .container-fluid > .row.engine-shell > [class*="col-"] {
-    flex: 1 1 0 !important;            /* KEY: was missing in v1 */
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* ── 6. Question box: fill the col completely ── */
-  #questionBox {
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-    resize: none !important;
-    max-height: none !important;
-  }
-
-  /* ── 7. Question content + options: the ONLY scrollable region ── */
-  #questionBox .question-scroll-area {
-    flex: 1 1 0 !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    min-height: 0 !important;
-    -webkit-overflow-scrolling: touch !important;
-    padding-right: 2px !important;
-  }
-
-  /* ── 8. Everything below the scroll area: NEVER shrink, always visible ── */
-  #questionBox > .d-flex.justify-content-between.align-items-center {
-    flex-shrink: 0 !important;
-  }
-  #questionBox > hr {
-    flex-shrink: 0 !important;
-    margin: 5px 0 !important;
-  }
-  /* ◀ Previous / Save & Next / Mark for Review / Clear response */
-  #questionBox > .d-flex.flex-wrap.gap-2 {
-    flex-shrink: 0 !important;
-    flex-wrap: wrap !important;
-    gap: 5px !important;
-  }
-  /* Sound: On / Exam Mode / Hint toolbar */
-  #questionBox > .top-toolbar.mobile-move-toolbar {
-    flex-shrink: 0 !important;
-  }
-
-  /* ── 9. PDF tutor panel — same treatment ── */
-  #pdfTutorPanel {
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
-    overflow: hidden !important;
-    resize: none !important;
-  }
-
-  /* ── 10. All resizable boxes: disable resize on mobile ── */
-  .resizable-question-box {
-    resize: none !important;
-  }
-
-  /* ── 11. Timer pill: keep clear of buttons ── */
-  .timer-pill {
-    bottom: 10px !important;
-    right: 10px !important;
-    z-index: 200 !important;
-  }
 }
 </style>
 </head>
@@ -2489,6 +2633,75 @@ body {
 
   <!-- Feedback overlay -->
   <div id="feedbackOverlay" class="feedback-overlay"></div>
+
+  <!-- MOBILE FAB DROP-UP RIBBON -->
+  <button id="mobileFab" aria-label="Open toolbar" style="display:none;">
+    <span class="fab-bar"></span>
+    <span class="fab-bar"></span>
+    <span class="fab-bar"></span>
+  </button>
+
+  <div id="fabRibbon">
+    <div class="ribbon-label">Navigation</div>
+    <button class="ribbon-btn" id="fab_backBtn">
+      <span class="rb-icon">←</span>
+      <span class="rb-text">Back to Portal</span>
+    </button>
+
+    <div class="ribbon-divider"></div>
+    <div class="ribbon-label">Test Info</div>
+    <button class="ribbon-btn" id="fab_topicInfo" style="cursor:default;opacity:.8;pointer-events:none;">
+      <span class="rb-icon">📋</span>
+      <span class="rb-text" id="fab_topicLabel" style="font-size:11px;line-height:1.3;word-break:break-word;">Topic</span>
+    </button>
+    <button class="ribbon-btn" id="fab_qCounter" style="cursor:default;opacity:.8;pointer-events:none;">
+      <span class="rb-icon">🔢</span>
+      <span class="rb-text" id="fab_qCountLabel">Q —</span>
+      <span class="rb-badge" id="fab_modeBadge">EXAM</span>
+    </button>
+
+    <div class="ribbon-divider"></div>
+    <div class="ribbon-label">Tools</div>
+    <button class="ribbon-btn" id="fab_qmarkBtn" style="display:none;">
+      <span class="rb-icon">💡</span>
+      <span class="rb-text">Hint / Explanation</span>
+    </button>
+    <button class="ribbon-btn" id="fab_googleBtn" style="display:none;">
+      <span class="rb-icon">
+        <svg width="14" height="14" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303C33.613 32.973 29.21 36 24 36c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.272 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 16.108 19.01 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.272 4 24 4c-7.682 0-14.344 4.312-17.694 10.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.197l-6.19-5.238C29.23 35.091 26.715 36 24 36c-5.189 0-9.58-3.007-11.283-7.285l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.06 12.06 0 0 1-4.087 5.565l.002-.001 6.19 5.238C36.97 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+      </span>
+      <span class="rb-text">Search on Google</span>
+    </button>
+    <button class="ribbon-btn" id="fab_soundBtn">
+      <span class="rb-icon" id="fab_soundIcon">🔊</span>
+      <span class="rb-text" id="fab_soundLabel">Sound: On</span>
+    </button>
+    <button class="ribbon-btn" id="fab_examModeBtn">
+      <span class="rb-icon" id="fab_examIcon">🔒</span>
+      <span class="rb-text" id="fab_examLabel">Exam Mode: On</span>
+    </button>
+    <button class="ribbon-btn" id="fab_pdfTutorBtn" style="display:none;">
+      <span class="rb-icon">📄</span>
+      <span class="rb-text">PDF Tutor</span>
+    </button>
+    <button class="ribbon-btn" id="fab_timerRestoreBtn" style="display:none;">
+      <span class="rb-icon">⏱</span>
+      <span class="rb-text">Show Timer</span>
+    </button>
+
+    <div class="ribbon-divider"></div>
+    <div class="ribbon-label">Navigator</div>
+    <button class="ribbon-btn" id="fab_navigatorBtn">
+      <span class="rb-icon">☰</span>
+      <span class="rb-text">Question Navigator</span>
+    </button>
+
+    <div class="ribbon-divider"></div>
+    <button class="ribbon-btn rb-danger" id="fab_submitBtn">
+      <span class="rb-icon">✅</span>
+      <span class="rb-text">Submit Test</span>
+    </button>
+  </div>
 
   <!-- Help Modal -->
   <div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
@@ -4645,7 +4858,7 @@ body {
 
     <script>
       /* ============================================================
-         PRESS "P" → CAPTURE ALL QUESTIONS VIA goNext() → PPT
+         PRESS "." → CAPTURE ALL QUESTIONS VIA goNext() → PPT
          FINAL FIX (POST-SUBMIT SAFE)
          ============================================================ */
 
@@ -4811,7 +5024,7 @@ body {
           }
         });
 
-        console.log("✅ PRESS 'P' → CAPTURE ALL QUESTIONS (goNext based)");
+        console.log("✅ PRESS '.' → CAPTURE ALL QUESTIONS (goNext based)");
 
       })();
     </script>
@@ -4820,31 +5033,45 @@ body {
         const topBar = document.querySelector('.engine-topbar');
         if (!topBar) return;
 
-        // initial hidden state
+        const IS_TOUCH = window.matchMedia('(hover: none)').matches || navigator.maxTouchPoints > 0;
+        const IS_SMALL = () => window.innerWidth <= 640;
+
+        if (IS_TOUCH || IS_SMALL()) {
+          // Mobile / touch: always fully visible, no hide/show tricks
+          topBar.style.height = '';
+          topBar.style.opacity = '1';
+          topBar.style.overflow = '';
+          topBar.style.transition = '';
+          return;
+        }
+
+        // Desktop only: hide topbar until hover at top of screen
         topBar.style.transition = 'height 0.25s ease, opacity 0.25s ease';
         topBar.style.height = '0px';
         topBar.style.opacity = '0';
         topBar.style.overflow = 'hidden';
 
-        // hover zone (top 18px of screen)
         const hoverZone = document.createElement('div');
-        hoverZone.style.position = 'fixed';
-        hoverZone.style.top = '0';
-        hoverZone.style.left = '0';
-        hoverZone.style.width = '100%';
-        hoverZone.style.height = '18px';
-        hoverZone.style.zIndex = '99999';
-        hoverZone.style.background = 'transparent';
+        hoverZone.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:18px;z-index:99999;background:transparent;';
         document.body.appendChild(hoverZone);
 
         hoverZone.addEventListener('mouseenter', () => {
           topBar.style.height = '';
           topBar.style.opacity = '1';
         });
-
         topBar.addEventListener('mouseleave', () => {
           topBar.style.height = '0px';
           topBar.style.opacity = '0';
+        });
+
+        // Also re-check if resized to mobile while on page
+        window.addEventListener('resize', () => {
+          if (IS_SMALL()) {
+            topBar.style.height = '';
+            topBar.style.opacity = '1';
+            topBar.style.overflow = '';
+            topBar.style.transition = '';
+          }
         });
       })();
     </script>
@@ -6612,6 +6839,174 @@ function boot() {
   initFirebase();  // try early init (may fail if config is demo — that's ok)
   buildUI();
   addBattleButtons();
+  initTopbarSwiper();
+}
+
+// ── MOBILE FAB DROP-UP RIBBON ─────────────────────────────────────────────────
+function initTopbarSwiper() {
+  const MOBILE = () => window.innerWidth <= 640;
+
+  const fab     = document.getElementById('mobileFab');
+  const ribbon  = document.getElementById('fabRibbon');
+  const backdrop = document.getElementById('topbarBackdrop');
+  if (!fab || !ribbon) return;
+
+  let isOpen = false;
+
+  // ── Sync ribbon content from real buttons ──
+  function syncRibbon() {
+    // topic label
+    const topicEl = document.getElementById('testInfoTop');
+    if (topicEl) document.getElementById('fab_topicLabel').textContent = topicEl.textContent || 'Topic';
+
+    // q counter
+    const qEl = document.getElementById('qCounterBadge');
+    if (qEl) document.getElementById('fab_qCountLabel').textContent = qEl.textContent || 'Q —';
+
+    // mode badge
+    const modeEl = document.getElementById('modeBadge');
+    const fabMode = document.getElementById('fab_modeBadge');
+    if (modeEl && fabMode) {
+      fabMode.textContent = modeEl.textContent || '';
+      fabMode.style.background = modeEl.classList.contains('hud-mode-practice')
+        ? 'rgba(34,197,94,.18)' : 'rgba(239,68,68,.15)';
+      fabMode.style.color = modeEl.classList.contains('hud-mode-practice') ? '#4ade80' : '#f87171';
+      fabMode.style.borderColor = modeEl.classList.contains('hud-mode-practice')
+        ? 'rgba(34,197,94,.4)' : 'rgba(239,68,68,.4)';
+    }
+
+    // sound button label
+    const soundBtn = document.getElementById('soundBtn');
+    if (soundBtn) {
+      document.getElementById('fab_soundLabel').textContent = soundBtn.textContent;
+      document.getElementById('fab_soundIcon').textContent =
+        soundBtn.textContent.includes('Off') ? '🔇' : '🔊';
+    }
+
+    // exam mode btn label
+    const examBtn = document.getElementById('examModeBtn');
+    if (examBtn) {
+      document.getElementById('fab_examLabel').textContent = examBtn.textContent;
+      document.getElementById('fab_examIcon').textContent =
+        examBtn.textContent.includes('Off') ? '🔓' : '🔒';
+    }
+
+    // hint btn visibility
+    const qmarkBtn = document.getElementById('qmarkBtn');
+    const fab_q = document.getElementById('fab_qmarkBtn');
+    if (fab_q) fab_q.style.display = (qmarkBtn && qmarkBtn.style.display !== 'none') ? 'flex' : 'none';
+
+    // google btn visibility
+    const gBtn = document.getElementById('googleSearchBtnTop');
+    const fab_g = document.getElementById('fab_googleBtn');
+    if (fab_g) fab_g.style.display = (gBtn && gBtn.style.display !== 'none') ? 'flex' : 'none';
+
+    // pdf tutor
+    const pdfBtn = document.getElementById('pdfTutorToggleBtn');
+    const fab_p = document.getElementById('fab_pdfTutorBtn');
+    if (fab_p) fab_p.style.display = (pdfBtn && pdfBtn.style.display !== 'none') ? 'flex' : 'none';
+
+    // timer restore
+    const timerShowBtn = document.getElementById('timerShowBtn');
+    const fab_t = document.getElementById('fab_timerRestoreBtn');
+    if (fab_t) fab_t.style.display = (timerShowBtn && timerShowBtn.style.display === 'flex') ? 'flex' : 'none';
+  }
+
+  function openRibbon() {
+    syncRibbon();
+    isOpen = true;
+    fab.classList.add('fab-open');
+    ribbon.classList.add('ribbon-animating');
+    ribbon.style.display = 'block';
+    // force reflow
+    ribbon.getBoundingClientRect();
+    ribbon.classList.add('ribbon-open');
+    backdrop.classList.add('show');
+  }
+
+  function closeRibbon() {
+    isOpen = false;
+    fab.classList.remove('fab-open');
+    ribbon.classList.remove('ribbon-open');
+    backdrop.classList.remove('show');
+    setTimeout(() => {
+      if (!isOpen) {
+        ribbon.style.display = 'none';
+        ribbon.classList.remove('ribbon-animating');
+      }
+    }, 320);
+  }
+
+  function toggleRibbon() { isOpen ? closeRibbon() : openRibbon(); }
+
+  function isEngineActive() {
+    const ev = document.getElementById('engineView');
+    return ev && ev.classList.contains('active');
+  }
+
+  function updateFabVisibility() {
+    if (MOBILE() && isEngineActive()) {
+      fab.style.display = 'flex';
+      // Measure real topbar height and update CSS var
+      const tb = document.querySelector('.engine-topbar');
+      if (tb) {
+        const h = tb.offsetHeight || 72;
+        document.documentElement.style.setProperty('--topbar-h', h + 'px');
+      }
+    } else {
+      fab.style.display = 'none';
+      if (isOpen) closeRibbon();
+    }
+  }
+
+  // ── FAB click ──
+  fab.addEventListener('click', toggleRibbon);
+
+  // ── Backdrop click closes ──
+  backdrop.addEventListener('click', closeRibbon);
+
+  // ── Wire ribbon buttons to real buttons ──
+  function wireBtn(fabId, realId) {
+    const fabBtn = document.getElementById(fabId);
+    if (!fabBtn) return;
+    fabBtn.addEventListener('click', () => {
+      closeRibbon();
+      setTimeout(() => {
+        const real = document.getElementById(realId);
+        if (real) real.click();
+      }, 80);
+    });
+  }
+
+  wireBtn('fab_backBtn',         'engineBackBtn');
+  wireBtn('fab_qmarkBtn',        'qmarkBtn');
+  wireBtn('fab_googleBtn',       'googleSearchBtnTop');
+  wireBtn('fab_soundBtn',        'soundBtn');
+  wireBtn('fab_examModeBtn',     'examModeBtn');
+  wireBtn('fab_navigatorBtn',    'navToggleIcon');
+  wireBtn('fab_submitBtn',       'submitBtn');
+  wireBtn('fab_pdfTutorBtn',     'pdfTutorToggleBtn');
+  wireBtn('fab_timerRestoreBtn', 'timerShowBtn');
+
+  // ── Watch view changes ──
+  const observer = new MutationObserver(updateFabVisibility);
+  ['engineView', 'portalView', 'subjectView'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  window.addEventListener('resize', updateFabVisibility);
+  updateFabVisibility();
+
+  // ── Re-sync ribbon when engine state changes (exam mode, sound, etc.) ──
+  // Watch soundBtn and examModeBtn text changes
+  ['soundBtn', 'examModeBtn', 'qmarkBtn', 'googleSearchBtnTop', 'timerShowBtn', 'pdfTutorToggleBtn', 'qCounterBadge', 'testInfoTop', 'modeBadge'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      const mo = new MutationObserver(() => { if (isOpen) syncRibbon(); });
+      mo.observe(el, { childList: true, characterData: true, subtree: true, attributes: true });
+    }
+  });
 }
 
 // Retry button injection a few times for dynamically-rendered elements
