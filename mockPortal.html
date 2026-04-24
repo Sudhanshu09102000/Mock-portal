@@ -1983,35 +1983,6 @@ body {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   MOBILE TOPBAR FIX — position:sticky is broken when body has
-   overflow-x:hidden (creates a new BFC that silently kills sticky).
-   Fix: switch to position:fixed on mobile only, push content down.
-   ═══════════════════════════════════════════════════════════════ */
-@media (max-width: 767px) {
-  /* Always glued to top — never scrolls away */
-  .engine-topbar {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    z-index: 9998 !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Push the page content down by the topbar's height so nothing hides behind it.
-     The topbar on mobile is roughly 48px tall (compact single-row layout). */
-  #engineView > .container-fluid {
-    padding-top: 52px !important;
-  }
-
-  /* Also push the progress bar down since it's part of the topbar */
-  #engineView .progress {
-    /* The progress bar is the first child of engine-topbar — stays inside fixed bar */
-  }
-}
-
 </style>
 
 
@@ -2067,6 +2038,120 @@ body {
   background: rgba(100,116,139,.22) !important;
   border-color: rgba(148,163,184,.55) !important;
   color: rgba(234,240,255,.4) !important;
+}
+</style>
+
+<style>
+/* ══════════════════════════════════════════════════════════════
+   MOBILE VIEWPORT FIX v2 — topbar always visible, buttons never off-screen
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* ── 1. Engine view = exact viewport height, flex column ── */
+  #engineView {
+    height: 100svh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  /* ── 2. Topbar: never shrink, always on top ── */
+  #engineView .engine-topbar {
+    flex-shrink: 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+  }
+
+  /* ── 3. Content area below topbar: fill remaining height ── */
+  #engineView > .container-fluid {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 8px 10px !important;
+    overflow: hidden !important;
+  }
+
+  /* ── 4. Bootstrap row: fill container, stretch all children to same height ── */
+  #engineView > .container-fluid > .row.engine-shell {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    align-items: stretch !important;   /* KEY: children stretch to row height */
+    flex-wrap: nowrap !important;
+  }
+
+  /* ── 5. Bootstrap col: grow to fill row height ── */
+  #engineView > .container-fluid > .row.engine-shell > [class*="col-"] {
+    flex: 1 1 0 !important;            /* KEY: was missing in v1 */
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* ── 6. Question box: fill the col completely ── */
+  #questionBox {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    resize: none !important;
+    max-height: none !important;
+  }
+
+  /* ── 7. Question content + options: the ONLY scrollable region ── */
+  #questionBox .question-scroll-area {
+    flex: 1 1 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    min-height: 0 !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-right: 2px !important;
+  }
+
+  /* ── 8. Everything below the scroll area: NEVER shrink, always visible ── */
+  #questionBox > .d-flex.justify-content-between.align-items-center {
+    flex-shrink: 0 !important;
+  }
+  #questionBox > hr {
+    flex-shrink: 0 !important;
+    margin: 5px 0 !important;
+  }
+  /* ◀ Previous / Save & Next / Mark for Review / Clear response */
+  #questionBox > .d-flex.flex-wrap.gap-2 {
+    flex-shrink: 0 !important;
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+  }
+  /* Sound: On / Exam Mode / Hint toolbar */
+  #questionBox > .top-toolbar.mobile-move-toolbar {
+    flex-shrink: 0 !important;
+  }
+
+  /* ── 9. PDF tutor panel — same treatment ── */
+  #pdfTutorPanel {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    resize: none !important;
+  }
+
+  /* ── 10. All resizable boxes: disable resize on mobile ── */
+  .resizable-question-box {
+    resize: none !important;
+  }
+
+  /* ── 11. Timer pill: keep clear of buttons ── */
+  .timer-pill {
+    bottom: 10px !important;
+    right: 10px !important;
+    z-index: 200 !important;
+  }
 }
 </style>
 </head>
