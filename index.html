@@ -6,13 +6,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mock Test Portal</title>
 
+  <!-- Google Fonts: Merriweather + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+
+
   <style>
     :root {
-  
-      --bg1: #1a0b2e;
+      --bg1: #0b1020;
       --bg2: #1a0b2e;
       --glass: rgba(255, 255, 255, .10);
       --glass2: rgba(255, 255, 255, .06);
@@ -339,80 +345,94 @@
     }
 
 
+    /* ── Navigator dot base ── */
     .qdot {
       width: 48px;
       height: 48px;
       border-radius: 50%;
       display: grid;
       place-items: center;
+      border: 1.5px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.04);
+      color: rgba(234,240,255,.7);
+      font-size: 13px;
+      font-weight: 600;
+      transition: transform .14s ease, box-shadow .14s ease, background .14s ease, border-color .14s ease;
+      cursor: pointer;
     }
-
 
     .qdot:hover {
-      transform: translateY(-2px);
+      transform: translateY(-2px) scale(1.08);
+      border-color: rgba(6,182,212,.6);
+      box-shadow: 0 0 12px rgba(6,182,212,.25);
     }
 
+    /* ── Current (active) question ── */
     .qdot.current {
-      border-color: rgba(139, 92, 246, .85);
-      box-shadow: 0 0 0 2px rgba(139, 92, 246, .22) inset, 0 0 20px rgba(139, 92, 246, .25);
-      background: rgba(139, 92, 246, .18);
+      border-color: rgba(139, 92, 246, .95) !important;
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, .28) inset, 0 0 22px rgba(139, 92, 246, .4) !important;
+      background: rgba(139, 92, 246, .22) !important;
+      color: #e0d4ff !important;
     }
 
-    .st-attempted {
-      background: rgba(34, 197, 94, .18);
-      border-color: rgba(34, 197, 94, .55);
+    /* ── BEFORE SUBMIT states ── */
+
+    /* Visited but NO answer selected = orange/amber */
+    .qdot.st-notanswered {
+      background: rgba(251, 146, 60, .22) !important;
+      border-color: rgba(251, 146, 60, .75) !important;
+      color: #fcd34d !important;
     }
 
-    .st-notanswered {
-      background: rgba(239, 68, 68, .18);
-      border-color: rgba(239, 68, 68, .55);
+    /* Answer selected = solid green */
+    .qdot.st-attempted {
+      background: rgba(34, 197, 94, .30) !important;
+      border-color: rgba(34, 197, 94, .90) !important;
+      color: #bbf7d0 !important;
+      box-shadow: 0 0 10px rgba(34,197,94,.25) !important;
     }
 
-    .st-review {
-      background: rgba(250, 204, 21, .18);
-      border-color: rgba(250, 204, 21, .55);
-      color: #111827;
+    /* Marked for review only (no answer) = yellow */
+    .qdot.st-review {
+      background: rgba(250, 204, 21, .22) !important;
+      border-color: rgba(250, 204, 21, .85) !important;
+      color: #fef08a !important;
     }
 
-    .st-skipped {
-      background: rgba(100, 116, 139, .16);
-      border-color: rgba(100, 116, 139, .45);
+    /* Marked for review AND answered = half green half red */
+    .qdot.st-reviewanswered {
+      background: linear-gradient(135deg, rgba(34,197,94,.40) 0% 50%, rgba(239,68,68,.35) 50% 100%) !important;
+      border-color: rgba(34,197,94,.80) !important;
+      color: #fff !important;
     }
 
-    /* Half yellow/half green for review+answered */
-    .st-reviewanswered {
-      border-color: rgba(255, 255, 255, .18);
-      background: linear-gradient(90deg, rgba(250, 204, 21, .35) 0 50%, rgba(34, 197, 94, .28) 50% 100%);
-      color: #0b1020;
+    /* Explicitly skipped = grey */
+    .qdot.st-skipped {
+      background: rgba(100, 116, 139, .18) !important;
+      border-color: rgba(100, 116, 139, .5) !important;
+      color: rgba(234,240,255,.45) !important;
     }
 
-    /* ===== Final Result Colors (AFTER SUBMIT) ===== */
-    /* ✅ FINAL RESULT NAV COLORS (AFTER SUBMIT) */
-    .st-final-correct {
-      background: rgba(34, 197, 94, .30);
-      border-color: rgba(34, 197, 94, .95);
+    /* ── AFTER SUBMIT final result colors ── */
+    .qdot.st-final-correct {
+      background: rgba(34, 197, 94, .40) !important;
+      border-color: rgba(34, 197, 94, 1) !important;
+      color: #bbf7d0 !important;
+      box-shadow: 0 0 12px rgba(34,197,94,.45) !important;
     }
 
-    .st-final-wrong {
-      background: rgba(239, 68, 68, .30);
-      border-color: rgba(239, 68, 68, .95);
+    .qdot.st-final-wrong {
+      background: rgba(239, 68, 68, .38) !important;
+      border-color: rgba(239, 68, 68, 1) !important;
+      color: #fecaca !important;
+      box-shadow: 0 0 12px rgba(239,68,68,.45) !important;
     }
 
-    .st-final-unattempted {
-      background: rgba(78, 68, 51, 0.35);
-      /* strong brown */
-      border-color: rgba(255, 170, 50, .95);
-      /* golden border */
-      color: #fff;
+    .qdot.st-final-unattempted {
+      background: rgba(100, 116, 139, .20) !important;
+      border-color: rgba(148, 163, 184, .55) !important;
+      color: rgba(234,240,255,.4) !important;
     }
-
-
-    .st-final-wrong {
-      background: rgba(239, 68, 68, .28);
-      border-color: rgba(239, 68, 68, .85);
-    }
-
-
 
 
     /* Timer */
@@ -421,12 +441,12 @@
       right: 14px;
       bottom: 14px;
       z-index: 99;
-      padding: .65rem .85rem;
-      border-radius: 16px;
+      padding: .3rem .55rem;
+      border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, .18);
       background: rgba(0, 0, 0, .30);
       backdrop-filter: blur(10px);
-      box-shadow: 0 14px 35px rgba(0, 0, 0, .35);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
       font-variant-numeric: tabular-nums;
     }
 
@@ -836,36 +856,85 @@
       display: none;
     }
 
-    /* ✅ Mobile: move top-toolbar below Previous/Save & Next row */
+    /* ✅ Mobile: compact topbar — single tight row, never column-stacked */
     @media (max-width: 576px) {
 
-      /* topbar area ko normal flow me rakho */
+      /* Keep topbar as a ROW (never column — column = massive height that pushes content off-screen) */
       .engine-topbar .container-fluid>.d-flex {
-        flex-direction: column;
-        align-items: stretch !important;
-        gap: 8px;
-      }
-
-      /* right-top-actions (Back + topic + Q counter) upar */
-      .right-top-actions {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
         justify-content: space-between !important;
+        gap: 5px !important;
+        padding: 4px 0 !important;
       }
 
-      /* toolbar ko center & compact */
+      /* right-top-actions: all buttons in one compact row */
+      .right-top-actions {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 5px !important;
+        width: 100% !important;
+      }
+
+      /* Back button — keep small */
+      #engineBackBtn {
+        font-size: 10px !important;
+        padding: 4px 8px !important;
+        flex-shrink: 0 !important;
+      }
+
+      /* Topic badge — truncate aggressively on small screens */
+      #testInfoTop {
+        max-width: min(140px, 34vw) !important;
+        font-size: 10px !important;
+        padding: 3px 7px !important;
+        flex-shrink: 1 !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+
+      /* Q counter & mode badge — tiny */
+      #qCounterBadge, #modeBadge {
+        font-size: 9px !important;
+        padding: 2px 6px !important;
+        flex-shrink: 0 !important;
+      }
+      .hud-mode-badge {
+        font-size: 9px !important;
+        padding: 2px 6px !important;
+      }
+
+      /* Hamburger stays right */
+      .nav-toggle-icon {
+        width: 36px !important;
+        height: 34px !important;
+        flex-shrink: 0 !important;
+        margin-left: auto !important;
+      }
+
+      /* toolbar inside question box — wrap buttons, never overflow */
       .mobile-move-toolbar {
         justify-content: center !important;
         width: 100% !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto;
-        /* ✅ scroll if tiny screen */
-        white-space: nowrap;
-        padding: 6px 6px;
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+        white-space: normal !important;
+        padding: 6px 4px !important;
+        box-sizing: border-box !important;
       }
 
-      /* extra small buttons */
+      /* extra small buttons inside toolbar */
       .mobile-move-toolbar .btn {
         font-size: 10px !important;
         padding: 5px 8px !important;
+        white-space: nowrap !important;
+        flex: 0 0 auto !important;
       }
 
       /* google icon fit */
@@ -875,6 +944,7 @@
       }
     }
 
+    /* Desktop: single-row toolbar */
     .top-toolbar.mobile-move-toolbar {
       display: flex;
       gap: 8px;
@@ -885,23 +955,42 @@
       overflow-x: auto;
       width: 100%;
       padding: 6px 6px;
+      box-sizing: border-box;
     }
 
-    @media(max-width:576px) {
+    /* ── MOBILE TOOLBAR FIX ──
+       .resizable-question-box has overflow:hidden which clips overflow-x:auto
+       children — buttons go off screen silently. Fix: wrap to next row.     */
+    @media (max-width: 767px) {
+      .top-toolbar.mobile-move-toolbar {
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+        white-space: normal !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 6px 2px !important;
+        margin-top: 8px !important;
+      }
       .top-toolbar.mobile-move-toolbar .btn {
         font-size: 10px !important;
-        padding: 5px 8px !important;
+        padding: 5px 9px !important;
+        border-radius: 8px !important;
+        white-space: nowrap !important;
+        flex: 0 0 auto !important;
+        height: auto !important;
       }
-    }
-
-    /* ✅ gap between action buttons row & toolbar strip */
-    .action-btn-row {
-      margin-bottom: 10px !important;
-    }
-
-    /* ✅ extra spacing above toolbar strip */
-    .top-toolbar.mobile-move-toolbar {
-      margin-top: 10px !important;
+      .top-toolbar.mobile-move-toolbar #googleSearchBtnTop {
+        width: 32px !important;
+        height: 32px !important;
+        padding: 0 !important;
+      }
+      .top-toolbar.mobile-move-toolbar #googleSearchBtnTop svg {
+        width: 16px !important;
+        height: 16px !important;
+      }
     }
 
     /* ✅ Navigator numbers: symmetrical + centered */
@@ -1219,102 +1308,922 @@ body::before {
 </style>
 
 <style>
-/* ===============================
-   SSC CGL EXAM FONT STANDARD
-   =============================== */
+/* ============================================================
+   DEFAULT FONT: MERRIWEATHER
+   ============================================================ */
 
-/* Use pure system fonts (same feel as SSC CBT) */
-html, body, * {
-  font-family: Arial, Helvetica, "Nimbus Sans", "Liberation Sans", sans-serif !important;
-  letter-spacing: 0 !important;
-  word-spacing: 0 !important;
-  font-weight: 400 !important;
-  text-transform: none !important;
+/* Base — Merriweather for body reading text */
+html, body {
+  font-family: 'Merriweather', Georgia, 'Times New Roman', serif !important;
 }
 
-/* Question text */
-#questionText,
-.qbox,
-.opt-text {
-  font-size: 16px !important;
-  line-height: 1.45 !important;
-  font-weight: 400 !important;
-}
-
-/* Options */
-.option {
+/* Question & option text — Merriweather for exam feel */
+#questionText, .qbox, .opt-text, .bm-qtext {
+  font-family: 'Merriweather', Georgia, serif !important;
   font-size: 15.5px !important;
-  line-height: 1.45 !important;
-}
-
-/* Buttons & labels */
-button,
-.btn,
-.badge,
-.pill,
-input,
-select,
-textarea {
-  font-size: 14px !important;
+  line-height: 1.68 !important;
   font-weight: 400 !important;
 }
 
-/* Headings toned down (no decorative font) */
+.option, .bm-opt {
+  font-family: 'Merriweather', Georgia, serif !important;
+  font-size: 14.5px !important;
+  line-height: 1.5 !important;
+}
+
+/* UI chrome — Inter for clarity */
+button, .btn, .badge, .pill, input, select, textarea,
+.badge-soft, .bm-btn, .bm-label, .bm-input,
+.engine-topbar *, .nav-panel *, .timer-pill,
+#timerText, .kbd, .bm-qbar *, .bm-sb-head, .bm-fin-title {
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+/* Headings — Inter bold */
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, sans-serif !important;
-  font-weight: 600 !important;
-  letter-spacing: 0 !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.3px !important;
 }
 
-/* Remove premium / decorative font effects */
-.brand-title,
-.modal-title {
-  text-shadow: none !important;
-}
-
-/* Numbers look like exam timer */
-#timerText,
-.kbd {
+/* Numeric elements */
+#timerText, .kbd, .bm-qbar-timer {
   font-variant-numeric: tabular-nums;
 }
 </style>
 
+
+<style>
+/* ============================================================
+   🔥 IRON-MAN HUD ENHANCEMENT LAYER
+   Upgrades existing design without breaking engine logic
+   ============================================================ */
+
+/* ── Enhanced CSS Variables ── */
+:root {
+  --c-cyan: #06b6d4;
+  --c-purple: #7c3aed;
+  --c-blue: #3b82f6;
+  --c-green: #22c55e;
+  --c-red: #ef4444;
+  --glow-cyan: 0 0 20px rgba(6,182,212,.45), 0 0 60px rgba(6,182,212,.15);
+  --glow-purple: 0 0 20px rgba(124,58,237,.45), 0 0 60px rgba(124,58,237,.15);
+  --glow-green: 0 0 20px rgba(34,197,94,.45);
+  --glow-red: 0 0 20px rgba(239,68,68,.45);
+  --hud-gradient: linear-gradient(135deg, rgba(6,182,212,.08), rgba(124,58,237,.08));
+}
+
+/* ── Animated Gradient Background ── */
+body {
+  background: linear-gradient(225deg,
+    #050714 0%,
+    #0b1020 35%,
+    #0d0620 65%,
+    #050714 100%) !important;
+  background-size: 400% 400% !important;
+  animation: bgShift 18s ease infinite !important;
+}
+@keyframes bgShift {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ── Particle Canvas (re-enable) ── */
+#particleCanvas { opacity: .35 !important; }
+
+/* ── Brand Title - Neon Glow ── */
+.brand-title {
+  background: linear-gradient(90deg, #e0e7ff, #06b6d4, #7c3aed, #e0e7ff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: titleShimmer 4s linear infinite;
+  font-size: clamp(1.6rem, 4vw, 2.4rem) !important;
+  filter: drop-shadow(0 0 12px rgba(6,182,212,.4));
+}
+@keyframes titleShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Glass Cards - Enhanced ── */
+.glass {
+  background: linear-gradient(135deg,
+    rgba(6,182,212,.07) 0%,
+    rgba(124,58,237,.07) 50%,
+    rgba(255,255,255,.04) 100%) !important;
+  border: 1px solid rgba(6,182,212,.2) !important;
+  box-shadow:
+    0 10px 40px rgba(0,0,0,.4),
+    inset 0 1px 0 rgba(255,255,255,.08) !important;
+  backdrop-filter: blur(18px) !important;
+  transition: border-color .25s ease, box-shadow .25s ease !important;
+}
+.glass:hover {
+  border-color: rgba(6,182,212,.38) !important;
+  box-shadow: 0 14px 50px rgba(0,0,0,.5), 0 0 25px rgba(6,182,212,.08) !important;
+}
+
+/* ── Subject Cards ── */
+.subject-card {
+  border: 1px solid rgba(255,255,255,.12) !important;
+  position: relative;
+  overflow: hidden;
+}
+.subject-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(6,182,212,.08), transparent 60%);
+  pointer-events: none;
+  opacity: 0; transition: opacity .3s;
+}
+.subject-card:hover::before { opacity: 1; }
+.subject-card:hover {
+  border-color: rgba(6,182,212,.45) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.5), 0 0 30px rgba(6,182,212,.12) !important;
+}
+
+/* ── OPTION BUTTONS - HUD Style ── */
+.option {
+  border: 1px solid rgba(6,182,212,.18) !important;
+  background: linear-gradient(135deg, rgba(6,182,212,.05), rgba(124,58,237,.04)) !important;
+  position: relative;
+  overflow: hidden;
+  transition: all .18s ease !important;
+}
+.option::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--c-cyan), var(--c-purple));
+  opacity: 0; transition: opacity .18s;
+  border-radius: 0 2px 2px 0;
+}
+.option:hover {
+  border-color: rgba(6,182,212,.55) !important;
+  background: linear-gradient(135deg, rgba(6,182,212,.12), rgba(124,58,237,.08)) !important;
+  box-shadow: 0 0 18px rgba(6,182,212,.12), inset 0 0 20px rgba(6,182,212,.05) !important;
+  transform: translateX(4px) !important;
+}
+.option:hover::before { opacity: 1; }
+
+.option.selected {
+  border-color: rgba(124,58,237,.9) !important;
+  background: linear-gradient(135deg, rgba(124,58,237,.18), rgba(6,182,212,.12)) !important;
+  box-shadow: 0 0 25px rgba(124,58,237,.25), inset 0 0 20px rgba(124,58,237,.08) !important;
+}
+.option.selected::before { opacity: 1; background: var(--c-purple); }
+
+.option.correct {
+  border-color: rgba(34,197,94,.95) !important;
+  background: linear-gradient(135deg, rgba(34,197,94,.18), rgba(34,197,94,.08)) !important;
+  box-shadow: var(--glow-green) !important;
+}
+.option.correct::before { opacity: 1; background: var(--c-green); }
+
+.option.wrong {
+  border-color: rgba(239,68,68,.95) !important;
+  background: linear-gradient(135deg, rgba(239,68,68,.18), rgba(239,68,68,.08)) !important;
+  box-shadow: var(--glow-red) !important;
+}
+.option.wrong::before { opacity: 1; background: var(--c-red); }
+
+/* ── KBD keys in options ── */
+.option .kbd {
+  background: linear-gradient(135deg, rgba(6,182,212,.25), rgba(124,58,237,.2)) !important;
+  border: 1px solid rgba(6,182,212,.4) !important;
+  color: #06b6d4 !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  min-width: 26px;
+  text-align: center;
+}
+
+/* ── Buttons ── */
+.btn-glass {
+  border: 1px solid rgba(6,182,212,.25) !important;
+  background: linear-gradient(135deg, rgba(6,182,212,.08), rgba(124,58,237,.06)) !important;
+  color: var(--txt) !important;
+  border-radius: 12px !important;
+  transition: all .18s ease !important;
+  position: relative; overflow: hidden;
+}
+.btn-glass::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(6,182,212,.0), rgba(6,182,212,.0));
+  transition: background .18s ease;
+}
+.btn-glass:hover {
+  border-color: rgba(6,182,212,.6) !important;
+  background: linear-gradient(135deg, rgba(6,182,212,.18), rgba(124,58,237,.12)) !important;
+  box-shadow: 0 0 20px rgba(6,182,212,.2) !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+
+/* ── Topbar ── */
+.engine-topbar {
+  background: rgba(5,7,20,.7) !important;
+  border-bottom: 1px solid rgba(6,182,212,.2) !important;
+  box-shadow: 0 2px 20px rgba(6,182,212,.08) !important;
+}
+
+/* ── Progress bar ── */
+.progress-bar {
+  background: linear-gradient(90deg, #06b6d4, #7c3aed, #06b6d4) !important;
+  background-size: 200% 100% !important;
+  animation: progressShimmer 2s linear infinite !important;
+}
+@keyframes progressShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ── Timer Pill ── */
+.timer-pill {
+  border: 1px solid rgba(6,182,212,.35) !important;
+  background: rgba(5,7,25,.85) !important;
+  box-shadow: var(--glow-cyan) !important;
+  font-family: 'Courier New', monospace !important;
+  letter-spacing: 1px !important;
+  padding: .3rem .55rem !important;
+  border-radius: 10px !important;
+}
+#timerText {
+  color: #06b6d4 !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  text-shadow: 0 0 10px rgba(6,182,212,.5) !important;
+}
+
+/* ── Navigator dots ── */
+.qdot {
+  border: 1px solid rgba(255,255,255,.14) !important;
+  background: rgba(255,255,255,.05) !important;
+  transition: all .18s ease !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+.qdot:hover {
+  border-color: rgba(6,182,212,.6) !important;
+  background: rgba(6,182,212,.12) !important;
+  box-shadow: 0 0 14px rgba(6,182,212,.2) !important;
+  transform: scale(1.08) translateY(-2px) !important;
+}
+.qdot.current {
+  border-color: rgba(124,58,237,.95) !important;
+  background: rgba(124,58,237,.22) !important;
+  box-shadow: 0 0 20px rgba(124,58,237,.4), 0 0 40px rgba(124,58,237,.15) !important;
+}
+
+/* ── Nav Panel ── */
+.nav-panel .glass {
+  border: 1px solid rgba(124,58,237,.3) !important;
+  box-shadow: -8px 0 40px rgba(124,58,237,.12) !important;
+}
+.nav-toggle-icon {
+  border: 1px solid rgba(6,182,212,.3) !important;
+  background: rgba(6,182,212,.08) !important;
+  transition: all .18s ease !important;
+}
+.nav-toggle-icon:hover {
+  border-color: rgba(6,182,212,.7) !important;
+  box-shadow: 0 0 16px rgba(6,182,212,.3) !important;
+}
+.nav-toggle-icon span {
+  background: rgba(6,182,212,.9) !important;
+  box-shadow: 0 0 6px rgba(6,182,212,.5);
+}
+
+/* ── Submit button ── */
+#submitBtn {
+  background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+  border: 1px solid rgba(239,68,68,.5) !important;
+  box-shadow: 0 0 20px rgba(239,68,68,.25) !important;
+  transition: all .2s ease !important;
+  font-weight: 700 !important;
+}
+#submitBtn:hover {
+  box-shadow: 0 0 30px rgba(239,68,68,.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── Question text ── */
+#questionText {
+  line-height: 1.6 !important;
+}
+#questionText .badge {
+  background: linear-gradient(135deg, rgba(6,182,212,.3), rgba(124,58,237,.3)) !important;
+  border: 1px solid rgba(6,182,212,.4) !important;
+  color: #06b6d4 !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  padding: 3px 10px !important;
+}
+
+/* ── Badge-soft ── */
+.badge-soft {
+  background: linear-gradient(135deg, rgba(6,182,212,.1), rgba(124,58,237,.08)) !important;
+  border: 1px solid rgba(6,182,212,.25) !important;
+  color: rgba(200,220,255,.8) !important;
+}
+
+/* ── Pills ── */
+.pill {
+  background: rgba(6,182,212,.1) !important;
+  border: 1px solid rgba(6,182,212,.25) !important;
+  color: rgba(200,220,255,.8) !important;
+}
+
+/* ── Search input ── */
+#searchInput, .form-control {
+  background: rgba(6,182,212,.06) !important;
+  border: 1px solid rgba(6,182,212,.2) !important;
+  color: #eaf0ff !important;
+  border-radius: 12px !important;
+  transition: all .2s ease !important;
+}
+#searchInput:focus, .form-control:focus {
+  border-color: rgba(6,182,212,.7) !important;
+  box-shadow: 0 0 0 3px rgba(6,182,212,.12), 0 0 20px rgba(6,182,212,.1) !important;
+  outline: none !important;
+  background: rgba(6,182,212,.1) !important;
+}
+
+/* ── Scan Line effect on question box ── */
+.resizable-question-box::after {
+  content: '';
+  position: absolute; left: 0; right: 0; top: -100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(6,182,212,.3), transparent);
+  animation: scanLine 6s linear infinite;
+  pointer-events: none; z-index: 0;
+}
+@keyframes scanLine {
+  0% { top: -5%; }
+  100% { top: 105%; }
+}
+
+/* ── Topic/subtopic buttons ── */
+.topic-btn, .subtopic-btn {
+  border: 1px solid rgba(6,182,212,.18) !important;
+  background: rgba(6,182,212,.05) !important;
+  transition: all .18s ease !important;
+}
+.topic-btn:hover, .subtopic-btn:hover {
+  border-color: rgba(6,182,212,.55) !important;
+  background: rgba(6,182,212,.12) !important;
+  box-shadow: 0 0 16px rgba(6,182,212,.12) !important;
+  transform: translateX(4px) !important;
+}
+
+/* ── Question mark button ── */
+#qmarkBtn {
+  background: linear-gradient(135deg, rgba(124,58,237,.4), rgba(6,182,212,.25)) !important;
+  border: 1px solid rgba(124,58,237,.5) !important;
+  box-shadow: 0 0 18px rgba(124,58,237,.25) !important;
+}
+
+/* ── Modal content ── */
+.modal-content.glass {
+  border: 1px solid rgba(124,58,237,.35) !important;
+  box-shadow: 0 0 60px rgba(124,58,237,.2) !important;
+}
+
+/* ── Feedback overlays ── */
+.feedback-overlay.good {
+  background: radial-gradient(circle at center, rgba(34,197,94,.22), transparent 70%) !important;
+}
+.feedback-overlay.bad {
+  background: radial-gradient(circle at center, rgba(239,68,68,.22), transparent 70%) !important;
+}
+
+/* ── Top toolbar buttons ── */
+.top-toolbar .btn {
+  border-radius: 10px !important;
+}
+
+/* ── HUD corner decoration (engine view) ── */
+#engineView .engine-topbar::before {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(6,182,212,.6), rgba(124,58,237,.6), transparent);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE + VISUAL POLISH LAYER
+   ═══════════════════════════════════════════ */
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,.04); border-radius: 99px; }
+::-webkit-scrollbar-thumb { background: rgba(6,182,212,.35); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(6,182,212,.65); }
+
+/* ── Selection ── */
+::selection { background: rgba(124,58,237,.4); color: #fff; }
+
+/* ── Portal header responsive ── */
+@media (max-width: 576px) {
+  .brand-title { font-size: 1.5rem !important; }
+  .container { padding-left: 12px !important; padding-right: 12px !important; }
+  .subject-card { min-height: 110px; }
+  .action-btn-row { justify-content: center; }
+}
+
+/* ── Subject cards responsive grid ── */
+@media (max-width: 400px) {
+  #subjectsGrid .col-12 { padding: 6px !important; }
+}
+
+/* ── Topic group card polish ── */
+.topic-group-card {
+  transition: border-color .2s, box-shadow .2s !important;
+}
+.topic-group-card:hover {
+  border-color: rgba(6,182,212,.4) !important;
+  box-shadow: 0 0 30px rgba(6,182,212,.1) !important;
+}
+
+/* ── Topic toggle button ── */
+.topic-toggle-btn {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  padding: 0 !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 10px !important;
+  flex-shrink: 0;
+  transition: all .18s ease !important;
+  color: rgba(6,182,212,.9) !important;
+  border-color: rgba(6,182,212,.35) !important;
+  background: rgba(6,182,212,.08) !important;
+}
+.topic-toggle-btn:hover {
+  background: rgba(6,182,212,.18) !important;
+  border-color: rgba(6,182,212,.7) !important;
+  box-shadow: 0 0 14px rgba(6,182,212,.25) !important;
+  transform: scale(1.1) !important;
+}
+
+/* ── PDF upload area ── */
+.pdf-upload-box {
+  background: rgba(6,182,212,.04) !important;
+  transition: all .2s ease !important;
+}
+.pdf-upload-box:hover {
+  border-color: rgba(6,182,212,.7) !important;
+  background: rgba(6,182,212,.08) !important;
+  box-shadow: 0 0 20px rgba(6,182,212,.12) !important;
+}
+
+/* ── Engine view responsive ── */
+@media (max-width: 991px) {
+  .engine-shell { min-height: auto !important; }
+  .resizable-question-box { resize: none !important; }
+  .nav-wrap { position: static; max-height: none; }
+}
+@media (max-width: 576px) {
+  .resizable-question-box { padding: 12px !important; border-radius: 14px !important; }
+  #optionsArea .option { padding: .6rem .7rem !important; font-size: 14px !important; }
+  .engine-topbar .container-fluid { padding: 6px 10px !important; }
+  .timer-pill { padding: .45rem .6rem !important; font-size: 13px !important; }
+  #timerText { font-size: 15px !important; }
+}
+
+/* ── Search input ── */
+#searchInput {
+  background: rgba(6,182,212,.06) !important;
+  border: 1px solid rgba(6,182,212,.25) !important;
+  padding: .65rem 1rem !important;
+  font-size: 15px !important;
+  transition: all .2s !important;
+}
+#searchInput:focus {
+  border-color: rgba(6,182,212,.7) !important;
+  box-shadow: 0 0 0 3px rgba(6,182,212,.12), 0 0 20px rgba(6,182,212,.08) !important;
+  outline: none !important;
+}
+
+/* ── Candidate modal improvements ── */
+#candidateModal .modal-content {
+  border: 1px solid rgba(124,58,237,.4) !important;
+  box-shadow: 0 0 60px rgba(124,58,237,.25) !important;
+}
+
+/* ── Summary cards responsive ── */
+@media (max-width: 576px) {
+  #summaryStats .col-12 { padding: 4px !important; }
+  .modal-xl { max-width: 95vw !important; }
+  #summaryCards .col-12 { padding: 4px !important; }
+}
+
+/* ── Grand control box fix for mobile ── */
+@media (max-width: 576px) {
+  #grandControlBox {
+    bottom: 8px !important;
+    right: 8px !important;
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+}
+
+/* ── Nav panel backdrop ── */
+#navPanel.open::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  z-index: -1;
+  backdrop-filter: blur(2px);
+}
+
+/* ── Subtopic btn hover ── */
+.subtopic-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+.subtopic-btn .pill {
+  flex-shrink: 0;
+  font-size: .75rem !important;
+  padding: .18rem .5rem !important;
+  background: rgba(6,182,212,.12) !important;
+  border-color: rgba(6,182,212,.3) !important;
+  color: #06b6d4 !important;
+  transition: all .15s !important;
+}
+.subtopic-btn:hover .pill {
+  background: rgba(6,182,212,.25) !important;
+  color: #fff !important;
+}
+
+/* ── Progress bar glow ── */
+.progress { overflow: visible !important; }
+.progress-bar { border-radius: 0 !important; }
+
+/* ── qMetaLine ── */
+#qMetaLine {
+  font-size: 12px !important;
+  color: rgba(6,182,212,.7) !important;
+  letter-spacing: .3px;
+}
+
+/* ── Mode indicator badge ── */
+.hud-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+.hud-mode-exam {
+  background: rgba(239,68,68,.15);
+  border: 1px solid rgba(239,68,68,.4);
+  color: #f87171;
+}
+.hud-mode-practice {
+  background: rgba(34,197,94,.12);
+  border: 1px solid rgba(34,197,94,.35);
+  color: #4ade80;
+}
+
+/* ── Animate question card entry ── */
+@keyframes questionFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.resizable-question-box {
+  animation: questionFadeIn .3s ease;
+}
+
+/* ── Search result buttons ── */
+#searchResults .btn-glass {
+  border-radius: 12px !important;
+  padding: .55rem .85rem !important;
+  transition: all .15s !important;
+}
+#searchResults .btn-glass:hover {
+  transform: translateX(4px) !important;
+}
+
+/* ── Keyboard shortcut pills ── */
+.pill {
+  font-size: .78rem !important;
+}
+
+/* ── Back to portal button ── */
+#engineBackBtn {
+  font-size: 12px !important;
+  padding: 5px 10px !important;
+}
+
+/* ── PDF Tutor Panel ── */
+#pdfTutorPanel {
+  flex-direction: column;
+  min-height: 360px;
+}
+#pdfDropZone {
+  flex: 1;
+  min-height: 260px;
+  user-select: none;
+}
+#pdfViewerWrap {
+  flex: 1;
+  min-height: 320px;
+  flex-direction: column;
+}
+#pdfCanvasArea {
+  flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#pdfRenderCanvas {
+  display: block;
+  max-width: 100%;
+  height: auto !important;
+}
+#pdfTutorToggleBtn {
+  background: linear-gradient(135deg, rgba(6,182,212,.1), rgba(124,58,237,.08)) !important;
+  border-color: rgba(6,182,212,.35) !important;
+  color: #06b6d4 !important;
+  font-weight: 700 !important;
+  transition: all .18s !important;
+}
+#pdfTutorToggleBtn:hover {
+  background: rgba(6,182,212,.2) !important;
+  border-color: rgba(6,182,212,.7) !important;
+  box-shadow: 0 0 18px rgba(6,182,212,.25) !important;
+}
+@media (max-width: 576px) {
+  #pdfViewerWrap { min-height: 260px; }
+  #pdfDropZone   { min-height: 200px; padding: 1.2rem; }
+}
+
+/* ── MOBILE: stop question box clipping the toolbar ── */
+@media (max-width: 767px) {
+  /* Allow the question box to show toolbar overflow (wraps, never hides) */
+  .resizable-question-box {
+    overflow: visible !important;
+  }
+  /* But keep the scroll area itself contained */
+  .question-scroll-area {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   📱 MOBILE TOPBAR SWIPER  — slide-down reveal on touch
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 576px) {
+  .engine-topbar {
+    position: fixed !important;
+    top: 0 !important; left: 0 !important; right: 0 !important;
+    z-index: 200 !important;
+    transform: translateY(-110%) !important;
+    transition: transform 0.42s cubic-bezier(0.34, 1.45, 0.64, 1) !important;
+    will-change: transform;
+  }
+  .engine-topbar.topbar-open {
+    transform: translateY(0) !important;
+  }
+  /* push content down when topbar is pinned open */
+  #engineView.topbar-pinned > .container-fluid {
+    padding-top: calc(var(--topbar-h, 88px) + 6px) !important;
+  }
+}
+
+/* ── Handle pill ── */
+#topbarSwipeHandle {
+  display: none;          /* JS shows it only on mobile + engine active */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 202;
+  width: 72px;
+  height: 30px;
+  background: linear-gradient(180deg,
+    rgba(6,182,212,.08) 0%,
+    rgba(6,182,212,.22) 100%);
+  border: 1px solid rgba(6,182,212,.50);
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 6px 22px rgba(6,182,212,.22),
+    0 0 0 1px rgba(6,182,212,.08),
+    inset 0 1px 0 rgba(255,255,255,.07);
+  transition:
+    top         0.42s cubic-bezier(0.34, 1.45, 0.64, 1),
+    height      0.28s ease,
+    background  0.18s ease,
+    box-shadow  0.18s ease;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+#topbarSwipeHandle:active {
+  background: rgba(6,182,212,.35);
+  box-shadow: 0 6px 28px rgba(6,182,212,.38), 0 0 0 2px rgba(6,182,212,.25);
+}
+/* Chevron bars */
+#topbarSwipeHandle .sw-bar {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, rgba(6,182,212,.55), rgba(139,92,246,.8), rgba(6,182,212,.55));
+  box-shadow: 0 0 7px rgba(6,182,212,.45);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  position: relative;
+}
+/* Closed state: show a gentle ˅ shape */
+#topbarSwipeHandle .sw-bar:nth-child(1){ transform: translateY(2px) rotate(20deg); width:14px; margin-left:2px; }
+#topbarSwipeHandle .sw-bar:nth-child(2){ transform: translateY(2px) rotate(-20deg); width:14px; margin-left:5px; }
+/* Open state: flip to ˄ */
+#topbarSwipeHandle.handle-open .sw-bar:nth-child(1){ transform: translateY(-2px) rotate(-20deg); }
+#topbarSwipeHandle.handle-open .sw-bar:nth-child(2){ transform: translateY(-2px) rotate(20deg); }
+
+/* glow pulse for "I am here" affordance */
+@keyframes handlePulse {
+  0%,100% { box-shadow: 0 6px 22px rgba(6,182,212,.22), 0 0 0 1px rgba(6,182,212,.08); }
+  50%      { box-shadow: 0 6px 30px rgba(6,182,212,.40), 0 0 0 2px rgba(6,182,212,.20); }
+}
+#topbarSwipeHandle:not(.handle-open) { animation: handlePulse 2.8s ease-in-out infinite; }
+#topbarSwipeHandle.handle-open       { animation: none; }
+
+/* ── Backdrop ── */
+#topbarBackdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: rgba(0,0,0,.32);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  transition: opacity 0.25s ease;
+  opacity: 0;
+}
+#topbarBackdrop.show {
+  display: block;
+  opacity: 1;
+}
+
+</style>
+
+
+<style>
+/* ── FINAL OVERRIDE: navigator state colors always win ── */
+.qdot.st-attempted,
+.qdot.st-attempted:hover {
+  background: rgba(34,197,94,.32) !important;
+  border-color: rgba(34,197,94,.95) !important;
+  color: #bbf7d0 !important;
+  box-shadow: 0 0 12px rgba(34,197,94,.3) !important;
+}
+.qdot.st-notanswered,
+.qdot.st-notanswered:hover {
+  background: rgba(251,146,60,.28) !important;
+  border-color: rgba(251,146,60,.85) !important;
+  color: #fcd34d !important;
+}
+.qdot.st-review,
+.qdot.st-review:hover {
+  background: rgba(250,204,21,.28) !important;
+  border-color: rgba(250,204,21,.9) !important;
+  color: #fef08a !important;
+}
+.qdot.st-reviewanswered,
+.qdot.st-reviewanswered:hover {
+  background: linear-gradient(135deg, rgba(34,197,94,.42) 0% 50%, rgba(239,68,68,.38) 50% 100%) !important;
+  border-color: rgba(34,197,94,.85) !important;
+  color: #fff !important;
+}
+.qdot.st-skipped,
+.qdot.st-skipped:hover {
+  background: rgba(100,116,139,.22) !important;
+  border-color: rgba(100,116,139,.55) !important;
+  color: rgba(234,240,255,.5) !important;
+}
+.qdot.st-final-correct,
+.qdot.st-final-correct:hover {
+  background: rgba(34,197,94,.42) !important;
+  border-color: rgba(34,197,94,1) !important;
+  color: #bbf7d0 !important;
+  box-shadow: 0 0 14px rgba(34,197,94,.5) !important;
+}
+.qdot.st-final-wrong,
+.qdot.st-final-wrong:hover {
+  background: rgba(239,68,68,.40) !important;
+  border-color: rgba(239,68,68,1) !important;
+  color: #fecaca !important;
+  box-shadow: 0 0 14px rgba(239,68,68,.5) !important;
+}
+.qdot.st-final-unattempted,
+.qdot.st-final-unattempted:hover {
+  background: rgba(100,116,139,.22) !important;
+  border-color: rgba(148,163,184,.55) !important;
+  color: rgba(234,240,255,.4) !important;
+}
+</style>
 </head>
 
 <body>
-  <!-- <canvas id="particleCanvas"></canvas> -->
+  <canvas id="particleCanvas"></canvas>
 
   <div class="page-wrap">
 
     <!-- PORTAL VIEW -->
     <div id="portalView" class="view active">
       <div class="container py-4 py-md-5">
-        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
-          <div>
-            <h1 class="brand-title mb-1">Mock Test Portal</h1>
 
-          </div>
-          <div class="d-flex gap-2 flex-wrap mt-3 action-btn-row">
+        <!-- ✨ HERO HEADER BOX -->
+        <div style="
+          position: relative;
+          margin-bottom: 2.2rem;
+          border-radius: 24px;
+          overflow: hidden;
+          background: linear-gradient(135deg, rgba(6,182,212,.10) 0%, rgba(124,58,237,.14) 50%, rgba(59,130,246,.10) 100%);
+          border: 1px solid rgba(6,182,212,.30);
+          box-shadow: 0 0 60px rgba(124,58,237,.12), 0 20px 60px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08);
+          padding: clamp(1.4rem, 4vw, 2.4rem) clamp(1.4rem, 4vw, 2.6rem);
+        ">
+          <!-- animated corner accents -->
+          <div style="position:absolute;top:0;left:0;width:80px;height:80px;background:conic-gradient(from 180deg at 0% 0%, rgba(6,182,212,.5), transparent 45%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:0;right:0;width:80px;height:80px;background:conic-gradient(from 0deg at 100% 100%, rgba(124,58,237,.5), transparent 45%);pointer-events:none;"></div>
+          <!-- glow orbs -->
+          <div style="position:absolute;top:-40px;right:80px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle, rgba(124,58,237,.18), transparent 70%);pointer-events:none;animation:orb1 6s ease-in-out infinite;"></div>
+          <div style="position:absolute;bottom:-30px;left:60px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle, rgba(6,182,212,.14), transparent 70%);pointer-events:none;animation:orb2 8s ease-in-out infinite;"></div>
+          <style>
+            @keyframes orb1 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-14px) scale(1.08)} }
+            @keyframes orb2 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(12px) scale(1.06)} }
+          </style>
 
-            <button id="typingBtn" class="btn btn-glass">Typing Test Engine</button>
+          <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3" style="position:relative;z-index:1;">
+            <div>
+              <!-- small eyebrow label -->
+              <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:999px;padding:3px 12px;margin-bottom:12px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#06b6d4;box-shadow:0 0 8px #06b6d4;display:inline-block;animation:pulse-dot 1.4s ease-in-out infinite;"></span>
+                <span style="font-size:11px;font-weight:700;letter-spacing:1.2px;color:#06b6d4;">MOCK TEST PLATFORM</span>
+              </div>
+              <style>@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.85)} }</style>
+
+              <h1 class="brand-title mb-0" style="line-height:1.1;">Mock Test Portal</h1>
+              <div style="font-size:1rem;color:rgba(180,210,255,.75);margin-top:8px;max-width:480px;line-height:1.5;">
+                Practice smarter with AI-powered tests, battle mode, and instant feedback.
+              </div>
+
+              <!-- stat pills -->
+              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;">
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#4ade80;">✅ Exam Mode</span>
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#a78bfa;">⚔️ Battle Mode</span>
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(250,204,21,.10);border:1px solid rgba(250,204,21,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#facc15;">📄 PDF Tutor</span>
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(6,182,212,.10);border:1px solid rgba(6,182,212,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#06b6d4;">⌨️ Typing Test</span>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap action-btn-row" style="flex-shrink:0;">
+              <button id="typingBtn" class="btn btn-glass" style="border-color:rgba(6,182,212,.4);color:#06b6d4;font-weight:600;">⌨️ Typing Test Engine</button>
+            </div>
           </div>
         </div>
 
         <div class="glass p-3 p-md-4 mb-4">
           <div class="row g-3 align-items-center">
             <div class="col-12 col-lg-6">
-              <label class="form-label subtle mb-1">Search chapters/subtopics</label>
+              <label class="form-label subtle mb-1">🔍 Search chapters / subtopics</label>
               <input id="searchInput" class="form-control"
                 placeholder="Type e.g. 'Number System', 'Synonyms', 'demo'..." />
               <div class="small subtle mt-2">Search results open the selected test directly.</div>
             </div>
             <div class="col-12 col-lg-6">
               <div class="glass p-3">
+                <div class="small subtle mb-2 fw-semibold" style="color:rgba(6,182,212,.8);">⌨️ Keyboard shortcuts</div>
                 <div class="d-flex flex-wrap gap-2">
-                  <span class="pill">Keyboard: 1-4 select</span>
-                  <span class="pill">Enter: save & next</span>
-                  <span class="pill">Arrows: prev/next</span>
-                  <span class="pill">Navigator: toggle</span>
+                  <span class="pill">1–4: select option</span>
+                  <span class="pill">Enter: save &amp; next</span>
+                  <span class="pill">← →: prev/next</span>
+                  <span class="pill">☰: navigator</span>
+                  <span class="pill">0: hint toggle</span>
+                  <span class="pill">Space: tools</span>
                 </div>
               </div>
             </div>
@@ -1357,10 +2266,24 @@ h1, h2, h3, h4, h5, h6 {
           <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
             <div class="d-flex align-items-center gap-2 flex-wrap right-top-actions">
 
-              <button id="engineBackBtn" class="btn btn-glass btn-sm">Back to portal</button>
+              <button id="engineBackBtn" class="btn btn-glass btn-sm">← Portal</button>
               <span class="badge-soft" id="testInfoTop">Topic • Subtopic • Test</span>
 
               <span class="badge-soft" id="qCounterBadge" style="display: none;">Q 1/0</span>
+              <span id="modeBadge" class="hud-mode-badge hud-mode-exam">🔒 EXAM</span>
+              <!-- PDF Tutor toggle -->
+              <button id="pdfTutorToggleBtn" class="btn btn-glass btn-sm" title="Open PDF Tutor panel" style="display:none;gap:5px;align-items:center;">
+                📄 PDF Tutor
+              </button>
+
+              <!-- ⏱ Timer restore button (shown when timer is hidden) -->
+              <button id="timerShowBtn" title="Show timer" onclick="
+                document.getElementById('timerPill').style.display='';
+                document.getElementById('timerShowBtn').style.display='none';
+              " style="display:none;align-items:center;gap:4px;font-size:12px;padding:4px 8px;border-radius:8px;border:1px solid rgba(6,182,212,.35);background:rgba(6,182,212,.08);color:#06b6d4;cursor:pointer;">
+                ⏱ Timer
+              </button>
+
               <!-- ✅ NAV ICON (Top Right) -->
               <button id="navToggleIcon" class="nav-toggle-icon" aria-label="Open Navigator">
                 <span></span><span></span><span></span>
@@ -1377,7 +2300,49 @@ h1, h2, h3, h4, h5, h6 {
       <div class="container-fluid py-3">
         <div class="row g-3 engine-shell">
           <div class="col-12 col-lg-8">
-            <div class="glass p-3 p-md-4 resizable-question-box" id="A4">
+            <!-- PDF TUTOR PANEL (replaces question box when active) -->
+            <div id="pdfTutorPanel" class="glass p-3 p-md-4 resizable-question-box" style="display:none;flex-direction:column;">
+              <div class="d-flex align-items-center justify-content-between mb-3" style="flex-shrink:0;">
+                <div class="d-flex align-items-center gap-2">
+                  <span style="font-size:1.3rem;">📄</span>
+                  <div>
+                    <div class="fw-bold" style="font-size:.95rem;color:#06b6d4;" id="pdfTutorTitle">PDF Tutor</div>
+                    
+                  </div>
+                </div>
+                <button id="pdfTutorCloseBtn" class="btn btn-glass btn-sm" title="Back to test">✕ Close</button>
+              </div>
+
+              <!-- Drop zone (shown when no PDF loaded) -->
+              <div id="pdfDropZone" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed rgba(6,182,212,.4);border-radius:16px;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(6,182,212,.03);">
+                <input type="file" id="pdfFileInput" accept=".pdf" style="display:none;">
+                <div style="font-size:3.5rem;margin-bottom:.75rem;">📄</div>
+                <div class="fw-semibold mb-1" style="color:#06b6d4;font-size:1.1rem;">Drop your PDF here</div>
+                <div class="subtle mb-3" style="font-size:.85rem;">or click to choose a file</div>
+                <button class="btn btn-glass" id="pdfChooseBtn" style="padding:.45rem 1.2rem;border-color:rgba(6,182,212,.5);color:#06b6d4;">Choose PDF</button>
+              </div>
+
+              <!-- PDF viewer (shown after load) -->
+              <div id="pdfViewerWrap" style="display:none;flex:1;flex-direction:column;overflow:hidden;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid rgba(6,182,212,.2);">
+                <!-- toolbar -->
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(0,0,0,.35);border-bottom:1px solid rgba(6,182,212,.18);flex-shrink:0;flex-wrap:wrap;">
+                  <button class="btn btn-glass btn-sm" id="pdfPrevPage">◀</button>
+                  <span style="font-size:.82rem;color:rgba(234,240,255,.7);">Page <span id="pdfPageNum">1</span> / <span id="pdfPageTotal">?</span></span>
+                  <button class="btn btn-glass btn-sm" id="pdfNextPage">▶</button>
+                  <button class="btn btn-glass btn-sm" id="pdfZoomOut" style="margin-left:auto;">−</button>
+                  <span style="font-size:.78rem;color:rgba(234,240,255,.5);" id="pdfZoomLabel">100%</span>
+                  <button class="btn btn-glass btn-sm" id="pdfZoomIn">+</button>
+                  <button class="btn btn-glass btn-sm" id="pdfChangePdf" style="font-size:.75rem;padding:4px 8px;margin-left:6px;">📂 Change</button>
+                </div>
+                <!-- canvas area -->
+                <div style="flex:1;overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:10px;" id="pdfCanvasArea">
+                  <canvas id="pdfRenderCanvas" style="border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);max-width:100%;height:auto;"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- QUESTION BOX (normal test mode) -->
+            <div class="glass p-3 p-md-4 resizable-question-box" id="questionBox">
 
               <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
                 <div class="subtle" id="qMetaLine" style="display: none;">Status: -</div>
@@ -1405,7 +2370,7 @@ h1, h2, h3, h4, h5, h6 {
               <!-- ✅ FIXED FOOTER (always visible) -->
               <hr class="border-white border-opacity-10 my-3">
 
-              <div class="d-flex flex-wrap gap-2" id="A1">
+              <div class="d-flex flex-wrap gap-2">
                 <button id="prevBtn" class="btn btn-glass">◀ Previous </button>
                 <button id="saveNextBtn" class="btn btn-glass">Save & Next ▶</button>
                 <button id="reviewNextBtn" class="btn btn-glass">Mark for Review & Next</button>
@@ -1413,7 +2378,7 @@ h1, h2, h3, h4, h5, h6 {
                 <button id="showSummaryBtn" class="btn btn-glass d-none">Show summary</button>
               </div>
 
-              <div class="top-toolbar ms-auto mobile-move-toolbar" id="A2">
+              <div class="top-toolbar ms-auto mobile-move-toolbar">
                 <!-- ✅ Answer / Explanation (?) button (ONLY Practice Mode) -->
                 <button id="qmarkBtn" class="btn btn-glass btn-sm" title="Answer & Explanation">
                   &nbsp;&nbsp;&nbsp;Hint?&nbsp;&nbsp;&nbsp;
@@ -1438,8 +2403,8 @@ h1, h2, h3, h4, h5, h6 {
                 <button id="helpBtn" class="btn btn-glass btn-sm" style="display: none;">Help</button>
 
               </div>
-            </div>
-          </div>
+            </div><!-- end #questionBox -->
+          </div><!-- end col-lg-8 -->
 
           <!-- ✅ RIGHT SLIDE NAVIGATOR PANEL -->
           <div id="navPanel" class="nav-panel">
@@ -1454,6 +2419,15 @@ h1, h2, h3, h4, h5, h6 {
               <span class="subtle small" id="navLegend"></span>
 
               <div id="qNav" class="qnav mt-2"></div>
+
+              <!-- Legend -->
+              <div class="mt-3" style="font-size:10px;color:rgba(234,240,255,.5);line-height:1.9;">
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.2);margin-right:5px;"></span>Not visited</div>
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(251,146,60,.22);border:1.5px solid rgba(251,146,60,.75);margin-right:5px;"></span>Visited, no answer</div>
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(34,197,94,.25);border:1.5px solid rgba(34,197,94,.85);margin-right:5px;"></span>Answered</div>
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(250,204,21,.22);border:1.5px solid rgba(250,204,21,.85);margin-right:5px;"></span>Review (no answer)</div>
+                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,rgba(250,204,21,.35) 0 50%,rgba(34,197,94,.3) 50% 100%);border:1.5px solid rgba(250,204,21,.75);margin-right:5px;"></span>Review + answered</div>
+              </div>
 
               <!-- ✅ Buttons under Navigator -->
               <div class="nav-actions-vertical mt-3">
@@ -1474,12 +2448,21 @@ h1, h2, h3, h4, h5, h6 {
       </div>
 
 
-      <div class="timer-pill glass" id="A3">
-        <div class="d-flex align-items-center gap-2">
-          <!-- <div class="fw-semibold">Time</div> -->
+      <div class="timer-pill glass" id="timerPill">
+        <div class="d-flex align-items-center gap-1">
           <div id="timerText">00:00</div>
+          <button id="timerCloseBtn" title="Hide timer" onclick="
+            document.getElementById('timerPill').style.display='none';
+            document.getElementById('timerShowBtn').style.display='flex';
+          " style="
+            background:none;border:none;padding:0 0 0 3px;cursor:pointer;
+            color:rgba(255,255,255,.45);font-size:10px;line-height:1;
+            display:flex;align-items:center;transition:color .15s;
+          " onmouseover="this.style.color='rgba(255,255,255,.9)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">✕</button>
         </div>
       </div>
+
+
     </div>
 
   </div>
@@ -1591,9 +2574,93 @@ h1, h2, h3, h4, h5, h6 {
       <source src="b.mp3" type="audio/mpeg">
     </audio>
 
+
+    
+    
     <!-- Bootstrap + jsPDF -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+<script>
+(function() {
+  const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const colors = ['rgba(6,182,212,', 'rgba(124,58,237,', 'rgba(59,130,246,'];
+
+  for (let i = 0; i < 35; i++) {
+    particles.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 1.6 + 0.4,
+      dx: (Math.random() - 0.5) * 0.28,
+      dy: (Math.random() - 0.5) * 0.28,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: Math.random() * 0.45 + 0.15
+    });
+  }
+
+  let frameCount = 0;
+  function draw() {
+    frameCount++;
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + p.alpha + ')';
+      ctx.fill();
+
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+    });
+
+    // draw connection lines every other frame for perf
+    if (frameCount % 2 === 0) {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i+1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx+dy*dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = 'rgba(6,182,212,' + (0.07 * (1 - dist/100)) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <!-- PDF.js for PDF Tutor panel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      // Set PDF.js worker
+      if (window.pdfjsLib) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+          'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+    </script>
 
     <!-- Google Translate widget (top right) -->
     <script type="text/javascript">
@@ -1631,7 +2698,7 @@ h1, h2, h3, h4, h5, h6 {
       }
 
       /* ========= PORTAL RENDER ========= */
-      const state = {
+      const state = window.state = {
         selectedSubjectIndex: null,
         selectedTest: null, // {subjectTitle, topicName, subtopicName, fileKey}
         candidateName: '',
@@ -1659,18 +2726,33 @@ h1, h2, h3, h4, h5, h6 {
         const grid = $('subjectsGrid');
         grid.innerHTML = '';
 
+        const subjectIcons = {
+          'c-reasoning': '🧩',
+          'c-gk': '🌍',
+          'c-math': '📐',
+          'c-english': '📚',
+          'c-computer': '💻',
+          'c-others': '⭐',
+        };
+
         PORTAL_DATA.forEach((s, idx) => {
           const col = document.createElement('div');
           col.className = 'col-12 col-md-6 col-lg-4';
+          const icon = subjectIcons[s.colorClass] || '📖';
+          const totalSubs = (s.topics || []).reduce((acc, t) => acc + (t.subtopics ? t.subtopics.length : 0), 0);
           col.innerHTML = `
       <div class="glass subject-card ${s.colorClass} p-3 p-md-4 h-100" role="button" tabindex="0">
         <div class="d-flex align-items-start gap-3">
-          <div class="subject-accent"></div>
+          <div class="subject-accent">
+            <span style="position:relative;z-index:1;font-size:18px;">${icon}</span>
+          </div>
           <div class="flex-grow-1">
             <div class="fs-5 fw-bold">${escapeHtml(s.title)}</div>
-            <div class="subtle mt-1">Topic groups: ${s.topics?.length || 0}</div>
+            <div class="subtle mt-1" style="font-size:.82rem;">
+              ${s.topics?.length || 0} topic groups &nbsp;·&nbsp; ${totalSubs} subtopics
+            </div>
           </div>
-          <span class="pill">Open</span>
+          <span class="pill" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:#06b6d4;">Open →</span>
         </div>
       </div>
     `;
@@ -1692,24 +2774,47 @@ h1, h2, h3, h4, h5, h6 {
         subject.topics.forEach((tg, i) => {
           const topicCol = document.createElement('div');
           topicCol.className = 'col-12 col-lg-6';
+
           const subBtns = tg.subtopics.map(st => `
-      <button class="subtopic-btn mt-2" data-file="${st.file}">
-        ${escapeHtml(st.name)} <span class="pill float-end">Start</span>
-      </button>
-    `).join('');
-          topicCol.innerHTML = `
-      <div class="glass p-3 h-100">
-        <button class="topic-btn fw-semibold" type="button" data-topic="${escapeHtml(tg.name)}">
-          ${escapeHtml(tg.name)}
+      <div class="subtopic-row d-flex align-items-center gap-2 mt-2">
+        <button class="subtopic-btn flex-grow-1" data-file="${st.file}">
+          ${escapeHtml(st.name)} <span class="pill float-end">Start</span>
         </button>
-        <div class="mt-2">${subBtns}</div>
+        <button class="share-btn" data-file="${st.file}"
+          data-subject="${escapeHtml(subject.title)}"
+          data-topic="${escapeHtml(tg.name)}"
+          data-subtopic="${escapeHtml(st.name)}"
+          title="Copy direct link to this test"
+          style="flex-shrink:0;width:36px;height:36px;border-radius:10px;border:1px solid rgba(6,182,212,.4);background:rgba(6,182,212,.10);color:#06b6d4;font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;">🔗</button>
+      </div>
+    `).join('');
+
+          topicCol.innerHTML = `
+      <div class="glass p-3 h-100 topic-group-card">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <button class="topic-btn fw-semibold flex-grow-1" type="button" data-topic="${escapeHtml(tg.name)}">
+            ${escapeHtml(tg.name)}
+          </button>
+
+        </div>
+        <div class="subtopic-area mt-2">${subBtns}</div>
+        <div class="pdf-upload-area mt-2" style="display:none;">
+          <div class="pdf-upload-box glass p-3 text-center" style="border:2px dashed rgba(6,182,212,.4);border-radius:14px;cursor:pointer;transition:all .2s;">
+            <input type="file" accept=".pdf" class="chapter-pdf-input" style="display:none;">
+            <div class="pdf-upload-icon" style="font-size:2.5rem;margin-bottom:.5rem;">📄</div>
+            <div class="fw-semibold mb-1" style="color:#06b6d4;">Drop PDF here or click to choose</div>
+            <div class="small subtle">Upload a PDF for <strong>${escapeHtml(tg.name)}</strong></div>
+            <div class="pdf-chosen-name mt-2 small" style="color:#22c55e;display:none;"></div>
+          </div>
+        </div>
       </div>
     `;
+
           // subtopic clicks
           topicCol.querySelectorAll('.subtopic-btn').forEach(btn => {
             btn.addEventListener('click', () => {
               const fileKey = btn.getAttribute('data-file');
-              const subName = btn.textContent.replace('Start', '').trim();
+              const subName = btn.closest('.subtopic-row').querySelector('.subtopic-btn').textContent.replace('Start', '').trim();
               startTestFromPortal({
                 subjectTitle: subject.title,
                 topicName: tg.name,
@@ -1718,6 +2823,99 @@ h1, h2, h3, h4, h5, h6 {
               });
             });
           });
+
+          // share button clicks
+          topicCol.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+              btn.style.background = 'rgba(6,182,212,.22)';
+              btn.style.borderColor = 'rgba(6,182,212,.8)';
+              btn.style.transform = 'scale(1.08)';
+            });
+            btn.addEventListener('mouseleave', () => {
+              btn.style.background = 'rgba(6,182,212,.10)';
+              btn.style.borderColor = 'rgba(6,182,212,.4)';
+              btn.style.transform = '';
+            });
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const fileKey   = btn.getAttribute('data-file');
+              const subj      = btn.getAttribute('data-subject');
+              const topic     = btn.getAttribute('data-topic');
+              const subtopic  = btn.getAttribute('data-subtopic');
+              const url = new URL(location.href);
+              url.search = '';
+              url.searchParams.set('launch', '1');
+              url.searchParams.set('file', fileKey);
+              url.searchParams.set('subject', subj);
+              url.searchParams.set('topic', topic);
+              url.searchParams.set('subtopic', subtopic);
+              const link = url.toString();
+              navigator.clipboard.writeText(link).then(() => {
+                showShareToast(subtopic);
+              }).catch(() => {
+                prompt('Copy this link:', link);
+              });
+            });
+          });
+
+          // + / - toggle button (removed from UI — guard against null)
+          const toggleBtn = topicCol.querySelector('.topic-toggle-btn');
+          const subtopicArea = topicCol.querySelector('.subtopic-area');
+          const pdfArea = topicCol.querySelector('.pdf-upload-area');
+          let pdfOpen = false;
+
+          if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+              pdfOpen = !pdfOpen;
+              if (pdfOpen) {
+                subtopicArea.style.display = 'none';
+                pdfArea.style.display = 'block';
+                toggleBtn.textContent = '−';
+                toggleBtn.style.color = '#ef4444';
+                toggleBtn.style.borderColor = 'rgba(239,68,68,.5)';
+              } else {
+                subtopicArea.style.display = '';
+                pdfArea.style.display = 'none';
+                toggleBtn.textContent = '+';
+                toggleBtn.style.color = '';
+                toggleBtn.style.borderColor = '';
+              }
+            });
+          }
+
+          // PDF drop/click handling
+          const pdfBox = topicCol.querySelector('.pdf-upload-box');
+          const pdfInput = topicCol.querySelector('.chapter-pdf-input');
+          const pdfChosen = topicCol.querySelector('.pdf-chosen-name');
+
+          pdfBox.addEventListener('click', () => pdfInput.click());
+
+          pdfBox.addEventListener('dragover', e => {
+            e.preventDefault();
+            pdfBox.style.borderColor = 'rgba(34,197,94,.8)';
+            pdfBox.style.background = 'rgba(34,197,94,.07)';
+          });
+          pdfBox.addEventListener('dragleave', () => {
+            pdfBox.style.borderColor = 'rgba(6,182,212,.4)';
+            pdfBox.style.background = '';
+          });
+          pdfBox.addEventListener('drop', e => {
+            e.preventDefault();
+            pdfBox.style.borderColor = 'rgba(6,182,212,.4)';
+            pdfBox.style.background = '';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/pdf') {
+              pdfChosen.textContent = '✅ ' + file.name;
+              pdfChosen.style.display = 'block';
+            }
+          });
+          pdfInput.addEventListener('change', () => {
+            if (pdfInput.files[0]) {
+              pdfChosen.textContent = '✅ ' + pdfInput.files[0].name;
+              pdfChosen.style.display = 'block';
+            }
+          });
+
           topicsArea.appendChild(topicCol);
         });
 
@@ -1973,72 +3171,62 @@ h1, h2, h3, h4, h5, h6 {
         const dots = [...$('qNav').children];
         dots.forEach((dot, idx) => {
           const qid = state.qIds[idx];
-          const qs = state.qState[qid];
+          const qs  = state.qState[qid];
+
+          // Remove all state classes first
           dot.classList.remove(
             'current',
-            'st-attempted', 'st-notanswered', 'st-review', 'st-reviewanswered', 'st-skipped',
+            'st-attempted', 'st-notanswered', 'st-review',
+            'st-reviewanswered', 'st-skipped',
             'st-final-correct', 'st-final-wrong', 'st-final-unattempted'
           );
 
-
-
-          // current
+          // Current question always gets purple glow
           if (idx === state.currentIndex) dot.classList.add('current');
 
-          // status coloring rules
           const hasSelected = !!qs.selectedMetaId;
-          const visited = qs.visited;
-          const review = qs.review;
-          const skipped = qs.skipped;
+          const visited     = qs.visited;
+          const review      = qs.review;
+          const skipped     = qs.skipped;
 
-          // ✅ AFTER SUBMIT: show final colors only
           if (state.submitted) {
+            // ── AFTER SUBMIT: show correct/wrong/unattempted ──
             const sh = getOrBuildShuffle(qid);
-            const correctMeta = sh.correctMetaId;
-
-            if (hasSelected && qs.selectedMetaId === correctMeta) {
-              dot.classList.add('st-final-correct'); // green
+            if (hasSelected && qs.selectedMetaId === sh.correctMetaId) {
+              dot.classList.add('st-final-correct');
+            } else if (hasSelected) {
+              dot.classList.add('st-final-wrong');
+            } else {
+              dot.classList.add('st-final-unattempted');
             }
-            else if (hasSelected && qs.selectedMetaId !== correctMeta) {
-              dot.classList.add('st-final-wrong'); // red
-            }
-            else {
-              dot.classList.add('st-final-unattempted'); // brown
-            }
+          } else {
+            // ── BEFORE SUBMIT: status colors ──
+            // Priority: review+answered > review > answered > visited > skipped > untouched
+            if (review && hasSelected)  dot.classList.add('st-reviewanswered');
+            else if (review)            dot.classList.add('st-review');
+            else if (hasSelected)       dot.classList.add('st-attempted');
+            else if (skipped)           dot.classList.add('st-skipped');
+            else if (visited)           dot.classList.add('st-notanswered');
+            // else: untouched — no class, shows default white/transparent
           }
-          else {
-            // ✅ AFTER SUBMIT: Show only Result colors
-            if (state.submitted) {
-
-              const sh = getOrBuildShuffle(qid);
-              const correctMeta = sh.correctMetaId;
-
-              if (hasSelected && qs.selectedMetaId === correctMeta) {
-                dot.classList.add('st-final-correct');     // ✅ green
-              }
-              else if (hasSelected && qs.selectedMetaId !== correctMeta) {
-                dot.classList.add('st-final-wrong');       // ❌ red
-              }
-              else {
-                dot.classList.add('st-final-unattempted'); // 🤎 brown (even if visited)
-              }
-
-            }
-            else {
-
-              // ✅ BEFORE SUBMIT: your old status logic
-              if (review && hasSelected) dot.classList.add('st-reviewanswered');
-              else if (review) dot.classList.add('st-review');
-              else if (skipped) dot.classList.add('st-skipped');
-              else if (hasSelected) dot.classList.add('st-attempted');
-              else if (visited) dot.classList.add('st-notanswered');
-
-            }
-
-          }
-
-
         });
+
+        // Update legend
+        if (!state.submitted) {
+          const attempted = state.qIds.filter(qid => !!state.qState[qid].selectedMetaId).length;
+          $('navLegend').innerHTML =
+            `<span style="color:#22c55e;">●</span> ${attempted} answered &nbsp;` +
+            `<span style="color:rgba(255,255,255,.3);">●</span> ${state.qCount - attempted} left`;
+        } else {
+          const correct = state.qIds.filter(qid => {
+            const qs = state.qState[qid];
+            if (!qs.selectedMetaId) return false;
+            return qs.selectedMetaId === getOrBuildShuffle(qid).correctMetaId;
+          }).length;
+          $('navLegend').innerHTML =
+            `<span style="color:#22c55e;">●</span> ${correct} correct &nbsp;` +
+            `<span style="color:#ef4444;">●</span> ${state.qIds.filter(qid=>{const qs=state.qState[qid];return qs.selectedMetaId && qs.selectedMetaId!==getOrBuildShuffle(qid).correctMetaId;}).length} wrong`;
+        }
       }
 
       function getOrBuildShuffle(qid) {
@@ -2106,7 +3294,7 @@ h1, h2, h3, h4, h5, h6 {
           div.addEventListener('click', () => selectOption(metaId));
 
           area.appendChild(div);
-        });zz
+        });
 
         // restore selection
         const qs = state.qState[qid];
@@ -2387,6 +3575,32 @@ h1, h2, h3, h4, h5, h6 {
         $('reviewNextBtn').onclick = markReviewAndNext;
         $('clearBtn').onclick = clearResponse;
 
+        // ── PDF Tutor toggle ──
+        const pdfTutorBtn  = $('pdfTutorToggleBtn');
+        const pdfPanel     = $('pdfTutorPanel');
+        const questionBox  = $('questionBox');
+        const pdfCloseBtn  = $('pdfTutorCloseBtn');
+
+        if (pdfTutorBtn) {
+          pdfTutorBtn.style.display = 'inline-flex';
+          pdfTutorBtn.onclick = () => {
+            pdfPanel.style.display    = 'flex';
+            questionBox.style.display = 'none';
+            pdfTutorBtn.style.background = 'rgba(6,182,212,.2)';
+            pdfTutorBtn.style.borderColor = 'rgba(6,182,212,.7)';
+          };
+        }
+        if (pdfCloseBtn) {
+          pdfCloseBtn.onclick = () => {
+            pdfPanel.style.display   = 'none';
+            questionBox.style.display = '';
+            if (pdfTutorBtn) {
+              pdfTutorBtn.style.background = '';
+              pdfTutorBtn.style.borderColor = '';
+            }
+          };
+        }
+
         // ✅ Navigator Slide Panel Toggle (Hamburger icon)
         const navPanel = $('navPanel');
         const navIcon = $('navToggleIcon');
@@ -2513,6 +3727,15 @@ h1, h2, h3, h4, h5, h6 {
 
       function updateExamModeUI() {
         $('examModeBtn').textContent = `Exam mode: ${state.examMode ? 'On' : 'Off'}`;
+
+        // Update mode badge
+        const badge = $('modeBadge');
+        if (badge) {
+          badge.className = state.examMode
+            ? 'hud-mode-badge hud-mode-exam'
+            : 'hud-mode-badge hud-mode-practice';
+          badge.textContent = state.examMode ? '🔒 EXAM' : '💡 PRACTICE';
+        }
 
         // Show ? button ONLY in practice mode
         const qbtn = $('qmarkBtn');
@@ -2693,46 +3916,45 @@ h1, h2, h3, h4, h5, h6 {
         }
 
         $('summaryStats').innerHTML = `
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Total questions</div>
-      <div class="fs-4 fw-bold">${st.total}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">TOTAL</div>
+      <div class="fs-3 fw-bold" style="color:#06b6d4;">${st.total}</div>
     </div>
   </div>
 
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Attempted</div>
-      <div class="fs-4 fw-bold">${st.attempted}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">ATTEMPTED</div>
+      <div class="fs-3 fw-bold" style="color:#a78bfa;">${st.attempted}</div>
     </div>
   </div>
 
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Marked for review</div>
-      <div class="fs-4 fw-bold">${st.review}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">CORRECT ✅</div>
+      <div class="fs-3 fw-bold" style="color:#22c55e;">${st.correct}</div>
     </div>
   </div>
 
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Correct</div>
-      <div class="fs-4 fw-bold">${st.correct}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">WRONG ❌</div>
+      <div class="fs-3 fw-bold" style="color:#ef4444;">${st.wrong}</div>
     </div>
   </div>
 
-  <!-- ✅ NEW WRONG BOX -->
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Wrong</div>
-      <div class="fs-4 fw-bold">${st.wrong}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">FOR REVIEW</div>
+      <div class="fs-3 fw-bold" style="color:#facc15;">${st.review}</div>
     </div>
   </div>
 
-  <div class="col-12 col-md-3">
-    <div class="glass p-3">
-      <div class="subtle">Score</div>
-      <div class="fs-4 fw-bold">${st.score}</div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="glass p-3 text-center" style="background:linear-gradient(135deg,rgba(6,182,212,.12),rgba(124,58,237,.12))!important;border-color:rgba(6,182,212,.4)!important;">
+      <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">SCORE 🏆</div>
+      <div class="fs-3 fw-bold" style="color:#06b6d4;text-shadow:0 0 16px rgba(6,182,212,.5);">${st.score}</div>
     </div>
   </div>
 `;
@@ -3041,6 +4263,52 @@ h1, h2, h3, h4, h5, h6 {
       /* ========= INIT ========= */
       buildSubjects();
 
+      /* ── Share toast ── */
+      function showShareToast(name) {
+        let toast = document.getElementById('shareToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'shareToast';
+          toast.style.cssText = `
+            position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+            z-index:99999;padding:.6rem 1.1rem;border-radius:14px;
+            background:rgba(6,182,212,.18);border:1px solid rgba(6,182,212,.55);
+            backdrop-filter:blur(12px);color:#06b6d4;font-weight:700;font-size:.93rem;
+            box-shadow:0 8px 28px rgba(0,0,0,.35);opacity:0;
+            transition:opacity .22s ease, transform .22s ease;pointer-events:none;
+            white-space:nowrap;
+          `;
+          document.body.appendChild(toast);
+        }
+        toast.textContent = `🔗 Link copied for "${name}"`;
+        requestAnimationFrame(() => {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translateX(-50%) translateY(0)';
+        });
+        clearTimeout(toast._hideTimer);
+        toast._hideTimer = setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(-50%) translateY(10px)';
+        }, 2800);
+      }
+
+      /* ── Auto-launch from shared URL ── */
+      (function checkDirectLaunch() {
+        const p = new URLSearchParams(location.search);
+        if (p.get('launch') !== '1') return;
+        const sel = {
+          fileKey:      p.get('file')     || '',
+          subjectTitle: p.get('subject')  || '',
+          topicName:    p.get('topic')    || '',
+          subtopicName: p.get('subtopic') || '',
+        };
+        if (!sel.fileKey) return;
+        // Clean URL so refresh doesn't re-trigger
+        history.replaceState({}, '', location.pathname);
+        // Small delay to let page finish rendering
+        setTimeout(() => startTestFromPortal(sel), 350);
+      })();
+
       function convertTestData(testData) {
         const questionsObj = {};
         const explanationsObj = {};
@@ -3145,19 +4413,8 @@ h1, h2, h3, h4, h5, h6 {
       function toggleCenterHintBox() {
         // ✅ only in practice mode
         if (state.examMode) return;
-
-        const box = document.getElementById("hintCorrectOptionBox");
-
-        // if hint box is open -> close it, else open it
-        if (box && box.style.display === "block") {
-          closeHintCorrectOption();
-        } else {
-          const yourText = getOptionText(qid, userAnswers[qid]);
-          doc.text(`Answer: ${yourText}`, margin, y);
-
-
-          showHintCorrectOption();
-        }
+        // Delegate to the center help modal
+        openCenterHelpModal();
       }
       function getOptionText(qid, optionIndex) {
         const q = questions[qid];
@@ -3211,9 +4468,174 @@ h1, h2, h3, h4, h5, h6 {
 
     </script>
 
+    <!-- ═══════════════════════════════════════════════════
+         PDF TUTOR ENGINE
+         ═══════════════════════════════════════════════════ -->
+    <script>
+    (function() {
+      'use strict';
+
+      // State
+      let pdfDoc      = null;
+      let currentPage = 1;
+      let totalPages  = 0;
+      let zoom        = 1.0;
+      let renderTask  = null;
+
+      const ZOOM_STEP = 0.2;
+      const ZOOM_MIN  = 0.4;
+      const ZOOM_MAX  = 3.0;
+
+      function el(id) { return document.getElementById(id); }
+
+      // ── Wait for DOM ──
+      function init() {
+        const dropZone   = el('pdfDropZone');
+        const fileInput  = el('pdfFileInput');
+        const chooseBtn  = el('pdfChooseBtn');
+        const changePdf  = el('pdfChangePdf');
+        const prevPage   = el('pdfPrevPage');
+        const nextPage   = el('pdfNextPage');
+        const zoomIn     = el('pdfZoomIn');
+        const zoomOut    = el('pdfZoomOut');
+
+        if (!dropZone) return; // not in DOM yet
+
+        // Click to choose
+        chooseBtn.onclick = () => fileInput.click();
+        if (changePdf) changePdf.onclick = () => {
+          fileInput.value = '';
+          fileInput.click();
+        };
+
+        // File chosen
+        fileInput.onchange = () => {
+          if (fileInput.files && fileInput.files[0]) loadPdfFile(fileInput.files[0]);
+        };
+
+        // Drag & drop
+        dropZone.addEventListener('dragover', e => {
+          e.preventDefault();
+          dropZone.style.borderColor = 'rgba(34,197,94,.8)';
+          dropZone.style.background  = 'rgba(34,197,94,.06)';
+        });
+        dropZone.addEventListener('dragleave', () => {
+          dropZone.style.borderColor = 'rgba(6,182,212,.4)';
+          dropZone.style.background  = 'rgba(6,182,212,.03)';
+        });
+        dropZone.addEventListener('drop', e => {
+          e.preventDefault();
+          dropZone.style.borderColor = 'rgba(6,182,212,.4)';
+          dropZone.style.background  = 'rgba(6,182,212,.03)';
+          const file = e.dataTransfer.files[0];
+          if (file && file.type === 'application/pdf') loadPdfFile(file);
+        });
+        dropZone.onclick = (e) => {
+          if (e.target !== chooseBtn) fileInput.click();
+        };
+
+        // Navigation
+        if (prevPage)  prevPage.onclick  = () => goToPage(currentPage - 1);
+        if (nextPage)  nextPage.onclick  = () => goToPage(currentPage + 1);
+        if (zoomIn)    zoomIn.onclick    = () => { zoom = Math.min(ZOOM_MAX, zoom + ZOOM_STEP); renderPage(currentPage); };
+        if (zoomOut)   zoomOut.onclick   = () => { zoom = Math.max(ZOOM_MIN, zoom - ZOOM_STEP); renderPage(currentPage); };
+
+        // Keyboard in PDF panel
+        document.addEventListener('keydown', (e) => {
+          const panel = el('pdfTutorPanel');
+          if (!panel || panel.style.display === 'none') return;
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goToPage(currentPage + 1); }
+          if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); goToPage(currentPage - 1); }
+          if (e.key === '+' || e.key === '=') { zoom = Math.min(ZOOM_MAX, zoom + ZOOM_STEP); renderPage(currentPage); }
+          if (e.key === '-') { zoom = Math.max(ZOOM_MIN, zoom - ZOOM_STEP); renderPage(currentPage); }
+        });
+      }
+
+      function loadPdfFile(file) {
+        if (!window.pdfjsLib) {
+          alert('PDF.js library not loaded yet. Please wait a moment and try again.');
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          try {
+            const typedArr = new Uint8Array(e.target.result);
+            pdfDoc = await pdfjsLib.getDocument({ data: typedArr }).promise;
+            totalPages  = pdfDoc.numPages;
+            currentPage = 1;
+            zoom        = 1.0;
+
+            // Show viewer, hide drop zone
+            el('pdfDropZone').style.display   = 'none';
+            el('pdfViewerWrap').style.display = 'flex';
+
+            // Update title
+            const titleEl = el('pdfTutorTitle');
+            if (titleEl) titleEl.textContent = '📄 ' + file.name.replace(/\.pdf$/i, '');
+
+            renderPage(1);
+          } catch (err) {
+            console.error('PDF load error:', err);
+            alert('Could not read PDF. Make sure it is a valid PDF file.');
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      }
+
+      async function renderPage(pageNum) {
+        if (!pdfDoc) return;
+        pageNum = Math.max(1, Math.min(totalPages, pageNum));
+        currentPage = pageNum;
+
+        // Update UI
+        const numEl   = el('pdfPageNum');
+        const totEl   = el('pdfPageTotal');
+        const zoomLbl = el('pdfZoomLabel');
+        if (numEl)   numEl.textContent   = pageNum;
+        if (totEl)   totEl.textContent   = totalPages;
+        if (zoomLbl) zoomLbl.textContent = Math.round(zoom * 100) + '%';
+
+        // Button states
+        const prev = el('pdfPrevPage');
+        const next = el('pdfNextPage');
+        if (prev) prev.disabled = pageNum <= 1;
+        if (next) next.disabled = pageNum >= totalPages;
+
+        // Cancel previous render
+        if (renderTask) { try { renderTask.cancel(); } catch(_){} }
+
+        const page     = await pdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale: zoom });
+
+        const canvas  = el('pdfRenderCanvas');
+        const ctx     = canvas.getContext('2d');
+        canvas.width  = viewport.width;
+        canvas.height = viewport.height;
+
+        renderTask = page.render({ canvasContext: ctx, viewport });
+        try { await renderTask.promise; } catch(e) { if (e.name !== 'RenderingCancelledException') console.warn(e); }
+      }
+
+      function goToPage(n) { renderPage(n); }
+
+      // Init on DOMContentLoaded or immediately if already loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        // Retry a few times in case elements aren't rendered yet
+        let tries = 0;
+        const tryInit = () => {
+          if (el('pdfDropZone')) { init(); }
+          else if (++tries < 20) { setTimeout(tryInit, 200); }
+        };
+        tryInit();
+      }
+    })();
+    </script>
+
     <script>
       /* ============================================================
-         
+         PRESS "P" → CAPTURE ALL QUESTIONS VIA goNext() → PPT
          FINAL FIX (POST-SUBMIT SAFE)
          ============================================================ */
 
@@ -3277,9 +4699,30 @@ h1, h2, h3, h4, h5, h6 {
 
         /* ---------- SCREENSHOT ---------- */
         async function captureScreen() {
+          // Inject a style that kills all animations + scan line for clean PPT capture
+          let captureStyle = document.getElementById('pptCaptureStyle');
+          if (!captureStyle) {
+            captureStyle = document.createElement('style');
+            captureStyle.id = 'pptCaptureStyle';
+            document.head.appendChild(captureStyle);
+          }
+          captureStyle.textContent = `
+            *, *::before, *::after {
+              animation: none !important;
+              transition: none !important;
+            }
+            .resizable-question-box::after { display: none !important; }
+            body { animation: none !important; background-size: 100% 100% !important; }
+            .progress-bar { animation: none !important; }
+            #particleCanvas { display: none !important; }
+          `;
+
+          // Small delay so browser repaints without animations
+          await new Promise(r => setTimeout(r, 80));
+
           const canvas = await html2canvas(document.documentElement, {
             scale: 2,
-            backgroundColor: "#ffffff",
+            backgroundColor: "#0b1020",
             useCORS: true,
             width: window.innerWidth,
             height: window.innerHeight,
@@ -3287,6 +4730,9 @@ h1, h2, h3, h4, h5, h6 {
             windowHeight: window.innerHeight
           });
           SHOTS.push(canvas.toDataURL("image/png"));
+
+          // Restore animations after capture
+          captureStyle.textContent = '';
         }
 
         /* ---------- PPT ---------- */
@@ -3355,7 +4801,7 @@ h1, h2, h3, h4, h5, h6 {
           }
         });
 
-        console.log("✅ PRESS '.' → CAPTURE ALL QUESTIONS (goNext based)");
+        console.log("✅ PRESS 'P' → CAPTURE ALL QUESTIONS (goNext based)");
 
       })();
     </script>
@@ -3533,98 +4979,6 @@ h1, h2, h3, h4, h5, h6 {
       })();
     </script>
 
-
-
-    <script>
-      /* ===== AUTO HIDE OPTIONS IF EMPTY ===== */
-      function renderQuestion(index) {
-        state.currentIndex = Math.max(0, Math.min(index, state.qCount - 1));
-        const qid = state.qIds[state.currentIndex];
-        const qs = state.qState[qid];
-
-        qs.visited = true;
-
-        // Question header
-        $('qCounterBadge').textContent = `Q ${state.currentIndex + 1}/${state.qCount}`;
-
-        const q = state.questionsMap[qid];
-        $('questionText').innerHTML =
-          `<span class="badge bg-dark me-2">Q${state.currentIndex + 1}/${state.qCount}</span> ${q.text}`;
-
-        // Image
-        if (q.image) {
-          $('questionImageWrap').classList.remove('d-none');
-          $('questionImage').src = q.image;
-        } else {
-          $('questionImageWrap').classList.add('d-none');
-        }
-
-        // OPTIONS (rebuild)
-        const sh = getOrBuildShuffle(qid);
-        const opts = sh.order.map(i => q.options[i]);
-        const area = $('optionsArea');
-        area.innerHTML = '';
-
-        opts.forEach((optHtml, i) => {
-          const metaId = String(i + 1);
-          const div = document.createElement('div');
-          div.className = 'option';
-          div.dataset.meta = metaId;
-
-          div.innerHTML = `
-      <span class="kbd">${metaId}</span>
-      <span class="opt-text">${optHtml}</span>
-    `;
-
-          // ✅ CLICK = SAVE + BLUE
-          div.onclick = () => {
-            qs.selectedMetaId = metaId;
-
-            document.querySelectorAll('.option').forEach(o =>
-              o.classList.remove('selected', 'correct', 'wrong')
-            );
-
-            div.classList.add('selected');
-
-            if (!state.examMode) {
-              const sh = getOrBuildShuffle(qid);
-              const correctMeta = sh.correctMetaId;
-
-              if (metaId === correctMeta) {
-                div.classList.add('correct');
-              } else {
-                div.classList.add('wrong');
-                document.querySelectorAll('.option').forEach(o => {
-                  if (o.dataset.meta === correctMeta) {
-                    o.classList.add('correct');
-                  }
-                });
-              }
-
-              // 🔊 SOUND FIX (THIS WAS MISSING)
-              if (state.soundEnabled) {
-                const audio = metaId === correctMeta
-                  ? document.getElementById("audCorrect")
-                  : document.getElementById("audWrong");
-
-                if (audio) {
-                  audio.currentTime = 0;
-                  audio.play().catch(() => { });
-                }
-              }
-            }
-          };
-          // ✅ RESTORE BLUE WHEN REVISITING
-          if (qs.selectedMetaId === metaId) {
-            div.classList.add('selected');
-          }
-
-          area.appendChild(div);
-        });
-
-        updateNavigator();
-      }
-    </script>
 <script>
 (function(){
 
@@ -3939,27 +5293,37 @@ panel.style.display==="none"
       colorPanel = document.createElement("div");
       colorPanel.id = "color-picker-panel";
 
+      // Read current applied colors as best-guess defaults
+      const curBg    = "#0b1020";
+      const curBox   = "#131830";
+      const curText  = "#eaf0ff";
+
       colorPanel.innerHTML = `
-        <div style="margin-bottom:8px;font-weight:500;">Background</div>
-        <input type="color" id="bgPick" value="#000000" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
-        <div style="margin-bottom:8px;font-weight:500;">Question Box</div>
-        <input type="color" id="boxPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;margin-bottom:10px;">
-        <div style="margin-bottom:8px;font-weight:500;">Text</div>
-        <input type="color" id="textPick" value="#ffffff" style="width:100%;height:36px;border-radius:6px;border:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <span style="font-weight:600;font-size:13px;">🎨 Colors</span>
+          <button id="colorPickerClose" style="background:none;border:none;color:#aaa;font-size:16px;cursor:pointer;padding:0 2px;line-height:1;">✕</button>
+        </div>
+        <div style="margin-bottom:6px;font-weight:500;font-size:11px;color:#aaa;">BACKGROUND</div>
+        <input type="color" id="bgPick" value="${curBg}" style="width:100%;height:32px;border-radius:6px;border:none;margin-bottom:10px;cursor:pointer;">
+        <div style="margin-bottom:6px;font-weight:500;font-size:11px;color:#aaa;">QUESTION BOX</div>
+        <input type="color" id="boxPick" value="${curBox}" style="width:100%;height:32px;border-radius:6px;border:none;margin-bottom:10px;cursor:pointer;">
+        <div style="margin-bottom:6px;font-weight:500;font-size:11px;color:#aaa;">TEXT COLOR</div>
+        <input type="color" id="textPick" value="${curText}" style="width:100%;height:32px;border-radius:6px;border:none;margin-bottom:10px;cursor:pointer;">
+        <button id="colorPickerReset" style="width:100%;padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#aaa;cursor:pointer;font-size:11px;margin-top:2px;">↺ Reset defaults</button>
       `;
 
       Object.assign(colorPanel.style, {
         position: "fixed",
         left: "14px",
         bottom: "60px",
-        padding: "16px",
+        padding: "14px",
         borderRadius: "14px",
         background: "rgba(10,12,20,0.98)",
         backdropFilter: "blur(25px)",
-        border: "1px solid rgba(255,255,255,0.3)",
+        border: "1px solid rgba(255,255,255,0.25)",
         boxShadow: "0 25px 50px rgba(0,0,0,0.6)",
         zIndex: 100002,
-        width: "170px",
+        width: "180px",
         color: "#fff",
         fontSize: "12px",
         fontFamily: "system-ui, sans-serif"
@@ -3967,29 +5331,52 @@ panel.style.display==="none"
 
       document.body.appendChild(colorPanel);
 
-      $("#bgPick").oninput = (e) => {
-        document.body.style.background = `linear-gradient(120deg, ${e.target.value}, ${e.target.value})`;
-      };
+      // Create or reuse a persistent override style tag
+      let overrideStyle = document.getElementById("colorPickerOverride");
+      if (!overrideStyle) {
+        overrideStyle = document.createElement("style");
+        overrideStyle.id = "colorPickerOverride";
+        document.head.appendChild(overrideStyle);
+      }
 
-      $("#boxPick").oninput = (e) => {
-        document.querySelectorAll(".glass").forEach(el =>
-          el.style.background = `linear-gradient(135deg, ${e.target.value}cc, ${e.target.value}99)`
-        );
-      };
-
-      $("#textPick").oninput = (e) => {
-        document.documentElement.style.setProperty("--txt", e.target.value);
-      };
-
-      setTimeout(() => {
-        const closeHandler = (ev) => {
-          if (!colorPanel.contains(ev.target)) {
-            colorPanel.remove();
-            document.removeEventListener("click", closeHandler);
+      function applyColors(bg, box, txt) {
+        overrideStyle.textContent = `
+          body, body * { animation: none !important; }
+          body {
+            background: ${bg} !important;
+            background-image: none !important;
           }
-        };
-        document.addEventListener("click", closeHandler);
-      }, 50);
+          .glass, .resizable-question-box, .engine-topbar, .nav-panel .glass, #questionBox {
+            background: ${box}cc !important;
+            background-image: none !important;
+          }
+          body, body p, body div, body span, body button, body label,
+          #questionText, .opt-text, .subtle, .qbox, .option, .btn-glass,
+          #qMetaLine, #navLegend, .badge-soft, .pill {
+            color: ${txt} !important;
+          }
+          :root { --txt: ${txt} !important; }
+        `;
+      }
+
+      // Read current pickers and apply immediately
+      let bgVal   = curBg;
+      let boxVal  = curBox;
+      let txtVal  = curText;
+
+      $("#bgPick").oninput   = (e) => { bgVal  = e.target.value; applyColors(bgVal, boxVal, txtVal); };
+      $("#boxPick").oninput  = (e) => { boxVal = e.target.value; applyColors(bgVal, boxVal, txtVal); };
+      $("#textPick").oninput = (e) => { txtVal = e.target.value; applyColors(bgVal, boxVal, txtVal); };
+
+      $("#colorPickerClose").onclick = () => colorPanel.remove();
+
+      $("#colorPickerReset").onclick = () => {
+        overrideStyle.textContent = "";
+        bgVal  = curBg;  boxVal = curBox;  txtVal = curText;
+        $("#bgPick").value   = curBg;
+        $("#boxPick").value  = curBox;
+        $("#textPick").value = curText;
+      };
     }
 
     console.log("✅ Tools Panel Ready!");
@@ -4023,164 +5410,1365 @@ panel.style.display==="none"
 
 })();
 </script>
+
+
+
+
+<!-- Firebase Compat SDK (no ES modules — works in plain <script> context) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <script>
-(function(){
+/* ============================================================
+   BATTLE MODE — Firebase Realtime Database
+   Uses window.state from main engine (exposed above)
+   ============================================================ */
+(function() {
 
-function cleanOptions(){
+// ── YOUR FIREBASE CONFIG ─────────────────────────────────────────────────────
+// Replace these values with your own from https://console.firebase.google.com
+// Project → Realtime Database → Create (Test Mode) → Project Settings → Web App
+const FIREBASE_CONFIG = {
 
-  const area = document.getElementById("optionsArea");
-  if(!area) return;
+  apiKey: "AIzaSyDw1DRkmYRAG5aEpAWQuHAn15rQw45wpSk",
+  authDomain: "game-694f7.firebaseapp.com",
+  databaseURL: "https://game-694f7-default-rtdb.firebaseio.com",
+  projectId: "game-694f7",
+  storageBucket: "game-694f7.firebasestorage.app",
+  messagingSenderId: "623755811863",
+  appId: "1:623755811863:web:487514f51e7eeb488e1052",
+  measurementId: "G-GL1MS8KN0F"
 
-  const options = area.querySelectorAll(".option");
+};
+// ─────────────────────────────────────────────────────────────────────────────
 
-  let visible = 0;
+const AVATARS = ['🤖','🦾','🧠','⚡','🔥','🌟','💎','🚀','🎯','🏆'];
 
-  options.forEach(opt=>{
+// ── STATE ────────────────────────────────────────────────────────────────────
+const B = {
+  app: null, db: null,
+  myId:     'p_' + Math.random().toString(36).substr(2,9),
+  myAvatar: AVATARS[Math.floor(Math.random()*AVATARS.length)],
+  myName:   '',
+  roomCode: '',
+  isHost:   false,
+  players:  {},
+  active:   false,
+  answered: false,
+  qStartTime: 0,
+  listeners: [],   // firebase .off() references {ref, cb}
+};
 
-    let text = opt.innerText.replace(/\s/g,"");
+// ── FIREBASE INIT ────────────────────────────────────────────────────────────
+function initFirebase() {
+  try {
+    if (!firebase.apps.length) {
+      B.app = firebase.initializeApp(FIREBASE_CONFIG);
+    } else {
+      B.app = firebase.apps[0];
+    }
+    B.db = firebase.database();
+    return true;
+  } catch(e) {
+    console.error('Firebase init error:', e);
+    return false;
+  }
+}
 
-    // remove keyboard label like "1"
-    const kbd = opt.querySelector(".kbd");
-    if(kbd){
-        text = text.replace(kbd.innerText.trim(),"");
+// ── FIREBASE HELPERS ─────────────────────────────────────────────────────────
+function dbSet(path, val) {
+  if (!B.db) return;
+  return B.db.ref(path).set(val);
+}
+
+function dbListen(path, cb) {
+  if (!B.db) return;
+  const r = B.db.ref(path);
+  r.on('value', snap => cb(snap.val()));
+  B.listeners.push({ r, cb });
+}
+
+function dbStopAll() {
+  B.listeners.forEach(({r}) => r.off());
+  B.listeners = [];
+}
+
+// ── ENGINE STATE ACCESSOR (safe) ─────────────────────────────────────────────
+function getEngineState() {
+  // window.state is set by main engine via `const state = window.state = {...}`
+  return window.state || null;
+}
+
+function isTestLoaded() {
+  const s = getEngineState();
+  return s && s.questionsMap && Object.keys(s.questionsMap).length > 0;
+}
+
+// ── UI STYLES ────────────────────────────────────────────────────────────────
+function injectStyles() {
+  if (document.getElementById('bm-styles')) return;
+  const s = document.createElement('style');
+  s.id = 'bm-styles';
+  s.textContent = `
+  .bm-glow-btn {
+    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+    border:1px solid rgba(124,58,237,.6);color:#fff !important;
+    border-radius:14px;padding:.45rem .9rem;font-weight:700;cursor:pointer;
+    box-shadow:0 0 20px rgba(124,58,237,.4);transition:all .2s;
+  }
+  .bm-glow-btn:hover { box-shadow:0 0 35px rgba(124,58,237,.7);transform:translateY(-2px); }
+  #bmOverlay {
+    display:none;position:fixed;inset:0;z-index:100000;
+    background:rgba(4,6,18,.9);backdrop-filter:blur(10px);
+    justify-content:center;align-items:center;
+  }
+  #bmOverlay.open { display:flex; }
+  .bm-modal {
+    width:min(500px,95vw);max-height:92vh;overflow-y:auto;
+    background:linear-gradient(140deg,rgba(8,12,35,.98),rgba(16,5,38,.98));
+    border:1px solid rgba(124,58,237,.5);border-radius:22px;padding:26px;
+    box-shadow:0 0 80px rgba(124,58,237,.3);
+  }
+  .bm-head { display:flex;justify-content:space-between;align-items:center;margin-bottom:20px; }
+  .bm-logo {
+    font-size:21px;font-weight:900;letter-spacing:2px;
+    background:linear-gradient(90deg,#7c3aed,#06b6d4);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .bm-x {
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+    color:#fff;border-radius:10px;width:34px;height:34px;cursor:pointer;font-size:15px;
+  }
+  .bm-label { display:block;color:rgba(180,200,255,.65);font-size:12px;margin:10px 0 5px; }
+  .bm-input {
+    width:100%;padding:10px 13px;border-radius:11px;box-sizing:border-box;
+    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);
+    color:#fff;font-size:15px;outline:none;transition:border .2s;
+  }
+  .bm-input:focus { border-color:rgba(124,58,237,.85);box-shadow:0 0 0 3px rgba(124,58,237,.14); }
+  .bm-code-input {
+    text-transform:uppercase;letter-spacing:5px;font-size:24px;
+    text-align:center;font-weight:700;
+  }
+  .bm-row { display:flex;gap:10px;margin-top:12px; }
+  .bm-btn {
+    flex:1;padding:11px;border-radius:11px;border:none;cursor:pointer;
+    font-weight:700;font-size:14px;color:#fff;transition:all .15s;
+  }
+  .bm-btn:hover { transform:translateY(-2px);filter:brightness(1.15); }
+  .bm-blue   { background:linear-gradient(135deg,#1d4ed8,#06b6d4); }
+  .bm-purple { background:linear-gradient(135deg,#7c3aed,#a855f7); }
+  .bm-green  { background:linear-gradient(135deg,#059669,#10b981); }
+  .bm-red    { background:linear-gradient(135deg,#dc2626,#ef4444); }
+  .bm-full   { width:100%;flex:none; }
+  .bm-code-box {
+    text-align:center;padding:16px;border-radius:13px;margin-bottom:14px;
+    background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.28);
+  }
+  .bm-big-code {
+    font-size:40px;font-weight:900;letter-spacing:8px;
+    background:linear-gradient(90deg,#7c3aed,#06b6d4);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    margin:4px 0;
+  }
+  .bm-hint { font-size:11px;color:rgba(180,200,255,.45);margin:3px 0; }
+  .bm-player-row {
+    display:flex;align-items:center;gap:9px;padding:9px 13px;border-radius:11px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);margin-bottom:6px;
+  }
+  .bm-player-name { flex:1;font-weight:600;font-size:14px; }
+  .bm-tag {
+    font-size:10px;padding:2px 7px;border-radius:999px;font-weight:700;
+  }
+  .bm-tag-you   { background:rgba(6,182,212,.22);border:1px solid rgba(6,182,212,.5);color:#06b6d4; }
+  .bm-tag-host  { background:rgba(250,204,21,.18);border:1px solid rgba(250,204,21,.45);color:#facc15; }
+  .bm-info {
+    text-align:center;padding:11px;border-radius:11px;font-size:13px;margin-top:10px;
+    background:rgba(6,182,212,.07);border:1px solid rgba(6,182,212,.2);color:#06b6d4;
+  }
+  .bm-warn {
+    text-align:center;padding:11px;border-radius:11px;font-size:13px;margin-top:10px;
+    background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.28);color:#facc15;
+  }
+  .bm-err {
+    text-align:center;padding:10px;border-radius:11px;font-size:12px;margin-top:8px;
+    background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#f87171;
+  }
+  /* ── BATTLE QUESTION OVERLAY ── */
+  #bmQuestionOverlay {
+    display:none;position:fixed;inset:0;z-index:99990;
+    background:linear-gradient(160deg,#050714 0%,#0b1020 50%,#0d0620 100%);
+    flex-direction:column;overflow:hidden;
+  }
+  #bmQuestionOverlay.bm-active { display:flex; }
+  .bm-qbar {
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 18px;background:rgba(255,255,255,.04);
+    border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;
+  }
+  .bm-qbar-label { font-size:13px;font-weight:700;color:rgba(180,200,255,.8);letter-spacing:1px; }
+  .bm-qbar-score { font-size:14px;font-weight:800;color:#22c55e; }
+  .bm-qbar-timer {
+    font-size:15px;font-weight:900;
+    font-variant-numeric:tabular-nums;
+    color:#facc15;
+    background:rgba(250,204,21,.1);
+    border:1px solid rgba(250,204,21,.28);
+    border-radius:10px;padding:3px 10px;
+    min-width:52px;text-align:center;
+    transition:color .2s,background .2s;
+  }
+  .bm-qbar-timer.bm-timer-warn  { color:#f97316;background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.4); }
+  .bm-qbar-timer.bm-timer-hot   { color:#ef4444;background:rgba(239,68,68,.14);border-color:rgba(239,68,68,.5); }
+  .bm-bonus-badge {
+    position:fixed;top:54px;right:18px;z-index:99998;
+    font-size:20px;font-weight:900;
+    padding:6px 14px;border-radius:12px;
+    pointer-events:none;opacity:0;
+    transition:opacity .15s,transform .3s;
+    transform:translateY(0px);
+  }
+  .bm-bonus-badge.show { opacity:1; }
+  .bm-bonus-badge.bm-bonus-correct { color:#22c55e;background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.5); }
+  .bm-bonus-badge.bm-bonus-wrong   { color:#ef4444;background:rgba(239,68,68,.16);border:1px solid rgba(239,68,68,.45); }
+  .bm-qcard-wrap {
+    flex:1;display:flex;flex-direction:column;justify-content:flex-start;
+    padding:18px 18px 200px;overflow-y:auto;
+  }
+  .bm-qtext { font-size:17px;line-height:1.55;font-weight:500;color:#eaf0ff;margin-bottom:18px; }
+  .bm-qimage {
+    max-width:100%;max-height:38vh;object-fit:contain;border-radius:12px;
+    border:1px solid rgba(255,255,255,.12);margin-bottom:14px;display:block;
+  }
+  .bm-opt {
+    width:100%;padding:13px 16px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);
+    color:#eaf0ff;font-size:15px;text-align:left;cursor:pointer;margin-bottom:10px;
+    transition:background .12s,border-color .12s,transform .08s;
+    display:flex;align-items:center;gap:10px;box-sizing:border-box;
+  }
+  .bm-opt:active { transform:scale(.98); }
+  .bm-opt:hover  { background:rgba(255,255,255,.11);border-color:rgba(6,182,212,.5); }
+  .bm-opt.bm-correct {
+    background:rgba(34,197,94,.25);border-color:rgba(34,197,94,.85);pointer-events:none;
+  }
+  .bm-opt.bm-wrong {
+    background:rgba(239,68,68,.22);border-color:rgba(239,68,68,.75);pointer-events:none;
+  }
+  .bm-opt.bm-disabled { pointer-events:none;opacity:.5; }
+  .bm-opt-key {
+    font-size:11px;font-weight:700;background:rgba(255,255,255,.1);
+    border-radius:7px;padding:2px 7px;min-width:22px;text-align:center;flex-shrink:0;
+  }
+  .bm-flash {
+    position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;transition:opacity .15s;
+  }
+  .bm-flash.bm-flash-good { background:rgba(34,197,94,.2);opacity:1; }
+  .bm-flash.bm-flash-bad  { background:rgba(239,68,68,.2);opacity:1; }
+  /* ── SCOREBOARD fixed at bottom ── */
+  #bmScoreboard {
+    display:none;position:fixed;bottom:0;left:0;right:0;z-index:99991;
+    background:rgba(4,6,22,.97);border-top:1px solid rgba(124,58,237,.38);
+    backdrop-filter:blur(14px);padding:0;max-height:160px;overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  #bmScoreboard.bm-sb-active { display:block; }
+  #bmScoreboard.bm-sb-expanded { max-height:40vh; }
+  .bm-sb-topbar {
+    display:flex;align-items:center;justify-content:space-between;
+    padding:5px 14px 3px;cursor:pointer;user-select:none;
+  }
+  .bm-sb-head {
+    font-size:10px;font-weight:800;letter-spacing:2px;
+    color:#06b6d4;
+  }
+  .bm-sb-toggle { font-size:11px;color:rgba(6,182,212,.6);padding:2px 7px;border-radius:6px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2); }
+  #bmSbRows { padding:0 14px 8px;overflow-y:auto;max-height:calc(160px - 28px); }
+  #bmScoreboard.bm-sb-expanded #bmSbRows { max-height:calc(40vh - 28px); }
+  .bm-sb-row {
+    display:flex;align-items:center;gap:7px;padding:4px 7px;
+    border-radius:9px;margin-bottom:4px;
+  }
+  .bm-sb-row.me { background:rgba(124,58,237,.14); }
+  .bm-sb-rank { font-size:10px;font-weight:700;min-width:16px;color:rgba(180,200,255,.5); }
+  .bm-sb-name { font-size:12px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .bm-sb-track {
+    flex:2;height:10px;background:rgba(255,255,255,.07);
+    border-radius:6px;position:relative;overflow:hidden;
+  }
+  .bm-sb-fill {
+    height:100%;border-radius:6px;
+    background:linear-gradient(90deg,#7c3aed,#06b6d4);
+    transition:width .55s cubic-bezier(.34,1.56,.64,1);min-width:3px;
+  }
+  .bm-sb-score { font-size:12px;font-weight:800;min-width:28px;text-align:right;color:#22c55e; }
+  /* ── FINISHED SCREEN ── */
+  #bmFinished {
+    display:none;position:fixed;inset:0;z-index:100000;
+    background:rgba(4,6,18,.97);backdrop-filter:blur(10px);
+    flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;
+  }
+  #bmFinished.bm-fin-active { display:flex; }
+  .bm-fin-title { font-size:26px;font-weight:900;margin-bottom:4px; }
+  .bm-fin-sub   { font-size:14px;color:rgba(180,200,255,.7);margin-bottom:20px; }
+  .bm-fin-table { width:100%;max-width:420px;margin-bottom:22px; }
+  .bm-fin-row {
+    display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;
+    margin-bottom:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  }
+  .bm-fin-row.bm-fin-me { background:rgba(124,58,237,.18);border-color:rgba(124,58,237,.5); }
+  .bm-fin-rank-num { font-size:13px;font-weight:800;min-width:22px;color:rgba(180,200,255,.6); }
+  .bm-fin-name { flex:1;font-size:14px;font-weight:600; }
+  .bm-fin-score { font-size:14px;font-weight:800;color:#22c55e; }
+  /* OLD race track hidden */
+  #bmRaceTrack { display:none !important; }
+  /* Waiting screen */
+  #bmWaiting {
+    display:none;position:fixed;inset:0;z-index:99995;
+    background:rgba(4,6,18,.97);backdrop-filter:blur(10px);
+    flex-direction:column;align-items:center;justify-content:center;
+    padding:24px;text-align:center;gap:18px;
+  }
+  #bmWaiting.bm-wait-active { display:flex; }
+  .bm-wait-title { font-size:22px;font-weight:800;color:#eaf0ff; }
+  .bm-wait-sub   { font-size:14px;color:rgba(180,200,255,.6); }
+  .bm-wait-list  { width:100%;max-width:360px; }
+  .bm-wait-row {
+    display:flex;align-items:center;gap:10px;padding:8px 12px;
+    border-radius:11px;margin-bottom:6px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
+  }
+  .bm-wait-name { flex:1;font-size:13px; }
+  .bm-wait-status { font-size:16px; }
+  @media(max-width:640px){
+    .bm-qtext { font-size:15px; }
+    .bm-opt   { font-size:14px;padding:11px 13px; }
+    #bmScoreboard { max-height:42vh; }
+  }
+  `;
+  document.head.appendChild(s);
+}
+
+// ── UI BUILD ────────────────────────────────────────────────────────────────
+function buildUI() {
+  if (document.getElementById('bmOverlay')) return;
+
+  // Overlay modal
+  const ov = document.createElement('div');
+  ov.id = 'bmOverlay';
+  ov.innerHTML = `
+  <div class="bm-modal">
+    <div class="bm-head">
+      <div class="bm-logo" >⚔️ BATTLE MODE</div>
+      <button class="bm-x" id="bmClose">✕</button>
+    </div>
+    <div id="bmFirebaseErr" class="bm-err" style="display:none;">
+      ⚠️ Firebase not connected.
+      <a href="#" id="bmFbHelpLink" style="color:#f87171;text-decoration:underline;cursor:pointer;">
+        Setup guide →
+      </a>
+    </div>
+
+    <!-- SETUP -->
+    <div id="bmSetup">
+      <label class="bm-label">Your Name</label>
+      <input id="bmName" class="bm-input" placeholder="Enter your name..." maxlength="24"/>
+      <div class="bm-row">
+        <button class="bm-btn bm-blue"   id="bmCreateBtn">🏠 Create Room</button>
+        <button class="bm-btn bm-purple" id="bmJoinShowBtn">🔗 Join Room</button>
+      </div>
+      <div id="bmJoinArea" style="display:none;margin-top:12px;">
+        <label class="bm-label">Enter Room Code</label>
+        <input id="bmCodeInput" class="bm-input bm-code-input" placeholder="ABC123" maxlength="8"/>
+        <button class="bm-btn bm-green bm-full" id="bmJoinBtn" style="margin-top:10px;">Join →</button>
+      </div>
+    </div>
+
+    <!-- LOBBY -->
+    <div id="bmLobby" style="display:none;">
+      <div class="bm-code-box">
+        <div class="bm-hint">Room Code — share with friends on any device</div>
+        <div class="bm-big-code" id="bmCodeDisplay">------</div>
+        <div class="bm-hint">✅ Firebase connected — works across devices &amp; networks</div>
+      </div>
+      <div id="bmPlayerList"></div>
+      <div id="bmHostCtrl" style="display:none;margin-top:12px;">
+        <div id="bmTestStatus" class="bm-warn">⏳ Checking test status...</div>
+        <button class="bm-btn bm-green bm-full" id="bmStartBtn" style="margin-top:10px;font-size:16px;padding:13px;">
+          🚀 Start Battle!
+        </button>
+      </div>
+      <div id="bmGuestWait" class="bm-info" style="display:none;">
+        ⏳ Waiting for host to start the battle...
+      </div>
+      <button class="bm-btn bm-red bm-full" id="bmLeaveBtn"
+        style="margin-top:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+        color:rgba(180,200,255,.65);font-weight:500;">
+        ← Leave Room
+      </button>
+    </div>
+  </div>
+  `;
+  document.body.appendChild(ov);
+
+  // Battle question overlay
+  const qov = document.createElement('div');
+  qov.id = 'bmQuestionOverlay';
+  qov.innerHTML = `
+    <div class="bm-qbar">
+      <span class="bm-qbar-label" id="bmQLabel">Q 1/?</span>
+      <span class="bm-qbar-timer" id="bmQTimer">0.0s</span>
+      <span class="bm-qbar-score" id="bmMyScore">Score: 0</span>
+      <span style="font-size:9px;color:rgba(180,200,255,.4);letter-spacing:.5px;display:none;" class="bm-kbd-hint d-none d-sm-inline">⌨ 1-4 to select</span>
+      <button id="bmSkipBtn" onclick="bmSkipQuestion()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.1);color:#facc15;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Send this question to the end of the queue">⏭ Skip →end</button>
+      <button id="bmFinishBtn" onclick="bmFinishBattle()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(239,68,68,.5);background:rgba(239,68,68,.13);color:#f87171;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Submit and finish battle now">🏁 Finish</button>
+    </div>
+    <div class="bm-bonus-badge" id="bmBonusBadge"></div>
+    <div class="bm-qcard-wrap" id="bmQCardWrap">
+      <!-- question injected here -->
+    </div>
+    <div class="bm-flash" id="bmFlash"></div>
+  `;
+  document.body.appendChild(qov);
+
+  // Scoreboard (fixed at bottom, shown during battle)
+  const sb = document.createElement('div');
+  sb.id = 'bmScoreboard';
+  sb.innerHTML = `
+    <div class="bm-sb-topbar" onclick="this.closest('#bmScoreboard').classList.toggle('bm-sb-expanded')">
+      <div class="bm-sb-head">⚡ LIVE LEADERBOARD</div>
+      <span class="bm-sb-toggle" id="bmSbToggleLabel">▲ expand</span>
+    </div>
+    <div id="bmSbRows"></div>
+  `;
+  document.body.appendChild(sb);
+
+  // Finished screen
+  const fin = document.createElement('div');
+  fin.id = 'bmFinished';
+  fin.innerHTML = `
+    <div class="bm-fin-title" id="bmFinTitle">🏆 Battle Over!</div>
+    <div class="bm-fin-sub"  id="bmFinSub"></div>
+    <div class="bm-fin-table" id="bmFinTable"></div>
+    <button class="bm-btn bm-purple" style="min-width:180px;padding:13px;" onclick="bmExitBattle()">Back to test</button>
+  `;
+  document.body.appendChild(fin);
+
+  // Waiting screen
+  const wt = document.createElement('div');
+  wt.id = 'bmWaiting';
+  wt.innerHTML = `
+    <div class="bm-wait-title">⏳ You finished!</div>
+    <div class="bm-wait-sub">Waiting for other players to complete...</div>
+    <div class="bm-wait-list" id="bmWaitList"></div>
+  `;
+  document.body.appendChild(wt);
+
+  // Keep old race track element (now hidden via CSS)
+  const rt = document.createElement('div');
+  rt.id = 'bmRaceTrack';
+  rt.innerHTML = '<div id="bmRaceRows"></div>';
+  document.body.appendChild(rt);
+
+  // Wire all events
+  document.getElementById('bmClose').onclick     = closeModal;
+  document.getElementById('bmCreateBtn').onclick = doCreate;
+  document.getElementById('bmJoinShowBtn').onclick = () => {
+    const a = document.getElementById('bmJoinArea');
+    a.style.display = a.style.display === 'none' ? 'block' : 'none';
+  };
+  document.getElementById('bmJoinBtn').onclick   = doJoin;
+  document.getElementById('bmStartBtn').onclick  = doStart;
+  document.getElementById('bmLeaveBtn').onclick  = doLeave;
+  document.getElementById('bmFbHelpLink').onclick = e => { e.preventDefault(); showFbHelp(); };
+}
+
+function addBattleButtons() {
+  // Engine topbar button
+  if (!document.getElementById('bmEngineBtn')) {
+    const nav = document.getElementById('navToggleIcon');
+    if (nav && nav.parentNode) {
+      const b = document.createElement('button');
+      b.id = 'bmEngineBtn';
+      b.className = 'bm-glow-btn';
+      b.style.cssText = 'font-size:12px;padding:5px 10px;border-radius:10px;';
+      b.innerHTML = '⚔️ Battle';
+      b.onclick = openModal;
+      nav.parentNode.insertBefore(b, nav);
+    }
+  }
+  // Portal button
+  if (!document.getElementById('bmPortalBtn')) {
+    const row = document.querySelector('.action-btn-row');
+    if (row) {
+      const b = document.createElement('button');
+      b.id = 'bmPortalBtn';
+      b.className = 'bm-glow-btn btn';
+      b.innerHTML = '⚔️ Battle Mode';
+      b.onclick = openModal;
+      row.prepend(b);
+    }
+  }
+}
+
+// ── MODAL OPEN/CLOSE ─────────────────────────────────────────────────────────
+function openModal() {
+  document.getElementById('bmOverlay').classList.add('open');
+  // Check firebase
+  if (!B.db && !initFirebase()) {
+    document.getElementById('bmFirebaseErr').style.display = 'block';
+  } else {
+    document.getElementById('bmFirebaseErr').style.display = 'none';
+  }
+  // Update test status if in lobby
+  if (B.roomCode) updateTestStatus();
+}
+window.openBattleModal = openModal;
+
+function closeModal() {
+  document.getElementById('bmOverlay').classList.remove('open');
+}
+window.closeBattleModal = closeModal;
+
+// ── CREATE ────────────────────────────────────────────────────────────────────
+async function doCreate() {
+  const name = document.getElementById('bmName').value.trim();
+  if (!name) { alert('Enter your name first!'); return; }
+  if (!B.db && !initFirebase()) { showFbHelp(); return; }
+
+  B.myName   = name;
+  B.isHost   = true;
+  B.roomCode = Math.random().toString(36).substr(2,6).toUpperCase();
+  B.players  = {};
+
+  const myData = { name: B.myName, avatar: B.myAvatar, score: 0, qIndex: 0, isHost: true, joined: Date.now() };
+  await dbSet(`battle_rooms/${B.roomCode}/players/${B.myId}`, myData);
+  await dbSet(`battle_rooms/${B.roomCode}/status`, 'lobby');
+
+  // Auto-remove on disconnect
+  B.db.ref(`battle_rooms/${B.roomCode}/players/${B.myId}`).onDisconnect().remove();
+
+  listenRoom();
+  showLobby();
+}
+
+// ── JOIN ──────────────────────────────────────────────────────────────────────
+async function doJoin() {
+  const name = document.getElementById('bmName').value.trim();
+  const code = (document.getElementById('bmCodeInput').value || '').trim().toUpperCase();
+  if (!name) { alert('Enter your name first!'); return; }
+  if (!code) { alert('Enter the room code!'); return; }
+  if (!B.db && !initFirebase()) { showFbHelp(); return; }
+
+  B.myName   = name;
+  B.isHost   = false;
+  B.roomCode = code;
+  B.players  = {};
+
+  // Check room exists
+  const snap = await B.db.ref(`battle_rooms/${code}/status`).once('value');
+  if (!snap.val()) {
+    alert(`❌ Room "${code}" not found. Check the code and try again.`);
+    return;
+  }
+
+  const myData = { name: B.myName, avatar: B.myAvatar, score: 0, qIndex: 0, isHost: false, joined: Date.now() };
+  await dbSet(`battle_rooms/${B.roomCode}/players/${B.myId}`, myData);
+  B.db.ref(`battle_rooms/${B.roomCode}/players/${B.myId}`).onDisconnect().remove();
+
+  listenRoom();
+  showLobby();
+}
+
+// ── ROOM LISTENERS ────────────────────────────────────────────────────────────
+function listenRoom() {
+  const base = `battle_rooms/${B.roomCode}`;
+
+  // Players list — fires for ALL player updates
+  dbListen(`${base}/players`, (data) => {
+    B.players = data || {};
+
+    // Keep my own score label in sync
+    const me = B.players[B.myId];
+    if (me !== undefined) {
+      const el = document.getElementById('bmMyScore');
+      if (el) el.textContent = 'Score: ' + (me.score || 0);
     }
 
-    if(text.trim()===""){
-        opt.style.display="none";
-    }else{
-        opt.style.display="";
-        visible++;
+    renderPlayerList();
+    if (B.active) renderRace();
+
+    // Check if ALL players are done — works whether we're on waiting screen OR just finished last
+    const playerList = Object.values(B.players);
+    const allDone = playerList.length > 0 && playerList.every(p => p.done);
+
+    const waitEl = document.getElementById('bmWaiting');
+    const finEl  = document.getElementById('bmFinished');
+    const isFinished = finEl && finEl.classList.contains('bm-fin-active');
+
+    if (allDone && !isFinished && !B.active) {
+      // All done and we're not still answering questions → show scoreboard
+      bmShowFinished();
+      return;
     }
 
+    // Update waiting list if we're on waiting screen
+    if (waitEl && waitEl.classList.contains('bm-wait-active')) {
+      bmRenderWaitList();
+    }
   });
 
-  if(visible===0){
-      area.style.display="none";
-  }else{
-      area.style.display="grid";
-  }
-
+  // Status — triggers battle start for guests
+  dbListen(`${base}/status`, (status) => {
+    if (status === 'started' && !B.active) {
+      beginBattle();
+    }
+  });
 }
 
-// observe dynamic updates
-const observer = new MutationObserver(cleanOptions);
+// ── START ─────────────────────────────────────────────────────────────────────
+async function doStart() {
+  // ── THE KEY FIX: read directly from window.state ──────────────────────────
+  const engineState = window.state;
 
-observer.observe(document.body,{
-  childList:true,
-  subtree:true
-});
+  if (!engineState) {
+    showTestAlert('window.state is not defined yet. Open a test first.');
+    return;
+  }
+  if (!engineState.questionsMap) {
+    showTestAlert('questionsMap is null. Start a test from the portal first, then re-open Battle Mode.');
+    return;
+  }
+  if (Object.keys(engineState.questionsMap).length === 0) {
+    showTestAlert('questionsMap is empty. The test has no questions loaded.');
+    return;
+  }
 
-cleanOptions();
+  // All good — fire!
+  await dbSet(`battle_rooms/${B.roomCode}/status`, 'started');
+  beginBattle();
+}
 
-})();
-</script>
+function showTestAlert(msg) {
+  alert('⚠️ ' + msg + '\n\nSteps:\n1. Close this Battle dialog\n2. Go to portal (Back to portal)\n3. Pick a subject → click a subtopic → enter name → Start\n4. Once the test questions are showing, tap ⚔️ Battle in the top bar\n5. Create/Join room → Start Battle');
+}
 
-<script>
-(function(){
+// ── LEAVE ─────────────────────────────────────────────────────────────────────
+async function doLeave() {
+  dbStopAll();
+  try { await B.db.ref(`battle_rooms/${B.roomCode}/players/${B.myId}`).remove(); } catch(_){}
+  B.active = false; B.roomCode = ''; B.players = {};
+  document.getElementById('bmLobby').style.display  = 'none';
+  document.getElementById('bmSetup').style.display  = 'block';
+  document.getElementById('bmRaceTrack').style.display = 'none';
+}
 
-let pdfMode=false;
-let savedContent=null;
+// ── BEGIN BATTLE ──────────────────────────────────────────────────────────────
+function beginBattle() {
+  B.active      = true;
+  B.battleIndex = 0;       // which question we're on in battle
+  B.answered    = false;
+  B.onceskipped = new Set();   // qids that have already been sent to end once
+  B.timeSpent   = {};          // cumulative seconds spent per qid
+  closeModal();
 
-function enablePDF(){
+  // Build the shuffled question order for this battle (use engine's qIds)
+  const es = window.state;
+  if (!es || !es.qIds || !es.qIds.length) {
+    alert('No questions loaded. Open a test first.');
+    B.active = false;
+    return;
+  }
+  B.battleQIds = [...es.qIds]; // copy — go through all once in order
 
-  if(pdfMode) return;
+  // Show overlay + scoreboard, hide normal engine UI elements
+  document.getElementById('bmQuestionOverlay').classList.add('bm-active');
+  document.getElementById('bmScoreboard').classList.add('bm-sb-active');
+  bmHideNormalUI(true);
 
-  const area=document.querySelector(".question-scroll-area");
-  if(!area) return;
+  B.qStartTime = Date.now();
+  renderRace();
+  bmShowQuestion(0);
+}
 
-  savedContent=area.innerHTML;
+// ── HIDE / RESTORE NORMAL UI DURING BATTLE ───────────────────────────────────
+function bmHideNormalUI(hide) {
+  // Elements to hide: topbar, timer, nav panel, action buttons, toolbar strip, progress bar
+  const selectors = [
+    '.engine-topbar',
+    '.timer-pill',
+    '#navPanel',
+    '#grandControlBox',
+    '.top-toolbar.mobile-move-toolbar',
+    '.action-btn-row',
+    '#timeProgress',
+  ];
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      el.style.setProperty('display', hide ? 'none' : '', 'important');
+    });
+  });
+  // Also hide the bottom action buttons row inside question box
+  const btnRow = document.querySelector('.resizable-question-box .d-flex.flex-wrap.gap-2');
+  if (btnRow) btnRow.style.setProperty('display', hide ? 'none' : '', 'important');
+}
 
-  area.innerHTML=`
-    <div style="height:100%;display:flex;flex-direction:column;gap:10px">
-      <input type="file" id="pdfLoader" accept="application/pdf" style="height:100%;"">
-      <iframe id="pdfFrame" style="flex:1;border:none;height:100%"></iframe>
+// ── SHOW BATTLE QUESTION ──────────────────────────────────────────────────────
+function bmShowQuestion(idx) {
+  const es = window.state;
+  if (!es) return;
+
+  if (idx >= B.battleQIds.length) {
+    bmPlayerDone();
+    return;
+  }
+
+  B.battleIndex = idx;
+  B.answered    = false;
+
+  const qid = B.battleQIds[idx];
+
+  // Carry over accumulated time so timer continues from where it left off
+  const prevTime = (B.timeSpent && B.timeSpent[qid]) || 0;
+  B.qStartTime  = Date.now() - prevTime * 1000;
+
+  // ── Update skip button based on whether this question was already skipped ──
+  const skipBtn = document.getElementById('bmSkipBtn');
+  const isRevisit = B.onceskipped && B.onceskipped.has(qid);
+  if (skipBtn) {
+    if (isRevisit) {
+      skipBtn.disabled = true;
+      skipBtn.textContent = '⛔ No re-skip';
+      skipBtn.style.opacity = '0.38';
+      skipBtn.title = 'Already sent to end once — must answer now';
+    } else {
+      skipBtn.disabled = false;
+      skipBtn.textContent = '⏭ Skip →end';
+      skipBtn.style.opacity = '1';
+      skipBtn.title = 'Send this question to the end of the queue';
+    }
+  }
+
+  // ── Per-question timer tick ──
+  if (B._timerInterval) clearInterval(B._timerInterval);
+  B._timerInterval = setInterval(() => {
+    if (B.answered) return;
+    const elapsed = (Date.now() - B.qStartTime) / 1000;
+    const el = document.getElementById('bmQTimer');
+    if (el) {
+      el.textContent = elapsed.toFixed(1) + 's';
+      el.className = 'bm-qbar-timer' +
+        (elapsed > 8 ? ' bm-timer-hot' : elapsed > 5 ? ' bm-timer-warn' : '');
+    }
+  }, 100);
+
+  const q   = es.questionsMap[qid];
+  if (!q) { bmShowQuestion(idx + 1); return; }
+
+  const sh = (window.getOrBuildShuffle || bmBuildShuffle)(qid);
+
+  const wrap = document.getElementById('bmQCardWrap');
+  wrap.innerHTML = '';
+
+  // Label — show ↩ revisit badge if this is a returned skipped question
+  const lbl = document.getElementById('bmQLabel');
+  if (lbl) lbl.textContent = `Q ${idx + 1} / ${B.battleQIds.length}${isRevisit ? '  ↩ Revisit' : ''}`;
+
+  // Timer display — start from accumulated previous time
+  const timerEl = document.getElementById('bmQTimer');
+  if (timerEl) {
+    timerEl.textContent = prevTime.toFixed(1) + 's';
+    timerEl.className = 'bm-qbar-timer' +
+      (prevTime > 8 ? ' bm-timer-hot' : prevTime > 5 ? ' bm-timer-warn' : '');
+  }
+
+  // Question text
+  const qtxt = document.createElement('div');
+  qtxt.className = 'bm-qtext';
+  qtxt.innerHTML = q.text || '';
+  wrap.appendChild(qtxt);
+
+  // Question image
+  if (q.image) {
+    const img = document.createElement('img');
+    img.className = 'bm-qimage';
+    img.src = q.image;
+    img.onerror = () => img.remove();
+    wrap.appendChild(img);
+  }
+
+  // Options
+  const keys = ['A','B','C','D'];
+  const nums = ['1','2','3','4'];
+  sh.order.forEach((origIdx, displayPos) => {
+    const metaId  = String(displayPos + 1);
+    const optHtml = q.options[origIdx] || '';
+    const btn = document.createElement('button');
+    btn.className = 'bm-opt';
+    btn.innerHTML = `<span class="bm-opt-key" title="Press ${nums[displayPos]}">${nums[displayPos]}</span><span class="bm-opt-letter" style="font-size:10px;opacity:.5;margin-right:4px;">${keys[displayPos]}</span><span>${optHtml}</span>`;
+    btn.onclick = () => bmSelectOption(metaId, sh.correctMetaId, idx);
+    wrap.appendChild(btn);
+  });
+
+  // Padding so scoreboard doesn't cover last option
+  const pad = document.createElement('div');
+  pad.style.height = '180px';
+  wrap.appendChild(pad);
+}
+
+// ── BATTLE OPTION SELECT ──────────────────────────────────────────────────────
+function bmSelectOption(metaId, correctMetaId, qIdx) {
+  if (B.answered) return;
+  B.answered = true;
+
+  // Stop the timer tick
+  if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+
+  const isCorrect = (metaId === correctMetaId);
+  const secs      = (Date.now() - B.qStartTime) / 1000;
+
+  // Freeze timer display at final value
+  const timerEl = document.getElementById('bmQTimer');
+  if (timerEl) timerEl.textContent = secs.toFixed(1) + 's';
+
+  // Color options
+  const opts = document.querySelectorAll('#bmQCardWrap .bm-opt');
+  opts.forEach((btn, i) => {
+    const m = String(i + 1);
+    if (m === correctMetaId) btn.classList.add('bm-correct');
+    else if (m === metaId)   btn.classList.add('bm-wrong');
+    else                     btn.classList.add('bm-disabled');
+  });
+
+  // Flash feedback
+  const flash = document.getElementById('bmFlash');
+  if (flash) {
+    flash.className = 'bm-flash ' + (isCorrect ? 'bm-flash-good' : 'bm-flash-bad');
+    setTimeout(() => { flash.className = 'bm-flash'; }, 380);
+  }
+
+  // ── SCORING ──────────────────────────────────────────────────────────────────
+  // Correct:  base +4  +  speed bonus (up to +6 extra for answering under 3s)
+  //           speedBonus = max(0, floor(6 * (1 - secs/10)))  → 0 if >= 10s
+  // Wrong:    -1
+  // Score can't go below 0
+  // ─────────────────────────────────────────────────────────────────────────────
+  const cur = (B.players[B.myId] || {}).score || 0;
+  let delta = 0;
+  let bonusText = '';
+
+  if (isCorrect) {
+    const speedBonus = Math.floor(100 / Math.max(0.1, secs));
+    delta     = 4 + speedBonus;
+    bonusText = `+${delta} ⚡${speedBonus}`;
+  } else {
+    delta     = -1;
+    bonusText = `-1`;
+  }
+
+  const next = cur + delta;
+  bmPushScore(next, qIdx);
+
+  // Show floating bonus badge
+  const badge = document.getElementById('bmBonusBadge');
+  if (badge) {
+    badge.textContent = bonusText;
+    badge.className = 'bm-bonus-badge show ' + (isCorrect ? 'bm-bonus-correct' : 'bm-bonus-wrong');
+    badge.style.transform = 'translateY(0px)';
+    setTimeout(() => {
+      badge.style.transform = 'translateY(-28px)';
+      badge.style.opacity   = '0';
+    }, 50);
+    setTimeout(() => {
+      badge.className = 'bm-bonus-badge';
+      badge.style.transform = '';
+      badge.style.opacity   = '';
+    }, 700);
+  }
+
+  // Auto-advance
+  setTimeout(() => bmShowQuestion(qIdx + 1), 700);
+}
+
+// ── BATTLE SKIP QUESTION (moves to end, once per question) ───────────────────
+function bmSkipQuestion() {
+  if (B.answered) return;
+
+  const idx = B.battleIndex || 0;
+  const qid = B.battleQIds[idx];
+  const elapsed = (Date.now() - B.qStartTime) / 1000;
+
+  // Always accumulate the time spent on this attempt
+  B.timeSpent = B.timeSpent || {};
+  B.timeSpent[qid] = (B.timeSpent[qid] || 0) + elapsed;
+
+  // Already skipped once → can't re-skip, treat as forced advance
+  if (B.onceskipped && B.onceskipped.has(qid)) {
+    B.answered = true;
+    if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+    _bmShowSkipBadge('⛔ Must answer!', '#ef4444', 'rgba(239,68,68,.16)', 'rgba(239,68,68,.45)');
+    setTimeout(() => { B.answered = false; bmShowQuestion(idx + 1); }, 600);
+    return;
+  }
+
+  // First skip — send to end of queue
+  B.answered = true;
+  if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+
+  B.onceskipped = B.onceskipped || new Set();
+  B.onceskipped.add(qid);
+
+  // Splice current question out and push to end
+  B.battleQIds.splice(idx, 1);
+  B.battleQIds.push(qid);
+
+  _bmShowSkipBadge('⏭ Sent to end', '#facc15', 'rgba(250,204,21,.14)', 'rgba(250,204,21,.4)');
+
+  // Show question at the same index (which is now the next question)
+  setTimeout(() => { B.answered = false; bmShowQuestion(idx); }, 500);
+}
+
+function _bmShowSkipBadge(text, color, bg, border) {
+  const badge = document.getElementById('bmBonusBadge');
+  if (!badge) return;
+  badge.textContent = text;
+  badge.className = 'bm-bonus-badge show';
+  badge.style.color = color;
+  badge.style.background = bg;
+  badge.style.border = `1px solid ${border}`;
+  badge.style.transform = 'translateY(0px)';
+  badge.style.opacity = '1';
+  setTimeout(() => { badge.style.transform = 'translateY(-28px)'; badge.style.opacity = '0'; }, 80);
+  setTimeout(() => {
+    badge.className = 'bm-bonus-badge';
+    badge.style.transform = '';
+    badge.style.opacity = '';
+    badge.style.color = '';
+    badge.style.background = '';
+    badge.style.border = '';
+  }, 700);
+}
+window.bmSkipQuestion = bmSkipQuestion;
+
+// ── FINISH BATTLE (manual early submit) ──────────────────────────────────────
+function bmFinishBattle() {
+  if (!B.active) return;
+
+  // Confirm before finishing
+  const confirmed = confirm('🏁 Finish Battle?\n\nThis will submit your current score and end your battle session.\nUnanswered questions will be counted as skipped.');
+  if (!confirmed) return;
+
+  if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+  B.answered = true;
+  B.active   = false;
+
+  // Push final score to Firebase and mark done
+  bmPlayerDone();
+}
+window.bmFinishBattle = bmFinishBattle;
+
+// ── FALLBACK SHUFFLE (in case engine function not ready) ──────────────────────
+function bmBuildShuffle(qid) {
+  if (window.getOrBuildShuffle) return window.getOrBuildShuffle(qid);
+  const q = window.state.questionsMap[qid];
+  const idxs = [0,1,2,3];
+  for (let i = 3; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [idxs[i],idxs[j]] = [idxs[j],idxs[i]];
+  }
+  const correctOriginal = Number(q.correct) - 1;
+  const correctMetaPos  = idxs.indexOf(correctOriginal) + 1;
+  if (!window.state.shuffled) window.state.shuffled = {};
+  window.state.shuffled[qid] = { order: idxs, correctMetaId: String(correctMetaPos) };
+  return window.state.shuffled[qid];
+}
+
+// ── SCORE PUSH ────────────────────────────────────────────────────────────────
+function bmPushScore(score, qIndex) {
+  if (!B.players[B.myId]) B.players[B.myId] = {};
+  B.players[B.myId].score  = score;
+  B.players[B.myId].qIndex = qIndex;
+  dbSet(`battle_rooms/${B.roomCode}/players/${B.myId}/score`,  score);
+  dbSet(`battle_rooms/${B.roomCode}/players/${B.myId}/qIndex`, qIndex);
+  const el = document.getElementById('bmMyScore');
+  if (el) el.textContent = 'Score: ' + score;
+  renderRace();
+}
+// keep old name as alias
+function pushScore(score, qIndex) { bmPushScore(score, qIndex); }
+
+// ── PLAYER DONE — push to Firebase, show waiting screen ─────────────────────
+function bmPlayerDone() {
+  B.active = false;
+  if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+
+  // Mark ourselves done locally FIRST so allDone check is accurate
+  if (!B.players[B.myId]) B.players[B.myId] = {};
+  B.players[B.myId].done = true;
+
+  // Mark ourselves done in Firebase
+  dbSet(`battle_rooms/${B.roomCode}/players/${B.myId}/done`, true);
+
+  // Hide question overlay
+  document.getElementById('bmQuestionOverlay').classList.remove('bm-active');
+
+  // Check if ALL players (including us) are already done → skip waiting screen
+  const playerList = Object.values(B.players);
+  if (playerList.length > 0 && playerList.every(p => p.done)) {
+    bmShowFinished();
+    return;
+  }
+
+  // Show waiting screen
+  document.getElementById('bmWaiting').classList.add('bm-wait-active');
+  bmRenderWaitList();
+
+  // Fallback: poll Firebase every 1.5s in case listener misses the final update
+  if (B._pollInterval) clearInterval(B._pollInterval);
+  B._pollInterval = setInterval(async () => {
+    if (!B.db || !B.roomCode) { clearInterval(B._pollInterval); return; }
+    const finEl = document.getElementById('bmFinished');
+    if (finEl && finEl.classList.contains('bm-fin-active')) {
+      clearInterval(B._pollInterval); return;
+    }
+    try {
+      const snap = await B.db.ref(`battle_rooms/${B.roomCode}/players`).once('value');
+      const players = snap.val() || {};
+      const vals = Object.values(players);
+      if (vals.length > 0 && vals.every(p => p.done)) {
+        clearInterval(B._pollInterval);
+        B.players = players;
+        bmShowFinished();
+      }
+    } catch(_) {}
+  }, 1500);
+}
+
+function bmRenderWaitList() {
+  const el = document.getElementById('bmWaitList');
+  if (!el) return;
+  el.innerHTML = Object.entries(B.players).map(([id, p]) => `
+    <div class="bm-wait-row">
+      <span style="font-size:16px;">${p.avatar||'🎮'}</span>
+      <span class="bm-wait-name">${esc(p.name)}${id===B.myId?' (you)':''}</span>
+      <span class="bm-wait-status">${p.done ? '✅' : '⏳'}</span>
     </div>
-  `;
-
-  const loader=document.getElementById("pdfLoader");
-  const frame=document.getElementById("pdfFrame");
-
-  loader.onchange=function(){
-
-    const file=this.files[0];
-    if(!file) return;
-
-    frame.src=URL.createObjectURL(file);
-
-    // hide file selector after choosing pdf
-    loader.style.display="none";
-
-  };
-
-  pdfMode=true;
-
+  `).join('');
 }
 
-function disablePDF(){
+// ── SHOW FINAL SCOREBOARD (called when ALL players are done) ──────────────────
+function bmShowFinished() {
+  if (B._pollInterval) { clearInterval(B._pollInterval); B._pollInterval = null; }
+  document.getElementById('bmQuestionOverlay').classList.remove('bm-active');
+  document.getElementById('bmWaiting').classList.remove('bm-wait-active');
+  document.getElementById('bmScoreboard').classList.remove('bm-sb-active');
 
-  if(!pdfMode) return;
+  const entries = Object.entries(B.players).sort((a,b) => (b[1].score||0)-(a[1].score||0));
+  const myRank  = entries.findIndex(([id]) => id === B.myId) + 1;
+  const myScore = (B.players[B.myId] || {}).score || 0;
 
-  const area=document.querySelector(".question-scroll-area");
-  if(!area) return;
+  const medals = ['🥇','🥈','🥉'];
+  document.getElementById('bmFinTitle').textContent =
+    (myRank <= 3 ? medals[myRank-1] + ' ' : '') + 'Battle Over!';
+  document.getElementById('bmFinSub').textContent =
+    `You finished #${myRank} with ${myScore} points`;
 
-  area.innerHTML=savedContent;
+  const table = document.getElementById('bmFinTable');
+  table.innerHTML = entries.map(([id, p], i) => `
+    <div class="bm-fin-row ${id === B.myId ? 'bm-fin-me' : ''}">
+      <span class="bm-fin-rank-num">${medals[i] || '#'+(i+1)}</span>
+      <span class="bm-fin-name">${p.avatar||'🎮'} ${esc(p.name)}</span>
+      <span class="bm-fin-score">${p.score||0}</span>
+    </div>
+  `).join('');
 
-  pdfMode=false;
-
+  document.getElementById('bmFinished').classList.add('bm-fin-active');
 }
 
-document.addEventListener("keydown",function(e){
+window.bmExitBattle = function() {
+  if (B._pollInterval) { clearInterval(B._pollInterval); B._pollInterval = null; }
+  document.getElementById('bmFinished').classList.remove('bm-fin-active');
+  document.getElementById('bmQuestionOverlay').classList.remove('bm-active');
+  document.getElementById('bmScoreboard').classList.remove('bm-sb-active');
+  document.getElementById('bmWaiting').classList.remove('bm-wait-active');
+  bmHideNormalUI(false);
+  B.active = false;
+  B.battleQIds = [];
+};
 
-  if(e.key==="+"){
-    document.getElementById("A1").style.setProperty("display","none","important");
-    document.getElementById("A2").style.setProperty("display","none","important");
-    document.getElementById("A3").style.setProperty("display","none","important");
-    document.getElementById("A4").style.setProperty("padding","0.5rem","important");
+// ── LOBBY UI ─────────────────────────────────────────────────────────────────
+function showLobby() {
+  document.getElementById('bmSetup').style.display = 'none';
+  document.getElementById('bmLobby').style.display = 'block';
+  document.getElementById('bmCodeDisplay').textContent = B.roomCode;
+  document.getElementById('bmHostCtrl').style.display   = B.isHost ? 'block' : 'none';
+  document.getElementById('bmGuestWait').style.display  = B.isHost ? 'none'  : 'block';
+  updateTestStatus();
+  renderPlayerList();
+}
 
-    enablePDF();
-    
-    
+function updateTestStatus() {
+  const el = document.getElementById('bmTestStatus');
+  if (!el) return;
+  if (isTestLoaded()) {
+    el.className = 'bm-info';
+    el.textContent = '✅ Test loaded! Ready to start battle.';
+  } else {
+    el.className = 'bm-warn';
+    el.innerHTML = '⚠️ No test loaded yet. <strong>Close this → pick a test → open ⚔️ Battle again.</strong>';
   }
+}
 
-  if(e.key==="-" ){
-    document.getElementById("A1").style.setProperty("display","","important");
-    document.getElementById("A2").style.setProperty("display","","important");
-    document.getElementById("A3").style.setProperty("display","","important");
-    document.getElementById("A4").style.removeProperty("padding");
-    disablePDF();
-    
-    
+function renderPlayerList() {
+  const el = document.getElementById('bmPlayerList');
+  if (!el) return;
+  el.innerHTML = Object.entries(B.players).map(([id, p]) => `
+    <div class="bm-player-row">
+      <span style="font-size:18px;">${p.avatar||'🎮'}</span>
+      <span class="bm-player-name">${esc(p.name)}</span>
+      ${id===B.myId   ? '<span class="bm-tag bm-tag-you">YOU</span>'  : ''}
+      ${p.isHost      ? '<span class="bm-tag bm-tag-host">HOST</span>' : ''}
+    </div>
+  `).join('');
+
+  // refresh test status each time players update (for host)
+  if (B.isHost) updateTestStatus();
+}
+
+// ── SCOREBOARD RENDER ─────────────────────────────────────────────────────────
+function renderRace() {
+  const el = document.getElementById('bmSbRows');
+  if (!el) return;
+  const entries = Object.entries(B.players).sort((a,b) => (b[1].score||0)-(a[1].score||0));
+  const maxScore = Math.max(1, ...entries.map(([,p]) => p.score||0));
+  el.innerHTML = entries.map(([id,p], i) => {
+    const pct = maxScore > 0 ? Math.max(3, Math.min(100, ((p.score||0)/maxScore)*100)) : 3;
+    return `
+    <div class="bm-sb-row ${id===B.myId?'me':''}">
+      <span class="bm-sb-rank">${i+1}</span>
+      <span class="bm-sb-name">${p.avatar||'🎮'} ${esc(p.name)}</span>
+      <div class="bm-sb-track">
+        <div class="bm-sb-fill" style="width:${pct}%"></div>
+      </div>
+      <span class="bm-sb-score">${p.score||0}</span>
+    </div>`;
+  }).join('');
+}
+
+function updateQLabel() {
+  const el = document.getElementById('bmQLabel');
+  if (el && B.battleQIds) el.textContent = `Q ${(B.battleIndex||0)+1}/${B.battleQIds.length}`;
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/[&<>"']/g, m =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+
+function showFbHelp() {
+  alert(
+    '🔥 Firebase Setup Guide (Free — 5 minutes)\n\n' +
+    '1. Go to https://console.firebase.google.com\n' +
+    '2. Click "Add project" → name it anything (e.g. mock-battle)\n' +
+    '3. Left menu: Build → Realtime Database → Create database\n' +
+    '4. Choose "Start in TEST MODE" → Enable\n' +
+    '5. Gear icon (top left) → Project settings → "Your apps" → click </> (Web)\n' +
+    '6. Register app → copy the firebaseConfig values\n' +
+    '7. Open this HTML file → find FIREBASE_CONFIG → paste your values\n\n' +
+    'Done! Battle works across all devices.'
+  );
+}
+
+// ── KEYBOARD SHORTCUTS IN BATTLE MODE ────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+  // Only active during battle question phase
+  if (!B.active || B.answered) return;
+  const key = e.key;
+  if (!['1','2','3','4'].includes(key)) return;
+
+  // Find the option buttons
+  const opts = document.querySelectorAll('#bmQCardWrap .bm-opt');
+  const idx = parseInt(key) - 1;
+  if (opts[idx]) {
+    e.preventDefault();
+    opts[idx].click();
   }
-
 });
 
-})();
-</script>
+// ── BOOT ──────────────────────────────────────────────────────────────────────
+function boot() {
+  injectStyles();
+  initFirebase();  // try early init (may fail if config is demo — that's ok)
+  buildUI();
+  addBattleButtons();
+  initTopbarSwiper();
+}
 
-<script>
-  let isHidden = false;
+// ── MOBILE TOPBAR SWIPER ──────────────────────────────────────────────────────
+function initTopbarSwiper() {
+  const MOBILE = () => window.innerWidth <= 576;
 
-  document.addEventListener("keydown", function (e) {
-    // Detect '*' key (Shift + 8 OR Numpad *)
-    if (e.key === "*" || e.code === "NumpadMultiply") {
-      const box = document.getElementById("A4");
-      if (!box) return;
+  // ── Create handle pill ──
+  const handle = document.createElement('div');
+  handle.id = 'topbarSwipeHandle';
+  handle.setAttribute('aria-label', 'Toggle top toolbar');
+  handle.innerHTML = '<span class="sw-bar"></span><span class="sw-bar"></span>';
+  document.body.appendChild(handle);
 
-      isHidden = !isHidden;
+  // ── Create backdrop ──
+  const backdrop = document.createElement('div');
+  backdrop.id = 'topbarBackdrop';
+  document.body.appendChild(backdrop);
 
-      if (isHidden) {
-        box.style.display = "none";
-      } else {
-        box.style.display = "flex"; // because your container uses flex
+  let topbar = null;
+  let isOpen = false;
+  let dragStartY = 0;
+  let dragging = false;
+  let topbarH = 0;
+
+  function getTopbar() {
+    if (!topbar) topbar = document.querySelector('.engine-topbar');
+    return topbar;
+  }
+
+  function isEngineActive() {
+    const ev = document.getElementById('engineView');
+    return ev && ev.classList.contains('active');
+  }
+
+  function setOpen(val, animate) {
+    const tb = getTopbar();
+    if (!tb) return;
+    isOpen = val;
+    topbarH = tb.offsetHeight || 72;
+
+    // update CSS var for content offset
+    document.documentElement.style.setProperty('--topbar-h', topbarH + 'px');
+
+    const engineView = document.getElementById('engineView');
+
+    if (val) {
+      tb.classList.add('topbar-open');
+      handle.classList.add('handle-open');
+      handle.style.top = topbarH + 'px';
+      backdrop.classList.add('show');
+      if (engineView) engineView.classList.add('topbar-pinned');
+    } else {
+      tb.classList.remove('topbar-open');
+      handle.classList.remove('handle-open');
+      handle.style.top = '';
+      backdrop.classList.remove('show');
+      if (engineView) engineView.classList.remove('topbar-pinned');
+      // reset any inline transform from drag
+      tb.style.transform = '';
+    }
+  }
+
+  function toggle() { setOpen(!isOpen); }
+
+  function updateVisibility() {
+    if (!MOBILE() || !isEngineActive()) {
+      handle.style.display = 'none';
+      if (isOpen) setOpen(false);
+    } else {
+      handle.style.display = 'flex';
+    }
+  }
+
+  // ── Tap handle ──
+  handle.addEventListener('click', (e) => {
+    if (dragging) return;
+    toggle();
+  });
+
+  // ── Tap backdrop ──
+  backdrop.addEventListener('click', () => setOpen(false));
+
+  // ── Touch-drag on handle → open ──
+  handle.addEventListener('touchstart', (e) => {
+    dragStartY = e.touches[0].clientY;
+    dragging = false;
+  }, { passive: true });
+
+  handle.addEventListener('touchmove', (e) => {
+    const dy = e.touches[0].clientY - dragStartY;
+    if (Math.abs(dy) > 6) dragging = true;
+    if (!isOpen && dy > 0) {
+      const tb = getTopbar();
+      if (tb) {
+        const clamp = Math.min(dy, topbarH + 20);
+        tb.style.transition = 'none';
+        tb.style.transform = `translateY(calc(-110% + ${clamp}px))`;
       }
     }
+  }, { passive: true });
+
+  handle.addEventListener('touchend', (e) => {
+    const dy = e.changedTouches[0].clientY - dragStartY;
+    const tb = getTopbar();
+    if (tb) {
+      tb.style.transition = '';
+      tb.style.transform = '';
+    }
+    if (dy > 40) {
+      setOpen(true);
+      dragging = true; // suppress click
+    } else if (dy < -30) {
+      setOpen(false);
+      dragging = true;
+    }
+    // reset dragging flag after click fires
+    setTimeout(() => { dragging = false; }, 50);
+  }, { passive: true });
+
+  // ── Swipe up anywhere on topbar → close ──
+  let tbTouchStartY = 0;
+  document.addEventListener('touchstart', (e) => {
+    if (isOpen && e.target.closest('.engine-topbar')) {
+      tbTouchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    if (isOpen && e.target.closest('.engine-topbar')) {
+      if (e.changedTouches[0].clientY - tbTouchStartY < -30) {
+        setOpen(false);
+      }
+    }
+  }, { passive: true });
+
+  // ── Watch view changes ──
+  const observer = new MutationObserver(updateVisibility);
+  ['engineView', 'portalView', 'subjectView'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el, { attributes: true, attributeFilter: ['class'] });
   });
+
+  window.addEventListener('resize', () => {
+    if (!MOBILE() && isOpen) setOpen(false);
+    updateVisibility();
+  });
+
+  updateVisibility();
+}
+
+// Retry button injection a few times for dynamically-rendered elements
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
+setTimeout(addBattleButtons, 600);
+setTimeout(addBattleButtons, 1800);
+
+})(); // end IIFE
 </script>
+
+
+
 
 </body>
 
 
 </html>
-
-
-   
