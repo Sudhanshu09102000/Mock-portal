@@ -866,26 +866,36 @@
         gap: 8px;
       }
 
-      /* right-top-actions (Back + topic + Q counter) upar */
+      /* right-top-actions (Back + topic + Q counter) — wrap so they don't overflow */
       .right-top-actions {
-        justify-content: space-between !important;
+        justify-content: flex-start !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
       }
 
-      /* toolbar ko center & compact */
+      /* testInfoTop badge — truncate on tiny screens */
+      #testInfoTop {
+        max-width: calc(100vw - 130px) !important;
+        font-size: 11px !important;
+      }
+
+      /* toolbar ko center & wrap (never overflow) */
       .mobile-move-toolbar {
         justify-content: center !important;
         width: 100% !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto;
-        /* ✅ scroll if tiny screen */
-        white-space: nowrap;
-        padding: 6px 6px;
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+        white-space: normal !important;
+        padding: 6px 4px;
+        box-sizing: border-box;
       }
 
       /* extra small buttons */
       .mobile-move-toolbar .btn {
         font-size: 10px !important;
         padding: 5px 8px !important;
+        white-space: nowrap !important;
+        flex: 0 0 auto !important;
       }
 
       /* google icon fit */
@@ -895,6 +905,7 @@
       }
     }
 
+    /* Desktop: single-row toolbar */
     .top-toolbar.mobile-move-toolbar {
       display: flex;
       gap: 8px;
@@ -905,23 +916,42 @@
       overflow-x: auto;
       width: 100%;
       padding: 6px 6px;
+      box-sizing: border-box;
     }
 
-    @media(max-width:576px) {
+    /* ── MOBILE TOOLBAR FIX ──
+       .resizable-question-box has overflow:hidden which clips overflow-x:auto
+       children — buttons go off screen silently. Fix: wrap to next row.     */
+    @media (max-width: 767px) {
+      .top-toolbar.mobile-move-toolbar {
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+        white-space: normal !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 6px 2px !important;
+        margin-top: 8px !important;
+      }
       .top-toolbar.mobile-move-toolbar .btn {
         font-size: 10px !important;
-        padding: 5px 8px !important;
+        padding: 5px 9px !important;
+        border-radius: 8px !important;
+        white-space: nowrap !important;
+        flex: 0 0 auto !important;
+        height: auto !important;
       }
-    }
-
-    /* ✅ gap between action buttons row & toolbar strip */
-    .action-btn-row {
-      margin-bottom: 10px !important;
-    }
-
-    /* ✅ extra spacing above toolbar strip */
-    .top-toolbar.mobile-move-toolbar {
-      margin-top: 10px !important;
+      .top-toolbar.mobile-move-toolbar #googleSearchBtnTop {
+        width: 32px !important;
+        height: 32px !important;
+        padding: 0 !important;
+      }
+      .top-toolbar.mobile-move-toolbar #googleSearchBtnTop svg {
+        width: 16px !important;
+        height: 16px !important;
+      }
     }
 
     /* ✅ Navigator numbers: symmetrical + centered */
@@ -1901,6 +1931,19 @@ body {
   #pdfDropZone   { min-height: 200px; padding: 1.2rem; }
 }
 
+/* ── MOBILE: stop question box clipping the toolbar ── */
+@media (max-width: 767px) {
+  /* Allow the question box to show toolbar overflow (wraps, never hides) */
+  .resizable-question-box {
+    overflow: visible !important;
+  }
+  /* But keep the scroll area itself contained */
+  .question-scroll-area {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+}
+
 </style>
 
 
@@ -2590,9 +2633,17 @@ body {
           topicCol.className = 'col-12 col-lg-6';
 
           const subBtns = tg.subtopics.map(st => `
-      <button class="subtopic-btn mt-2" data-file="${st.file}">
-        ${escapeHtml(st.name)} <span class="pill float-end">Start</span>
-      </button>
+      <div class="subtopic-row d-flex align-items-center gap-2 mt-2">
+        <button class="subtopic-btn flex-grow-1" data-file="${st.file}">
+          ${escapeHtml(st.name)} <span class="pill float-end">Start</span>
+        </button>
+        <button class="share-btn" data-file="${st.file}"
+          data-subject="${escapeHtml(subject.title)}"
+          data-topic="${escapeHtml(tg.name)}"
+          data-subtopic="${escapeHtml(st.name)}"
+          title="Copy direct link to this test"
+          style="flex-shrink:0;width:36px;height:36px;border-radius:10px;border:1px solid rgba(6,182,212,.4);background:rgba(6,182,212,.10);color:#06b6d4;font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;">🔗</button>
+      </div>
     `).join('');
 
           topicCol.innerHTML = `
@@ -2620,12 +2671,46 @@ body {
           topicCol.querySelectorAll('.subtopic-btn').forEach(btn => {
             btn.addEventListener('click', () => {
               const fileKey = btn.getAttribute('data-file');
-              const subName = btn.textContent.replace('Start', '').trim();
+              const subName = btn.closest('.subtopic-row').querySelector('.subtopic-btn').textContent.replace('Start', '').trim();
               startTestFromPortal({
                 subjectTitle: subject.title,
                 topicName: tg.name,
                 subtopicName: subName,
                 fileKey
+              });
+            });
+          });
+
+          // share button clicks
+          topicCol.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+              btn.style.background = 'rgba(6,182,212,.22)';
+              btn.style.borderColor = 'rgba(6,182,212,.8)';
+              btn.style.transform = 'scale(1.08)';
+            });
+            btn.addEventListener('mouseleave', () => {
+              btn.style.background = 'rgba(6,182,212,.10)';
+              btn.style.borderColor = 'rgba(6,182,212,.4)';
+              btn.style.transform = '';
+            });
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const fileKey   = btn.getAttribute('data-file');
+              const subj      = btn.getAttribute('data-subject');
+              const topic     = btn.getAttribute('data-topic');
+              const subtopic  = btn.getAttribute('data-subtopic');
+              const url = new URL(location.href);
+              url.search = '';
+              url.searchParams.set('launch', '1');
+              url.searchParams.set('file', fileKey);
+              url.searchParams.set('subject', subj);
+              url.searchParams.set('topic', topic);
+              url.searchParams.set('subtopic', subtopic);
+              const link = url.toString();
+              navigator.clipboard.writeText(link).then(() => {
+                showShareToast(subtopic);
+              }).catch(() => {
+                prompt('Copy this link:', link);
               });
             });
           });
@@ -4034,6 +4119,52 @@ body {
 
       /* ========= INIT ========= */
       buildSubjects();
+
+      /* ── Share toast ── */
+      function showShareToast(name) {
+        let toast = document.getElementById('shareToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'shareToast';
+          toast.style.cssText = `
+            position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+            z-index:99999;padding:.6rem 1.1rem;border-radius:14px;
+            background:rgba(6,182,212,.18);border:1px solid rgba(6,182,212,.55);
+            backdrop-filter:blur(12px);color:#06b6d4;font-weight:700;font-size:.93rem;
+            box-shadow:0 8px 28px rgba(0,0,0,.35);opacity:0;
+            transition:opacity .22s ease, transform .22s ease;pointer-events:none;
+            white-space:nowrap;
+          `;
+          document.body.appendChild(toast);
+        }
+        toast.textContent = `🔗 Link copied for "${name}"`;
+        requestAnimationFrame(() => {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translateX(-50%) translateY(0)';
+        });
+        clearTimeout(toast._hideTimer);
+        toast._hideTimer = setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(-50%) translateY(10px)';
+        }, 2800);
+      }
+
+      /* ── Auto-launch from shared URL ── */
+      (function checkDirectLaunch() {
+        const p = new URLSearchParams(location.search);
+        if (p.get('launch') !== '1') return;
+        const sel = {
+          fileKey:      p.get('file')     || '',
+          subjectTitle: p.get('subject')  || '',
+          topicName:    p.get('topic')    || '',
+          subtopicName: p.get('subtopic') || '',
+        };
+        if (!sel.fileKey) return;
+        // Clean URL so refresh doesn't re-trigger
+        history.replaceState({}, '', location.pathname);
+        // Small delay to let page finish rendering
+        setTimeout(() => startTestFromPortal(sel), 350);
+      })();
 
       function convertTestData(testData) {
         const questionsObj = {};
@@ -5546,7 +5677,8 @@ function buildUI() {
       <span class="bm-qbar-timer" id="bmQTimer">0.0s</span>
       <span class="bm-qbar-score" id="bmMyScore">Score: 0</span>
       <span style="font-size:9px;color:rgba(180,200,255,.4);letter-spacing:.5px;display:none;" class="bm-kbd-hint d-none d-sm-inline">⌨ 1-4 to select</span>
-      <button id="bmSkipBtn" onclick="bmSkipQuestion()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.1);color:#facc15;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Skip this question (no penalty)">⏭ Skip</button>
+      <button id="bmSkipBtn" onclick="bmSkipQuestion()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.1);color:#facc15;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Send this question to the end of the queue">⏭ Skip →end</button>
+      <button id="bmFinishBtn" onclick="bmFinishBattle()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(239,68,68,.5);background:rgba(239,68,68,.13);color:#f87171;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Submit and finish battle now">🏁 Finish</button>
     </div>
     <div class="bm-bonus-badge" id="bmBonusBadge"></div>
     <div class="bm-qcard-wrap" id="bmQCardWrap">
@@ -5793,6 +5925,8 @@ function beginBattle() {
   B.active      = true;
   B.battleIndex = 0;       // which question we're on in battle
   B.answered    = false;
+  B.onceskipped = new Set();   // qids that have already been sent to end once
+  B.timeSpent   = {};          // cumulative seconds spent per qid
   closeModal();
 
   // Build the shuffled question order for this battle (use engine's qIds)
@@ -5848,7 +5982,29 @@ function bmShowQuestion(idx) {
 
   B.battleIndex = idx;
   B.answered    = false;
-  B.qStartTime  = Date.now();
+
+  const qid = B.battleQIds[idx];
+
+  // Carry over accumulated time so timer continues from where it left off
+  const prevTime = (B.timeSpent && B.timeSpent[qid]) || 0;
+  B.qStartTime  = Date.now() - prevTime * 1000;
+
+  // ── Update skip button based on whether this question was already skipped ──
+  const skipBtn = document.getElementById('bmSkipBtn');
+  const isRevisit = B.onceskipped && B.onceskipped.has(qid);
+  if (skipBtn) {
+    if (isRevisit) {
+      skipBtn.disabled = true;
+      skipBtn.textContent = '⛔ No re-skip';
+      skipBtn.style.opacity = '0.38';
+      skipBtn.title = 'Already sent to end once — must answer now';
+    } else {
+      skipBtn.disabled = false;
+      skipBtn.textContent = '⏭ Skip →end';
+      skipBtn.style.opacity = '1';
+      skipBtn.title = 'Send this question to the end of the queue';
+    }
+  }
 
   // ── Per-question timer tick ──
   if (B._timerInterval) clearInterval(B._timerInterval);
@@ -5863,7 +6019,6 @@ function bmShowQuestion(idx) {
     }
   }, 100);
 
-  const qid = B.battleQIds[idx];
   const q   = es.questionsMap[qid];
   if (!q) { bmShowQuestion(idx + 1); return; }
 
@@ -5872,11 +6027,17 @@ function bmShowQuestion(idx) {
   const wrap = document.getElementById('bmQCardWrap');
   wrap.innerHTML = '';
 
-  // Label + reset timer display
+  // Label — show ↩ revisit badge if this is a returned skipped question
   const lbl = document.getElementById('bmQLabel');
-  if (lbl) lbl.textContent = `Q ${idx + 1} / ${B.battleQIds.length}`;
+  if (lbl) lbl.textContent = `Q ${idx + 1} / ${B.battleQIds.length}${isRevisit ? '  ↩ Revisit' : ''}`;
+
+  // Timer display — start from accumulated previous time
   const timerEl = document.getElementById('bmQTimer');
-  if (timerEl) { timerEl.textContent = '0.0s'; timerEl.className = 'bm-qbar-timer'; }
+  if (timerEl) {
+    timerEl.textContent = prevTime.toFixed(1) + 's';
+    timerEl.className = 'bm-qbar-timer' +
+      (prevTime > 8 ? ' bm-timer-hot' : prevTime > 5 ? ' bm-timer-warn' : '');
+  }
 
   // Question text
   const qtxt = document.createElement('div');
@@ -5986,38 +6147,82 @@ function bmSelectOption(metaId, correctMetaId, qIdx) {
   setTimeout(() => bmShowQuestion(qIdx + 1), 700);
 }
 
-// ── BATTLE SKIP QUESTION ──────────────────────────────────────────────────────
+// ── BATTLE SKIP QUESTION (moves to end, once per question) ───────────────────
 function bmSkipQuestion() {
   if (B.answered) return;
-  B.answered = true;
 
-  if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+  const idx = B.battleIndex || 0;
+  const qid = B.battleQIds[idx];
+  const elapsed = (Date.now() - B.qStartTime) / 1000;
 
-  // Show "Skipped" badge
-  const badge = document.getElementById('bmBonusBadge');
-  if (badge) {
-    badge.textContent = '⏭ Skipped';
-    badge.className = 'bm-bonus-badge show';
-    badge.style.color = '#facc15';
-    badge.style.background = 'rgba(250,204,21,.14)';
-    badge.style.border = '1px solid rgba(250,204,21,.4)';
-    badge.style.transform = 'translateY(0px)';
-    badge.style.opacity = '1';
-    setTimeout(() => { badge.style.transform = 'translateY(-28px)'; badge.style.opacity = '0'; }, 80);
-    setTimeout(() => {
-      badge.className = 'bm-bonus-badge';
-      badge.style.transform = '';
-      badge.style.opacity = '';
-      badge.style.color = '';
-      badge.style.background = '';
-      badge.style.border = '';
-    }, 700);
+  // Always accumulate the time spent on this attempt
+  B.timeSpent = B.timeSpent || {};
+  B.timeSpent[qid] = (B.timeSpent[qid] || 0) + elapsed;
+
+  // Already skipped once → can't re-skip, treat as forced advance
+  if (B.onceskipped && B.onceskipped.has(qid)) {
+    B.answered = true;
+    if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+    _bmShowSkipBadge('⛔ Must answer!', '#ef4444', 'rgba(239,68,68,.16)', 'rgba(239,68,68,.45)');
+    setTimeout(() => { B.answered = false; bmShowQuestion(idx + 1); }, 600);
+    return;
   }
 
-  // No score change — just advance
-  setTimeout(() => { B.answered = false; bmShowQuestion((B.battleIndex || 0) + 1); }, 500);
+  // First skip — send to end of queue
+  B.answered = true;
+  if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+
+  B.onceskipped = B.onceskipped || new Set();
+  B.onceskipped.add(qid);
+
+  // Splice current question out and push to end
+  B.battleQIds.splice(idx, 1);
+  B.battleQIds.push(qid);
+
+  _bmShowSkipBadge('⏭ Sent to end', '#facc15', 'rgba(250,204,21,.14)', 'rgba(250,204,21,.4)');
+
+  // Show question at the same index (which is now the next question)
+  setTimeout(() => { B.answered = false; bmShowQuestion(idx); }, 500);
+}
+
+function _bmShowSkipBadge(text, color, bg, border) {
+  const badge = document.getElementById('bmBonusBadge');
+  if (!badge) return;
+  badge.textContent = text;
+  badge.className = 'bm-bonus-badge show';
+  badge.style.color = color;
+  badge.style.background = bg;
+  badge.style.border = `1px solid ${border}`;
+  badge.style.transform = 'translateY(0px)';
+  badge.style.opacity = '1';
+  setTimeout(() => { badge.style.transform = 'translateY(-28px)'; badge.style.opacity = '0'; }, 80);
+  setTimeout(() => {
+    badge.className = 'bm-bonus-badge';
+    badge.style.transform = '';
+    badge.style.opacity = '';
+    badge.style.color = '';
+    badge.style.background = '';
+    badge.style.border = '';
+  }, 700);
 }
 window.bmSkipQuestion = bmSkipQuestion;
+
+// ── FINISH BATTLE (manual early submit) ──────────────────────────────────────
+function bmFinishBattle() {
+  if (!B.active) return;
+
+  // Confirm before finishing
+  const confirmed = confirm('🏁 Finish Battle?\n\nThis will submit your current score and end your battle session.\nUnanswered questions will be counted as skipped.');
+  if (!confirmed) return;
+
+  if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
+  B.answered = true;
+  B.active   = false;
+
+  // Push final score to Firebase and mark done
+  bmPlayerDone();
+}
+window.bmFinishBattle = bmFinishBattle;
 
 // ── FALLBACK SHUFFLE (in case engine function not ready) ──────────────────────
 function bmBuildShuffle(qid) {
