@@ -4327,136 +4327,607 @@ body {
         modal.show();
       }
 
-      /* ========= PDF DOWNLOAD (jsPDF) ========= */
+      /* ========= PDF DOWNLOAD — GOD-LEVEL (jsPDF) ========= */
       async function downloadPdf() {
         const { jsPDF } = window.jspdf;
+        if (!jsPDF) { alert('PDF library not loaded yet. Please try again in a moment.'); return; }
 
-        const testName = state.selectedTest ? state.selectedTest.subtopicName : 'Test';
-        const subjectName = state.selectedTest ? state.selectedTest.subjectTitle : '';
-        const candidate = state.candidateName || ' ';
+        // ── Gather metadata ─────────────────────────────────────────────────────
+        const testName    = state.selectedTest ? state.selectedTest.subtopicName  : 'Mock Test';
+        const topicName   = state.selectedTest ? state.selectedTest.topicName     : '';
+        const subjectName = state.selectedTest ? state.selectedTest.subjectTitle  : '';
+        const candidate   = (state.candidateName || 'Candidate').trim();
+        const st          = computeStats();
+        const now         = new Date();
+        const dateStr     = now.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+        const timeStr     = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+        const elapsed     = Math.max(0, Math.floor((Date.now() - (state.startedAt || Date.now())) / 1000));
+        const timeTakenStr = `${Math.floor(elapsed / 60)}m ${elapsed % 60}s`;
+        const accuracy    = st.attempted > 0 ? ((st.correct / st.attempted) * 100).toFixed(1) : '0.0';
+        const maxPossible = st.total * 3;
+        const scorePct    = maxPossible > 0 ? (st.score / maxPossible) * 100 : 0;
 
-        const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-        const pageW = doc.internal.pageSize.getWidth();
-        const pageH = doc.internal.pageSize.getHeight();
-        const margin = 40;
+        let grade, gradeColor;
+        if (scorePct >= 85)      { grade = 'OUTSTANDING';        gradeColor = [16, 185, 129]; }
+        else if (scorePct >= 70) { grade = 'EXCELLENT';          gradeColor = [34, 197, 94]; }
+        else if (scorePct >= 55) { grade = 'GOOD';               gradeColor = [6, 182, 212]; }
+        else if (scorePct >= 40) { grade = 'AVERAGE';            gradeColor = [250, 204, 21]; }
+        else                     { grade = 'NEEDS IMPROVEMENT';  gradeColor = [239, 68, 68]; }
 
-        // Basic strategy: render mostly as text blocks; keep HTML by stripping tags for PDF text,
-        // while still including original HTML in the on-screen app.
-        // (For full HTML fidelity + complex scripts, consider html() + html2canvas, but that can be heavy.)
-        // Unicode strategy: jsPDF needs a custom font for complex scripts; here we keep a safe baseline.
-        // (You can embed a TTF using addFileToVFS/addFont if needed.) [web:6]
-        let y = margin;
+        // ── jsPDF setup ────────────────────────────────────────────────────────
+        const doc      = new jsPDF({ unit: 'pt', format: 'a4', compress: true });
+        const pageW    = doc.internal.pageSize.getWidth();   // 595.28 pt
+        const pageH    = doc.internal.pageSize.getHeight();  // 841.89 pt
+        const margin   = 44;
+        const cW       = pageW - margin * 2;    // content width
+        const footerH  = 28;
+        let   y        = margin;
+        let   pageNum  = 1;
 
-        function addPageIfNeeded(extra) {
-          if (y + extra > pageH - margin) {
-            doc.addPage();
-            y = margin;
-          }
+        // Colour palette
+        const C = {
+          purple:  [160, 120, 255],
+          green:   [ 50, 220, 110],
+          red:     [255,  90,  90],
+          yellow:  [255, 215,  50],
+          cyan:    [ 30, 210, 235],
+          dark:    [ 12,  16,  36],
+          card:    [ 20,  26,  50],
+          mid:     [ 40,  50,  80],
+          light:   [255, 255, 255],
+          muted:   [180, 195, 230],
+          white:   [255, 255, 255],
+        };
+
+        const sf = (...a) => doc.setFillColor(...a);
+        const sd = (...a) => doc.setDrawColor(...a);
+        const st2 = (...a) => doc.setTextColor(...a);
+
+        function imgFmt(dataUrl) {
+          if (!dataUrl) return 'JPEG';
+          if (dataUrl.startsWith('data:image/png'))  return 'PNG';
+          if (dataUrl.startsWith('data:image/gif'))  return 'GIF';
+          if (dataUrl.startsWith('data:image/webp')) return 'WEBP';
+          return 'JPEG';
         }
 
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(16);
-        doc.text('Mock Test Response Sheet', margin, y); y += 22;
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(11);
-        doc.text(`Candidate: ${candidate}`, margin, y); y += 16;
-        doc.text(`Test: ${testName}`, margin, y); y += 16;
-        doc.text(`Subject: ${subjectName}`, margin, y); y += 16;
-        y += 8;
-
-        state.qIds.forEach((qid, idx) => {
-          const q = state.questionsMap[qid];
-          const exp = state.explanationsMap[qid] || {};
-          const qs = state.qState[qid];
-          const sh = getOrBuildShuffle(qid);
-
-          addPageIfNeeded(120);
-
-          doc.setDrawColor(200);
-          doc.setLineWidth(0.7);
-          doc.roundedRect(margin, y, pageW - margin * 2, 18, 6, 6);
-
+        // ── Page utilities ──────────────────────────────────────────────────────
+        function drawHeader() {
+          sf(...C.dark);
+          doc.rect(0, 0, pageW, 30, 'F');
+          // left: portal name
+          st2(...C.purple);
           doc.setFont('helvetica', 'bold');
-          doc.setFontSize(12);
-          doc.text(`Q${idx + 1}`, margin + 10, y + 13);
-
-          // clickable google search link for question number
-          const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(stripHtml(q.text || ''))}`;
-          doc.link(margin + 10, y, 40, 18, { url: googleUrl });
-
-          y += 28;
-
+          doc.setFontSize(7.5);
+          doc.text('MOCK TEST PORTAL', margin, 19);
+          // centre: subject · topic
+          st2(...C.muted);
           doc.setFont('helvetica', 'normal');
-          doc.setFontSize(11);
-
-          const qText = stripHtml(q.text || '');
-          const qLines = doc.splitTextToSize(qText, pageW - margin * 2);
-          addPageIfNeeded(qLines.length * 13 + 20);
-          doc.text(qLines, margin, y); y += qLines.length * 13 + 6;
-
-          // image (if any) - simple placement
-          if (q.image) {
-            addPageIfNeeded(180);
-            try {
-              doc.text('Question image:', margin, y); y += 12;
-              doc.addImage(q.image, 'PNG', margin, y, 220, 130);
-              y += 140;
-            } catch (_) {
-              doc.text('[Image not embedded - unsupported format]', margin, y); y += 14;
-            }
-          }
-
-          // options (display order in PDF must match shuffled order)
-          const shuf = getOrBuildShuffle(qid);
-          const opts = shuf.order.map(i => q.options[i]);
-          opts.forEach((opt, i) => {
-            addPageIfNeeded(18);
-            const meta = String(i + 1);
-            doc.text(`${meta}) ${stripHtml(opt)}`, margin, y); y += 14;
-          });
-
-          y += 4;
-          const your = qs.selectedMetaId ? qs.selectedMetaId : '—';
-          const corr = shuf.correctMetaId;
-          const isCorrect = (your !== '—' && your === corr);
-
-          addPageIfNeeded(24);
+          doc.setFontSize(7.5);
+          const centreLabel = [subjectName, topicName, testName].filter(Boolean).join('  ·  ');
+          doc.text(centreLabel, pageW / 2, 19, { align: 'center' });
+          // right: candidate
+          st2(...C.light);
           doc.setFont('helvetica', 'bold');
-          doc.setTextColor(isCorrect ? 34 : (your === '—' ? 0 : 239), isCorrect ? 197 : (your === '—' ? 0 : 68), isCorrect ? 94 : (your === '—' ? 0 : 68));
-          doc.text(`Answer: ${your}`, margin, y); y += 16;
+          doc.text(candidate, pageW - margin, 19, { align: 'right' });
+          y = 44;
+        }
 
-          doc.setTextColor(34, 197, 94);
-          doc.text(`Correct answer: ${corr}`, margin, y); y += 16;
-
-          doc.setTextColor(0, 0, 0);
-          doc.setFont('helvetica', 'bold');
-          doc.text('Explanation:', margin, y); y += 14;
-
+        function drawFooter() {
+          const fy = pageH - footerH + 4;
+          sd(...C.mid);
+          doc.setLineWidth(0.3);
+          doc.line(margin, fy - 6, pageW - margin, fy - 6);
+          st2(...C.muted);
           doc.setFont('helvetica', 'normal');
-          const expLines = doc.splitTextToSize(stripHtml(exp.text || ''), pageW - margin * 2);
-          addPageIfNeeded(expLines.length * 13 + 20);
-          doc.text(expLines, margin, y); y += expLines.length * 13 + 6;
+          doc.setFontSize(7.5);
+          doc.text(`Generated: ${dateStr}  ${timeStr}`, margin, fy + 8);
+          doc.text(`Page ${pageNum}`, pageW / 2, fy + 8, { align: 'center' });
+          doc.text('Mock Test Portal', pageW - margin, fy + 8, { align: 'right' });
+        }
 
-          if (exp.image) {
-            addPageIfNeeded(180);
-            try {
-              doc.text('Explanation image:', margin, y); y += 12;
-              doc.addImage(exp.image, 'PNG', margin, y, 220, 130);
-              y += 140;
-            } catch (_) {
-              doc.text('[Image not embedded - unsupported format]', margin, y); y += 14;
-            }
-          }
+        function newPage() {
+          drawFooter();
+          doc.addPage();
+          pageNum++;
+          y = margin;
+          drawHeader();
+        }
 
-          y += 12;
-          doc.setDrawColor(240);
-          doc.line(margin, y, pageW - margin, y);
-          y += 18;
-          doc.setTextColor(0, 0, 0);
+        function needRoom(h) {
+          if (y + h > pageH - footerH - 16) newPage();
+        }
+
+        // ── COVER PAGE ─────────────────────────────────────────────────────────
+        // Full dark background
+        sf(...C.dark);
+        doc.rect(0, 0, pageW, pageH, 'F');
+
+        // Tri-colour top accent stripe
+        [[139,92,246],[80,140,246],[6,182,212]].forEach((c, i) => {
+          sf(...c);
+          doc.rect(i * (pageW / 3), 0, pageW / 3 + 2, 7, 'F');
         });
 
-        doc.save(`${testName}-response.pdf`);
+        // Centre card
+        const cX = margin, cY = 90, cardH = pageH - 210;
+        sf(20, 26, 50);
+        doc.roundedRect(cX, cY, cW, cardH, 16, 16, 'F');
+        sd(...C.purple);
+        doc.setLineWidth(1.2);
+        doc.roundedRect(cX, cY, cW, cardH, 16, 16, 'S');
+
+        // "RESULT REPORT" label
+        st2(...C.purple);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8.5);
+        doc.text('MOCK TEST PORTAL  —  RESULT REPORT', pageW / 2, cY + 38, { align: 'center' });
+
+        // Test name
+        st2(...C.white);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(21);
+        const tnLines = doc.splitTextToSize(testName.toUpperCase(), cW - 60);
+        doc.text(tnLines, pageW / 2, cY + 64, { align: 'center' });
+
+        // Subject pill
+        const pillY = cY + 64 + tnLines.length * 26 + 6;
+        sf(50, 30, 100);
+        doc.roundedRect(pageW / 2 - 130, pillY, 260, 20, 10, 10, 'F');
+        st2(...C.light);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8.5);
+        doc.text([subjectName, topicName].filter(Boolean).join('  ·  '), pageW / 2, pillY + 13.5, { align: 'center' });
+
+        // Horizontal rule
+        const ruleY = pillY + 36;
+        sd(50, 60, 95);
+        doc.setLineWidth(0.5);
+        doc.line(cX + 36, ruleY, cX + cW - 36, ruleY);
+
+        // Score (huge)
+        const scoreY = ruleY + 16;
+        st2(...gradeColor);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(58);
+        doc.text(String(st.score), pageW / 2, scoreY + 58, { align: 'center' });
+        st2(...C.muted);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.text(`out of ${maxPossible} marks  (${scorePct.toFixed(1)}%)`, pageW / 2, scoreY + 74, { align: 'center' });
+
+        // Grade badge
+        const gbY = scoreY + 92;
+        sf(...gradeColor);
+        doc.roundedRect(pageW / 2 - 80, gbY, 160, 24, 12, 12, 'F');
+        st2(...C.dark);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9.5);
+        doc.text(grade, pageW / 2, gbY + 15.5, { align: 'center' });
+
+        // Stat row
+        const statY = gbY + 44;
+        const statItems = [
+          { label: 'Correct',     value: String(st.correct),     c: C.green  },
+          { label: 'Wrong',       value: String(st.wrong),       c: C.red    },
+          { label: 'Unattempted', value: String(st.unattempted), c: C.muted  },
+          { label: 'Accuracy',    value: accuracy + '%',         c: C.cyan   },
+          { label: 'Time Taken',  value: timeTakenStr,           c: C.purple },
+          { label: 'Score',       value: String(st.score),       c: gradeColor },
+        ];
+        const sw = (cW - 40) / statItems.length;
+        statItems.forEach((s, i) => {
+          const sx = cX + 20 + i * sw + sw / 2;
+          st2(...s.c);
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(17);
+          doc.text(s.value, sx, statY + 20, { align: 'center' });
+          st2(...C.muted);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(7);
+          doc.text(s.label.toUpperCase(), sx, statY + 31, { align: 'center' });
+        });
+
+        // Candidate block
+        const ciY = statY + 52;
+        sd(40, 50, 80);
+        doc.setLineWidth(0.3);
+        doc.line(cX + 36, ciY, cX + cW - 36, ciY);
+        st2(...C.white);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(13);
+        doc.text(candidate, pageW / 2, ciY + 24, { align: 'center' });
+        st2(...C.muted);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8.5);
+        doc.text(
+          `Date: ${dateStr}  |  Time: ${timeStr}  |  Mode: ${state.examMode ? 'Exam' : 'Practice'}  |  Auto-submit: ${state.autoSubmittedFinal ? 'Yes' : 'No'}`,
+          pageW / 2, ciY + 38, { align: 'center' }
+        );
+
+        // Bottom caption
+        st2(...C.muted);
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(7.5);
+        doc.text('Auto-generated by Mock Test Portal. For personal use only.', pageW / 2, pageH - 44, { align: 'center' });
+
+        drawFooter();
+
+        // ── DETAILED ANSWERS SECTION ──────────────────────────────────────────
+        doc.addPage();
+        pageNum++;
+        y = margin;
+        drawHeader();
+
+        // Section heading
+        st2(...C.purple);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.text('DETAILED ANSWERS & EXPLANATIONS', margin, y);
+        y += 8;
+        sf(...C.purple);
+        doc.rect(margin, y, 196, 2.5, 'F');
+        y += 20;
+
+        // ══════════════════════════════════════════════════════════════════
+        // CANVAS-BASED QUESTION RENDERER — every card is a crisp image
+        // ══════════════════════════════════════════════════════════════════
+        const _S  = 1.8;                          // scale (lower = faster, less memory)
+        const _CW = Math.round(507 * _S);         // canvas px width = PDF content width
+
+        function _wrap(ctx, text, maxW) {
+          const words = (text||'').replace(/\s+/g,' ').trim().split(' ');
+          const lines=[]; let cur='';
+          for (const w of words) {
+            const t = cur ? cur+' '+w : w;
+            if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur=w; }
+            else cur=t;
+          }
+          if (cur) lines.push(cur);
+          return lines.length ? lines : [''];
+        }
+
+        // Strips HTML but preserves <br> and block-tag line breaks as \n
+        function stripHtmlKeepLines(html) {
+          const cleaned = (html||'')
+            .replace(/<br\s*\/?>/gi, '\n')
+            .replace(/<\/p>/gi, '\n')
+            .replace(/<\/div>/gi, '\n')
+            .replace(/<\/li>/gi, '\n');
+          const d = document.createElement('div');
+          d.innerHTML = cleaned;
+          return (d.textContent || d.innerText || '').replace(/\n{3,}/g, '\n\n').trim();
+        }
+
+        // Word-wraps text that may contain \n (preserves newlines as real line breaks)
+        function _wrapMultiline(ctx, text, maxW) {
+          const paragraphs = text.split('\n');
+          const lines = [];
+          for (const para of paragraphs) {
+            if (para.trim() === '') { lines.push(''); continue; }
+            lines.push(..._wrap(ctx, para, maxW));
+          }
+          return lines.length ? lines : [''];
+        }
+
+        function _rr(ctx, x, y, w, h, r, fill, stroke, lw) {
+          ctx.beginPath();
+          const tl=r[0]||r, tr=r[1]||r, br=r[2]||r, bl=r[3]||r;
+          ctx.moveTo(x+tl,y);
+          ctx.lineTo(x+w-tr,y); ctx.arcTo(x+w,y,x+w,y+tr,tr);
+          ctx.lineTo(x+w,y+h-br); ctx.arcTo(x+w,y+h,x+w-br,y+h,br);
+          ctx.lineTo(x+bl,y+h); ctx.arcTo(x,y+h,x,y+h-bl,bl);
+          ctx.lineTo(x,y+tl); ctx.arcTo(x,y,x+tl,y,tl);
+          ctx.closePath();
+          if (fill)   { ctx.fillStyle=fill;   ctx.fill(); }
+          if (stroke) { ctx.strokeStyle=stroke; ctx.lineWidth=lw||1; ctx.stroke(); }
+        }
+
+        async function _buildQCanvas(q, exp, qs, sh, idx) {
+          const S=_S, CW=_CW;
+          const pad=32*S, iw=CW-pad*2;
+
+          const your=qs.selectedMetaId||null, corr=sh.correctMetaId;
+          const isC=!!your&&your===corr, isUn=!your;
+          const statusLabel = isUn?'UNATTEMPTED':isC?'✓  CORRECT':'✗  WRONG';
+          const statusBg    = isUn?'#1e2d52':isC?'#14532d':'#7f1d1d';
+          const statusFg    = isUn?'#a5b4fc':isC?'#4ade80':'#f87171';
+          const hdrBg       = isUn?'#0e1530':isC?'#071c10':'#1a0707';
+          const accentClr   = isUn?'#818cf8':isC?'#22c55e':'#ef4444';
+
+          const F = {
+            qnum: `700 ${15*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+            qtxt: `${13*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+            optN: `700 ${9*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+            opt:  `${12.5*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+            optB: `700 ${12.5*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+            bdg:  `700 ${8.5*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+            str:  `600 ${11*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+            elab: `700 ${10.5*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+            etxt: `${12.5*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+          };
+          const LH=20*S, optPV=13*S, optPH=18*S, optGap=8*S, circR=11*S;
+
+          const mc=document.createElement('canvas'); mc.width=CW; mc.height=10;
+          const mx=mc.getContext('2d');
+          mx.font=F.qtxt;
+          const qLines=_wrap(mx, stripHtml(q.text||''), iw-10*S);
+          const opts=sh.order.map(i=>q.options[i]);
+          const optLs=opts.map(o=>{ mx.font=F.opt; return _wrap(mx,stripHtml(o),iw-circR*2-optPH*2-16*S); });
+          const expTxt=stripHtmlKeepLines((exp&&exp.text)||'');
+          mx.font=F.etxt;
+          const expLs=expTxt?_wrapMultiline(mx,expTxt,iw-10*S):[];
+
+          let H=pad;
+          H+=44*S;                                     // header
+          H+=20*S;                                     // gap
+          H+=qLines.length*LH+10*S;                   // question
+          if(q.image) H+=165*S+16*S;
+          H+=12*S;
+          for(const ol of optLs) H+=ol.length*LH+optPV*2+optGap;
+          H+=16*S;
+          H+=32*S;                                     // strip
+          if(expLs.length){ H+=28*S; H+=expLs.length*LH+12*S; }
+          if(exp&&exp.image) H+=165*S+16*S;
+          H+=pad;
+
+          const canvas=document.createElement('canvas');
+          canvas.width=CW; canvas.height=Math.ceil(H);
+          const ctx=canvas.getContext('2d');
+
+          // Background gradient
+          const bg=ctx.createLinearGradient(0,0,0,H);
+          bg.addColorStop(0,'#0c1224'); bg.addColorStop(1,'#090d1c');
+          ctx.fillStyle=bg; ctx.fillRect(0,0,CW,H);
+
+          let y=pad;
+
+          // ── Header bar
+          _rr(ctx,0,y,CW,44*S,[10*S,10*S,0,0],hdrBg);
+          // Shine overlay
+          const shine=ctx.createLinearGradient(0,y,0,y+44*S);
+          shine.addColorStop(0,'rgba(255,255,255,0.07)'); shine.addColorStop(1,'rgba(255,255,255,0)');
+          _rr(ctx,0,y,CW,44*S,[10*S,10*S,0,0],shine);
+          // Accent left stripe
+          const ag=ctx.createLinearGradient(0,y,0,y+44*S);
+          ag.addColorStop(0,accentClr); ag.addColorStop(1,accentClr+'66');
+          ctx.fillStyle=ag; ctx.fillRect(0,y,5*S,44*S);
+          // Q label
+          ctx.font=F.qnum; ctx.fillStyle='#ffffff';
+          ctx.fillText(`Q${idx+1}`, 18*S, y+29*S);
+          // Status badge
+          const bW=118*S,bH2=24*S,bX=CW-bW-14*S,bY=y+(44*S-bH2)/2;
+          ctx.shadowColor=accentClr; ctx.shadowBlur=12*S;
+          _rr(ctx,bX,bY,bW,bH2,[12*S,12*S,12*S,12*S],statusBg,accentClr+'55',0.8*S);
+          ctx.shadowBlur=0;
+          ctx.font=F.bdg; ctx.fillStyle=statusFg; ctx.textAlign='center';
+          ctx.fillText(statusLabel,bX+bW/2,bY+16.5*S); ctx.textAlign='left';
+          y+=44*S+20*S;
+
+          // ── Question text
+          ctx.font=F.qtxt; ctx.fillStyle='#dde8ff';
+          for(const ln of qLines){ ctx.fillText(ln,pad,y); y+=LH; }
+          y+=10*S;
+
+          // ── Question image
+          if(q.image){
+            try{
+              const im=await new Promise((res,rej)=>{const i=new Image();if(!q.image.startsWith('data:'))i.crossOrigin='anonymous';i.onload=()=>res(i);i.onerror=rej;i.src=q.image;});
+              const ih=150*S,iw2=Math.min(iw,ih*im.naturalWidth/im.naturalHeight);
+              _rr(ctx,pad,y,iw2,ih,[8*S,8*S,8*S,8*S],'#0a1020','#1e2d4a',S);
+              ctx.drawImage(im,pad,y,iw2,ih); y+=ih+16*S;
+            }catch(_){ctx.font=F.etxt;ctx.fillStyle='#475569';ctx.fillText('[Image unavailable]',pad,y);y+=LH+8*S;}
+          }
+          y+=10*S;
+
+          // ── Options
+          for(let i=0;i<opts.length;i++){
+            const mid=String(i+1),isY=your===mid,isCC=corr===mid;
+            let bg2,brd,fg;
+            if(isCC)      {bg2='#071c0e';brd=isY?'#22c55e':'#16a34a';fg='#4ade80';}
+            else if(isY)  {bg2='#1f0707';brd='#ef4444';fg='#f87171';}
+            else          {bg2='#0d1526';brd='#1a2540';fg='#b8c8ee';}
+            const ol=optLs[i];
+            const bH3=ol.length*LH+optPV*2;
+            ctx.shadowColor='rgba(0,0,0,0.35)'; ctx.shadowBlur=8*S; ctx.shadowOffsetY=3*S;
+            _rr(ctx,pad/2,y,CW-pad,bH3,[10*S,10*S,10*S,10*S],bg2,brd,(isCC||isY?1.8:0.7)*S);
+            ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+            if(isCC||isY){
+              const barG=ctx.createLinearGradient(0,y,0,y+bH3);
+              barG.addColorStop(0,isCC?'#22c55e':'#ef4444');
+              barG.addColorStop(1,(isCC?'#22c55e':'#ef4444')+'33');
+              ctx.fillStyle=barG; ctx.fillRect(pad/2,y,4*S,bH3);
+            }
+            // Number circle
+            const cx=pad/2+optPH+circR,cy=y+bH3/2;
+            ctx.beginPath(); ctx.arc(cx,cy,circR,0,Math.PI*2);
+            ctx.fillStyle=isCC?'#14532d':isY?'#7f1d1d':'#182038';
+            ctx.fill();
+            ctx.font=F.optN; ctx.fillStyle=isCC?'#4ade80':isY?'#f87171':'#64748b';
+            ctx.textAlign='center'; ctx.fillText(mid,cx,cy+3.5*S); ctx.textAlign='left';
+            // Text
+            ctx.font=(isCC||isY)?F.optB:F.opt; ctx.fillStyle=fg;
+            const tx=pad/2+optPH+circR*2+12*S;
+            ol.forEach((ln,li)=>ctx.fillText(ln,tx,y+optPV+(li+0.8)*LH));
+            // Icon
+            if(isCC||isY){
+              ctx.font=`700 ${14*S}px Helvetica,Arial`; ctx.fillStyle=isCC?'#4ade80':'#f87171';
+              ctx.textAlign='right'; ctx.fillText(isCC?'✓':'✗',CW-pad/2-14*S,y+bH3/2+5*S); ctx.textAlign='left';
+            }
+            y+=bH3+optGap;
+          }
+          y+=14*S;
+
+          // ── Answer strip
+          const sH=32*S;
+          const sg=ctx.createLinearGradient(0,y,CW,y+sH);
+          sg.addColorStop(0,'#0b1230'); sg.addColorStop(1,'#0f1a3c');
+          _rr(ctx,pad/2,y,CW-pad,sH,[8*S,8*S,8*S,8*S],sg,'#1a2848',0.8*S);
+          const sTxt=your?(isC?`✓  Your answer (${your}) is CORRECT`:`✗  Your answer: ${your}   ─   Correct answer: ${corr}`):`Not attempted   ─   Correct answer: ${corr}`;
+          ctx.font=F.str; ctx.fillStyle=isUn?'#7c8db5':isC?'#4ade80':'#f87171';
+          ctx.fillText(sTxt,pad,y+21.5*S);
+          y+=sH+20*S;
+
+          // ── Explanation
+          if(expLs.length){
+            // Pill label
+            mx.font=F.elab; const lbW=mx.measureText('EXPLANATION').width+28*S;
+            _rr(ctx,pad-6*S,y-14*S,lbW,20*S,[10*S,10*S,10*S,10*S],'rgba(34,211,238,0.1)','rgba(34,211,238,0.4)',0.8*S);
+            ctx.font=F.elab; ctx.fillStyle='#22d3ee';
+            ctx.fillText('EXPLANATION',pad+8*S,y);
+            y+=26*S;
+            ctx.font=F.etxt; ctx.fillStyle='#d8e4ff';
+            for(const ln of expLs){ if(ln!=='')ctx.fillText(ln,pad,y); y+=LH; }
+            y+=12*S;
+          }
+
+          // ── Explanation image
+          if(exp&&exp.image){
+            try{
+              const im=await new Promise((res,rej)=>{const i=new Image();if(!exp.image.startsWith('data:'))i.crossOrigin='anonymous';i.onload=()=>res(i);i.onerror=rej;i.src=exp.image;});
+              const ih=150*S,iw2=Math.min(iw,ih*im.naturalWidth/im.naturalHeight);
+              _rr(ctx,pad,y,iw2,ih,[8*S,8*S,8*S,8*S],'#0a1020','#1e2d4a',S);
+              ctx.drawImage(im,pad,y,iw2,ih); y+=ih+16*S;
+            }catch(_){}
+          }
+
+          return canvas;
+        }
+
+        // Progress toast
+        const _toast = document.createElement('div');
+        _toast.style.cssText = 'position:fixed;bottom:28px;right:28px;z-index:9999;background:#1e2a50;border:1px solid rgba(139,92,246,.5);color:#e0e8ff;font:600 13px -apple-system,sans-serif;padding:12px 20px;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:220px;';
+        _toast.innerHTML = '⏳ Generating PDF… <span id="_pdfProg">0</span> / ' + state.qIds.length;
+        document.body.appendChild(_toast);
+        const _prog = document.getElementById('_pdfProg');
+
+        // ── Render each question as a canvas image ─────────────────────────────
+        for (let qi = 0; qi < state.qIds.length; qi++) {
+          // Yield to browser between each question to stay responsive
+          await new Promise(r => setTimeout(r, 0));
+          if (_prog) _prog.textContent = qi + 1;
+          const qid = state.qIds[qi];
+          const q   = state.questionsMap[qid];
+          const exp = state.explanationsMap[qid] || {};
+          const qs  = state.qState[qid];
+          const sh  = getOrBuildShuffle(qid);
+
+          const qCanvas = await _buildQCanvas(q, exp, qs, sh, qi);
+          const imgH    = cW * qCanvas.height / qCanvas.width;
+          const maxH    = pageH - footerH - margin - 16;
+
+          // Fit check — start new page if needed
+          if (y + imgH > pageH - footerH - 8) newPage();
+
+          if (imgH <= maxH) {
+            doc.addImage(qCanvas.toDataURL('image/png'), 'PNG', margin, y, cW, imgH);
+            y += imgH + 12;
+          } else {
+            // Scale down to fit single page (rare: very long question)
+            const scale = maxH / imgH;
+            doc.addImage(qCanvas.toDataURL('image/png'), 'PNG', margin, y, cW * scale, maxH);
+            y += maxH + 12;
+          }
+        }
+        _toast.remove();
+
+        drawFooter();
+
+        // ── "QUESTIONS TO REVISIT" PAGE — canvas rendered ─────────────────────
+        const revisitList = state.qIds.filter(qid => {
+          const qs = state.qState[qid];
+          const sh = getOrBuildShuffle(qid);
+          return !qs.selectedMetaId || qs.selectedMetaId !== sh.correctMetaId;
+        });
+
+        if (revisitList.length > 0) {
+          doc.addPage(); pageNum++; y = margin; drawHeader();
+
+          // Section heading canvas
+          const _hCanvas = document.createElement('canvas');
+          _hCanvas.width = _CW; _hCanvas.height = Math.round(70 * _S);
+          const _hCtx = _hCanvas.getContext('2d');
+          _hCtx.fillStyle = '#0c1224'; _hCtx.fillRect(0,0,_CW,_hCanvas.height);
+          _hCtx.font = `700 ${16*_S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`;
+          _hCtx.fillStyle = '#f87171';
+          _hCtx.fillText('QUESTIONS TO REVISIT', 0, 22*_S);
+          _hCtx.fillStyle = 'rgba(239,68,68,0.6)';
+          _hCtx.fillRect(0, 28*_S, 170*_S, 2.5*_S);
+          const _wrongN = state.qIds.filter(q=>{ const qs=state.qState[q]; return qs.selectedMetaId && qs.selectedMetaId!==getOrBuildShuffle(q).correctMetaId; }).length;
+          _hCtx.font = `${11*_S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`;
+          _hCtx.fillStyle = '#7c8db5';
+          _hCtx.fillText(`${revisitList.length} question${revisitList.length!==1?'s':''} need further study  —  ${_wrongN} wrong, ${st.unattempted} not attempted.`, 0, 54*_S);
+          const _hImgH = cW * _hCanvas.height / _hCanvas.width;
+          doc.addImage(_hCanvas.toDataURL('image/png'),'PNG',margin,y,cW,_hImgH);
+          y += _hImgH + 8;
+
+          // Each revisit item as canvas
+          for (const qid of revisitList) {
+            await new Promise(r => setTimeout(r, 0));
+            const ridx = state.qIds.indexOf(qid);
+            const rq   = state.questionsMap[qid];
+            const rqs  = state.qState[qid];
+            const rsh  = getOrBuildShuffle(qid);
+            const isUn = !rqs.selectedMetaId;
+            const acC  = isUn ? '#818cf8' : '#ef4444';
+            const tag  = isUn ? 'NOT ATTEMPTED' : 'WRONG';
+
+            const S=_S, CW=_CW, pad=28*S;
+            const iw2=CW-pad*2;
+            const F = {
+              qnum: `700 ${11*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+              qtxt: `${12.5*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+              tag:  `700 ${8*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+              ans:  `700 ${10*S}px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif`,
+            };
+            const LH=18*S;
+            const mc2=document.createElement('canvas'); mc2.width=CW; mc2.height=10;
+            const mx2=mc2.getContext('2d'); mx2.font=F.qtxt;
+            const rqLines=_wrap(mx2, stripHtml(rq.text||''), iw2-10*S);
+            let rH=pad; rH+=22*S; rH+=rqLines.length*LH+12*S; rH+=22*S; rH+=pad;
+
+            const rCanvas=document.createElement('canvas');
+            rCanvas.width=CW; rCanvas.height=Math.ceil(rH);
+            const rCtx=rCanvas.getContext('2d');
+            const rbg=rCtx.createLinearGradient(0,0,0,rH);
+            rbg.addColorStop(0,'#0c1224'); rbg.addColorStop(1,'#090d1c');
+            rCtx.fillStyle=rbg; rCtx.fillRect(0,0,CW,rH);
+            // Accent bar
+            const rbg2=rCtx.createLinearGradient(0,pad,0,rH-pad);
+            rbg2.addColorStop(0,acC); rbg2.addColorStop(1,acC+'44');
+            rCtx.fillStyle=rbg2; rCtx.fillRect(0,pad,4*S,rH-pad*2);
+            let ry=pad;
+            // Q label + tag
+            rCtx.font=F.qnum; rCtx.fillStyle='#dde8ff';
+            rCtx.fillText(`Q${ridx+1}.`, 14*S, ry+15*S);
+            mx2.font=F.tag; const tagW=mx2.measureText(tag).width+20*S;
+            _rr(rCtx,50*S,ry+2*S,tagW,18*S,[9*S,9*S,9*S,9*S],isUn?'rgba(129,140,248,0.12)':'rgba(239,68,68,0.12)',acC+'88',0.8*S);
+            rCtx.font=F.tag; rCtx.fillStyle=acC;
+            rCtx.fillText(tag,60*S,ry+14.5*S);
+            ry+=22*S;
+            // Question text
+            rCtx.font=F.qtxt; rCtx.fillStyle='#c8d6f5';
+            for(const ln of rqLines){ rCtx.fillText(ln,14*S,ry); ry+=LH; }
+            ry+=12*S;
+            // Correct answer
+            const ansStr=`✓  Correct Answer: ${rsh.correctMetaId}`;
+            mx2.font=F.ans; const ansW=mx2.measureText(ansStr).width+24*S;
+            _rr(rCtx,14*S,ry,ansW,20*S,[10*S,10*S,10*S,10*S],'rgba(34,197,94,0.1)','rgba(34,197,94,0.4)',0.8*S);
+            rCtx.font=F.ans; rCtx.fillStyle='#4ade80';
+            rCtx.fillText(ansStr,26*S,ry+14*S);
+
+            const rImgH = cW * rCanvas.height / rCanvas.width;
+            if (y + rImgH > pageH - footerH - 8) { drawFooter(); doc.addPage(); pageNum++; y=margin; drawHeader(); }
+            doc.addImage(rCanvas.toDataURL('image/png'),'PNG',margin,y,cW,rImgH);
+            y += rImgH + 8;
+          }
+
+          drawFooter();
+        }
+
+        // ── Save ──────────────────────────────────────────────────────────────
+        const safeName = (s) => s.replace(/[^a-zA-Z0-9\-_. ]/g, '').trim().replace(/\s+/g, '-');
+        doc.save(`${safeName(candidate)}_${safeName(testName)}_Result.pdf`);
       }
       /* ========= PRACTICE ? HELP BUTTON ========= */
       function buildHelpContentHtml(qid) {
