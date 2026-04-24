@@ -435,7 +435,6 @@
     }
 
 
-    /* Timer */
     .timer-pill {
       position: fixed;
       right: 14px;
@@ -448,6 +447,13 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
       font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 640px) {
+      .timer-pill {
+        right: 80px !important;  /* shift left of FAB on mobile */
+        bottom: 16px !important;
+      }
     }
 
     /* Hover help box (desktop only) */
@@ -1931,7 +1937,8 @@ body {
 /* ── PDF Tutor Panel ── */
 #pdfTutorPanel {
   flex-direction: column;
-  min-height: 360px;
+  min-height: calc(100vh - 130px);
+  height: calc(100vh - 130px);
 }
 #pdfDropZone {
   flex: 1;
@@ -1940,18 +1947,28 @@ body {
 }
 #pdfViewerWrap {
   flex: 1;
-  min-height: 320px;
+  min-height: 0;
   flex-direction: column;
 }
 #pdfCanvasArea {
   flex: 1;
   overflow: auto;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px;
 }
-#pdfRenderCanvas {
+/* individual page canvases rendered dynamically */
+#pdfCanvasArea canvas {
   display: block;
-  max-width: 100%;
-  height: auto !important;
+  max-width: none;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  flex-shrink: 0;
 }
 #pdfTutorToggleBtn {
   background: linear-gradient(135deg, rgba(6,182,212,.1), rgba(124,58,237,.08)) !important;
@@ -1966,7 +1983,8 @@ body {
   box-shadow: 0 0 18px rgba(6,182,212,.25) !important;
 }
 @media (max-width: 576px) {
-  #pdfViewerWrap { min-height: 260px; }
+  #pdfTutorPanel { min-height: calc(100vh - 110px); height: calc(100vh - 110px); }
+  #pdfViewerWrap { min-height: 0; }
   #pdfDropZone   { min-height: 200px; padding: 1.2rem; }
 }
 
@@ -1984,108 +2002,256 @@ body {
 }
 
 /* ════════════════════════════════════════════════════════════
-   📱 MOBILE TOPBAR SWIPER  — slide-down reveal on touch
+   📱 MOBILE FAB DROP-UP RIBBON  — bottom-right corner
    ════════════════════════════════════════════════════════════ */
-@media (max-width: 576px) {
-  .engine-topbar {
-    position: fixed !important;
-    top: 0 !important; left: 0 !important; right: 0 !important;
-    z-index: 200 !important;
-    transform: translateY(-110%) !important;
-    transition: transform 0.42s cubic-bezier(0.34, 1.45, 0.64, 1) !important;
-    will-change: transform;
-  }
-  .engine-topbar.topbar-open {
-    transform: translateY(0) !important;
-  }
-  /* push content down when topbar is pinned open */
-  #engineView.topbar-pinned > .container-fluid {
-    padding-top: calc(var(--topbar-h, 88px) + 6px) !important;
-  }
-}
 
-/* ── Handle pill ── */
-#topbarSwipeHandle {
-  display: none;          /* JS shows it only on mobile + engine active */
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 3px;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 202;
-  width: 72px;
-  height: 30px;
-  background: linear-gradient(180deg,
-    rgba(6,182,212,.08) 0%,
-    rgba(6,182,212,.22) 100%);
-  border: 1px solid rgba(6,182,212,.50);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  cursor: pointer;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow:
-    0 6px 22px rgba(6,182,212,.22),
-    0 0 0 1px rgba(6,182,212,.08),
-    inset 0 1px 0 rgba(255,255,255,.07);
-  transition:
-    top         0.42s cubic-bezier(0.34, 1.45, 0.64, 1),
-    height      0.28s ease,
-    background  0.18s ease,
-    box-shadow  0.18s ease;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-}
-#topbarSwipeHandle:active {
-  background: rgba(6,182,212,.35);
-  box-shadow: 0 6px 28px rgba(6,182,212,.38), 0 0 0 2px rgba(6,182,212,.25);
-}
-/* Chevron bars */
-#topbarSwipeHandle .sw-bar {
-  display: block;
-  width: 22px;
-  height: 2.5px;
-  border-radius: 99px;
-  background: linear-gradient(90deg, rgba(6,182,212,.55), rgba(139,92,246,.8), rgba(6,182,212,.55));
-  box-shadow: 0 0 7px rgba(6,182,212,.45);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  position: relative;
-}
-/* Closed state: show a gentle ˅ shape */
-#topbarSwipeHandle .sw-bar:nth-child(1){ transform: translateY(2px) rotate(20deg); width:14px; margin-left:2px; }
-#topbarSwipeHandle .sw-bar:nth-child(2){ transform: translateY(2px) rotate(-20deg); width:14px; margin-left:5px; }
-/* Open state: flip to ˄ */
-#topbarSwipeHandle.handle-open .sw-bar:nth-child(1){ transform: translateY(-2px) rotate(-20deg); }
-#topbarSwipeHandle.handle-open .sw-bar:nth-child(2){ transform: translateY(-2px) rotate(20deg); }
-
-/* glow pulse for "I am here" affordance */
-@keyframes handlePulse {
-  0%,100% { box-shadow: 0 6px 22px rgba(6,182,212,.22), 0 0 0 1px rgba(6,182,212,.08); }
-  50%      { box-shadow: 0 6px 30px rgba(6,182,212,.40), 0 0 0 2px rgba(6,182,212,.20); }
-}
-#topbarSwipeHandle:not(.handle-open) { animation: handlePulse 2.8s ease-in-out infinite; }
-#topbarSwipeHandle.handle-open       { animation: none; }
-
-/* ── Backdrop ── */
+/* Hide the old swipe handle entirely */
+#topbarSwipeHandle { display: none !important; }
 #topbarBackdrop {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 199;
-  background: rgba(0,0,0,.32);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   transition: opacity 0.25s ease;
   opacity: 0;
 }
-#topbarBackdrop.show {
-  display: block;
-  opacity: 1;
+#topbarBackdrop.show { display: block; opacity: 1; }
+
+/* On mobile engine view: keep topbar hidden (we use FAB ribbon instead) */
+@media (max-width: 576px) {
+  .engine-topbar {
+    position: fixed !important;
+    top: 0 !important; left: 0 !important; right: 0 !important;
+    z-index: 200 !important;
+  }
+  /* Always push content below the fixed topbar */
+  #engineView > .container-fluid {
+    padding-top: calc(var(--topbar-h, 88px) + 6px) !important;
+  }
 }
+
+/* ════════ FAB BUTTON ════════ */
+#mobileFab {
+  display: none; /* shown by JS only on mobile + engine active */
+  position: fixed;
+  bottom: 80px;   /* above timer pill */
+  right: 16px;
+  z-index: 500;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(6,182,212,.65);
+  background: linear-gradient(135deg, rgba(6,182,212,.22), rgba(124,58,237,.28));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 8px 32px rgba(6,182,212,.35),
+    0 0 0 1px rgba(6,182,212,.12),
+    inset 0 1px 0 rgba(255,255,255,.12);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+#mobileFab:active {
+  transform: scale(0.92);
+  box-shadow: 0 4px 18px rgba(6,182,212,.4), 0 0 0 2px rgba(6,182,212,.3);
+}
+#mobileFab.fab-open {
+  background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.22));
+  box-shadow: 0 8px 36px rgba(124,58,237,.45), 0 0 0 2px rgba(124,58,237,.22);
+  border-color: rgba(124,58,237,.7);
+}
+
+/* FAB Icon bars */
+.fab-bar {
+  display: block;
+  height: 2.5px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #06b6d4, #7c3aed);
+  box-shadow: 0 0 6px rgba(6,182,212,.5);
+  transition: all .3s cubic-bezier(0.34, 1.45, 0.64, 1);
+  position: relative;
+}
+.fab-bar:nth-child(1) { width: 20px; }
+.fab-bar:nth-child(2) { width: 14px; margin-left: 3px; }
+.fab-bar:nth-child(3) { width: 18px; margin-left: 1px; }
+
+/* Open state: morph to X */
+#mobileFab.fab-open .fab-bar:nth-child(1) {
+  width: 20px; margin-left: 0;
+  transform: translateY(6.5px) rotate(45deg);
+  background: linear-gradient(90deg, #7c3aed, #06b6d4);
+}
+#mobileFab.fab-open .fab-bar:nth-child(2) {
+  opacity: 0; transform: scaleX(0);
+}
+#mobileFab.fab-open .fab-bar:nth-child(3) {
+  width: 20px; margin-left: 0;
+  transform: translateY(-6.5px) rotate(-45deg);
+  background: linear-gradient(90deg, #06b6d4, #7c3aed);
+}
+
+/* Glow pulse on closed state */
+@keyframes fabPulse {
+  0%,100% { box-shadow: 0 8px 32px rgba(6,182,212,.35), 0 0 0 1px rgba(6,182,212,.12); }
+  50%      { box-shadow: 0 8px 40px rgba(6,182,212,.55), 0 0 0 3px rgba(6,182,212,.2); }
+}
+#mobileFab:not(.fab-open) { animation: fabPulse 2.5s ease-in-out infinite; }
+#mobileFab.fab-open        { animation: none; }
+
+/* ════════ DROP-UP RIBBON ════════ */
+#fabRibbon {
+  display: none; /* toggled by JS */
+  position: fixed;
+  bottom: 144px; /* above FAB + timer */
+  right: 10px;
+  z-index: 499;
+  min-width: 200px;
+  max-width: min(280px, 88vw);
+  border-radius: 20px;
+  border: 1px solid rgba(6,182,212,.35);
+  background: linear-gradient(160deg,
+    rgba(5,7,20,.92) 0%,
+    rgba(12,6,30,.94) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.65),
+    0 0 0 1px rgba(6,182,212,.1),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  padding: 12px 10px;
+  transform-origin: bottom right;
+  transform: scale(0.88) translateY(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.45, 0.64, 1),
+    opacity   0.22s ease;
+}
+#fabRibbon.ribbon-open {
+  display: block;
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+/* Force display block before animation */
+#fabRibbon.ribbon-animating {
+  display: block;
+}
+
+/* Ribbon section label */
+.ribbon-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: rgba(6,182,212,.65);
+  padding: 4px 8px 2px 8px;
+  margin-top: 4px;
+}
+.ribbon-label:first-child { margin-top: 0; }
+
+/* Ribbon divider */
+.ribbon-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(6,182,212,.25), transparent);
+  margin: 6px 8px;
+}
+
+/* Ribbon buttons */
+.ribbon-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 13px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(234,240,255,.88);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .18s ease;
+  text-align: left;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+.ribbon-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 13px;
+  background: rgba(6,182,212,.0);
+  transition: background .18s ease;
+}
+.ribbon-btn:active::before,
+.ribbon-btn:hover::before {
+  background: rgba(6,182,212,.10);
+}
+.ribbon-btn:active {
+  transform: scale(0.97);
+  border-color: rgba(6,182,212,.3);
+}
+.ribbon-btn .rb-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  transition: all .18s ease;
+}
+.ribbon-btn:active .rb-icon {
+  background: rgba(6,182,212,.18);
+  border-color: rgba(6,182,212,.4);
+}
+.ribbon-btn .rb-text { position: relative; z-index: 1; }
+.ribbon-btn .rb-badge {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(6,182,212,.15);
+  border: 1px solid rgba(6,182,212,.3);
+  color: #06b6d4;
+  flex-shrink: 0;
+}
+
+/* Danger ribbon btn */
+.ribbon-btn.rb-danger .rb-icon {
+  background: rgba(239,68,68,.12);
+  border-color: rgba(239,68,68,.3);
+}
+.ribbon-btn.rb-danger:active .rb-icon {
+  background: rgba(239,68,68,.25);
+  border-color: rgba(239,68,68,.6);
+}
+.ribbon-btn.rb-danger { color: #fca5a5; }
+
+/* Success ribbon btn */
+.ribbon-btn.rb-success .rb-icon {
+  background: rgba(34,197,94,.12);
+  border-color: rgba(34,197,94,.3);
+}
+.ribbon-btn.rb-success { color: #86efac; }
 
 </style>
 
@@ -2323,20 +2489,56 @@ body {
               </div>
 
               <!-- PDF viewer (shown after load) -->
-              <div id="pdfViewerWrap" style="display:none;flex:1;flex-direction:column;overflow:hidden;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid rgba(6,182,212,.2);">
+              <div id="pdfViewerWrap" style="display:none;flex:1;min-height:0;flex-direction:column;overflow:hidden;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid rgba(6,182,212,.2);">
                 <!-- toolbar -->
-                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(0,0,0,.35);border-bottom:1px solid rgba(6,182,212,.18);flex-shrink:0;flex-wrap:wrap;">
-                  <button class="btn btn-glass btn-sm" id="pdfPrevPage">◀</button>
-                  <span style="font-size:.82rem;color:rgba(234,240,255,.7);">Page <span id="pdfPageNum">1</span> / <span id="pdfPageTotal">?</span></span>
-                  <button class="btn btn-glass btn-sm" id="pdfNextPage">▶</button>
-                  <button class="btn btn-glass btn-sm" id="pdfZoomOut" style="margin-left:auto;">−</button>
-                  <span style="font-size:.78rem;color:rgba(234,240,255,.5);" id="pdfZoomLabel">100%</span>
-                  <button class="btn btn-glass btn-sm" id="pdfZoomIn">+</button>
-                  <button class="btn btn-glass btn-sm" id="pdfChangePdf" style="font-size:.75rem;padding:4px 8px;margin-left:6px;">📂 Change</button>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(0,0,0,.45);border-bottom:1px solid rgba(6,182,212,.22);flex-shrink:0;flex-wrap:wrap;">
+
+                  <!-- Page navigator pill -->
+                  <div style="display:flex;align-items:center;gap:6px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.28);border-radius:12px;padding:4px 10px;">
+                    <button id="pdfPrevPage" title="Previous page"
+                      style="width:26px;height:26px;border-radius:8px;border:1px solid rgba(6,182,212,.35);background:rgba(6,182,212,.12);color:#06b6d4;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;line-height:1;">&#9664;</button>
+
+                    <div style="display:flex;align-items:center;gap:5px;">
+                      <input id="pdfCurPageInput"
+                        type="number" min="1"
+                        value="1"
+                        title="Type a page number and press Enter"
+                        style="width:44px;height:28px;border-radius:8px;border:1px solid rgba(6,182,212,.45);background:rgba(6,182,212,.10);color:#06b6d4;font-size:.82rem;font-weight:700;text-align:center;outline:none;padding:0 4px;-moz-appearance:textfield;appearance:textfield;transition:border-color .15s,box-shadow .15s;">
+                      <span style="color:rgba(234,240,255,.45);font-size:.78rem;font-weight:500;">/</span>
+                      <span id="pdfPageTotal" style="color:rgba(234,240,255,.65);font-size:.82rem;font-weight:600;min-width:18px;">&#8212;</span>
+                    </div>
+
+                    <button id="pdfNextPage" title="Next page"
+                      style="width:26px;height:26px;border-radius:8px;border:1px solid rgba(6,182,212,.35);background:rgba(6,182,212,.12);color:#06b6d4;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;line-height:1;">&#9654;</button>
+                  </div>
+
+                  <!-- Zoom controls -->
+                  <div style="display:flex;align-items:center;gap:6px;margin-left:auto;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.25);border-radius:12px;padding:4px 10px;">
+                    <button class="btn btn-glass btn-sm" id="pdfZoomOut"
+                      style="width:26px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;border-color:rgba(139,92,246,.4);color:#a78bfa;font-size:16px;font-weight:700;">&#8722;</button>
+                    <span id="pdfZoomLabel"
+                      style="font-size:.8rem;font-weight:700;color:#a78bfa;min-width:38px;text-align:center;letter-spacing:.3px;">100%</span>
+                    <button class="btn btn-glass btn-sm" id="pdfZoomIn"
+                      style="width:26px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;border-color:rgba(139,92,246,.4);color:#a78bfa;font-size:16px;font-weight:700;">+</button>
+                  </div>
+
+                  <!-- Change PDF -->
+                  <button class="btn btn-glass btn-sm" id="pdfChangePdf"
+                    style="font-size:.75rem;padding:4px 10px;border-radius:10px;">&#128194; Change</button>
                 </div>
-                <!-- canvas area -->
-                <div style="flex:1;overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:10px;" id="pdfCanvasArea">
-                  <canvas id="pdfRenderCanvas" style="border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);max-width:100%;height:auto;"></canvas>
+                <style>
+                  #pdfCurPageInput::-webkit-outer-spin-button,
+                  #pdfCurPageInput::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+                  #pdfCurPageInput:focus { border-color:rgba(6,182,212,.9) !important; box-shadow:0 0 0 2px rgba(6,182,212,.18); }
+                  #pdfPrevPage:hover, #pdfNextPage:hover {
+                    background:rgba(6,182,212,.28) !important;
+                    border-color:rgba(6,182,212,.8) !important;
+                    transform:scale(1.1);
+                  }
+                  #pdfPrevPage:disabled, #pdfNextPage:disabled { opacity:.3; cursor:default; transform:none !important; }
+                </style>
+                <!-- canvas area: all pages stacked top-to-bottom -->
+                <div id="pdfCanvasArea">
                 </div>
               </div>
             </div>
@@ -2370,7 +2572,7 @@ body {
               <!-- ✅ FIXED FOOTER (always visible) -->
               <hr class="border-white border-opacity-10 my-3">
 
-              <div class="d-flex flex-wrap gap-2">
+              <div class="d-flex flex-wrap gap-2" style="padding-bottom: 10px;">
                 <button id="prevBtn" class="btn btn-glass">◀ Previous </button>
                 <button id="saveNextBtn" class="btn btn-glass">Save & Next ▶</button>
                 <button id="reviewNextBtn" class="btn btn-glass">Mark for Review & Next</button>
@@ -2378,7 +2580,8 @@ body {
                 <button id="showSummaryBtn" class="btn btn-glass d-none">Show summary</button>
               </div>
 
-              <div class="top-toolbar ms-auto mobile-move-toolbar">
+              
+              <div class="top-toolbar ms-auto mobile-move-toolbar" ">
                 <!-- ✅ Answer / Explanation (?) button (ONLY Practice Mode) -->
                 <button id="qmarkBtn" class="btn btn-glass btn-sm" title="Answer & Explanation">
                   &nbsp;&nbsp;&nbsp;Hint?&nbsp;&nbsp;&nbsp;
@@ -2479,6 +2682,75 @@ body {
 
   <!-- Feedback overlay -->
   <div id="feedbackOverlay" class="feedback-overlay"></div>
+
+  <!-- MOBILE FAB DROP-UP RIBBON -->
+  <button id="mobileFab" aria-label="Open toolbar" style="display:none;">
+    <span class="fab-bar"></span>
+    <span class="fab-bar"></span>
+    <span class="fab-bar"></span>
+  </button>
+
+  <div id="fabRibbon">
+    <div class="ribbon-label">Navigation</div>
+    <button class="ribbon-btn" id="fab_backBtn">
+      <span class="rb-icon">←</span>
+      <span class="rb-text">Back to Portal</span>
+    </button>
+
+    <div class="ribbon-divider"></div>
+    <div class="ribbon-label">Test Info</div>
+    <button class="ribbon-btn" id="fab_topicInfo" style="cursor:default;opacity:.8;pointer-events:none;">
+      <span class="rb-icon">📋</span>
+      <span class="rb-text" id="fab_topicLabel" style="font-size:11px;line-height:1.3;word-break:break-word;">Topic</span>
+    </button>
+    <button class="ribbon-btn" id="fab_qCounter" style="cursor:default;opacity:.8;pointer-events:none;">
+      <span class="rb-icon">🔢</span>
+      <span class="rb-text" id="fab_qCountLabel">Q —</span>
+      <span class="rb-badge" id="fab_modeBadge">EXAM</span>
+    </button>
+
+    <div class="ribbon-divider"></div>
+    <div class="ribbon-label">Tools</div>
+    <button class="ribbon-btn" id="fab_qmarkBtn" style="display:none;">
+      <span class="rb-icon">💡</span>
+      <span class="rb-text">Hint / Explanation</span>
+    </button>
+    <button class="ribbon-btn" id="fab_googleBtn" style="display:none;">
+      <span class="rb-icon">
+        <svg width="14" height="14" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303C33.613 32.973 29.21 36 24 36c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.272 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 16.108 19.01 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.272 4 24 4c-7.682 0-14.344 4.312-17.694 10.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.197l-6.19-5.238C29.23 35.091 26.715 36 24 36c-5.189 0-9.58-3.007-11.283-7.285l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.06 12.06 0 0 1-4.087 5.565l.002-.001 6.19 5.238C36.97 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+      </span>
+      <span class="rb-text">Search on Google</span>
+    </button>
+    <button class="ribbon-btn" id="fab_soundBtn">
+      <span class="rb-icon" id="fab_soundIcon">🔊</span>
+      <span class="rb-text" id="fab_soundLabel">Sound: On</span>
+    </button>
+    <button class="ribbon-btn" id="fab_examModeBtn">
+      <span class="rb-icon" id="fab_examIcon">🔒</span>
+      <span class="rb-text" id="fab_examLabel">Exam Mode: On</span>
+    </button>
+    <button class="ribbon-btn" id="fab_pdfTutorBtn" style="display:none;">
+      <span class="rb-icon">📄</span>
+      <span class="rb-text">PDF Tutor</span>
+    </button>
+    <button class="ribbon-btn" id="fab_timerRestoreBtn" style="display:none;">
+      <span class="rb-icon">⏱</span>
+      <span class="rb-text">Show Timer</span>
+    </button>
+
+    <div class="ribbon-divider"></div>
+    <div class="ribbon-label">Navigator</div>
+    <button class="ribbon-btn" id="fab_navigatorBtn">
+      <span class="rb-icon">☰</span>
+      <span class="rb-text">Question Navigator</span>
+    </button>
+
+    <div class="ribbon-divider"></div>
+    <button class="ribbon-btn rb-danger" id="fab_submitBtn">
+      <span class="rb-icon">✅</span>
+      <span class="rb-text">Submit Test</span>
+    </button>
+  </div>
 
   <!-- Help Modal -->
   <div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
@@ -2967,12 +3239,50 @@ body {
         const list = document.createElement('div');
         list.className = 'd-grid gap-2';
         hits.forEach(h => {
+          const row = document.createElement('div');
+          row.className = 'd-flex align-items-center gap-2';
+
           const btn = document.createElement('button');
-          btn.className = 'btn btn-glass text-start';
+          btn.className = 'btn btn-glass text-start flex-grow-1';
           btn.innerHTML = `<div class="fw-semibold">${escapeHtml(h.subtopicName)}</div>
       <div class="small subtle">${escapeHtml(h.subjectTitle)} • ${escapeHtml(h.topicName)}</div>`;
           btn.addEventListener('click', () => startTestFromPortal(h));
-          list.appendChild(btn);
+
+          // Share button (same style as subtopic list)
+          const shareBtn = document.createElement('button');
+          shareBtn.title = 'Copy direct link to this test';
+          shareBtn.style.cssText = 'flex-shrink:0;width:36px;height:36px;border-radius:10px;border:1px solid rgba(6,182,212,.4);background:rgba(6,182,212,.10);color:#06b6d4;font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;';
+          shareBtn.textContent = '🔗';
+          shareBtn.addEventListener('mouseenter', () => {
+            shareBtn.style.background = 'rgba(6,182,212,.22)';
+            shareBtn.style.borderColor = 'rgba(6,182,212,.8)';
+            shareBtn.style.transform = 'scale(1.08)';
+          });
+          shareBtn.addEventListener('mouseleave', () => {
+            shareBtn.style.background = 'rgba(6,182,212,.10)';
+            shareBtn.style.borderColor = 'rgba(6,182,212,.4)';
+            shareBtn.style.transform = '';
+          });
+          shareBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const url = new URL(location.href);
+            url.search = '';
+            url.searchParams.set('launch', '1');
+            url.searchParams.set('file', h.fileKey);
+            url.searchParams.set('subject', h.subjectTitle);
+            url.searchParams.set('topic', h.topicName);
+            url.searchParams.set('subtopic', h.subtopicName);
+            const link = url.toString();
+            navigator.clipboard.writeText(link).then(() => {
+              showShareToast(h.subtopicName);
+            }).catch(() => {
+              prompt('Copy this link:', link);
+            });
+          });
+
+          row.appendChild(btn);
+          row.appendChild(shareBtn);
+          list.appendChild(row);
         });
         box.appendChild(list);
       });
@@ -4498,6 +4808,7 @@ body {
         const nextPage   = el('pdfNextPage');
         const zoomIn     = el('pdfZoomIn');
         const zoomOut    = el('pdfZoomOut');
+        const pageInput  = el('pdfCurPageInput');
 
         if (!dropZone) return; // not in DOM yet
 
@@ -4534,21 +4845,77 @@ body {
           if (e.target !== chooseBtn) fileInput.click();
         };
 
-        // Navigation
-        if (prevPage)  prevPage.onclick  = () => goToPage(currentPage - 1);
-        if (nextPage)  nextPage.onclick  = () => goToPage(currentPage + 1);
-        if (zoomIn)    zoomIn.onclick    = () => { zoom = Math.min(ZOOM_MAX, zoom + ZOOM_STEP); renderPage(currentPage); };
-        if (zoomOut)   zoomOut.onclick   = () => { zoom = Math.max(ZOOM_MIN, zoom - ZOOM_STEP); renderPage(currentPage); };
+        // Zoom
+        if (zoomIn)  zoomIn.onclick  = () => { zoom = Math.min(ZOOM_MAX, zoom + ZOOM_STEP); renderAllPages(); };
+        if (zoomOut) zoomOut.onclick  = () => { zoom = Math.max(ZOOM_MIN, zoom - ZOOM_STEP); renderAllPages(); };
+
+        // Prev / Next page buttons
+        if (prevPage) prevPage.addEventListener('click', () => scrollToPage(currentPage - 1));
+        if (nextPage) nextPage.addEventListener('click', () => scrollToPage(currentPage + 1));
+
+        // Page input: jump on Enter or blur
+        if (pageInput) {
+          const jumpFromInput = () => {
+            const n = parseInt(pageInput.value);
+            if (!isNaN(n)) scrollToPage(n);
+          };
+          pageInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); jumpFromInput(); pageInput.blur(); } });
+          pageInput.addEventListener('blur', jumpFromInput);
+        }
 
         // Keyboard in PDF panel
         document.addEventListener('keydown', (e) => {
           const panel = el('pdfTutorPanel');
           if (!panel || panel.style.display === 'none') return;
-          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goToPage(currentPage + 1); }
-          if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); goToPage(currentPage - 1); }
-          if (e.key === '+' || e.key === '=') { zoom = Math.min(ZOOM_MAX, zoom + ZOOM_STEP); renderPage(currentPage); }
-          if (e.key === '-') { zoom = Math.max(ZOOM_MIN, zoom - ZOOM_STEP); renderPage(currentPage); }
+          if (e.key === '+' || e.key === '=') { zoom = Math.min(ZOOM_MAX, zoom + ZOOM_STEP); renderAllPages(); }
+          if (e.key === '-') { zoom = Math.max(ZOOM_MIN, zoom - ZOOM_STEP); renderAllPages(); }
         });
+      }
+
+      // ── Scroll to a page by index (1-based) and update counter ──
+      function scrollToPage(n) {
+        if (!pdfDoc) return;
+        n = Math.max(1, Math.min(totalPages, n));
+        const area = el('pdfCanvasArea');
+        const canvases = area ? area.querySelectorAll('canvas') : [];
+        const target = canvases[n - 1];
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        updatePageCounter(n);
+      }
+
+      // ── Update visible page counter + prev/next state ──
+      function updatePageCounter(n) {
+        currentPage = n;
+        const inp  = el('pdfCurPageInput');
+        const prev = el('pdfPrevPage');
+        const next = el('pdfNextPage');
+        if (inp  && document.activeElement !== inp) inp.value = n;
+        if (prev) prev.disabled = (n <= 1);
+        if (next) next.disabled = (n >= totalPages);
+      }
+
+      // ── IntersectionObserver: track which page is most visible ──
+      let pageObserver = null;
+      function setupPageObserver() {
+        if (pageObserver) { pageObserver.disconnect(); pageObserver = null; }
+        const area = el('pdfCanvasArea');
+        if (!area) return;
+        const canvases = area.querySelectorAll('canvas');
+        if (!canvases.length) return;
+
+        const visibleRatio = new Array(totalPages).fill(0);
+
+        pageObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const idx = Array.from(canvases).indexOf(entry.target);
+            if (idx >= 0) visibleRatio[idx] = entry.intersectionRatio;
+          });
+          let bestIdx = 0;
+          visibleRatio.forEach((r, i) => { if (r > visibleRatio[bestIdx]) bestIdx = i; });
+          updatePageCounter(bestIdx + 1);
+        }, { root: area, threshold: Array.from({length:21}, (_,i) => i/20) });
+
+        canvases.forEach(c => pageObserver.observe(c));
       }
 
       function loadPdfFile(file) {
@@ -4569,11 +4936,17 @@ body {
             el('pdfDropZone').style.display   = 'none';
             el('pdfViewerWrap').style.display = 'flex';
 
+            // Update page total and reset input
+            const totalEl = el('pdfPageTotal');
+            if (totalEl) totalEl.textContent = totalPages;
+            const inp = el('pdfCurPageInput');
+            if (inp) { inp.value = 1; inp.max = totalPages; }
+
             // Update title
             const titleEl = el('pdfTutorTitle');
             if (titleEl) titleEl.textContent = '📄 ' + file.name.replace(/\.pdf$/i, '');
 
-            renderPage(1);
+            renderAllPages();
           } catch (err) {
             console.error('PDF load error:', err);
             alert('Could not read PDF. Make sure it is a valid PDF file.');
@@ -4582,41 +4955,55 @@ body {
         reader.readAsArrayBuffer(file);
       }
 
-      async function renderPage(pageNum) {
+      async function renderAllPages() {
         if (!pdfDoc) return;
-        pageNum = Math.max(1, Math.min(totalPages, pageNum));
-        currentPage = pageNum;
 
-        // Update UI
-        const numEl   = el('pdfPageNum');
-        const totEl   = el('pdfPageTotal');
+        const area = el('pdfCanvasArea');
+        area.innerHTML = ''; // clear previous canvases
+
+        // Update zoom label
         const zoomLbl = el('pdfZoomLabel');
-        if (numEl)   numEl.textContent   = pageNum;
-        if (totEl)   totEl.textContent   = totalPages;
         if (zoomLbl) zoomLbl.textContent = Math.round(zoom * 100) + '%';
 
-        // Button states
-        const prev = el('pdfPrevPage');
-        const next = el('pdfNextPage');
-        if (prev) prev.disabled = pageNum <= 1;
-        if (next) next.disabled = pageNum >= totalPages;
+        // Measure available width (subtract padding)
+        const containerWidth = area.clientWidth - 20;
 
-        // Cancel previous render
-        if (renderTask) { try { renderTask.cancel(); } catch(_){} }
+        // Use devicePixelRatio so canvas pixels match physical screen pixels (fixes blur)
+        const dpr = window.devicePixelRatio || 1;
 
-        const page     = await pdfDoc.getPage(pageNum);
-        const viewport = page.getViewport({ scale: zoom });
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+          const page = await pdfDoc.getPage(pageNum);
 
-        const canvas  = el('pdfRenderCanvas');
-        const ctx     = canvas.getContext('2d');
-        canvas.width  = viewport.width;
-        canvas.height = viewport.height;
+          // Auto-fit to container width, then apply user zoom
+          const baseVP = page.getViewport({ scale: 1 });
+          const autoScale = containerWidth > 0 ? (containerWidth / baseVP.width) : 1;
+          const scale = autoScale * zoom;
 
-        renderTask = page.render({ canvasContext: ctx, viewport });
-        try { await renderTask.promise; } catch(e) { if (e.name !== 'RenderingCancelledException') console.warn(e); }
+          // Render at physical pixel density to eliminate blur
+          const viewport  = page.getViewport({ scale: scale * dpr });
+          const cssWidth  = Math.round(baseVP.width  * autoScale * zoom);
+          const cssHeight = Math.round(baseVP.height * autoScale * zoom);
+
+          const canvas = document.createElement('canvas');
+          canvas.width  = viewport.width;   // physical pixels (dpr-scaled)
+          canvas.height = viewport.height;
+          // Display at logical CSS size so layout stays correct
+          canvas.style.width  = cssWidth  + 'px';
+          canvas.style.height = cssHeight + 'px';
+
+          area.appendChild(canvas);
+
+          const ctx = canvas.getContext('2d');
+          const task = page.render({ canvasContext: ctx, viewport });
+          try { await task.promise; } catch(e) { if (e.name !== 'RenderingCancelledException') console.warn(e); }
+        }
+
+        // After all pages rendered: set up scroll tracker
+        setupPageObserver();
+        updatePageCounter(currentPage);
       }
 
-      function goToPage(n) { renderPage(n); }
+      function goToPage(n) { scrollToPage(n); }
 
       // Init on DOMContentLoaded or immediately if already loaded
       if (document.readyState === 'loading') {
@@ -4635,7 +5022,7 @@ body {
 
     <script>
       /* ============================================================
-         PRESS "P" → CAPTURE ALL QUESTIONS VIA goNext() → PPT
+         PRESS "." → CAPTURE ALL QUESTIONS VIA goNext() → PPT
          FINAL FIX (POST-SUBMIT SAFE)
          ============================================================ */
 
@@ -4801,7 +5188,7 @@ body {
           }
         });
 
-        console.log("✅ PRESS 'P' → CAPTURE ALL QUESTIONS (goNext based)");
+        console.log("✅ PRESS '.' → CAPTURE ALL QUESTIONS (goNext based)");
 
       })();
     </script>
@@ -4810,31 +5197,45 @@ body {
         const topBar = document.querySelector('.engine-topbar');
         if (!topBar) return;
 
-        // initial hidden state
+        const IS_TOUCH = window.matchMedia('(hover: none)').matches || navigator.maxTouchPoints > 0;
+        const IS_SMALL = () => window.innerWidth <= 640;
+
+        if (IS_TOUCH || IS_SMALL()) {
+          // Mobile / touch: always fully visible, no hide/show tricks
+          topBar.style.height = '';
+          topBar.style.opacity = '1';
+          topBar.style.overflow = '';
+          topBar.style.transition = '';
+          return;
+        }
+
+        // Desktop only: hide topbar until hover at top of screen
         topBar.style.transition = 'height 0.25s ease, opacity 0.25s ease';
         topBar.style.height = '0px';
         topBar.style.opacity = '0';
         topBar.style.overflow = 'hidden';
 
-        // hover zone (top 18px of screen)
         const hoverZone = document.createElement('div');
-        hoverZone.style.position = 'fixed';
-        hoverZone.style.top = '0';
-        hoverZone.style.left = '0';
-        hoverZone.style.width = '100%';
-        hoverZone.style.height = '18px';
-        hoverZone.style.zIndex = '99999';
-        hoverZone.style.background = 'transparent';
+        hoverZone.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:18px;z-index:99999;background:transparent;';
         document.body.appendChild(hoverZone);
 
         hoverZone.addEventListener('mouseenter', () => {
           topBar.style.height = '';
           topBar.style.opacity = '1';
         });
-
         topBar.addEventListener('mouseleave', () => {
           topBar.style.height = '0px';
           topBar.style.opacity = '0';
+        });
+
+        // Also re-check if resized to mobile while on page
+        window.addEventListener('resize', () => {
+          if (IS_SMALL()) {
+            topBar.style.height = '';
+            topBar.style.opacity = '1';
+            topBar.style.overflow = '';
+            topBar.style.transition = '';
+          }
         });
       })();
     </script>
@@ -6605,152 +7006,171 @@ function boot() {
   initTopbarSwiper();
 }
 
-// ── MOBILE TOPBAR SWIPER ──────────────────────────────────────────────────────
+// ── MOBILE FAB DROP-UP RIBBON ─────────────────────────────────────────────────
 function initTopbarSwiper() {
-  const MOBILE = () => window.innerWidth <= 576;
+  const MOBILE = () => window.innerWidth <= 640;
 
-  // ── Create handle pill ──
-  const handle = document.createElement('div');
-  handle.id = 'topbarSwipeHandle';
-  handle.setAttribute('aria-label', 'Toggle top toolbar');
-  handle.innerHTML = '<span class="sw-bar"></span><span class="sw-bar"></span>';
-  document.body.appendChild(handle);
+  const fab     = document.getElementById('mobileFab');
+  const ribbon  = document.getElementById('fabRibbon');
+  const backdrop = document.getElementById('topbarBackdrop');
+  if (!fab || !ribbon) return;
 
-  // ── Create backdrop ──
-  const backdrop = document.createElement('div');
-  backdrop.id = 'topbarBackdrop';
-  document.body.appendChild(backdrop);
-
-  let topbar = null;
   let isOpen = false;
-  let dragStartY = 0;
-  let dragging = false;
-  let topbarH = 0;
 
-  function getTopbar() {
-    if (!topbar) topbar = document.querySelector('.engine-topbar');
-    return topbar;
+  // ── Sync ribbon content from real buttons ──
+  function syncRibbon() {
+    // topic label
+    const topicEl = document.getElementById('testInfoTop');
+    if (topicEl) document.getElementById('fab_topicLabel').textContent = topicEl.textContent || 'Topic';
+
+    // q counter
+    const qEl = document.getElementById('qCounterBadge');
+    if (qEl) document.getElementById('fab_qCountLabel').textContent = qEl.textContent || 'Q —';
+
+    // mode badge
+    const modeEl = document.getElementById('modeBadge');
+    const fabMode = document.getElementById('fab_modeBadge');
+    if (modeEl && fabMode) {
+      fabMode.textContent = modeEl.textContent || '';
+      fabMode.style.background = modeEl.classList.contains('hud-mode-practice')
+        ? 'rgba(34,197,94,.18)' : 'rgba(239,68,68,.15)';
+      fabMode.style.color = modeEl.classList.contains('hud-mode-practice') ? '#4ade80' : '#f87171';
+      fabMode.style.borderColor = modeEl.classList.contains('hud-mode-practice')
+        ? 'rgba(34,197,94,.4)' : 'rgba(239,68,68,.4)';
+    }
+
+    // sound button label
+    const soundBtn = document.getElementById('soundBtn');
+    if (soundBtn) {
+      document.getElementById('fab_soundLabel').textContent = soundBtn.textContent;
+      document.getElementById('fab_soundIcon').textContent =
+        soundBtn.textContent.includes('Off') ? '🔇' : '🔊';
+    }
+
+    // exam mode btn label
+    const examBtn = document.getElementById('examModeBtn');
+    if (examBtn) {
+      document.getElementById('fab_examLabel').textContent = examBtn.textContent;
+      document.getElementById('fab_examIcon').textContent =
+        examBtn.textContent.includes('Off') ? '🔓' : '🔒';
+    }
+
+    // hint btn visibility
+    const qmarkBtn = document.getElementById('qmarkBtn');
+    const fab_q = document.getElementById('fab_qmarkBtn');
+    if (fab_q) fab_q.style.display = (qmarkBtn && qmarkBtn.style.display !== 'none') ? 'flex' : 'none';
+
+    // google btn visibility
+    const gBtn = document.getElementById('googleSearchBtnTop');
+    const fab_g = document.getElementById('fab_googleBtn');
+    if (fab_g) fab_g.style.display = (gBtn && gBtn.style.display !== 'none') ? 'flex' : 'none';
+
+    // pdf tutor
+    const pdfBtn = document.getElementById('pdfTutorToggleBtn');
+    const fab_p = document.getElementById('fab_pdfTutorBtn');
+    if (fab_p) fab_p.style.display = (pdfBtn && pdfBtn.style.display !== 'none') ? 'flex' : 'none';
+
+    // timer restore
+    const timerShowBtn = document.getElementById('timerShowBtn');
+    const fab_t = document.getElementById('fab_timerRestoreBtn');
+    if (fab_t) fab_t.style.display = (timerShowBtn && timerShowBtn.style.display === 'flex') ? 'flex' : 'none';
   }
+
+  function openRibbon() {
+    syncRibbon();
+    isOpen = true;
+    fab.classList.add('fab-open');
+    ribbon.classList.add('ribbon-animating');
+    ribbon.style.display = 'block';
+    // force reflow
+    ribbon.getBoundingClientRect();
+    ribbon.classList.add('ribbon-open');
+    backdrop.classList.add('show');
+  }
+
+  function closeRibbon() {
+    isOpen = false;
+    fab.classList.remove('fab-open');
+    ribbon.classList.remove('ribbon-open');
+    backdrop.classList.remove('show');
+    setTimeout(() => {
+      if (!isOpen) {
+        ribbon.style.display = 'none';
+        ribbon.classList.remove('ribbon-animating');
+      }
+    }, 320);
+  }
+
+  function toggleRibbon() { isOpen ? closeRibbon() : openRibbon(); }
 
   function isEngineActive() {
     const ev = document.getElementById('engineView');
     return ev && ev.classList.contains('active');
   }
 
-  function setOpen(val, animate) {
-    const tb = getTopbar();
-    if (!tb) return;
-    isOpen = val;
-    topbarH = tb.offsetHeight || 72;
-
-    // update CSS var for content offset
-    document.documentElement.style.setProperty('--topbar-h', topbarH + 'px');
-
-    const engineView = document.getElementById('engineView');
-
-    if (val) {
-      tb.classList.add('topbar-open');
-      handle.classList.add('handle-open');
-      handle.style.top = topbarH + 'px';
-      backdrop.classList.add('show');
-      if (engineView) engineView.classList.add('topbar-pinned');
-    } else {
-      tb.classList.remove('topbar-open');
-      handle.classList.remove('handle-open');
-      handle.style.top = '';
-      backdrop.classList.remove('show');
-      if (engineView) engineView.classList.remove('topbar-pinned');
-      // reset any inline transform from drag
-      tb.style.transform = '';
-    }
-  }
-
-  function toggle() { setOpen(!isOpen); }
-
-  function updateVisibility() {
-    if (!MOBILE() || !isEngineActive()) {
-      handle.style.display = 'none';
-      if (isOpen) setOpen(false);
-    } else {
-      handle.style.display = 'flex';
-    }
-  }
-
-  // ── Tap handle ──
-  handle.addEventListener('click', (e) => {
-    if (dragging) return;
-    toggle();
-  });
-
-  // ── Tap backdrop ──
-  backdrop.addEventListener('click', () => setOpen(false));
-
-  // ── Touch-drag on handle → open ──
-  handle.addEventListener('touchstart', (e) => {
-    dragStartY = e.touches[0].clientY;
-    dragging = false;
-  }, { passive: true });
-
-  handle.addEventListener('touchmove', (e) => {
-    const dy = e.touches[0].clientY - dragStartY;
-    if (Math.abs(dy) > 6) dragging = true;
-    if (!isOpen && dy > 0) {
-      const tb = getTopbar();
+  function updateFabVisibility() {
+    if (MOBILE() && isEngineActive()) {
+      fab.style.display = 'flex';
+      // Measure real topbar height and update CSS var
+      const tb = document.querySelector('.engine-topbar');
       if (tb) {
-        const clamp = Math.min(dy, topbarH + 20);
-        tb.style.transition = 'none';
-        tb.style.transform = `translateY(calc(-110% + ${clamp}px))`;
+        const h = tb.offsetHeight || 72;
+        document.documentElement.style.setProperty('--topbar-h', h + 'px');
       }
+    } else {
+      fab.style.display = 'none';
+      if (isOpen) closeRibbon();
     }
-  }, { passive: true });
+  }
 
-  handle.addEventListener('touchend', (e) => {
-    const dy = e.changedTouches[0].clientY - dragStartY;
-    const tb = getTopbar();
-    if (tb) {
-      tb.style.transition = '';
-      tb.style.transform = '';
-    }
-    if (dy > 40) {
-      setOpen(true);
-      dragging = true; // suppress click
-    } else if (dy < -30) {
-      setOpen(false);
-      dragging = true;
-    }
-    // reset dragging flag after click fires
-    setTimeout(() => { dragging = false; }, 50);
-  }, { passive: true });
+  // ── FAB click ──
+  fab.addEventListener('click', toggleRibbon);
 
-  // ── Swipe up anywhere on topbar → close ──
-  let tbTouchStartY = 0;
-  document.addEventListener('touchstart', (e) => {
-    if (isOpen && e.target.closest('.engine-topbar')) {
-      tbTouchStartY = e.touches[0].clientY;
-    }
-  }, { passive: true });
+  // ── Backdrop click closes ──
+  backdrop.addEventListener('click', closeRibbon);
 
-  document.addEventListener('touchend', (e) => {
-    if (isOpen && e.target.closest('.engine-topbar')) {
-      if (e.changedTouches[0].clientY - tbTouchStartY < -30) {
-        setOpen(false);
-      }
-    }
-  }, { passive: true });
+  // ── Wire ribbon buttons to real buttons ──
+  function wireBtn(fabId, realId) {
+    const fabBtn = document.getElementById(fabId);
+    if (!fabBtn) return;
+    fabBtn.addEventListener('click', () => {
+      closeRibbon();
+      setTimeout(() => {
+        const real = document.getElementById(realId);
+        if (real) real.click();
+      }, 80);
+    });
+  }
+
+  wireBtn('fab_backBtn',         'engineBackBtn');
+  wireBtn('fab_qmarkBtn',        'qmarkBtn');
+  wireBtn('fab_googleBtn',       'googleSearchBtnTop');
+  wireBtn('fab_soundBtn',        'soundBtn');
+  wireBtn('fab_examModeBtn',     'examModeBtn');
+  wireBtn('fab_navigatorBtn',    'navToggleIcon');
+  wireBtn('fab_submitBtn',       'submitBtn');
+  wireBtn('fab_pdfTutorBtn',     'pdfTutorToggleBtn');
+  wireBtn('fab_timerRestoreBtn', 'timerShowBtn');
 
   // ── Watch view changes ──
-  const observer = new MutationObserver(updateVisibility);
+  const observer = new MutationObserver(updateFabVisibility);
   ['engineView', 'portalView', 'subjectView'].forEach(id => {
     const el = document.getElementById(id);
     if (el) observer.observe(el, { attributes: true, attributeFilter: ['class'] });
   });
 
-  window.addEventListener('resize', () => {
-    if (!MOBILE() && isOpen) setOpen(false);
-    updateVisibility();
-  });
+  window.addEventListener('resize', updateFabVisibility);
+  updateFabVisibility();
 
-  updateVisibility();
+  // ── Re-sync ribbon when engine state changes (exam mode, sound, etc.) ──
+  // Watch soundBtn and examModeBtn text changes
+  ['soundBtn', 'examModeBtn', 'qmarkBtn', 'googleSearchBtnTop', 'timerShowBtn', 'pdfTutorToggleBtn', 'qCounterBadge', 'testInfoTop', 'modeBadge'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      const mo = new MutationObserver(() => { if (isOpen) syncRibbon(); });
+      mo.observe(el, { childList: true, characterData: true, subtree: true, attributes: true });
+    }
+  });
 }
 
 // Retry button injection a few times for dynamically-rendered elements
