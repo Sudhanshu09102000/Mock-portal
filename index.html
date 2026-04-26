@@ -7545,7 +7545,7 @@ function initTopbarSwiper() {
   fab.addEventListener('click', toggleRibbon);
 
   // ── Backdrop click closes ──
-  backdrop.addEventListener('click', closeRibbon);
+  if (backdrop) backdrop.addEventListener('click', closeRibbon);
 
   // ── Wire ribbon buttons to real buttons ──
   function wireBtn(fabId, realId) {
@@ -7895,8 +7895,21 @@ async function vcStart() {
   // Keyboard shortcut V to toggle mute
   document.addEventListener('keydown', _vcKeyHandler);
 
+  // Unlock all audio elements once — some browsers suspend them until a user gesture
+  // The getUserMedia() call itself counts as a gesture, so we sweep immediately
+  _vcUnlockAllAudio();
+
   // Show live badge briefly
   vcFlashBadge('🎙 Voice Chat Joined!');
+}
+
+// ── UNLOCK AUDIO (sweep all peer audio elements) ──────────────────
+function _vcUnlockAllAudio() {
+  Object.values(VC.peers).forEach(peer => {
+    if (peer.audio && peer.audio.paused) {
+      peer.audio.play().catch(() => {});
+    }
+  });
 }
 
 function _vcKeyHandler(e) {
@@ -8000,8 +8013,17 @@ function vcMakePc(remoteId) {
     // Respect existing per-peer mute state; audio element is the primary speaker output
     audio.muted = !!VC.mutedPeers[remoteId];
     audio.srcObject = e.streams[0];
+    // Chrome requires explicit .play() on dynamically-created audio elements
+    // even when autoplay=true — without this, sound never starts
+    audio.play().catch(err => {
+      console.warn('VC audio.play() failed:', err);
+      // If autoplay blocked, retry once on next user interaction
+      const retry = () => { audio.play().catch(()=>{}); document.removeEventListener('click', retry); };
+      document.addEventListener('click', retry, { once: true });
+    });
     // vcSetupRemoteAnalyser sets up Web Audio for volume-bar visualization only
     vcSetupRemoteAnalyser(remoteId, e.streams[0]);
+    _vcUnlockAllAudio();
     vcRenderSpeakers();
   };
 
