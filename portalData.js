@@ -202,18 +202,8 @@ const PORTAL_DATA = [
       {
         name: "Current Affairs",
         subtopics: [
-          { name: "January 2025 Current Affairs", file: "ca-january" },
-          { name: "February 2025 Current Affairs", file: "ca-february" },
-          { name: "March 2025 Current Affairs", file: "ca-march" },
-          { name: "April 2025 Current Affairs", file: "ca-april" },
-          { name: "May 2025 Current Affairs", file: "ca-may" },
-          { name: "June 2025 Current Affairs", file: "ca-june" },
-          { name: "July 2025 Current Affairs", file: "ca-july" },
-          { name: "August 2025 Current Affairs", file: "ca-august" },
-          { name: "September 2025 Current Affairs", file: "ca-september" },
-          { name: "October 2025 Current Affairs", file: "ca-october" },
-          { name: "November 2025 Current Affairs", file: "ca-november" },
-          { name: "December 2025 Current Affairs", file: "ca-december" }
+          { name: "February and March 2026 Current Affiars", file: "ca-feb-march-2026" },
+          
         ]
       }
     ]
@@ -227,9 +217,7 @@ const PORTAL_DATA = [
         name: "Exam Specific Mathematics",
         subtopics: [
           { name: "SSC-CGL 2025 Mains Mathematics", file: "SSC-CGL-2025-Mains-Mathematics" },
-          { name: "Coming Soon...", file: "alphabet-analogy" },
-             { name: "Factorization", file: "factorization" },
-      
+          { name: "Coming Soon...", file: "alphabet-analogy" }
         ]
       }
     ]
@@ -340,5 +328,4 @@ const PORTAL_DATA = [
   }
 
 ];
-
 
