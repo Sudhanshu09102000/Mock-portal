@@ -203,6 +203,7 @@ const PORTAL_DATA = [
         name: "Current Affairs",
         subtopics: [
           { name: "February and March 2026 Current Affiars", file: "ca-feb-march-2026" },
+          { name: "January 2026 Current Affiars", file: "ca-jan-2026" },
           
         ]
       }
