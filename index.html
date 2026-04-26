@@ -6657,12 +6657,20 @@ function buildUI() {
     <div id="bmVcHeader">
       <span id="bmVcTitle">🎙 VOICE CHAT</span>
       <div style="display:flex;gap:6px;align-items:center;">
-        <button id="bmVcMuteBtn" onclick="vcToggleMic()" title="Mute/Unmute (V)">🎙 Mute</button>
         <button id="bmVcMinBtn" onclick="vcTogglePanel()" title="Minimize">–</button>
       </div>
     </div>
     <div id="bmVcBody">
-      <div id="bmVcStatus" class="bm-vc-status-msg">🔌 Click Mic to join voice...</div>
+      <div id="bmVcStatus" class="bm-vc-status-msg">🔌 Click "Join Voice" to start...</div>
+      <!-- Self mic controls row (shown once VC is enabled) -->
+      <div id="bmVcSelfControls" style="display:none;margin-bottom:8px;display:none;">
+        <button id="bmVcMuteBtn" onclick="vcToggleMic()" title="Mute/Unmute your mic (V key)"
+          style="width:100%;padding:6px 10px;font-size:12px;font-weight:700;border-radius:9px;
+          cursor:pointer;border:1px solid rgba(34,197,94,.5);background:rgba(34,197,94,.13);
+          color:#4ade80;transition:all .18s;letter-spacing:.3px;">
+          🎙 Mute My Mic
+        </button>
+      </div>
       <div id="bmVcSpeakers"></div>
       <div id="bmVcError" style="display:none;"></div>
     </div>
@@ -7931,40 +7939,31 @@ function vcSetupLocalAnalyser() {
 }
 
 // ── REMOTE ANALYSER ───────────────────────────────────────────────
+// NOTE: <audio> element handles ALL actual playback (reliable, autoplay-safe).
+// Web Audio API is used ONLY for volume-bar visualization.
 function vcSetupRemoteAnalyser(pid, stream) {
   try {
     const ctx = new AudioContext();
-    // FIX: Resume AudioContext (Chrome blocks without resume after user gesture)
-    ctx.resume().catch(() => {});
+    ctx.resume().catch(() => {});   // needed by Chrome policy
 
-    const src  = ctx.createMediaStreamSource(stream);
-    const ana  = ctx.createAnalyser();
+    const src = ctx.createMediaStreamSource(stream);
+    const ana = ctx.createAnalyser();
     ana.fftSize = 512;
 
-    // GainNode for smooth per-peer mute control (no click artifacts)
-    const gain = ctx.createGain();
-    gain.gain.value = VC.mutedPeers[pid] ? 0 : 1;
-
-    // FIX: Full audio signal chain -- source -> analyser -> gain -> speakers
-    // Previously analyser was NEVER connected to ctx.destination = NO SOUND!
+    // Analysis chain only — NOT connected to ctx.destination
+    // (audio element is the speaker output; connecting here would cause echo)
     src.connect(ana);
-    ana.connect(gain);
-    gain.connect(ctx.destination);   // <-- THE CRITICAL MISSING LINK
 
     if (!VC.peers[pid]) VC.peers[pid] = {};
     VC.peers[pid].analyser = ana;
     VC.peers[pid].audCtx   = ctx;
-    VC.peers[pid].gainNode = gain;
-
-    // Silence the <audio> element -- Web Audio API now handles output
-    if (VC.peers[pid].audio) VC.peers[pid].audio.muted = true;
 
     // Tick: update remote volume bar
     setInterval(() => {
       if (!VC.peers[pid]) return;
       const d = new Uint8Array(ana.frequencyBinCount);
       ana.getByteFrequencyData(d);
-      const vol = d.reduce((a,b)=>a+b,0) / d.length;
+      const vol = d.reduce((a, b) => a + b, 0) / d.length;
       const row = document.querySelector(`.bm-vc-speaker[data-pid="${pid}"] .bm-vc-volbar`);
       if (row) row.style.width = Math.min(100, vol * 2.5) + '%';
     }, 120);
@@ -7998,9 +7997,10 @@ function vcMakePc(remoteId) {
       if (!VC.peers[remoteId]) VC.peers[remoteId] = {};
       VC.peers[remoteId].audio = audio;
     }
-    audio.muted = true;            // FIX: Web Audio API handles playback - prevent double-audio
+    // Respect existing per-peer mute state; audio element is the primary speaker output
+    audio.muted = !!VC.mutedPeers[remoteId];
     audio.srcObject = e.streams[0];
-    // vcSetupRemoteAnalyser routes: stream -> analyser -> gain -> ctx.destination (speakers)
+    // vcSetupRemoteAnalyser sets up Web Audio for volume-bar visualization only
     vcSetupRemoteAnalyser(remoteId, e.streams[0]);
     vcRenderSpeakers();
   };
@@ -8141,13 +8141,13 @@ function vcTeardownPeer(pid) {
   delete VC.peers[pid];
 }
 
-// ── MUTE / UNMUTE ─────────────────────────────────────────────────
+// ── MUTE / UNMUTE PEER SPEAKER ────────────────────────────────────
 window.vcTogglePeerMute = function(pid) {
   VC.mutedPeers[pid] = !VC.mutedPeers[pid];
   const peer = VC.peers[pid];
-  if (peer) {
-    if (peer.gainNode) { peer.gainNode.gain.value = VC.mutedPeers[pid] ? 0 : 1; }
-    if (peer.audio)    { peer.audio.muted = VC.mutedPeers[pid]; }
+  if (peer && peer.audio) {
+    // audio element is primary speaker output; just toggle its muted property
+    peer.audio.muted = !!VC.mutedPeers[pid];
   }
   vcRenderSpeakers();
   const playerName = (B.players[pid] && B.players[pid].name) || 'Player';
@@ -8195,30 +8195,36 @@ function vcRenderSpeakers() {
   const allPids = new Set([B.myId, ...Object.keys(B.players)]);
 
   const rows = [...allPids].map(pid => {
-    const p    = (pid === B.myId) ? { name: B.myName, avatar: B.myAvatar } : (B.players[pid] || {});
+    const p         = (pid === B.myId) ? { name: B.myName, avatar: B.myAvatar } : (B.players[pid] || {});
     const isSelf    = pid === B.myId;
     const speaking  = VC.speaking[pid];
     const selfMuted = isSelf && VC.muted;
     const peerMuted = !isSelf && VC.mutedPeers[pid];
     const icon      = selfMuted ? '🔇' : (speaking ? '🗣' : '🎙');
-    const peer      = VC.peers[pid];
-    const state     = isSelf ? (VC.enabled ? 'live' : 'off') : (peer && peer.pc ? peer.pc.connectionState : 'not-joined');
+
     const stateClass    = speaking  ? 'bm-vc-speaking'       : '';
     const selfClass     = isSelf    ? 'bm-vc-self'           : '';
-    const mutedRowClass = peerMuted ? 'bm-vc-peer-muted-row' : '';
+    const mutedRowClass = (peerMuted || selfMuted) ? 'bm-vc-peer-muted-row' : '';
 
-    // Speaker mute button shown for remote players only
+    // Self row: show a quick mic toggle button (mic mute/unmute)
+    const selfMicBtn = isSelf
+      ? `<button class="bm-vc-peer-mute-btn${selfMuted ? ' bm-vc-peer-muted' : ''}"
+           onclick="vcToggleMic()"
+           title="${selfMuted ? 'Unmute your mic' : 'Mute your mic'}">${selfMuted ? '🔇' : '🎙'}</button>`
+      : '';
+
+    // Peer row: speaker mute button (mutes what YOU hear from them)
     const peerMuteBtn = !isSelf
       ? `<button class="bm-vc-peer-mute-btn${peerMuted ? ' bm-vc-peer-muted' : ''}"
            onclick="vcTogglePeerMute('${pid}')"
-           title="${peerMuted ? 'Unmute speaker' : 'Mute speaker'}">${peerMuted ? '🔕' : '🔔'}</button>`
+           title="${peerMuted ? 'Unmute this speaker' : 'Mute this speaker'}">${peerMuted ? '🔕' : '🔊'}</button>`
       : '';
 
     return `<div class="bm-vc-speaker ${stateClass} ${selfClass} ${mutedRowClass}" data-pid="${pid}">
       <div class="bm-vc-avatar">${p.avatar||'🎮'}</div>
       <div class="bm-vc-name">${esc(p.name||'?')}${isSelf?'<span class="bm-vc-you-tag">YOU</span>':''}</div>
       <div class="bm-vc-state">${icon}</div>
-      ${peerMuteBtn}
+      ${isSelf ? selfMicBtn : peerMuteBtn}
       <div class="bm-vc-volbar"></div>
     </div>`;
   }).join('');
@@ -8228,36 +8234,58 @@ function vcRenderSpeakers() {
 
 // ── UPDATE BUTTONS ────────────────────────────────────────────────
 function vcUpdateUI() {
-  const btn    = document.getElementById('bmVoiceBtn');
-  const muteBtn= document.getElementById('bmVcMuteBtn');
-  const icon   = document.getElementById('bmVoiceIcon');
-  const label  = document.getElementById('bmVoiceLabel');
-  const panel  = document.getElementById('bmVoicePanel');
+  const btn         = document.getElementById('bmVoiceBtn');
+  const muteBtn     = document.getElementById('bmVcMuteBtn');
+  const icon        = document.getElementById('bmVoiceIcon');
+  const label       = document.getElementById('bmVoiceLabel');
+  const panel       = document.getElementById('bmVoicePanel');
+  const selfCtrls   = document.getElementById('bmVcSelfControls');
 
   if (!VC.enabled) {
-    if (btn)   { btn.className = btn.className.replace(/bm-vc-btn-live|bm-vc-btn-muted/g,'').trim(); btn.style.borderColor='rgba(34,197,94,.45)';btn.style.color='#4ade80'; }
-    if (icon)  icon.textContent = '🎙';
+    if (btn) { btn.className = btn.className.replace(/bm-vc-btn-live|bm-vc-btn-muted/g,'').trim(); btn.style.borderColor='rgba(34,197,94,.45)'; btn.style.color='#4ade80'; }
+    if (icon)  icon.textContent  = '🎙';
     if (label) label.textContent = 'Voice';
-    if (muteBtn){ muteBtn.textContent='🎙 Mute'; muteBtn.classList.remove('bm-vc-muted'); }
     if (panel) panel.classList.remove('bm-vc-live');
+    if (selfCtrls) selfCtrls.style.display = 'none';
+    if (muteBtn) {
+      muteBtn.textContent = '🎙 Mute My Mic';
+      muteBtn.style.borderColor  = 'rgba(34,197,94,.5)';
+      muteBtn.style.background   = 'rgba(34,197,94,.13)';
+      muteBtn.style.color        = '#4ade80';
+      muteBtn.style.boxShadow    = 'none';
+    }
   } else if (VC.muted) {
-    if (btn)   { btn.classList.remove('bm-vc-btn-live'); btn.classList.add('bm-vc-btn-muted'); }
-    if (icon)  icon.textContent = '🔇';
+    if (btn) { btn.classList.remove('bm-vc-btn-live'); btn.classList.add('bm-vc-btn-muted'); }
+    if (icon)  icon.textContent  = '🔇';
     if (label) label.textContent = 'Muted';
-    if (muteBtn){ muteBtn.textContent='🔇 Unmute'; muteBtn.classList.add('bm-vc-muted'); }
     if (panel) panel.classList.add('bm-vc-live');
+    if (selfCtrls) selfCtrls.style.display = 'block';
+    if (muteBtn) {
+      muteBtn.textContent = '🔇 Unmute My Mic';
+      muteBtn.style.borderColor = 'rgba(239,68,68,.6)';
+      muteBtn.style.background  = 'rgba(239,68,68,.18)';
+      muteBtn.style.color       = '#f87171';
+      muteBtn.style.boxShadow   = '0 0 12px rgba(239,68,68,.25)';
+    }
   } else {
-    if (btn)   { btn.classList.add('bm-vc-btn-live'); btn.classList.remove('bm-vc-btn-muted'); }
-    if (icon)  icon.textContent = '🎙';
+    if (btn) { btn.classList.add('bm-vc-btn-live'); btn.classList.remove('bm-vc-btn-muted'); }
+    if (icon)  icon.textContent  = '🎙';
     if (label) label.textContent = 'On Air';
-    if (muteBtn){ muteBtn.textContent='🎙 Mute'; muteBtn.classList.remove('bm-vc-muted'); }
     if (panel) panel.classList.add('bm-vc-live');
+    if (selfCtrls) selfCtrls.style.display = 'block';
+    if (muteBtn) {
+      muteBtn.textContent = '🎙 Mute My Mic';
+      muteBtn.style.borderColor = 'rgba(34,197,94,.5)';
+      muteBtn.style.background  = 'rgba(34,197,94,.13)';
+      muteBtn.style.color       = '#4ade80';
+      muteBtn.style.boxShadow   = 'none';
+    }
   }
 
   const statusEl = document.getElementById('bmVcStatus');
   if (statusEl) {
     statusEl.style.display = VC.enabled ? 'none' : 'block';
-    statusEl.textContent   = '🔌 Click Voice to join chat (V key)';
+    statusEl.textContent   = '🔌 Click "Voice" in the top bar to join (V key)';
   }
 
   vcRenderSpeakers();
