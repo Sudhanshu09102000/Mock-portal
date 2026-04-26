@@ -2372,7 +2372,8 @@ body {
                 <span style="display:inline-flex;align-items:center;gap:6px;">
                   <span style="font-size:15px;filter:drop-shadow(0 0 6px rgba(251,113,133,.7));">🔍</span>
                   <span>OCR PDF Reader</span>
-                  </span>
+                  <span style="font-size:9px;font-weight:800;letter-spacing:.8px;padding:2px 6px;border-radius:999px;background:rgba(251,113,133,.18);border:1px solid rgba(251,113,133,.4);color:#fda4af;">NEW</span>
+                </span>
               </button>
             </div>
           </div>
@@ -5490,6 +5491,11 @@ body {
             body { animation: none !important; background-size: 100% 100% !important; }
             .progress-bar { animation: none !important; }
             #particleCanvas { display: none !important; }
+            /* Hide Google Translate widget during capture to avoid CORS errors */
+            #google_translate_element,
+            .goog-te-banner-frame,
+            .skiptranslate,
+            iframe.goog-te-menu-frame { display: none !important; visibility: hidden !important; }
           `;
 
           // Small delay so browser repaints without animations
@@ -5499,10 +5505,24 @@ body {
             scale: 2,
             backgroundColor: "#0b1020",
             useCORS: true,
+            allowTaint: false,
+            logging: false,
             width: window.innerWidth,
             height: window.innerHeight,
             windowWidth: window.innerWidth,
-            windowHeight: window.innerHeight
+            windowHeight: window.innerHeight,
+            // Skip any cross-origin elements (Google Translate, iframes, etc.)
+            ignoreElements: el => {
+              const id  = el.id  || '';
+              const cls = el.className || '';
+              if (typeof cls !== 'string') return false;
+              return (
+                id  === 'google_translate_element'  ||
+                cls.includes('goog-te')             ||
+                cls.includes('skiptranslate')       ||
+                el.tagName === 'IFRAME'
+              );
+            }
           });
           SHOTS.push(canvas.toDataURL("image/png"));
 
