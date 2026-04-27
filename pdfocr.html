@@ -380,6 +380,104 @@
     padding-top: 8px;
   }
 
+  /* ─── PAGE RANGE PANEL ─── */
+  .page-range-panel {
+    display: none;
+    margin-top: 20px;
+    background: var(--surface);
+    border: 1px solid var(--amber-dim);
+    border-radius: 8px;
+    padding: 20px 24px;
+    animation: fadeUp 0.35s ease forwards;
+    box-shadow: 0 0 30px rgba(245,158,11,0.07);
+  }
+  .page-range-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .page-range-title::before {
+    content: '';
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--amber);
+    box-shadow: 0 0 8px var(--amber);
+  }
+  .page-range-body {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .page-range-info {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    flex: 1;
+    min-width: 140px;
+  }
+  .page-range-info strong { color: var(--text); }
+  .range-inputs {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .range-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .range-input {
+    width: 68px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 10px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -moz-appearance: textfield;
+  }
+  .range-input::-webkit-inner-spin-button,
+  .range-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .range-input:focus { border-color: var(--amber); box-shadow: 0 0 0 2px rgba(245,158,11,0.15); }
+  .range-input.invalid { border-color: var(--red); box-shadow: 0 0 0 2px rgba(239,68,68,0.15); }
+  .range-sep {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .range-error {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    display: none;
+    width: 100%;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+  .extract-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 9px 20px;
+    border: 1px solid var(--amber-dim);
+    background: var(--amber-glow);
+    color: var(--amber);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 7px;
+    white-space: nowrap;
+  }
+  .extract-btn:hover { background: rgba(245,158,11,0.2); box-shadow: 0 0 16px rgba(245,158,11,0.12); }
+  .extract-btn svg { width: 13px; height: 13px; }
+
   /* ─── RESET ─── */
   .reset-btn {
     display: none;
@@ -454,6 +552,30 @@
     <div class="drop-title">DROP YOUR PDF HERE</div>
     <div class="drop-sub">
       Drag & drop or <em>click to browse</em> — native text + <em>OCR fallback</em> per page
+    </div>
+  </div>
+
+  <!-- PAGE RANGE PANEL -->
+  <div class="page-range-panel" id="pageRangePanel">
+    <div class="page-range-title">Page Range Selection</div>
+    <div class="page-range-body">
+      <div class="page-range-info">
+        Detected <strong id="totalPagesLabel">—</strong> page(s) — set the range to extract below.
+      </div>
+      <div class="range-inputs">
+        <span class="range-label">From</span>
+        <input type="number" class="range-input" id="rangeFrom" min="1" value="1" placeholder="1"/>
+        <span class="range-sep">→</span>
+        <span class="range-label">To</span>
+        <input type="number" class="range-input" id="rangeTo" min="1" placeholder="end"/>
+        <button class="extract-btn" id="extractBtn" onclick="beginExtraction()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Run OCR
+        </button>
+      </div>
+      <div class="range-error" id="rangeError">⚠ Invalid range — from must be ≤ to, and within document bounds.</div>
     </div>
   </div>
 
@@ -556,6 +678,8 @@ let nativePages = 0, ocrPages = 0;
 let startTime = 0;
 let searchMatches = [];
 let searchIndex = 0;
+let loadedPdf = null;      // holds the parsed PDF object between phases
+let totalNumPages = 0;     // total pages of loaded PDF
 
 // ─── PDF.js WORKER ──────────────────────────────────────────────────────────
 pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -596,68 +720,122 @@ function setProgress(pct, label) {
   if (label) document.getElementById('statusLabel').textContent = label;
 }
 
-// ─── MAIN HANDLER ───────────────────────────────────────────────────────────
+// ─── MAIN HANDLER — PHASE 1: load PDF, show range panel ─────────────────────
 async function handleFile(file) {
   if (!file) return;
   resetUI();
   currentFileName = file.name.replace('.pdf', '');
-  startTime = performance.now();
-
   document.getElementById('fileNameLabel').textContent = file.name + ' → output.txt';
+
+  // Show status bar for loading feedback
   document.getElementById('statusBar').style.display = 'block';
   document.getElementById('statusBar').classList.add('fade-up');
   document.getElementById('statusDot').className = 'status-dot';
-
   addLog(`Loaded: ${file.name} (${(file.size/1024).toFixed(1)} KB)`, 'warn');
+  setProgress(0, 'Parsing document…');
 
   try {
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     const numPages = pdf.numPages;
 
+    loadedPdf = pdf;
+    totalNumPages = numPages;
+
     addLog(`Document parsed — ${numPages} page(s) detected`, 'success');
-    setProgress(5, `Scanning ${numPages} pages…`);
+    setProgress(0, 'Awaiting page range…');
+    document.getElementById('statusDot').className = 'status-dot done';
 
-    extractedPages = [];
-    nativePages = 0; ocrPages = 0;
+    // Populate range panel
+    document.getElementById('totalPagesLabel').textContent = numPages;
+    const fromInput = document.getElementById('rangeFrom');
+    const toInput = document.getElementById('rangeTo');
+    fromInput.value = 1;
+    fromInput.max = numPages;
+    toInput.value = numPages;
+    toInput.max = numPages;
+    toInput.placeholder = numPages;
 
-    // ── PHASE 1: NATIVE TEXT EXTRACTION ──
+    document.getElementById('pageRangePanel').style.display = 'block';
+
+  } catch (err) {
+    document.getElementById('statusDot').className = 'status-dot error';
+    addLog(`Fatal error: ${err.message}`, 'error');
+    setProgress(100, 'Error occurred');
+  }
+}
+
+// ─── PHASE 2: validate range, run extraction ─────────────────────────────────
+async function beginExtraction() {
+  const fromInput = document.getElementById('rangeFrom');
+  const toInput   = document.getElementById('rangeTo');
+  const errorEl   = document.getElementById('rangeError');
+  const startPage = parseInt(fromInput.value, 10);
+  const endPage   = parseInt(toInput.value,   10);
+
+  // Validate
+  fromInput.classList.remove('invalid');
+  toInput.classList.remove('invalid');
+  errorEl.style.display = 'none';
+
+  if (
+    isNaN(startPage) || isNaN(endPage) ||
+    startPage < 1 || endPage < 1 ||
+    startPage > totalNumPages || endPage > totalNumPages ||
+    startPage > endPage
+  ) {
+    fromInput.classList.add('invalid');
+    toInput.classList.add('invalid');
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  // Hide range panel, reset progress, begin
+  document.getElementById('pageRangePanel').style.display = 'none';
+  document.getElementById('statusDot').className = 'status-dot';
+  document.getElementById('logConsole').innerHTML = '';
+  startTime = performance.now();
+
+  const pdf = loadedPdf;
+  const rangeLen = endPage - startPage + 1;
+
+  addLog(`Extracting pages ${startPage}–${endPage} (${rangeLen} page(s))…`, 'warn');
+  setProgress(5, `Scanning ${rangeLen} page(s)…`);
+
+  extractedPages = [];
+  nativePages = 0; ocrPages = 0;
+
+  try {
+    // ── PHASE A: NATIVE TEXT EXTRACTION ──
     addLog('Phase 1 — Native text extraction…');
     const nativeResults = [];
-    for (let i = 1; i <= numPages; i++) {
+    for (let i = startPage; i <= endPage; i++) {
       const page = await pdf.getPage(i);
       const content = await page.getTextContent();
       const text = content.items.map(item => item.str).join(' ').trim();
       nativeResults.push({ page: i, pdfPage: page, text });
-      setProgress(5 + (i / numPages) * 40, `Native extraction: page ${i}/${numPages}`);
+      setProgress(5 + ((i - startPage + 1) / rangeLen) * 40, `Native extraction: page ${i}/${endPage}`);
     }
 
-    // ── PHASE 2: DETECT SCANNED PAGES, RUN OCR ──
+    // ── PHASE B: DETECT SCANNED PAGES, RUN OCR ──
     const scannedPages = nativeResults.filter(r => r.text.replace(/\s/g,'').length < 20);
-    const textPages = nativeResults.filter(r => r.text.replace(/\s/g,'').length >= 20);
+    const textPages    = nativeResults.filter(r => r.text.replace(/\s/g,'').length >= 20);
 
     addLog(`Native text found on ${textPages.length} page(s)`, 'success');
     if (scannedPages.length > 0) {
       addLog(`${scannedPages.length} page(s) need OCR — initializing Tesseract…`, 'ocr');
     }
 
-    // Copy native text results
     for (const r of textPages) {
       extractedPages[r.page - 1] = { page: r.page, text: r.text, method: 'native' };
       nativePages++;
     }
 
-    // ── PHASE 3: OCR on scanned pages ──
+    // ── PHASE C: OCR on scanned pages ──
     if (scannedPages.length > 0) {
       let worker;
       try {
-        worker = await Tesseract.createWorker('eng', 1, {
-          logger: m => {
-            if (m.status === 'recognizing text' && m.progress) {
-              // silent progress
-            }
-          }
-        });
+        worker = await Tesseract.createWorker('eng', 1, { logger: () => {} });
 
         for (let idx = 0; idx < scannedPages.length; idx++) {
           const r = scannedPages[idx];
@@ -676,7 +854,6 @@ async function handleFile(file) {
         await worker.terminate();
       } catch (ocrErr) {
         addLog(`OCR error: ${ocrErr.message}`, 'error');
-        // fallback: mark as empty
         for (const r of scannedPages) {
           if (!extractedPages[r.page - 1]) {
             extractedPages[r.page - 1] = { page: r.page, text: '[OCR failed for this page]', method: 'error' };
@@ -688,8 +865,8 @@ async function handleFile(file) {
     // ── ASSEMBLE FINAL TEXT ──
     setProgress(95, 'Assembling output…');
     rawText = extractedPages
-      .map((p, i) => {
-        if (!p) return '';
+      .filter(Boolean)
+      .map(p => {
         const sep = `── PAGE ${p.page} [${p.method.toUpperCase()}] ──────────────────────────`;
         return `${sep}\n${p.text}`;
       })
@@ -702,8 +879,7 @@ async function handleFile(file) {
     const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
     addLog(`Total time: ${elapsed}s`, 'warn');
 
-    // ── SHOW RESULTS ──
-    showResults(numPages, elapsed);
+    showResults(rangeLen, elapsed);
 
   } catch (err) {
     document.getElementById('statusDot').className = 'status-dot error';
@@ -830,6 +1006,7 @@ function downloadTxt() {
 // ─── RESET ───────────────────────────────────────────────────────────────────
 function resetUI() {
   rawText = ''; extractedPages = []; nativePages = 0; ocrPages = 0;
+  loadedPdf = null; totalNumPages = 0;
   document.getElementById('logConsole').innerHTML = '';
   document.getElementById('outputText').innerHTML = '';
   document.getElementById('searchInput').value = '';
@@ -838,6 +1015,10 @@ function resetUI() {
   document.getElementById('statsRow').style.display = 'none';
   document.getElementById('outputSection').style.display = 'none';
   document.getElementById('resetBtn').style.display = 'none';
+  document.getElementById('pageRangePanel').style.display = 'none';
+  document.getElementById('rangeError').style.display = 'none';
+  document.getElementById('rangeFrom').classList.remove('invalid');
+  document.getElementById('rangeTo').classList.remove('invalid');
   document.getElementById('progressFill').style.width = '0%';
   fileInput.value = '';
 }
