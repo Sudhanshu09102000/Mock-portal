@@ -2372,7 +2372,7 @@ body {
                 <span style="display:inline-flex;align-items:center;gap:6px;">
                   <span style="font-size:15px;filter:drop-shadow(0 0 6px rgba(251,113,133,.7));">🔍</span>
                   <span>OCR PDF Reader</span>
-                 </span>
+                  </span>
               </button>
             </div>
           </div>
@@ -5885,16 +5885,20 @@ applySize(slider.value);
 
 /* ===== Toggle panel with "/" key ===== */
 document.addEventListener("keydown",(e)=>{
+  // ✅ Don't intercept when typing in any input
+  const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+  if (['input','textarea','select'].includes(tag)) return;
+  if (document.activeElement && document.activeElement.closest && (
+    document.activeElement.closest('#bmChatPanel') ||
+    document.activeElement.closest('#bmVoicePanel')
+  )) return;
 
-if(e.key==="/" || e.code==="Slash"){
-
-panel.style.display=
-panel.style.display==="none"
-? "block"
-: "none";
-
-}
-
+  if(e.key==="/" || e.code==="Slash"){
+    panel.style.display=
+    panel.style.display==="none"
+    ? "block"
+    : "none";
+  }
 });
 
 })();
@@ -5990,7 +5994,15 @@ panel.style.display==="none"
     let spacePressed = false;
 
     document.addEventListener("keydown", (e) => {
-      if (e.code === "Space" && !spacePressed) {
+      // ✅ Don't intercept spacebar when user is typing
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const inInput = ['input', 'textarea', 'select'].includes(tag);
+      const inChatPanel = document.activeElement && document.activeElement.closest && (
+        document.activeElement.closest('#bmChatPanel') ||
+        document.activeElement.closest('#bmVoicePanel')
+      );
+
+      if (e.code === "Space" && !spacePressed && !inInput && !inChatPanel) {
         spacePressed = true;
         e.preventDefault();
         toggleTools();
@@ -6225,6 +6237,8 @@ panel.style.display==="none"
 <!-- Firebase Compat SDK (no ES modules — works in plain <script> context) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<!-- PeerJS for P2P Voice -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.2/peerjs.min.js"></script>
 
 <script>
 /* ============================================================
@@ -6404,15 +6418,23 @@ function injectStyles() {
   }
   /* ── BATTLE QUESTION OVERLAY ── */
   #bmQuestionOverlay {
-    display:none;position:fixed;inset:0;z-index:99990;
+    display:none;position:fixed;inset:0;z-index:99980;
     background:linear-gradient(160deg,#050714 0%,#0b1020 50%,#0d0620 100%);
     flex-direction:column;overflow:hidden;
   }
   #bmQuestionOverlay.bm-active { display:flex; }
   .bm-qbar {
     display:flex;align-items:center;justify-content:space-between;
-    padding:10px 18px;background:rgba(255,255,255,.04);
+    padding:8px 12px;background:rgba(255,255,255,.04);
     border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;
+    flex-wrap:wrap;gap:6px;
+  }
+  @media(max-width:480px){
+    .bm-qbar { padding:6px 8px;gap:4px; }
+    .bm-qbar-label { font-size:11px; }
+    .bm-qbar-score { font-size:12px; }
+    .bm-qbar-timer { font-size:12px;padding:2px 7px;min-width:42px; }
+    #bmChatToggleBtn,#bmSkipBtn,#bmFinishBtn { font-size:10px!important;padding:3px 8px!important; }
   }
   .bm-qbar-label { font-size:13px;font-weight:700;color:rgba(180,200,255,.8);letter-spacing:1px; }
   .bm-qbar-score { font-size:14px;font-weight:800;color:#22c55e; }
@@ -6628,6 +6650,7 @@ function buildUI() {
       <span class="bm-qbar-timer" id="bmQTimer">0.0s</span>
       <span class="bm-qbar-score" id="bmMyScore">Score: 0</span>
       <span style="font-size:9px;color:rgba(180,200,255,.4);letter-spacing:.5px;display:none;" class="bm-kbd-hint d-none d-sm-inline">⌨ 1-4 to select</span>
+      <button id="bmChatToggleBtn" onclick="toggleChat()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(6,182,212,.45);background:rgba(6,182,212,.1);color:#06b6d4;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Open battle chat">💬 Chat</button>
       <button id="bmSkipBtn" onclick="bmSkipQuestion()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.1);color:#facc15;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Send this question to the end of the queue">⏭ Skip →end</button>
       <button id="bmFinishBtn" onclick="bmFinishBattle()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(239,68,68,.5);background:rgba(239,68,68,.13);color:#f87171;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Submit and finish battle now">🏁 Finish</button>
     </div>
@@ -6791,6 +6814,9 @@ async function doJoin() {
 
 // ── ROOM LISTENERS ────────────────────────────────────────────────────────────
 function listenRoom() {
+  // Start chat for this room (auto-connect, no extra code needed)
+  startChatForRoom(B.roomCode);
+
   const base = `battle_rooms/${B.roomCode}`;
 
   // Players list — fires for ALL player updates
@@ -6865,6 +6891,8 @@ function showTestAlert(msg) {
 // ── LEAVE ─────────────────────────────────────────────────────────────────────
 async function doLeave() {
   dbStopAll();
+  stopChat();
+  vcLeave();  // ✅ also leave voice when leaving battle room
   try { await B.db.ref(`battle_rooms/${B.roomCode}/players/${B.myId}`).remove(); } catch(_){}
   B.active = false; B.roomCode = ''; B.players = {};
   document.getElementById('bmLobby').style.display  = 'none';
@@ -7314,6 +7342,19 @@ function showLobby() {
   document.getElementById('bmGuestWait').style.display  = B.isHost ? 'none'  : 'block';
   updateTestStatus();
   renderPlayerList();
+  // Add lobby chat shortcut button if not already there
+  if (!document.getElementById('bmLobbyChatBtn')) {
+    const lb = document.getElementById('bmLeaveBtn');
+    if (lb) {
+      const chatBtn = document.createElement('button');
+      chatBtn.id = 'bmLobbyChatBtn';
+      chatBtn.className = 'bm-btn bm-full';
+      chatBtn.style.cssText = 'margin-top:8px;background:linear-gradient(135deg,rgba(6,182,212,.18),rgba(124,58,237,.18));border:1px solid rgba(6,182,212,.45);color:#06b6d4;';
+      chatBtn.innerHTML = '💬 Open Battle Chat';
+      chatBtn.onclick = () => { closeModal(); openChat(); };
+      lb.parentNode.insertBefore(chatBtn, lb);
+    }
+  }
 }
 
 function updateTestStatus() {
@@ -7393,6 +7434,16 @@ function showFbHelp() {
 document.addEventListener('keydown', function(e) {
   // Only active during battle question phase
   if (!B.active || B.answered) return;
+  // ✅ NEVER fire shortcuts while user is typing in any input/textarea
+  const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+  if (['input', 'textarea', 'select'].includes(tag)) return;
+  // Also block if any chat/voice input is focused
+  if (document.activeElement && (
+    document.activeElement.id === 'bmChatInput' ||
+    document.activeElement.closest('#bmChatPanel') ||
+    document.activeElement.closest('#bmVoicePanel')
+  )) return;
+
   const key = e.key;
   if (!['1','2','3','4'].includes(key)) return;
 
@@ -7405,11 +7456,1043 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+// ── BATTLE CHAT SYSTEM ───────────────────────────────────────────────────────
+const CHAT = {
+  visible: false,
+  minimized: false,
+  unread: 0,
+  listener: null,
+};
+
+// ── VOICE CHAT SYSTEM (PeerJS P2P) ───────────────────────────────────────────
+const VC = {
+  peer: null,
+  myStream: null,
+  myAnalyser: null,
+  myAudioCtx: null,
+  micOn: true,
+  spkOn: true,
+  rafId: null,
+  peers: new Map(),  // peerId -> { name, avatar, analyser, audioCtx, audioEl, call, speaking, muted }
+  active: false,     // joined voice?
+};
+
+function injectChatStyles() {
+  if (document.getElementById('bm-chat-styles')) return;
+  const s = document.createElement('style');
+  s.id = 'bm-chat-styles';
+  s.textContent = `
+  /* ── Chat FAB Bubble ── */
+  #bmChatFab {
+    display:none;
+    position:fixed;
+    bottom:72px;
+    left:16px;
+    width:52px;height:52px;
+    border-radius:50%;
+    border:2px solid rgba(6,182,212,.7);
+    background:linear-gradient(135deg,rgba(6,182,212,.25),rgba(124,58,237,.35));
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    box-shadow:0 6px 28px rgba(6,182,212,.4),0 0 0 1px rgba(6,182,212,.1);
+    cursor:grab;
+    z-index:99980;
+    align-items:center;justify-content:center;
+    font-size:22px;
+    transition:box-shadow .2s ease;
+    touch-action:none;user-select:none;-webkit-user-select:none;
+    flex-direction:column;gap:2px;
+  }
+  #bmChatFab:active { cursor:grabbing; transform:scale(.92); }
+  #bmChatFab.bm-chat-show { display:flex; }
+  #bmChatFab .bm-chat-badge {
+    position:absolute;top:-4px;right:-4px;
+    min-width:18px;height:18px;border-radius:999px;
+    background:#ef4444;color:#fff;font-size:10px;font-weight:800;
+    display:none;align-items:center;justify-content:center;
+    border:2px solid rgba(5,7,20,.95);
+    padding:0 3px;
+  }
+  #bmChatFab .bm-chat-badge.show { display:flex; }
+
+  /* ── Chat + Voice Popup Panel ── */
+  #bmChatPanel {
+    display:none;
+    position:fixed;
+    bottom:136px;
+    left:16px;
+    width:min(340px,calc(100vw - 32px));
+    max-height:520px;
+    background:linear-gradient(160deg,rgba(6,8,28,.97),rgba(14,4,36,.97));
+    border:1px solid rgba(6,182,212,.4);
+    border-radius:20px;
+    box-shadow:0 0 60px rgba(6,182,212,.2),0 20px 50px rgba(0,0,0,.6);
+    z-index:99981;
+    flex-direction:column;
+    overflow:hidden;
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    transition:transform .25s cubic-bezier(0.34,1.56,0.64,1), opacity .2s ease;
+    transform:scale(.85) translateY(20px);
+    opacity:0;
+    pointer-events:none;
+  }
+  #bmChatPanel.bm-chat-open {
+    display:flex;
+    transform:scale(1) translateY(0);
+    opacity:1;
+    pointer-events:all;
+  }
+  #bmChatPanel.bm-chat-mini { max-height:52px !important; }
+  #bmChatPanel.bm-chat-mini #bmChatTabBar,
+  #bmChatPanel.bm-chat-mini #bmChatBody,
+  #bmChatPanel.bm-chat-mini #bmVoiceBody,
+  #bmChatPanel.bm-chat-mini #bmChatFooter { display:none !important; }
+
+  /* ── Chat Header ── */
+  #bmChatHeader {
+    display:flex;align-items:center;gap:8px;
+    padding:10px 14px;
+    border-bottom:1px solid rgba(6,182,212,.18);
+    background:rgba(6,182,212,.06);
+    flex-shrink:0;cursor:pointer;user-select:none;
+  }
+  #bmChatHeader .bm-ch-title {
+    flex:1;font-weight:800;font-size:13px;
+    background:linear-gradient(90deg,#06b6d4,#a78bfa);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    letter-spacing:.5px;
+  }
+  #bmChatHeader .bm-ch-live {
+    display:flex;align-items:center;gap:4px;
+    font-size:10px;color:rgba(180,255,200,.7);font-weight:600;
+  }
+  #bmChatHeader .bm-ch-live-dot {
+    width:6px;height:6px;border-radius:50%;background:#22c55e;
+    box-shadow:0 0 6px #22c55e;
+    animation:bmChatDotPulse 1.4s ease-in-out infinite;
+  }
+  @keyframes bmChatDotPulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .bm-ch-btn {
+    width:28px;height:28px;border-radius:8px;border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.06);color:rgba(200,220,255,.8);
+    font-size:13px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:all .15s;flex-shrink:0;
+  }
+  .bm-ch-btn:hover { background:rgba(255,255,255,.12);border-color:rgba(6,182,212,.5);color:#06b6d4; }
+
+  /* ── Tab Bar ── */
+  #bmChatTabBar {
+    display:flex;flex-shrink:0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(0,0,0,.15);
+  }
+  .bm-tab-btn {
+    flex:1;padding:7px 4px;font-size:12px;font-weight:700;
+    background:transparent;border:none;color:rgba(150,170,220,.5);
+    cursor:pointer;transition:all .15s;letter-spacing:.3px;
+    border-bottom:2px solid transparent;
+  }
+  .bm-tab-btn.active {
+    color:#06b6d4;border-bottom-color:#06b6d4;
+    background:rgba(6,182,212,.05);
+  }
+  .bm-tab-btn:hover:not(.active) { color:rgba(150,170,220,.8); }
+
+  /* ── Chat Body (messages) ── */
+  #bmChatBody {
+    flex:1;overflow-y:auto;padding:10px 12px;
+    display:flex;flex-direction:column;gap:6px;
+    min-height:0;max-height:300px;
+    scroll-behavior:smooth;
+  }
+  #bmChatBody::-webkit-scrollbar{width:4px;}
+  #bmChatBody::-webkit-scrollbar-thumb{background:rgba(6,182,212,.3);border-radius:99px;}
+
+  /* Empty state */
+  .bm-chat-empty {
+    text-align:center;padding:24px 12px;
+    color:rgba(150,170,220,.45);font-size:12px;line-height:1.6;
+  }
+
+  /* Individual message */
+  .bm-msg {
+    display:flex;gap:7px;align-items:flex-start;
+    animation:bmMsgIn .2s ease;
+  }
+  @keyframes bmMsgIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .bm-msg.bm-msg-me { flex-direction:row-reverse; }
+  .bm-msg-avatar {
+    width:28px;height:28px;border-radius:50%;
+    border:1.5px solid rgba(6,182,212,.35);
+    background:rgba(6,182,212,.1);
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;flex-shrink:0;
+  }
+  .bm-msg-me .bm-msg-avatar { border-color:rgba(124,58,237,.45);background:rgba(124,58,237,.1); }
+  .bm-msg-bubble {
+    max-width:75%;padding:7px 11px;border-radius:14px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.1);
+    font-size:13px;line-height:1.45;
+    color:rgba(220,235,255,.9);word-break:break-word;
+  }
+  .bm-msg-me .bm-msg-bubble { background:rgba(124,58,237,.22);border-color:rgba(124,58,237,.4);color:#e0d4ff; }
+  .bm-msg-name { font-size:9px;font-weight:700;color:rgba(6,182,212,.8);margin-bottom:2px;letter-spacing:.3px; }
+  .bm-msg-me .bm-msg-name { color:rgba(167,139,250,.8);text-align:right; }
+  .bm-msg-time { font-size:8.5px;color:rgba(150,170,220,.35);margin-top:2px; }
+  .bm-msg-me .bm-msg-time { text-align:right; }
+  .bm-msg-system {
+    text-align:center;font-size:10.5px;
+    color:rgba(6,182,212,.55);padding:3px 8px;
+    background:rgba(6,182,212,.05);border-radius:999px;
+    border:1px solid rgba(6,182,212,.12);
+    align-self:center;
+  }
+
+  /* ── Chat Footer (input) ── */
+  #bmChatFooter {
+    padding:10px 12px;border-top:1px solid rgba(255,255,255,.08);
+    display:flex;gap:7px;align-items:center;flex-shrink:0;
+    background:rgba(0,0,0,.2);
+  }
+  #bmChatInput {
+    flex:1;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:12px;color:#fff;font-size:13px;
+    padding:8px 12px;outline:none;transition:border .2s;
+    font-family:'Inter',sans-serif;
+  }
+  #bmChatInput::placeholder{color:rgba(150,170,220,.35);}
+  #bmChatInput:focus{border-color:rgba(6,182,212,.65);box-shadow:0 0 0 2px rgba(6,182,212,.1);}
+  #bmChatSendBtn {
+    width:36px;height:36px;border-radius:12px;
+    border:1px solid rgba(6,182,212,.5);
+    background:linear-gradient(135deg,rgba(6,182,212,.2),rgba(124,58,237,.2));
+    color:#06b6d4;font-size:16px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .15s;flex-shrink:0;
+  }
+  #bmChatSendBtn:hover { background:rgba(6,182,212,.3);border-color:rgba(6,182,212,.9); }
+  #bmChatSendBtn:active { transform:scale(.92); }
+
+  /* ── VOICE BODY ── */
+  #bmVoiceBody {
+    display:none;flex-direction:column;
+    padding:12px;gap:8px;
+    min-height:200px;max-height:380px;overflow-y:auto;
+    flex:1;
+  }
+  #bmVoiceBody::-webkit-scrollbar{width:4px;}
+  #bmVoiceBody::-webkit-scrollbar-thumb{background:rgba(160,32,255,.3);border-radius:99px;}
+
+  /* Voice join section */
+  #bmVoiceJoinArea {
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    padding:16px 8px;text-align:center;
+  }
+  .bm-vc-join-hint {
+    font-size:11px;color:rgba(150,170,220,.5);line-height:1.5;
+  }
+  .bm-vc-join-btn {
+    padding:10px 24px;border-radius:14px;font-size:13px;font-weight:800;
+    background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(160,32,255,.25));
+    border:1px solid rgba(0,229,255,.5);color:#00e5ff;cursor:pointer;
+    transition:all .2s;letter-spacing:.4px;
+  }
+  .bm-vc-join-btn:hover { transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,229,255,.3); }
+  .bm-vc-join-btn:active { transform:scale(.96); }
+
+  /* Voice controls bar */
+  #bmVoiceControls {
+    display:none;
+    align-items:center;gap:8px;padding:8px 4px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    flex-shrink:0;
+  }
+  #bmVoiceControls.vc-active { display:flex; }
+  .bm-vc-ctrl {
+    width:36px;height:36px;border-radius:50%;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:16px;
+    border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);
+    transition:all .18s;flex-shrink:0;
+  }
+  .bm-vc-ctrl:hover { border-color:rgba(0,229,255,.6);background:rgba(0,229,255,.1); }
+  .bm-vc-ctrl.vc-on  { background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.5);color:#22c55e; }
+  .bm-vc-ctrl.vc-off { background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.5);color:#ef4444; }
+  .bm-vc-status {
+    flex:1;font-size:10px;font-weight:700;color:rgba(0,229,255,.7);
+    letter-spacing:.5px;
+  }
+  .bm-vc-leave-btn {
+    font-size:10px;padding:4px 9px;border-radius:8px;cursor:pointer;
+    border:1px solid rgba(239,68,68,.4);background:rgba(239,68,68,.1);
+    color:#f87171;font-weight:700;transition:all .15s;
+  }
+  .bm-vc-leave-btn:hover { background:rgba(239,68,68,.22);border-color:rgba(239,68,68,.8); }
+
+  /* Voice participant cards */
+  #bmVoiceParticipants {
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .bm-vc-card {
+    display:flex;align-items:center;gap:10px;
+    padding:8px 10px;border-radius:12px;
+    border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.04);
+    transition:all .25s;
+  }
+  .bm-vc-card.vc-speaking {
+    border-color:rgba(0,255,157,.35);
+    background:rgba(0,255,157,.05);
+    box-shadow:0 0 14px rgba(0,255,157,.08);
+  }
+  .bm-vc-av {
+    width:36px;height:36px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;
+    border:2px solid transparent;
+    transition:border-color .25s,box-shadow .25s;
+    background:rgba(255,255,255,.06);
+  }
+  .bm-vc-card.vc-speaking .bm-vc-av {
+    border-color:#00ff9d;
+    box-shadow:0 0 10px rgba(0,255,157,.5);
+    animation:vcRingPulse .8s ease-in-out infinite;
+  }
+  @keyframes vcRingPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .bm-vc-info { flex:1;min-width:0; }
+  .bm-vc-name { font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .bm-vc-sub  { font-size:9px;color:rgba(150,170,220,.5);margin-top:1px; }
+  .bm-vc-wave {
+    display:flex;align-items:center;gap:2px;height:18px;
+  }
+  .bm-vc-bar {
+    width:3px;border-radius:2px;background:rgba(150,170,220,.3);
+    transition:height .08s ease,background .2s;min-height:2px;height:2px;
+  }
+  .bm-vc-card.vc-speaking .bm-vc-bar { background:#00ff9d; }
+  .bm-vc-mute-btn {
+    width:26px;height:26px;border-radius:6px;cursor:pointer;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-size:12px;
+    border:1px solid rgba(255,255,255,.12);background:transparent;
+    transition:all .15s;
+  }
+  .bm-vc-mute-btn:hover { border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.1); }
+  .bm-vc-mute-btn.muted { border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.1);color:#f87171; }
+
+  /* Mobile tweaks */
+  @media(max-width:480px){
+    #bmChatPanel{
+      bottom:130px;
+      left:8px;
+      width:calc(100vw - 16px);
+      max-height:65vh;
+    }
+    #bmChatFab { left:10px;bottom:70px; }
+  }
+  `;
+  document.head.appendChild(s);
+}
+
+function buildChatUI() {
+  if (document.getElementById('bmChatFab')) return;
+
+  // FAB bubble
+  const fab = document.createElement('div');
+  fab.id = 'bmChatFab';
+  fab.title = 'Battle Chat & Voice';
+  fab.innerHTML = `💬<div class="bm-chat-badge" id="bmChatBadge">0</div>`;
+  fab.addEventListener('click', toggleChat);
+  document.body.appendChild(fab);
+
+  // ── Make FAB draggable (mouse + touch) ──────────────────────────────────────
+  (function makeFabDraggable(el) {
+    let dragging = false, hasMoved = false;
+    let startX = 0, startY = 0, origLeft = 0, origBottom = 0;
+
+    function getPos() {
+      const r = el.getBoundingClientRect();
+      return { left: r.left, top: r.top };
+    }
+
+    function onDragStart(cx, cy) {
+      dragging = true; hasMoved = false;
+      const r = el.getBoundingClientRect();
+      startX = cx; startY = cy;
+      origLeft  = r.left;
+      origBottom = window.innerHeight - r.bottom;
+      el.style.transition = 'none';
+      el.style.left   = r.left   + 'px';
+      el.style.bottom = origBottom + 'px';
+      el.style.right  = 'auto';
+      el.style.top    = 'auto';
+    }
+
+    function onDragMove(cx, cy) {
+      if (!dragging) return;
+      const dx = cx - startX, dy = cy - startY;
+      if (Math.abs(dx) > 4 || Math.abs(dy) > 4) hasMoved = true;
+      let newLeft   = origLeft   + dx;
+      let newBottom = origBottom - dy;
+      newLeft   = Math.max(0, Math.min(newLeft,   window.innerWidth  - el.offsetWidth));
+      newBottom = Math.max(0, Math.min(newBottom, window.innerHeight - el.offsetHeight));
+      el.style.left   = newLeft   + 'px';
+      el.style.bottom = newBottom + 'px';
+    }
+
+    function onDragEnd() {
+      if (!dragging) return;
+      dragging = false;
+      el.style.transition = '';
+      if (!hasMoved) toggleChat(); // click without drag = toggle panel
+    }
+
+    // Mouse
+    el.addEventListener('mousedown', e => {
+      e.preventDefault();
+      onDragStart(e.clientX, e.clientY);
+      const mm = e2 => onDragMove(e2.clientX, e2.clientY);
+      const mu = () => { onDragEnd(); document.removeEventListener('mousemove', mm); document.removeEventListener('mouseup', mu); };
+      document.addEventListener('mousemove', mm);
+      document.addEventListener('mouseup', mu);
+    });
+
+    // Touch
+    el.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      onDragStart(t.clientX, t.clientY);
+    }, { passive: true });
+    el.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const t = e.touches[0];
+      onDragMove(t.clientX, t.clientY);
+    }, { passive: false });
+    el.addEventListener('touchend', () => onDragEnd());
+  })(fab);
+  // Remove the old click listener since drag logic handles click-vs-drag
+  fab.removeEventListener('click', toggleChat);
+
+  // Chat panel
+  const panel = document.createElement('div');
+  panel.id = 'bmChatPanel';
+  panel.innerHTML = `
+    <div id="bmChatHeader">
+      <div style="font-size:18px;flex-shrink:0;">⚔️</div>
+      <div class="bm-ch-title">Battle Comms</div>
+      <div class="bm-ch-live">
+        <span class="bm-ch-live-dot"></span>
+        <span id="bmChatRoom">—</span>
+      </div>
+      <div class="bm-ch-btn" id="bmChatMinBtn" title="Minimise">−</div>
+      <div class="bm-ch-btn" id="bmChatCloseBtn" title="Close">✕</div>
+    </div>
+
+    <!-- Tab bar -->
+    <div id="bmChatTabBar">
+      <button class="bm-tab-btn active" id="bmTabChat" onclick="switchChatTab('chat')">💬 Chat</button>
+      <button class="bm-tab-btn" id="bmTabVoice" onclick="switchChatTab('voice')">🎤 Voice</button>
+    </div>
+
+    <!-- Chat Tab -->
+    <div id="bmChatBody">
+      <div class="bm-chat-empty">🤫 Be the first to say hi!<br><span style="font-size:10px;opacity:.6;">Messages sync live with your battle room</span></div>
+    </div>
+
+    <!-- Voice Tab -->
+    <div id="bmVoiceBody">
+      <div id="bmVoiceControls">
+        <button class="bm-vc-ctrl vc-on" id="bmVcMicBtn" title="Toggle Mic" onclick="vcToggleMic()">🎤</button>
+        <button class="bm-vc-ctrl vc-on" id="bmVcSpkBtn" title="Toggle Speaker" onclick="vcToggleSpk()">🔊</button>
+        <span class="bm-vc-status" id="bmVcStatus">🟢 CONNECTED</span>
+        <button class="bm-vc-leave-btn" onclick="vcLeave()">Leave Voice</button>
+      </div>
+      <div id="bmVoiceJoinArea">
+        <div style="font-size:32px;">🎙️</div>
+        <div style="font-size:13px;font-weight:800;color:rgba(200,220,255,.9);">Voice Chat</div>
+        <div class="bm-vc-join-hint">Talk live with your battle room.<br>Uses P2P — no servers needed.</div>
+        <button class="bm-vc-join-btn" onclick="vcJoin()">🎤 Join Voice</button>
+      </div>
+      <div id="bmVoiceParticipants"></div>
+    </div>
+
+    <div id="bmChatFooter">
+      <input id="bmChatInput" type="text" maxlength="200" placeholder="Type a message…" autocomplete="off" />
+      <button id="bmChatSendBtn" title="Send">➤</button>
+    </div>
+  `;
+  document.body.appendChild(panel);
+
+  // Wire header click to toggle minimize
+  document.getElementById('bmChatHeader').addEventListener('click', (e) => {
+    if (e.target.id === 'bmChatMinBtn' || e.target.id === 'bmChatCloseBtn') return;
+    toggleChatMinimize();
+  });
+  document.getElementById('bmChatMinBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleChatMinimize(); });
+  document.getElementById('bmChatCloseBtn').addEventListener('click', (e) => { e.stopPropagation(); closeChat(); });
+  document.getElementById('bmChatSendBtn').addEventListener('click', sendChatMessage);
+  document.getElementById('bmChatInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); }
+    // Stop ALL key events from propagating to battle shortcuts
+    e.stopPropagation();
+  });
+  // Also block keyup on input so nothing bleeds through
+  document.getElementById('bmChatInput').addEventListener('keyup', e => e.stopPropagation());
+
+  // Make chat panel itself draggable (by header)
+  (function makePanelDraggable(panel, handle) {
+    let drag = false, dx = 0, dy = 0;
+    handle.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('bm-ch-btn')) return;
+      drag = true;
+      const r = panel.getBoundingClientRect();
+      dx = e.clientX - r.left;
+      dy = e.clientY - r.top;
+      panel.style.transition = 'none';
+      panel.style.left   = r.left + 'px';
+      panel.style.bottom = (window.innerHeight - r.bottom) + 'px';
+      panel.style.right  = 'auto';
+      panel.style.top    = 'auto';
+    });
+    document.addEventListener('mousemove', (e) => {
+      if (!drag) return;
+      let nx = e.clientX - dx;
+      let nb = window.innerHeight - e.clientY - (panel.offsetHeight - dy);
+      nx = Math.max(0, Math.min(nx, window.innerWidth  - panel.offsetWidth));
+      nb = Math.max(0, Math.min(nb, window.innerHeight - panel.offsetHeight));
+      panel.style.left   = nx + 'px';
+      panel.style.bottom = nb + 'px';
+    });
+    document.addEventListener('mouseup', () => { drag = false; panel.style.transition = ''; });
+  })(panel, document.getElementById('bmChatHeader'));
+}
+
+// ── TAB SWITCHING ──────────────────────────────────────────────────────────────
+function switchChatTab(tab) {
+  const chatBody   = document.getElementById('bmChatBody');
+  const voiceBody  = document.getElementById('bmVoiceBody');
+  const footer     = document.getElementById('bmChatFooter');
+  const tabChat    = document.getElementById('bmTabChat');
+  const tabVoice   = document.getElementById('bmTabVoice');
+  if (!chatBody || !voiceBody) return;
+
+  if (tab === 'chat') {
+    chatBody.style.display  = '';
+    voiceBody.style.display = 'none';
+    footer.style.display    = '';
+    tabChat.classList.add('active');
+    tabVoice.classList.remove('active');
+    chatBody.scrollTop = chatBody.scrollHeight;
+  } else {
+    chatBody.style.display  = 'none';
+    voiceBody.style.display = 'flex';
+    footer.style.display    = 'none';
+    tabVoice.classList.add('active');
+    tabChat.classList.remove('active');
+  }
+}
+window.switchChatTab = switchChatTab;
+
+function openChat() {
+  const fab = document.getElementById('bmChatFab');
+  const panel = document.getElementById('bmChatPanel');
+  if (!fab || !panel) return;
+  CHAT.visible = true;
+  CHAT.unread = 0;
+  fab.classList.add('bm-chat-show');
+  panel.classList.add('bm-chat-open');
+  panel.classList.remove('bm-chat-mini');
+  const badge = document.getElementById('bmChatBadge');
+  if (badge) { badge.textContent = '0'; badge.classList.remove('show'); }
+  // Scroll to bottom
+  const body = document.getElementById('bmChatBody');
+  if (body) body.scrollTop = body.scrollHeight;
+  const input = document.getElementById('bmChatInput');
+  if (input) input.focus();
+}
+
+function closeChat() {
+  CHAT.visible = false;
+  const panel = document.getElementById('bmChatPanel');
+  const fab = document.getElementById('bmChatFab');
+  if (panel) panel.classList.remove('bm-chat-open');
+  // Keep FAB if in battle
+  if (!B.roomCode) {
+    if (fab) fab.classList.remove('bm-chat-show');
+  }
+}
+
+function toggleChat() {
+  if (CHAT.visible) { closeChat(); } else { openChat(); }
+}
+// Expose to global scope (needed for inline onclick attributes)
+window.toggleChat  = toggleChat;
+window.openChat    = openChat;
+window.closeChat   = closeChat;
+
+function toggleChatMinimize() {
+  CHAT.minimized = !CHAT.minimized;
+  const panel = document.getElementById('bmChatPanel');
+  const minBtn = document.getElementById('bmChatMinBtn');
+  if (!panel) return;
+  if (CHAT.minimized) {
+    panel.classList.add('bm-chat-mini');
+    if (minBtn) minBtn.textContent = '+';
+  } else {
+    panel.classList.remove('bm-chat-mini');
+    if (minBtn) minBtn.textContent = '−';
+    // Scroll to bottom when restoring
+    const body = document.getElementById('bmChatBody');
+    if (body) setTimeout(() => { body.scrollTop = body.scrollHeight; }, 50);
+  }
+}
+
+function startChatForRoom(roomCode) {
+  if (!B.db || !roomCode) return;
+  // Update room label
+  const lbl = document.getElementById('bmChatRoom');
+  if (lbl) lbl.textContent = roomCode;
+
+  // Stop previous listener
+  if (CHAT.listener) { CHAT.listener.off(); CHAT.listener = null; }
+
+  // Clear old messages
+  const body = document.getElementById('bmChatBody');
+  if (body) body.innerHTML = `<div class="bm-chat-empty">🤫 Be the first to say hi!<br><span style="font-size:10px;opacity:.6;">Messages sync live with your battle room</span></div>`;
+
+  // Show FAB
+  const fab = document.getElementById('bmChatFab');
+  if (fab) fab.classList.add('bm-chat-show');
+
+  // Listen for chat messages
+  const chatRef = B.db.ref(`battle_rooms/${roomCode}/chat`);
+  CHAT.listener = chatRef;
+  chatRef.limitToLast(80).on('child_added', (snap) => {
+    const msg = snap.val();
+    if (!msg) return;
+    appendChatMessage(msg);
+    // Unread badge if panel is closed or minimized
+    if (!CHAT.visible || CHAT.minimized) {
+      CHAT.unread++;
+      const badge = document.getElementById('bmChatBadge');
+      if (badge) { badge.textContent = CHAT.unread; badge.classList.add('show'); }
+    }
+  });
+
+  // Add system message
+  const sysMsg = { type:'system', text:`You joined room ${roomCode}`, ts: Date.now() };
+  appendChatMessage(sysMsg);
+}
+
+function stopChat() {
+  if (CHAT.listener) { CHAT.listener.off(); CHAT.listener = null; }
+  const fab = document.getElementById('bmChatFab');
+  const panel = document.getElementById('bmChatPanel');
+  if (fab) fab.classList.remove('bm-chat-show');
+  if (panel) panel.classList.remove('bm-chat-open');
+  CHAT.visible = false; CHAT.minimized = false; CHAT.unread = 0;
+  const lbl = document.getElementById('bmChatRoom');
+  if (lbl) lbl.textContent = '—';
+}
+
+// =========================================================
+// VOICE CHAT — PeerJS P2P Audio
+// =========================================================
+
+async function vcJoin() {
+  if (VC.active) return;
+  if (!B.roomCode) { alert('Join a battle room first!'); return; }
+
+  // Show loading state
+  const joinArea = document.getElementById('bmVoiceJoinArea');
+  if (joinArea) joinArea.innerHTML = '<div style="text-align:center;padding:20px;color:rgba(150,170,220,.5);font-size:12px;">🎙️ Requesting microphone…</div>';
+
+  // Get mic
+  try {
+    VC.myStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, sampleRate: 48000 },
+      video: false
+    });
+  } catch(e) {
+    if (joinArea) joinArea.innerHTML = `
+      <div style="text-align:center;padding:16px;">
+        <div style="font-size:28px;margin-bottom:8px;">🚫</div>
+        <div style="font-size:12px;color:#f87171;font-weight:700;">Mic access denied</div>
+        <div style="font-size:11px;color:rgba(150,170,220,.5);margin-top:4px;">Allow microphone in browser settings</div>
+        <button class="bm-vc-join-btn" onclick="vcJoin()" style="margin-top:12px;">Try Again</button>
+      </div>`;
+    return;
+  }
+
+  if (joinArea) joinArea.innerHTML = '<div style="text-align:center;padding:20px;color:rgba(150,170,220,.5);font-size:12px;">⚡ Connecting to peers…</div>';
+
+  // Setup audio analyser for self
+  try {
+    VC.myAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const src = VC.myAudioCtx.createMediaStreamSource(VC.myStream);
+    VC.myAnalyser = VC.myAudioCtx.createAnalyser();
+    VC.myAnalyser.fftSize = 512;
+    VC.myAnalyser.smoothingTimeConstant = 0.45;
+    src.connect(VC.myAnalyser);
+  } catch(e) {}
+
+  // Init PeerJS
+  VC.peer = new Peer(undefined, {
+    debug: 0,
+    config: { iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' },
+      { urls: 'stun:stun1.l.google.com:19302' },
+      { urls: 'stun:global.stun.twilio.com:3478' }
+    ]}
+  });
+
+  VC.peer.on('open', async (id) => {
+    VC.active = true;
+    VC.micOn  = true;
+    VC.spkOn  = true;
+
+    // Store our voice peer ID in Firebase so others can call us
+    if (B.db && B.roomCode) {
+      await B.db.ref(`battle_rooms/${B.roomCode}/players/${B.myId}/voicePeerId`).set(id);
+    }
+
+    // Show voice controls, hide join area
+    const ja = document.getElementById('bmVoiceJoinArea');
+    const vc = document.getElementById('bmVoiceControls');
+    if (ja) ja.style.display = 'none';
+    if (vc) vc.classList.add('vc-active');
+
+    // Render self card
+    vcRenderParticipants();
+
+    // Call any already-connected players who have a voicePeerId
+    if (B.db && B.roomCode) {
+      const snap = await B.db.ref(`battle_rooms/${B.roomCode}/players`).once('value');
+      const players = snap.val() || {};
+      Object.entries(players).forEach(([pid, pdata]) => {
+        if (pid !== B.myId && pdata.voicePeerId && !VC.peers.has(pdata.voicePeerId)) {
+          vcCallPeer(pdata.voicePeerId, pdata.name || 'Player', pdata.avatar || '🎮');
+        }
+      });
+    }
+
+    // Listen for new players who join voice after us
+    const voiceRef = B.db.ref(`battle_rooms/${B.roomCode}/players`);
+    voiceRef.on('child_changed', (snap) => {
+      const pdata = snap.val();
+      const pid   = snap.key;
+      if (pid !== B.myId && pdata && pdata.voicePeerId && !VC.peers.has(pdata.voicePeerId)) {
+        setTimeout(() => vcCallPeer(pdata.voicePeerId, pdata.name || 'Player', pdata.avatar || '🎮'), 300);
+      }
+    });
+
+    // Start animation loop
+    vcStartLoop();
+    vcUpdateStatus();
+  });
+
+  // Answer incoming voice calls
+  VC.peer.on('call', (call) => {
+    call.answer(VC.myStream);
+    const callerName   = (call.metadata && call.metadata.name)   || 'Player';
+    const callerAvatar = (call.metadata && call.metadata.avatar) || '🎮';
+    vcLinkCallStream(call, callerName, callerAvatar);
+  });
+
+  VC.peer.on('error', (err) => {
+    console.warn('VoiceChat PeerJS error:', err.type, err);
+  });
+}
+window.vcJoin = vcJoin;
+
+function vcCallPeer(remotePeerId, name, avatar) {
+  if (!VC.peer || !VC.myStream) return;
+  const call = VC.peer.call(remotePeerId, VC.myStream, {
+    metadata: { name: B.myName || 'Player', avatar: B.myAvatar || '🎮' }
+  });
+  if (call) vcLinkCallStream(call, name, avatar);
+}
+
+function vcLinkCallStream(call, name, avatar) {
+  const pid = call.peer;
+  if (!VC.peers.has(pid)) {
+    VC.peers.set(pid, { name, avatar, call, stream: null, audioEl: null, analyser: null, audioCtx: null, speaking: false, muted: false });
+  }
+  call.on('stream', (stream) => {
+    const p = VC.peers.get(pid);
+    if (!p) return;
+    p.stream = stream;
+    // Audio element
+    if (p.audioEl) p.audioEl.srcObject = null;
+    const ael = new Audio();
+    ael.srcObject = stream;
+    ael.autoplay  = true;
+    ael.muted     = p.muted || !VC.spkOn;
+    p.audioEl = ael;
+    // Analyser
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const src = ctx.createMediaStreamSource(stream);
+      const an  = ctx.createAnalyser();
+      an.fftSize = 512; an.smoothingTimeConstant = 0.45;
+      src.connect(an);
+      p.analyser = an; p.audioCtx = ctx;
+    } catch(e) {}
+    vcRenderParticipants();
+  });
+  call.on('close', () => {
+    const p = VC.peers.get(pid);
+    if (p) {
+      if (p.audioEl) p.audioEl.srcObject = null;
+      try { p.audioCtx && p.audioCtx.close(); } catch(e){}
+    }
+    VC.peers.delete(pid);
+    vcRenderParticipants();
+  });
+}
+
+function vcLeave() {
+  VC.active = false;
+  if (VC.rafId) { cancelAnimationFrame(VC.rafId); VC.rafId = null; }
+  VC.peers.forEach(p => {
+    try { p.call && p.call.close(); p.audioEl && (p.audioEl.srcObject = null); p.audioCtx && p.audioCtx.close(); } catch(e){}
+  });
+  VC.peers.clear();
+  VC.myStream && VC.myStream.getTracks().forEach(t => t.stop());
+  VC.myStream   = null;
+  VC.myAudioCtx && VC.myAudioCtx.close();
+  VC.myAudioCtx = null;
+  VC.myAnalyser = null;
+  try { VC.peer && VC.peer.destroy(); } catch(e){}
+  VC.peer = null;
+  // Remove our voice peer ID from Firebase
+  if (B.db && B.roomCode) {
+    B.db.ref(`battle_rooms/${B.roomCode}/players/${B.myId}/voicePeerId`).remove().catch(()=>{});
+  }
+  // Reset UI
+  const vc = document.getElementById('bmVoiceControls');
+  const ja = document.getElementById('bmVoiceJoinArea');
+  if (vc) vc.classList.remove('vc-active');
+  if (ja) {
+    ja.style.display = '';
+    ja.innerHTML = `
+      <div style="font-size:32px;">🎙️</div>
+      <div style="font-size:13px;font-weight:800;color:rgba(200,220,255,.9);">Voice Chat</div>
+      <div class="bm-vc-join-hint">Talk live with your battle room.<br>Uses P2P — no servers needed.</div>
+      <button class="bm-vc-join-btn" onclick="vcJoin()">🎤 Join Voice</button>`;
+  }
+  vcRenderParticipants();
+}
+window.vcLeave = vcLeave;
+
+function vcToggleMic() {
+  VC.micOn = !VC.micOn;
+  if (VC.myStream) VC.myStream.getAudioTracks().forEach(t => t.enabled = VC.micOn);
+  const btn = document.getElementById('bmVcMicBtn');
+  if (btn) {
+    btn.textContent = VC.micOn ? '🎤' : '🎙️';
+    btn.className   = 'bm-vc-ctrl ' + (VC.micOn ? 'vc-on' : 'vc-off');
+    btn.title       = VC.micOn ? 'Mute Mic' : 'Unmute Mic';
+  }
+  vcUpdateStatus();
+  vcRenderParticipants();
+}
+window.vcToggleMic = vcToggleMic;
+
+function vcToggleSpk() {
+  VC.spkOn = !VC.spkOn;
+  VC.peers.forEach(p => { if (p.audioEl) p.audioEl.muted = !VC.spkOn || p.muted; });
+  const btn = document.getElementById('bmVcSpkBtn');
+  if (btn) {
+    btn.textContent = VC.spkOn ? '🔊' : '🔈';
+    btn.className   = 'bm-vc-ctrl ' + (VC.spkOn ? 'vc-on' : 'vc-off');
+    btn.title       = VC.spkOn ? 'Mute All Audio' : 'Unmute All Audio';
+  }
+}
+window.vcToggleSpk = vcToggleSpk;
+
+function vcTogglePeerMute(peerId) {
+  const p = VC.peers.get(peerId);
+  if (!p) return;
+  p.muted = !p.muted;
+  if (p.audioEl) p.audioEl.muted = p.muted || !VC.spkOn;
+  vcRenderParticipants();
+}
+window.vcTogglePeerMute = vcTogglePeerMute;
+
+function vcGetRMS(an) {
+  if (!an) return 0;
+  const d = new Uint8Array(an.fftSize);
+  an.getByteTimeDomainData(d);
+  let s = 0;
+  for (let i = 0; i < d.length; i++) { const v = (d[i] - 128) / 128; s += v * v; }
+  return Math.sqrt(s / d.length);
+}
+
+function vcStartLoop() {
+  const N = 6;
+  let mySpk = false;
+  function loop() {
+    if (!VC.active) return;
+    // Self
+    const myVol  = VC.micOn ? vcGetRMS(VC.myAnalyser) : 0;
+    const nowSpk = myVol > 0.018;
+    if (nowSpk !== mySpk) {
+      mySpk = nowSpk;
+      const card = document.querySelector('.bm-vc-card[data-vcid="me"]');
+      if (card) card.classList.toggle('vc-speaking', mySpk);
+    }
+    vcAnimBars('me', myVol, nowSpk, N);
+    // Peers
+    VC.peers.forEach((p, pid) => {
+      const vol  = (p.muted || !VC.spkOn) ? 0 : vcGetRMS(p.analyser);
+      const spk  = vol > 0.012;
+      if (spk !== p.speaking) {
+        p.speaking = spk;
+        const card = document.querySelector(`.bm-vc-card[data-vcid="${CSS.escape(pid)}"]`);
+        if (card) card.classList.toggle('vc-speaking', spk);
+        const sub  = card && card.querySelector('.bm-vc-sub');
+        if (sub) sub.textContent = spk ? '🎤 speaking' : '∙ connected';
+      }
+      vcAnimBars(CSS.escape(pid), vol, spk, N);
+    });
+    VC.rafId = requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+function vcAnimBars(id, vol, active, n) {
+  const scale = Math.min(vol * 80, 1);
+  for (let i = 0; i < n; i++) {
+    const el = document.getElementById(`vcb-${id}-${i}`);
+    if (!el) continue;
+    const pos = i / (n - 1);
+    const curve = Math.sin(pos * Math.PI) * 0.85 + 0.15;
+    const h = active ? (2 + 14 * scale * curve * (0.6 + Math.random() * 0.8)) : 2;
+    el.style.height = h + 'px';
+  }
+}
+
+function vcRenderParticipants() {
+  const container = document.getElementById('bmVoiceParticipants');
+  if (!container) return;
+  const N = 6;
+  const bars = (id) => Array.from({length: N}, (_, i) =>
+    `<div class="bm-vc-bar" id="vcb-${id}-${i}"></div>`).join('');
+
+  let html = '';
+  // Self card
+  if (VC.active) {
+    html += `
+    <div class="bm-vc-card" data-vcid="me">
+      <div class="bm-vc-av">${B.myAvatar || '🎮'}</div>
+      <div class="bm-vc-info">
+        <div class="bm-vc-name">${escMsg(B.myName || 'You')} <span style="font-size:9px;color:#06b6d4;">(you)</span></div>
+        <div class="bm-vc-sub">${VC.micOn ? '🎤 live' : '🔇 muted'}</div>
+      </div>
+      <div class="bm-vc-wave">${bars('me')}</div>
+    </div>`;
+  }
+  // Peer cards
+  VC.peers.forEach((p, pid) => {
+    const eid = CSS.escape(pid);
+    html += `
+    <div class="bm-vc-card" data-vcid="${eid}">
+      <div class="bm-vc-av">${p.avatar || '🎮'}</div>
+      <div class="bm-vc-info">
+        <div class="bm-vc-name">${escMsg(p.name)}</div>
+        <div class="bm-vc-sub">${p.stream ? '∙ connected' : '⏳ connecting…'}</div>
+      </div>
+      <div class="bm-vc-wave">${bars(eid)}</div>
+      <button class="bm-vc-mute-btn ${p.muted ? 'muted' : ''}"
+        onclick="vcTogglePeerMute('${pid.replace(/'/g, "\\'")}')"
+        title="${p.muted ? 'Unmute' : 'Mute'}">
+        ${p.muted ? '🔇' : '🔊'}
+      </button>
+    </div>`;
+  });
+
+  if (!VC.active) html = '';
+  container.innerHTML = html;
+}
+
+function vcUpdateStatus() {
+  const el = document.getElementById('bmVcStatus');
+  if (!el) return;
+  const count = VC.peers.size;
+  el.textContent = VC.micOn
+    ? `🟢 ${count + 1} in voice`
+    : `🔇 Muted · ${count + 1} in voice`;
+}
+
+function appendChatMessage(msg) {
+  const body = document.getElementById('bmChatBody');
+  if (!body) return;
+
+  // Remove empty placeholder
+  const empty = body.querySelector('.bm-chat-empty');
+  if (empty) empty.remove();
+
+  if (msg.type === 'system') {
+    const el = document.createElement('div');
+    el.className = 'bm-msg-system';
+    el.textContent = msg.text;
+    body.appendChild(el);
+  } else {
+    const isMe = msg.senderId === B.myId;
+    const el = document.createElement('div');
+    el.className = 'bm-msg' + (isMe ? ' bm-msg-me' : '');
+    const t = msg.ts ? new Date(msg.ts).toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }) : '';
+    el.innerHTML = `
+      <div class="bm-msg-avatar">${msg.avatar || '🎮'}</div>
+      <div>
+        <div class="bm-msg-name">${escMsg(msg.senderName || 'Player')}</div>
+        <div class="bm-msg-bubble">${escMsg(msg.text)}</div>
+        <div class="bm-msg-time">${t}</div>
+      </div>`;
+    body.appendChild(el);
+  }
+
+  // Auto-scroll only if near bottom
+  if (body.scrollHeight - body.scrollTop < body.clientHeight + 120) {
+    body.scrollTop = body.scrollHeight;
+  }
+}
+
+function escMsg(s) {
+  return String(s || '').replace(/[&<>"']/g, m =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+
+async function sendChatMessage() {
+  const input = document.getElementById('bmChatInput');
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text || !B.db || !B.roomCode) return;
+
+  input.value = '';
+
+  const msg = {
+    senderId: B.myId,
+    senderName: B.myName || 'Player',
+    avatar: B.myAvatar || '🎮',
+    text: text,
+    ts: Date.now()
+  };
+
+  try {
+    await B.db.ref(`battle_rooms/${B.roomCode}/chat`).push(msg);
+  } catch(e) {
+    console.error('Chat send error:', e);
+  }
+}
+
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 function boot() {
   injectStyles();
+  injectChatStyles();
   initFirebase();  // try early init (may fail if config is demo — that's ok)
   buildUI();
+  buildChatUI();
   addBattleButtons();
   initTopbarSwiper();
 }
