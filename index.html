@@ -7630,13 +7630,17 @@ function injectChatStyles() {
     font-size:14px;flex-shrink:0;
   }
   .bm-msg-me .bm-msg-avatar { border-color:rgba(124,58,237,.45);background:rgba(124,58,237,.1); }
+  .bm-msg-content {
+    max-width:calc(100% - 42px);min-width:0;
+  }
   .bm-msg-bubble {
-    max-width:75%;padding:7px 11px;border-radius:14px;
+    display:inline-block;max-width:100%;padding:7px 11px;border-radius:14px;
     background:rgba(255,255,255,.07);
     border:1px solid rgba(255,255,255,.1);
     font-size:13px;line-height:1.45;
     color:rgba(220,235,255,.9);word-break:break-word;
   }
+  .bm-msg-me .bm-msg-content { align-items:flex-end; display:flex; flex-direction:column; }
   .bm-msg-me .bm-msg-bubble { background:rgba(124,58,237,.22);border-color:rgba(124,58,237,.4);color:#e0d4ff; }
   .bm-msg-name { font-size:9px;font-weight:700;color:rgba(6,182,212,.8);margin-bottom:2px;letter-spacing:.3px; }
   .bm-msg-me .bm-msg-name { color:rgba(167,139,250,.8);text-align:right; }
@@ -8444,7 +8448,7 @@ function appendChatMessage(msg) {
     const t = msg.ts ? new Date(msg.ts).toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }) : '';
     el.innerHTML = `
       <div class="bm-msg-avatar">${msg.avatar || '🎮'}</div>
-      <div>
+      <div class="bm-msg-content">
         <div class="bm-msg-name">${escMsg(msg.senderName || 'Player')}</div>
         <div class="bm-msg-bubble">${escMsg(msg.text)}</div>
         <div class="bm-msg-time">${t}</div>
