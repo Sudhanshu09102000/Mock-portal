@@ -478,6 +478,75 @@
   .extract-btn:hover { background: rgba(245,158,11,0.2); box-shadow: 0 0 16px rgba(245,158,11,0.12); }
   .extract-btn svg { width: 13px; height: 13px; }
 
+  /* ─── ENGLISH-ONLY TOGGLE ─── */
+  .eng-toggle-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .toggle-switch {
+    position: relative; width: 40px; height: 22px; flex-shrink: 0;
+  }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .toggle-track {
+    position: absolute; inset: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .toggle-track::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: transform 0.25s, background 0.25s;
+  }
+  .toggle-switch input:checked + .toggle-track {
+    background: rgba(16,185,129,0.18);
+    border-color: var(--green);
+    box-shadow: 0 0 10px rgba(16,185,129,0.2);
+  }
+  .toggle-switch input:checked + .toggle-track::after {
+    transform: translateX(18px);
+    background: var(--green);
+  }
+  .toggle-text {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    flex: 1;
+  }
+  .toggle-text strong {
+    display: block;
+    color: var(--text);
+    margin-bottom: 2px;
+    font-size: 11px;
+  }
+  .toggle-text span { color: var(--muted); font-size: 9px; letter-spacing: 0.08em; }
+  .toggle-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+  .toggle-badge.active {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(16,185,129,0.1);
+  }
+
   /* ─── RESET ─── */
   .reset-btn {
     display: none;
@@ -576,6 +645,19 @@
         </button>
       </div>
       <div class="range-error" id="rangeError">⚠ Invalid range — from must be ≤ to, and within document bounds.</div>
+
+      <!-- ENGLISH-ONLY FILTER TOGGLE -->
+      <div class="eng-toggle-row">
+        <label class="toggle-switch">
+          <input type="checkbox" id="engOnlyToggle" onchange="updateToggleBadge(this)"/>
+          <div class="toggle-track"></div>
+        </label>
+        <div class="toggle-text">
+          <strong>English Characters Only</strong>
+          <span>Strips all non-English symbols, foreign scripts &amp; special glyphs from output</span>
+        </div>
+        <div class="toggle-badge" id="toggleBadge">OFF</div>
+      </div>
     </div>
   </div>
 
@@ -765,6 +847,38 @@ async function handleFile(file) {
   }
 }
 
+// ─── ENGLISH-ONLY FILTER ─────────────────────────────────────────────────────
+function updateToggleBadge(checkbox) {
+  const badge = document.getElementById('toggleBadge');
+  if (checkbox.checked) {
+    badge.textContent = 'ON';
+    badge.classList.add('active');
+  } else {
+    badge.textContent = 'OFF';
+    badge.classList.remove('active');
+  }
+}
+
+function filterEnglishOnly(text) {
+  // Keep: A-Z a-z 0-9, common punctuation, whitespace, newlines
+  // Strip: anything outside basic ASCII printable range + newlines/tabs
+  return text
+    .split('\n')
+    .map(line =>
+      line
+        // Keep only ASCII printable chars (32–126) — covers all English letters,
+        // digits, punctuation and spaces. Everything else (Devanagari, Arabic,
+        // CJK, special Unicode symbols…) is removed.
+        .replace(/[^\x20-\x7E]/g, '')
+        // Collapse runs of spaces that result from stripping
+        .replace(/ {2,}/g, ' ')
+        .trim()
+    )
+    // Drop lines that became empty after filtering
+    .filter(line => line.length > 0)
+    .join('\n');
+}
+
 // ─── PHASE 2: validate range, run extraction ─────────────────────────────────
 async function beginExtraction() {
   const fromInput = document.getElementById('rangeFrom');
@@ -802,6 +916,9 @@ async function beginExtraction() {
   addLog(`Extracting pages ${startPage}–${endPage} (${rangeLen} page(s))…`, 'warn');
   setProgress(5, `Scanning ${rangeLen} page(s)…`);
 
+  const engOnly = document.getElementById('engOnlyToggle').checked;
+  if (engOnly) addLog('English-only filter: ON — non-ASCII characters will be stripped', 'warn');
+
   extractedPages = [];
   nativePages = 0; ocrPages = 0;
 
@@ -827,7 +944,8 @@ async function beginExtraction() {
     }
 
     for (const r of textPages) {
-      extractedPages[r.page - 1] = { page: r.page, text: r.text, method: 'native' };
+      const t = engOnly ? filterEnglishOnly(r.text) : r.text;
+      extractedPages[r.page - 1] = { page: r.page, text: t, method: 'native' };
       nativePages++;
     }
 
@@ -844,7 +962,8 @@ async function beginExtraction() {
           addLog(`OCR: running recognition on page ${r.page}…`, 'ocr');
           const result = await worker.recognize(imgDataUrl);
           const ocrText = result.data.text.trim();
-          extractedPages[r.page - 1] = { page: r.page, text: ocrText, method: 'ocr' };
+          const finalText = engOnly ? filterEnglishOnly(ocrText) : ocrText;
+          extractedPages[r.page - 1] = { page: r.page, text: finalText, method: 'ocr' };
           ocrPages++;
           const overallPct = 45 + ((idx + 1) / scannedPages.length) * 45;
           setProgress(overallPct, `OCR: page ${r.page} complete (${idx+1}/${scannedPages.length})`);
@@ -1019,6 +1138,9 @@ function resetUI() {
   document.getElementById('rangeError').style.display = 'none';
   document.getElementById('rangeFrom').classList.remove('invalid');
   document.getElementById('rangeTo').classList.remove('invalid');
+  document.getElementById('engOnlyToggle').checked = false;
+  document.getElementById('toggleBadge').textContent = 'OFF';
+  document.getElementById('toggleBadge').classList.remove('active');
   document.getElementById('progressFill').style.width = '0%';
   fileInput.value = '';
 }
