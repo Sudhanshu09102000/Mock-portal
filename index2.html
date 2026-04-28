@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -439,27 +438,6 @@
       color: rgba(234,240,255,.4) !important;
     }
 
-
-    .timer-pill {
-      position: fixed;
-      right: 14px;
-      bottom: 14px;
-      z-index: 99;
-      padding: .3rem .55rem;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, .18);
-      background: rgba(0, 0, 0, .30);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
-      font-variant-numeric: tabular-nums;
-    }
-
-    @media (max-width: 640px) {
-      .timer-pill {
-        right: 80px !important;  /* shift left of FAB on mobile */
-        bottom: 16px !important;
-      }
-    }
 
     /* Hover help box (desktop only) */
     .hover-help {
@@ -1268,14 +1246,6 @@
       align-self: stretch;
     }
 
-    .timer-pill {
-      cursor: grab;
-    }
-
-    .timer-pill:active {
-      cursor: grabbing;
-    }
-
     @media (max-width: 576px) {
       .nav-panel {
         top: 0;
@@ -1981,16 +1951,30 @@ body {
   #pdfDropZone   { min-height: 200px; padding: 1.2rem; }
 }
 
-/* ── MOBILE: stop question box clipping the toolbar ── */
+/* ── MOBILE: fix scrolling + toolbar visibility ── */
 @media (max-width: 767px) {
-  /* Allow the question box to show toolbar overflow (wraps, never hides) */
+  /* Let the question box expand to full content height — page scroll handles it */
   .resizable-question-box {
     overflow: visible !important;
+    height: auto !important;
+    min-height: unset !important;
+    flex: none !important;
   }
-  /* But keep the scroll area itself contained */
+  /* Disable inner scroll — content flows naturally, body/page scrolls */
   .question-scroll-area {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
+    overflow: visible !important;
+    flex: none !important;
+    height: auto !important;
+    max-height: none !important;
+    padding-right: 0 !important;
+  }
+  /* Allow the engine column to grow with content */
+  .engine-shell {
+    min-height: unset !important;
+    height: auto !important;
+  }
+  .engine-shell > div {
+    height: auto !important;
   }
 }
 
@@ -2486,7 +2470,35 @@ button, .btn, .topic-btn, .subtopic-btn, .ribbon-btn, .bm-btn, .nav-toggle-icon,
 @media (max-width: 480px) {
   #questionText { font-size: 1.02rem !important; line-height: 1.5; }
   .qbox { padding: .25rem 0; }
-  .top-toolbar.mobile-move-toolbar { display: none !important; } /* mobile FAB ribbon is the source of truth */
+
+  /* Always keep Sound/Exam toolbar visible — wrap tightly on narrow screens */
+  .top-toolbar.mobile-move-toolbar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    padding: 5px 4px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: visible !important;
+    white-space: normal !important;
+    border-radius: 12px !important;
+  }
+  .top-toolbar.mobile-move-toolbar .btn {
+    font-size: 10px !important;
+    padding: 5px 9px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 34px !important;
+  }
+  #googleSearchBtnTop {
+    width: 34px !important;
+    height: 34px !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
 }
 
 /* Small detail: HUD mode badge clean look */
@@ -2632,14 +2644,6 @@ button, .btn, .topic-btn, .subtopic-btn, .ribbon-btn, .bm-btn, .nav-toggle-icon,
               <!-- PDF Tutor toggle -->
               <button id="pdfTutorToggleBtn" class="btn btn-glass btn-sm" title="Open PDF Tutor panel" style="display:none;gap:5px;align-items:center;">
                 📄 PDF Tutor
-              </button>
-
-              <!-- ⏱ Timer restore button (shown when timer is hidden) -->
-              <button id="timerShowBtn" title="Show timer" onclick="
-                document.getElementById('timerPill').style.display='';
-                document.getElementById('timerShowBtn').style.display='none';
-              " style="display:none;align-items:center;gap:4px;font-size:12px;padding:4px 8px;border-radius:8px;border:1px solid rgba(6,182,212,.35);background:rgba(6,182,212,.08);color:#06b6d4;cursor:pointer;">
-                ⏱ Timer
               </button>
 
               <!-- ✅ NAV ICON (Top Right) -->
@@ -2843,19 +2847,6 @@ button, .btn, .topic-btn, .subtopic-btn, .ribbon-btn, .bm-btn, .nav-toggle-icon,
       </div>
 
 
-      <div class="timer-pill glass" id="timerPill">
-        <div class="d-flex align-items-center gap-1">
-          <div id="timerText">00:00</div>
-          <button id="timerCloseBtn" title="Hide timer" onclick="
-            document.getElementById('timerPill').style.display='none';
-            document.getElementById('timerShowBtn').style.display='flex';
-          " style="
-            background:none;border:none;padding:0 0 0 3px;cursor:pointer;
-            color:rgba(255,255,255,.45);font-size:10px;line-height:1;
-            display:flex;align-items:center;transition:color .15s;
-          " onmouseover="this.style.color='rgba(255,255,255,.9)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">✕</button>
-        </div>
-      </div>
 
 
     </div>
@@ -2874,6 +2865,28 @@ button, .btn, .topic-btn, .subtopic-btn, .ribbon-btn, .bm-btn, .nav-toggle-icon,
 
   <!-- Feedback overlay -->
   <div id="feedbackOverlay" class="feedback-overlay"></div>
+
+  <!-- ⏱ Timer — fixed bottom-left, always visible, no close button -->
+  <div id="timerPill" style="
+    display: none;
+    position: fixed;
+    bottom: 14px;
+    left: 14px;
+    z-index: 999;
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(0,0,0,.45);
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #eaf0ff;
+    letter-spacing: .5px;
+    pointer-events: none;
+    user-select: none;
+  ">
+    <span id="timerText">00:00</span>
+  </div>
 
 
 
@@ -3007,20 +3020,15 @@ button, .btn, .topic-btn, .subtopic-btn, .ribbon-btn, .bm-btn, .nav-toggle-icon,
             <label class="form-label subtle">Candidate name</label>
             <input id="candNameInput" class="form-control" placeholder=" " />
           </div>
-          <div class="top-toolbar ms-auto mobile-move-toolbar">
-
-
-            <div class="mb-1">
-              <label class="form-label subtle">Time required (in minutes)</label>
-              <input id="candTimeInput" type="number" min="1" class="form-control" placeholder=" " />
-              <div class="small subtle mt-2">If empty, auto time = 15 mins</div>
-            </div>
+          <div class="mb-3">
+            <label class="form-label subtle">Time required (in minutes)</label>
+            <input id="candTimeInput" type="number" min="1" class="form-control" placeholder=" " />
+            <div class="small subtle mt-2">If empty, auto time = 15 mins</div>
           </div>
-
-          <div class="modal-footer border-0">
-            <button type="button" class="btn btn-glass" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-success" id="startTestConfirmBtn">Start</button>
-          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-glass" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" id="startTestConfirmBtn">Start</button>
         </div>
       </div>
     </div>
@@ -3408,6 +3416,8 @@ button, .btn, .topic-btn, .subtopic-btn, .ribbon-btn, .bm-btn, .nav-toggle-icon,
       $('backToPortalBtn').addEventListener('click', () => showView('portal'));
       $('engineBackBtn').addEventListener('click', () => {
         cleanupEngine();
+        const tp = document.getElementById('timerPill');
+        if (tp) tp.style.display = 'none';
         showView('portal');
       });
 
@@ -3667,6 +3677,10 @@ button, .btn, .topic-btn, .subtopic-btn, .ribbon-btn, .bm-btn, .nav-toggle-icon,
         renderQuestion(0);
         state.startedAt = Date.now(); // ✅ ADD
         startTimer();
+
+        // Show the timer pill
+        const tp = document.getElementById('timerPill');
+        if (tp) tp.style.display = 'block';
 
       }
 
@@ -5855,44 +5869,7 @@ button, .btn, .topic-btn, .subtopic-btn, .ribbon-btn, .bm-btn, .nav-toggle-icon,
 
     <script>
       (function () {
-        const box = document.querySelector('.timer-pill');
-        if (!box) return;
-
-        let isDragging = false;
-        let offsetX = 0;
-        let offsetY = 0;
-
-        box.addEventListener('mousedown', (e) => {
-          isDragging = true;
-          offsetX = e.clientX - box.getBoundingClientRect().left;
-          offsetY = e.clientY - box.getBoundingClientRect().top;
-          box.style.transition = 'none';
-          box.style.zIndex = 99999;
-        });
-
-        document.addEventListener('mousemove', (e) => {
-          if (!isDragging) return;
-
-          let x = e.clientX - offsetX;
-          let y = e.clientY - offsetY;
-
-          // keep inside viewport
-          const maxX = window.innerWidth - box.offsetWidth;
-          const maxY = window.innerHeight - box.offsetHeight;
-
-          x = Math.max(0, Math.min(x, maxX));
-          y = Math.max(0, Math.min(y, maxY));
-
-          box.style.left = x + 'px';
-          box.style.top = y + 'px';
-          box.style.right = 'auto';
-          box.style.bottom = 'auto';
-          box.style.position = 'fixed';
-        });
-
-        document.addEventListener('mouseup', () => {
-          isDragging = false;
-        });
+        // Timer drag removed — timer is now a simple fixed element
       })();
     </script>
 
@@ -8710,7 +8687,7 @@ function boot() {
 function initTopbarSwiper() {
   const MOBILE = () => window.innerWidth <= 640;
 
-  
+  const fab = document.getElementById('fab');
   const ribbon  = document.getElementById('fabRibbon');
   const backdrop = document.getElementById('topbarBackdrop');
   if (!fab || !ribbon) return;
@@ -8890,110 +8867,7 @@ setTimeout(addBattleButtons, 1800);
 
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"7f7b0fd8732c4326aae4b9d58d5c514a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-<script>
-/* =====================================================
-   🔥 FINAL MOBILE FIX SCRIPT (ALL IN ONE)
-   ===================================================== */
 
-(function () {
-
-  /* ===============================
-     ✅ FIX 1: FORCE MODAL SCROLL
-     =============================== */
-  const style = document.createElement("style");
-  style.innerHTML = `
-  @media (max-width: 576px) {
-
-    .modal-dialog {
-      margin: 8px !important;
-      max-width: 100% !important;
-    }
-
-    .modal-content {
-      max-height: 85vh !important;
-      overflow-y: auto !important;
-      padding: 12px !important;
-    }
-
-    .modal-body {
-      padding: 10px !important;
-    }
-
-    /* 🔥 CRITICAL: remove inner glass spacing */
-    .modal-body .glass {
-      padding: 8px !important;
-      margin-bottom: 10px !important;
-    }
-
-    /* ===============================
-       ✅ FIX 2: BOTTOM UI VISIBILITY
-       =============================== */
-
-    .resizable-question-box {
-      padding-bottom: 120px !important;
-    }
-
-    .timer-pill {
-      bottom: 85px !important;
-      right: 70px !important;
-      z-index: 9999 !important;
-    }
-
-  }
-
-  /* ===============================
-     ✅ FIX 3: FORCE HIDE NAV ICON
-     =============================== */
-
-  .nav-toggle-icon {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
-  `;
-  document.head.appendChild(style);
-
-
-  /* ===============================
-     ✅ FIX 4: REMOVE NAV ICON (JS LEVEL)
-     =============================== */
-  function removeNavIcon() {
-    document.querySelectorAll('.nav-toggle-icon').forEach(el => el.remove());
-  }
-
-  removeNavIcon();
-  setInterval(removeNavIcon, 1000); // keeps removing if re-rendered
-
-
-  /* ===============================
-     ✅ FIX 5: ENSURE MODAL CONTENT VISIBLE
-     =============================== */
-  function fixModal() {
-    const modal = document.querySelector('.modal.show .modal-content');
-    if (modal) {
-      modal.style.maxHeight = "85vh";
-      modal.style.overflowY = "auto";
-    }
-  }
-
-  setInterval(fixModal, 500);
-
-
-  /* ===============================
-     ✅ FIX 6: FORCE SCROLL TO BOTTOM FIELD
-     =============================== */
-  document.addEventListener("focusin", function (e) {
-    if (e.target.closest(".modal")) {
-      setTimeout(() => {
-        e.target.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 300);
-    }
-  });
-
-})();
-</script>
 
 </body>
 
