@@ -1662,19 +1662,7 @@ body {
   background: rgba(6,182,212,.1) !important;
 }
 
-/* ── Scan Line effect on question box ── */
-.resizable-question-box::after {
-  content: '';
-  position: absolute; left: 0; right: 0; top: -100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(6,182,212,.3), transparent);
-  animation: scanLine 6s linear infinite;
-  pointer-events: none; z-index: 0;
-}
-@keyframes scanLine {
-  0% { top: -5%; }
-  100% { top: 105%; }
-}
+
 
 /* ── Topic/subtopic buttons ── */
 .topic-btn, .subtopic-btn {
@@ -2038,43 +2026,7 @@ body {
   }
 }
 
-/* ════════ FAB BUTTON ════════ */
-#mobileFab {
-  display: none; /* shown by JS only on mobile + engine active */
-  position: fixed;
-  bottom: 80px;   /* above timer pill */
-  right: 16px;
-  z-index: 500;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(6,182,212,.65);
-  background: linear-gradient(135deg, rgba(6,182,212,.22), rgba(124,58,237,.28));
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow:
-    0 8px 32px rgba(6,182,212,.35),
-    0 0 0 1px rgba(6,182,212,.12),
-    inset 0 1px 0 rgba(255,255,255,.12);
-  cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-  touch-action: manipulation;
-  user-select: none;
-  -webkit-user-select: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 4px;
-}
-#mobileFab:active {
-  transform: scale(0.92);
-  box-shadow: 0 4px 18px rgba(6,182,212,.4), 0 0 0 2px rgba(6,182,212,.3);
-}
-#mobileFab.fab-open {
-  background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.22));
-  box-shadow: 0 8px 36px rgba(124,58,237,.45), 0 0 0 2px rgba(124,58,237,.22);
-  border-color: rgba(124,58,237,.7);
-}
+
 
 /* FAB Icon bars */
 .fab-bar {
@@ -2090,28 +2042,13 @@ body {
 .fab-bar:nth-child(2) { width: 14px; margin-left: 3px; }
 .fab-bar:nth-child(3) { width: 18px; margin-left: 1px; }
 
-/* Open state: morph to X */
-#mobileFab.fab-open .fab-bar:nth-child(1) {
-  width: 20px; margin-left: 0;
-  transform: translateY(6.5px) rotate(45deg);
-  background: linear-gradient(90deg, #7c3aed, #06b6d4);
-}
-#mobileFab.fab-open .fab-bar:nth-child(2) {
-  opacity: 0; transform: scaleX(0);
-}
-#mobileFab.fab-open .fab-bar:nth-child(3) {
-  width: 20px; margin-left: 0;
-  transform: translateY(-6.5px) rotate(-45deg);
-  background: linear-gradient(90deg, #06b6d4, #7c3aed);
-}
+
 
 /* Glow pulse on closed state */
 @keyframes fabPulse {
   0%,100% { box-shadow: 0 8px 32px rgba(6,182,212,.35), 0 0 0 1px rgba(6,182,212,.12); }
   50%      { box-shadow: 0 8px 40px rgba(6,182,212,.55), 0 0 0 3px rgba(6,182,212,.2); }
 }
-#mobileFab:not(.fab-open) { animation: fabPulse 2.5s ease-in-out infinite; }
-#mobileFab.fab-open        { animation: none; }
 
 /* ════════ DROP-UP RIBBON ════════ */
 #fabRibbon {
@@ -2327,11 +2264,11 @@ body {
 /* GPU & paint hints */
 html, body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 body {
-  background:
-    radial-gradient(1200px 700px at 85% -10%, rgba(124,58,237,.18), transparent 60%),
-    radial-gradient(900px 600px at -10% 110%, rgba(6,182,212,.14), transparent 60%),
-    linear-gradient(135deg, #0a0f1f 0%, #0f0a24 55%, #0a0f1f 100%) !important;
-  background-attachment: fixed;
+  background: radial-gradient(circle at 20% 30%, #0b1020, transparent 60%),
+              radial-gradient(circle at 80% 70%, #1a0b2e, transparent 60%),
+              #050714;
+
+  background-blend-mode: screen;
 }
 
 /* Fixed background layer that animates only via CSS transform (GPU) */
@@ -2938,12 +2875,7 @@ button, .btn, .topic-btn, .subtopic-btn, .ribbon-btn, .bm-btn, .nav-toggle-icon,
   <!-- Feedback overlay -->
   <div id="feedbackOverlay" class="feedback-overlay"></div>
 
-  <!-- MOBILE FAB DROP-UP RIBBON -->
-  <button id="mobileFab" aria-label="Open toolbar" style="display:none;">
-    <span class="fab-bar"></span>
-    <span class="fab-bar"></span>
-    <span class="fab-bar"></span>
-  </button>
+
 
   <div id="fabRibbon">
     <div class="ribbon-label">Navigation</div>
@@ -8778,7 +8710,7 @@ function boot() {
 function initTopbarSwiper() {
   const MOBILE = () => window.innerWidth <= 640;
 
-  const fab     = document.getElementById('mobileFab');
+  
   const ribbon  = document.getElementById('fabRibbon');
   const backdrop = document.getElementById('topbarBackdrop');
   if (!fab || !ribbon) return;
@@ -8958,6 +8890,111 @@ setTimeout(addBattleButtons, 1800);
 
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"7f7b0fd8732c4326aae4b9d58d5c514a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script>
+/* =====================================================
+   🔥 FINAL MOBILE FIX SCRIPT (ALL IN ONE)
+   ===================================================== */
+
+(function () {
+
+  /* ===============================
+     ✅ FIX 1: FORCE MODAL SCROLL
+     =============================== */
+  const style = document.createElement("style");
+  style.innerHTML = `
+  @media (max-width: 576px) {
+
+    .modal-dialog {
+      margin: 8px !important;
+      max-width: 100% !important;
+    }
+
+    .modal-content {
+      max-height: 85vh !important;
+      overflow-y: auto !important;
+      padding: 12px !important;
+    }
+
+    .modal-body {
+      padding: 10px !important;
+    }
+
+    /* 🔥 CRITICAL: remove inner glass spacing */
+    .modal-body .glass {
+      padding: 8px !important;
+      margin-bottom: 10px !important;
+    }
+
+    /* ===============================
+       ✅ FIX 2: BOTTOM UI VISIBILITY
+       =============================== */
+
+    .resizable-question-box {
+      padding-bottom: 120px !important;
+    }
+
+    .timer-pill {
+      bottom: 85px !important;
+      right: 70px !important;
+      z-index: 9999 !important;
+    }
+
+  }
+
+  /* ===============================
+     ✅ FIX 3: FORCE HIDE NAV ICON
+     =============================== */
+
+  .nav-toggle-icon {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  `;
+  document.head.appendChild(style);
+
+
+  /* ===============================
+     ✅ FIX 4: REMOVE NAV ICON (JS LEVEL)
+     =============================== */
+  function removeNavIcon() {
+    document.querySelectorAll('.nav-toggle-icon').forEach(el => el.remove());
+  }
+
+  removeNavIcon();
+  setInterval(removeNavIcon, 1000); // keeps removing if re-rendered
+
+
+  /* ===============================
+     ✅ FIX 5: ENSURE MODAL CONTENT VISIBLE
+     =============================== */
+  function fixModal() {
+    const modal = document.querySelector('.modal.show .modal-content');
+    if (modal) {
+      modal.style.maxHeight = "85vh";
+      modal.style.overflowY = "auto";
+    }
+  }
+
+  setInterval(fixModal, 500);
+
+
+  /* ===============================
+     ✅ FIX 6: FORCE SCROLL TO BOTTOM FIELD
+     =============================== */
+  document.addEventListener("focusin", function (e) {
+    if (e.target.closest(".modal")) {
+      setTimeout(() => {
+        e.target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 300);
+    }
+  });
+
+})();
+</script>
+
 </body>
 
 
