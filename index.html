@@ -3,7 +3,11 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Mock Test Portal</title>
 
   <!-- Google Fonts: Merriweather + Inter -->
@@ -434,27 +438,6 @@
       color: rgba(234,240,255,.4) !important;
     }
 
-
-    .timer-pill {
-      position: fixed;
-      right: 14px;
-      bottom: 14px;
-      z-index: 99;
-      padding: .3rem .55rem;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, .18);
-      background: rgba(0, 0, 0, .30);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
-      font-variant-numeric: tabular-nums;
-    }
-
-    @media (max-width: 640px) {
-      .timer-pill {
-        right: 80px !important;  /* shift left of FAB on mobile */
-        bottom: 16px !important;
-      }
-    }
 
     /* Hover help box (desktop only) */
     .hover-help {
@@ -1263,14 +1246,6 @@
       align-self: stretch;
     }
 
-    .timer-pill {
-      cursor: grab;
-    }
-
-    .timer-pill:active {
-      cursor: grabbing;
-    }
-
     @media (max-width: 576px) {
       .nav-panel {
         top: 0;
@@ -1657,19 +1632,7 @@ body {
   background: rgba(6,182,212,.1) !important;
 }
 
-/* ── Scan Line effect on question box ── */
-.resizable-question-box::after {
-  content: '';
-  position: absolute; left: 0; right: 0; top: -100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(6,182,212,.3), transparent);
-  animation: scanLine 6s linear infinite;
-  pointer-events: none; z-index: 0;
-}
-@keyframes scanLine {
-  0% { top: -5%; }
-  100% { top: 105%; }
-}
+
 
 /* ── Topic/subtopic buttons ── */
 .topic-btn, .subtopic-btn {
@@ -1988,37 +1951,35 @@ body {
   #pdfDropZone   { min-height: 200px; padding: 1.2rem; }
 }
 
-/* ── MOBILE: stop question box clipping the toolbar ── */
+/* ── MOBILE: fix scrolling + toolbar visibility ── */
 @media (max-width: 767px) {
-  /* Allow the question box to show toolbar overflow (wraps, never hides) */
+  /* Let the question box expand to full content height — page scroll handles it */
   .resizable-question-box {
     overflow: visible !important;
+    height: auto !important;
+    min-height: unset !important;
+    flex: none !important;
   }
-  /* But keep the scroll area itself contained */
+  /* Disable inner scroll — content flows naturally, body/page scrolls */
   .question-scroll-area {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
+    overflow: visible !important;
+    flex: none !important;
+    height: auto !important;
+    max-height: none !important;
+    padding-right: 0 !important;
+  }
+  /* Allow the engine column to grow with content */
+  .engine-shell {
+    min-height: unset !important;
+    height: auto !important;
+  }
+  .engine-shell > div {
+    height: auto !important;
   }
 }
-
-/* ════════════════════════════════════════════════════════════
-   📱 MOBILE FAB DROP-UP RIBBON  — bottom-right corner
-   ════════════════════════════════════════════════════════════ */
 
 /* Hide the old swipe handle entirely */
 #topbarSwipeHandle { display: none !important; }
-#topbarBackdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 199;
-  background: rgba(0,0,0,.45);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  transition: opacity 0.25s ease;
-  opacity: 0;
-}
-#topbarBackdrop.show { display: block; opacity: 1; }
 
 /* On mobile engine view: keep topbar hidden (we use FAB ribbon instead) */
 @media (max-width: 576px) {
@@ -2033,225 +1994,40 @@ body {
   }
 }
 
-/* ════════ FAB BUTTON ════════ */
-#mobileFab {
-  display: none; /* shown by JS only on mobile + engine active */
-  position: fixed;
-  bottom: 80px;   /* above timer pill */
-  right: 16px;
-  z-index: 500;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(6,182,212,.65);
-  background: linear-gradient(135deg, rgba(6,182,212,.22), rgba(124,58,237,.28));
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow:
-    0 8px 32px rgba(6,182,212,.35),
-    0 0 0 1px rgba(6,182,212,.12),
-    inset 0 1px 0 rgba(255,255,255,.12);
-  cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-  touch-action: manipulation;
-  user-select: none;
-  -webkit-user-select: none;
+
+
+/* ── Timer show pill in topbar ── */
+#timerShowBtn {
+  display: none;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
   gap: 4px;
-}
-#mobileFab:active {
-  transform: scale(0.92);
-  box-shadow: 0 4px 18px rgba(6,182,212,.4), 0 0 0 2px rgba(6,182,212,.3);
-}
-#mobileFab.fab-open {
-  background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.22));
-  box-shadow: 0 8px 36px rgba(124,58,237,.45), 0 0 0 2px rgba(124,58,237,.22);
-  border-color: rgba(124,58,237,.7);
-}
-
-/* FAB Icon bars */
-.fab-bar {
-  display: block;
-  height: 2.5px;
-  border-radius: 99px;
-  background: linear-gradient(90deg, #06b6d4, #7c3aed);
-  box-shadow: 0 0 6px rgba(6,182,212,.5);
-  transition: all .3s cubic-bezier(0.34, 1.45, 0.64, 1);
-  position: relative;
-}
-.fab-bar:nth-child(1) { width: 20px; }
-.fab-bar:nth-child(2) { width: 14px; margin-left: 3px; }
-.fab-bar:nth-child(3) { width: 18px; margin-left: 1px; }
-
-/* Open state: morph to X */
-#mobileFab.fab-open .fab-bar:nth-child(1) {
-  width: 20px; margin-left: 0;
-  transform: translateY(6.5px) rotate(45deg);
-  background: linear-gradient(90deg, #7c3aed, #06b6d4);
-}
-#mobileFab.fab-open .fab-bar:nth-child(2) {
-  opacity: 0; transform: scaleX(0);
-}
-#mobileFab.fab-open .fab-bar:nth-child(3) {
-  width: 20px; margin-left: 0;
-  transform: translateY(-6.5px) rotate(-45deg);
-  background: linear-gradient(90deg, #06b6d4, #7c3aed);
-}
-
-/* Glow pulse on closed state */
-@keyframes fabPulse {
-  0%,100% { box-shadow: 0 8px 32px rgba(6,182,212,.35), 0 0 0 1px rgba(6,182,212,.12); }
-  50%      { box-shadow: 0 8px 40px rgba(6,182,212,.55), 0 0 0 3px rgba(6,182,212,.2); }
-}
-#mobileFab:not(.fab-open) { animation: fabPulse 2.5s ease-in-out infinite; }
-#mobileFab.fab-open        { animation: none; }
-
-/* ════════ DROP-UP RIBBON ════════ */
-#fabRibbon {
-  display: none; /* toggled by JS */
-  position: fixed;
-  bottom: 144px; /* above FAB + timer */
-  right: 10px;
-  z-index: 499;
-  min-width: 200px;
-  max-width: min(280px, 88vw);
-  border-radius: 20px;
-  border: 1px solid rgba(6,182,212,.35);
-  background: linear-gradient(160deg,
-    rgba(5,7,20,.92) 0%,
-    rgba(12,6,30,.94) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow:
-    0 20px 60px rgba(0,0,0,.65),
-    0 0 0 1px rgba(6,182,212,.1),
-    inset 0 1px 0 rgba(255,255,255,.06);
-  padding: 12px 10px;
-  transform-origin: bottom right;
-  transform: scale(0.88) translateY(12px);
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    transform 0.3s cubic-bezier(0.34, 1.45, 0.64, 1),
-    opacity   0.22s ease;
-}
-#fabRibbon.ribbon-open {
-  display: block;
-  transform: scale(1) translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-/* Force display block before animation */
-#fabRibbon.ribbon-animating {
-  display: block;
-}
-
-/* Ribbon section label */
-.ribbon-label {
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  color: rgba(6,182,212,.65);
-  padding: 4px 8px 2px 8px;
-  margin-top: 4px;
-}
-.ribbon-label:first-child { margin-top: 0; }
-
-/* Ribbon divider */
-.ribbon-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(6,182,212,.25), transparent);
-  margin: 6px 8px;
-}
-
-/* Ribbon buttons */
-.ribbon-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 10px 14px;
-  border-radius: 13px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: rgba(234,240,255,.88);
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 11px !important;
+  padding: 4px 9px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(6,182,212,.45) !important;
+  background: rgba(6,182,212,.08) !important;
+  color: #06b6d4 !important;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   cursor: pointer;
-  transition: all .18s ease;
-  text-align: left;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  position: relative;
-  overflow: hidden;
-}
-.ribbon-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 13px;
-  background: rgba(6,182,212,.0);
-  transition: background .18s ease;
-}
-.ribbon-btn:active::before,
-.ribbon-btn:hover::before {
-  background: rgba(6,182,212,.10);
-}
-.ribbon-btn:active {
-  transform: scale(0.97);
-  border-color: rgba(6,182,212,.3);
-}
-.ribbon-btn .rb-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  flex-shrink: 0;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  transition: all .18s ease;
-}
-.ribbon-btn:active .rb-icon {
-  background: rgba(6,182,212,.18);
-  border-color: rgba(6,182,212,.4);
-}
-.ribbon-btn .rb-text { position: relative; z-index: 1; }
-.ribbon-btn .rb-badge {
-  margin-left: auto;
-  font-size: 9px;
   font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 999px;
-  background: rgba(6,182,212,.15);
-  border: 1px solid rgba(6,182,212,.3);
-  color: #06b6d4;
+}
+#timerShowBtn:active { opacity: .75; }
+
+/* ── Timer pill close button ── */
+#timerHideBtn {
+  background: none;
+  border: none;
+  color: rgba(6,182,212,.6);
+  font-size: 11px;
+  line-height: 1;
+  padding: 0 0 0 5px;
+  cursor: pointer;
   flex-shrink: 0;
+  transition: color .15s;
+  -webkit-tap-highlight-color: transparent;
 }
-
-/* Danger ribbon btn */
-.ribbon-btn.rb-danger .rb-icon {
-  background: rgba(239,68,68,.12);
-  border-color: rgba(239,68,68,.3);
-}
-.ribbon-btn.rb-danger:active .rb-icon {
-  background: rgba(239,68,68,.25);
-  border-color: rgba(239,68,68,.6);
-}
-.ribbon-btn.rb-danger { color: #fca5a5; }
-
-/* Success ribbon btn */
-.ribbon-btn.rb-success .rb-icon {
-  background: rgba(34,197,94,.12);
-  border-color: rgba(34,197,94,.3);
-}
-.ribbon-btn.rb-success { color: #86efac; }
+#timerHideBtn:hover, #timerHideBtn:active { color: rgba(6,182,212,1); }
 
 </style>
 
@@ -2310,6 +2086,278 @@ body {
   color: rgba(234,240,255,.4) !important;
 }
 </style>
+
+  <style id="god-perf-overrides">
+/* ============================================================
+   GOD-LEVEL PERFORMANCE + UI OVERRIDES (mobile-first)
+   - Drop-in additions; never replaces JS-bound class names/IDs.
+   - Defeats the worst lag culprits: heavy backdrop-filter,
+     paints on scroll, layout thrash, GPU layer churn.
+   ============================================================ */
+
+/* GPU & paint hints */
+html, body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body {
+  background: radial-gradient(circle at 20% 30%, #0b1020, transparent 60%),
+              radial-gradient(circle at 80% 70%, #1a0b2e, transparent 60%),
+              #050714;
+
+  background-blend-mode: screen;
+}
+
+/* Fixed background layer that animates only via CSS transform (GPU) */
+.page-wrap { isolation: isolate; }
+
+/* Smoother scrolling on iOS / contain layout to reduce reflow */
+* { -webkit-tap-highlight-color: transparent; }
+.view, .container, .container-fluid { contain: layout style; }
+.subjects, #subjectsGrid, #topicsArea, #qNav { contain: content; }
+img, video, canvas { content-visibility: auto; }
+
+/* Improved focus rings */
+button:focus-visible, input:focus-visible, select:focus-visible, [role=button]:focus-visible {
+  outline: 2px solid rgba(6,182,212,.7) !important;
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* Buttons & glass: GPU compositor friendly hover */
+.btn-glass, .topic-btn, .subtopic-btn, .subject-card {
+  will-change: transform;
+  transform: translateZ(0);
+  transition: transform .18s cubic-bezier(.2,.7,.2,1), background-color .18s ease, border-color .18s ease, box-shadow .25s ease;
+}
+.btn-glass:active, .topic-btn:active, .subtopic-btn:active { transform: translateY(1px) scale(.99); }
+
+/* Slightly elevated, cleaner glass */
+.glass {
+  background: linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.03)) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05) !important;
+  border-radius: 18px;
+}
+
+/* Hero polish */
+.brand-title {
+  background: linear-gradient(120deg,#fff 0%, #cfeaff 40%, #d6c1ff 80%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: .2px;
+}
+
+/* Pills */
+.pill {
+  background: rgba(255,255,255,.05) !important;
+  border-color: rgba(255,255,255,.12) !important;
+}
+
+/* Subject cards: subtle hover, no expensive box-shadow on mobile */
+.subject-card { border-radius: 18px; }
+@media (hover:hover) and (pointer:fine) {
+  .subject-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px rgba(0,0,0,.45), 0 0 0 1px rgba(124,58,237,.25); }
+}
+
+/* Question navigator dots */
+#qNav { gap: 6px !important; }
+
+/* ============================================================
+   MOBILE PERF FIXES (the big wins)
+   ============================================================ */
+@media (max-width: 900px) {
+  /* Backdrop-filter is the #1 cause of phone lag. Kill it. */
+  .glass, .engine-topbar, .timer-pill, #bmChatPanel,
+  .nav-panel, .bm-modal, #bmScoreboard, #bmFinished, #bmWaiting,
+  #bmRaceTrack, .hover-help {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(12,16,28,.92) !important;
+  }
+  .glass {
+    background: linear-gradient(135deg, rgba(20,24,40,.92), rgba(16,20,34,.92)) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.45) !important;
+  }
+
+  /* Disable the particle canvas entirely on phones (huge GPU savings) */
+  #particleCanvas { display: none !important; }
+
+  /* Soft-disable conic/orb gradients & decorative blurs commonly inlined */
+  [style*="conic-gradient"], [style*="radial-gradient(circle"] {
+    filter: none !important;
+  }
+
+  /* Disable hover transforms on touch (avoids flicker) */
+  .subject-card:hover, .btn-glass:hover, .topic-btn:hover, .subtopic-btn:hover {
+    transform: none !important;
+  }
+
+  /* Faster, snappier transitions on phone */
+  *, *::before, *::after {
+    animation-duration: .35s !important;
+    transition-duration: .15s !important;
+  }
+
+  /* Force composited scroll containers to behave */
+  .question-scroll-area, #pdfCanvasArea, .nav-panel-inner, #bmChatBody {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Reduce shadow complexity on cards */
+  .subject-card, .qbox, #questionBox, .glass {
+    box-shadow: 0 6px 18px rgba(0,0,0,.5) !important;
+  }
+
+  /* Keep text legible on small screens */
+  .brand-title { font-size: clamp(1.6rem, 5.4vw, 2.3rem) !important; }
+  .fs-5 { font-size: 1.02rem !important; }
+
+  /* Sticky topbar should be solid, not blurred */
+  .engine-topbar {
+    background: rgba(8,10,18,.96) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+  }
+
+  /* Prevent rubber-band repaint chaos */
+  body { overscroll-behavior-y: contain; }
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  #particleCanvas { display: none !important; }
+}
+
+/* Touch tap target sizing */
+button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIcon {
+  min-height: 40px;
+}
+@media (max-width: 480px) {
+  button, .btn, .topic-btn, .subtopic-btn, .bm-btn { min-height: 44px; }
+  .nav-actions-vertical .btn { width: 100% !important; }
+  .timer-pill { font-size: .85rem; padding: 6px 10px !important; }
+}
+
+/* ============================================================
+   GOD-LEVEL VISUAL POLISH (desktop & tablet)
+   ============================================================ */
+@media (min-width: 901px) {
+  /* Lighter blur for far less paint cost while keeping the look */
+  .glass { backdrop-filter: blur(10px) saturate(120%) !important; -webkit-backdrop-filter: blur(10px) saturate(120%) !important; }
+  .engine-topbar { backdrop-filter: blur(8px) saturate(115%) !important; -webkit-backdrop-filter: blur(8px) saturate(115%) !important; }
+
+  /* Subtle moving aurora (CSS transform — GPU only, ~0% CPU) */
+  body::before {
+    content: "";
+    position: fixed; inset: -20vmax;
+    background:
+      radial-gradient(40vmax 30vmax at 20% 20%, rgba(6,182,212,.12), transparent 60%),
+      radial-gradient(35vmax 28vmax at 80% 70%, rgba(124,58,237,.14), transparent 60%);
+    z-index: 0; pointer-events: none;
+    animation: aurora 22s ease-in-out infinite alternate;
+    filter: blur(40px);
+  }
+  @keyframes aurora {
+    0%   { transform: translate3d(-3%,-2%,0) rotate(0deg); }
+    50%  { transform: translate3d(2%,3%,0) rotate(8deg); }
+    100% { transform: translate3d(-1%,-1%,0) rotate(-6deg); }
+  }
+}
+
+/* Buttons */
+.btn-glass {
+  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.14);
+  color: var(--txt);
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  transition: transform .15s, background .15s, border-color .15s, box-shadow .2s;
+}
+.btn-glass:hover { background: linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,255,255,.06)); border-color: rgba(255,255,255,.25); }
+
+/* Form inputs polish */
+.form-control, .bm-input, #bmCodeInput, #pdfCurPageInput, #bmChatInput, select#fontSelect {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  color: var(--txt) !important;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+.form-control:focus, .bm-input:focus, #bmCodeInput:focus, #pdfCurPageInput:focus, #bmChatInput:focus {
+  background: rgba(255,255,255,.07) !important;
+  border-color: rgba(6,182,212,.5) !important;
+  box-shadow: 0 0 0 3px rgba(6,182,212,.18) !important;
+  outline: none !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,.03); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(6,182,212,.5), rgba(124,58,237,.5));
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background-clip: padding-box; background-image: linear-gradient(180deg, rgba(6,182,212,.7), rgba(124,58,237,.7)); }
+
+/* Selection */
+::selection { background: rgba(6,182,212,.35); color:#fff; }
+
+/* Lazy heavy panels until visible */
+#pdfTutorPanel, #bmChatPanel, #bmOverlay, #bmFinished, #bmWaiting, #bmRaceTrack {
+  contain: content;
+}
+
+/* Engine question box scroll smooth */
+.question-scroll-area { scroll-behavior: smooth; will-change: scroll-position; }
+
+/* Big question on phones */
+@media (max-width: 480px) {
+  #questionText { font-size: 1.02rem !important; line-height: 1.5; }
+  .qbox { padding: .25rem 0; }
+
+  /* Always keep Sound/Exam toolbar visible — wrap tightly on narrow screens */
+  .top-toolbar.mobile-move-toolbar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    padding: 5px 4px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: visible !important;
+    white-space: normal !important;
+    border-radius: 12px !important;
+  }
+  .top-toolbar.mobile-move-toolbar .btn {
+    font-size: 10px !important;
+    padding: 5px 9px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 34px !important;
+  }
+  #googleSearchBtnTop {
+    width: 34px !important;
+    height: 34px !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* Small detail: HUD mode badge clean look */
+.hud-mode-badge { letter-spacing: .8px; font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 999px; }
+.hud-mode-exam { background: rgba(34,197,94,.1); color:#4ade80; border:1px solid rgba(34,197,94,.35); }
+
+/* Print-friendly fallback removed for size */
+
+  </style>
 </head>
 
 <body>
@@ -2448,13 +2496,8 @@ body {
                 📄 PDF Tutor
               </button>
 
-              <!-- ⏱ Timer restore button (shown when timer is hidden) -->
-              <button id="timerShowBtn" title="Show timer" onclick="
-                document.getElementById('timerPill').style.display='';
-                document.getElementById('timerShowBtn').style.display='none';
-              " style="display:none;align-items:center;gap:4px;font-size:12px;padding:4px 8px;border-radius:8px;border:1px solid rgba(6,182,212,.35);background:rgba(6,182,212,.08);color:#06b6d4;cursor:pointer;">
-                ⏱ Timer
-              </button>
+              <!-- ⏱ Timer restore button (appears when timer is hidden) -->
+              <button id="timerShowBtn" class="btn" title="Show Timer">⏱</button>
 
               <!-- ✅ NAV ICON (Top Right) -->
               <button id="navToggleIcon" class="nav-toggle-icon" aria-label="Open Navigator">
@@ -2657,19 +2700,6 @@ body {
       </div>
 
 
-      <div class="timer-pill glass" id="timerPill">
-        <div class="d-flex align-items-center gap-1">
-          <div id="timerText">00:00</div>
-          <button id="timerCloseBtn" title="Hide timer" onclick="
-            document.getElementById('timerPill').style.display='none';
-            document.getElementById('timerShowBtn').style.display='flex';
-          " style="
-            background:none;border:none;padding:0 0 0 3px;cursor:pointer;
-            color:rgba(255,255,255,.45);font-size:10px;line-height:1;
-            display:flex;align-items:center;transition:color .15s;
-          " onmouseover="this.style.color='rgba(255,255,255,.9)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">✕</button>
-        </div>
-      </div>
 
 
     </div>
@@ -2689,74 +2719,31 @@ body {
   <!-- Feedback overlay -->
   <div id="feedbackOverlay" class="feedback-overlay"></div>
 
-  <!-- MOBILE FAB DROP-UP RIBBON -->
-  <button id="mobileFab" aria-label="Open toolbar" style="display:none;">
-    <span class="fab-bar"></span>
-    <span class="fab-bar"></span>
-    <span class="fab-bar"></span>
-  </button>
-
-  <div id="fabRibbon">
-    <div class="ribbon-label">Navigation</div>
-    <button class="ribbon-btn" id="fab_backBtn">
-      <span class="rb-icon">←</span>
-      <span class="rb-text">Back to Portal</span>
-    </button>
-
-    <div class="ribbon-divider"></div>
-    <div class="ribbon-label">Test Info</div>
-    <button class="ribbon-btn" id="fab_topicInfo" style="cursor:default;opacity:.8;pointer-events:none;">
-      <span class="rb-icon">📋</span>
-      <span class="rb-text" id="fab_topicLabel" style="font-size:11px;line-height:1.3;word-break:break-word;">Topic</span>
-    </button>
-    <button class="ribbon-btn" id="fab_qCounter" style="cursor:default;opacity:.8;pointer-events:none;">
-      <span class="rb-icon">🔢</span>
-      <span class="rb-text" id="fab_qCountLabel">Q —</span>
-      <span class="rb-badge" id="fab_modeBadge">EXAM</span>
-    </button>
-
-    <div class="ribbon-divider"></div>
-    <div class="ribbon-label">Tools</div>
-    <button class="ribbon-btn" id="fab_qmarkBtn" style="display:none;">
-      <span class="rb-icon">💡</span>
-      <span class="rb-text">Hint / Explanation</span>
-    </button>
-    <button class="ribbon-btn" id="fab_googleBtn" style="display:none;">
-      <span class="rb-icon">
-        <svg width="14" height="14" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303C33.613 32.973 29.21 36 24 36c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.272 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 16.108 19.01 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.272 4 24 4c-7.682 0-14.344 4.312-17.694 10.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.197l-6.19-5.238C29.23 35.091 26.715 36 24 36c-5.189 0-9.58-3.007-11.283-7.285l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.06 12.06 0 0 1-4.087 5.565l.002-.001 6.19 5.238C36.97 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
-      </span>
-      <span class="rb-text">Search on Google</span>
-    </button>
-    <button class="ribbon-btn" id="fab_soundBtn">
-      <span class="rb-icon" id="fab_soundIcon">🔊</span>
-      <span class="rb-text" id="fab_soundLabel">Sound: On</span>
-    </button>
-    <button class="ribbon-btn" id="fab_examModeBtn">
-      <span class="rb-icon" id="fab_examIcon">🔒</span>
-      <span class="rb-text" id="fab_examLabel">Exam Mode: On</span>
-    </button>
-    <button class="ribbon-btn" id="fab_pdfTutorBtn" style="display:none;">
-      <span class="rb-icon">📄</span>
-      <span class="rb-text">PDF Tutor</span>
-    </button>
-    <button class="ribbon-btn" id="fab_timerRestoreBtn" style="display:none;">
-      <span class="rb-icon">⏱</span>
-      <span class="rb-text">Show Timer</span>
-    </button>
-
-    <div class="ribbon-divider"></div>
-    <div class="ribbon-label">Navigator</div>
-    <button class="ribbon-btn" id="fab_navigatorBtn">
-      <span class="rb-icon">☰</span>
-      <span class="rb-text">Question Navigator</span>
-    </button>
-
-    <div class="ribbon-divider"></div>
-    <button class="ribbon-btn rb-danger" id="fab_submitBtn">
-      <span class="rb-icon">✅</span>
-      <span class="rb-text">Submit Test</span>
-    </button>
+  <!-- ⏱ Timer — fixed bottom-left, collapsible via ✕ button -->
+  <div id="timerPill" style="
+    display: none;
+    position: fixed;
+    bottom: 14px;
+    left: 14px;
+    z-index: 999;
+    padding: 4px 6px 4px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(0,0,0,.45);
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #eaf0ff;
+    letter-spacing: .5px;
+    align-items: center;
+    gap: 0;
+    user-select: none;
+  ">
+    <span id="timerText">00:00</span>
+    <button id="timerHideBtn" title="Hide timer" onclick="(function(){document.getElementById('timerPill').style.display='none';var s=document.getElementById('timerShowBtn');if(s){s.style.display='flex';}})()">✕</button>
   </div>
+
+
 
   <!-- Help Modal -->
   <div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
@@ -2826,20 +2813,15 @@ body {
             <label class="form-label subtle">Candidate name</label>
             <input id="candNameInput" class="form-control" placeholder=" " />
           </div>
-          <div class="top-toolbar ms-auto mobile-move-toolbar">
-
-
-            <div class="mb-1">
-              <label class="form-label subtle">Time required (in minutes)</label>
-              <input id="candTimeInput" type="number" min="1" class="form-control" placeholder=" " />
-              <div class="small subtle mt-2">If empty, auto time = 15 mins</div>
-            </div>
+          <div class="mb-3">
+            <label class="form-label subtle">Time required (in minutes)</label>
+            <input id="candTimeInput" type="number" min="1" class="form-control" placeholder=" " />
+            <div class="small subtle mt-2">If empty, auto time = 15 mins</div>
           </div>
-
-          <div class="modal-footer border-0">
-            <button type="button" class="btn btn-glass" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-success" id="startTestConfirmBtn">Start</button>
-          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-glass" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" id="startTestConfirmBtn">Start</button>
         </div>
       </div>
     </div>
@@ -2858,71 +2840,95 @@ body {
     <!-- Bootstrap + jsPDF -->
     
 <script>
+/* GOD-LEVEL particle field: device-aware, throttled, pause-when-hidden */
 (function() {
   const canvas = document.getElementById('particleCanvas');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [];
+
+  // Hard-disable on mobile / low-power / reduced-motion
+  const ua = navigator.userAgent || '';
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua) || window.matchMedia('(max-width: 900px)').matches;
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lowMem = (navigator.deviceMemory && navigator.deviceMemory <= 4);
+  const lowCPU = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+  if (isMobile || reduceMotion || lowMem) { canvas.style.display = 'none'; return; }
+
+  const ctx = canvas.getContext('2d', { alpha: true });
+  const DPR = Math.min(window.devicePixelRatio || 1, 1.25); // cap DPR to save fillrate
+  let W, H, particles = [], running = true, lastTs = 0;
+
+  // Slightly lighter on mid-tier hardware
+  const COUNT = lowCPU ? 18 : 28;
+  const MAX_LINK_DIST = lowCPU ? 80 : 100;
+  const TARGET_FPS = lowCPU ? 24 : 30;
+  const FRAME_MS = 1000 / TARGET_FPS;
 
   function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.floor(W * DPR);
+    canvas.height = Math.floor(H * DPR);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   }
   resize();
-  window.addEventListener('resize', resize);
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 120); }, { passive: true });
 
   const colors = ['rgba(6,182,212,', 'rgba(124,58,237,', 'rgba(59,130,246,'];
-
-  for (let i = 0; i < 35; i++) {
+  for (let i = 0; i < COUNT; i++) {
     particles.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      r: Math.random() * 1.6 + 0.4,
-      dx: (Math.random() - 0.5) * 0.28,
-      dy: (Math.random() - 0.5) * 0.28,
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 1.4 + 0.5,
+      dx: (Math.random() - 0.5) * 0.22,
+      dy: (Math.random() - 0.5) * 0.22,
       color: colors[Math.floor(Math.random() * colors.length)],
-      alpha: Math.random() * 0.45 + 0.15
+      alpha: Math.random() * 0.4 + 0.18
     });
   }
 
-  let frameCount = 0;
+  document.addEventListener('visibilitychange', () => {
+    running = !document.hidden;
+    if (running) { lastTs = 0; requestAnimationFrame(loop); }
+  });
+
   function draw() {
-    frameCount++;
     ctx.clearRect(0, 0, W, H);
-    particles.forEach(p => {
+    for (let i=0;i<particles.length;i++) {
+      const p = particles[i];
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = p.color + p.alpha + ')';
       ctx.fill();
-
       p.x += p.dx; p.y += p.dy;
-      if (p.x < 0) p.x = W;
-      if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H;
-      if (p.y > H) p.y = 0;
-    });
-
-    // draw connection lines every other frame for perf
-    if (frameCount % 2 === 0) {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i+1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx*dx+dy*dy);
-          if (dist < 100) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = 'rgba(6,182,212,' + (0.07 * (1 - dist/100)) + ')';
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
+      if (p.x < 0) p.x = W; else if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; else if (p.y > H) p.y = 0;
+    }
+    // links
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i+1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < MAX_LINK_DIST*MAX_LINK_DIST) {
+          const dist = Math.sqrt(d2);
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = 'rgba(6,182,212,' + (0.06 * (1 - dist/MAX_LINK_DIST)).toFixed(3) + ')';
+          ctx.stroke();
         }
       }
     }
-    requestAnimationFrame(draw);
   }
-  draw();
+
+  function loop(ts) {
+    if (!running) return;
+    if (ts - lastTs >= FRAME_MS) { draw(); lastTs = ts; }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
 })();
 </script>
 
@@ -3203,6 +3209,8 @@ body {
       $('backToPortalBtn').addEventListener('click', () => showView('portal'));
       $('engineBackBtn').addEventListener('click', () => {
         cleanupEngine();
+        const tp = document.getElementById('timerPill');
+        if (tp) tp.style.display = 'none';
         showView('portal');
       });
 
@@ -3462,6 +3470,13 @@ body {
         renderQuestion(0);
         state.startedAt = Date.now(); // ✅ ADD
         startTimer();
+
+        // Show the timer pill
+        const tp = document.getElementById('timerPill');
+        if (tp) tp.style.display = 'flex';
+        // Ensure restore button is hidden when timer is shown
+        const tsb = document.getElementById('timerShowBtn');
+        if (tsb) tsb.style.display = 'none';
 
       }
 
@@ -5650,44 +5665,7 @@ body {
 
     <script>
       (function () {
-        const box = document.querySelector('.timer-pill');
-        if (!box) return;
-
-        let isDragging = false;
-        let offsetX = 0;
-        let offsetY = 0;
-
-        box.addEventListener('mousedown', (e) => {
-          isDragging = true;
-          offsetX = e.clientX - box.getBoundingClientRect().left;
-          offsetY = e.clientY - box.getBoundingClientRect().top;
-          box.style.transition = 'none';
-          box.style.zIndex = 99999;
-        });
-
-        document.addEventListener('mousemove', (e) => {
-          if (!isDragging) return;
-
-          let x = e.clientX - offsetX;
-          let y = e.clientY - offsetY;
-
-          // keep inside viewport
-          const maxX = window.innerWidth - box.offsetWidth;
-          const maxY = window.innerHeight - box.offsetHeight;
-
-          x = Math.max(0, Math.min(x, maxX));
-          y = Math.max(0, Math.min(y, maxY));
-
-          box.style.left = x + 'px';
-          box.style.top = y + 'px';
-          box.style.right = 'auto';
-          box.style.bottom = 'auto';
-          box.style.position = 'fixed';
-        });
-
-        document.addEventListener('mouseup', () => {
-          isDragging = false;
-        });
+        // Timer drag removed — timer is now a simple fixed element
       })();
     </script>
 
@@ -8498,174 +8476,16 @@ function boot() {
   buildUI();
   buildChatUI();
   addBattleButtons();
-  initTopbarSwiper();
-}
 
-// ── MOBILE FAB DROP-UP RIBBON ─────────────────────────────────────────────────
-function initTopbarSwiper() {
-  const MOBILE = () => window.innerWidth <= 640;
-
-  const fab     = document.getElementById('mobileFab');
-  const ribbon  = document.getElementById('fabRibbon');
-  const backdrop = document.getElementById('topbarBackdrop');
-  if (!fab || !ribbon) return;
-
-  let isOpen = false;
-
-  // ── Sync ribbon content from real buttons ──
-  function syncRibbon() {
-    // topic label
-    const topicEl = document.getElementById('testInfoTop');
-    if (topicEl) document.getElementById('fab_topicLabel').textContent = topicEl.textContent || 'Topic';
-
-    // q counter
-    const qEl = document.getElementById('qCounterBadge');
-    if (qEl) document.getElementById('fab_qCountLabel').textContent = qEl.textContent || 'Q —';
-
-    // mode badge
-    const modeEl = document.getElementById('modeBadge');
-    const fabMode = document.getElementById('fab_modeBadge');
-    if (modeEl && fabMode) {
-      fabMode.textContent = modeEl.textContent || '';
-      fabMode.style.background = modeEl.classList.contains('hud-mode-practice')
-        ? 'rgba(34,197,94,.18)' : 'rgba(239,68,68,.15)';
-      fabMode.style.color = modeEl.classList.contains('hud-mode-practice') ? '#4ade80' : '#f87171';
-      fabMode.style.borderColor = modeEl.classList.contains('hud-mode-practice')
-        ? 'rgba(34,197,94,.4)' : 'rgba(239,68,68,.4)';
-    }
-
-    // sound button label
-    const soundBtn = document.getElementById('soundBtn');
-    if (soundBtn) {
-      document.getElementById('fab_soundLabel').textContent = soundBtn.textContent;
-      document.getElementById('fab_soundIcon').textContent =
-        soundBtn.textContent.includes('Off') ? '🔇' : '🔊';
-    }
-
-    // exam mode btn label
-    const examBtn = document.getElementById('examModeBtn');
-    if (examBtn) {
-      document.getElementById('fab_examLabel').textContent = examBtn.textContent;
-      document.getElementById('fab_examIcon').textContent =
-        examBtn.textContent.includes('Off') ? '🔓' : '🔒';
-    }
-
-    // hint btn visibility
-    const qmarkBtn = document.getElementById('qmarkBtn');
-    const fab_q = document.getElementById('fab_qmarkBtn');
-    if (fab_q) fab_q.style.display = (qmarkBtn && qmarkBtn.style.display !== 'none') ? 'flex' : 'none';
-
-    // google btn visibility
-    const gBtn = document.getElementById('googleSearchBtnTop');
-    const fab_g = document.getElementById('fab_googleBtn');
-    if (fab_g) fab_g.style.display = (gBtn && gBtn.style.display !== 'none') ? 'flex' : 'none';
-
-    // pdf tutor
-    const pdfBtn = document.getElementById('pdfTutorToggleBtn');
-    const fab_p = document.getElementById('fab_pdfTutorBtn');
-    if (fab_p) fab_p.style.display = (pdfBtn && pdfBtn.style.display !== 'none') ? 'flex' : 'none';
-
-    // timer restore
-    const timerShowBtn = document.getElementById('timerShowBtn');
-    const fab_t = document.getElementById('fab_timerRestoreBtn');
-    if (fab_t) fab_t.style.display = (timerShowBtn && timerShowBtn.style.display === 'flex') ? 'flex' : 'none';
-  }
-
-  function openRibbon() {
-    syncRibbon();
-    isOpen = true;
-    fab.classList.add('fab-open');
-    ribbon.classList.add('ribbon-animating');
-    ribbon.style.display = 'block';
-    // force reflow
-    ribbon.getBoundingClientRect();
-    ribbon.classList.add('ribbon-open');
-    backdrop.classList.add('show');
-  }
-
-  function closeRibbon() {
-    isOpen = false;
-    fab.classList.remove('fab-open');
-    ribbon.classList.remove('ribbon-open');
-    backdrop.classList.remove('show');
-    setTimeout(() => {
-      if (!isOpen) {
-        ribbon.style.display = 'none';
-        ribbon.classList.remove('ribbon-animating');
-      }
-    }, 320);
-  }
-
-  function toggleRibbon() { isOpen ? closeRibbon() : openRibbon(); }
-
-  function isEngineActive() {
-    const ev = document.getElementById('engineView');
-    return ev && ev.classList.contains('active');
-  }
-
-  function updateFabVisibility() {
-    if (MOBILE() && isEngineActive()) {
-      fab.style.display = 'flex';
-      // Measure real topbar height and update CSS var
-      const tb = document.querySelector('.engine-topbar');
-      if (tb) {
-        const h = tb.offsetHeight || 72;
-        document.documentElement.style.setProperty('--topbar-h', h + 'px');
-      }
-    } else {
-      fab.style.display = 'none';
-      if (isOpen) closeRibbon();
-    }
-  }
-
-  // ── FAB click ──
-  fab.addEventListener('click', toggleRibbon);
-
-  // ── Backdrop click closes ──
-  if (backdrop) backdrop.addEventListener('click', closeRibbon);
-
-  // ── Wire ribbon buttons to real buttons ──
-  function wireBtn(fabId, realId) {
-    const fabBtn = document.getElementById(fabId);
-    if (!fabBtn) return;
-    fabBtn.addEventListener('click', () => {
-      closeRibbon();
-      setTimeout(() => {
-        const real = document.getElementById(realId);
-        if (real) real.click();
-      }, 80);
+  // Wire timerShowBtn to restore timer pill
+  const timerShowBtnEl = document.getElementById('timerShowBtn');
+  if (timerShowBtnEl) {
+    timerShowBtnEl.addEventListener('click', () => {
+      const tp = document.getElementById('timerPill');
+      if (tp) tp.style.display = 'flex';
+      timerShowBtnEl.style.display = 'none';
     });
   }
-
-  wireBtn('fab_backBtn',         'engineBackBtn');
-  wireBtn('fab_qmarkBtn',        'qmarkBtn');
-  wireBtn('fab_googleBtn',       'googleSearchBtnTop');
-  wireBtn('fab_soundBtn',        'soundBtn');
-  wireBtn('fab_examModeBtn',     'examModeBtn');
-  wireBtn('fab_navigatorBtn',    'navToggleIcon');
-  wireBtn('fab_submitBtn',       'submitBtn');
-  wireBtn('fab_pdfTutorBtn',     'pdfTutorToggleBtn');
-  wireBtn('fab_timerRestoreBtn', 'timerShowBtn');
-
-  // ── Watch view changes ──
-  const observer = new MutationObserver(updateFabVisibility);
-  ['engineView', 'portalView', 'subjectView'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) observer.observe(el, { attributes: true, attributeFilter: ['class'] });
-  });
-
-  window.addEventListener('resize', updateFabVisibility);
-  updateFabVisibility();
-
-  // ── Re-sync ribbon when engine state changes (exam mode, sound, etc.) ──
-  // Watch soundBtn and examModeBtn text changes
-  ['soundBtn', 'examModeBtn', 'qmarkBtn', 'googleSearchBtnTop', 'timerShowBtn', 'pdfTutorToggleBtn', 'qCounterBadge', 'testInfoTop', 'modeBadge'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      const mo = new MutationObserver(() => { if (isOpen) syncRibbon(); });
-      mo.observe(el, { childList: true, characterData: true, subtree: true, attributes: true });
-    }
-  });
 }
 
 // Retry button injection a few times for dynamically-rendered elements
@@ -8682,6 +8502,9 @@ setTimeout(addBattleButtons, 1800);
 </script>
 
 
+
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"7f7b0fd8732c4326aae4b9d58d5c514a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 
 
 </body>
