@@ -1990,13 +1990,116 @@ body {
   }
   /* Always push content below the fixed topbar */
   #engineView > .container-fluid {
-    padding-top: calc(var(--topbar-h, 88px) + 6px) !important;
+    padding-top: calc(var(--topbar-h, 120px) + 8px) !important;
   }
 }
 
 
 
-/* ── Timer show pill in topbar ── */
+/* ── Submit Confirm Modal ── */
+#submitConfirmOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#submitConfirmOverlay.show { display: flex; }
+#submitConfirmBox {
+  background: linear-gradient(145deg, rgba(12,16,32,.97), rgba(18,10,38,.97));
+  border: 1px solid rgba(239,68,68,.35);
+  border-radius: 22px;
+  box-shadow: 0 30px 70px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.05) inset;
+  padding: 28px 24px 24px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  animation: confirmPop .22s cubic-bezier(.34,1.45,.64,1);
+}
+@keyframes confirmPop {
+  from { transform: scale(.88) translateY(12px); opacity: 0; }
+  to   { transform: scale(1) translateY(0);      opacity: 1; }
+}
+#submitConfirmBox .sc-icon {
+  font-size: 2.6rem;
+  margin-bottom: 10px;
+  display: block;
+}
+#submitConfirmBox .sc-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #eaf0ff;
+  margin-bottom: 6px;
+  letter-spacing: .2px;
+}
+#submitConfirmBox .sc-sub {
+  font-size: .85rem;
+  color: rgba(234,240,255,.55);
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+#submitConfirmBox .sc-stats {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+#submitConfirmBox .sc-stat {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: .78rem;
+  color: rgba(234,240,255,.75);
+  font-weight: 600;
+}
+#submitConfirmBox .sc-stat span {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #eaf0ff;
+  margin-bottom: 2px;
+}
+#submitConfirmBox .sc-btns {
+  display: flex;
+  gap: 10px;
+}
+#scCancelBtn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  color: rgba(234,240,255,.75);
+  font-size: .92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+#scCancelBtn:hover { background: rgba(255,255,255,.10); color: #eaf0ff; }
+#scConfirmBtn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(239,68,68,.5);
+  background: linear-gradient(135deg, rgba(220,38,38,.85), rgba(153,27,27,.9));
+  color: #fff;
+  font-size: .92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  box-shadow: 0 6px 20px rgba(239,68,68,.28);
+  -webkit-tap-highlight-color: transparent;
+}
+#scConfirmBtn:hover { box-shadow: 0 8px 28px rgba(239,68,68,.45); transform: translateY(-1px); }
+#scConfirmBtn:active { transform: translateY(0); }
 #timerShowBtn {
   display: none;
   align-items: center;
@@ -3986,7 +4089,40 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         };
         $('googleSearchBtnTop').onclick = googleSearchCurrentQuestion;
 
-        $('submitBtn').onclick = submitTest;
+        $('submitBtn').onclick = showSubmitConfirm;
+
+        // ── Submit confirm modal wiring ──
+        function showSubmitConfirm() {
+          if (state.submitted) return;
+          // Build stats
+          let attempted = 0, unanswered = 0, review = 0;
+          state.qIds.forEach(qid => {
+            const s = state.qState[qid];
+            if (s.answer !== null) attempted++;
+            else unanswered++;
+            if (s.markedReview) review++;
+          });
+          const statsEl = document.getElementById('scStats');
+          if (statsEl) {
+            statsEl.innerHTML = `
+              <div class="sc-stat"><span style="color:#4ade80">${attempted}</span>Answered</div>
+              <div class="sc-stat"><span style="color:#fb923c">${unanswered}</span>Unanswered</div>
+              <div class="sc-stat"><span style="color:#facc15">${review}</span>Marked</div>
+            `;
+          }
+          const ov = document.getElementById('submitConfirmOverlay');
+          if (ov) ov.classList.add('show');
+        }
+
+        const scCancel = document.getElementById('scCancelBtn');
+        const scConfirm = document.getElementById('scConfirmBtn');
+        const scOverlay = document.getElementById('submitConfirmOverlay');
+        if (scCancel) scCancel.onclick = () => scOverlay.classList.remove('show');
+        if (scOverlay) scOverlay.addEventListener('click', e => { if (e.target === scOverlay) scOverlay.classList.remove('show'); });
+        if (scConfirm) scConfirm.onclick = () => {
+          scOverlay.classList.remove('show');
+          submitTest(false);
+        };
         // Practice help ? button (only works when examMode OFF)
         const qbtn = $('qmarkBtn');
         if (qbtn) {
@@ -4167,7 +4303,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
 
         if (fromTimer) {
-          alert('Test submitted.');
+          // auto-submitted by timer — no alert, summary shows automatically
         }
         showSummary(fromTimer);
 
@@ -8477,6 +8613,28 @@ function boot() {
   buildChatUI();
   addBattleButtons();
 
+  // ── Measure real topbar height and keep CSS var updated (fixes mobile cut-off) ──
+  function updateTopbarHeight() {
+    const tb = document.querySelector('.engine-topbar');
+    if (tb) {
+      const h = tb.getBoundingClientRect().height || tb.offsetHeight || 120;
+      document.documentElement.style.setProperty('--topbar-h', h + 'px');
+    }
+  }
+  // Run on load, on resize, and whenever engine view activates
+  updateTopbarHeight();
+  window.addEventListener('resize', updateTopbarHeight);
+  const engineViewEl = document.getElementById('engineView');
+  if (engineViewEl) {
+    new MutationObserver(() => {
+      if (engineViewEl.classList.contains('active')) {
+        // Give DOM a tick to render before measuring
+        setTimeout(updateTopbarHeight, 50);
+        setTimeout(updateTopbarHeight, 300);
+      }
+    }).observe(engineViewEl, { attributes: true, attributeFilter: ['class'] });
+  }
+
   // Wire timerShowBtn to restore timer pill
   const timerShowBtnEl = document.getElementById('timerShowBtn');
   if (timerShowBtnEl) {
@@ -8506,6 +8664,20 @@ setTimeout(addBattleButtons, 1800);
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"7f7b0fd8732c4326aae4b9d58d5c514a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 
+
+<!-- ✅ Submit Confirmation Modal -->
+<div id="submitConfirmOverlay">
+  <div id="submitConfirmBox">
+    <span class="sc-icon">📋</span>
+    <div class="sc-title">Submit Test?</div>
+    <div class="sc-sub">Once submitted, you won't be able to change your answers.</div>
+    <div class="sc-stats" id="scStats"></div>
+    <div class="sc-btns">
+      <button id="scCancelBtn">✕ Cancel</button>
+      <button id="scConfirmBtn">✓ Yes, Submit</button>
+    </div>
+  </div>
+</div>
 
 </body>
 
