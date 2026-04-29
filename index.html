@@ -4098,9 +4098,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           let attempted = 0, unanswered = 0, review = 0;
           state.qIds.forEach(qid => {
             const s = state.qState[qid];
-            if (s.answer !== null) attempted++;
+            if (s.selectedMetaId !== null) attempted++;
             else unanswered++;
-            if (s.markedReview) review++;
+            if (s.review) review++;
           });
           const statsEl = document.getElementById('scStats');
           if (statsEl) {
@@ -8678,6 +8678,83 @@ setTimeout(addBattleButtons, 1800);
     </div>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  // ==============================
+  // ✅ CREATE MODAL DYNAMICALLY
+  // ==============================
+  const modalHTML = `
+  <div class="modal fade" id="submitConfirmModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass text-center p-3" style="border-radius:18px;">
+        
+        <h5 class="mb-3 fw-bold">⚠️ Confirm Submission</h5>
+        
+        <p class="subtle mb-4">
+          Are you sure you want to submit the test?
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+          <button class="btn btn-success px-4" id="confirmSubmitBtn">
+            Yes Submit
+          </button>
+          <button class="btn btn-danger px-4" data-bs-dismiss="modal">
+            Cancel
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  `;
+
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+  // ==============================
+  // ✅ INIT MODAL
+  // ==============================
+  const submitModalEl = document.getElementById("submitConfirmModal");
+  const submitModal = new bootstrap.Modal(submitModalEl);
+
+  // ==============================
+  // ✅ FIX SUBMIT BUTTON CLICK
+  // ==============================
+  const submitBtn = document.getElementById("submitBtn");
+
+  if (!submitBtn) {
+    console.error("❌ submitBtn not found");
+    return;
+  }
+
+  submitBtn.addEventListener("click", function (e) {
+    e.preventDefault();  // 🔥 important
+    submitModal.show(); // show confirmation box
+  });
+
+  // ==============================
+  // ✅ FINAL SUBMIT ACTION
+  // ==============================
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.id === "confirmSubmitBtn"){
+
+      submitModal.hide();
+
+      // 🔥 CALL YOUR ORIGINAL SUBMIT FUNCTION
+      if (typeof finishTest === "function") {
+        finishTest();
+      } 
+      else if (typeof submitTest === "function") {
+        submitTest();
+      } 
+      else {
+        alert("⚠️ Submit function not found. Add finishTest() or submitTest()");
+      }
+    }
+  });
+
+});
+</script>
 
 </body>
 
