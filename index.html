@@ -6973,6 +6973,9 @@ function listenRoom() {
       beginBattle();
     }
   });
+
+  // Screen share — listen for requests and active shares
+  ssListenRoom(B.roomCode);
 }
 
 // ── START ─────────────────────────────────────────────────────────────────────
@@ -7007,6 +7010,7 @@ async function doLeave() {
   dbStopAll();
   stopChat();
   vcLeave();  // ✅ also leave voice when leaving battle room
+  ssLeave();  // ✅ also stop any screen share
   try { await B.db.ref(`battle_rooms/${B.roomCode}/players/${B.myId}`).remove(); } catch(_){}
   B.active = false; B.roomCode = ''; B.players = {};
   document.getElementById('bmLobby').style.display  = 'none';
@@ -7591,6 +7595,21 @@ const VC = {
   active: false,     // joined voice?
 };
 
+// ── SCREEN SHARE SYSTEM ───────────────────────────────────────────────────────
+const SS = {
+  peer: null,          // PeerJS peer for screen sharing
+  myStream: null,      // getDisplayMedia stream (sharer only)
+  sharerPeerId: null,  // PeerJS id of current sharer
+  sharerId: null,      // B.myId of current sharer
+  sharerName: null,
+  isSharing: false,    // am I the one sharing?
+  isWatching: false,   // am I watching?
+  viewCall: null,      // call object when watching
+  videoEl: null,       // <video> element for watching
+  fbRef: null,         // firebase listener ref
+  pendingRequest: null, // { requesterId, requesterName } host sees this
+};
+
 function injectChatStyles() {
   if (document.getElementById('bm-chat-styles')) return;
   const s = document.createElement('style');
@@ -7661,7 +7680,103 @@ function injectChatStyles() {
   #bmChatPanel.bm-chat-mini #bmChatTabBar,
   #bmChatPanel.bm-chat-mini #bmChatBody,
   #bmChatPanel.bm-chat-mini #bmVoiceBody,
+  #bmChatPanel.bm-chat-mini #bmScreenBody,
   #bmChatPanel.bm-chat-mini #bmChatFooter { display:none !important; }
+
+  /* ── Screen Share Tab Body ── */
+  #bmScreenBody {
+    display:none;flex-direction:column;
+    padding:12px;gap:10px;
+    min-height:200px;max-height:440px;overflow-y:auto;
+    flex:1;
+  }
+  #bmScreenBody::-webkit-scrollbar{width:4px;}
+  #bmScreenBody::-webkit-scrollbar-thumb{background:rgba(34,197,94,.3);border-radius:99px;}
+
+  /* Host approval toast */
+  #bmSsRequestToast {
+    display:none;flex-direction:column;gap:8px;
+    padding:12px 14px;border-radius:14px;
+    background:rgba(250,204,21,.1);border:1px solid rgba(250,204,21,.4);
+    animation:bmMsgIn .25s ease;
+  }
+  #bmSsRequestToast.show { display:flex; }
+  .bm-ss-toast-name { font-size:12px;font-weight:700;color:#fbbf24; }
+  .bm-ss-toast-btns { display:flex;gap:8px; }
+  .bm-ss-approve-btn {
+    flex:1;padding:7px;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer;
+    background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.6);color:#22c55e;
+    transition:all .15s;
+  }
+  .bm-ss-approve-btn:hover { background:rgba(34,197,94,.35);border-color:#22c55e; }
+  .bm-ss-deny-btn {
+    flex:1;padding:7px;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer;
+    background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.5);color:#f87171;
+    transition:all .15s;
+  }
+  .bm-ss-deny-btn:hover { background:rgba(239,68,68,.28);border-color:#ef4444; }
+
+  /* Status banner */
+  #bmSsStatus {
+    padding:10px 12px;border-radius:12px;font-size:12px;font-weight:600;text-align:center;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+    color:rgba(180,200,255,.6);
+  }
+
+  /* Video viewer area */
+  #bmSsViewArea {
+    display:none;flex-direction:column;gap:8px;
+  }
+  #bmSsViewArea.show { display:flex; }
+  #bmSsVideo {
+    width:100%;border-radius:12px;
+    border:1px solid rgba(34,197,94,.4);
+    background:#000;
+    max-height:200px;object-fit:contain;
+    display:block;
+  }
+  .bm-ss-viewer-bar {
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .bm-ss-sharer-name {
+    flex:1;font-size:11px;font-weight:700;color:#22c55e;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+
+  /* Action buttons in screen tab */
+  .bm-ss-btn {
+    width:100%;padding:9px 12px;border-radius:12px;font-size:12px;font-weight:800;
+    cursor:pointer;transition:all .18s;letter-spacing:.3px;border:none;
+  }
+  .bm-ss-btn:hover { transform:translateY(-2px); }
+  .bm-ss-btn:active { transform:scale(.96); }
+  .bm-ss-btn-request {
+    background:linear-gradient(135deg,rgba(56,189,248,.2),rgba(99,102,241,.25));
+    border:1px solid rgba(56,189,248,.55);color:#38bdf8;
+  }
+  .bm-ss-btn-stop {
+    background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.5);color:#f87171;
+  }
+  .bm-ss-btn-watch {
+    background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.5);color:#22c55e;
+  }
+  .bm-ss-btn-hide {
+    background:rgba(100,116,139,.15);border:1px solid rgba(100,116,139,.4);color:#94a3b8;
+  }
+  .bm-ss-btn:disabled {
+    opacity:.4;cursor:not-allowed;transform:none !important;
+  }
+
+  /* Screen share live indicator in FAB */
+  #bmSsActiveDot {
+    position:absolute;bottom:-2px;right:-2px;
+    width:12px;height:12px;border-radius:50%;
+    background:#22c55e;border:2px solid rgba(5,7,20,.95);
+    display:none;
+    box-shadow:0 0 8px #22c55e;
+    animation:bmChatDotPulse 1.2s ease-in-out infinite;
+  }
+  #bmSsActiveDot.show { display:block; }
 
   /* ── Chat Header ── */
   #bmChatHeader {
@@ -7919,7 +8034,7 @@ function buildChatUI() {
   const fab = document.createElement('div');
   fab.id = 'bmChatFab';
   fab.title = 'Battle Chat & Voice';
-  fab.innerHTML = `💬<div class="bm-chat-badge" id="bmChatBadge">0</div>`;
+  fab.innerHTML = `💬<div class="bm-chat-badge" id="bmChatBadge">0</div><div id="bmSsActiveDot"></div>`;
   fab.addEventListener('click', toggleChat);
   document.body.appendChild(fab);
 
@@ -8009,6 +8124,7 @@ function buildChatUI() {
     <div id="bmChatTabBar">
       <button class="bm-tab-btn active" id="bmTabChat" onclick="switchChatTab('chat')">💬 Chat</button>
       <button class="bm-tab-btn" id="bmTabVoice" onclick="switchChatTab('voice')">🎤 Voice</button>
+      <button class="bm-tab-btn" id="bmTabScreen" onclick="switchChatTab('screen')">📺 Screen</button>
     </div>
 
     <!-- Chat Tab -->
@@ -8031,6 +8147,33 @@ function buildChatUI() {
         <button class="bm-vc-join-btn" onclick="vcJoin()">🎤 Join Voice</button>
       </div>
       <div id="bmVoiceParticipants"></div>
+    </div>
+
+    <!-- Screen Share Tab -->
+    <div id="bmScreenBody">
+      <!-- Host-only: incoming request toast -->
+      <div id="bmSsRequestToast">
+        <div class="bm-ss-toast-name" id="bmSsRequesterName">🖥️ Someone wants to share screen</div>
+        <div class="bm-ss-toast-btns">
+          <button class="bm-ss-approve-btn" onclick="ssApproveRequest()">✅ Approve</button>
+          <button class="bm-ss-deny-btn" onclick="ssDenyRequest()">✕ Deny</button>
+        </div>
+      </div>
+
+      <!-- Status info -->
+      <div id="bmSsStatus">📺 No active screen share</div>
+
+      <!-- Live video viewer (for watchers) -->
+      <div id="bmSsViewArea">
+        <video id="bmSsVideo" autoplay playsinline muted></video>
+        <div class="bm-ss-viewer-bar">
+          <div class="bm-ss-sharer-name" id="bmSsSharerLabel">🖥️ Shared by —</div>
+          <button class="bm-ss-btn bm-ss-btn-hide" style="width:auto;padding:5px 11px;font-size:11px;" onclick="ssStopWatching()">🚫 Stop watching</button>
+        </div>
+      </div>
+
+      <!-- Action buttons (context-sensitive, rendered by ssRenderUI) -->
+      <div id="bmSsActions"></div>
     </div>
 
     <div id="bmChatFooter">
@@ -8088,24 +8231,32 @@ function buildChatUI() {
 function switchChatTab(tab) {
   const chatBody   = document.getElementById('bmChatBody');
   const voiceBody  = document.getElementById('bmVoiceBody');
+  const screenBody = document.getElementById('bmScreenBody');
   const footer     = document.getElementById('bmChatFooter');
   const tabChat    = document.getElementById('bmTabChat');
   const tabVoice   = document.getElementById('bmTabVoice');
+  const tabScreen  = document.getElementById('bmTabScreen');
   if (!chatBody || !voiceBody) return;
+
+  // Hide all
+  chatBody.style.display   = 'none';
+  voiceBody.style.display  = 'none';
+  if (screenBody) screenBody.style.display = 'none';
+  footer.style.display     = 'none';
+  [tabChat, tabVoice, tabScreen].forEach(t => t && t.classList.remove('active'));
 
   if (tab === 'chat') {
     chatBody.style.display  = '';
-    voiceBody.style.display = 'none';
     footer.style.display    = '';
-    tabChat.classList.add('active');
-    tabVoice.classList.remove('active');
+    if (tabChat) tabChat.classList.add('active');
     chatBody.scrollTop = chatBody.scrollHeight;
-  } else {
-    chatBody.style.display  = 'none';
+  } else if (tab === 'voice') {
     voiceBody.style.display = 'flex';
-    footer.style.display    = 'none';
-    tabVoice.classList.add('active');
-    tabChat.classList.remove('active');
+    if (tabVoice) tabVoice.classList.add('active');
+  } else if (tab === 'screen') {
+    if (screenBody) screenBody.style.display = 'flex';
+    if (tabScreen) tabScreen.classList.add('active');
+    ssRenderUI();
   }
 }
 window.switchChatTab = switchChatTab;
@@ -8603,6 +8754,371 @@ async function sendChatMessage() {
     console.error('Chat send error:', e);
   }
 }
+
+// =========================================================
+// SCREEN SHARE — PeerJS P2P Video
+// =========================================================
+
+function ssListenRoom(roomCode) {
+  if (!B.db) return;
+  // Detach old listener if any
+  if (SS.fbRef) { SS.fbRef.off(); SS.fbRef = null; }
+
+  const ref = B.db.ref(`battle_rooms/${roomCode}/screenShare`);
+  SS.fbRef = ref;
+  ref.on('value', (snap) => {
+    const data = snap.val() || {};
+    const req    = data.request  || null;
+    const active = data.active   || null;
+
+    // ── Host sees approval toast ──
+    const toast = document.getElementById('bmSsRequestToast');
+    if (B.isHost && req && req.requesterId !== B.myId) {
+      SS.pendingRequest = req;
+      const nameEl = document.getElementById('bmSsRequesterName');
+      if (nameEl) nameEl.textContent = `🖥️ ${req.requesterName} wants to share screen`;
+      if (toast) toast.classList.add('show');
+    } else {
+      SS.pendingRequest = null;
+      if (toast) toast.classList.remove('show');
+    }
+
+    // ── Active share ──
+    if (active && active.sharerId) {
+      SS.sharerId    = active.sharerId;
+      SS.sharerName  = active.sharerName;
+      SS.sharerPeerId = active.sharerPeerId || null;
+
+      // Show green dot on FAB
+      const dot = document.getElementById('bmSsActiveDot');
+      if (dot) dot.classList.add('show');
+
+      // If I'm the approved sharer and haven't started yet → start sharing
+      if (active.sharerId === B.myId && !SS.isSharing && !active.sharerPeerId) {
+        ssStartSharing();
+      }
+
+      // If watching and peer ID just appeared, try to connect
+      if (SS.isWatching && active.sharerPeerId && !SS.viewCall) {
+        ssConnectViewer(active.sharerPeerId);
+      }
+    } else {
+      // Share ended
+      SS.sharerId    = null;
+      SS.sharerName  = null;
+      SS.sharerPeerId = null;
+      const dot = document.getElementById('bmSsActiveDot');
+      if (dot) dot.classList.remove('show');
+      if (SS.isSharing) ssCleanupSharer();
+      if (SS.isWatching) ssStopWatching();
+    }
+
+    ssRenderUI();
+  });
+}
+
+function ssRenderUI() {
+  const actions   = document.getElementById('bmSsActions');
+  const statusEl  = document.getElementById('bmSsStatus');
+  const viewArea  = document.getElementById('bmSsViewArea');
+  const sharerLbl = document.getElementById('bmSsSharerLabel');
+  if (!actions) return;
+
+  const hasActive = !!SS.sharerId;
+
+  // Update status label
+  if (statusEl) {
+    if (hasActive) {
+      statusEl.style.background = 'rgba(34,197,94,.07)';
+      statusEl.style.borderColor = 'rgba(34,197,94,.35)';
+      statusEl.style.color = '#22c55e';
+      statusEl.textContent = `🟢 ${SS.sharerName || 'Someone'} is sharing screen`;
+    } else {
+      statusEl.style.background = '';
+      statusEl.style.borderColor = '';
+      statusEl.style.color = '';
+      statusEl.textContent = '📺 No active screen share';
+    }
+  }
+
+  // Show/hide video area for watchers
+  if (viewArea) {
+    if (SS.isWatching && hasActive) {
+      viewArea.classList.add('show');
+      if (sharerLbl) sharerLbl.textContent = `🖥️ Shared by ${SS.sharerName || '—'}`;
+    } else {
+      viewArea.classList.remove('show');
+    }
+  }
+
+  // Build action buttons
+  let html = '';
+  const iAmSharer = SS.sharerId === B.myId && SS.isSharing;
+
+  if (iAmSharer) {
+    // Sharer: stop button
+    html = `<button class="bm-ss-btn bm-ss-btn-stop" onclick="ssStopSharing()">⏹ Stop Sharing</button>`;
+  } else if (hasActive) {
+    // Active share by someone else — watch/unwatch
+    if (SS.isWatching) {
+      html = `<button class="bm-ss-btn bm-ss-btn-hide" onclick="ssStopWatching()">🚫 Stop Watching</button>`;
+    } else {
+      html = `<button class="bm-ss-btn bm-ss-btn-watch" onclick="ssStartWatching()">👁 Watch Screen</button>`;
+    }
+  } else if (!hasActive) {
+    // No active share — allow requesting
+    const alreadyRequested = SS.pendingRequest && SS.pendingRequest.requesterId === B.myId;
+    if (alreadyRequested) {
+      html = `<button class="bm-ss-btn bm-ss-btn-request" disabled>⏳ Waiting for host approval…</button>
+              <button class="bm-ss-btn bm-ss-btn-stop" style="margin-top:6px;font-size:11px;" onclick="ssCancelRequest()">✕ Cancel Request</button>`;
+    } else if (B.isHost) {
+      // Host can share directly without approval
+      html = `<button class="bm-ss-btn bm-ss-btn-request" onclick="ssHostShareDirect()">🖥️ Share My Screen</button>`;
+    } else {
+      html = `<button class="bm-ss-btn bm-ss-btn-request" onclick="ssRequestShare()">📤 Request to Share Screen</button>`;
+    }
+  }
+
+  actions.innerHTML = html;
+}
+
+// HOST: start sharing directly (no approval needed)
+async function ssHostShareDirect() {
+  if (!B.db || !B.roomCode || !B.isHost) return;
+  // Set active in Firebase with own id; sharerPeerId comes after getDisplayMedia
+  await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/active`).set({
+    sharerId:   B.myId,
+    sharerName: B.myName || 'Host',
+    sharerPeerId: null,
+    ts: Date.now()
+  });
+  // Clear any pending requests
+  await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/request`).remove();
+}
+window.ssHostShareDirect = ssHostShareDirect;
+
+// GUEST: send share request to host
+async function ssRequestShare() {
+  if (!B.db || !B.roomCode) return;
+  await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/request`).set({
+    requesterId:   B.myId,
+    requesterName: B.myName || 'Player',
+    ts: Date.now()
+  });
+  ssRenderUI();
+}
+window.ssRequestShare = ssRequestShare;
+
+// GUEST: cancel their own request
+async function ssCancelRequest() {
+  if (!B.db || !B.roomCode) return;
+  const req = SS.pendingRequest;
+  if (req && req.requesterId === B.myId) {
+    await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/request`).remove();
+  }
+  ssRenderUI();
+}
+window.ssCancelRequest = ssCancelRequest;
+
+// HOST: approve a pending request
+async function ssApproveRequest() {
+  if (!B.db || !B.roomCode || !SS.pendingRequest) return;
+  const req = SS.pendingRequest;
+  await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/active`).set({
+    sharerId:   req.requesterId,
+    sharerName: req.requesterName,
+    sharerPeerId: null,
+    ts: Date.now()
+  });
+  await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/request`).remove();
+}
+window.ssApproveRequest = ssApproveRequest;
+
+// HOST: deny a pending request
+async function ssDenyRequest() {
+  if (!B.db || !B.roomCode) return;
+  await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/request`).remove();
+  SS.pendingRequest = null;
+  const toast = document.getElementById('bmSsRequestToast');
+  if (toast) toast.classList.remove('show');
+}
+window.ssDenyRequest = ssDenyRequest;
+
+// SHARER: start capturing screen and broadcast via PeerJS
+async function ssStartSharing() {
+  if (SS.isSharing) return;
+
+  // Capture display
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
+  } catch(e) {
+    // User cancelled or denied
+    ssStopSharing();
+    return;
+  }
+  SS.myStream  = stream;
+  SS.isSharing = true;
+
+  // Stop sharing if user ends from browser UI
+  stream.getVideoTracks()[0].addEventListener('ended', () => ssStopSharing());
+
+  // Init PeerJS for screen share
+  SS.peer = new Peer(undefined, {
+    debug: 0,
+    config: { iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' },
+      { urls: 'stun:stun1.l.google.com:19302' }
+    ]}
+  });
+
+  SS.peer.on('open', async (id) => {
+    // Publish peer ID so the sharer can call viewers who registered
+    if (B.db && B.roomCode) {
+      await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/active/sharerPeerId`).set(id);
+    }
+
+    // Call any viewers who registered before us
+    const snap = await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers`).once('value');
+    const viewers = snap.val() || {};
+    Object.values(viewers).forEach(vPeerId => ssCallViewer(vPeerId));
+
+    // Watch for new viewers joining while sharing
+    B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers`).on('child_added', (snap) => {
+      ssCallViewer(snap.val());
+    });
+
+    ssRenderUI();
+  });
+
+  // Answer calls from viewers — send them the screen stream
+  SS.peer.on('call', (call) => {
+    call.answer(SS.myStream);
+  });
+
+  SS.peer.on('error', (err) => {
+    console.warn('ScreenShare PeerJS error:', err);
+  });
+
+  ssRenderUI();
+}
+
+// SHARER: stop sharing
+async function ssStopSharing() {
+  ssCleanupSharer();
+  if (B.db && B.roomCode) {
+    await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/active`).remove();
+  }
+}
+window.ssStopSharing = ssStopSharing;
+
+function ssCleanupSharer() {
+  SS.isSharing = false;
+  if (SS.myStream) { SS.myStream.getTracks().forEach(t => t.stop()); SS.myStream = null; }
+  try { SS.peer && SS.peer.destroy(); } catch(e) {}
+  SS.peer = null;
+  // Remove viewers list and our peer ID from Firebase
+  if (B.db && B.roomCode) {
+    B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers`).off();
+    B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers`).remove().catch(()=>{});
+  }
+}
+
+// VIEWER: register to watch — write own PeerJS ID to Firebase so sharer calls us
+function ssStartWatching() {
+  if (!B.db || !B.roomCode) return;
+  SS.isWatching = true;
+
+  // Create a viewer PeerJS peer to receive calls from the sharer
+  if (SS.viewPeer) { try { SS.viewPeer.destroy(); } catch(e) {} SS.viewPeer = null; }
+  const viewPeer = new Peer(undefined, {
+    debug: 0,
+    config: { iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' },
+      { urls: 'stun:stun1.l.google.com:19302' }
+    ]}
+  });
+  SS.viewPeer = viewPeer;
+
+  viewPeer.on('open', async (vid) => {
+    // Register this viewer's peer ID in Firebase — sharer will call us
+    await B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers/${B.myId}`).set(vid);
+  });
+
+  // Receive the incoming call from the sharer
+  viewPeer.on('call', (call) => {
+    SS.viewCall = call;
+    // Answer with a silent dummy audio stream so WebRTC negotiation completes
+    const silentStream = _ssSilentStream();
+    call.answer(silentStream);
+    call.on('stream', (stream) => {
+      const videoEl = document.getElementById('bmSsVideo');
+      if (videoEl) {
+        videoEl.srcObject = stream;
+        videoEl.muted = false;
+        videoEl.play().catch(() => {});
+      }
+      ssRenderUI();
+    });
+    call.on('close', () => ssStopWatching());
+    call.on('error', (e) => console.warn('SS viewer call error', e));
+  });
+
+  viewPeer.on('error', (err) => console.warn('SS viewer peer error:', err));
+
+  ssRenderUI();
+}
+window.ssStartWatching = ssStartWatching;
+
+// Helper: create a MediaStream with one silent audio track (needed for WebRTC answer)
+function _ssSilentStream() {
+  try {
+    const ctx  = new (window.AudioContext || window.webkitAudioContext)();
+    const dest = ctx.createMediaStreamDestination();
+    return dest.stream;
+  } catch(e) {
+    return new MediaStream();
+  }
+}
+
+// SHARER: call a single viewer peer ID with the screen stream
+function ssCallViewer(viewerPeerId) {
+  if (!SS.peer || !SS.myStream || !viewerPeerId) return;
+  const call = SS.peer.call(viewerPeerId, SS.myStream);
+  if (!call) return;
+  call.on('error', (e) => console.warn('SS sharer call error:', e));
+}
+
+// VIEWER: stop watching
+function ssStopWatching() {
+  SS.isWatching = false;
+  const vid = document.getElementById('bmSsVideo');
+  if (vid) { vid.srcObject = null; }
+  if (SS.viewCall) { try { SS.viewCall.close(); } catch(e) {} SS.viewCall = null; }
+  if (SS.viewPeer) { try { SS.viewPeer.destroy(); } catch(e) {} SS.viewPeer = null; }
+  // Remove viewer registration from Firebase
+  if (B.db && B.roomCode) {
+    B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers/${B.myId}`).remove().catch(()=>{});
+  }
+  ssRenderUI();
+}
+window.ssStopWatching = ssStopWatching;
+
+// Cleanup everything on leave
+function ssLeave() {
+  ssCleanupSharer();
+  ssStopWatching();
+  if (SS.fbRef) { SS.fbRef.off(); SS.fbRef = null; }
+  // If we were the active sharer, remove from Firebase
+  if (SS.sharerId === B.myId && B.db && B.roomCode) {
+    B.db.ref(`battle_rooms/${B.roomCode}/screenShare/active`).remove().catch(()=>{});
+  }
+  SS.sharerId = null; SS.sharerName = null; SS.sharerPeerId = null;
+  SS.pendingRequest = null;
+  const dot = document.getElementById('bmSsActiveDot');
+  if (dot) dot.classList.remove('show');
+}
+window.ssLeave = ssLeave;
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 function boot() {
