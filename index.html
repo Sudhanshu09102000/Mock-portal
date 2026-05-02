@@ -7728,13 +7728,107 @@ function injectChatStyles() {
     display:none;flex-direction:column;gap:8px;
   }
   #bmSsViewArea.show { display:flex; }
-  #bmSsVideo {
-    width:100%;border-radius:12px;
-    border:1px solid rgba(34,197,94,.4);
-    background:#000;
-    max-height:200px;object-fit:contain;
-    display:block;
+
+  /* ── Video wrapper (relative so fullscreen btn overlays it) ── */
+  #bmSsVideoWrap {
+    position:relative;border-radius:12px;overflow:hidden;
+    background:#000;border:1px solid rgba(34,197,94,.4);
+    cursor:pointer;
   }
+  #bmSsVideoWrap:hover #bmSsFsBtn { opacity:1; }
+
+  #bmSsVideo {
+    width:100%;display:block;
+    max-height:200px;object-fit:contain;
+    background:#000;
+  }
+
+  /* Fullscreen button that appears on hover */
+  #bmSsFsBtn {
+    position:absolute;bottom:8px;right:8px;
+    width:32px;height:32px;border-radius:9px;
+    background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.25);
+    color:#fff;font-size:15px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transition:opacity .2s,background .15s;
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    z-index:2;
+  }
+  #bmSsFsBtn:hover { background:rgba(34,197,94,.45);border-color:rgba(34,197,94,.8); }
+
+  /* ── Full-screen overlay (covers entire viewport) ── */
+  #bmSsFullscreenOverlay {
+    display:none;
+    position:fixed;inset:0;z-index:999999;
+    background:#000;
+    flex-direction:column;
+    align-items:center;justify-content:center;
+  }
+  #bmSsFullscreenOverlay.fs-open { display:flex; }
+
+  #bmSsVideoFs {
+    width:100%;height:100%;object-fit:contain;
+    display:block;background:#000;
+  }
+
+  /* Top HUD bar inside fullscreen overlay */
+  #bmSsFsHud {
+    position:absolute;top:0;left:0;right:0;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 16px;
+    background:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);
+    pointer-events:none;
+    transition:opacity .3s;
+  }
+  #bmSsFullscreenOverlay:not(:hover) #bmSsFsHud { opacity:0; }
+  #bmSsFullscreenOverlay:hover #bmSsFsHud { opacity:1;pointer-events:all; }
+
+  #bmSsFsLabel {
+    font-size:13px;font-weight:700;color:rgba(255,255,255,.85);
+    text-shadow:0 1px 6px rgba(0,0,0,.6);
+    display:flex;align-items:center;gap:8px;
+  }
+  #bmSsFsLabel::before {
+    content:'';display:inline-block;
+    width:8px;height:8px;border-radius:50%;
+    background:#22c55e;box-shadow:0 0 8px #22c55e;
+    animation:bmChatDotPulse 1.2s ease-in-out infinite;
+  }
+
+  #bmSsFsCloseBtn {
+    padding:6px 16px;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer;
+    background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.55);color:#f87171;
+    transition:all .15s;pointer-events:all;
+  }
+  #bmSsFsCloseBtn:hover { background:rgba(239,68,68,.38);border-color:#ef4444; }
+
+  /* Bottom HUD bar — stop watching */
+  #bmSsFsBottom {
+    position:absolute;bottom:0;left:0;right:0;
+    display:flex;align-items:center;justify-content:center;
+    padding:14px 16px;
+    background:linear-gradient(to top,rgba(0,0,0,.7),transparent);
+    pointer-events:none;
+    transition:opacity .3s;
+    gap:10px;
+  }
+  #bmSsFullscreenOverlay:not(:hover) #bmSsFsBottom { opacity:0; }
+  #bmSsFullscreenOverlay:hover #bmSsFsBottom { opacity:1;pointer-events:all; }
+
+  .bm-ss-fs-stop-btn {
+    padding:8px 22px;border-radius:11px;font-size:12px;font-weight:800;cursor:pointer;
+    background:rgba(239,68,68,.18);border:1px solid rgba(239,68,68,.5);color:#f87171;
+    transition:all .15s;
+  }
+  .bm-ss-fs-stop-btn:hover { background:rgba(239,68,68,.32);border-color:#ef4444; }
+
+  /* ESC hint */
+  .bm-ss-esc-hint {
+    font-size:10px;color:rgba(255,255,255,.35);
+    text-shadow:0 1px 4px rgba(0,0,0,.6);
+  }
+
   .bm-ss-viewer-bar {
     display:flex;align-items:center;gap:8px;flex-wrap:wrap;
   }
@@ -8165,7 +8259,10 @@ function buildChatUI() {
 
       <!-- Live video viewer (for watchers) -->
       <div id="bmSsViewArea">
-        <video id="bmSsVideo" autoplay playsinline muted></video>
+        <div id="bmSsVideoWrap" onclick="ssToggleFullscreen()">
+          <video id="bmSsVideo" autoplay playsinline muted></video>
+          <button id="bmSsFsBtn" title="Fullscreen" onclick="event.stopPropagation();ssOpenFullscreen()">⛶</button>
+        </div>
         <div class="bm-ss-viewer-bar">
           <div class="bm-ss-sharer-name" id="bmSsSharerLabel">🖥️ Shared by —</div>
           <button class="bm-ss-btn bm-ss-btn-hide" style="width:auto;padding:5px 11px;font-size:11px;" onclick="ssStopWatching()">🚫 Stop watching</button>
@@ -8182,6 +8279,23 @@ function buildChatUI() {
     </div>
   `;
   document.body.appendChild(panel);
+
+  // ── Fullscreen overlay for screen share ──────────────────────────────────────
+  if (!document.getElementById('bmSsFullscreenOverlay')) {
+    const fsOv = document.createElement('div');
+    fsOv.id = 'bmSsFullscreenOverlay';
+    fsOv.innerHTML = `
+      <video id="bmSsVideoFs" autoplay playsinline></video>
+      <div id="bmSsFsHud">
+        <div id="bmSsFsLabel">Screen Share</div>
+        <button id="bmSsFsCloseBtn" onclick="ssCloseFullscreen()">✕ Exit Fullscreen</button>
+      </div>
+      <div id="bmSsFsBottom">
+        <button class="bm-ss-fs-stop-btn" onclick="ssCloseFullscreen();ssStopWatching()">🚫 Stop Watching</button>
+        <span class="bm-ss-esc-hint">Press ESC to exit</span>
+      </div>`;
+    document.body.appendChild(fsOv);
+  }
 
   // Wire header click to toggle minimize
   document.getElementById('bmChatHeader').addEventListener('click', (e) => {
@@ -8811,6 +8925,7 @@ function ssListenRoom(roomCode) {
       if (dot) dot.classList.remove('show');
       if (SS.isSharing) ssCleanupSharer();
       if (SS.isWatching) ssStopWatching();
+      ssCheckFsOnShareEnd();
     }
 
     ssRenderUI();
@@ -9092,6 +9207,7 @@ function ssCallViewer(viewerPeerId) {
 // VIEWER: stop watching
 function ssStopWatching() {
   SS.isWatching = false;
+  ssCheckFsOnShareEnd();
   const vid = document.getElementById('bmSsVideo');
   if (vid) { vid.srcObject = null; }
   if (SS.viewCall) { try { SS.viewCall.close(); } catch(e) {} SS.viewCall = null; }
@@ -9103,6 +9219,89 @@ function ssStopWatching() {
   ssRenderUI();
 }
 window.ssStopWatching = ssStopWatching;
+
+// ── FULLSCREEN ────────────────────────────────────────────────────────────────
+
+function ssOpenFullscreen() {
+  const smallVid = document.getElementById('bmSsVideo');
+  const fsOverlay = document.getElementById('bmSsFullscreenOverlay');
+  const fsVid = document.getElementById('bmSsVideoFs');
+  const fsLabel = document.getElementById('bmSsFsLabel');
+  if (!fsOverlay || !fsVid || !smallVid || !smallVid.srcObject) return;
+
+  // Mirror the same stream into the fullscreen video
+  fsVid.srcObject = smallVid.srcObject;
+  fsVid.play().catch(() => {});
+
+  // Update label
+  if (fsLabel && SS.sharerName) {
+    // set text while keeping the ::before dot (just replace text node)
+    fsLabel.childNodes[0] && fsLabel.childNodes.forEach(n => { if (n.nodeType === 3) n.textContent = `  ${SS.sharerName} is sharing`; });
+    fsLabel.textContent = `  ${SS.sharerName} is sharing`;
+  }
+
+  fsOverlay.classList.add('fs-open');
+
+  // Try native browser fullscreen API on the overlay
+  if (fsOverlay.requestFullscreen) {
+    fsOverlay.requestFullscreen().catch(() => {});
+  } else if (fsOverlay.webkitRequestFullscreen) {
+    fsOverlay.webkitRequestFullscreen();
+  }
+}
+window.ssOpenFullscreen = ssOpenFullscreen;
+
+function ssCloseFullscreen() {
+  const fsOverlay = document.getElementById('bmSsFullscreenOverlay');
+  const fsVid = document.getElementById('bmSsVideoFs');
+  if (fsOverlay) fsOverlay.classList.remove('fs-open');
+  if (fsVid) { fsVid.srcObject = null; }
+
+  // Exit native fullscreen if active
+  if (document.fullscreenElement || document.webkitFullscreenElement) {
+    (document.exitFullscreen || document.webkitExitFullscreen || (() => {})).call(document);
+  }
+}
+window.ssCloseFullscreen = ssCloseFullscreen;
+
+// Toggle: click on video thumbnail = open fullscreen
+function ssToggleFullscreen() {
+  const fsOverlay = document.getElementById('bmSsFullscreenOverlay');
+  if (fsOverlay && fsOverlay.classList.contains('fs-open')) {
+    ssCloseFullscreen();
+  } else {
+    ssOpenFullscreen();
+  }
+}
+window.ssToggleFullscreen = ssToggleFullscreen;
+
+// ESC key closes fullscreen overlay
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const fsOverlay = document.getElementById('bmSsFullscreenOverlay');
+    if (fsOverlay && fsOverlay.classList.contains('fs-open')) {
+      ssCloseFullscreen();
+    }
+  }
+});
+
+// Also close when browser exits native fullscreen (e.g. user presses ESC)
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    const fsOverlay = document.getElementById('bmSsFullscreenOverlay');
+    if (fsOverlay && fsOverlay.classList.contains('fs-open')) {
+      fsOverlay.classList.remove('fs-open');
+      const fsVid = document.getElementById('bmSsVideoFs');
+      if (fsVid) fsVid.srcObject = null;
+    }
+  }
+});
+
+// Auto-close fullscreen if the share ends
+function ssCheckFsOnShareEnd() {
+  const fsOverlay = document.getElementById('bmSsFullscreenOverlay');
+  if (fsOverlay && fsOverlay.classList.contains('fs-open')) ssCloseFullscreen();
+}
 
 // Cleanup everything on leave
 function ssLeave() {
