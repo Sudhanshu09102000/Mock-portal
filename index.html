@@ -6893,6 +6893,9 @@ async function doCreate() {
 
   // Auto-remove on disconnect
   B.db.ref(`battle_rooms/${B.roomCode}/players/${B.myId}`).onDisconnect().remove();
+  // Also remove screen share if this player was sharing when they disconnect
+  B.db.ref(`battle_rooms/${B.roomCode}/screenShare/active`).onDisconnect().remove();
+  B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers/${B.myId}`).onDisconnect().remove();
 
   listenRoom();
   showLobby();
@@ -6921,6 +6924,9 @@ async function doJoin() {
   const myData = { name: B.myName, avatar: B.myAvatar, score: 0, qIndex: 0, isHost: false, joined: Date.now() };
   await dbSet(`battle_rooms/${B.roomCode}/players/${B.myId}`, myData);
   B.db.ref(`battle_rooms/${B.roomCode}/players/${B.myId}`).onDisconnect().remove();
+  // Also remove screen share if this player was sharing when they disconnect
+  B.db.ref(`battle_rooms/${B.roomCode}/screenShare/active`).onDisconnect().remove();
+  B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers/${B.myId}`).onDisconnect().remove();
 
   listenRoom();
   showLobby();
@@ -9063,20 +9069,41 @@ window.ssDenyRequest = ssDenyRequest;
 async function ssStartSharing() {
   if (SS.isSharing) return;
 
-  // Capture display
+  // ── Full HD capture constraints ──────────────────────────────────────────────
   let stream;
   try {
-    stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
+    stream = await navigator.mediaDevices.getDisplayMedia({
+      video: {
+        width:     { ideal: 1920, max: 1920 },
+        height:    { ideal: 1080, max: 1080 },
+        frameRate: { ideal: 30,   max: 60   },
+        displaySurface: 'monitor',          // prefer full monitor
+        logicalSurface: true,
+        cursor: 'always',                   // always show cursor
+      },
+      audio: false,
+    });
   } catch(e) {
-    // User cancelled or denied
+    // User cancelled or denied — clean up Firebase entry
     ssStopSharing();
     return;
   }
+
+  // ── Force the video track to highest quality ─────────────────────────────────
+  const vTrack = stream.getVideoTracks()[0];
+  if (vTrack && vTrack.applyConstraints) {
+    vTrack.applyConstraints({
+      width:     { ideal: 1920 },
+      height:    { ideal: 1080 },
+      frameRate: { ideal: 30, max: 60 },
+    }).catch(() => {});
+  }
+
   SS.myStream  = stream;
   SS.isSharing = true;
 
   // Stop sharing if user ends from browser UI
-  stream.getVideoTracks()[0].addEventListener('ended', () => ssStopSharing());
+  vTrack && vTrack.addEventListener('ended', () => ssStopSharing());
 
   // Init PeerJS for screen share
   SS.peer = new Peer(undefined, {
@@ -9106,9 +9133,27 @@ async function ssStartSharing() {
     ssRenderUI();
   });
 
-  // Answer calls from viewers — send them the screen stream
+  // Answer calls from viewers — send screen stream and maximise bitrate
   SS.peer.on('call', (call) => {
     call.answer(SS.myStream);
+    // Boost sender bitrate to ~8 Mbps once ICE connects
+    call.peerConnection && call.peerConnection.addEventListener('iceconnectionstatechange', () => {
+      if (call.peerConnection.iceConnectionState === 'connected' ||
+          call.peerConnection.iceConnectionState === 'completed') {
+        call.peerConnection.getSenders().forEach(async sender => {
+          if (sender.track && sender.track.kind === 'video') {
+            try {
+              const params = sender.getParameters();
+              if (!params.encodings || params.encodings.length === 0) params.encodings = [{}];
+              params.encodings[0].maxBitrate    = 8_000_000;  // 8 Mbps
+              params.encodings[0].maxFramerate  = 30;
+              params.encodings[0].scaleResolutionDownBy = 1;  // no downscale
+              await sender.setParameters(params);
+            } catch(e) { /* browser may not support */ }
+          }
+        });
+      }
+    });
   });
 
   SS.peer.on('error', (err) => {
@@ -9318,6 +9363,20 @@ function ssLeave() {
   if (dot) dot.classList.remove('show');
 }
 window.ssLeave = ssLeave;
+
+// ── AUTO-STOP SCREEN SHARE ON TAB CLOSE / BROWSER EXIT ───────────────────────
+window.addEventListener('beforeunload', () => {
+  // Best-effort synchronous cleanup — Firebase onDisconnect handles the real guarantee
+  if (SS.isSharing && B.db && B.roomCode) {
+    try { B.db.ref(`battle_rooms/${B.roomCode}/screenShare/active`).remove(); } catch(e) {}
+    try { B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers`).remove(); } catch(e) {}
+  }
+  if (SS.isWatching && B.db && B.roomCode) {
+    try { B.db.ref(`battle_rooms/${B.roomCode}/screenShare/viewers/${B.myId}`).remove(); } catch(e) {}
+  }
+  // Stop all media tracks immediately
+  if (SS.myStream) { try { SS.myStream.getTracks().forEach(t => t.stop()); } catch(e) {} }
+});
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 function boot() {
