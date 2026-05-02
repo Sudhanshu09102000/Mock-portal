@@ -204,7 +204,16 @@ const PORTAL_DATA = [
         subtopics: [
           { name: "February and March 2026 Current Affiars", file: "ca-feb-march-2026" },
           { name: "January 2026 Current Affiars", file: "ca-jan-2026" },
-          { name: "December 2025 Current Affiars", file: "ca-dec-2025" },
+          { name: "December 2025 Current Affairs", file: "ca-dec-2025" },
+          { name: "November 2025 Current Affairs", file: "ca-nov-2025" },
+          { name: "October 2025 Current Affairs", file: "ca-oct-2025" },
+          { name: "September 2025 Current Affairs", file: "ca-sep-2025" },
+          { name: "August 2025 Current Affairs", file: "ca-aug-2025" },
+          { name: "July 2025 Current Affairs", file: "ca-jul-2025" },
+          { name: "June 2025 Current Affairs", file: "ca-jun-2025" },
+          { name: "May 2025 Current Affairs", file: "ca-may-2025" },
+          { name: "April 2025 Current Affairs", file: "ca-apr-2025" },
+          { name: "March 2025 Current Affairs", file: "ca-mar-2025" }
           
         ]
       }
