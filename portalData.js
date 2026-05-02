@@ -204,6 +204,7 @@ const PORTAL_DATA = [
         subtopics: [
           { name: "February and March 2026 Current Affiars", file: "ca-feb-march-2026" },
           { name: "January 2026 Current Affiars", file: "ca-jan-2026" },
+          { name: "December 2025 Current Affiars", file: "ca-dec-2025" },
           
         ]
       }
