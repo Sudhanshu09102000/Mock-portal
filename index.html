@@ -8975,7 +8975,8 @@ function ssRenderUI() {
   // Build action buttons
   let html = '';
   const iAmSharer = SS.sharerId === B.myId && SS.isSharing;
-  const isMobileDevice = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  const isMobileDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+    (!navigator.mediaDevices || typeof navigator.mediaDevices.getDisplayMedia !== 'function');
 
   if (iAmSharer) {
     // Sharer: stop button
@@ -8993,8 +8994,8 @@ function ssRenderUI() {
     if (isMobileDevice) {
       // Mobile: can't share, show informational note
       html = `<div style="text-align:center;padding:10px 8px;color:rgba(234,240,255,.6);font-size:12px;line-height:1.5;">
-                📱 <strong style="color:rgba(234,240,255,.85);">Screen sharing from mobile is not supported.</strong><br>
-                Use a desktop browser to share your screen.<br>You can still watch others share.
+                📱 <strong style="color:rgba(234,240,255,.85);">Screen sharing is not supported on iOS.</strong><br>
+                Use a desktop or Android browser to share your screen.<br>You can still watch others share.
               </div>`;
     } else if (alreadyRequested) {
       html = `<button class="bm-ss-btn bm-ss-btn-request" disabled>⏳ Waiting for host approval…</button>
@@ -9076,10 +9077,11 @@ window.ssDenyRequest = ssDenyRequest;
 async function ssStartSharing() {
   if (SS.isSharing) return;
 
-  // ── Mobile guard: getDisplayMedia is not supported on iOS/Android ────────────
-  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-  if (isMobile || !navigator.mediaDevices || typeof navigator.mediaDevices.getDisplayMedia !== 'function') {
-    alert('📱 Screen sharing is not supported on mobile browsers.\n\nPlease use a desktop or laptop browser to share your screen.\n\nYou can still watch others share their screen on mobile.');
+  // ── Mobile guard: getDisplayMedia is NOT supported on iOS (iPhone/iPad).
+  //    Android Chrome 94+ DOES support it, so we only block iOS. ────────────────
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isIOS || !navigator.mediaDevices || typeof navigator.mediaDevices.getDisplayMedia !== 'function') {
+    alert('📱 Screen sharing is not supported on iOS (iPhone/iPad).\n\nPlease use a desktop or laptop browser to share your screen.\n\nYou can still watch others share their screen.');
     return;
   }
 
@@ -9231,7 +9233,7 @@ function ssStartWatching() {
         videoEl.srcObject = stream;
         // Keep muted=true on mobile — browsers block unmuted autoplay.
         // On desktop we can unmute; on mobile we show a tap-to-unmute prompt.
-        const isMobileViewer = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        const isMobileViewer = /iPhone|iPad|iPod/i.test(navigator.userAgent);
         if (!isMobileViewer) {
           videoEl.muted = false;
         }
@@ -9311,7 +9313,7 @@ function ssOpenFullscreen() {
   // Mirror the same stream into the fullscreen video
   fsVid.srcObject = smallVid.srcObject;
   // Keep muted on mobile to allow autoplay
-  const isMobileFs = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  const isMobileFs = /iPhone|iPad|iPod/i.test(navigator.userAgent);
   fsVid.muted = isMobileFs;
   fsVid.play().catch(() => {});
 
