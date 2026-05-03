@@ -8975,6 +8975,7 @@ function ssRenderUI() {
   // Build action buttons
   let html = '';
   const iAmSharer = SS.sharerId === B.myId && SS.isSharing;
+  const isMobileDevice = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
 
   if (iAmSharer) {
     // Sharer: stop button
@@ -8989,7 +8990,13 @@ function ssRenderUI() {
   } else if (!hasActive) {
     // No active share — allow requesting
     const alreadyRequested = SS.pendingRequest && SS.pendingRequest.requesterId === B.myId;
-    if (alreadyRequested) {
+    if (isMobileDevice) {
+      // Mobile: can't share, show informational note
+      html = `<div style="text-align:center;padding:10px 8px;color:rgba(234,240,255,.6);font-size:12px;line-height:1.5;">
+                📱 <strong style="color:rgba(234,240,255,.85);">Screen sharing from mobile is not supported.</strong><br>
+                Use a desktop browser to share your screen.<br>You can still watch others share.
+              </div>`;
+    } else if (alreadyRequested) {
       html = `<button class="bm-ss-btn bm-ss-btn-request" disabled>⏳ Waiting for host approval…</button>
               <button class="bm-ss-btn bm-ss-btn-stop" style="margin-top:6px;font-size:11px;" onclick="ssCancelRequest()">✕ Cancel Request</button>`;
     } else if (B.isHost) {
@@ -9068,6 +9075,13 @@ window.ssDenyRequest = ssDenyRequest;
 // SHARER: start capturing screen and broadcast via PeerJS
 async function ssStartSharing() {
   if (SS.isSharing) return;
+
+  // ── Mobile guard: getDisplayMedia is not supported on iOS/Android ────────────
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  if (isMobile || !navigator.mediaDevices || typeof navigator.mediaDevices.getDisplayMedia !== 'function') {
+    alert('📱 Screen sharing is not supported on mobile browsers.\n\nPlease use a desktop or laptop browser to share your screen.\n\nYou can still watch others share their screen on mobile.');
+    return;
+  }
 
   // ── Full HD capture constraints ──────────────────────────────────────────────
   let stream;
@@ -9215,8 +9229,28 @@ function ssStartWatching() {
       const videoEl = document.getElementById('bmSsVideo');
       if (videoEl) {
         videoEl.srcObject = stream;
-        videoEl.muted = false;
-        videoEl.play().catch(() => {});
+        // Keep muted=true on mobile — browsers block unmuted autoplay.
+        // On desktop we can unmute; on mobile we show a tap-to-unmute prompt.
+        const isMobileViewer = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        if (!isMobileViewer) {
+          videoEl.muted = false;
+        }
+        videoEl.play().catch(() => {
+          // Autoplay was blocked — add a one-time tap listener to start playback
+          const resume = () => { videoEl.play().catch(()=>{}); videoEl.removeEventListener('click', resume); };
+          videoEl.addEventListener('click', resume);
+          // Show a visual prompt
+          const wrap = document.getElementById('bmSsVideoWrap');
+          if (wrap && !wrap.querySelector('.ss-tap-prompt')) {
+            const tip = document.createElement('div');
+            tip.className = 'ss-tap-prompt';
+            tip.textContent = '▶ Tap to play';
+            tip.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);color:#fff;font-size:18px;font-weight:700;border-radius:12px;cursor:pointer;z-index:5;';
+            tip.addEventListener('click', () => { videoEl.play().catch(()=>{}); tip.remove(); });
+            wrap.style.position = 'relative';
+            wrap.appendChild(tip);
+          }
+        });
       }
       ssRenderUI();
     });
@@ -9276,6 +9310,9 @@ function ssOpenFullscreen() {
 
   // Mirror the same stream into the fullscreen video
   fsVid.srcObject = smallVid.srcObject;
+  // Keep muted on mobile to allow autoplay
+  const isMobileFs = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  fsVid.muted = isMobileFs;
   fsVid.play().catch(() => {});
 
   // Update label
