@@ -9879,21 +9879,18 @@ document.addEventListener("DOMContentLoaded", function () {
   inset: 0;
   z-index: 1000000;
   background: transparent;
-  /* NO backdrop blur — test stays fully visible */
   pointer-events: none;
 }
 #gbl-overlay.open {
   display: block;
 }
 
-/* Side-by-side split: blackboard floats on the right half, test visible on left */
 #gbl-window {
   pointer-events: all;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
-  /* Takes up right 52% of screen — left 48% = test engine visible */
   width: min(760px, 52vw);
   height: 100vh;
   border-radius: 14px 0 0 14px;
@@ -9908,13 +9905,9 @@ document.addEventListener("DOMContentLoaded", function () {
   flex-direction: column;
   overflow: hidden;
   resize: none;
-  min-width: 340px;
-  /* Slide-in animation */
-  transform: translateX(0);
-  transition: transform 0.28s cubic-bezier(.2,.7,.2,1);
+  min-width: 300px;
 }
 
-/* On mobile: take full width */
 @media (max-width: 768px) {
   #gbl-window {
     width: 100vw;
@@ -10141,7 +10134,8 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 #gbl-canvas {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   cursor: crosshair;
   touch-action: none;
   will-change: transform;
@@ -10394,6 +10388,62 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
   </div>
 
+  <!-- THEME COLORS -->
+  <div class="gcp-section">
+    <div class="gcp-section-title">🖌️ Theme Colors</div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;padding:2px 0;">
+
+      <!-- Website Text Color -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        <div style="font-size:11px;color:rgba(200,220,255,0.7);font-family:'Inter',sans-serif;flex:1;">
+          Website Text
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <input type="color" id="gcp-text-color" value="#eaf0ff"
+            style="width:32px;height:28px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;">
+          <button id="gcp-text-color-reset" style="font-size:9px;padding:3px 7px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">Reset</button>
+        </div>
+      </div>
+
+      <!-- Page Background Color -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        <div style="font-size:11px;color:rgba(200,220,255,0.7);font-family:'Inter',sans-serif;flex:1;">
+          Page Background
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <input type="color" id="gcp-bg-color" value="#050714"
+            style="width:32px;height:28px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;">
+          <button id="gcp-bg-color-reset" style="font-size:9px;padding:3px 7px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">Reset</button>
+        </div>
+      </div>
+
+      <!-- Test Box Color -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        <div style="font-size:11px;color:rgba(200,220,255,0.7);font-family:'Inter',sans-serif;flex:1;">
+          Test Box / Cards
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <input type="color" id="gcp-box-color" value="#111827"
+            style="width:32px;height:28px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;">
+          <button id="gcp-box-color-reset" style="font-size:9px;padding:3px 7px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">Reset</button>
+        </div>
+      </div>
+
+      <!-- Quick Preset Themes -->
+      <div style="margin-top:4px;">
+        <div style="font-size:10px;color:rgba(180,200,255,0.35);font-family:'Inter',sans-serif;margin-bottom:6px;letter-spacing:0.5px;">QUICK THEMES</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="gcp-theme-btn" data-theme="dark" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(124,58,237,0.4);background:rgba(124,58,237,0.15);color:#c084fc;cursor:pointer;font-family:'Inter',sans-serif;">🌌 Dark</button>
+          <button class="gcp-theme-btn" data-theme="midnight" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(6,182,212,0.4);background:rgba(6,182,212,0.1);color:#67e8f9;cursor:pointer;font-family:'Inter',sans-serif;">🌊 Midnight</button>
+          <button class="gcp-theme-btn" data-theme="forest" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(34,197,94,0.4);background:rgba(34,197,94,0.1);color:#4ade80;cursor:pointer;font-family:'Inter',sans-serif;">🌿 Forest</button>
+          <button class="gcp-theme-btn" data-theme="light" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(200,200,200,0.4);background:rgba(240,240,255,0.12);color:#c8d8ff;cursor:pointer;font-family:'Inter',sans-serif;">☀️ Light</button>
+          <button class="gcp-theme-btn" data-theme="sepia" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(234,179,8,0.4);background:rgba(234,179,8,0.1);color:#fde047;cursor:pointer;font-family:'Inter',sans-serif;">📜 Sepia</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- SHORTCUTS -->
   <div class="gcp-section">
     <div class="gcp-section-title">⌨️ Shortcuts</div>
@@ -10467,10 +10517,13 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="gbl-tool-sep"></div>
         <!-- Stroke sizes -->
         <div id="gbl-stroke-size">
-          <div class="gbl-sz active" data-size="2"  style="width:6px;height:6px;"   title="Thin"></div>
+          <div class="gbl-sz active" data-size="1"  style="width:6px;height:6px;"   title="Ultra Thin"></div>
+          <div class="gbl-sz"        data-size="2"  style="width:8px;height:8px;"   title="Thin"></div>
           <div class="gbl-sz"        data-size="4"  style="width:10px;height:10px;" title="Medium"></div>
-          <div class="gbl-sz"        data-size="8"  style="width:14px;height:14px;" title="Thick"></div>
-          <div class="gbl-sz"        data-size="16" style="width:18px;height:18px;" title="Xl"></div>
+          <div class="gbl-sz"        data-size="8"  style="width:12px;height:12px;" title="Thick"></div>
+          <div class="gbl-sz"        data-size="16" style="width:14px;height:14px;" title="XXl"></div>
+          <div class="gbl-sz"        data-size="32" style="width:16px;height:16px;" title="XXXl"></div>
+          <div class="gbl-sz"        data-size="64" style="width:18px;height:18px;" title="XXXXl"></div>
         </div>
         <div class="gbl-tool-sep"></div>
         <!-- Fill / BG -->
@@ -10621,6 +10674,102 @@ document.addEventListener("DOMContentLoaded", function () {
   fontSizeSlider.addEventListener('input', () => {
     fontSizeVal.textContent = fontSizeSlider.value + 'px';
     applySize(fontSizeSlider.value);
+  });
+
+  // ── THEME COLOR CUSTOMIZATION ──
+  let themeStyle = document.createElement('style');
+  themeStyle.id = 'gcp-theme-style';
+  document.head.appendChild(themeStyle);
+
+  const THEME_DEFAULTS = {
+    textColor: '#eaf0ff',
+    bgColor:   '#050714',
+    boxColor:  '#111827'
+  };
+
+  const THEMES = {
+    dark:     { textColor:'#eaf0ff', bgColor:'#050714',  boxColor:'#111827' },
+    midnight: { textColor:'#e0f7ff', bgColor:'#020d18',  boxColor:'#041624' },
+    forest:   { textColor:'#e0ffe8', bgColor:'#020f06',  boxColor:'#051a09' },
+    light:    { textColor:'#1a1a2e', bgColor:'#f0f4ff',  boxColor:'#ffffff' },
+    sepia:    { textColor:'#3d2b1f', bgColor:'#f5ead7',  boxColor:'#ece1c8' },
+  };
+
+  function applyThemeColors(textColor, bgColor, boxColor) {
+    themeStyle.textContent = `
+      html, body { color: ${textColor} !important; }
+      body {
+        background: ${bgColor} !important;
+        background-image: none !important;
+        animation: none !important;
+      }
+      #particleCanvas { display: none !important; }
+      body::before { display: none !important; }
+      .glass, .resizable-question-box, #questionBox,
+      .nav-panel .glass, .engine-topbar {
+        background: ${boxColor} !important;
+        backdrop-filter: none !important;
+      }
+      #questionText, .qbox, .option, .opt-text,
+      .badge-soft, .pill, h1, h2, h3, h4, h5, h6,
+      p, span:not(.badge):not(.gcp-icon), label {
+        color: ${textColor} !important;
+      }
+      .option {
+        border-color: rgba(128,128,200,0.25) !important;
+        background: color-mix(in srgb, ${boxColor} 80%, transparent) !important;
+      }
+    `;
+    // Sync pickers
+    document.getElementById('gcp-text-color').value = textColor;
+    document.getElementById('gcp-bg-color').value   = bgColor;
+    document.getElementById('gcp-box-color').value  = boxColor;
+  }
+
+  function clearThemeColors() {
+    themeStyle.textContent = '';
+  }
+
+  document.getElementById('gcp-text-color').addEventListener('input', e => {
+    const bg  = document.getElementById('gcp-bg-color').value;
+    const box = document.getElementById('gcp-box-color').value;
+    applyThemeColors(e.target.value, bg, box);
+  });
+  document.getElementById('gcp-bg-color').addEventListener('input', e => {
+    const txt = document.getElementById('gcp-text-color').value;
+    const box = document.getElementById('gcp-box-color').value;
+    applyThemeColors(txt, e.target.value, box);
+  });
+  document.getElementById('gcp-box-color').addEventListener('input', e => {
+    const txt = document.getElementById('gcp-text-color').value;
+    const bg  = document.getElementById('gcp-bg-color').value;
+    applyThemeColors(txt, bg, e.target.value);
+  });
+
+  document.getElementById('gcp-text-color-reset').addEventListener('click', () => {
+    document.getElementById('gcp-text-color').value = THEME_DEFAULTS.textColor;
+    applyThemeColors(THEME_DEFAULTS.textColor,
+      document.getElementById('gcp-bg-color').value,
+      document.getElementById('gcp-box-color').value);
+  });
+  document.getElementById('gcp-bg-color-reset').addEventListener('click', () => {
+    document.getElementById('gcp-bg-color').value = THEME_DEFAULTS.bgColor;
+    applyThemeColors(document.getElementById('gcp-text-color').value,
+      THEME_DEFAULTS.bgColor,
+      document.getElementById('gcp-box-color').value);
+  });
+  document.getElementById('gcp-box-color-reset').addEventListener('click', () => {
+    document.getElementById('gcp-box-color').value = THEME_DEFAULTS.boxColor;
+    applyThemeColors(document.getElementById('gcp-text-color').value,
+      document.getElementById('gcp-bg-color').value,
+      THEME_DEFAULTS.boxColor);
+  });
+
+  document.querySelectorAll('.gcp-theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = THEMES[btn.dataset.theme];
+      if (t) applyThemeColors(t.textColor, t.bgColor, t.boxColor);
+    });
   });
 
   /* ── GLOBAL KEYBOARD SHORTCUTS ── */
@@ -10819,14 +10968,43 @@ document.addEventListener("DOMContentLoaded", function () {
     const area = document.getElementById('gbl-canvas-area');
     const w = area.clientWidth;
     const h = area.clientHeight;
-    // Save current drawing
-    const snap = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    canvas.width  = w;
-    canvas.height = h;
-    fillBg();
-    if (snap && snap.width > 0 && snap.height > 0) {
-      ctx.putImageData(snap, 0, 0);
+    if (w < 2 || h < 2) return;
+
+    const oldW = canvas.width;
+    const oldH = canvas.height;
+
+    // First open: set size and fill bg
+    if (oldW < 2 || oldH < 2) {
+      canvas.width  = w;
+      canvas.height = h;
+      fillBg();
+      redrawGeoOverlays();
+      return;
     }
+
+    // Only GROW the canvas, never shrink it.
+    // Shrinking would cut off content — the container clips the view via overflow:hidden.
+    const newW = Math.max(oldW, w);
+    const newH = Math.max(oldH, h);
+
+    if (newW === oldW && newH === oldH) {
+      // Container shrank but canvas is already bigger — content safe, just re-overlay.
+      redrawGeoOverlays();
+      return;
+    }
+
+    // Canvas needs to grow — save drawing, expand, restore at (0,0) without scaling
+    const tmp = document.createElement('canvas');
+    tmp.width  = oldW;
+    tmp.height = oldH;
+    tmp.getContext('2d').drawImage(canvas, 0, 0);
+
+    canvas.width  = newW;
+    canvas.height = newH;
+
+    fillBg();
+    ctx.drawImage(tmp, 0, 0);
+
     redrawGeoOverlays();
   }
 
@@ -10848,7 +11026,7 @@ document.addEventListener("DOMContentLoaded", function () {
     hideGeoTools();
   }
   document.getElementById('gbl-close-btn').addEventListener('click', closeBlackboard);
-  // Overlay is now transparent/non-blocking for side-by-side mode — no click-outside-to-close
+  // Overlay is transparent/non-blocking in side-by-side mode
 
   // ── TOOL BUTTONS ──
   document.querySelectorAll('.gbl-tool[data-tool]').forEach(btn => {
@@ -11141,7 +11319,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // ── CANVAS DRAWING — Windows Ink + Pointer Events + Smooth Bezier ──
   function getXY(e) {
     const rect = canvas.getBoundingClientRect();
-    // scaleX/scaleY for when canvas resolution differs from CSS size
     const scaleX = canvas.width  / rect.width;
     const scaleY = canvas.height / rect.height;
     if (e.touches) {
@@ -11180,10 +11357,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ── SMOOTH STROKE ENGINE (single continuous path, no restarts) ──
-  // Collects all points, draws quadratic bezier curves through midpoints.
-  // Path is never broken mid-stroke — gives silky natural pencil feel.
   let _pts = [];
-  let _strokePath = null; // the single Path2D for the current stroke
 
   function _beginStroke(x, y) {
     _pts = [{x, y}];
@@ -11194,16 +11368,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function _addSmoothPoint(x, y) {
     _pts.push({x, y});
     const n = _pts.length;
-    if (n < 2) return;
-    if (n === 2) {
-      // Just a micro-segment — don't draw yet, wait for 3rd point
-      return;
-    }
-    // Use midpoints as anchors so the bezier passes through each point
-    // Redraw the whole stroke each move for maximum smoothness
-    ctx.clearRect(0, 0, 0, 0); // no-op clear; we build incrementally
-    // Erase just the last tiny segment area and redraw from scratch each time
-    // would be expensive — instead just extend the open path
+    if (n < 3) return; // wait for 3 points before drawing curves
     const p0 = _pts[n - 3];
     const p1 = _pts[n - 2];
     const p2 = _pts[n - 1];
@@ -11212,41 +11377,33 @@ document.addEventListener("DOMContentLoaded", function () {
     const mid2x = (p1.x + p2.x) / 2;
     const mid2y = (p1.y + p2.y) / 2;
     if (n === 3) {
-      // Move to first midpoint, then curve through p1 to mid2
       ctx.beginPath();
       ctx.moveTo(mid1x, mid1y);
     }
     ctx.quadraticCurveTo(p1.x, p1.y, mid2x, mid2y);
     ctx.stroke();
-    // Keep path open at mid2 for next segment
     ctx.beginPath();
     ctx.moveTo(mid2x, mid2y);
   }
 
   function _flushBezier() {
-    // Close the final tail from last midpoint to the actual last point
     const n = _pts.length;
-    if (n >= 2) {
-      const p1 = _pts[n - 2];
-      const p2 = _pts[n - 1];
-      const mid1x = (p1.x + p2.x) / 2;
-      const mid1y = (p1.y + p2.y) / 2;
-      if (n === 2) {
-        // Only 2 points — just draw a line
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
-      } else {
-        // Draw from last mid to final point
-        ctx.quadraticCurveTo(p2.x, p2.y, p2.x, p2.y);
-        ctx.stroke();
-      }
-    } else if (n === 1) {
+    if (n === 1) {
       // Single dot (tap)
       ctx.beginPath();
-      ctx.arc(_pts[0].x, _pts[0].y, ctx.lineWidth / 2, 0, Math.PI * 2);
+      ctx.arc(_pts[0].x, _pts[0].y, Math.max(ctx.lineWidth / 2, 1), 0, Math.PI * 2);
       ctx.fill();
+    } else if (n === 2) {
+      ctx.beginPath();
+      ctx.moveTo(_pts[0].x, _pts[0].y);
+      ctx.lineTo(_pts[1].x, _pts[1].y);
+      ctx.stroke();
+    } else {
+      // Finish tail to the final point
+      const p1 = _pts[n - 2];
+      const p2 = _pts[n - 1];
+      ctx.quadraticCurveTo(p2.x, p2.y, p2.x, p2.y);
+      ctx.stroke();
     }
     _pts = [];
   }
@@ -11487,11 +11644,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ── PAGE MANAGEMENT ──
   function savePage() {
-    pages[currentPage] = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // Save as an offscreen canvas (not raw ImageData) so we can scale on restore
+    const tmp = document.createElement('canvas');
+    tmp.width  = canvas.width;
+    tmp.height = canvas.height;
+    tmp.getContext('2d').drawImage(canvas, 0, 0);
+    pages[currentPage] = tmp;
   }
   function loadPage(idx) {
     fillBg();
-    if (pages[idx]) ctx.putImageData(pages[idx], 0, 0);
+    const saved = pages[idx];
+    if (saved && saved.width > 0 && saved.height > 0) {
+      // Draw saved page at its native resolution (always CANVAS_W x CANVAS_H)
+      ctx.drawImage(saved, 0, 0);
+    }
   }
   function updatePageUI() {
     document.getElementById('gbl-page-indicator').textContent = `Page ${currentPage+1} / ${pages.length}`;
@@ -11535,26 +11701,21 @@ document.addEventListener("DOMContentLoaded", function () {
   // ── FULLSCREEN ──
   document.getElementById('gbl-fullscreen-btn').addEventListener('click', () => {
     const w = gblWindow;
-    if (w.style.width === '100vw') {
-      // Back to side-by-side
+    if (w.dataset.fullscreen === '1') {
+      w.dataset.fullscreen = '0';
       w.style.width  = 'min(760px, 52vw)';
       w.style.height = '100vh';
-      w.style.top    = '0';
-      w.style.bottom = '0';
       w.style.borderRadius = '14px 0 0 14px';
     } else {
-      // Full screen
+      w.dataset.fullscreen = '1';
       w.style.width  = '100vw';
       w.style.height = '100vh';
-      w.style.top    = '0';
-      w.style.bottom = '0';
       w.style.borderRadius = '0';
     }
     setTimeout(resizeCanvas, 50);
   });
 
-  // ── DRAG TITLE BAR — resize width by dragging left edge instead ──
-  // In side-by-side mode, dragging the title bar adjusts the panel width
+  // ── DRAG TITLE BAR — drag to resize panel width ──
   const titleBar = document.getElementById('gbl-titlebar');
   let tbDrag=false, tbStartX=0, tbStartW=0;
   titleBar.addEventListener('mousedown', e => {
@@ -11565,7 +11726,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.addEventListener('mousemove', e => {
     if (!tbDrag) return;
-    const delta = tbStartX - e.clientX; // drag left = widen
+    const delta = tbStartX - e.clientX;
     const newW = Math.max(300, Math.min(window.innerWidth, tbStartW + delta));
     gblWindow.style.width = newW + 'px';
   });
@@ -11602,11 +11763,8 @@ document.addEventListener("DOMContentLoaded", function () {
         ectx.fillStyle = bgColor;
         ectx.fillRect(0,0,W,H);
         if (pages[i]) {
-          // Scale the saved imagedata to export size
-          const tmpCv = document.createElement('canvas');
-          tmpCv.width = pages[i].width; tmpCv.height = pages[i].height;
-          tmpCv.getContext('2d').putImageData(pages[i], 0, 0);
-          ectx.drawImage(tmpCv, 0, 0, W, H);
+          // pages[i] is now an offscreen canvas — draw directly
+          ectx.drawImage(pages[i], 0, 0, W, H);
         }
         const dataUrl = exportCanvas.toDataURL('image/png');
         const sl = pptx.addSlide();
