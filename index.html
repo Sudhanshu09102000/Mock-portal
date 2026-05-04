@@ -2928,9 +2928,10 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         </div>
       </div>
     </div>
+  </div><!-- /#candidateModal -->
 
-    <!-- Audio -->
-    <audio id="audCorrect" preload="auto">
+  <!-- Audio -->
+  <audio id="audCorrect" preload="auto">
       <source src="a.mp3" type="audio/mpeg">
     </audio>
     <audio id="audWrong" preload="auto">
@@ -5739,14 +5740,12 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         }
 
         /* ---------- KEY BIND ---------- */
-        document.addEventListener("keydown", (e) => {
-          if (e.key.toLowerCase() === ".") {
-            e.preventDefault();
-            run();
-          }
-        });
+        // "." key is now reserved for the Blackboard (see GCP panel below).
+        // PPT capture is accessible via the side panel button (/) → "Capture All Questions".
+        // Expose run() globally so the panel button can call it.
+        window._gcpRunPPT = run;
 
-        console.log("✅ PRESS '.' → CAPTURE ALL QUESTIONS (goNext based)");
+        console.log("✅ PPT capture ready — use side panel (/) → Capture All Questions");
 
       })();
     </script>
@@ -9567,6 +9566,2034 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ██████╗  ██████╗ ██████╗         ██╗     ███████╗██╗   ██╗███████╗██╗
+    ██╔════╝ ██╔═══██╗██╔══██╗        ██║     ██╔════╝██║   ██║██╔════╝██║
+    ██║  ███╗██║   ██║██║  ██║        ██║     █████╗  ██║   ██║█████╗  ██║
+    ██║   ██║██║   ██║██║  ██║        ██║     ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║
+    ╚██████╔╝╚██████╔╝██████╔╝        ███████╗███████╗ ╚████╔╝ ███████╗███████╗
+     ╚═════╝  ╚═════╝ ╚═════╝         ╚══════╝╚══════╝  ╚═══╝  ╚══════╝╚══════╝
+     UNIFIED CONTROL PANEL + GOD-LEVEL BLACKBOARD
+═══════════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ═══ SUPPRESS OLD PANELS ═══ */
+#tools-panel { display: none !important; }
+
+/* ═══ DOOR TRIGGER BUTTON ═══ */
+#gcp-trigger {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2147483647;
+  width: 12px;
+  height: 60px;
+  background: linear-gradient(180deg, #7c3aed 0%, #06b6d4 50%, #7c3aed 100%);
+  border-radius: 0 12px 12px 0;
+  border: 1px solid rgba(255,255,255,0.30);
+  border-left: none;
+  box-shadow: 4px 0 18px rgba(124,58,237,0.6), 0 0 32px rgba(6,182,212,0.3), inset -1px 0 0 rgba(255,255,255,0.1);
+  cursor: pointer;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: width 0.18s ease, box-shadow 0.18s ease;
+  overflow: hidden;
+  pointer-events: all !important;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#gcp-trigger:hover {
+  width: 30px;
+  box-shadow: 5px 0 24px rgba(124,58,237,0.8), 0 0 48px rgba(6,182,212,0.45), inset -1px 0 0 rgba(255,255,255,0.18);
+}
+#gcp-trigger:active { opacity: 0.75; }
+#gcp-trigger-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+#gcp-trigger-dots span {
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(255,255,255,0.9);
+}
+@keyframes gcp-pulse {
+  0%,100% { box-shadow: 4px 0 18px rgba(124,58,237,0.6), 0 0 32px rgba(6,182,212,0.3); }
+  50%      { box-shadow: 4px 0 26px rgba(124,58,237,0.9), 0 0 50px rgba(6,182,212,0.5); }
+}
+#gcp-trigger { animation: gcp-pulse 3s ease-in-out infinite; }
+
+/* ═══ PANEL BACKDROP ═══ */
+#gcp-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  z-index: 2147483645;
+}
+#gcp-backdrop.open { display: block; }
+
+/* ═══ MAIN PANEL ═══ */
+#gcp-panel {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  z-index: 2147483646;
+  background: linear-gradient(180deg,
+    rgba(8,6,30,0.98) 0%,
+    rgba(12,8,28,0.98) 50%,
+    rgba(6,10,28,0.98) 100%
+  );
+  border-right: 1px solid rgba(124,58,237,0.4);
+  box-shadow: 8px 0 60px rgba(0,0,0,0.7), inset -1px 0 0 rgba(6,182,212,0.15);
+  transform-origin: left center;
+  transform: perspective(1400px) rotateY(-90deg);
+  transition: transform 0.5s cubic-bezier(0.34,1.2,0.64,1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124,58,237,0.4) transparent;
+}
+#gcp-panel.open {
+  transform: perspective(1400px) rotateY(0deg);
+}
+#gcp-panel::-webkit-scrollbar { width: 4px; }
+#gcp-panel::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.4); border-radius: 99px; }
+
+/* ═══ PANEL HEADER ═══ */
+.gcp-header {
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  position: sticky;
+  top: 0;
+  background: rgba(8,6,30,0.98);
+  z-index: 2;
+}
+.gcp-header-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg,#7c3aed,#06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2px;
+}
+.gcp-header-sub {
+  font-size: 10px;
+  color: rgba(180,200,255,0.4);
+  font-family: 'Inter', sans-serif;
+}
+.gcp-close {
+  position: absolute;
+  top: 16px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  transition: background 0.15s, color 0.15s;
+}
+.gcp-close:hover { background: rgba(239,68,68,0.2); color: #f87171; }
+
+/* ═══ SECTIONS ═══ */
+.gcp-section {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.gcp-section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(180,200,255,0.35);
+  margin-bottom: 10px;
+}
+
+/* ═══ PANEL BUTTONS ═══ */
+.gcp-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: rgba(234,240,255,0.9);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+.gcp-btn:last-child { margin-bottom: 0; }
+.gcp-btn:hover {
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateX(3px);
+}
+.gcp-btn.accent-purple {
+  background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(124,58,237,0.08));
+  border-color: rgba(124,58,237,0.4);
+}
+.gcp-btn.accent-purple:hover { border-color: rgba(124,58,237,0.7); background: rgba(124,58,237,0.25); }
+.gcp-btn.accent-cyan {
+  background: linear-gradient(135deg, rgba(6,182,212,0.18), rgba(6,182,212,0.07));
+  border-color: rgba(6,182,212,0.4);
+}
+.gcp-btn.accent-cyan:hover { border-color: rgba(6,182,212,0.7); background: rgba(6,182,212,0.22); }
+.gcp-btn.accent-green {
+  background: linear-gradient(135deg, rgba(34,197,94,0.18), rgba(34,197,94,0.06));
+  border-color: rgba(34,197,94,0.4);
+}
+.gcp-btn.accent-green:hover { border-color: rgba(34,197,94,0.7); }
+.gcp-btn .gcp-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.08);
+}
+.gcp-btn .gcp-kbd {
+  margin-left: auto;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.5);
+  font-family: monospace;
+}
+
+/* ═══ FONT CONTROLS ═══ */
+.gcp-font-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.gcp-select {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(234,240,255,0.9);
+  border-radius: 10px;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+}
+.gcp-select:focus { border-color: rgba(124,58,237,0.6); }
+.gcp-range-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.gcp-range {
+  flex: 1;
+  accent-color: #7c3aed;
+  height: 4px;
+}
+.gcp-range-val {
+  font-size: 11px;
+  font-family: monospace;
+  color: rgba(180,200,255,0.6);
+  min-width: 30px;
+  text-align: right;
+}
+
+/* ═══ PPT PROGRESS ═══ */
+#gcp-ppt-status {
+  display: none;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  color: rgba(34,197,94,0.9);
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.25);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* ═══ SHORTCUT PILLS ═══ */
+.gcp-shortcut-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.gcp-shortcut-row .k {
+  font-size: 11px;
+  font-family: monospace;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(200,220,255,0.8);
+  min-width: 30px;
+  text-align: center;
+}
+.gcp-shortcut-row .desc {
+  font-size: 11px;
+  color: rgba(180,200,255,0.55);
+  font-family: 'Inter', sans-serif;
+}
+
+/* ═══════════════════════════════════════════════
+   GOD-LEVEL BLACKBOARD
+═══════════════════════════════════════════════ */
+#gbl-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+}
+#gbl-overlay.open { display: flex; align-items: center; justify-content: center; }
+
+#gbl-window {
+  position: relative;
+  background: #0d1117;
+  border-radius: 14px;
+  border: 1px solid rgba(124,58,237,0.35);
+  box-shadow:
+    0 0 0 1px rgba(6,182,212,0.08),
+    0 40px 120px rgba(0,0,0,0.8),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* default size: very generous — canvas should dominate */
+  width: min(1400px, 98vw);
+  height: min(900px, 96vh);
+  resize: both;
+  min-width: 400px;
+  min-height: 280px;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+/* ── TITLE BAR — ultra-slim ── */
+#gbl-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  height: 30px;
+  background: linear-gradient(90deg, rgba(124,58,237,0.22), rgba(6,182,212,0.10));
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  cursor: move;
+  user-select: none;
+  flex-shrink: 0;
+}
+.gbl-tb-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg,#c084fc,#67e8f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  flex: 1;
+  white-space: nowrap;
+}
+.gbl-tb-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.05);
+  color: rgba(200,220,255,0.8);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  transition: all 0.12s;
+  flex-shrink: 0;
+}
+.gbl-tb-btn:hover { background: rgba(255,255,255,0.12); }
+.gbl-tb-btn.danger:hover { background: rgba(239,68,68,0.25); color: #f87171; border-color: rgba(239,68,68,0.4); }
+.gbl-tb-btn.fullscreen-btn { font-size: 10px; }
+
+/* ── FLOATING TOOLBAR — overlays canvas, takes NO layout space ── */
+#gbl-toolbar {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 8px;
+  background: rgba(8,6,28,0.82);
+  border: 1px solid rgba(124,58,237,0.35);
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.55);
+  flex-wrap: nowrap;
+  transition: opacity 0.2s;
+  opacity: 0.88;
+  max-width: calc(100% - 16px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+#gbl-toolbar::-webkit-scrollbar { display: none; }
+#gbl-toolbar:hover { opacity: 1; }
+.gbl-tool-sep {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.10);
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+.gbl-tool {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(200,220,255,0.75);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  transition: all 0.10s;
+  position: relative;
+  flex-shrink: 0;
+}
+.gbl-tool:hover {
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.gbl-tool.active {
+  background: linear-gradient(135deg,rgba(124,58,237,0.40),rgba(6,182,212,0.28));
+  border-color: rgba(124,58,237,0.65);
+  color: #c084fc;
+  box-shadow: 0 0 10px rgba(124,58,237,0.30);
+}
+.gbl-tool[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+  background: rgba(10,10,20,0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 2px 6px;
+  border-radius: 5px;
+  color: rgba(200,220,255,0.9);
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* Color swatches */
+#gbl-colors {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.gbl-color-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.10s;
+  flex-shrink: 0;
+}
+.gbl-color-swatch:hover { transform: scale(1.25); }
+.gbl-color-swatch.active { border-color: #fff; box-shadow: 0 0 8px currentColor; transform: scale(1.18); }
+#gbl-custom-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.3);
+  overflow: hidden;
+  padding: 0;
+  background: conic-gradient(red,yellow,lime,cyan,blue,magenta,red);
+  flex-shrink: 0;
+}
+
+/* Stroke width */
+#gbl-stroke-size {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.gbl-sz {
+  cursor: pointer;
+  border-radius: 50%;
+  background: rgba(200,220,255,0.45);
+  flex-shrink: 0;
+  border: 2px solid transparent;
+  transition: all 0.10s;
+}
+.gbl-sz.active {
+  background: #c084fc;
+  border-color: rgba(192,132,252,0.55);
+  box-shadow: 0 0 7px rgba(192,132,252,0.5);
+}
+
+/* Geometry toggle */
+#gbl-geo-panel {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(8,6,30,0.98);
+  border: 1px solid rgba(124,58,237,0.4);
+  border-radius: 14px;
+  padding: 12px;
+  z-index: 200;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+  width: 280px;
+}
+#gbl-geo-panel.show { display: flex; flex-wrap: wrap; gap: 8px; }
+.gbl-geo-btn {
+  flex: 1 1 calc(50% - 4px);
+  min-width: 110px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: rgba(200,220,255,0.85);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.12s;
+}
+.gbl-geo-btn:hover { background: rgba(124,58,237,0.2); border-color: rgba(124,58,237,0.5); }
+.gbl-geo-btn.active { background: rgba(124,58,237,0.3); border-color: rgba(124,58,237,0.7); color: #c084fc; }
+
+/* ── CANVAS AREA — takes ALL space ── */
+#gbl-canvas-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #0d1117;
+  min-height: 0;
+}
+#gbl-canvas {
+  position: absolute;
+  inset: 0;
+  cursor: crosshair;
+  touch-action: none;
+  will-change: transform;
+  image-rendering: auto;
+}
+
+/* Geometry overlays */
+.gbl-geo-overlay {
+  position: absolute;
+  pointer-events: auto;
+  user-select: none;
+}
+#gbl-ruler-overlay {
+  display: none;
+}
+#gbl-protractor-overlay {
+  display: none;
+}
+#gbl-compass-overlay {
+  display: none;
+  cursor: crosshair;
+}
+
+/* ── STATUS BAR — ultra slim, floating in canvas ── */
+#gbl-statusbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 10px;
+  background: rgba(6,4,22,0.75);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  color: rgba(180,200,255,0.45);
+  z-index: 20;
+  height: 24px;
+}
+.gbl-stat { display: flex; align-items: center; gap: 4px; }
+.gbl-stat svg { opacity: 0.5; }
+
+/* ── PAGE NAV ── */
+#gbl-page-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.gbl-page-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.05);
+  color: rgba(200,220,255,0.8);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  transition: all 0.10s;
+}
+.gbl-page-btn:hover:not(:disabled) { background: rgba(124,58,237,0.22); }
+.gbl-page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+#gbl-page-indicator {
+  font-size: 9px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  color: rgba(180,200,255,0.65);
+  min-width: 44px;
+  text-align: center;
+}
+.gbl-add-page {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1px solid rgba(34,197,94,0.3);
+  background: rgba(34,197,94,0.10);
+  color: rgba(34,197,94,0.8);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  transition: all 0.10s;
+}
+.gbl-add-page:hover { background: rgba(34,197,94,0.2); border-color: rgba(34,197,94,0.5); }
+
+/* ── UNDO/REDO ── */
+#gbl-undo-redo { display: flex; gap: 5px; }
+
+/* Resize handle visual cue */
+#gbl-window::after {
+  content: '⣿';
+  position: absolute;
+  bottom: 5px;
+  right: 6px;
+  color: rgba(124,58,237,0.4);
+  font-size: 13px;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* ── GEOMETRY TOOLS ON CANVAS ── */
+#gbl-ruler-obj {
+  position: absolute;
+  display: none;
+  pointer-events: auto;
+  cursor: move;
+}
+.gbl-ruler-body {
+  width: 400px;
+  height: 40px;
+  background: linear-gradient(180deg, rgba(255,220,130,0.15), rgba(200,160,60,0.12));
+  border: 1.5px solid rgba(255,200,80,0.6);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.gbl-ruler-tick {
+  position: absolute;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255,200,80,0.6);
+}
+.gbl-ruler-label {
+  position: absolute;
+  bottom: 0;
+  font-size: 8px;
+  color: rgba(255,200,80,0.8);
+  transform: translateX(-50%);
+  font-family: monospace;
+  pointer-events: none;
+}
+
+#gbl-protractor-obj {
+  position: absolute;
+  display: none;
+  pointer-events: auto;
+  cursor: move;
+}
+#gbl-compass-mode-hint {
+  display: none;
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(8,6,30,0.95);
+  border: 1px solid rgba(6,182,212,0.4);
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  color: rgba(6,182,212,0.9);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 200;
+}
+
+/* PPT save loading overlay */
+#gbl-save-toast {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(5,5,15,0.88);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+#gbl-save-toast.show { display: flex; }
+.gbl-save-spinner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid rgba(124,58,237,0.2);
+  border-top-color: #7c3aed;
+  border-right-color: #06b6d4;
+  animation: gbl-spin 0.9s linear infinite;
+}
+@keyframes gbl-spin { to { transform: rotate(360deg); } }
+.gbl-save-msg {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(200,220,255,0.9);
+}
+</style>
+
+<!-- ═══ DOOR TRIGGER BUTTON ═══ -->
+<div id="gcp-trigger" title="Open Control Panel (/ or Space)">
+  <div id="gcp-trigger-dots">
+    <span></span><span></span><span></span>
+  </div>
+</div>
+
+<!-- ═══ BACKDROP ═══ -->
+<div id="gcp-backdrop"></div>
+
+<!-- ═══ MAIN PANEL ═══ -->
+<div id="gcp-panel">
+  <div class="gcp-header">
+    <div class="gcp-header-title">⚡ Control Panel</div>
+    <div class="gcp-header-sub">All tools · One place</div>
+    <button class="gcp-close" id="gcp-close-btn">✕</button>
+  </div>
+
+  <!-- BLACKBOARD -->
+  <div class="gcp-section">
+    <div class="gcp-section-title">🖊️ Blackboard</div>
+    <button class="gcp-btn accent-purple" id="gcp-open-blackboard">
+      <span class="gcp-icon">🖊️</span>
+      <span>Open Blackboard</span>
+      <span class="gcp-kbd">.</span>
+    </button>
+  </div>
+
+  <!-- CAPTURE PPT -->
+  <div class="gcp-section">
+    <div class="gcp-section-title">📊 Capture to PPT</div>
+    <button class="gcp-btn accent-cyan" id="gcp-ppt-btn">
+      <span class="gcp-icon">📊</span>
+      <span>Capture All Questions</span>
+    </button>
+    <div id="gcp-ppt-status"></div>
+  </div>
+
+  <!-- FONT SETTINGS -->
+  <div class="gcp-section">
+    <div class="gcp-section-title">🎨 Font & Display</div>
+    <div class="gcp-font-row">
+      <select class="gcp-select" id="gcp-font-select">
+        <option value="'Merriweather', Georgia, serif">Merriweather (Default)</option>
+        <option value="'Inter', system-ui, sans-serif">Inter (Clean)</option>
+        <option value="Georgia, 'Times New Roman', serif">Georgia</option>
+        <option value="'Courier New', monospace">Courier New</option>
+        <option value="'Segoe UI', system-ui, sans-serif">Segoe UI</option>
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="'Comic Sans MS', cursive">Comic Sans</option>
+      </select>
+    </div>
+    <div class="gcp-range-row">
+      <span style="font-size:10px;color:rgba(180,200,255,0.45);font-family:'Inter',sans-serif;">Size</span>
+      <input type="range" class="gcp-range" id="gcp-font-size" min="12" max="28" value="16">
+      <span class="gcp-range-val" id="gcp-font-size-val">16px</span>
+    </div>
+  </div>
+
+  <!-- SHORTCUTS -->
+  <div class="gcp-section">
+    <div class="gcp-section-title">⌨️ Shortcuts</div>
+    <div class="gcp-shortcut-row"><span class="k">.</span><span class="desc">Launch Blackboard</span></div>
+    <div class="gcp-shortcut-row"><span class="k">Space</span><span class="desc">Toggle Blackboard</span></div>
+    <div class="gcp-shortcut-row"><span class="k">1-4</span><span class="desc">Select answer</span></div>
+    <div class="gcp-shortcut-row"><span class="k">Enter</span><span class="desc">Next question</span></div>
+    <div class="gcp-shortcut-row"><span class="k">←→</span><span class="desc">Navigate questions</span></div>
+    <div class="gcp-shortcut-row"><span class="k">0</span><span class="desc">Toggle hint</span></div>
+    <div class="gcp-shortcut-row"><span class="k">Esc</span><span class="desc">Close panel/blackboard</span></div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="padding:14px 16px;text-align:center;">
+    <div style="font-size:10px;color:rgba(180,200,255,0.2);font-family:'Inter',sans-serif;">GOD LEVEL TOOLS v3.0</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     GOD-LEVEL BLACKBOARD
+═══════════════════════════════════════════════════════ -->
+<div id="gbl-overlay">
+  <div id="gbl-window">
+
+    <!-- Title Bar -->
+    <div id="gbl-titlebar">
+      <span class="gbl-tb-title">✦ BLACKBOARD</span>
+      <button class="gbl-tb-btn" id="gbl-undo-btn" title="Undo (Ctrl+Z)">↩</button>
+      <button class="gbl-tb-btn" id="gbl-redo-btn" title="Redo (Ctrl+Y)">↪</button>
+      <button class="gbl-tb-btn fullscreen-btn" id="gbl-fullscreen-btn" title="Toggle Fullscreen">⛶</button>
+      <button class="gbl-tb-btn" id="gbl-save-ppt-btn" title="Save as PPT" style="background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(6,182,212,0.2));border-color:rgba(124,58,237,0.5);color:#c084fc;">💾 PPT</button>
+      <button class="gbl-tb-btn danger" id="gbl-close-btn" title="Close">✕</button>
+    </div>
+
+    <!-- Canvas Area — takes ALL space; toolbar + statusbar float inside -->
+    <div id="gbl-canvas-area">
+      <canvas id="gbl-canvas"></canvas>
+
+      <!-- Floating Toolbar (overlays canvas, takes no layout space) -->
+      <div id="gbl-toolbar">
+        <!-- Draw tools -->
+        <button class="gbl-tool active" id="gbl-t-pen"        data-tool="pen"        title="Pen (P)">✏️</button>
+        <button class="gbl-tool"        id="gbl-t-highlighter" data-tool="highlight" title="Highlighter (H)">🖊</button>
+        <button class="gbl-tool"        id="gbl-t-eraser"     data-tool="eraser"     title="Eraser (E)">🧹</button>
+        <button class="gbl-tool"        id="gbl-t-text"       data-tool="text"       title="Text (T)">T</button>
+        <div class="gbl-tool-sep"></div>
+        <!-- Shapes -->
+        <button class="gbl-tool" id="gbl-t-line"     data-tool="line"     title="Line (L)">╱</button>
+        <button class="gbl-tool" id="gbl-t-arrow"    data-tool="arrow"    title="Arrow">➜</button>
+        <button class="gbl-tool" id="gbl-t-rect"     data-tool="rect"     title="Rectangle (R)">▭</button>
+        <button class="gbl-tool" id="gbl-t-circle"   data-tool="circle"   title="Circle (C)">○</button>
+        <button class="gbl-tool" id="gbl-t-triangle" data-tool="triangle" title="Triangle">△</button>
+        <div class="gbl-tool-sep"></div>
+        <!-- Geometry apparatus -->
+        <button class="gbl-tool" id="gbl-t-ruler-tool"      data-geo="ruler"      title="Ruler">📏</button>
+        <button class="gbl-tool" id="gbl-t-protractor-tool" data-geo="protractor" title="Protractor">📐</button>
+        <button class="gbl-tool" id="gbl-t-compass-tool"    data-geo="compass"    title="Compass">🧭</button>
+        <div class="gbl-tool-sep"></div>
+        <!-- Colors -->
+        <div id="gbl-colors">
+          <div class="gbl-color-swatch active" data-color="#ffffff" style="background:#ffffff;" title="White"></div>
+          <div class="gbl-color-swatch" data-color="#f87171" style="background:#f87171;" title="Red"></div>
+          <div class="gbl-color-swatch" data-color="#fb923c" style="background:#fb923c;" title="Orange"></div>
+          <div class="gbl-color-swatch" data-color="#facc15" style="background:#facc15;" title="Yellow"></div>
+          <div class="gbl-color-swatch" data-color="#4ade80" style="background:#4ade80;" title="Green"></div>
+          <div class="gbl-color-swatch" data-color="#22d3ee" style="background:#22d3ee;" title="Cyan"></div>
+          <div class="gbl-color-swatch" data-color="#818cf8" style="background:#818cf8;" title="Indigo"></div>
+          <div class="gbl-color-swatch" data-color="#e879f9" style="background:#e879f9;" title="Pink"></div>
+          <input type="color" id="gbl-custom-color" value="#ffffff" title="Custom color">
+        </div>
+        <div class="gbl-tool-sep"></div>
+        <!-- Stroke sizes -->
+        <div id="gbl-stroke-size">
+          <div class="gbl-sz active" data-size="2"  style="width:6px;height:6px;"   title="Thin"></div>
+          <div class="gbl-sz"        data-size="4"  style="width:10px;height:10px;" title="Medium"></div>
+          <div class="gbl-sz"        data-size="8"  style="width:14px;height:14px;" title="Thick"></div>
+          <div class="gbl-sz"        data-size="16" style="width:18px;height:18px;" title="Xl"></div>
+        </div>
+        <div class="gbl-tool-sep"></div>
+        <!-- Fill / BG -->
+        <button class="gbl-tool" id="gbl-t-fill" title="Toggle Fill" style="font-size:9px;font-family:'Inter',sans-serif;font-weight:700;width:28px;">Fill</button>
+        <button class="gbl-tool" id="gbl-bg-btn" title="Background Color" style="font-size:9px;font-family:'Inter',sans-serif;width:24px;">BG</button>
+      </div>
+
+      <!-- Geometry overlays rendered here by JS -->
+      <div id="gbl-compass-mode-hint">Click to set center → drag for radius → release to draw circle</div>
+      <div id="gbl-save-toast">
+        <div class="gbl-save-spinner"></div>
+        <div class="gbl-save-msg" id="gbl-save-msg">Preparing slides…</div>
+      </div>
+
+      <!-- Floating Status Bar (absolute inside canvas) -->
+      <div id="gbl-statusbar">
+        <div class="gbl-stat">
+          <svg width="8" height="8" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span id="gbl-status-tool">Pen</span>
+        </div>
+        <div class="gbl-stat">
+          <span id="gbl-status-color" style="display:inline-flex;align-items:center;gap:3px;">
+            <span id="gbl-status-color-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;"></span>
+            #ffffff
+          </span>
+        </div>
+        <div style="flex:1;"></div>
+        <!-- PAGE NAV -->
+        <div id="gbl-page-nav">
+          <button class="gbl-page-btn" id="gbl-prev-page" title="Previous Page">◀</button>
+          <span id="gbl-page-indicator">Page 1 / 1</span>
+          <button class="gbl-page-btn" id="gbl-next-page" title="Next Page">▶</button>
+          <button class="gbl-add-page" id="gbl-add-page" title="Add Page">+</button>
+          <button class="gbl-page-btn" id="gbl-del-page" title="Delete Page" style="border-color:rgba(239,68,68,0.3);color:rgba(239,68,68,0.7);">🗑</button>
+        </div>
+      </div>
+    </div><!-- end #gbl-canvas-area -->
+
+  </div><!-- end #gbl-window -->
+</div><!-- end #gbl-overlay -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   GOD CONTROL PANEL + GOD BLACKBOARD — MASTER SCRIPT
+═══════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  /* ── SUPPRESS OLD PANELS ── */
+  function killOldPanels() {
+    ['tools-panel'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.style.setProperty('display','none','important'); }
+    });
+    // Remove old font panel (the one toggled by /)
+    document.querySelectorAll('[id^="font"],[id*="font-panel"]').forEach(el => {
+      if (el.id !== 'gcp-font-select' && el.id !== 'gcp-font-size' && el.id !== 'gcp-font-size-val') {
+        if (el.style && el.tagName === 'DIV' && el.style.position === 'fixed') {
+          el.style.setProperty('display','none','important');
+        }
+      }
+    });
+  }
+  killOldPanels();
+  setTimeout(killOldPanels, 500);
+  setTimeout(killOldPanels, 1500);
+
+  /* ══════════════════════════
+     CONTROL PANEL LOGIC
+  ══════════════════════════ */
+  const trigger  = document.getElementById('gcp-trigger');
+  const panel    = document.getElementById('gcp-panel');
+  const backdrop = document.getElementById('gcp-backdrop');
+  const closeBtn = document.getElementById('gcp-close-btn');
+  let panelOpen  = false;
+
+  // ── Ensure trigger is ALWAYS visible (fix styles only — never move the DOM
+  //    element, as appendChild mid-click drops the event on many browsers) ──
+  function enforceTriggerVisibility() {
+    const t = document.getElementById('gcp-trigger');
+    if (!t) return;
+    // Force visibility via inline styles (overrides any sheet rule)
+    t.style.setProperty('display', 'flex', 'important');
+    t.style.setProperty('visibility', 'visible', 'important');
+    t.style.setProperty('pointer-events', 'all', 'important');
+    t.style.zIndex = '2147483647';
+    // Never let opacity reach 0 when panel is closed
+    if (!panelOpen && parseFloat(t.style.opacity || '1') < 0.5) {
+      t.style.opacity = '1';
+    }
+  }
+  enforceTriggerVisibility();
+  setInterval(enforceTriggerVisibility, 2000); // slower cadence — no DOM thrash
+
+  function openPanel() {
+    panelOpen = true;
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    trigger.style.opacity = '0.3';
+  }
+  function closePanel() {
+    panelOpen = false;
+    panel.classList.remove('open');
+    backdrop.classList.remove('open');
+    trigger.style.opacity = '1';
+  }
+
+  trigger.addEventListener('click', (e) => { e.stopPropagation(); panelOpen ? closePanel() : openPanel(); });
+  closeBtn.addEventListener('click', closePanel);
+  backdrop.addEventListener('click', closePanel);
+
+  // Open blackboard from panel
+  document.getElementById('gcp-open-blackboard').addEventListener('click', () => {
+    closePanel();
+    openBlackboard();
+  });
+
+  // PPT from panel
+  document.getElementById('gcp-ppt-btn').addEventListener('click', () => {
+    closePanel();
+    runPPTCapture();
+  });
+
+  // Font selector
+  const fontSelect = document.getElementById('gcp-font-select');
+  const fontSizeSlider = document.getElementById('gcp-font-size');
+  const fontSizeVal = document.getElementById('gcp-font-size-val');
+  let fontStyle = document.createElement('style');
+  document.head.appendChild(fontStyle);
+
+  function applyFont(font) {
+    fontStyle.textContent = `
+      html, body, *:not(button):not(.gbl-toolbar *):not(.gcp-panel *) {
+        font-family: ${font} !important;
+      }
+      #questionText, .qbox, .opt-text, .option {
+        font-family: ${font} !important;
+      }
+    `;
+  }
+  function applySize(size) {
+    fontStyle.textContent = fontStyle.textContent.replace(/font-size:[^!;]*!important;?\s*/g,'');
+    fontStyle.textContent += `
+      #questionText, .qbox, .option { font-size: ${size}px !important; }
+    `;
+  }
+  fontSelect.addEventListener('change', () => applyFont(fontSelect.value));
+  fontSizeSlider.addEventListener('input', () => {
+    fontSizeVal.textContent = fontSizeSlider.value + 'px';
+    applySize(fontSizeSlider.value);
+  });
+
+  /* ── GLOBAL KEYBOARD SHORTCUTS ── */
+  document.addEventListener('keydown', (e) => {
+    const tag = (e.target?.tagName || '').toLowerCase();
+    // Also treat contentEditable divs as "input" so we don't steal typing
+    const inInput = ['input','textarea','select'].includes(tag)
+                    || e.target?.isContentEditable
+                    || e.target?.contentEditable === 'true';
+    const inBlackboard = document.getElementById('gbl-overlay')?.classList.contains('open');
+
+    // "." → open blackboard (only when not in input and not already open)
+    if (e.key === '.' && !inInput && !inBlackboard) {
+      e.preventDefault();
+      e.stopImmediatePropagation(); // Block old PPT handler from also firing
+      openBlackboard();
+      return;
+    }
+    // Escape → close panel or blackboard
+    if (e.key === 'Escape') {
+      if (panelOpen) { closePanel(); return; }
+      if (inBlackboard) { closeBlackboard(); return; }
+    }
+    // Override "/" — open control panel instead of old font panel
+    if ((e.key === '/' || e.code === 'Slash') && !inInput) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      panelOpen ? closePanel() : openPanel();
+      return;
+    }
+    // Space — toggle blackboard directly (open if closed, close if open)
+    if (e.code === 'Space' && !inInput) {
+      const inChat = document.activeElement?.closest?.('#bmChatPanel,#bmVoicePanel');
+      if (!inChat) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (inBlackboard) { closeBlackboard(); } else { openBlackboard(); }
+        return;
+      }
+    }
+    // Blackboard keyboard shortcuts
+    if (inBlackboard) {
+      handleBlackboardKey(e);
+    }
+  }, true); // capture phase to override old handlers
+
+  // ── BACKUP: window-level "." → blackboard (catches edge cases where
+  //    document capture is swallowed by a focused inner frame/widget) ──
+  window.addEventListener('keydown', (e) => {
+    if (e.key !== '.') return;
+    const tag = (e.target?.tagName || '').toLowerCase();
+    if (['input','textarea','select'].includes(tag)) return;
+    if (e.target?.isContentEditable || e.target?.contentEditable === 'true') return;
+    const inBlackboard = document.getElementById('gbl-overlay')?.classList.contains('open');
+    if (inBlackboard) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    openBlackboard();
+  }, true); // also capture phase
+
+  /* ══════════════════════════
+     PPT CAPTURE
+  ══════════════════════════ */
+  const LIBS = [
+    "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js",
+    "https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"
+  ];
+  function loadScript(src) {
+    return new Promise((res,rej) => {
+      if ([...document.scripts].some(s => s.src && s.src.includes(src.split('/').pop()))) { res(); return; }
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+  async function ensureLibs() {
+    for (const src of LIBS) await loadScript(src);
+  }
+
+  async function runPPTCapture() {
+    const statusEl = document.getElementById('gcp-ppt-status');
+    statusEl.style.display = 'block';
+    statusEl.textContent = '⏳ Loading libraries…';
+    try {
+      await ensureLibs();
+      statusEl.textContent = '📸 Capturing questions…';
+
+      const SHOTS = [];
+      let prevText = '', tries = 0;
+
+      function getQText() {
+        return document.getElementById('questionText')?.innerText.trim() || '';
+      }
+      function waitChange(prev) {
+        return new Promise(res => {
+          let t = 0;
+          const chk = () => {
+            const now = getQText();
+            if (now && now !== prev) { res(true); return; }
+            if (++t > 40) { res(false); return; }
+            setTimeout(chk, 130);
+          };
+          chk();
+        });
+      }
+      async function shot() {
+        let cs = document.getElementById('pptCaptureStyle') || document.createElement('style');
+        cs.id = 'pptCaptureStyle';
+        cs.textContent = `*,*::before,*::after{animation:none!important;transition:none!important;}body{animation:none!important;}#particleCanvas{display:none!important;}.skiptranslate,.goog-te-banner-frame{display:none!important;}`;
+        document.head.appendChild(cs);
+        await new Promise(r => setTimeout(r, 80));
+        const cv = await html2canvas(document.documentElement, {
+          scale:2, backgroundColor:'#0b1020', useCORS:true, allowTaint:false, logging:false,
+          width:window.innerWidth, height:window.innerHeight,
+          ignoreElements: el => {
+            const c = typeof el.className === 'string' ? el.className : '';
+            return el.id==='google_translate_element' || c.includes('goog-te') || c.includes('skiptranslate') || el.tagName==='IFRAME';
+          }
+        });
+        SHOTS.push(cv.toDataURL('image/png'));
+        cs.textContent = '';
+      }
+
+      let curText = getQText();
+      if (!curText) { statusEl.textContent = '⚠️ No question visible. Open a test first.'; return; }
+
+      const visited = new Set();
+      while (true) {
+        if (visited.has(curText)) break;
+        visited.add(curText);
+        statusEl.textContent = `📸 Capturing Q${visited.size}…`;
+        await shot();
+        if (typeof goNext !== 'function') break;
+        goNext();
+        const changed = await waitChange(curText);
+        if (!changed) break;
+        curText = getQText();
+      }
+
+      if (SHOTS.length === 0) { statusEl.textContent = '⚠️ Nothing captured.'; return; }
+
+      statusEl.textContent = `✅ Building PPT (${SHOTS.length} slides)…`;
+      const pptx = new PptxGenJS();
+      pptx.defineLayout({ name:'FULL', width:13.33, height:7.5 });
+      pptx.layout = 'FULL';
+      SHOTS.forEach(img => {
+        const sl = pptx.addSlide();
+        sl.addImage({ data:img, x:0, y:0, w:'100%', h:'100%' });
+      });
+      await pptx.writeFile({ fileName:'mock-test-questions.pptx' });
+      statusEl.textContent = `✅ Downloaded! (${SHOTS.length} slides)`;
+      setTimeout(() => { statusEl.style.display = 'none'; }, 4000);
+    } catch(err) {
+      console.error(err);
+      statusEl.textContent = '❌ Capture failed. Check console.';
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     GOD-LEVEL BLACKBOARD ENGINE
+  ══════════════════════════════════════════════════════════════ */
+  const overlay   = document.getElementById('gbl-overlay');
+  const gblWindow = document.getElementById('gbl-window');
+  const canvas    = document.getElementById('gbl-canvas');
+  // desynchronized:true = OS composites pen strokes before the next frame (key for Windows Ink / Apple Pencil smoothness)
+  const ctx       = canvas.getContext('2d', { desynchronized: true, willReadFrequently: false });
+
+  // ── STATE ──
+  let currentTool  = 'pen';
+  let currentColor = '#ffffff';
+  let strokeSize   = 2;
+  let fillShape    = false;
+  let bgColor      = '#0d1117';
+  let isDrawing    = false;
+  let startX = 0, startY = 0;
+  let lastX = 0, lastY = 0;
+  let textInput    = null;
+  // Pages: array of ImageData snapshots
+  let pages        = [null]; // null = blank
+  let currentPage  = 0;
+  // Undo/Redo stacks per page
+  let undoStacks   = [[]];
+  let redoStacks   = [[]];
+  // Geometry state
+  let geoMode      = null; // 'ruler'|'protractor'|'compass'
+  let compassState = 0;    // 0=set center 1=set radius
+  let compassCx    = 0, compassCy = 0;
+  // Ruler obj position
+  let rulerX = 60, rulerY = 60, rulerAngle = 0, rulerDragging = false;
+  // Protractor position
+  let protX = 120, protY = 120, protAngle = 0, protDragging = false;
+  // Pre-draw snapshot for live shape preview
+  let preDrawSnapshot = null;
+
+  function resizeCanvas() {
+    const area = document.getElementById('gbl-canvas-area');
+    const w = area.clientWidth;
+    const h = area.clientHeight;
+    // Save current drawing
+    const snap = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    canvas.width  = w;
+    canvas.height = h;
+    fillBg();
+    if (snap && snap.width > 0 && snap.height > 0) {
+      ctx.putImageData(snap, 0, 0);
+    }
+    redrawGeoOverlays();
+  }
+
+  function fillBg() {
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // ── OPEN / CLOSE ──
+  function openBlackboard() {
+    overlay.classList.add('open');
+    setTimeout(() => { resizeCanvas(); }, 50);
+  }
+  window.openBlackboard = openBlackboard;
+
+  function closeBlackboard() {
+    overlay.classList.remove('open');
+    // hide any active geo
+    hideGeoTools();
+  }
+  document.getElementById('gbl-close-btn').addEventListener('click', closeBlackboard);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeBlackboard(); });
+
+  // ── TOOL BUTTONS ──
+  document.querySelectorAll('.gbl-tool[data-tool]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentTool = btn.dataset.tool;
+      document.querySelectorAll('.gbl-tool[data-tool]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateStatusTool();
+      // Deactivate geo tools
+      geoMode = null;
+      document.querySelectorAll('.gbl-tool[data-geo]').forEach(b => b.classList.remove('active'));
+      document.getElementById('gbl-compass-mode-hint').style.display = 'none';
+      compassState = 0;
+    });
+  });
+
+  // ── GEO TOOL BUTTONS ──
+  document.querySelectorAll('.gbl-tool[data-geo]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const geo = btn.dataset.geo;
+      if (geoMode === geo) {
+        // Toggle off
+        geoMode = null;
+        btn.classList.remove('active');
+        hideGeoTools();
+        document.getElementById('gbl-compass-mode-hint').style.display = 'none';
+        compassState = 0;
+      } else {
+        geoMode = geo;
+        document.querySelectorAll('.gbl-tool[data-geo]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        showGeoTool(geo);
+      }
+    });
+  });
+
+  function showGeoTool(geo) {
+    hideGeoTools();
+    if (geo === 'ruler') {
+      let ruler = document.getElementById('gbl-ruler-obj');
+      if (!ruler) ruler = buildRuler();
+      ruler.style.display = 'block';
+      ruler.style.left = rulerX + 'px';
+      ruler.style.top  = rulerY + 'px';
+      ruler.style.transform = `rotate(${rulerAngle}deg)`;
+    } else if (geo === 'protractor') {
+      let prot = document.getElementById('gbl-protractor-obj');
+      if (!prot) prot = buildProtractor();
+      prot.style.display = 'block';
+      prot.style.left = protX + 'px';
+      prot.style.top  = protY + 'px';
+    } else if (geo === 'compass') {
+      compassState = 0;
+      document.getElementById('gbl-compass-mode-hint').style.display = 'block';
+    }
+  }
+
+  function hideGeoTools() {
+    ['gbl-ruler-obj','gbl-protractor-obj'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    document.getElementById('gbl-compass-mode-hint').style.display = 'none';
+  }
+
+  // Build Ruler
+  function buildRuler() {
+    const el = document.createElement('div');
+    el.id = 'gbl-ruler-obj';
+    Object.assign(el.style, {
+      position:'absolute', display:'none', pointerEvents:'auto', cursor:'move',
+      zIndex:'50', userSelect:'none', transformOrigin:'left center'
+    });
+    const body = document.createElement('div');
+    body.className = 'gbl-ruler-body';
+    // Ticks
+    for (let i = 0; i <= 20; i++) {
+      const x = i * 20;
+      const tick = document.createElement('div');
+      tick.className = 'gbl-ruler-tick';
+      tick.style.left = x + 'px';
+      tick.style.height = (i % 5 === 0 ? '14px' : '8px');
+      body.appendChild(tick);
+      if (i % 5 === 0) {
+        const lbl = document.createElement('div');
+        lbl.className = 'gbl-ruler-label';
+        lbl.style.left = x + 'px';
+        lbl.textContent = i * 0.5;
+        body.appendChild(lbl);
+      }
+    }
+    el.appendChild(body);
+
+    // Rotation handle
+    const rotHandle = document.createElement('div');
+    Object.assign(rotHandle.style, {
+      position:'absolute', right:'-20px', top:'50%', transform:'translateY(-50%)',
+      width:'16px', height:'16px', borderRadius:'50%',
+      background:'rgba(6,182,212,0.6)', border:'2px solid rgba(6,182,212,0.9)',
+      cursor:'ew-resize', display:'grid', placeItems:'center',
+      fontSize:'8px', color:'#fff'
+    });
+    rotHandle.title = 'Rotate';
+    rotHandle.textContent = '↻';
+    el.appendChild(rotHandle);
+
+    document.getElementById('gbl-canvas-area').appendChild(el);
+
+    // Drag ruler body
+    let ox=0, oy=0;
+    body.addEventListener('mousedown', e => {
+      e.preventDefault(); rulerDragging = true;
+      ox = e.clientX - rulerX; oy = e.clientY - rulerY;
+      const mm = (ev) => {
+        if (!rulerDragging) return;
+        rulerX = ev.clientX - ox; rulerY = ev.clientY - oy;
+        el.style.left = rulerX+'px'; el.style.top = rulerY+'px';
+      };
+      const mu = () => { rulerDragging = false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu); };
+      document.addEventListener('mousemove', mm); document.addEventListener('mouseup', mu);
+    });
+    // Rotate handle
+    rotHandle.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation();
+      const startAngle = rulerAngle - (Math.atan2(e.clientY - (rulerY+20), e.clientX - rulerX) * 180/Math.PI);
+      const mm = (ev) => {
+        const angle = Math.atan2(ev.clientY-(rulerY+20), ev.clientX - rulerX)*180/Math.PI + startAngle;
+        rulerAngle = angle;
+        el.style.transform = `rotate(${rulerAngle}deg)`;
+      };
+      const mu = () => { document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu); };
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+    });
+    return el;
+  }
+
+  // Build Protractor
+  function buildProtractor() {
+    const el = document.createElement('div');
+    el.id = 'gbl-protractor-obj';
+    Object.assign(el.style, { position:'absolute', display:'none', cursor:'move', zIndex:'50', userSelect:'none' });
+    const size = 160;
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', size); svg.setAttribute('height', size/2 + 20);
+    svg.setAttribute('viewBox', `0 0 ${size} ${size/2 + 20}`);
+    // Semicircle
+    const r = size/2 - 10;
+    const cx = size/2, cy = size/2;
+    // Arc
+    const arc = document.createElementNS(svgNS,'path');
+    arc.setAttribute('d', `M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy} Z`);
+    arc.setAttribute('fill','rgba(255,200,80,0.08)');
+    arc.setAttribute('stroke','rgba(255,200,80,0.7)');
+    arc.setAttribute('stroke-width','1.5');
+    svg.appendChild(arc);
+    // Baseline
+    const baseline = document.createElementNS(svgNS,'line');
+    baseline.setAttribute('x1',cx-r); baseline.setAttribute('y1',cy);
+    baseline.setAttribute('x2',cx+r); baseline.setAttribute('y2',cy);
+    baseline.setAttribute('stroke','rgba(255,200,80,0.5)'); baseline.setAttribute('stroke-width','1');
+    svg.appendChild(baseline);
+    // Center dot
+    const cdot = document.createElementNS(svgNS,'circle');
+    cdot.setAttribute('cx',cx); cdot.setAttribute('cy',cy); cdot.setAttribute('r','3');
+    cdot.setAttribute('fill','rgba(255,200,80,0.8)'); svg.appendChild(cdot);
+    // Degree ticks & labels
+    for (let deg = 0; deg <= 180; deg += 10) {
+      const rad = (180 - deg) * Math.PI / 180;
+      const inner = deg % 30 === 0 ? r - 16 : (deg % 10 === 0 ? r - 10 : r - 6);
+      const x1 = cx + r * Math.cos(rad), y1 = cy - r * Math.sin(rad);
+      const x2 = cx + inner * Math.cos(rad), y2 = cy - inner * Math.sin(rad);
+      const tick = document.createElementNS(svgNS,'line');
+      tick.setAttribute('x1',x1.toFixed(1)); tick.setAttribute('y1',y1.toFixed(1));
+      tick.setAttribute('x2',x2.toFixed(1)); tick.setAttribute('y2',y2.toFixed(1));
+      tick.setAttribute('stroke','rgba(255,200,80,0.6)'); tick.setAttribute('stroke-width','1');
+      svg.appendChild(tick);
+      if (deg % 30 === 0) {
+        const lx = cx + (r-22)*Math.cos(rad), ly = cy - (r-22)*Math.sin(rad);
+        const lbl = document.createElementNS(svgNS,'text');
+        lbl.setAttribute('x',lx.toFixed(1)); lbl.setAttribute('y',ly.toFixed(1));
+        lbl.setAttribute('fill','rgba(255,200,80,0.8)'); lbl.setAttribute('font-size','9');
+        lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('dominant-baseline','middle');
+        lbl.textContent = deg;
+        svg.appendChild(lbl);
+      }
+    }
+    el.appendChild(svg);
+    document.getElementById('gbl-canvas-area').appendChild(el);
+    // Drag
+    let ox=0, oy=0;
+    svg.addEventListener('mousedown', e => {
+      e.preventDefault(); protDragging=true;
+      ox=e.clientX-protX; oy=e.clientY-protY;
+      const mm=ev=>{if(!protDragging)return; protX=ev.clientX-ox; protY=ev.clientY-oy; el.style.left=protX+'px'; el.style.top=protY+'px';};
+      const mu=()=>{protDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+    });
+    return el;
+  }
+
+  function redrawGeoOverlays() {
+    if (geoMode === 'ruler') {
+      const el = document.getElementById('gbl-ruler-obj');
+      if (el) { el.style.left=rulerX+'px'; el.style.top=rulerY+'px'; }
+    }
+    if (geoMode === 'protractor') {
+      const el = document.getElementById('gbl-protractor-obj');
+      if (el) { el.style.left=protX+'px'; el.style.top=protY+'px'; }
+    }
+  }
+
+  // ── COLOR SWATCHES ──
+  document.querySelectorAll('.gbl-color-swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+      currentColor = sw.dataset.color;
+      document.querySelectorAll('.gbl-color-swatch').forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+      updateStatusColor();
+    });
+  });
+  document.getElementById('gbl-custom-color').addEventListener('input', e => {
+    currentColor = e.target.value;
+    document.querySelectorAll('.gbl-color-swatch').forEach(s => s.classList.remove('active'));
+    updateStatusColor();
+  });
+
+  // ── STROKE SIZE ──
+  document.querySelectorAll('.gbl-sz').forEach(sz => {
+    sz.addEventListener('click', () => {
+      strokeSize = parseInt(sz.dataset.size);
+      document.querySelectorAll('.gbl-sz').forEach(s => s.classList.remove('active'));
+      sz.classList.add('active');
+    });
+  });
+
+  // ── FILL TOGGLE ──
+  document.getElementById('gbl-t-fill').addEventListener('click', function() {
+    fillShape = !fillShape;
+    this.classList.toggle('active', fillShape);
+    this.style.color = fillShape ? '#c084fc' : '';
+  });
+
+  // ── BG COLOR ──
+  document.getElementById('gbl-bg-btn').addEventListener('click', () => {
+    const inp = document.createElement('input');
+    inp.type = 'color'; inp.value = bgColor;
+    inp.addEventListener('input', e => {
+      bgColor = e.target.value;
+      // Redraw bg without clearing drawings - use composite
+      const snap = ctx.getImageData(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.putImageData(snap,0,0);
+    });
+    inp.click();
+  });
+
+  // ── STATUS UPDATE ──
+  function updateStatusTool() {
+    const names = { pen:'Pen ✏', highlight:'Highlighter', eraser:'Eraser', text:'Text', line:'Line', arrow:'Arrow', rect:'Rectangle', circle:'Circle', triangle:'Triangle' };
+    document.getElementById('gbl-status-tool').textContent = names[currentTool] || currentTool;
+  }
+  function updateStatusColor() {
+    document.getElementById('gbl-status-color-dot').style.background = currentColor;
+    document.getElementById('gbl-status-color').childNodes[1] && (document.getElementById('gbl-status-color').lastChild.textContent = ' ' + currentColor);
+  }
+
+  // ── UNDO / REDO ──
+  function saveUndoState() {
+    undoStacks[currentPage].push(ctx.getImageData(0,0,canvas.width,canvas.height));
+    if (undoStacks[currentPage].length > 50) undoStacks[currentPage].shift();
+    redoStacks[currentPage] = [];
+  }
+  function undo() {
+    const stack = undoStacks[currentPage];
+    if (!stack.length) return;
+    redoStacks[currentPage].push(ctx.getImageData(0,0,canvas.width,canvas.height));
+    ctx.putImageData(stack.pop(), 0, 0);
+  }
+  function redo() {
+    const stack = redoStacks[currentPage];
+    if (!stack.length) return;
+    undoStacks[currentPage].push(ctx.getImageData(0,0,canvas.width,canvas.height));
+    ctx.putImageData(stack.pop(), 0, 0);
+  }
+  document.getElementById('gbl-undo-btn').addEventListener('click', undo);
+  document.getElementById('gbl-redo-btn').addEventListener('click', redo);
+
+  // ── CANVAS DRAWING — Windows Ink + Pointer Events + Smooth Bezier ──
+  function getXY(e) {
+    const rect = canvas.getBoundingClientRect();
+    // scaleX/scaleY for when canvas resolution differs from CSS size
+    const scaleX = canvas.width  / rect.width;
+    const scaleY = canvas.height / rect.height;
+    if (e.touches) {
+      return {
+        x: (e.touches[0].clientX - rect.left) * scaleX,
+        y: (e.touches[0].clientY - rect.top)  * scaleY,
+        pressure: 0.5
+      };
+    }
+    return {
+      x: (e.clientX - rect.left) * scaleX,
+      y: (e.clientY - rect.top)  * scaleY,
+      pressure: (e.pressure !== undefined && e.pressure > 0) ? e.pressure : 0.5
+    };
+  }
+
+  function setCtxStyle(forEraser) {
+    if (forEraser) {
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.strokeStyle = 'rgba(0,0,0,1)';
+      ctx.lineWidth = strokeSize * 4;
+    } else {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.strokeStyle = currentColor;
+      ctx.fillStyle = currentColor;
+      ctx.lineWidth = strokeSize;
+      if (currentTool === 'highlight') {
+        ctx.globalAlpha = 0.35;
+        ctx.lineWidth = strokeSize * 6;
+      } else {
+        ctx.globalAlpha = 1;
+      }
+    }
+    ctx.lineCap  = 'round';
+    ctx.lineJoin = 'round';
+  }
+
+  // Point buffer for smooth bezier interpolation
+  let _pts = [];
+
+  function _flushBezier() {
+    // Draw the tail segment on pen-up
+    if (_pts.length >= 2) {
+      const last = _pts[_pts.length - 1];
+      ctx.lineTo(last.x, last.y);
+      ctx.stroke();
+    }
+    _pts = [];
+  }
+
+  function _addSmoothPoint(x, y) {
+    _pts.push({x, y});
+    const n = _pts.length;
+    if (n === 1) {
+      ctx.moveTo(x, y);
+      return;
+    }
+    if (n === 2) {
+      // Need at least 2 points — draw a short line segment
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      // Restart path at current position for next segment
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      return;
+    }
+    // Midpoint bezier: use previous point as control, midpoint as endpoint
+    const prev = _pts[n - 2];
+    const midX = (prev.x + x) / 2;
+    const midY = (prev.y + y) / 2;
+    ctx.quadraticCurveTo(prev.x, prev.y, midX, midY);
+    ctx.stroke();
+    // Start next segment from the midpoint
+    ctx.beginPath();
+    ctx.moveTo(midX, midY);
+  }
+
+  function onDown(e) {
+    const pos = getXY(e);
+    const x = pos.x, y = pos.y;
+
+    // Compass tool
+    if (geoMode === 'compass') {
+      if (compassState === 0) {
+        compassCx = x; compassCy = y;
+        compassState = 1;
+        document.getElementById('gbl-compass-mode-hint').textContent = 'Drag for radius → release to draw circle';
+        saveUndoState();
+        isDrawing = true; startX = x; startY = y;
+      }
+      return;
+    }
+
+    if (currentTool === 'text') { placeText(x, y); return; }
+
+    saveUndoState();
+    isDrawing = true;
+    startX = x; startY = y; lastX = x; lastY = y;
+    _pts = [];
+
+    if (['line','arrow','rect','circle','triangle'].includes(currentTool)) {
+      preDrawSnapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    }
+
+    setCtxStyle(currentTool === 'eraser');
+    if (currentTool === 'pen' || currentTool === 'highlight' || currentTool === 'eraser') {
+      ctx.beginPath();
+      _addSmoothPoint(x, y);
+    }
+  }
+
+  function onMove(e) {
+    // Use coalesced events for high-frequency stylus/ink input (Windows Ink, Apple Pencil)
+    const coalescedEvents = (e.getCoalescedEvents && e.getCoalescedEvents().length > 0)
+      ? e.getCoalescedEvents()
+      : [e];
+
+    for (const ev of coalescedEvents) {
+      const pos = getXY(ev);
+      const x = pos.x, y = pos.y;
+
+      // Compass preview
+      if (geoMode === 'compass' && compassState === 1 && isDrawing) {
+        if (preDrawSnapshot === null) preDrawSnapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        ctx.putImageData(preDrawSnapshot, 0, 0);
+        const r = Math.sqrt((x - compassCx) ** 2 + (y - compassCy) ** 2);
+        setCtxStyle(false);
+        ctx.globalAlpha = 0.5;
+        ctx.beginPath(); ctx.arc(compassCx, compassCy, r, 0, Math.PI * 2); ctx.stroke();
+        ctx.globalAlpha = 1;
+        ctx.beginPath(); ctx.moveTo(compassCx - 6, compassCy); ctx.lineTo(compassCx + 6, compassCy);
+        ctx.moveTo(compassCx, compassCy - 6); ctx.lineTo(compassCx, compassCy + 6); ctx.stroke();
+        continue;
+      }
+
+      if (!isDrawing) continue;
+
+      setCtxStyle(currentTool === 'eraser');
+
+      if (currentTool === 'pen' || currentTool === 'highlight' || currentTool === 'eraser') {
+        // Windows Ink pressure-based line width (optional enhancement)
+        if (ev.pointerType === 'pen' && ev.pressure > 0 && currentTool === 'pen') {
+          const pressureWidth = Math.max(1, strokeSize * (0.5 + ev.pressure * 1.5));
+          ctx.lineWidth = pressureWidth;
+        }
+        _addSmoothPoint(x, y);
+        lastX = x; lastY = y;
+      } else {
+        // Shape preview
+        ctx.putImageData(preDrawSnapshot, 0, 0);
+        setCtxStyle(false);
+        drawShape(currentTool, startX, startY, x, y, false);
+      }
+    }
+  }
+
+  function onUp(e) {
+    if (!isDrawing) return;
+    isDrawing = false;
+
+    if (geoMode === 'compass' && compassState === 1) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const cx = e.changedTouches
+        ? (e.changedTouches[0].clientX - rect.left) * scaleX
+        : (e.clientX - rect.left) * scaleX;
+      const cy = e.changedTouches
+        ? (e.changedTouches[0].clientY - rect.top) * scaleY
+        : (e.clientY - rect.top) * scaleY;
+      if (preDrawSnapshot) ctx.putImageData(preDrawSnapshot, 0, 0);
+      preDrawSnapshot = null;
+      const r = Math.sqrt((cx - compassCx) ** 2 + (cy - compassCy) ** 2);
+      setCtxStyle(false);
+      ctx.globalAlpha = 1;
+      ctx.beginPath(); ctx.arc(compassCx, compassCy, r, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(compassCx, compassCy, 3, 0, Math.PI * 2); ctx.fill();
+      compassState = 0;
+      document.getElementById('gbl-compass-mode-hint').textContent = 'Click to set center → drag for radius → release to draw circle';
+      return;
+    }
+
+    // Flush remaining bezier tail
+    if (currentTool === 'pen' || currentTool === 'highlight' || currentTool === 'eraser') {
+      _flushBezier();
+    }
+
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = e.changedTouches
+      ? (e.changedTouches[0].clientX - rect.left) * scaleX
+      : (e.clientX - rect.left) * scaleX;
+    const y = e.changedTouches
+      ? (e.changedTouches[0].clientY - rect.top) * scaleY
+      : (e.clientY - rect.top) * scaleY;
+
+    if (['line','arrow','rect','circle','triangle'].includes(currentTool)) {
+      if (preDrawSnapshot) ctx.putImageData(preDrawSnapshot, 0, 0);
+      preDrawSnapshot = null;
+      setCtxStyle(false);
+      ctx.globalAlpha = 1;
+      drawShape(currentTool, startX, startY, x, y, true);
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  // ── POINTER EVENTS (Windows Ink, Apple Pencil, Touch, Mouse) ──
+  // Use Pointer Events API for unified input handling
+  canvas.style.touchAction = 'none'; // Prevent browser gesture handling
+
+  if (window.PointerEvent) {
+    // Modern path: Pointer Events API (supports Windows Ink, Apple Pencil)
+    canvas.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      canvas.setPointerCapture(e.pointerId);
+      onDown(e);
+    }, { passive: false });
+    canvas.addEventListener('pointermove', (e) => {
+      e.preventDefault();
+      onMove(e);
+    }, { passive: false });
+    canvas.addEventListener('pointerup', (e) => {
+      e.preventDefault();
+      onUp(e);
+    }, { passive: false });
+    canvas.addEventListener('pointercancel', (e) => {
+      e.preventDefault();
+      onUp(e);
+    }, { passive: false });
+  } else {
+    // Fallback: Mouse + Touch events
+    canvas.addEventListener('mousedown',  onDown);
+    canvas.addEventListener('mousemove',  onMove);
+    canvas.addEventListener('mouseup',    onUp);
+    canvas.addEventListener('mouseleave', onUp);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); onDown(e); },  { passive: false });
+    canvas.addEventListener('touchmove',  e => { e.preventDefault(); onMove(e); },  { passive: false });
+    canvas.addEventListener('touchend',   e => { e.preventDefault(); onUp(e); },    { passive: false });
+  }
+
+  function drawShape(tool, x1, y1, x2, y2, final) {
+    ctx.beginPath();
+    if (tool === 'line') {
+      ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    } else if (tool === 'arrow') {
+      const angle = Math.atan2(y2-y1,x2-x1);
+      ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+      const hw = Math.max(strokeSize*3, 10);
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - hw*Math.cos(angle-Math.PI/6), y2 - hw*Math.sin(angle-Math.PI/6));
+      ctx.lineTo(x2 - hw*Math.cos(angle+Math.PI/6), y2 - hw*Math.sin(angle+Math.PI/6));
+      ctx.closePath(); ctx.fill();
+    } else if (tool === 'rect') {
+      const w = x2-x1, h = y2-y1;
+      if (fillShape) ctx.fillRect(x1,y1,w,h);
+      ctx.strokeRect(x1,y1,w,h);
+    } else if (tool === 'circle') {
+      const rx = Math.abs(x2-x1)/2, ry = Math.abs(y2-y1)/2;
+      const cx = (x1+x2)/2, cy = (y1+y2)/2;
+      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+    } else if (tool === 'triangle') {
+      const mx = (x1+x2)/2;
+      ctx.moveTo(mx, y1); ctx.lineTo(x2, y2); ctx.lineTo(x1, y2); ctx.closePath();
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+    }
+  }
+
+  // Text tool
+  function placeText(x, y) {
+    if (textInput) { textInput.focus(); return; }
+    textInput = document.createElement('div');
+    textInput.contentEditable = 'true';
+    Object.assign(textInput.style, {
+      position:'absolute', left:(x-2)+'px', top:(y-2)+'px',
+      minWidth:'100px', minHeight:'24px',
+      color: currentColor, fontSize: Math.max(14, strokeSize*4) + 'px',
+      fontFamily:"'Merriweather',serif", fontWeight:'600', outline:'none',
+      border:'1px dashed rgba(255,255,255,0.3)', padding:'2px 4px', borderRadius:'4px',
+      background:'transparent', zIndex:'200', lineHeight:'1.4',
+      textShadow:'0 1px 3px rgba(0,0,0,0.8)'
+    });
+    document.getElementById('gbl-canvas-area').appendChild(textInput);
+    textInput.focus();
+    textInput.addEventListener('blur', () => {
+      const text = textInput.innerText.trim();
+      if (text) {
+        saveUndoState();
+        ctx.save();
+        ctx.font = `600 ${Math.max(14,strokeSize*4)}px 'Merriweather', serif`;
+        ctx.fillStyle = currentColor;
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.shadowColor = 'rgba(0,0,0,0.8)';
+        ctx.shadowBlur = 3;
+        text.split('\n').forEach((line, i) => {
+          ctx.fillText(line, x, y + i * (Math.max(14,strokeSize*4)*1.4));
+        });
+        ctx.restore();
+      }
+      textInput.remove(); textInput = null;
+    });
+    textInput.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { textInput.blur(); }
+    });
+  }
+
+  // ── PAGE MANAGEMENT ──
+  function savePage() {
+    pages[currentPage] = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  }
+  function loadPage(idx) {
+    fillBg();
+    if (pages[idx]) ctx.putImageData(pages[idx], 0, 0);
+  }
+  function updatePageUI() {
+    document.getElementById('gbl-page-indicator').textContent = `Page ${currentPage+1} / ${pages.length}`;
+    document.getElementById('gbl-prev-page').disabled = currentPage === 0;
+    document.getElementById('gbl-next-page').disabled = currentPage === pages.length - 1;
+    document.getElementById('gbl-del-page').disabled = pages.length <= 1;
+  }
+
+  document.getElementById('gbl-prev-page').addEventListener('click', () => {
+    if (currentPage === 0) return;
+    savePage(); currentPage--;
+    if (!undoStacks[currentPage]) undoStacks[currentPage] = [];
+    if (!redoStacks[currentPage]) redoStacks[currentPage] = [];
+    loadPage(currentPage); updatePageUI();
+  });
+  document.getElementById('gbl-next-page').addEventListener('click', () => {
+    if (currentPage === pages.length-1) return;
+    savePage(); currentPage++;
+    if (!undoStacks[currentPage]) undoStacks[currentPage] = [];
+    if (!redoStacks[currentPage]) redoStacks[currentPage] = [];
+    loadPage(currentPage); updatePageUI();
+  });
+  document.getElementById('gbl-add-page').addEventListener('click', () => {
+    savePage();
+    currentPage = pages.length;
+    pages.push(null);
+    undoStacks.push([]); redoStacks.push([]);
+    fillBg(); updatePageUI();
+  });
+  document.getElementById('gbl-del-page').addEventListener('click', () => {
+    if (pages.length <= 1) return;
+    if (!confirm(`Delete page ${currentPage+1}?`)) return;
+    pages.splice(currentPage, 1);
+    undoStacks.splice(currentPage, 1);
+    redoStacks.splice(currentPage, 1);
+    if (currentPage >= pages.length) currentPage = pages.length - 1;
+    loadPage(currentPage); updatePageUI();
+  });
+  updatePageUI();
+
+  // ── FULLSCREEN ──
+  document.getElementById('gbl-fullscreen-btn').addEventListener('click', () => {
+    const w = gblWindow;
+    if (w.style.width === '100vw') {
+      w.style.width  = 'min(1200px,96vw)';
+      w.style.height = 'min(800px,92vh)';
+    } else {
+      w.style.width  = '100vw';
+      w.style.height = '100vh';
+      w.style.borderRadius = '0';
+    }
+    setTimeout(resizeCanvas, 50);
+  });
+
+  // ── DRAG TITLE BAR ──
+  const titleBar = document.getElementById('gbl-titlebar');
+  let tbDrag=false, tbOx=0, tbOy=0;
+  titleBar.addEventListener('mousedown', e => {
+    if (e.target.tagName === 'BUTTON') return;
+    tbDrag=true;
+    const rect = gblWindow.getBoundingClientRect();
+    tbOx = e.clientX - rect.left; tbOy = e.clientY - rect.top;
+    gblWindow.style.position = 'absolute';
+    gblWindow.style.margin = '0';
+  });
+  document.addEventListener('mousemove', e => {
+    if (!tbDrag) return;
+    gblWindow.style.left = (e.clientX - tbOx) + 'px';
+    gblWindow.style.top  = (e.clientY - tbOy) + 'px';
+  });
+  document.addEventListener('mouseup', () => { tbDrag = false; });
+
+  // Watch resize of gbl-window
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(() => { if (overlay.classList.contains('open')) resizeCanvas(); }).observe(gblWindow);
+  }
+
+  // ── SAVE AS PPT ──
+  document.getElementById('gbl-save-ppt-btn').addEventListener('click', async () => {
+    const toast = document.getElementById('gbl-save-toast');
+    const msg   = document.getElementById('gbl-save-msg');
+    toast.classList.add('show');
+    msg.textContent = 'Loading libraries…';
+    try {
+      await ensureLibs();
+      // Save current page
+      savePage();
+      msg.textContent = `Building ${pages.length} slide(s)…`;
+      const pptx = new PptxGenJS();
+      pptx.defineLayout({ name:'BB', width:13.33, height:7.5 });
+      pptx.layout = 'BB';
+      // Create off-screen canvas for exporting at proper dimensions
+      const exportCanvas = document.createElement('canvas');
+      const W = 1333, H = 750;
+      exportCanvas.width = W; exportCanvas.height = H;
+      const ectx = exportCanvas.getContext('2d');
+      for (let i = 0; i < pages.length; i++) {
+        msg.textContent = `Rendering page ${i+1}/${pages.length}…`;
+        ectx.fillStyle = bgColor;
+        ectx.fillRect(0,0,W,H);
+        if (pages[i]) {
+          // Scale the saved imagedata to export size
+          const tmpCv = document.createElement('canvas');
+          tmpCv.width = pages[i].width; tmpCv.height = pages[i].height;
+          tmpCv.getContext('2d').putImageData(pages[i], 0, 0);
+          ectx.drawImage(tmpCv, 0, 0, W, H);
+        }
+        const dataUrl = exportCanvas.toDataURL('image/png');
+        const sl = pptx.addSlide();
+        sl.addImage({ data: dataUrl, x:0, y:0, w:'100%', h:'100%' });
+        // Add page number
+        sl.addText(`Page ${i+1}`, { x:0, y:6.9, w:13.33, h:0.4, align:'right', color:'888888', fontSize:10 });
+      }
+      await pptx.writeFile({ fileName: 'blackboard-slides.pptx' });
+      msg.textContent = '✅ Saved successfully!';
+      setTimeout(() => toast.classList.remove('show'), 1500);
+    } catch(err) {
+      console.error(err);
+      msg.textContent = '❌ Failed: ' + err.message;
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  });
+
+  // ── KEYBOARD IN BLACKBOARD ──
+  function handleBlackboardKey(e) {
+    const tag = (e.target?.tagName||'').toLowerCase();
+    if (['input','textarea'].includes(tag) || e.target?.contentEditable === 'true') return;
+
+    const keyMap = {
+      'p': 'pen', 'h': 'highlight', 'e': 'eraser', 't': 'text',
+      'l': 'line', 'r': 'rect', 'c': 'circle'
+    };
+    if (keyMap[e.key]) {
+      e.preventDefault();
+      const btn = document.querySelector(`.gbl-tool[data-tool="${keyMap[e.key]}"]`);
+      if (btn) btn.click();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); undo(); }
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.shiftKey && e.key === 'z'))) { e.preventDefault(); redo(); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); document.getElementById('gbl-prev-page').click(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); document.getElementById('gbl-next-page').click(); }
+    if (e.key === '+' || e.key === '=') { e.preventDefault(); document.getElementById('gbl-add-page').click(); }
+  }
+
+  // ── Init on window load ──
+  window.addEventListener('load', () => {
+    // Initial canvas fill is done on open
+  });
+
+  console.log('✅ GOD CONTROL PANEL v3.0 initialized. Press "." for blackboard, "/" or SPACE for panel.');
+})();
 </script>
 
 </body>
