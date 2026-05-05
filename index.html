@@ -9903,7 +9903,7 @@ document.addEventListener("DOMContentLoaded", function () {
   background: #0d1117;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
   resize: none;
   min-width: 300px;
 }
@@ -9916,17 +9916,29 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 }
 
-/* ── TITLE BAR — ultra-slim ── */
+/* ── TITLE BAR — single bar holding brand + ALL tools + page nav + actions ── */
 #gbl-titlebar {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 0 10px;
-  height: 30px;
+  gap: 4px;
+  padding: 0 8px;
+  height: 42px;
+  min-height: 42px;
   background: linear-gradient(90deg, rgba(124,58,237,0.22), rgba(6,182,212,0.10));
   border-bottom: 1px solid rgba(255,255,255,0.07);
-  cursor: move;
+  cursor: default;
   user-select: none;
+  flex-shrink: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+#gbl-titlebar::-webkit-scrollbar { display: none; }
+.gbl-tb-sep {
+  width: 1px;
+  height: 22px;
+  background: rgba(255,255,255,0.10);
+  margin: 0 2px;
   flex-shrink: 0;
 }
 .gbl-tb-title {
@@ -9959,33 +9971,8 @@ document.addEventListener("DOMContentLoaded", function () {
 .gbl-tb-btn.danger:hover { background: rgba(239,68,68,0.25); color: #f87171; border-color: rgba(239,68,68,0.4); }
 .gbl-tb-btn.fullscreen-btn { font-size: 10px; }
 
-/* ── FLOATING TOOLBAR — overlays canvas, takes NO layout space ── */
-#gbl-toolbar {
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  padding: 5px 8px;
-  background: rgba(8,6,28,0.82);
-  border: 1px solid rgba(124,58,237,0.35);
-  border-radius: 14px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.55);
-  flex-wrap: nowrap;
-  transition: opacity 0.2s;
-  opacity: 0.88;
-  max-width: calc(100% - 16px);
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-}
-#gbl-toolbar::-webkit-scrollbar { display: none; }
-#gbl-toolbar:hover { opacity: 1; }
+/* ── TOOLS IN TITLEBAR — same style as old floating toolbar ── */
+#gbl-toolbar { display: none; } /* legacy, no longer used */
 .gbl-tool-sep {
   width: 1px;
   height: 20px;
@@ -10019,6 +10006,19 @@ document.addEventListener("DOMContentLoaded", function () {
   color: #c084fc;
   box-shadow: 0 0 10px rgba(124,58,237,0.30);
 }
+/* Special glow colors for geo instrument buttons */
+#gbl-t-ruler-tool.active    { background:linear-gradient(135deg,rgba(6,182,212,.35),rgba(6,182,212,.15));border-color:rgba(6,182,212,.7);color:#67e8f9;box-shadow:0 0 12px rgba(6,182,212,.4); }
+#gbl-t-protractor-tool.active { background:linear-gradient(135deg,rgba(255,200,80,.3),rgba(255,200,80,.12));border-color:rgba(255,200,80,.7);color:#fde68a;box-shadow:0 0 12px rgba(255,200,80,.35); }
+#gbl-t-setsq45-tool.active  { background:linear-gradient(135deg,rgba(0,229,255,.28),rgba(0,229,255,.1));border-color:rgba(0,229,255,.6);color:#00e5ff;box-shadow:0 0 12px rgba(0,229,255,.35); }
+#gbl-t-setsq30-tool.active  { background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(168,85,247,.12));border-color:rgba(168,85,247,.7);color:#d8b4fe;box-shadow:0 0 12px rgba(168,85,247,.35); }
+#gbl-t-grid-tool.active     { background:linear-gradient(135deg,rgba(100,180,255,.28),rgba(100,180,255,.1));border-color:rgba(100,180,255,.6);color:#93c5fd;box-shadow:0 0 12px rgba(100,180,255,.35); }
+#gbl-t-isogrid-tool.active  { background:linear-gradient(135deg,rgba(255,160,80,.28),rgba(255,160,80,.1));border-color:rgba(255,160,80,.6);color:#fdba74;box-shadow:0 0 12px rgba(255,160,80,.35); }
+#gbl-t-frenchcurve-tool.active { background:linear-gradient(135deg,rgba(34,197,94,.28),rgba(34,197,94,.1));border-color:rgba(34,197,94,.6);color:#86efac;box-shadow:0 0 12px rgba(34,197,94,.35); }
+/* Shape tool subtle color coding */
+#gbl-t-star.active  { color:#fbbf24; border-color:rgba(251,191,36,.7); box-shadow:0 0 12px rgba(251,191,36,.3); }
+#gbl-t-pentagon.active,#gbl-t-hexagon.active { color:#a78bfa; border-color:rgba(167,139,250,.7); }
+#gbl-t-wave.active  { color:#34d399; border-color:rgba(52,211,153,.7); }
+
 .gbl-tool[title]:hover::after {
   content: attr(title);
   position: absolute;
@@ -10036,6 +10036,41 @@ document.addEventListener("DOMContentLoaded", function () {
   pointer-events: none;
   z-index: 100;
 }
+
+/* Titlebar scrollable on overflow */
+#gbl-titlebar {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124,58,237,0.4) transparent;
+}
+#gbl-titlebar::-webkit-scrollbar { height: 3px; }
+#gbl-titlebar::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.4); border-radius: 99px; }
+
+/* Geometry section divider label */
+.gbl-tb-geo-label {
+  font-size: 7px;
+  font-family: 'Inter',sans-serif;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: rgba(255,200,80,0.55);
+  text-transform: uppercase;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Geo resize handle universal style */
+.geo-resize-handle {
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  cursor: se-resize;
+  z-index: 61;
+  transition: transform .12s;
+}
+.geo-resize-handle:hover { transform: scale(1.3); }
 
 /* Color swatches */
 #gbl-colors {
@@ -10141,6 +10176,9 @@ document.addEventListener("DOMContentLoaded", function () {
   will-change: transform;
   image-rendering: auto;
 }
+#gbl-canvas.eraser-cursor {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Crect x='2' y='8' width='24' height='16' rx='3' ry='3' fill='%23fff' fill-opacity='0.92' stroke='%23555' stroke-width='1.5'/%3E%3Crect x='2' y='8' width='10' height='16' rx='3' ry='3' fill='%23f87171' fill-opacity='0.85'/%3E%3Cline x1='2' y1='20' x2='26' y2='20' stroke='%23aaa' stroke-width='1'/%3E%3C/svg%3E") 4 20, cell;
+}
 
 /* Geometry overlays */
 .gbl-geo-overlay {
@@ -10159,27 +10197,9 @@ document.addEventListener("DOMContentLoaded", function () {
   cursor: crosshair;
 }
 
-/* ── STATUS BAR — ultra slim, floating in canvas ── */
-#gbl-statusbar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 3px 10px;
-  background: rgba(6,4,22,0.75);
-  border-top: 1px solid rgba(255,255,255,0.05);
-  flex-shrink: 0;
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  color: rgba(180,200,255,0.45);
-  z-index: 20;
-  height: 24px;
-}
+/* ── STATUS BAR — now embedded in titlebar ── */
+#gbl-statusbar { display: none; } /* legacy */
 .gbl-stat { display: flex; align-items: center; gap: 4px; }
-.gbl-stat svg { opacity: 0.5; }
 
 /* ── PAGE NAV ── */
 #gbl-page-nav {
@@ -10229,16 +10249,32 @@ document.addEventListener("DOMContentLoaded", function () {
 /* ── UNDO/REDO ── */
 #gbl-undo-redo { display: flex; gap: 5px; }
 
-/* Resize handle visual cue */
-#gbl-window::after {
-  content: '⣿';
+/* ── RESIZE HANDLE — left edge of the blackboard panel ── */
+#gbl-resize-handle {
   position: absolute;
-  bottom: 5px;
-  right: 6px;
-  color: rgba(124,58,237,0.4);
+  top: 0;
+  left: -5px;
+  width: 10px;
+  height: 100%;
+  cursor: ew-resize;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#gbl-resize-handle::after {
+  content: '⋮⋮';
   font-size: 13px;
+  color: rgba(124,58,237,0.55);
+  letter-spacing: -2px;
   pointer-events: none;
-  line-height: 1;
+  text-shadow: 0 0 6px rgba(124,58,237,0.4);
+  transition: color 0.15s;
+}
+#gbl-resize-handle:hover::after,
+#gbl-resize-handle.dragging::after {
+  color: rgba(167,139,250,0.95);
+  text-shadow: 0 0 10px rgba(124,58,237,0.8);
 }
 
 /* ── GEOMETRY TOOLS ON CANVAS ── */
@@ -10467,98 +10503,131 @@ document.addEventListener("DOMContentLoaded", function () {
 ═══════════════════════════════════════════════════════ -->
 <div id="gbl-overlay">
   <div id="gbl-window">
+    <!-- Left-edge resize handle -->
+    <div id="gbl-resize-handle" title="Drag to resize"></div>
 
-    <!-- Title Bar -->
+    <!-- Title Bar — contains brand, ALL tools, page nav, and action buttons -->
     <div id="gbl-titlebar">
-      <span class="gbl-tb-title">✦ BLACKBOARD</span>
-      <button class="gbl-tb-btn" id="gbl-undo-btn" title="Undo (Ctrl+Z)">↩</button>
-      <button class="gbl-tb-btn" id="gbl-redo-btn" title="Redo (Ctrl+Y)">↪</button>
+      <!-- Brand -->
+      <span class="gbl-tb-title"> BLACKBOARD</span>
+
+      <div class="gbl-tb-sep"></div>
+
+      <!-- Draw tools -->
+      <button class="gbl-tool active" id="gbl-t-pen"         data-tool="pen"       title="Pen (P)">✏️</button>
+      <button class="gbl-tool"        id="gbl-t-highlighter" data-tool="highlight" title="Highlighter (H)">🖊</button>
+      <button class="gbl-tool"        id="gbl-t-eraser"      data-tool="eraser"    title="Eraser (E)">🧹</button>
+      <button class="gbl-tool"        id="gbl-t-move"        data-tool="move"      title="Move Stroke (M)">✥</button>
+      <button class="gbl-tool"        id="gbl-t-text"        data-tool="text"      title="Text (T)">T</button>
+
+      <div class="gbl-tb-sep"></div>
+
+      
+
+      <!-- Colors -->
+      <div id="gbl-colors">
+        <div class="gbl-color-swatch active" data-color="#ffffff" style="background:#ffffff;" title="White"></div>
+        <div class="gbl-color-swatch" data-color="#f87171" style="background:#f87171;" title="Red"></div>
+        <div class="gbl-color-swatch" data-color="#fb923c" style="background:#fb923c;" title="Orange"></div>
+        <div class="gbl-color-swatch" data-color="#facc15" style="background:#facc15;" title="Yellow"></div>
+        <div class="gbl-color-swatch" data-color="#4ade80" style="background:#4ade80;" title="Green"></div>
+        <div class="gbl-color-swatch" data-color="#22d3ee" style="background:#22d3ee;" title="Cyan"></div>
+        <div class="gbl-color-swatch" data-color="#818cf8" style="background:#818cf8;" title="Indigo"></div>
+        <div class="gbl-color-swatch" data-color="#e879f9" style="background:#e879f9;" title="Pink"></div>
+        <input type="color" id="gbl-custom-color" value="#ffffff" title="Custom color">
+      </div>
+
+      <div class="gbl-tb-sep"></div>
+
+      <!-- Stroke sizes -->
+      <div id="gbl-stroke-size">
+        <div class="gbl-sz"        data-size="0.5" style="width:3px;height:3px;"   title="Ultra Thin"></div>
+        <div class="gbl-sz active" data-size="2"   style="width:6px;height:6px;"   title="Thin"></div>
+        <div class="gbl-sz"        data-size="4"   style="width:10px;height:10px;" title="Medium"></div>
+        <div class="gbl-sz"        data-size="8"   style="width:14px;height:14px;" title="Thick"></div>
+        <div class="gbl-sz"        data-size="16"  style="width:18px;height:18px;" title="Xl"></div>
+        <div class="gbl-sz"        data-size="18"  style="width:20px;height:20px;" title="XXl"></div>
+      </div>
+
+      <div class="gbl-tb-sep"></div>
+
+      <!-- Fill / BG -->
+      <button class="gbl-tool" id="gbl-t-fill" title="Toggle Fill" style="font-size:9px;font-family:'Inter',sans-serif;font-weight:700;width:32px;">Fill</button>
+      <button class="gbl-tool" id="gbl-bg-btn" title="Background Color" style="font-size:9px;font-family:'Inter',sans-serif;width:28px;">BG</button>
+
+      <div class="gbl-tb-sep"></div>
+
+      <!-- Status info -->
+      <div class="gbl-stat" style="font-size:9px;color:rgba(180,200,255,0.5);font-family:'Inter',sans-serif;gap:4px;display:flex;align-items:center;">
+        <span id="gbl-status-color" style="display:inline-flex;align-items:center;gap:3px;">
+          <span id="gbl-status-color-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;flex-shrink:0;"></span>
+          <span id="gbl-status-tool" style="white-space:nowrap;">Pen</span>
+        </span>
+      </div>
+
+      <!-- Spacer -->
+      <div style="flex:1;min-width:4px;"></div>
+
+      <!-- Page nav -->
+      <div id="gbl-page-nav">
+        <button class="gbl-page-btn" id="gbl-prev-page" title="Previous Page">◀</button>
+        <span id="gbl-page-indicator">Page 1 / 1</span>
+        <button class="gbl-page-btn" id="gbl-next-page" title="Next Page">▶</button>
+        <button class="gbl-add-page" id="gbl-add-page" title="Add Page">+</button>
+        <button class="gbl-page-btn" id="gbl-del-page" title="Delete Page" style="border-color:rgba(239,68,68,0.3);color:rgba(239,68,68,0.7);">🗑</button>
+      </div>
+
+      <div class="gbl-tb-sep"></div>
+
+      <!-- Window actions -->
+      <button class="gbl-tb-btn" id="gbl-undo-btn"      title="Undo (Ctrl+Z)">↩</button>
+      <button class="gbl-tb-btn" id="gbl-redo-btn"      title="Redo (Ctrl+Y)">↪</button>
       <button class="gbl-tb-btn fullscreen-btn" id="gbl-fullscreen-btn" title="Toggle Fullscreen">⛶</button>
-      <button class="gbl-tb-btn" id="gbl-save-ppt-btn" title="Save as PPT" style="background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(6,182,212,0.2));border-color:rgba(124,58,237,0.5);color:#c084fc;">💾</button>
+      <button class="gbl-tb-btn" id="gbl-save-ppt-btn"  title="Save as PPT" style="background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(6,182,212,0.2));border-color:rgba(124,58,237,0.5);color:#c084fc;">💾</button>
       <button class="gbl-tb-btn danger" id="gbl-close-btn" title="Close">✕</button>
+
+      <!-- Shapes -->
+      <button class="gbl-tool" id="gbl-t-line"         data-tool="line"         title="Line (L)">╱</button>
+      <button class="gbl-tool" id="gbl-t-arrow"        data-tool="arrow"        title="Arrow (A)">➜</button>
+      <button class="gbl-tool" id="gbl-t-dbarrow"      data-tool="dbarrow"      title="Double Arrow">⟺</button>
+      <button class="gbl-tool" id="gbl-t-rect"         data-tool="rect"         title="Rectangle (R)">▭</button>
+      <button class="gbl-tool" id="gbl-t-roundrect"    data-tool="roundrect"    title="Rounded Rect">▢</button>
+      <button class="gbl-tool" id="gbl-t-circle"       data-tool="circle"       title="Circle (C)">○</button>
+      <button class="gbl-tool" id="gbl-t-ellipse"      data-tool="ellipse"      title="Ellipse">⬭</button>
+      <button class="gbl-tool" id="gbl-t-triangle"     data-tool="triangle"     title="Triangle (G)">△</button>
+      <button class="gbl-tool" id="gbl-t-righttri"     data-tool="righttri"     title="Right Triangle">◺</button>
+      <button class="gbl-tool" id="gbl-t-pentagon"     data-tool="pentagon"     title="Pentagon">⬠</button>
+      <button class="gbl-tool" id="gbl-t-hexagon"      data-tool="hexagon"      title="Hexagon">⬡</button>
+      <button class="gbl-tool" id="gbl-t-star"         data-tool="star"         title="Star (S)">★</button>
+      <button class="gbl-tool" id="gbl-t-rhombus"      data-tool="rhombus"      title="Rhombus">◇</button>
+      <button class="gbl-tool" id="gbl-t-parallelogram" data-tool="parallelogram" title="Parallelogram">▱</button>
+      <button class="gbl-tool" id="gbl-t-arc"          data-tool="arc"          title="Arc">⌒</button>
+      <button class="gbl-tool" id="gbl-t-wave"         data-tool="wave"         title="Wave / Bezier">〜</button>
+
+      <div class="gbl-tb-sep"></div>
+
+      <!-- Geometry Instruments -->
+      <button class="gbl-tool" id="gbl-t-ruler-tool"        data-geo="ruler"        title="Ruler (Draggable+Resizable)">📏</button>
+      <button class="gbl-tool" id="gbl-t-protractor-tool"   data-geo="protractor"   title="Protractor (Draggable+Resizable)">📐</button>
+      <button class="gbl-tool" id="gbl-t-compass-tool"      data-geo="compass"      title="Compass">🧭</button>
+      <button class="gbl-tool" id="gbl-t-setsq45-tool"      data-geo="setsq45"      title="Set Square 45°">🔺</button>
+      <button class="gbl-tool" id="gbl-t-setsq30-tool"      data-geo="setsq30"      title="Set Square 30-60°">📎</button>
+      <button class="gbl-tool" id="gbl-t-grid-tool"         data-geo="grid"         title="Graph Grid Overlay">⊞</button>
+      <button class="gbl-tool" id="gbl-t-isogrid-tool"      data-geo="isogrid"      title="Isometric Grid">◈</button>
+      <button class="gbl-tool" id="gbl-t-frenchcurve-tool"  data-geo="frenchcurve"  title="French Curve">⌀</button>
+
+      <div class="gbl-tb-sep"></div>
     </div>
 
-    <!-- Canvas Area — takes ALL space; toolbar + statusbar float inside -->
+    <!-- Canvas Area — takes ALL remaining space, no floating bars needed -->
     <div id="gbl-canvas-area">
       <canvas id="gbl-canvas"></canvas>
-
-      <!-- Floating Toolbar (overlays canvas, takes no layout space) -->
-      <div id="gbl-toolbar">
-        <!-- Draw tools -->
-        <button class="gbl-tool active" id="gbl-t-pen"        data-tool="pen"        title="Pen (P)">✏️</button>
-        <button class="gbl-tool"        id="gbl-t-highlighter" data-tool="highlight" title="Highlighter (H)">🖊</button>
-        <button class="gbl-tool"        id="gbl-t-eraser"     data-tool="eraser"     title="Eraser (E)">🧹</button>
-        <button class="gbl-tool"        id="gbl-t-text"       data-tool="text"       title="Text (T)">T</button>
-        <div class="gbl-tool-sep"></div>
-        <!-- Shapes -->
-        <button class="gbl-tool" id="gbl-t-line"     data-tool="line"     title="Line (L)">╱</button>
-        <button class="gbl-tool" id="gbl-t-arrow"    data-tool="arrow"    title="Arrow">➜</button>
-        <button class="gbl-tool" id="gbl-t-rect"     data-tool="rect"     title="Rectangle (R)">▭</button>
-        <button class="gbl-tool" id="gbl-t-circle"   data-tool="circle"   title="Circle (C)">○</button>
-        <button class="gbl-tool" id="gbl-t-triangle" data-tool="triangle" title="Triangle">△</button>
-        <div class="gbl-tool-sep"></div>
-        <!-- Geometry apparatus -->
-        <button class="gbl-tool" id="gbl-t-ruler-tool"      data-geo="ruler"      title="Ruler">📏</button>
-        <button class="gbl-tool" id="gbl-t-protractor-tool" data-geo="protractor" title="Protractor">📐</button>
-        <button class="gbl-tool" id="gbl-t-compass-tool"    data-geo="compass"    title="Compass">🧭</button>
-        <div class="gbl-tool-sep"></div>
-        <!-- Colors -->
-        <div id="gbl-colors">
-          <div class="gbl-color-swatch active" data-color="#ffffff" style="background:#ffffff;" title="White"></div>
-          <div class="gbl-color-swatch" data-color="#f87171" style="background:#f87171;" title="Red"></div>
-          <div class="gbl-color-swatch" data-color="#fb923c" style="background:#fb923c;" title="Orange"></div>
-          <div class="gbl-color-swatch" data-color="#facc15" style="background:#facc15;" title="Yellow"></div>
-          <div class="gbl-color-swatch" data-color="#4ade80" style="background:#4ade80;" title="Green"></div>
-          <div class="gbl-color-swatch" data-color="#22d3ee" style="background:#22d3ee;" title="Cyan"></div>
-          <div class="gbl-color-swatch" data-color="#818cf8" style="background:#818cf8;" title="Indigo"></div>
-          <div class="gbl-color-swatch" data-color="#e879f9" style="background:#e879f9;" title="Pink"></div>
-          <input type="color" id="gbl-custom-color" value="#ffffff" title="Custom color">
-        </div>
-        <div class="gbl-tool-sep"></div>
-        <!-- Stroke sizes -->
-        <div id="gbl-stroke-size">
-          <div class="gbl-sz active" data-size="1"  style="width:6px;height:6px;"   title="Ultra Thin"></div>
-          <div class="gbl-sz"        data-size="2"  style="width:8px;height:8px;"   title="Thin"></div>
-          <div class="gbl-sz"        data-size="4"  style="width:10px;height:10px;" title="Medium"></div>
-          <div class="gbl-sz"        data-size="8"  style="width:12px;height:12px;" title="Thick"></div>
-          <div class="gbl-sz"        data-size="16" style="width:14px;height:14px;" title="XXl"></div>
-          <div class="gbl-sz"        data-size="32" style="width:16px;height:16px;" title="XXXl"></div>
-          <div class="gbl-sz"        data-size="64" style="width:18px;height:18px;" title="XXXXl"></div>
-        </div>
-        <div class="gbl-tool-sep"></div>
-        <!-- Fill / BG -->
-        <button class="gbl-tool" id="gbl-t-fill" title="Toggle Fill" style="font-size:9px;font-family:'Inter',sans-serif;font-weight:700;width:28px;">Fill</button>
-        <button class="gbl-tool" id="gbl-bg-btn" title="Background Color" style="font-size:9px;font-family:'Inter',sans-serif;width:24px;">BG</button>
-      </div>
 
       <!-- Geometry overlays rendered here by JS -->
       <div id="gbl-compass-mode-hint">Click to set center → drag for radius → release to draw circle</div>
       <div id="gbl-save-toast">
         <div class="gbl-save-spinner"></div>
         <div class="gbl-save-msg" id="gbl-save-msg">Preparing slides…</div>
-      </div>
-
-      <!-- Floating Status Bar (absolute inside canvas) -->
-      <div id="gbl-statusbar">
-        <div class="gbl-stat">
-          <svg width="8" height="8" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-          <span id="gbl-status-tool">Pen</span>
-        </div>
-        <div class="gbl-stat">
-          <span id="gbl-status-color" style="display:inline-flex;align-items:center;gap:3px;">
-            <span id="gbl-status-color-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;"></span>
-            #ffffff
-          </span>
-        </div>
-        <div style="flex:1;"></div>
-        <!-- PAGE NAV -->
-        <div id="gbl-page-nav">
-          <button class="gbl-page-btn" id="gbl-prev-page" title="Previous Page">◀</button>
-          <span id="gbl-page-indicator">Page 1 / 1</span>
-          <button class="gbl-page-btn" id="gbl-next-page" title="Next Page">▶</button>
-          <button class="gbl-add-page" id="gbl-add-page" title="Add Page">+</button>
-          <button class="gbl-page-btn" id="gbl-del-page" title="Delete Page" style="border-color:rgba(239,68,68,0.3);color:rgba(239,68,68,0.7);">🗑</button>
-        </div>
       </div>
     </div><!-- end #gbl-canvas-area -->
 
@@ -10950,9 +11019,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Pages: array of ImageData snapshots
   let pages        = [null]; // null = blank
   let currentPage  = 0;
+  // Per-page background colors — so BG change only affects current page
+  let pageBgColors = ['#0d1117'];
   // Undo/Redo stacks per page
   let undoStacks   = [[]];
   let redoStacks   = [[]];
+  // Stroke history for PowerPoint-style whole-stroke erasing
+  // Each entry: { tool, color, size, fill, pts, x1,y1,x2,y2, textContent, textX, textY, fontSize }
+  let strokeHistory = [[]]; // one array per page
   // Geometry state
   let geoMode      = null; // 'ruler'|'protractor'|'compass'
   let compassState = 0;    // 0=set center 1=set radius
@@ -11002,6 +11076,9 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.width  = newW;
     canvas.height = newH;
 
+    // Keep live overlay in sync
+    if (_liveCanvas) { _liveCanvas.width = newW; _liveCanvas.height = newH; }
+
     fillBg();
     ctx.drawImage(tmp, 0, 0);
 
@@ -11009,6 +11086,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function fillBg() {
+    bgColor = pageBgColors[currentPage] || '#0d1117';
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
@@ -11035,6 +11113,10 @@ document.addEventListener("DOMContentLoaded", function () {
       document.querySelectorAll('.gbl-tool[data-tool]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       updateStatusTool();
+      // Eraser cursor
+      canvas.classList.toggle('eraser-cursor', currentTool === 'eraser');
+      // Move tool cursor
+      canvas.style.cursor = currentTool === 'move' ? 'crosshair' : '';
       // Deactivate geo tools
       geoMode = null;
       document.querySelectorAll('.gbl-tool[data-geo]').forEach(b => b.classList.remove('active'));
@@ -11081,15 +11163,32 @@ document.addEventListener("DOMContentLoaded", function () {
     } else if (geo === 'compass') {
       compassState = 0;
       document.getElementById('gbl-compass-mode-hint').style.display = 'block';
+    } else if (geo === 'setsq45') {
+      let sq = document.getElementById('gbl-setsq45-obj');
+      if (!sq) sq = buildSetSquare45();
+      sq.style.display = 'block';
+    } else if (geo === 'setsq30') {
+      let sq = document.getElementById('gbl-setsq30-obj');
+      if (!sq) sq = buildSetSquare30();
+      sq.style.display = 'block';
+    } else if (geo === 'grid') {
+      toggleGridOverlay();
+    } else if (geo === 'isogrid') {
+      toggleIsoGrid();
+    } else if (geo === 'frenchcurve') {
+      let fc = document.getElementById('gbl-frenchcurve-obj');
+      if (!fc) fc = buildFrenchCurve();
+      fc.style.display = 'block';
     }
   }
 
   function hideGeoTools() {
-    ['gbl-ruler-obj','gbl-protractor-obj'].forEach(id => {
+    ['gbl-ruler-obj','gbl-protractor-obj','gbl-setsq45-obj','gbl-setsq30-obj','gbl-frenchcurve-obj'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = 'none';
     });
     document.getElementById('gbl-compass-mode-hint').style.display = 'none';
+    // NOTE: grid and isogrid overlays are toggled separately
   }
 
   // Build Ruler
@@ -11100,25 +11199,65 @@ document.addEventListener("DOMContentLoaded", function () {
       position:'absolute', display:'none', pointerEvents:'auto', cursor:'move',
       zIndex:'50', userSelect:'none', transformOrigin:'left center'
     });
-    const body = document.createElement('div');
-    body.className = 'gbl-ruler-body';
-    // Ticks
-    for (let i = 0; i <= 20; i++) {
-      const x = i * 20;
-      const tick = document.createElement('div');
-      tick.className = 'gbl-ruler-tick';
-      tick.style.left = x + 'px';
-      tick.style.height = (i % 5 === 0 ? '14px' : '8px');
-      body.appendChild(tick);
-      if (i % 5 === 0) {
-        const lbl = document.createElement('div');
-        lbl.className = 'gbl-ruler-label';
-        lbl.style.left = x + 'px';
-        lbl.textContent = i * 0.5;
-        body.appendChild(lbl);
+    const rulerPos={x:rulerX,y:rulerY};
+
+    // SVG ruler for crisp rendering + resizability
+    const svgNS='http://www.w3.org/2000/svg';
+    let rulerW=420, rulerH=40;
+    const svg=document.createElementNS(svgNS,'svg');
+    svg.setAttribute('width',rulerW); svg.setAttribute('height',rulerH);
+    svg.setAttribute('viewBox',`0 0 ${rulerW} ${rulerH}`);
+    svg.style.cssText='display:block;overflow:visible;filter:drop-shadow(0 6px 18px rgba(6,182,212,0.3))';
+
+    function rebuildRulerContent() {
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+      rulerW=parseFloat(svg.getAttribute('width'))||420;
+      // Body
+      const body=document.createElementNS(svgNS,'rect');
+      body.setAttribute('x',0); body.setAttribute('y',0);
+      body.setAttribute('width',rulerW); body.setAttribute('height',rulerH);
+      body.setAttribute('rx','6');
+      body.setAttribute('fill','rgba(6,182,212,0.08)');
+      body.setAttribute('stroke','rgba(6,182,212,0.75)');
+      body.setAttribute('stroke-width','1.2');
+      svg.appendChild(body);
+      // Ticks & labels
+      const cmCount=Math.floor((rulerW-20)/20);
+      for(let i=0;i<=cmCount;i++){
+        const x=10+i*20;
+        const isMajor=(i%5===0), isMid=(i%5!==0&&i%1===0);
+        const tick=document.createElementNS(svgNS,'line');
+        tick.setAttribute('x1',x); tick.setAttribute('y1',rulerH);
+        tick.setAttribute('x2',x); tick.setAttribute('y2',rulerH-(isMajor?20:isMid?14:10));
+        tick.setAttribute('stroke',isMajor?'rgba(6,182,212,0.85)':'rgba(6,182,212,0.5)');
+        tick.setAttribute('stroke-width',isMajor?'1.2':'0.8');
+        svg.appendChild(tick);
+        if(isMajor){
+          const lbl=document.createElementNS(svgNS,'text');
+          lbl.setAttribute('x',x); lbl.setAttribute('y',rulerH-22);
+          lbl.setAttribute('fill','rgba(6,182,212,0.9)'); lbl.setAttribute('font-size','8');
+          lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('font-family','Inter,sans-serif');
+          lbl.textContent=i/2; svg.appendChild(lbl);
+        }
+        // 0.5cm ticks
+        if(i<cmCount){
+          const xh=x+10;
+          const ht=document.createElementNS(svgNS,'line');
+          ht.setAttribute('x1',xh); ht.setAttribute('y1',rulerH);
+          ht.setAttribute('x2',xh); ht.setAttribute('y2',rulerH-8);
+          ht.setAttribute('stroke','rgba(6,182,212,0.35)'); ht.setAttribute('stroke-width','0.6');
+          svg.appendChild(ht);
+        }
       }
+      // Label
+      const lbl2=document.createElementNS(svgNS,'text');
+      lbl2.setAttribute('x',rulerW/2); lbl2.setAttribute('y','13');
+      lbl2.setAttribute('fill','rgba(6,182,212,0.5)'); lbl2.setAttribute('font-size','9');
+      lbl2.setAttribute('text-anchor','middle'); lbl2.setAttribute('font-family','Inter,sans-serif');
+      lbl2.setAttribute('letter-spacing','2'); lbl2.textContent='cm'; svg.appendChild(lbl2);
     }
-    el.appendChild(body);
+    rebuildRulerContent();
+    el.appendChild(svg);
 
     // Rotation handle
     const rotHandle = document.createElement('div');
@@ -11127,37 +11266,56 @@ document.addEventListener("DOMContentLoaded", function () {
       width:'16px', height:'16px', borderRadius:'50%',
       background:'rgba(6,182,212,0.6)', border:'2px solid rgba(6,182,212,0.9)',
       cursor:'ew-resize', display:'grid', placeItems:'center',
-      fontSize:'8px', color:'#fff'
+      fontSize:'8px', color:'#fff', zIndex:'61'
     });
-    rotHandle.title = 'Rotate';
-    rotHandle.textContent = '↻';
+    rotHandle.title = 'Rotate'; rotHandle.textContent = '↻';
     el.appendChild(rotHandle);
+
+    // Resize handle
+    const resH=document.createElement('div');
+    Object.assign(resH.style,{
+      position:'absolute', right:'-8px', bottom:'-8px',
+      width:'14px', height:'14px', borderRadius:'3px',
+      background:'rgba(6,182,212,0.7)', border:'2px solid rgba(6,182,212,1)',
+      cursor:'se-resize', zIndex:'61'
+    });
+    resH.title='Drag to resize';
+    el.appendChild(resH);
 
     document.getElementById('gbl-canvas-area').appendChild(el);
 
-    // Drag ruler body
-    let ox=0, oy=0;
-    body.addEventListener('mousedown', e => {
-      e.preventDefault(); rulerDragging = true;
-      ox = e.clientX - rulerX; oy = e.clientY - rulerY;
-      const mm = (ev) => {
-        if (!rulerDragging) return;
-        rulerX = ev.clientX - ox; rulerY = ev.clientY - oy;
-        el.style.left = rulerX+'px'; el.style.top = rulerY+'px';
-      };
-      const mu = () => { rulerDragging = false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu); };
-      document.addEventListener('mousemove', mm); document.addEventListener('mouseup', mu);
+    // Drag body
+    let ox=0,oy=0;
+    svg.addEventListener('mousedown', e => {
+      e.preventDefault(); rulerDragging=true;
+      ox=e.clientX-rulerX; oy=e.clientY-rulerY;
+      const mm=(ev)=>{if(!rulerDragging)return; rulerX=ev.clientX-ox; rulerY=ev.clientY-oy; el.style.left=rulerX+'px'; el.style.top=rulerY+'px';};
+      const mu=()=>{rulerDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
     });
     // Rotate handle
     rotHandle.addEventListener('mousedown', e => {
       e.preventDefault(); e.stopPropagation();
-      const startAngle = rulerAngle - (Math.atan2(e.clientY - (rulerY+20), e.clientX - rulerX) * 180/Math.PI);
-      const mm = (ev) => {
-        const angle = Math.atan2(ev.clientY-(rulerY+20), ev.clientX - rulerX)*180/Math.PI + startAngle;
-        rulerAngle = angle;
-        el.style.transform = `rotate(${rulerAngle}deg)`;
+      const startAngle=rulerAngle-(Math.atan2(e.clientY-(rulerY+20),e.clientX-rulerX)*180/Math.PI);
+      const mm=(ev)=>{
+        const angle=Math.atan2(ev.clientY-(rulerY+20),ev.clientX-rulerX)*180/Math.PI+startAngle;
+        rulerAngle=angle; el.style.transform=`rotate(${rulerAngle}deg)`;
       };
-      const mu = () => { document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu); };
+      const mu=()=>{document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+    });
+    // Resize handle
+    let rw0=0,rmx0=0,rDragging=false;
+    resH.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation(); rDragging=true;
+      rw0=parseFloat(svg.getAttribute('width'))||420; rmx0=e.clientX;
+      const mm=ev=>{
+        if(!rDragging)return;
+        const nw=Math.max(120,rw0+(ev.clientX-rmx0));
+        svg.setAttribute('width',nw); svg.style.width=nw+'px';
+        rebuildRulerContent();
+      };
+      const mu=()=>{rDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
       document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
     });
     return el;
@@ -11167,64 +11325,125 @@ document.addEventListener("DOMContentLoaded", function () {
   function buildProtractor() {
     const el = document.createElement('div');
     el.id = 'gbl-protractor-obj';
+    const pos={x:protX,y:protY};
     Object.assign(el.style, { position:'absolute', display:'none', cursor:'move', zIndex:'50', userSelect:'none' });
-    const size = 160;
     const svgNS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('width', size); svg.setAttribute('height', size/2 + 20);
-    svg.setAttribute('viewBox', `0 0 ${size} ${size/2 + 20}`);
-    // Semicircle
-    const r = size/2 - 10;
-    const cx = size/2, cy = size/2;
-    // Arc
-    const arc = document.createElementNS(svgNS,'path');
-    arc.setAttribute('d', `M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy} Z`);
-    arc.setAttribute('fill','rgba(255,200,80,0.08)');
-    arc.setAttribute('stroke','rgba(255,200,80,0.7)');
-    arc.setAttribute('stroke-width','1.5');
-    svg.appendChild(arc);
-    // Baseline
-    const baseline = document.createElementNS(svgNS,'line');
-    baseline.setAttribute('x1',cx-r); baseline.setAttribute('y1',cy);
-    baseline.setAttribute('x2',cx+r); baseline.setAttribute('y2',cy);
-    baseline.setAttribute('stroke','rgba(255,200,80,0.5)'); baseline.setAttribute('stroke-width','1');
-    svg.appendChild(baseline);
-    // Center dot
-    const cdot = document.createElementNS(svgNS,'circle');
-    cdot.setAttribute('cx',cx); cdot.setAttribute('cy',cy); cdot.setAttribute('r','3');
-    cdot.setAttribute('fill','rgba(255,200,80,0.8)'); svg.appendChild(cdot);
-    // Degree ticks & labels
-    for (let deg = 0; deg <= 180; deg += 10) {
-      const rad = (180 - deg) * Math.PI / 180;
-      const inner = deg % 30 === 0 ? r - 16 : (deg % 10 === 0 ? r - 10 : r - 6);
-      const x1 = cx + r * Math.cos(rad), y1 = cy - r * Math.sin(rad);
-      const x2 = cx + inner * Math.cos(rad), y2 = cy - inner * Math.sin(rad);
-      const tick = document.createElementNS(svgNS,'line');
-      tick.setAttribute('x1',x1.toFixed(1)); tick.setAttribute('y1',y1.toFixed(1));
-      tick.setAttribute('x2',x2.toFixed(1)); tick.setAttribute('y2',y2.toFixed(1));
-      tick.setAttribute('stroke','rgba(255,200,80,0.6)'); tick.setAttribute('stroke-width','1');
-      svg.appendChild(tick);
-      if (deg % 30 === 0) {
-        const lx = cx + (r-22)*Math.cos(rad), ly = cy - (r-22)*Math.sin(rad);
-        const lbl = document.createElementNS(svgNS,'text');
-        lbl.setAttribute('x',lx.toFixed(1)); lbl.setAttribute('y',ly.toFixed(1));
-        lbl.setAttribute('fill','rgba(255,200,80,0.8)'); lbl.setAttribute('font-size','9');
-        lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('dominant-baseline','middle');
-        lbl.textContent = deg;
-        svg.appendChild(lbl);
+    let size = 220;
+
+    function rebuildProtractor() {
+      while(el.firstChild && el.firstChild.tagName==='svg') el.removeChild(el.firstChild);
+      size = parseFloat(el.querySelector('svg') && el.querySelector('svg').getAttribute('width')) || 220;
+      const svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('width', size); svg.setAttribute('height', size/2 + 30);
+      svg.setAttribute('viewBox', `0 0 ${size} ${size/2 + 30}`);
+      svg.style.cssText='display:block;overflow:visible;filter:drop-shadow(0 8px 24px rgba(255,200,80,0.3))';
+      const r = size/2 - 14;
+      const cx = size/2, cy = size/2;
+      // Filled body
+      const body=document.createElementNS(svgNS,'path');
+      body.setAttribute('d',`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy} Z`);
+      body.setAttribute('fill','rgba(255,200,80,0.07)');
+      body.setAttribute('stroke','rgba(255,200,80,0.8)');
+      body.setAttribute('stroke-width','1.5');
+      svg.appendChild(body);
+      // Inner arc for decoration
+      const innerR=r-18;
+      const inner=document.createElementNS(svgNS,'path');
+      inner.setAttribute('d',`M ${cx-innerR} ${cy} A ${innerR} ${innerR} 0 0 1 ${cx+innerR} ${cy}`);
+      inner.setAttribute('fill','none'); inner.setAttribute('stroke','rgba(255,200,80,0.2)'); inner.setAttribute('stroke-width','0.7');
+      svg.appendChild(inner);
+      // Baseline
+      const baseline=document.createElementNS(svgNS,'line');
+      baseline.setAttribute('x1',cx-r); baseline.setAttribute('y1',cy);
+      baseline.setAttribute('x2',cx+r); baseline.setAttribute('y2',cy);
+      baseline.setAttribute('stroke','rgba(255,200,80,0.6)'); baseline.setAttribute('stroke-width','1.2');
+      svg.appendChild(baseline);
+      // Center dot
+      const cdot=document.createElementNS(svgNS,'circle');
+      cdot.setAttribute('cx',cx); cdot.setAttribute('cy',cy); cdot.setAttribute('r','4');
+      cdot.setAttribute('fill','rgba(255,200,80,0.9)'); svg.appendChild(cdot);
+      // Center crosshair
+      [[-8,0,8,0],[0,-8,0,8]].forEach(([x1,y1,x2,y2])=>{
+        const l=document.createElementNS(svgNS,'line');
+        l.setAttribute('x1',cx+x1); l.setAttribute('y1',cy+y1);
+        l.setAttribute('x2',cx+x2); l.setAttribute('y2',cy+y2);
+        l.setAttribute('stroke','rgba(255,200,80,0.7)'); l.setAttribute('stroke-width','0.8');
+        svg.appendChild(l);
+      });
+      // Degree ticks & labels
+      for (let deg = 0; deg <= 180; deg += 5) {
+        const rad = (180-deg)*Math.PI/180;
+        const isMajor=deg%30===0, isMed=deg%10===0;
+        const inner2=r-(isMajor?20:isMed?14:9);
+        const x1c=cx+r*Math.cos(rad), y1c=cy-r*Math.sin(rad);
+        const x2c=cx+inner2*Math.cos(rad), y2c=cy-inner2*Math.sin(rad);
+        const tick=document.createElementNS(svgNS,'line');
+        tick.setAttribute('x1',x1c.toFixed(1)); tick.setAttribute('y1',y1c.toFixed(1));
+        tick.setAttribute('x2',x2c.toFixed(1)); tick.setAttribute('y2',y2c.toFixed(1));
+        tick.setAttribute('stroke',isMajor?'rgba(255,200,80,0.85)':'rgba(255,200,80,0.5)');
+        tick.setAttribute('stroke-width',isMajor?'1.2':'0.7'); svg.appendChild(tick);
+        if (isMajor) {
+          const lx=cx+(r-28)*Math.cos(rad), ly=cy-(r-28)*Math.sin(rad);
+          const lbl=document.createElementNS(svgNS,'text');
+          lbl.setAttribute('x',lx.toFixed(1)); lbl.setAttribute('y',ly.toFixed(1));
+          lbl.setAttribute('fill','rgba(255,200,80,0.9)'); lbl.setAttribute('font-size','9');
+          lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('dominant-baseline','middle');
+          lbl.setAttribute('font-family','Inter,sans-serif'); lbl.textContent=deg; svg.appendChild(lbl);
+        } else if (isMed) {
+          const lx2=cx+(r-22)*Math.cos(rad), ly2=cy-(r-22)*Math.sin(rad);
+          const lbl2=document.createElementNS(svgNS,'text');
+          lbl2.setAttribute('x',lx2.toFixed(1)); lbl2.setAttribute('y',ly2.toFixed(1));
+          lbl2.setAttribute('fill','rgba(255,200,80,0.6)'); lbl2.setAttribute('font-size','7');
+          lbl2.setAttribute('text-anchor','middle'); lbl2.setAttribute('dominant-baseline','middle');
+          lbl2.setAttribute('font-family','Inter,sans-serif'); lbl2.textContent=deg; svg.appendChild(lbl2);
+        }
       }
+      // Label
+      const title=document.createElementNS(svgNS,'text');
+      title.setAttribute('x',cx); title.setAttribute('y',size/2+22);
+      title.setAttribute('fill','rgba(255,200,80,0.6)'); title.setAttribute('font-size','9');
+      title.setAttribute('text-anchor','middle'); title.setAttribute('font-family','Inter,sans-serif');
+      title.setAttribute('letter-spacing','2'); title.textContent='PROTRACTOR'; svg.appendChild(title);
+      el.insertBefore(svg, el.firstChild);
+
+      // Drag via SVG
+      svg.addEventListener('mousedown', e => {
+        if(e.target.classList && e.target.classList.contains('geo-resize-handle')) return;
+        e.preventDefault(); protDragging=true;
+        const ox2=e.clientX-pos.x, oy2=e.clientY-pos.y;
+        const mm=ev=>{if(!protDragging)return; pos.x=ev.clientX-ox2; pos.y=ev.clientY-oy2; el.style.left=pos.x+'px'; el.style.top=pos.y+'px';};
+        const mu=()=>{protDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
+        document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+      });
+      return svg;
     }
-    el.appendChild(svg);
-    document.getElementById('gbl-canvas-area').appendChild(el);
-    // Drag
-    let ox=0, oy=0;
-    svg.addEventListener('mousedown', e => {
-      e.preventDefault(); protDragging=true;
-      ox=e.clientX-protX; oy=e.clientY-protY;
-      const mm=ev=>{if(!protDragging)return; protX=ev.clientX-ox; protY=ev.clientY-oy; el.style.left=protX+'px'; el.style.top=protY+'px';};
-      const mu=()=>{protDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
+
+    const svg = rebuildProtractor();
+    el.style.left=pos.x+'px'; el.style.top=pos.y+'px';
+
+    // Resize handle
+    const rh=document.createElement('div');
+    Object.assign(rh.style,{
+      position:'absolute', right:'-8px', bottom:'-8px', width:'14px', height:'14px',
+      borderRadius:'3px', background:'rgba(255,200,80,0.7)', border:'2px solid rgba(255,200,80,1)',
+      cursor:'se-resize', zIndex:'61'
+    });
+    rh.title='Drag to resize'; el.appendChild(rh);
+    let rs0=220, rmx=0, rDrag=false;
+    rh.addEventListener('mousedown', e=>{
+      e.preventDefault(); e.stopPropagation(); rDrag=true;
+      rs0=parseFloat(el.querySelector('svg').getAttribute('width'))||220; rmx=e.clientX;
+      const mm=ev=>{
+        if(!rDrag)return;
+        const ns=Math.max(120,rs0+(ev.clientX-rmx));
+        el.querySelector('svg').setAttribute('width',ns);
+        rebuildProtractor();
+      };
+      const mu=()=>{rDrag=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
       document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
     });
+
+    document.getElementById('gbl-canvas-area').appendChild(el);
     return el;
   }
 
@@ -11237,6 +11456,273 @@ document.addEventListener("DOMContentLoaded", function () {
       const el = document.getElementById('gbl-protractor-obj');
       if (el) { el.style.left=protX+'px'; el.style.top=protY+'px'; }
     }
+  }
+
+  /* ── HELPER: make any geo overlay draggable + resizable ── */
+  function makeGeoInteractive(el, svgEl, posObj) {
+    // Drag
+    let ox=0,oy=0,dragging=false;
+    svgEl.addEventListener('mousedown', e => {
+      if (e.target.classList.contains('geo-resize-handle')) return;
+      e.preventDefault(); dragging=true;
+      ox=e.clientX-posObj.x; oy=e.clientY-posObj.y;
+      const mm=ev=>{if(!dragging)return; posObj.x=ev.clientX-ox; posObj.y=ev.clientY-oy; el.style.left=posObj.x+'px'; el.style.top=posObj.y+'px';};
+      const mu=()=>{dragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+    });
+    // Resize handle (bottom-right)
+    const rh = document.createElement('div');
+    rh.className = 'geo-resize-handle';
+    Object.assign(rh.style, {
+      position:'absolute', right:'-8px', bottom:'-8px',
+      width:'16px', height:'16px', borderRadius:'4px',
+      background:'rgba(6,182,212,0.7)', border:'2px solid rgba(6,182,212,1)',
+      cursor:'se-resize', zIndex:'60'
+    });
+    rh.title = 'Drag to resize';
+    el.appendChild(rh);
+    let sw0=0,sh0=0,mx0=0,my0=0,rDragging=false;
+    rh.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation(); rDragging=true;
+      sw0 = parseFloat(svgEl.getAttribute('width'))||200;
+      sh0 = parseFloat(svgEl.getAttribute('height'))||150;
+      mx0=e.clientX; my0=e.clientY;
+      const mm=ev=>{
+        if(!rDragging)return;
+        const dw=ev.clientX-mx0, dh=ev.clientY-my0;
+        const nw=Math.max(100,sw0+dw), nh=Math.max(80,sh0+dh);
+        svgEl.setAttribute('width',nw); svgEl.setAttribute('height',nh);
+        svgEl.style.width=nw+'px'; svgEl.style.height=nh+'px';
+      };
+      const mu=()=>{rDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+    });
+  }
+
+  /* ── BUILD SET SQUARE 45° ── */
+  function buildSetSquare45() {
+    const el = document.createElement('div');
+    el.id = 'gbl-setsq45-obj';
+    const pos = {x:120, y:120};
+    Object.assign(el.style, {position:'absolute', display:'none', cursor:'move', zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'});
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const W=220, H=220;
+    const svg = document.createElementNS(svgNS,'svg');
+    svg.setAttribute('width',W); svg.setAttribute('height',H);
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    svg.style.cssText='display:block;overflow:visible;filter:drop-shadow(0 8px 24px rgba(0,229,255,0.25))';
+    // Body triangle
+    const body = document.createElementNS(svgNS,'polygon');
+    body.setAttribute('points',`20,${H-20} ${W-20},${H-20} 20,20`);
+    body.setAttribute('fill','rgba(0,229,255,0.07)');
+    body.setAttribute('stroke','rgba(0,229,255,0.8)');
+    body.setAttribute('stroke-width','1.5');
+    svg.appendChild(body);
+    // Angle labels
+    const labels = [{x:30,y:H-8,t:'90°'},{x:W-30,y:H-8,t:'45°'},{x:8,y:30,t:'45°'}];
+    labels.forEach(({x,y,t})=>{
+      const lbl=document.createElementNS(svgNS,'text');
+      lbl.setAttribute('x',x); lbl.setAttribute('y',y);
+      lbl.setAttribute('fill','rgba(0,229,255,0.9)'); lbl.setAttribute('font-size','10');
+      lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('font-family','Inter,sans-serif');
+      lbl.textContent=t; svg.appendChild(lbl);
+    });
+    // Ticks along hypotenuse & legs
+    const tickColor = 'rgba(0,229,255,0.5)';
+    for(let i=1;i<=9;i++){
+      const t=i/10;
+      // horizontal leg
+      const hx = 20 + t*(W-40);
+      const htick=document.createElementNS(svgNS,'line');
+      htick.setAttribute('x1',hx); htick.setAttribute('y1',H-20);
+      htick.setAttribute('x2',hx); htick.setAttribute('y2',H-20-(i%5===0?12:7));
+      htick.setAttribute('stroke',tickColor); htick.setAttribute('stroke-width','1');
+      svg.appendChild(htick);
+      if(i%5===0){
+        const num=document.createElementNS(svgNS,'text');
+        num.setAttribute('x',hx); num.setAttribute('y',H-24);
+        num.setAttribute('fill',tickColor); num.setAttribute('font-size','7');
+        num.setAttribute('text-anchor','middle'); num.textContent=i;
+        svg.appendChild(num);
+      }
+      // vertical leg
+      const vy = 20 + t*(H-40);
+      const vtick=document.createElementNS(svgNS,'line');
+      vtick.setAttribute('x1',20); vtick.setAttribute('y1',vy);
+      vtick.setAttribute('x2',20+(i%5===0?12:7)); vtick.setAttribute('y2',vy);
+      vtick.setAttribute('stroke',tickColor); vtick.setAttribute('stroke-width','1');
+      svg.appendChild(vtick);
+    }
+    el.appendChild(svg);
+    document.getElementById('gbl-canvas-area').appendChild(el);
+    makeGeoInteractive(el, svg, pos);
+    return el;
+  }
+
+  /* ── BUILD SET SQUARE 30-60° ── */
+  function buildSetSquare30() {
+    const el = document.createElement('div');
+    el.id = 'gbl-setsq30-obj';
+    const pos = {x:160, y:100};
+    Object.assign(el.style, {position:'absolute', display:'none', cursor:'move', zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'});
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const W=260, H=180;
+    const svg = document.createElementNS(svgNS,'svg');
+    svg.setAttribute('width',W); svg.setAttribute('height',H);
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    svg.style.cssText='display:block;overflow:visible;filter:drop-shadow(0 8px 24px rgba(168,85,247,0.25))';
+    // 30-60-90 triangle: right at bottom-left, 30 at top, 60 at bottom-right
+    const body = document.createElementNS(svgNS,'polygon');
+    body.setAttribute('points',`20,${H-20} ${W-20},${H-20} 20,20`);
+    body.setAttribute('fill','rgba(168,85,247,0.07)');
+    body.setAttribute('stroke','rgba(168,85,247,0.8)');
+    body.setAttribute('stroke-width','1.5');
+    svg.appendChild(body);
+    const labels = [{x:30,y:H-8,t:'90°'},{x:W-30,y:H-8,t:'60°'},{x:8,y:30,t:'30°'}];
+    labels.forEach(({x,y,t})=>{
+      const lbl=document.createElementNS(svgNS,'text');
+      lbl.setAttribute('x',x); lbl.setAttribute('y',y);
+      lbl.setAttribute('fill','rgba(168,85,247,0.9)'); lbl.setAttribute('font-size','10');
+      lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('font-family','Inter,sans-serif');
+      lbl.textContent=t; svg.appendChild(lbl);
+    });
+    const tickColor='rgba(168,85,247,0.5)';
+    for(let i=1;i<=9;i++){
+      const t=i/10;
+      const hx=20+t*(W-40);
+      const htick=document.createElementNS(svgNS,'line');
+      htick.setAttribute('x1',hx); htick.setAttribute('y1',H-20);
+      htick.setAttribute('x2',hx); htick.setAttribute('y2',H-20-(i%5===0?12:7));
+      htick.setAttribute('stroke',tickColor); htick.setAttribute('stroke-width','1');
+      svg.appendChild(htick);
+      if(i%5===0){
+        const num=document.createElementNS(svgNS,'text');
+        num.setAttribute('x',hx); num.setAttribute('y',H-24);
+        num.setAttribute('fill',tickColor); num.setAttribute('font-size','7');
+        num.setAttribute('text-anchor','middle'); num.textContent=i;
+        svg.appendChild(num);
+      }
+    }
+    el.appendChild(svg);
+    document.getElementById('gbl-canvas-area').appendChild(el);
+    makeGeoInteractive(el, svg, pos);
+    return el;
+  }
+
+  /* ── FRENCH CURVE ── */
+  function buildFrenchCurve() {
+    const el = document.createElement('div');
+    el.id = 'gbl-frenchcurve-obj';
+    const pos = {x:200, y:150};
+    Object.assign(el.style, {position:'absolute', display:'none', cursor:'move', zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'});
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const W=160, H=260;
+    const svg = document.createElementNS(svgNS,'svg');
+    svg.setAttribute('width',W); svg.setAttribute('height',H);
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    svg.style.cssText='display:block;overflow:visible;filter:drop-shadow(0 8px 24px rgba(34,197,94,0.3))';
+    // French curve organic shape
+    const body = document.createElementNS(svgNS,'path');
+    body.setAttribute('d',`M 80,10 C 130,20 150,60 140,100 C 130,140 80,150 60,180 C 40,210 50,240 80,250 C 60,255 20,240 10,200 C 0,160 30,130 50,100 C 70,70 40,30 80,10 Z`);
+    body.setAttribute('fill','rgba(34,197,94,0.08)');
+    body.setAttribute('stroke','rgba(34,197,94,0.8)');
+    body.setAttribute('stroke-width','1.5');
+    svg.appendChild(body);
+    // Label
+    const lbl=document.createElementNS(svgNS,'text');
+    lbl.setAttribute('x','80'); lbl.setAttribute('y','135');
+    lbl.setAttribute('fill','rgba(34,197,94,0.7)'); lbl.setAttribute('font-size','9');
+    lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('font-family','Inter,sans-serif');
+    lbl.textContent='French Curve'; svg.appendChild(lbl);
+    el.appendChild(svg);
+    document.getElementById('gbl-canvas-area').appendChild(el);
+    makeGeoInteractive(el, svg, pos);
+    return el;
+  }
+
+  /* ── GRID OVERLAY ── */
+  let _gridOverlay = null;
+  let _gridActive = false;
+  function toggleGridOverlay() {
+    if (_gridActive && _gridOverlay) {
+      _gridOverlay.style.display='none';
+      _gridActive=false;
+      const btn=document.getElementById('gbl-t-grid-tool');
+      if(btn) btn.classList.remove('active');
+      return;
+    }
+    if (!_gridOverlay) {
+      const sv=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      sv.id='gbl-grid-overlay';
+      sv.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;';
+      const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+      const pat=document.createElementNS('http://www.w3.org/2000/svg','pattern');
+      pat.setAttribute('id','gridpat'); pat.setAttribute('width','30'); pat.setAttribute('height','30');
+      pat.setAttribute('patternUnits','userSpaceOnUse');
+      const ph=document.createElementNS('http://www.w3.org/2000/svg','path');
+      ph.setAttribute('d','M 30 0 L 0 0 0 30'); ph.setAttribute('fill','none');
+      ph.setAttribute('stroke','rgba(100,180,255,0.18)'); ph.setAttribute('stroke-width','0.7');
+      pat.appendChild(ph);
+      // Major grid every 150
+      const pm=document.createElementNS('http://www.w3.org/2000/svg','pattern');
+      pm.setAttribute('id','gridpatmaj'); pm.setAttribute('width','150'); pm.setAttribute('height','150');
+      pm.setAttribute('patternUnits','userSpaceOnUse');
+      const phm=document.createElementNS('http://www.w3.org/2000/svg','path');
+      phm.setAttribute('d','M 150 0 L 0 0 0 150'); phm.setAttribute('fill','none');
+      phm.setAttribute('stroke','rgba(100,180,255,0.32)'); phm.setAttribute('stroke-width','1');
+      pm.appendChild(phm);
+      defs.appendChild(pat); defs.appendChild(pm); sv.appendChild(defs);
+      const r1=document.createElementNS('http://www.w3.org/2000/svg','rect');
+      r1.setAttribute('width','100%'); r1.setAttribute('height','100%');
+      r1.setAttribute('fill','url(#gridpat)'); sv.appendChild(r1);
+      const r2=document.createElementNS('http://www.w3.org/2000/svg','rect');
+      r2.setAttribute('width','100%'); r2.setAttribute('height','100%');
+      r2.setAttribute('fill','url(#gridpatmaj)'); sv.appendChild(r2);
+      document.getElementById('gbl-canvas-area').appendChild(sv);
+      _gridOverlay=sv;
+    }
+    _gridOverlay.style.display='block';
+    _gridActive=true;
+  }
+
+  /* ── ISO GRID OVERLAY ── */
+  let _isoOverlay=null, _isoActive=false;
+  function toggleIsoGrid() {
+    if (_isoActive && _isoOverlay) {
+      _isoOverlay.style.display='none'; _isoActive=false;
+      const btn=document.getElementById('gbl-t-isogrid-tool'); if(btn) btn.classList.remove('active');
+      return;
+    }
+    if (!_isoOverlay) {
+      const sv=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      sv.id='gbl-iso-overlay';
+      sv.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:hidden;';
+      const W=2000, H=1500, spacing=40;
+      const col='rgba(255,160,80,0.18)', strokeW='0.7';
+      // Draw isometric lines: 3 directions
+      for(let x=-H; x<W+H; x+=spacing) {
+        // 60° lines
+        const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+        l.setAttribute('x1',x); l.setAttribute('y1',0);
+        l.setAttribute('x2',x+H/Math.tan(Math.PI/3)); l.setAttribute('y2',H);
+        l.setAttribute('stroke',col); l.setAttribute('stroke-width',strokeW); sv.appendChild(l);
+        // 120° lines
+        const l2=document.createElementNS('http://www.w3.org/2000/svg','line');
+        l2.setAttribute('x1',x); l2.setAttribute('y1',0);
+        l2.setAttribute('x2',x-H/Math.tan(Math.PI/3)); l2.setAttribute('y2',H);
+        l2.setAttribute('stroke',col); l2.setAttribute('stroke-width',strokeW); sv.appendChild(l2);
+      }
+      // Horizontal lines
+      for(let y=0; y<H; y+=spacing*Math.sin(Math.PI/3)) {
+        const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+        l.setAttribute('x1',0); l.setAttribute('y1',y);
+        l.setAttribute('x2',W); l.setAttribute('y2',y);
+        l.setAttribute('stroke',col); l.setAttribute('stroke-width',strokeW); sv.appendChild(l);
+      }
+      document.getElementById('gbl-canvas-area').appendChild(sv);
+      _isoOverlay=sv;
+    }
+    _isoOverlay.style.display='block'; _isoActive=true;
   }
 
   // ── COLOR SWATCHES ──
@@ -11257,7 +11743,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // ── STROKE SIZE ──
   document.querySelectorAll('.gbl-sz').forEach(sz => {
     sz.addEventListener('click', () => {
-      strokeSize = parseInt(sz.dataset.size);
+      strokeSize = parseFloat(sz.dataset.size);
       document.querySelectorAll('.gbl-sz').forEach(s => s.classList.remove('active'));
       sz.classList.add('active');
     });
@@ -11276,18 +11762,25 @@ document.addEventListener("DOMContentLoaded", function () {
     inp.type = 'color'; inp.value = bgColor;
     inp.addEventListener('input', e => {
       bgColor = e.target.value;
-      // Redraw bg without clearing drawings - use composite
-      const snap = ctx.getImageData(0,0,canvas.width,canvas.height);
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-      ctx.putImageData(snap,0,0);
+      // Apply to current page and all pages after it
+      for (let i = currentPage; i < pageBgColors.length; i++) {
+        pageBgColors[i] = bgColor;
+      }
+      // Repaint current page (preserves drawings)
+      replayStrokes();
     });
     inp.click();
   });
 
   // ── STATUS UPDATE ──
   function updateStatusTool() {
-    const names = { pen:'Pen ✏', highlight:'Highlighter', eraser:'Eraser', text:'Text', line:'Line', arrow:'Arrow', rect:'Rectangle', circle:'Circle', triangle:'Triangle' };
+    const names = {
+      pen:'Pen ✏', highlight:'Highlighter', eraser:'Eraser', text:'Text',
+      line:'Line', arrow:'Arrow', dbarrow:'Double Arrow', rect:'Rectangle', roundrect:'Rounded Rect',
+      circle:'Circle', ellipse:'Ellipse', triangle:'Triangle', righttri:'Right Tri',
+      pentagon:'Pentagon', hexagon:'Hexagon', star:'Star', rhombus:'Rhombus',
+      parallelogram:'Parallelogram', arc:'Arc', wave:'Wave', move:'Move'
+    };
     document.getElementById('gbl-status-tool').textContent = names[currentTool] || currentTool;
   }
   function updateStatusColor() {
@@ -11297,21 +11790,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ── UNDO / REDO ──
   function saveUndoState() {
-    undoStacks[currentPage].push(ctx.getImageData(0,0,canvas.width,canvas.height));
+    // Save both pixel snapshot AND stroke list snapshot
+    undoStacks[currentPage].push({
+      img: ctx.getImageData(0,0,canvas.width,canvas.height),
+      strokes: strokeHistory[currentPage].map(s => Object.assign({}, s, { pts: s.pts ? [...s.pts] : null }))
+    });
     if (undoStacks[currentPage].length > 50) undoStacks[currentPage].shift();
     redoStacks[currentPage] = [];
   }
   function undo() {
     const stack = undoStacks[currentPage];
     if (!stack.length) return;
-    redoStacks[currentPage].push(ctx.getImageData(0,0,canvas.width,canvas.height));
-    ctx.putImageData(stack.pop(), 0, 0);
+    redoStacks[currentPage].push({
+      img: ctx.getImageData(0,0,canvas.width,canvas.height),
+      strokes: strokeHistory[currentPage].map(s => Object.assign({}, s, { pts: s.pts ? [...s.pts] : null }))
+    });
+    const state = stack.pop();
+    ctx.putImageData(state.img, 0, 0);
+    strokeHistory[currentPage] = state.strokes;
   }
   function redo() {
     const stack = redoStacks[currentPage];
     if (!stack.length) return;
-    undoStacks[currentPage].push(ctx.getImageData(0,0,canvas.width,canvas.height));
-    ctx.putImageData(stack.pop(), 0, 0);
+    undoStacks[currentPage].push({
+      img: ctx.getImageData(0,0,canvas.width,canvas.height),
+      strokes: strokeHistory[currentPage].map(s => Object.assign({}, s, { pts: s.pts ? [...s.pts] : null }))
+    });
+    const state = stack.pop();
+    ctx.putImageData(state.img, 0, 0);
+    strokeHistory[currentPage] = state.strokes;
   }
   document.getElementById('gbl-undo-btn').addEventListener('click', undo);
   document.getElementById('gbl-redo-btn').addEventListener('click', redo);
@@ -11356,56 +11863,345 @@ document.addEventListener("DOMContentLoaded", function () {
     ctx.lineJoin = 'round';
   }
 
-  // ── SMOOTH STROKE ENGINE (single continuous path, no restarts) ──
-  let _pts = [];
+  // ── ZERO-LAG SMOOTH STROKE ENGINE ──
+  //
+  // KEY PERFORMANCE FIX: We never call putImageData / getImageData during live
+  // drawing — those ops are O(canvas pixels) and cause the lag you felt.
+  //
+  // Instead we use TWO canvases:
+  //   • canvas      — the "committed" layer (all finished strokes)
+  //   • _liveCanvas — a transparent overlay for the current in-progress stroke
+  //
+  // During a stroke we only draw on _liveCanvas (cheap — just a few bezier
+  // segments per frame).  On pen-up we composite _liveCanvas onto canvas once
+  // (a single drawImage call) and clear _liveCanvas.  Zero pixel reads, zero
+  // full-canvas repaints mid-stroke.
+  //
+  // Smoothing: EMA on raw points → Catmull-Rom spline drawn INCREMENTALLY
+  // (only the last 4-point window, not the whole path) = O(1) per frame.
+
+  const SMOOTH_ALPHA = 0.25;   // EMA weight — higher = more responsive, less smoothing
+  const MIN_DIST     = 1.5;    // ignore micro-jitter below this px distance
+
+  // Live overlay canvas (same size as main canvas, positioned on top)
+  let _liveCanvas = null;
+  let _liveCtx    = null;
+
+  function _ensureLiveCanvas() {
+    if (_liveCanvas && _liveCanvas.width === canvas.width && _liveCanvas.height === canvas.height) return;
+    if (!_liveCanvas) {
+      _liveCanvas = document.createElement('canvas');
+      _liveCanvas.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;z-index:5;';
+      canvas.parentNode.insertBefore(_liveCanvas, canvas.nextSibling);
+      _liveCtx = _liveCanvas.getContext('2d');
+    }
+    _liveCanvas.width  = canvas.width;
+    _liveCanvas.height = canvas.height;
+  }
+
+  let _rawPts = [];   // raw pointer positions collected this stroke
+  let _pts    = [];   // EMA-smoothed positions
+
+  // Draw only the tail of the current stroke (last bezier segment) on _liveCtx
+  function _appendLiveSegment() {
+    const n = _pts.length;
+    if (n < 2) return;
+    const lw    = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
+    const alpha = currentTool === 'highlight' ? 0.35 : 1;
+
+    _liveCtx.save();
+    _liveCtx.strokeStyle = currentColor;
+    _liveCtx.fillStyle   = currentColor;
+    _liveCtx.lineWidth   = lw;
+    _liveCtx.lineCap     = 'round';
+    _liveCtx.lineJoin    = 'round';
+    _liveCtx.globalAlpha = alpha;
+    _liveCtx.globalCompositeOperation = 'source-over';
+    _liveCtx.shadowBlur  = 0;
+
+    if (n === 2) {
+      // First segment: simple line
+      _liveCtx.beginPath();
+      _liveCtx.moveTo(_pts[0].x, _pts[0].y);
+      _liveCtx.lineTo(_pts[1].x, _pts[1].y);
+      _liveCtx.stroke();
+    } else {
+      // Draw only the last Catmull-Rom segment (4-point window)
+      const i  = n - 2;
+      const p0 = _pts[Math.max(i - 1, 0)];
+      const p1 = _pts[i];
+      const p2 = _pts[i + 1];
+      const p3 = _pts[Math.min(i + 2, n - 1)];
+      const tension = 0.5;
+      const cp1x = p1.x + (p2.x - p0.x) / (6 / tension);
+      const cp1y = p1.y + (p2.y - p0.y) / (6 / tension);
+      const cp2x = p2.x - (p3.x - p1.x) / (6 / tension);
+      const cp2y = p2.y - (p3.y - p1.y) / (6 / tension);
+      _liveCtx.beginPath();
+      _liveCtx.moveTo(p1.x, p1.y);
+      _liveCtx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+      _liveCtx.stroke();
+    }
+    _liveCtx.restore();
+  }
+
+  // Full Catmull-Rom redraw on a given context (used for replay / flush)
+  function _drawCatmullRom(pts, lw, color, alpha, targetCtx) {
+    const c = targetCtx || ctx;
+    if (!pts || pts.length === 0) return;
+    c.save();
+    c.strokeStyle = color;
+    c.fillStyle   = color;
+    c.lineWidth   = lw;
+    c.lineCap     = 'round';
+    c.lineJoin    = 'round';
+    c.globalAlpha = alpha;
+    c.globalCompositeOperation = 'source-over';
+    c.shadowBlur  = 0;
+
+    if (pts.length === 1) {
+      c.beginPath();
+      c.arc(pts[0].x, pts[0].y, Math.max(lw / 2, 1), 0, Math.PI * 2);
+      c.fill();
+      c.restore();
+      return;
+    }
+
+    c.beginPath();
+    c.moveTo(pts[0].x, pts[0].y);
+
+    if (pts.length === 2) {
+      c.lineTo(pts[1].x, pts[1].y);
+    } else {
+      const tension = 0.5;
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p0 = pts[Math.max(i - 1, 0)];
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        const p3 = pts[Math.min(i + 2, pts.length - 1)];
+        const cp1x = p1.x + (p2.x - p0.x) / (6 / tension);
+        const cp1y = p1.y + (p2.y - p0.y) / (6 / tension);
+        const cp2x = p2.x - (p3.x - p1.x) / (6 / tension);
+        const cp2y = p2.y - (p3.y - p1.y) / (6 / tension);
+        c.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+      }
+    }
+    c.stroke();
+    c.restore();
+  }
+
+  // Douglas-Peucker simplification
+  function _dpSimplify(pts, epsilon) {
+    if (pts.length <= 2) return pts;
+    let maxDist = 0, idx = 0;
+    const end = pts.length - 1;
+    const x1 = pts[0].x, y1 = pts[0].y;
+    const x2 = pts[end].x, y2 = pts[end].y;
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    for (let i = 1; i < end; i++) {
+      const d = len === 0
+        ? Math.hypot(pts[i].x - x1, pts[i].y - y1)
+        : Math.abs(dy * pts[i].x - dx * pts[i].y + x2 * y1 - y2 * x1) / len;
+      if (d > maxDist) { maxDist = d; idx = i; }
+    }
+    if (maxDist > epsilon) {
+      const left  = _dpSimplify(pts.slice(0, idx + 1), epsilon);
+      const right = _dpSimplify(pts.slice(idx), epsilon);
+      return left.slice(0, -1).concat(right);
+    }
+    return [pts[0], pts[end]];
+  }
+
+  // Chaikin corner-cutting pass
+  function _chaikinPass(pts) {
+    if (pts.length < 3) return pts;
+    const out = [pts[0]];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i], p1 = pts[i + 1];
+      out.push({ x: p0.x * 0.75 + p1.x * 0.25, y: p0.y * 0.75 + p1.y * 0.25 });
+      out.push({ x: p0.x * 0.25 + p1.x * 0.75, y: p0.y * 0.25 + p1.y * 0.75 });
+    }
+    out.push(pts[pts.length - 1]);
+    return out;
+  }
+
+  // Post-process raw stroke: simplify + Chaikin smoothing (runs once on pen-up)
+  function _postProcessStroke(rawPts) {
+    if (rawPts.length <= 2) return rawPts;
+    let pts = _dpSimplify(rawPts, 1.2);
+    for (let i = 0; i < 3; i++) pts = _chaikinPass(pts);
+    return pts;
+  }
 
   function _beginStroke(x, y) {
-    _pts = [{x, y}];
-    ctx.beginPath();
-    ctx.moveTo(x, y);
+    _ensureLiveCanvas();
+    _liveCtx.clearRect(0, 0, _liveCanvas.width, _liveCanvas.height);
+    _rawPts = [{x, y}];
+    _pts    = [{x, y}];
   }
 
   function _addSmoothPoint(x, y) {
-    _pts.push({x, y});
-    const n = _pts.length;
-    if (n < 3) return; // wait for 3 points before drawing curves
-    const p0 = _pts[n - 3];
-    const p1 = _pts[n - 2];
-    const p2 = _pts[n - 1];
-    const mid1x = (p0.x + p1.x) / 2;
-    const mid1y = (p0.y + p1.y) / 2;
-    const mid2x = (p1.x + p2.x) / 2;
-    const mid2y = (p1.y + p2.y) / 2;
-    if (n === 3) {
-      ctx.beginPath();
-      ctx.moveTo(mid1x, mid1y);
-    }
-    ctx.quadraticCurveTo(p1.x, p1.y, mid2x, mid2y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(mid2x, mid2y);
+    const last = _rawPts[_rawPts.length - 1];
+    if (Math.hypot(x - last.x, y - last.y) < MIN_DIST) return;
+    _rawPts.push({x, y});
+    // EMA smooth
+    const prev = _pts[_pts.length - 1];
+    _pts.push({ x: prev.x + SMOOTH_ALPHA * (x - prev.x), y: prev.y + SMOOTH_ALPHA * (y - prev.y) });
+    // Draw only the new tail segment — O(1), no full redraw
+    _appendLiveSegment();
   }
 
   function _flushBezier() {
-    const n = _pts.length;
-    if (n === 1) {
-      // Single dot (tap)
-      ctx.beginPath();
-      ctx.arc(_pts[0].x, _pts[0].y, Math.max(ctx.lineWidth / 2, 1), 0, Math.PI * 2);
-      ctx.fill();
-    } else if (n === 2) {
-      ctx.beginPath();
-      ctx.moveTo(_pts[0].x, _pts[0].y);
-      ctx.lineTo(_pts[1].x, _pts[1].y);
-      ctx.stroke();
-    } else {
-      // Finish tail to the final point
-      const p1 = _pts[n - 2];
-      const p2 = _pts[n - 1];
-      ctx.quadraticCurveTo(p2.x, p2.y, p2.x, p2.y);
-      ctx.stroke();
+    if (_rawPts.length === 0) return;
+    // Post-process for a smooth committed stroke
+    _pts = _postProcessStroke(_rawPts);
+    // Clear live overlay
+    if (_liveCanvas) _liveCtx.clearRect(0, 0, _liveCanvas.width, _liveCanvas.height);
+    // Commit the beautified stroke directly to the main canvas
+    const lw    = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
+    const alpha = currentTool === 'highlight' ? 0.35 : 1;
+    _drawCatmullRom(_pts, lw, currentColor, alpha, ctx);
+    _rawPts = [];
+    // _pts kept so onUp can push the beautified points into strokeHistory
+  }
+
+  // ── STROKE-LEVEL ERASER helpers ──
+  // Redraw the entire canvas from strokeHistory (used after erasing a stroke)
+  function replayStrokes() {
+    fillBg();
+    const strokes = strokeHistory[currentPage];
+    for (const s of strokes) {
+      if (s.tool === 'text') {
+        ctx.save();
+        ctx.font = `600 ${s.fontSize}px 'Merriweather', serif`;
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.shadowColor = 'rgba(0,0,0,0.8)';
+        ctx.shadowBlur = 3;
+        s.textContent.split('\n').forEach((line, i) => {
+          ctx.fillText(line, s.textX, s.textY + i * (s.fontSize * 1.4));
+        });
+        ctx.restore();
+      } else if (['line','arrow','dbarrow','rect','roundrect','circle','ellipse','triangle','righttri','pentagon','hexagon','star','rhombus','parallelogram','arc','wave'].includes(s.tool)) {
+        ctx.save();
+        ctx.strokeStyle = s.color;
+        ctx.fillStyle = s.color;
+        ctx.lineWidth = s.size;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+        drawShape(s.tool, s.x1, s.y1, s.x2, s.y2, true);
+        ctx.restore();
+      } else {
+        // pen or highlight
+        const pts = s.pts;
+        if (!pts || pts.length === 0) continue;
+        const lw    = s.tool === 'highlight' ? s.size * 6 : s.size;
+        const alpha = s.tool === 'highlight' ? 0.35 : 1;
+        _drawCatmullRom(pts, lw, s.color, alpha, s.tool === 'highlight');
+      }
     }
-    _pts = [];
+  }
+
+  // Check if point (px,py) is near a stroke (within hitRadius)
+  function strokeHitTest(s, px, py) {
+    const hitR = Math.max(20, (s.size || 2) * 4);
+    if (s.tool === 'text') {
+      const fs = s.fontSize || 14;
+      const lines = (s.textContent || '').split('\n');
+      const w = lines.reduce((m,l) => Math.max(m, l.length * fs * 0.6), 0);
+      const h = lines.length * fs * 1.4;
+      return px >= s.textX - 4 && px <= s.textX + w + 8 &&
+             py >= s.textY - fs && py <= s.textY + h;
+    }
+    if (['line','arrow','dbarrow','rect','roundrect','circle','ellipse','triangle','righttri','pentagon','hexagon','star','rhombus','parallelogram','arc','wave'].includes(s.tool)) {
+      // Use bounding box + some tolerance
+      const minX = Math.min(s.x1,s.x2) - hitR;
+      const maxX = Math.max(s.x1,s.x2) + hitR;
+      const minY = Math.min(s.y1,s.y2) - hitR;
+      const maxY = Math.max(s.y1,s.y2) + hitR;
+      if (px < minX || px > maxX || py < minY || py > maxY) return false;
+      if (s.tool === 'line' || s.tool === 'arrow') {
+        // Distance from point to line segment
+        const dx = s.x2 - s.x1, dy = s.y2 - s.y1;
+        const lenSq = dx*dx + dy*dy;
+        if (lenSq === 0) return Math.hypot(px-s.x1, py-s.y1) < hitR;
+        let t = ((px-s.x1)*dx + (py-s.y1)*dy) / lenSq;
+        t = Math.max(0, Math.min(1, t));
+        return Math.hypot(px - (s.x1+t*dx), py - (s.y1+t*dy)) < hitR;
+      }
+      return true; // rect/circle/triangle: bounding box is enough
+    }
+    // pen / highlight: check proximity to any segment
+    const pts = s.pts;
+    if (!pts || pts.length === 0) return false;
+    if (pts.length === 1) return Math.hypot(px-pts[0].x, py-pts[0].y) < hitR;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const ax = pts[i].x, ay = pts[i].y;
+      const bx = pts[i+1].x, by = pts[i+1].y;
+      const dx = bx-ax, dy = by-ay;
+      const lenSq = dx*dx + dy*dy;
+      let t = lenSq > 0 ? ((px-ax)*dx + (py-ay)*dy) / lenSq : 0;
+      t = Math.max(0, Math.min(1, t));
+      if (Math.hypot(px-(ax+t*dx), py-(ay+t*dy)) < hitR) return true;
+    }
+    return false;
+  }
+
+  // ── MOVE TOOL STATE ──
+  let moveSelectedStroke = null;
+  let moveLastX = 0, moveLastY = 0;
+
+  function _moveStroke(s, dx, dy) {
+    if (s.pts && s.pts.length) {
+      s.pts = s.pts.map(p => ({ x: p.x + dx, y: p.y + dy }));
+    }
+    if (s.x1 !== undefined) { s.x1 += dx; s.x2 += dx; s.y1 += dy; s.y2 += dy; }
+    if (s.textX !== undefined) { s.textX += dx; s.textY += dy; }
+  }
+
+  function _getStrokeBounds(s) {
+    if (s.pts && s.pts.length) {
+      const xs = s.pts.map(p => p.x), ys = s.pts.map(p => p.y);
+      const pad = Math.max(10, (s.size || 2) * 4);
+      return { x: Math.min(...xs)-pad, y: Math.min(...ys)-pad,
+               w: Math.max(...xs)-Math.min(...xs)+pad*2, h: Math.max(...ys)-Math.min(...ys)+pad*2 };
+    }
+    if (s.x1 !== undefined) {
+      const pad = Math.max(12, (s.size || 2) * 3);
+      return { x: Math.min(s.x1,s.x2)-pad, y: Math.min(s.y1,s.y2)-pad,
+               w: Math.abs(s.x2-s.x1)+pad*2, h: Math.abs(s.y2-s.y1)+pad*2 };
+    }
+    if (s.textX !== undefined) {
+      const fs = s.fontSize || 14;
+      const lines = (s.textContent||'').split('\n');
+      const w = lines.reduce((m,l) => Math.max(m, l.length*fs*0.6), 0);
+      return { x: s.textX-6, y: s.textY-fs-6, w: w+20, h: lines.length*fs*1.4+12 };
+    }
+    return null;
+  }
+
+  function _drawSelectionBox(s) {
+    const b = _getStrokeBounds(s);
+    if (!b) return;
+    ctx.save();
+    ctx.setLineDash([7, 4]);
+    ctx.strokeStyle = 'rgba(6,182,212,0.95)';
+    ctx.lineWidth = 1.5;
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.shadowColor = 'rgba(6,182,212,0.6)';
+    ctx.shadowBlur = 8;
+    ctx.strokeRect(b.x, b.y, b.w, b.h);
+    // Draw small move-icon label
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(6,182,212,0.95)';
+    ctx.font = 'bold 11px Inter, sans-serif';
+    ctx.shadowBlur = 0;
+    ctx.fillText('MOVE', b.x + 4, b.y - 4 > 0 ? b.y - 4 : b.y + 14);
+    ctx.restore();
   }
 
   function onDown(e) {
@@ -11424,19 +12220,63 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    if (currentTool === 'text') { placeText(x, y); return; }
+    if (currentTool === 'text') {
+      const rect = canvas.getBoundingClientRect();
+      const sx = e.touches ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
+      const sy = e.touches ? e.touches[0].clientY - rect.top  : e.clientY - rect.top;
+      placeText(x, y, sx, sy);
+      return;
+    }
+
+    // Move tool: pick the topmost stroke under cursor and prepare to drag it
+    if (currentTool === 'move') {
+      const strokes = strokeHistory[currentPage];
+      for (let i = strokes.length - 1; i >= 0; i--) {
+        if (strokeHitTest(strokes[i], x, y)) {
+          saveUndoState();
+          moveSelectedStroke = strokes[i];
+          moveLastX = x; moveLastY = y;
+          isDrawing = true;
+          canvas.style.cursor = 'grabbing';
+          replayStrokes();
+          _drawSelectionBox(moveSelectedStroke);
+          return;
+        }
+      }
+      // Clicked on empty space — deselect
+      moveSelectedStroke = null;
+      isDrawing = false;
+      return;
+    }
+
+    // Stroke-level eraser: find and remove the topmost stroke touched
+    if (currentTool === 'eraser') {
+      const strokes = strokeHistory[currentPage];
+      // Search from top (last drawn) to bottom
+      for (let i = strokes.length - 1; i >= 0; i--) {
+        if (strokeHitTest(strokes[i], x, y)) {
+          saveUndoState();
+          strokes.splice(i, 1);
+          replayStrokes();
+          isDrawing = true; // allow drag-erasing more strokes
+          return;
+        }
+      }
+      isDrawing = true; // still mark drawing so drag works
+      return;
+    }
 
     saveUndoState();
     isDrawing = true;
     startX = x; startY = y; lastX = x; lastY = y;
     _pts = [];
 
-    if (['line','arrow','rect','circle','triangle'].includes(currentTool)) {
+    if (['line','arrow','dbarrow','rect','roundrect','circle','ellipse','triangle','righttri','pentagon','hexagon','star','rhombus','parallelogram','arc','wave'].includes(currentTool)) {
       preDrawSnapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
     }
 
-    setCtxStyle(currentTool === 'eraser');
-    if (currentTool === 'pen' || currentTool === 'highlight' || currentTool === 'eraser') {
+    setCtxStyle(false);
+    if (currentTool === 'pen' || currentTool === 'highlight') {
       _beginStroke(x, y);
     }
   }
@@ -11467,10 +12307,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (!isDrawing) continue;
 
-      setCtxStyle(currentTool === 'eraser');
+      // Move tool: translate selected stroke by drag delta
+      if (currentTool === 'move') {
+        if (moveSelectedStroke) {
+          const dx = x - moveLastX;
+          const dy = y - moveLastY;
+          moveLastX = x; moveLastY = y;
+          _moveStroke(moveSelectedStroke, dx, dy);
+          replayStrokes();
+          _drawSelectionBox(moveSelectedStroke);
+        }
+        continue;
+      }
 
-      if (currentTool === 'pen' || currentTool === 'highlight' || currentTool === 'eraser') {
-        // Windows Ink pressure-based line width (optional enhancement)
+      // Stroke-level eraser: erase any stroke the cursor drags over
+      if (currentTool === 'eraser') {
+        const strokes = strokeHistory[currentPage];
+        for (let i = strokes.length - 1; i >= 0; i--) {
+          if (strokeHitTest(strokes[i], x, y)) {
+            saveUndoState();
+            strokes.splice(i, 1);
+            replayStrokes();
+            break; // only one per move event to avoid flickering
+          }
+        }
+        continue;
+      }
+
+      setCtxStyle(false);
+
+      if (currentTool === 'pen' || currentTool === 'highlight') {
         if (ev.pointerType === 'pen' && ev.pressure > 0 && currentTool === 'pen') {
           const pressureWidth = Math.max(1, strokeSize * (0.5 + ev.pressure * 1.5));
           ctx.lineWidth = pressureWidth;
@@ -11489,6 +12355,22 @@ document.addEventListener("DOMContentLoaded", function () {
   function onUp(e) {
     if (!isDrawing) return;
     isDrawing = false;
+
+    // Move tool: finalize, keep selection box for a moment
+    if (currentTool === 'move') {
+      if (moveSelectedStroke) {
+        replayStrokes();
+        _drawSelectionBox(moveSelectedStroke);
+        // Fade out the selection box after 800ms
+        const _sel = moveSelectedStroke;
+        setTimeout(() => {
+          replayStrokes();
+        }, 900);
+      }
+      canvas.style.cursor = 'crosshair';
+      moveSelectedStroke = null;
+      return;
+    }
 
     if (geoMode === 'compass' && compassState === 1) {
       const rect = canvas.getBoundingClientRect();
@@ -11512,9 +12394,23 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    // Eraser: just stop, stroke removal already done in onDown/onMove
+    if (currentTool === 'eraser') {
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
+      return;
+    }
+
     // Flush remaining bezier tail
-    if (currentTool === 'pen' || currentTool === 'highlight' || currentTool === 'eraser') {
+    if (currentTool === 'pen' || currentTool === 'highlight') {
       _flushBezier();
+      // Record completed freehand stroke
+      strokeHistory[currentPage].push({
+        tool: currentTool,
+        color: currentColor,
+        size: strokeSize,
+        pts: _pts.length ? [..._pts] : (startX !== undefined ? [{x:startX,y:startY}] : [])
+      });
     }
 
     const rect = canvas.getBoundingClientRect();
@@ -11527,12 +12423,21 @@ document.addEventListener("DOMContentLoaded", function () {
       ? (e.changedTouches[0].clientY - rect.top) * scaleY
       : (e.clientY - rect.top) * scaleY;
 
-    if (['line','arrow','rect','circle','triangle'].includes(currentTool)) {
+    if (['line','arrow','dbarrow','rect','roundrect','circle','ellipse','triangle','righttri','pentagon','hexagon','star','rhombus','parallelogram','arc','wave'].includes(currentTool)) {
       if (preDrawSnapshot) ctx.putImageData(preDrawSnapshot, 0, 0);
       preDrawSnapshot = null;
       setCtxStyle(false);
       ctx.globalAlpha = 1;
       drawShape(currentTool, startX, startY, x, y, true);
+      // Record shape stroke
+      strokeHistory[currentPage].push({
+        tool: currentTool,
+        color: currentColor,
+        size: strokeSize,
+        fill: fillShape,
+        x1: startX, y1: startY, x2: x, y2: y,
+        pts: null
+      });
     }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
@@ -11551,6 +12456,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }, { passive: false });
     canvas.addEventListener('pointermove', (e) => {
       e.preventDefault();
+      // Show grab cursor hint when move tool hovers over a stroke
+      if (currentTool === 'move' && !isDrawing) {
+        const pos = getXY(e);
+        const strokes = strokeHistory[currentPage];
+        const hit = strokes.slice().reverse().some(s => strokeHitTest(s, pos.x, pos.y));
+        canvas.style.cursor = hit ? 'grab' : 'crosshair';
+      }
       onMove(e);
     }, { passive: false });
     canvas.addEventListener('pointerup', (e) => {
@@ -11573,89 +12485,290 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function drawShape(tool, x1, y1, x2, y2, final) {
+    const cx = (x1+x2)/2, cy = (y1+y2)/2;
+    const w  = x2-x1,     h  = y2-y1;
     ctx.beginPath();
+
     if (tool === 'line') {
       ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+
     } else if (tool === 'arrow') {
       const angle = Math.atan2(y2-y1,x2-x1);
       ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
-      const hw = Math.max(strokeSize*3, 10);
+      const hw = Math.max(strokeSize*3,10);
       ctx.beginPath();
-      ctx.moveTo(x2, y2);
-      ctx.lineTo(x2 - hw*Math.cos(angle-Math.PI/6), y2 - hw*Math.sin(angle-Math.PI/6));
-      ctx.lineTo(x2 - hw*Math.cos(angle+Math.PI/6), y2 - hw*Math.sin(angle+Math.PI/6));
+      ctx.moveTo(x2,y2);
+      ctx.lineTo(x2-hw*Math.cos(angle-Math.PI/6), y2-hw*Math.sin(angle-Math.PI/6));
+      ctx.lineTo(x2-hw*Math.cos(angle+Math.PI/6), y2-hw*Math.sin(angle+Math.PI/6));
       ctx.closePath(); ctx.fill();
+
+    } else if (tool === 'dbarrow') {
+      const angle = Math.atan2(y2-y1,x2-x1);
+      ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+      const hw = Math.max(strokeSize*3,10);
+      // head at x2,y2
+      ctx.beginPath();
+      ctx.moveTo(x2,y2);
+      ctx.lineTo(x2-hw*Math.cos(angle-Math.PI/6), y2-hw*Math.sin(angle-Math.PI/6));
+      ctx.lineTo(x2-hw*Math.cos(angle+Math.PI/6), y2-hw*Math.sin(angle+Math.PI/6));
+      ctx.closePath(); ctx.fill();
+      // tail at x1,y1
+      ctx.beginPath();
+      ctx.moveTo(x1,y1);
+      ctx.lineTo(x1+hw*Math.cos(angle-Math.PI/6), y1+hw*Math.sin(angle-Math.PI/6));
+      ctx.lineTo(x1+hw*Math.cos(angle+Math.PI/6), y1+hw*Math.sin(angle+Math.PI/6));
+      ctx.closePath(); ctx.fill();
+
     } else if (tool === 'rect') {
-      const w = x2-x1, h = y2-y1;
       if (fillShape) ctx.fillRect(x1,y1,w,h);
       ctx.strokeRect(x1,y1,w,h);
-    } else if (tool === 'circle') {
-      const rx = Math.abs(x2-x1)/2, ry = Math.abs(y2-y1)/2;
-      const cx = (x1+x2)/2, cy = (y1+y2)/2;
-      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+
+    } else if (tool === 'roundrect') {
+      const r = Math.min(Math.abs(w),Math.abs(h))*0.15;
+      ctx.roundRect(x1,y1,w,h,r);
       if (fillShape) ctx.fill();
       ctx.stroke();
+
+    } else if (tool === 'circle') {
+      const rx = Math.abs(w)/2, ry = Math.abs(h)/2;
+      ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+
+    } else if (tool === 'ellipse') {
+      const rx = Math.abs(w)/2, ry = Math.abs(h)/2;
+      ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+
     } else if (tool === 'triangle') {
       const mx = (x1+x2)/2;
-      ctx.moveTo(mx, y1); ctx.lineTo(x2, y2); ctx.lineTo(x1, y2); ctx.closePath();
+      ctx.moveTo(mx,y1); ctx.lineTo(x2,y2); ctx.lineTo(x1,y2); ctx.closePath();
       if (fillShape) ctx.fill();
+      ctx.stroke();
+
+    } else if (tool === 'righttri') {
+      ctx.moveTo(x1,y2); ctx.lineTo(x2,y2); ctx.lineTo(x1,y1); ctx.closePath();
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+
+    } else if (tool === 'pentagon') {
+      const rx = Math.abs(w)/2, ry = Math.abs(h)/2;
+      const n = 5, start = -Math.PI/2;
+      for(let i=0;i<n;i++){
+        const a=start+(i/n)*Math.PI*2;
+        i===0 ? ctx.moveTo(cx+rx*Math.cos(a),cy+ry*Math.sin(a))
+              : ctx.lineTo(cx+rx*Math.cos(a),cy+ry*Math.sin(a));
+      }
+      ctx.closePath();
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+
+    } else if (tool === 'hexagon') {
+      const rx = Math.abs(w)/2, ry = Math.abs(h)/2;
+      const n = 6;
+      for(let i=0;i<n;i++){
+        const a=(i/n)*Math.PI*2;
+        i===0 ? ctx.moveTo(cx+rx*Math.cos(a),cy+ry*Math.sin(a))
+              : ctx.lineTo(cx+rx*Math.cos(a),cy+ry*Math.sin(a));
+      }
+      ctx.closePath();
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+
+    } else if (tool === 'star') {
+      const outerX = Math.abs(w)/2, outerY = Math.abs(h)/2;
+      const innerX = outerX*0.4, innerY = outerY*0.4;
+      const pts = 5;
+      for(let i=0;i<pts*2;i++){
+        const a=(i/pts)*Math.PI - Math.PI/2;
+        const rx2 = i%2===0 ? outerX : innerX;
+        const ry2 = i%2===0 ? outerY : innerY;
+        i===0 ? ctx.moveTo(cx+rx2*Math.cos(a),cy+ry2*Math.sin(a))
+              : ctx.lineTo(cx+rx2*Math.cos(a),cy+ry2*Math.sin(a));
+      }
+      ctx.closePath();
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+
+    } else if (tool === 'rhombus') {
+      ctx.moveTo(cx,y1); ctx.lineTo(x2,cy); ctx.lineTo(cx,y2); ctx.lineTo(x1,cy); ctx.closePath();
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+
+    } else if (tool === 'parallelogram') {
+      const skew = Math.abs(w)*0.2;
+      ctx.moveTo(x1+skew,y1); ctx.lineTo(x2,y1); ctx.lineTo(x2-skew,y2); ctx.lineTo(x1,y2); ctx.closePath();
+      if (fillShape) ctx.fill();
+      ctx.stroke();
+
+    } else if (tool === 'arc') {
+      const rx = Math.abs(w)/2, ry = Math.abs(h)/2;
+      ctx.ellipse(cx,cy+ry*0.5,rx,ry,0,-Math.PI,0);
+      ctx.stroke();
+
+    } else if (tool === 'wave') {
+      // Bezier wave from x1,y1 to x2,y2
+      const dx = (x2-x1)/3, dy = (y2-y1)/3;
+      ctx.moveTo(x1,y1);
+      ctx.bezierCurveTo(x1+dx,y1-Math.abs(h)*0.5, x1+2*dx,y2+Math.abs(h)*0.5, x2,y2);
       ctx.stroke();
     }
   }
 
-  // Text tool
-  function placeText(x, y) {
+  // Text tool — x,y are canvas coords (for drawing); sx,sy are CSS/screen coords (for positioning)
+  function placeText(x, y, sx, sy) {
     if (textInput) { textInput.focus(); return; }
+
+    const canvasRect = canvas.getBoundingClientRect();
+    const vpX = canvasRect.left + sx;
+    const vpY = canvasRect.top  + sy;
+
+    // ── Outer wrapper appended to body ──
+    const wrapper = document.createElement('div');
+    wrapper.id = 'gbl-text-mover';
+    wrapper.style.cssText = [
+      'position:fixed',
+      'left:' + vpX + 'px',
+      'top:'  + vpY + 'px',
+      'z-index:2147483647',
+      'min-width:140px',
+      'box-shadow:0 4px 24px rgba(0,0,0,0.7)',
+      'border-radius:8px',
+      'overflow:visible',
+      'font-family:Inter,sans-serif'
+    ].join(';');
+
+    // ── Drag handle — bright, impossible to miss ──
+    const handle = document.createElement('div');
+    handle.style.cssText = [
+      'background:#7c3aed',
+      'color:#fff',
+      'font-size:12px',
+      'font-weight:600',
+      'padding:5px 10px',
+      'border-radius:8px 8px 0 0',
+      'cursor:grab',
+      'user-select:none',
+      'display:flex',
+      'align-items:center',
+      'gap:6px',
+      'letter-spacing:.3px',
+      'white-space:nowrap'
+    ].join(';');
+    handle.innerHTML = '<span style="font-size:15px;line-height:1">&#9654;</span> Hold &amp; drag to move';
+
+    // ── Text input ──
     textInput = document.createElement('div');
     textInput.contentEditable = 'true';
-    Object.assign(textInput.style, {
-      position:'absolute', left:(x-2)+'px', top:(y-2)+'px',
-      minWidth:'100px', minHeight:'24px',
-      color: currentColor, fontSize: Math.max(14, strokeSize*4) + 'px',
-      fontFamily:"'Merriweather',serif", fontWeight:'600', outline:'none',
-      border:'1px dashed rgba(255,255,255,0.3)', padding:'2px 4px', borderRadius:'4px',
-      background:'transparent', zIndex:'200', lineHeight:'1.4',
-      textShadow:'0 1px 3px rgba(0,0,0,0.8)'
-    });
-    document.getElementById('gbl-canvas-area').appendChild(textInput);
+    textInput.style.cssText = [
+      'min-width:120px',
+      'min-height:30px',
+      'color:' + currentColor,
+      'font-size:' + Math.max(14, strokeSize * 4) + 'px',
+      "font-family:'Merriweather',serif",
+      'font-weight:600',
+      'outline:none',
+      'border:2px solid #7c3aed',
+      'border-top:none',
+      'padding:5px 8px',
+      'border-radius:0 0 8px 8px',
+      'background:rgba(10,8,30,0.92)',
+      'line-height:1.4',
+      'text-shadow:0 1px 3px rgba(0,0,0,0.8)',
+      'cursor:text',
+      'caret-color:' + currentColor
+    ].join(';');
+
+    wrapper.appendChild(handle);
+    wrapper.appendChild(textInput);
+    document.body.appendChild(wrapper);
     textInput.focus();
-    textInput.addEventListener('blur', () => {
-      const text = textInput.innerText.trim();
+
+    // ── Drag via pointer events ──
+    let dragging = false, px0 = 0, py0 = 0, wx0 = vpX, wy0 = vpY;
+    handle.addEventListener('pointerdown', ev => {
+      ev.preventDefault(); ev.stopPropagation();
+      dragging = true;
+      px0 = ev.clientX; py0 = ev.clientY;
+      wx0 = parseFloat(wrapper.style.left);
+      wy0 = parseFloat(wrapper.style.top);
+      handle.setPointerCapture(ev.pointerId);
+      handle.style.cursor = 'grabbing';
+    });
+    handle.addEventListener('pointermove', ev => {
+      if (!dragging) return;
+      wrapper.style.left = (wx0 + ev.clientX - px0) + 'px';
+      wrapper.style.top  = (wy0 + ev.clientY - py0) + 'px';
+    });
+    handle.addEventListener('pointerup', ev => {
+      dragging = false;
+      handle.style.cursor = 'grab';
+      handle.releasePointerCapture(ev.pointerId);
+      textInput.focus();
+    });
+
+    // ── Commit on blur / Escape ──
+    function commitText() {
+      if (!wrapper.isConnected) return;
+      const cRect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width  / cRect.width;
+      const scaleY = canvas.height / cRect.height;
+      const cssX = parseFloat(wrapper.style.left) - cRect.left;
+      const cssY = parseFloat(wrapper.style.top)  - cRect.top;
+      const fx = cssX * scaleX;
+      const fy = cssY * scaleY;
+      const text = textInput ? textInput.innerText.trim() : '';
       if (text) {
         saveUndoState();
+        const fs = Math.max(14, strokeSize * 4);
         ctx.save();
-        ctx.font = `600 ${Math.max(14,strokeSize*4)}px 'Merriweather', serif`;
+        ctx.font = `600 ${fs}px 'Merriweather', serif`;
         ctx.fillStyle = currentColor;
         ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = 'source-over';
         ctx.shadowColor = 'rgba(0,0,0,0.8)';
         ctx.shadowBlur = 3;
         text.split('\n').forEach((line, i) => {
-          ctx.fillText(line, x, y + i * (Math.max(14,strokeSize*4)*1.4));
+          ctx.fillText(line, fx, fy + fs + i * (fs * 1.4));
         });
         ctx.restore();
+        strokeHistory[currentPage].push({
+          tool:'text', color:currentColor, fontSize:fs,
+          textContent:text, textX:fx, textY:fy + fs, pts:null
+        });
       }
-      textInput.remove(); textInput = null;
+      wrapper.remove();
+      textInput = null;
+    }
+
+    textInput.addEventListener('blur', () => {
+      setTimeout(() => { if (!dragging && textInput) commitText(); }, 200);
     });
     textInput.addEventListener('keydown', e => {
-      if (e.key === 'Escape') { textInput.blur(); }
+      if (e.key === 'Escape') commitText();
     });
   }
 
   // ── PAGE MANAGEMENT ──
   function savePage() {
-    // Save as an offscreen canvas (not raw ImageData) so we can scale on restore
     const tmp = document.createElement('canvas');
     tmp.width  = canvas.width;
     tmp.height = canvas.height;
     tmp.getContext('2d').drawImage(canvas, 0, 0);
-    pages[currentPage] = tmp;
+    pages[currentPage] = { canvas: tmp, strokes: strokeHistory[currentPage].map(s => Object.assign({}, s, { pts: s.pts ? [...s.pts] : null })) };
+    pageBgColors[currentPage] = bgColor; // persist current page's bg
   }
   function loadPage(idx) {
+    // Restore this page's bg color before filling
+    bgColor = pageBgColors[idx] || '#0d1117';
     fillBg();
     const saved = pages[idx];
-    if (saved && saved.width > 0 && saved.height > 0) {
-      // Draw saved page at its native resolution (always CANVAS_W x CANVAS_H)
+    if (saved && saved.canvas && saved.canvas.width > 0) {
+      ctx.drawImage(saved.canvas, 0, 0);
+      strokeHistory[idx] = saved.strokes || [];
+    } else if (saved && saved.width > 0) {
+      // legacy format
       ctx.drawImage(saved, 0, 0);
     }
   }
@@ -11685,6 +12798,8 @@ document.addEventListener("DOMContentLoaded", function () {
     currentPage = pages.length;
     pages.push(null);
     undoStacks.push([]); redoStacks.push([]);
+    strokeHistory.push([]);
+    pageBgColors.push(bgColor); // inherit current bg color
     fillBg(); updatePageUI();
   });
   document.getElementById('gbl-del-page').addEventListener('click', () => {
@@ -11693,6 +12808,7 @@ document.addEventListener("DOMContentLoaded", function () {
     pages.splice(currentPage, 1);
     undoStacks.splice(currentPage, 1);
     redoStacks.splice(currentPage, 1);
+    pageBgColors.splice(currentPage, 1);
     if (currentPage >= pages.length) currentPage = pages.length - 1;
     loadPage(currentPage); updatePageUI();
   });
@@ -11715,14 +12831,17 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(resizeCanvas, 50);
   });
 
-  // ── DRAG TITLE BAR — drag to resize panel width ──
-  const titleBar = document.getElementById('gbl-titlebar');
+  // ── RESIZE HANDLE — drag left edge to resize panel width ──
+  const resizeHandle = document.getElementById('gbl-resize-handle');
   let tbDrag=false, tbStartX=0, tbStartW=0;
-  titleBar.addEventListener('mousedown', e => {
-    if (e.target.tagName === 'BUTTON') return;
-    tbDrag=true;
+  resizeHandle.addEventListener('mousedown', e => {
+    e.preventDefault();
+    tbDrag = true;
     tbStartX = e.clientX;
     tbStartW = gblWindow.offsetWidth;
+    resizeHandle.classList.add('dragging');
+    document.body.style.cursor = 'ew-resize';
+    document.body.style.userSelect = 'none';
   });
   document.addEventListener('mousemove', e => {
     if (!tbDrag) return;
@@ -11731,7 +12850,13 @@ document.addEventListener("DOMContentLoaded", function () {
     gblWindow.style.width = newW + 'px';
   });
   document.addEventListener('mouseup', () => {
-    if (tbDrag) { tbDrag = false; setTimeout(resizeCanvas, 50); }
+    if (tbDrag) {
+      tbDrag = false;
+      resizeHandle.classList.remove('dragging');
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      setTimeout(resizeCanvas, 50);
+    }
   });
 
   // Watch resize of gbl-window
@@ -11789,7 +12914,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const keyMap = {
       'p': 'pen', 'h': 'highlight', 'e': 'eraser', 't': 'text',
-      'l': 'line', 'r': 'rect', 'c': 'circle'
+      'l': 'line', 'r': 'rect', 'c': 'circle', 'm': 'move',
+      'a': 'arrow', 'g': 'triangle', 's': 'star'
     };
     if (keyMap[e.key]) {
       e.preventDefault();
