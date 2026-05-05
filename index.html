@@ -11801,8 +11801,8 @@ setTimeout(addBattleButtons, 1800);
   // Smoothing: EMA on raw points → Catmull-Rom spline drawn INCREMENTALLY
   // (only the last 4-point window, not the whole path) = O(1) per frame.
 
-  const SMOOTH_ALPHA = 0.7;    // EMA weight — higher = more responsive, less smoothing
-  const MIN_DIST     = 1.5;    // ignore micro-jitter below this px distance
+  const SMOOTH_ALPHA = 0.55;   // EMA weight (unused now, kept for reference)
+  const MIN_DIST     = 1.0;    // min px between points — good density, avoids slowdown
 
   // Live overlay canvas (same size as main canvas, positioned on top)
   let _liveCanvas = null;
@@ -11814,7 +11814,7 @@ setTimeout(addBattleButtons, 1800);
       _liveCanvas = document.createElement('canvas');
       _liveCanvas.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;z-index:5;';
       canvas.parentNode.insertBefore(_liveCanvas, canvas.nextSibling);
-      _liveCtx = _liveCanvas.getContext('2d');
+      _liveCtx = _liveCanvas.getContext('2d', { desynchronized: true, willReadFrequently: false });
     }
     _liveCanvas.width  = canvas.width;
     _liveCanvas.height = canvas.height;
@@ -11823,50 +11823,43 @@ setTimeout(addBattleButtons, 1800);
   let _rawPts = [];   // raw pointer positions collected this stroke
   let _pts    = [];   // EMA-smoothed positions
 
-  // Draw only the tail of the current stroke (last bezier segment) on _liveCtx
+  let _liveStyleDirty = true;
+
   function _appendLiveSegment() {
     const n = _pts.length;
     if (n < 2) return;
-    const lw    = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
-    const alpha = currentTool === 'highlight' ? 0.35 : 1;
 
-    _liveCtx.save();
+    _liveCtx.clearRect(0, 0, _liveCanvas.width, _liveCanvas.height);
+
     _liveCtx.strokeStyle = currentColor;
-    _liveCtx.fillStyle   = currentColor;
-    _liveCtx.lineWidth   = lw;
+    _liveCtx.lineWidth   = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
     _liveCtx.lineCap     = 'round';
     _liveCtx.lineJoin    = 'round';
-    _liveCtx.globalAlpha = alpha;
+    _liveCtx.globalAlpha = currentTool === 'highlight' ? 0.35 : 1;
     _liveCtx.globalCompositeOperation = 'source-over';
     _liveCtx.shadowBlur  = 0;
 
+    _liveCtx.beginPath();
+    _liveCtx.moveTo(_pts[0].x, _pts[0].y);
+
     if (n === 2) {
-      // First segment: simple line
-      _liveCtx.beginPath();
-      _liveCtx.moveTo(_pts[0].x, _pts[0].y);
       _liveCtx.lineTo(_pts[1].x, _pts[1].y);
-      _liveCtx.stroke();
     } else {
-      // Draw only the last Catmull-Rom segment (4-point window)
-      const i  = n - 2;
-      const p0 = _pts[Math.max(i - 1, 0)];
-      const p1 = _pts[i];
-      const p2 = _pts[i + 1];
-      const p3 = _pts[Math.min(i + 2, n - 1)];
-      const tension = 0.5;
-      const cp1x = p1.x + (p2.x - p0.x) / (6 / tension);
-      const cp1y = p1.y + (p2.y - p0.y) / (6 / tension);
-      const cp2x = p2.x - (p3.x - p1.x) / (6 / tension);
-      const cp2y = p2.y - (p3.y - p1.y) / (6 / tension);
-      _liveCtx.beginPath();
-      _liveCtx.moveTo(p1.x, p1.y);
-      _liveCtx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
-      _liveCtx.stroke();
+      // Midpoint quadratic bezier — industry standard for smooth handwriting.
+      // Control point = actual raw point, curve passes through midpoints.
+      // Zero distortion on sharp turns, perfectly smooth on curves.
+      for (let i = 0; i < n - 1; i++) {
+        const mx = (_pts[i].x + _pts[i + 1].x) / 2;
+        const my = (_pts[i].y + _pts[i + 1].y) / 2;
+        _liveCtx.quadraticCurveTo(_pts[i].x, _pts[i].y, mx, my);
+      }
+      // End at last point
+      _liveCtx.lineTo(_pts[n - 1].x, _pts[n - 1].y);
     }
-    _liveCtx.restore();
+    _liveCtx.stroke();
   }
 
-  // Full Catmull-Rom redraw on a given context (used for replay / flush)
+  // Full stroke redraw on a given context (used for replay / flush)
   function _drawCatmullRom(pts, lw, color, alpha, targetCtx) {
     const c = targetCtx || ctx;
     if (!pts || pts.length === 0) return;
@@ -11894,18 +11887,13 @@ setTimeout(addBattleButtons, 1800);
     if (pts.length === 2) {
       c.lineTo(pts[1].x, pts[1].y);
     } else {
-      const tension = 0.5;
+      // Midpoint quadratic bezier — same algorithm as live drawing for consistency
       for (let i = 0; i < pts.length - 1; i++) {
-        const p0 = pts[Math.max(i - 1, 0)];
-        const p1 = pts[i];
-        const p2 = pts[i + 1];
-        const p3 = pts[Math.min(i + 2, pts.length - 1)];
-        const cp1x = p1.x + (p2.x - p0.x) / (6 / tension);
-        const cp1y = p1.y + (p2.y - p0.y) / (6 / tension);
-        const cp2x = p2.x - (p3.x - p1.x) / (6 / tension);
-        const cp2y = p2.y - (p3.y - p1.y) / (6 / tension);
-        c.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+        const mx = (pts[i].x + pts[i + 1].x) / 2;
+        const my = (pts[i].y + pts[i + 1].y) / 2;
+        c.quadraticCurveTo(pts[i].x, pts[i].y, mx, my);
       }
+      c.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
     }
     c.stroke();
     c.restore();
@@ -11949,8 +11937,8 @@ setTimeout(addBattleButtons, 1800);
   // Post-process raw stroke: simplify + Chaikin smoothing (runs once on pen-up)
   function _postProcessStroke(rawPts) {
     if (rawPts.length <= 2) return rawPts;
-    let pts = _dpSimplify(rawPts, 1.2);
-    pts = _chaikinPass(pts); // single pass — preserves shape, removes jitter only
+    let pts = _dpSimplify(rawPts, 1.0);
+    pts = _chaikinPass(pts); // single pass — removes jitter, preserves shape
     return pts;
   }
 
@@ -11959,31 +11947,28 @@ setTimeout(addBattleButtons, 1800);
     _liveCtx.clearRect(0, 0, _liveCanvas.width, _liveCanvas.height);
     _rawPts = [{x, y}];
     _pts    = [{x, y}];
+    _liveStyleDirty = true;
   }
 
   function _addSmoothPoint(x, y) {
     const last = _rawPts[_rawPts.length - 1];
     if (Math.hypot(x - last.x, y - last.y) < MIN_DIST) return;
     _rawPts.push({x, y});
-    // EMA smooth
-    const prev = _pts[_pts.length - 1];
-    _pts.push({ x: prev.x + SMOOTH_ALPHA * (x - prev.x), y: prev.y + SMOOTH_ALPHA * (y - prev.y) });
-    // Draw only the new tail segment — O(1), no full redraw
+    _pts.push({x, y});
     _appendLiveSegment();
   }
 
   function _flushBezier() {
     if (_rawPts.length === 0) return;
-    // Post-process for a smooth committed stroke
-    _pts = _postProcessStroke(_rawPts);
+    // Use raw points exactly as drawn — no post-processing
+    _pts = _rawPts;
     // Clear live overlay
     if (_liveCanvas) _liveCtx.clearRect(0, 0, _liveCanvas.width, _liveCanvas.height);
-    // Commit the beautified stroke directly to the main canvas
+    // Commit the stroke directly to the main canvas
     const lw    = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
     const alpha = currentTool === 'highlight' ? 0.35 : 1;
     _drawCatmullRom(_pts, lw, currentColor, alpha, ctx);
     _rawPts = [];
-    // _pts kept so onUp can push the beautified points into strokeHistory
   }
 
   // ── STROKE-LEVEL ERASER helpers ──
@@ -12021,7 +12006,7 @@ setTimeout(addBattleButtons, 1800);
         if (!pts || pts.length === 0) continue;
         const lw    = s.tool === 'highlight' ? s.size * 6 : s.size;
         const alpha = s.tool === 'highlight' ? 0.35 : 1;
-        _drawCatmullRom(pts, lw, s.color, alpha, s.tool === 'highlight');
+        _drawCatmullRom(pts, lw, s.color, alpha, ctx);
       }
     }
   }
