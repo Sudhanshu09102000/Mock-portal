@@ -10509,7 +10509,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <!-- Title Bar — contains brand, ALL tools, page nav, and action buttons -->
     <div id="gbl-titlebar">
       <!-- Brand -->
-      <span class="gbl-tb-title"> BLACKBOARD</span>
+      <span class="gbl-tb-title">✦ BLACKBOARD</span>
 
       <div class="gbl-tb-sep"></div>
 
@@ -10520,9 +10520,9 @@ document.addEventListener("DOMContentLoaded", function () {
       <button class="gbl-tool"        id="gbl-t-move"        data-tool="move"      title="Move Stroke (M)">✥</button>
       <button class="gbl-tool"        id="gbl-t-text"        data-tool="text"      title="Text (T)">T</button>
 
-      <div class="gbl-tb-sep"></div>
-
       
+
+      <div class="gbl-tb-sep"></div>
 
       <!-- Colors -->
       <div id="gbl-colors">
@@ -10546,7 +10546,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="gbl-sz"        data-size="4"   style="width:10px;height:10px;" title="Medium"></div>
         <div class="gbl-sz"        data-size="8"   style="width:14px;height:14px;" title="Thick"></div>
         <div class="gbl-sz"        data-size="16"  style="width:18px;height:18px;" title="Xl"></div>
-        <div class="gbl-sz"        data-size="18"  style="width:20px;height:20px;" title="XXl"></div>
+        <div class="gbl-sz"        data-size="20"  style="width:20px;height:20px;" title="XXl"></div>
       </div>
 
       <div class="gbl-tb-sep"></div>
@@ -10577,6 +10577,8 @@ document.addEventListener("DOMContentLoaded", function () {
         <button class="gbl-page-btn" id="gbl-del-page" title="Delete Page" style="border-color:rgba(239,68,68,0.3);color:rgba(239,68,68,0.7);">🗑</button>
       </div>
 
+      
+
       <div class="gbl-tb-sep"></div>
 
       <!-- Window actions -->
@@ -10585,6 +10587,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <button class="gbl-tb-btn fullscreen-btn" id="gbl-fullscreen-btn" title="Toggle Fullscreen">⛶</button>
       <button class="gbl-tb-btn" id="gbl-save-ppt-btn"  title="Save as PPT" style="background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(6,182,212,0.2));border-color:rgba(124,58,237,0.5);color:#c084fc;">💾</button>
       <button class="gbl-tb-btn danger" id="gbl-close-btn" title="Close">✕</button>
+      <div class="gbl-tb-sep"></div>
 
       <!-- Shapes -->
       <button class="gbl-tool" id="gbl-t-line"         data-tool="line"         title="Line (L)">╱</button>
@@ -10615,8 +10618,6 @@ document.addEventListener("DOMContentLoaded", function () {
       <button class="gbl-tool" id="gbl-t-grid-tool"         data-geo="grid"         title="Graph Grid Overlay">⊞</button>
       <button class="gbl-tool" id="gbl-t-isogrid-tool"      data-geo="isogrid"      title="Isometric Grid">◈</button>
       <button class="gbl-tool" id="gbl-t-frenchcurve-tool"  data-geo="frenchcurve"  title="French Curve">⌀</button>
-
-      <div class="gbl-tb-sep"></div>
     </div>
 
     <!-- Canvas Area — takes ALL remaining space, no floating bars needed -->
@@ -12885,11 +12886,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const ectx = exportCanvas.getContext('2d');
       for (let i = 0; i < pages.length; i++) {
         msg.textContent = `Rendering page ${i+1}/${pages.length}…`;
-        ectx.fillStyle = bgColor;
+        ectx.fillStyle = pageBgColors[i] || '#0d1117';
         ectx.fillRect(0,0,W,H);
         if (pages[i]) {
-          // pages[i] is now an offscreen canvas — draw directly
-          ectx.drawImage(pages[i], 0, 0, W, H);
+          // pages[i] is { canvas, strokes } — extract the canvas element
+          const pageCanvas = pages[i].canvas || pages[i]; // support both formats
+          if (pageCanvas && pageCanvas.width > 0) {
+            ectx.drawImage(pageCanvas, 0, 0, W, H);
+          }
         }
         const dataUrl = exportCanvas.toDataURL('image/png');
         const sl = pptx.addSlide();
