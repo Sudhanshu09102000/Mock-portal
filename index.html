@@ -10432,10 +10432,6 @@ setTimeout(addBattleButtons, 1800);
 
     <!-- Title Bar — contains brand, ALL tools, page nav, and action buttons -->
     <div id="gbl-titlebar">
-      <!-- Brand -->
-      <span class="gbl-tb-title">✦ BLACKBOARD</span>
-
-      <div class="gbl-tb-sep"></div>
 
       <!-- Draw tools -->
       <button class="gbl-tool active" id="gbl-t-pen"         data-tool="pen"       title="Pen (P)">✏️</button>
@@ -11805,7 +11801,7 @@ setTimeout(addBattleButtons, 1800);
   // Smoothing: EMA on raw points → Catmull-Rom spline drawn INCREMENTALLY
   // (only the last 4-point window, not the whole path) = O(1) per frame.
 
-  const SMOOTH_ALPHA = 0.25;   // EMA weight — higher = more responsive, less smoothing
+  const SMOOTH_ALPHA = 0.7;    // EMA weight — higher = more responsive, less smoothing
   const MIN_DIST     = 1.5;    // ignore micro-jitter below this px distance
 
   // Live overlay canvas (same size as main canvas, positioned on top)
@@ -11954,7 +11950,7 @@ setTimeout(addBattleButtons, 1800);
   function _postProcessStroke(rawPts) {
     if (rawPts.length <= 2) return rawPts;
     let pts = _dpSimplify(rawPts, 1.2);
-    for (let i = 0; i < 3; i++) pts = _chaikinPass(pts);
+    pts = _chaikinPass(pts); // single pass — preserves shape, removes jitter only
     return pts;
   }
 
