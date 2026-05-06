@@ -10036,15 +10036,32 @@ setTimeout(addBattleButtons, 1800);
 .gbl-sz {
   cursor: pointer;
   border-radius: 50%;
-  background: rgba(200,220,255,0.45);
+  background: transparent;
   flex-shrink: 0;
   border: 2px solid transparent;
   transition: all 0.10s;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gbl-sz::before {
+  content: '';
+  display: block;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: rgba(200,220,255,0.45);
+  transition: background 0.10s;
+  flex-shrink: 0;
 }
 .gbl-sz.active {
-  background: #c084fc;
   border-color: rgba(192,132,252,0.55);
   box-shadow: 0 0 7px rgba(192,132,252,0.5);
+}
+.gbl-sz.active::before {
+  background: #c084fc;
 }
 
 /* Geometry toggle */
@@ -10237,7 +10254,51 @@ setTimeout(addBattleButtons, 1800);
   position: absolute;
   display: none;
   pointer-events: auto;
-  cursor: move;
+  cursor: default;
+}
+.geo-drag-handle {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 18px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.28);
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 65;
+  user-select: none;
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 2px;
+}
+.geo-drag-handle:hover {
+  background: rgba(255,255,255,0.22);
+  border-color: rgba(255,255,255,0.5);
+  color: #fff;
+}
+.geo-drag-handle:active {
+  cursor: grabbing;
+}
+/* All geo tool wrappers are pass-through — only handles are interactive */
+#gbl-ruler-obj,
+#gbl-protractor-obj,
+#gbl-setsq45-obj,
+#gbl-setsq30-obj,
+#gbl-frenchcurve-obj,
+#gbl-compass-obj {
+  pointer-events: none;
+}
+.geo-drag-handle,
+.geo-resize-handle,
+.geo-rot-handle,
+.compass-draw-btn,
+.compass-tip-handle {
+  pointer-events: auto !important;
 }
 #gbl-compass-mode-hint {
   display: none;
@@ -10461,12 +10522,17 @@ setTimeout(addBattleButtons, 1800);
 
       <!-- Stroke sizes -->
       <div id="gbl-stroke-size">
-        <div class="gbl-sz active" data-size="0.8" style="width:3px;height:3px;"   title="Ultra Thin"></div>
-        <div class="gbl-sz"        data-size="2"   style="width:6px;height:6px;"   title="Thin"></div>
-        <div class="gbl-sz"        data-size="4"   style="width:10px;height:10px;" title="Medium"></div>
-        <div class="gbl-sz"        data-size="8"   style="width:14px;height:14px;" title="Thick"></div>
-        <div class="gbl-sz"        data-size="16"  style="width:18px;height:18px;" title="Xl"></div>
-        <div class="gbl-sz"        data-size="20"  style="width:20px;height:20px;" title="XXl"></div>
+        <div class="gbl-sz active" data-size="0.5"  style="--dot:2px;"   title="0.5"></div>
+        <div class="gbl-sz"        data-size="1"    style="--dot:3px;"   title="1"></div>
+        <div class="gbl-sz"        data-size="1.5"  style="--dot:4px;"   title="1.5"></div>
+        <div class="gbl-sz"        data-size="2"    style="--dot:6px;"   title="2"></div>
+        <div class="gbl-sz"        data-size="4"    style="--dot:8px;"   title="4"></div>
+        <div class="gbl-sz"        data-size="6"    style="--dot:10px;"  title="6"></div>
+        <div class="gbl-sz"        data-size="8"    style="--dot:12px;"  title="8"></div>
+        <div class="gbl-sz"        data-size="10"   style="--dot:14px;"  title="10"></div>
+        <div class="gbl-sz"        data-size="12"   style="--dot:16px;"  title="12"></div>
+        <div class="gbl-sz"        data-size="14"   style="--dot:18px;"  title="14"></div>
+        <div class="gbl-sz"        data-size="16"   style="--dot:20px;"  title="16"></div>
       </div>
 
       <div class="gbl-tb-sep"></div>
@@ -10930,7 +10996,7 @@ setTimeout(addBattleButtons, 1800);
   // ── STATE ──
   let currentTool  = 'pen';
   let currentColor = '#ffffff';
-  let strokeSize   = 0.8;
+  let strokeSize   = 0.5;
   let fillShape    = false;
   let bgColor      = '#0d1117';
   let isDrawing    = false;
@@ -11099,8 +11165,9 @@ setTimeout(addBattleButtons, 1800);
       prot.style.left = protX + 'px';
       prot.style.top  = protY + 'px';
     } else if (geo === 'compass') {
-      compassState = 0;
-      document.getElementById('gbl-compass-mode-hint').style.display = 'block';
+      let comp = document.getElementById('gbl-compass-obj');
+      if (!comp) comp = buildCompassTool();
+      comp.style.display = 'block';
     } else if (geo === 'setsq45') {
       let sq = document.getElementById('gbl-setsq45-obj');
       if (!sq) sq = buildSetSquare45();
@@ -11121,7 +11188,7 @@ setTimeout(addBattleButtons, 1800);
   }
 
   function hideGeoTools() {
-    ['gbl-ruler-obj','gbl-protractor-obj','gbl-setsq45-obj','gbl-setsq30-obj','gbl-frenchcurve-obj'].forEach(id => {
+    ['gbl-ruler-obj','gbl-protractor-obj','gbl-setsq45-obj','gbl-setsq30-obj','gbl-frenchcurve-obj','gbl-compass-obj'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = 'none';
     });
@@ -11134,7 +11201,7 @@ setTimeout(addBattleButtons, 1800);
     const el = document.createElement('div');
     el.id = 'gbl-ruler-obj';
     Object.assign(el.style, {
-      position:'absolute', display:'none', pointerEvents:'auto', cursor:'move',
+      position:'absolute', display:'none', pointerEvents:'auto', cursor:'default',
       zIndex:'50', userSelect:'none', transformOrigin:'left center'
     });
     const rulerPos={x:rulerX,y:rulerY};
@@ -11197,35 +11264,37 @@ setTimeout(addBattleButtons, 1800);
     rebuildRulerContent();
     el.appendChild(svg);
 
-    // Rotation handle
+    // Rotation handle — orange circle on the right side
     const rotHandle = document.createElement('div');
-    Object.assign(rotHandle.style, {
-      position:'absolute', right:'-20px', top:'50%', transform:'translateY(-50%)',
-      width:'16px', height:'16px', borderRadius:'50%',
-      background:'rgba(6,182,212,0.6)', border:'2px solid rgba(6,182,212,0.9)',
-      cursor:'ew-resize', display:'grid', placeItems:'center',
-      fontSize:'8px', color:'#fff', zIndex:'61'
-    });
-    rotHandle.title = 'Rotate'; rotHandle.textContent = '↻';
+    rotHandle.className = 'geo-rot-handle';
+    rotHandle.title = '↻ Rotate — drag to spin'; rotHandle.textContent = '↻';
     el.appendChild(rotHandle);
 
     // Resize handle
     const resH=document.createElement('div');
+    resH.className = 'geo-resize-handle';
     Object.assign(resH.style,{
       position:'absolute', right:'-8px', bottom:'-8px',
       width:'14px', height:'14px', borderRadius:'3px',
       background:'rgba(6,182,212,0.7)', border:'2px solid rgba(6,182,212,1)',
-      cursor:'se-resize', zIndex:'61'
+      cursor:'se-resize', zIndex:'61', pointerEvents:'auto'
     });
     resH.title='Drag to resize';
     el.appendChild(resH);
 
     document.getElementById('gbl-canvas-area').appendChild(el);
 
-    // Drag body
+    // Drag handle (grip strip above the ruler)
+    const dragH = document.createElement('div');
+    dragH.className = 'geo-drag-handle';
+    dragH.title = '✥ Hold &amp; drag to move';
+    dragH.innerHTML = '&#8942;&#8942;';
+    el.appendChild(dragH);
+
+    // Drag via handle only
     let ox=0,oy=0;
-    svg.addEventListener('mousedown', e => {
-      e.preventDefault(); rulerDragging=true;
+    dragH.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation(); rulerDragging=true;
       ox=e.clientX-rulerX; oy=e.clientY-rulerY;
       const mm=(ev)=>{if(!rulerDragging)return; rulerX=ev.clientX-ox; rulerY=ev.clientY-oy; el.style.left=rulerX+'px'; el.style.top=rulerY+'px';};
       const mu=()=>{rulerDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
@@ -11251,6 +11320,8 @@ setTimeout(addBattleButtons, 1800);
         if(!rDragging)return;
         const nw=Math.max(120,rw0+(ev.clientX-rmx0));
         svg.setAttribute('width',nw); svg.style.width=nw+'px';
+        svg.setAttribute('viewBox',`0 0 ${nw} ${rulerH}`);
+        el.style.width = nw + 'px';
         rebuildRulerContent();
       };
       const mu=()=>{rDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
@@ -11264,13 +11335,12 @@ setTimeout(addBattleButtons, 1800);
     const el = document.createElement('div');
     el.id = 'gbl-protractor-obj';
     const pos={x:protX,y:protY};
-    Object.assign(el.style, { position:'absolute', display:'none', cursor:'move', zIndex:'50', userSelect:'none' });
+    Object.assign(el.style, { position:'absolute', display:'none', cursor:'default', zIndex:'50', userSelect:'none' });
     const svgNS = 'http://www.w3.org/2000/svg';
     let size = 220;
 
     function rebuildProtractor() {
       while(el.firstChild && el.firstChild.tagName==='svg') el.removeChild(el.firstChild);
-      size = parseFloat(el.querySelector('svg') && el.querySelector('svg').getAttribute('width')) || 220;
       const svg = document.createElementNS(svgNS, 'svg');
       svg.setAttribute('width', size); svg.setAttribute('height', size/2 + 30);
       svg.setAttribute('viewBox', `0 0 ${size} ${size/2 + 30}`);
@@ -11343,39 +11413,51 @@ setTimeout(addBattleButtons, 1800);
       title.setAttribute('text-anchor','middle'); title.setAttribute('font-family','Inter,sans-serif');
       title.setAttribute('letter-spacing','2'); title.textContent='PROTRACTOR'; svg.appendChild(title);
       el.insertBefore(svg, el.firstChild);
-
-      // Drag via SVG
-      svg.addEventListener('mousedown', e => {
-        if(e.target.classList && e.target.classList.contains('geo-resize-handle')) return;
-        e.preventDefault(); protDragging=true;
-        const ox2=e.clientX-pos.x, oy2=e.clientY-pos.y;
-        const mm=ev=>{if(!protDragging)return; pos.x=ev.clientX-ox2; pos.y=ev.clientY-oy2; el.style.left=pos.x+'px'; el.style.top=pos.y+'px';};
-        const mu=()=>{protDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
-        document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
-      });
       return svg;
     }
 
     const svg = rebuildProtractor();
     el.style.left=pos.x+'px'; el.style.top=pos.y+'px';
 
+    // Drag handle (grip strip above the protractor)
+    const protDragH = document.createElement('div');
+    protDragH.className = 'geo-drag-handle';
+    protDragH.title = '✥ Hold &amp; drag to move';
+    protDragH.innerHTML = '&#8942;&#8942;';
+    el.appendChild(protDragH);
+    let pox=0,poy=0;
+    protDragH.addEventListener('mousedown', e=>{
+      e.preventDefault(); e.stopPropagation(); protDragging=true;
+      pox=e.clientX-pos.x; poy=e.clientY-pos.y;
+      const mm=ev=>{if(!protDragging)return; pos.x=ev.clientX-pox; pos.y=ev.clientY-poy; el.style.left=pos.x+'px'; el.style.top=pos.y+'px';};
+      const mu=()=>{protDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+    });
+
     // Resize handle
     const rh=document.createElement('div');
+    rh.className = 'geo-resize-handle';
     Object.assign(rh.style,{
       position:'absolute', right:'-8px', bottom:'-8px', width:'14px', height:'14px',
       borderRadius:'3px', background:'rgba(255,200,80,0.7)', border:'2px solid rgba(255,200,80,1)',
       cursor:'se-resize', zIndex:'61'
     });
-    rh.title='Drag to resize'; el.appendChild(rh);
-    let rs0=220, rmx=0, rDrag=false;
+    rh.title='Drag to scale'; el.appendChild(rh);
+    let rs0=1, rmx=0, rmy=0, rDrag=false, protScale=1;
     rh.addEventListener('mousedown', e=>{
       e.preventDefault(); e.stopPropagation(); rDrag=true;
-      rs0=parseFloat(el.querySelector('svg').getAttribute('width'))||220; rmx=e.clientX;
+      rs0=protScale; rmx=e.clientX; rmy=e.clientY;
       const mm=ev=>{
         if(!rDrag)return;
-        const ns=Math.max(120,rs0+(ev.clientX-rmx));
-        el.querySelector('svg').setAttribute('width',ns);
-        rebuildProtractor();
+        const drag=(ev.clientX-rmx+ev.clientY-rmy)/2;
+        protScale=Math.max(0.35,Math.min(4,rs0+drag/100));
+        const svgEl=el.querySelector('svg');
+        if(svgEl){
+          svgEl.style.transform=`scale(${protScale})`;
+          svgEl.style.transformOrigin='0 0';
+          el.style.width=(size*protScale)+'px';
+          el.style.height=((size/2+30)*protScale+30)+'px';
+        }
       };
       const mu=()=>{rDrag=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
       document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
@@ -11398,39 +11480,54 @@ setTimeout(addBattleButtons, 1800);
 
   /* ── HELPER: make any geo overlay draggable + resizable ── */
   function makeGeoInteractive(el, svgEl, posObj) {
-    // Drag
+    // Drag handle (grip strip above the tool)
+    const dh = document.createElement('div');
+    dh.className = 'geo-drag-handle';
+    dh.title = '✥ Hold &amp; drag to move';
+    dh.innerHTML = '&#8942;&#8942;';
+    el.appendChild(dh);
+
+    // Drag via handle only
     let ox=0,oy=0,dragging=false;
-    svgEl.addEventListener('mousedown', e => {
-      if (e.target.classList.contains('geo-resize-handle')) return;
-      e.preventDefault(); dragging=true;
+    dh.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation(); dragging=true;
       ox=e.clientX-posObj.x; oy=e.clientY-posObj.y;
       const mm=ev=>{if(!dragging)return; posObj.x=ev.clientX-ox; posObj.y=ev.clientY-oy; el.style.left=posObj.x+'px'; el.style.top=posObj.y+'px';};
       const mu=()=>{dragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
       document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
     });
-    // Resize handle (bottom-right)
+    // Resize handle (bottom-right) — scales the whole instrument uniformly
     const rh = document.createElement('div');
     rh.className = 'geo-resize-handle';
     Object.assign(rh.style, {
-      position:'absolute', right:'-8px', bottom:'-8px',
-      width:'16px', height:'16px', borderRadius:'4px',
+      position:'absolute', right:'-10px', bottom:'-10px',
+      width:'18px', height:'18px', borderRadius:'4px',
       background:'rgba(6,182,212,0.7)', border:'2px solid rgba(6,182,212,1)',
-      cursor:'se-resize', zIndex:'60'
+      cursor:'se-resize', zIndex:'60', pointerEvents:'auto'
     });
-    rh.title = 'Drag to resize';
+    rh.title = 'Drag to scale';
     el.appendChild(rh);
-    let sw0=0,sh0=0,mx0=0,my0=0,rDragging=false;
+
+    // Use CSS scale on the SVG element directly — works for all shapes
+    let baseW = parseFloat(svgEl.getAttribute('width')) || 200;
+    let baseH = parseFloat(svgEl.getAttribute('height')) || 150;
+    let curScale = parseFloat(el.dataset.geoScale || '1');
+    let mx0=0, my0=0, scl0=1, rDragging=false;
+
     rh.addEventListener('mousedown', e => {
       e.preventDefault(); e.stopPropagation(); rDragging=true;
-      sw0 = parseFloat(svgEl.getAttribute('width'))||200;
-      sh0 = parseFloat(svgEl.getAttribute('height'))||150;
       mx0=e.clientX; my0=e.clientY;
+      scl0 = parseFloat(el.dataset.geoScale || '1');
       const mm=ev=>{
         if(!rDragging)return;
-        const dw=ev.clientX-mx0, dh=ev.clientY-my0;
-        const nw=Math.max(100,sw0+dw), nh=Math.max(80,sh0+dh);
-        svgEl.setAttribute('width',nw); svgEl.setAttribute('height',nh);
-        svgEl.style.width=nw+'px'; svgEl.style.height=nh+'px';
+        const drag = (ev.clientX-mx0 + ev.clientY-my0) / 2; // avg of x+y drag
+        const newScale = Math.max(0.3, Math.min(5, scl0 + drag/120));
+        el.dataset.geoScale = newScale;
+        svgEl.style.transform = `scale(${newScale})`;
+        svgEl.style.transformOrigin = '0 0';
+        // Expand container div so resize handle stays reachable
+        el.style.width  = (baseW * newScale) + 'px';
+        el.style.height = (baseH * newScale) + 'px';
       };
       const mu=()=>{rDragging=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu);};
       document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
@@ -11442,7 +11539,7 @@ setTimeout(addBattleButtons, 1800);
     const el = document.createElement('div');
     el.id = 'gbl-setsq45-obj';
     const pos = {x:120, y:120};
-    Object.assign(el.style, {position:'absolute', display:'none', cursor:'move', zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'});
+    Object.assign(el.style, {position:'absolute', display:'none', cursor:'default', zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'});
     const svgNS = 'http://www.w3.org/2000/svg';
     const W=220, H=220;
     const svg = document.createElementNS(svgNS,'svg');
@@ -11502,7 +11599,7 @@ setTimeout(addBattleButtons, 1800);
     const el = document.createElement('div');
     el.id = 'gbl-setsq30-obj';
     const pos = {x:160, y:100};
-    Object.assign(el.style, {position:'absolute', display:'none', cursor:'move', zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'});
+    Object.assign(el.style, {position:'absolute', display:'none', cursor:'default', zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'});
     const svgNS = 'http://www.w3.org/2000/svg';
     const W=260, H=180;
     const svg = document.createElementNS(svgNS,'svg');
@@ -11552,7 +11649,7 @@ setTimeout(addBattleButtons, 1800);
     const el = document.createElement('div');
     el.id = 'gbl-frenchcurve-obj';
     const pos = {x:200, y:150};
-    Object.assign(el.style, {position:'absolute', display:'none', cursor:'move', zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'});
+    Object.assign(el.style, {position:'absolute', display:'none', cursor:'default', zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'});
     const svgNS = 'http://www.w3.org/2000/svg';
     const W=160, H=260;
     const svg = document.createElementNS(svgNS,'svg');
@@ -11578,7 +11675,323 @@ setTimeout(addBattleButtons, 1800);
     return el;
   }
 
-  /* ── GRID OVERLAY ── */
+  /* ── VISUAL COMPASS (god-level cm scaling) ── */
+  function buildCompassTool() {
+    const el = document.createElement('div');
+    el.id = 'gbl-compass-obj';
+    const pos = { x: 80, y: 80 };
+    const PX_PER_CM = 96 / 2.54; // ~37.795px per cm
+    let radiusCm = 3.0;
+    const MIN_CM = 0.1, MAX_CM = 12;
+    const PIVOT_X = 46, PIVOT_Y = 74;
+    const ARM_START = PIVOT_X + 14;
+
+    Object.assign(el.style, {
+      position:'absolute', display:'none', cursor:'default',
+      zIndex:'50', userSelect:'none', left:pos.x+'px', top:pos.y+'px'
+    });
+
+    const svgNS = 'http://www.w3.org/2000/svg';
+
+    function rebuildCompassSVG() {
+      const old = el.querySelector('svg.compass-main');
+      if (old) old.remove();
+
+      const armPx = radiusCm * PX_PER_CM;
+      const MAX_ARM_PX = MAX_CM * PX_PER_CM;
+      const W = ARM_START + MAX_ARM_PX + 48;
+      const H = 118;
+
+      const svg = document.createElementNS(svgNS, 'svg');
+      svg.classList.add('compass-main');
+      svg.setAttribute('width', W); svg.setAttribute('height', H);
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.style.cssText = 'display:block;overflow:visible;pointer-events:none;filter:drop-shadow(0 8px 28px rgba(255,200,80,0.32));';
+
+      // Glass background
+      const bg = document.createElementNS(svgNS,'rect');
+      bg.setAttribute('x','1'); bg.setAttribute('y','1');
+      bg.setAttribute('width', W-2); bg.setAttribute('height', H-2);
+      bg.setAttribute('rx','14');
+      bg.setAttribute('fill','rgba(10,7,28,0.93)');
+      bg.setAttribute('stroke','rgba(255,200,80,0.22)');
+      bg.setAttribute('stroke-width','1');
+      svg.appendChild(bg);
+
+      // Inner glow edge
+      const bgGlow = document.createElementNS(svgNS,'rect');
+      bgGlow.setAttribute('x','2'); bgGlow.setAttribute('y','2');
+      bgGlow.setAttribute('width', W-4); bgGlow.setAttribute('height', H-4);
+      bgGlow.setAttribute('rx','13');
+      bgGlow.setAttribute('fill','none');
+      bgGlow.setAttribute('stroke','rgba(255,200,80,0.08)');
+      bgGlow.setAttribute('stroke-width','2');
+      svg.appendChild(bgGlow);
+
+      // Title
+      const ttl = document.createElementNS(svgNS,'text');
+      ttl.setAttribute('x', PIVOT_X); ttl.setAttribute('y', 17);
+      ttl.setAttribute('fill','rgba(255,200,80,0.4)');
+      ttl.setAttribute('font-size','7'); ttl.setAttribute('font-weight','700');
+      ttl.setAttribute('font-family','Inter,sans-serif'); ttl.setAttribute('letter-spacing','2.5');
+      ttl.textContent = 'COMPASS'; svg.appendChild(ttl);
+
+      // Pivot outer ring
+      const pvOuter = document.createElementNS(svgNS,'circle');
+      pvOuter.setAttribute('cx', PIVOT_X); pvOuter.setAttribute('cy', PIVOT_Y);
+      pvOuter.setAttribute('r','13');
+      pvOuter.setAttribute('fill','rgba(255,200,80,0.06)');
+      pvOuter.setAttribute('stroke','rgba(255,200,80,0.35)'); pvOuter.setAttribute('stroke-width','1');
+      svg.appendChild(pvOuter);
+
+      // Pivot inner dot
+      const pvDot = document.createElementNS(svgNS,'circle');
+      pvDot.setAttribute('cx', PIVOT_X); pvDot.setAttribute('cy', PIVOT_Y);
+      pvDot.setAttribute('r','5');
+      pvDot.setAttribute('fill','rgba(255,200,80,0.95)');
+      svg.appendChild(pvDot);
+
+      // Crosshair
+      [[-17,0,17,0],[0,-17,0,17]].forEach(([x1,y1,x2,y2])=>{
+        const l = document.createElementNS(svgNS,'line');
+        l.setAttribute('x1',PIVOT_X+x1); l.setAttribute('y1',PIVOT_Y+y1);
+        l.setAttribute('x2',PIVOT_X+x2); l.setAttribute('y2',PIVOT_Y+y2);
+        l.setAttribute('stroke','rgba(255,200,80,0.3)'); l.setAttribute('stroke-width','0.7');
+        svg.appendChild(l);
+      });
+
+      // Arm track (full range, faded)
+      const track = document.createElementNS(svgNS,'line');
+      track.setAttribute('x1', ARM_START); track.setAttribute('y1', PIVOT_Y);
+      track.setAttribute('x2', ARM_START + MAX_ARM_PX); track.setAttribute('y2', PIVOT_Y);
+      track.setAttribute('stroke','rgba(255,255,255,0.07)'); track.setAttribute('stroke-width','3');
+      track.setAttribute('stroke-linecap','round');
+      svg.appendChild(track);
+
+      // Active arm
+      const arm = document.createElementNS(svgNS,'line');
+      arm.setAttribute('x1', ARM_START); arm.setAttribute('y1', PIVOT_Y);
+      arm.setAttribute('x2', ARM_START + armPx); arm.setAttribute('y2', PIVOT_Y);
+      arm.setAttribute('stroke','rgba(255,200,80,0.92)'); arm.setAttribute('stroke-width','2.8');
+      arm.setAttribute('stroke-linecap','round');
+      svg.appendChild(arm);
+
+      // Arm glow
+      const armGlow = document.createElementNS(svgNS,'line');
+      armGlow.setAttribute('x1', ARM_START); armGlow.setAttribute('y1', PIVOT_Y);
+      armGlow.setAttribute('x2', ARM_START + armPx); armGlow.setAttribute('y2', PIVOT_Y);
+      armGlow.setAttribute('stroke','rgba(255,200,80,0.18)'); armGlow.setAttribute('stroke-width','6');
+      armGlow.setAttribute('stroke-linecap','round');
+      svg.insertBefore(armGlow, arm);
+
+      // Ticks: mm, half-cm, cm
+      const totalMm = Math.floor(MAX_CM * 10);
+      for (let mm = 0; mm <= totalMm; mm++) {
+        const x = ARM_START + (mm / 10) * PX_PER_CM;
+        if (x > ARM_START + MAX_ARM_PX + 0.5) break;
+        const isCm = (mm % 10 === 0);
+        const isHalf = (mm % 5 === 0 && !isCm);
+        const tickH = isCm ? 16 : isHalf ? 10 : 5;
+        const isActive = (x <= ARM_START + armPx + 0.5);
+        const tick = document.createElementNS(svgNS,'line');
+        tick.setAttribute('x1', x.toFixed(2)); tick.setAttribute('y1', (PIVOT_Y - tickH/2).toFixed(1));
+        tick.setAttribute('x2', x.toFixed(2)); tick.setAttribute('y2', (PIVOT_Y + tickH/2).toFixed(1));
+        tick.setAttribute('stroke', isActive ? (isCm?'rgba(255,200,80,0.95)':'rgba(255,200,80,0.65)') : (isCm?'rgba(255,255,255,0.25)':'rgba(255,255,255,0.12)'));
+        tick.setAttribute('stroke-width', isCm?'1.3':isHalf?'0.85':'0.5');
+        svg.appendChild(tick);
+
+        if (isCm && mm >= 0) {
+          const label = document.createElementNS(svgNS,'text');
+          label.setAttribute('x', x.toFixed(2));
+          label.setAttribute('y', PIVOT_Y + 28);
+          label.setAttribute('fill', isActive ? 'rgba(255,200,80,0.88)' : 'rgba(255,255,255,0.18)');
+          label.setAttribute('font-size','8'); label.setAttribute('text-anchor','middle');
+          label.setAttribute('font-family','Inter,sans-serif');
+          label.setAttribute('font-weight', isCm && mm>0 ? '600':'400');
+          label.textContent = mm/10; svg.appendChild(label);
+        }
+      }
+
+      // cm unit label
+      const cmLabel = document.createElementNS(svgNS,'text');
+      cmLabel.setAttribute('x', ARM_START + MAX_ARM_PX + 16);
+      cmLabel.setAttribute('y', PIVOT_Y + 28);
+      cmLabel.setAttribute('fill','rgba(255,200,80,0.4)');
+      cmLabel.setAttribute('font-size','7'); cmLabel.setAttribute('font-family','Inter,sans-serif');
+      cmLabel.textContent = 'cm'; svg.appendChild(cmLabel);
+
+      // Radius readout
+      const readout = document.createElementNS(svgNS,'text');
+      readout.setAttribute('x', ARM_START + armPx/2);
+      readout.setAttribute('y', PIVOT_Y - 22);
+      readout.setAttribute('fill','rgba(255,200,80,1)');
+      readout.setAttribute('font-size','15'); readout.setAttribute('font-weight','800');
+      readout.setAttribute('text-anchor','middle');
+      readout.setAttribute('font-family','Inter,sans-serif');
+      readout.textContent = `r = ${radiusCm.toFixed(2)} cm`;
+      svg.appendChild(readout);
+
+      // Diameter hint
+      const diam = document.createElementNS(svgNS,'text');
+      diam.setAttribute('x', ARM_START + armPx/2);
+      diam.setAttribute('y', PIVOT_Y - 9);
+      diam.setAttribute('fill','rgba(255,200,80,0.45)');
+      diam.setAttribute('font-size','8'); diam.setAttribute('text-anchor','middle');
+      diam.setAttribute('font-family','Inter,sans-serif');
+      diam.textContent = `⌀ = ${(radiusCm*2).toFixed(2)} cm`; svg.appendChild(diam);
+
+      // Pencil tip handle (draggable)
+      const tipX = ARM_START + armPx;
+      const tipG = document.createElementNS(svgNS,'g');
+      tipG.classList.add('compass-tip-handle');
+      tipG.style.cursor = 'ew-resize';
+
+      const tipHalo = document.createElementNS(svgNS,'circle');
+      tipHalo.setAttribute('cx', tipX); tipHalo.setAttribute('cy', PIVOT_Y);
+      tipHalo.setAttribute('r','16');
+      tipHalo.setAttribute('fill','rgba(255,200,80,0.06)');
+      tipHalo.setAttribute('stroke','none');
+      tipG.appendChild(tipHalo);
+
+      const tipCirc = document.createElementNS(svgNS,'circle');
+      tipCirc.setAttribute('cx', tipX); tipCirc.setAttribute('cy', PIVOT_Y);
+      tipCirc.setAttribute('r','9');
+      tipCirc.setAttribute('fill','rgba(255,200,80,0.18)');
+      tipCirc.setAttribute('stroke','rgba(255,200,80,0.95)'); tipCirc.setAttribute('stroke-width','2');
+      tipG.appendChild(tipCirc);
+
+      const tipIcon = document.createElementNS(svgNS,'text');
+      tipIcon.setAttribute('x', tipX); tipIcon.setAttribute('y', PIVOT_Y + 5);
+      tipIcon.setAttribute('fill','rgba(255,200,80,0.95)');
+      tipIcon.setAttribute('font-size','11'); tipIcon.setAttribute('text-anchor','middle');
+      tipIcon.style.pointerEvents = 'none';
+      tipIcon.textContent = '✎'; tipG.appendChild(tipIcon);
+      svg.appendChild(tipG);
+
+      // Tip drag
+      let tipDrag = false, tipX0 = 0, tipCm0 = 0;
+      tipG.addEventListener('mousedown', e => {
+        e.preventDefault(); e.stopPropagation(); tipDrag = true;
+        tipX0 = e.clientX; tipCm0 = radiusCm;
+        const mm = ev => {
+          if (!tipDrag) return;
+          radiusCm = Math.max(MIN_CM, Math.min(MAX_CM, tipCm0 + (ev.clientX - tipX0) / PX_PER_CM));
+          el.dataset.compassRadiusCm = radiusCm; // expose for getCompassState
+          rebuildCompassSVG();
+          // Re-apply current scale so the compass doesn't snap back to default size
+          const svgAfter = el.querySelector('svg.compass-main');
+          if (svgAfter && compassScale !== 1) {
+            svgAfter.style.transform = `scale(${compassScale})`;
+            svgAfter.style.transformOrigin = '0 0';
+            const bw = parseFloat(svgAfter.getAttribute('width')) || 300;
+            const bh = parseFloat(svgAfter.getAttribute('height')) || 120;
+            el.style.width  = (bw * compassScale) + 'px';
+            el.style.height = (bh * compassScale + 50) + 'px';
+          }
+        };
+        const mu = () => { tipDrag=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu); };
+        document.addEventListener('mousemove', mm); document.addEventListener('mouseup', mu);
+      });
+
+      el.insertBefore(svg, el.firstChild);
+    }
+
+    rebuildCompassSVG();
+    el.dataset.compassRadiusCm = radiusCm;
+    el.dataset.compassScale = '1';
+    const drawBtn = document.createElement('button');
+    drawBtn.className = 'compass-draw-btn';
+    Object.assign(drawBtn.style, {
+      position:'absolute', right:'12px', bottom:'10px',
+      padding:'5px 14px', borderRadius:'8px',
+      border:'1px solid rgba(255,200,80,0.65)',
+      background:'rgba(255,200,80,0.14)',
+      color:'rgba(255,200,80,1)',
+      fontFamily:'Inter,sans-serif', fontSize:'11px', fontWeight:'700',
+      cursor:'pointer', zIndex:'66', letterSpacing:'0.3px',
+      transition:'background 0.12s'
+    });
+    drawBtn.textContent = '⊙  Draw Circle';
+    drawBtn.addEventListener('mouseenter', ()=>{ drawBtn.style.background='rgba(255,200,80,0.28)'; });
+    drawBtn.addEventListener('mouseleave', ()=>{ drawBtn.style.background='rgba(255,200,80,0.14)'; });
+    drawBtn.addEventListener('click', e => {
+      e.preventDefault(); e.stopPropagation();
+      const r = radiusCm * PX_PER_CM * compassScale;
+      const cx = pos.x + PIVOT_X * compassScale;
+      const cy = pos.y + PIVOT_Y * compassScale;
+      saveUndoState();
+      setCtxStyle(false);
+      ctx.globalAlpha = 1;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI*2); ctx.fill();
+      strokeHistory[currentPage].push({
+        tool:'circle', color:currentColor, size:strokeSize, pts:null,
+        x1: cx-r, y1: cy-r, x2: cx+r, y2: cy+r
+      });
+    });
+    el.appendChild(drawBtn);
+
+    // Drag handle
+    const dh = document.createElement('div');
+    dh.className = 'geo-drag-handle';
+    dh.title = '✥ Hold &amp; drag to move';
+    dh.innerHTML = '&#8942;&#8942;';
+    el.appendChild(dh);
+    let cox=0, coy=0, cDrag=false;
+    dh.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation(); cDrag=true;
+      cox=e.clientX-pos.x; coy=e.clientY-pos.y;
+      const mm=ev=>{ if(!cDrag)return; pos.x=ev.clientX-cox; pos.y=ev.clientY-coy; el.style.left=pos.x+'px'; el.style.top=pos.y+'px'; };
+      const mu=()=>{ cDrag=false; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu); };
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+    });
+
+    // ── SCALE HANDLE (bottom-right corner) ──
+    const scaleH = document.createElement('div');
+    Object.assign(scaleH.style, {
+      position:'absolute', right:'-10px', bottom:'-10px',
+      width:'18px', height:'18px', borderRadius:'4px',
+      background:'rgba(255,200,80,0.7)', border:'2px solid rgba(255,200,80,1)',
+      cursor:'se-resize', zIndex:'66', pointerEvents:'auto'
+    });
+    scaleH.title = 'Drag to scale compass';
+    scaleH.textContent = '⤡';
+    scaleH.style.cssText += 'display:grid;place-items:center;font-size:11px;color:#fff;';
+    el.appendChild(scaleH);
+
+    let scl0=1, smx0=0, smy0=0, sDrag=false;
+    let compassScale = 1;
+    const compassSvgEl = () => el.querySelector('svg.compass-main');
+
+    scaleH.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation(); sDrag=true;
+      smx0=e.clientX; smy0=e.clientY;
+      scl0 = compassScale;
+      const mm=ev=>{
+        if(!sDrag)return;
+        const drag=(ev.clientX-smx0+ev.clientY-smy0)/2;
+        compassScale=Math.max(0.35,Math.min(4,scl0+drag/100));
+        el.dataset.compassScale = compassScale; // expose for getCompassState
+        const svg=compassSvgEl();
+        if(svg){
+          svg.style.transform=`scale(${compassScale})`;
+          svg.style.transformOrigin='0 0';
+          // resize container so handles stay accessible
+          const bw=parseFloat(svg.getAttribute('width'))||300;
+          const bh=parseFloat(svg.getAttribute('height'))||120;
+          el.style.width=(bw*compassScale)+'px';
+          el.style.height=(bh*compassScale+50)+'px'; // +50 for buttons/handles
+        }
+      };
+      const mu=()=>{sDrag=false;document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);};
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+    });
+
+    document.getElementById('gbl-canvas-area').appendChild(el);
+    return el;
+  }
+
+
   let _gridOverlay = null;
   let _gridActive = false;
   function toggleGridOverlay() {
@@ -12882,6 +13295,770 @@ setTimeout(addBattleButtons, 1800);
 </script>
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"7f7b0fd8732c4326aae4b9d58d5c514a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     GEO TOOLS ENHANCEMENT v2.0
+     • Compass draws arcs of any length (start/end angle control)
+     • All instruments fully rotatable (rotation handle on every tool)
+     • Draw through instrument bodies with pencil / eraser
+     • Multi-select: Shift+click instruments to group & move together
+═══════════════════════════════════════════════════════════════ -->
+<style>
+/* ── ROTATE handle — right side, orange circle with ↻ ── */
+.geo-rot-handle {
+  position: absolute;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(255,140,0,0.22);
+  border: 2px solid rgba(255,160,30,0.95);
+  cursor: crosshair;
+  display: grid; place-items: center;
+  font-size: 13px; color: #ffca28;
+  z-index: 62;
+  top: 50%; right: -30px;
+  transform: translateY(-50%);
+  user-select: none;
+  transition: background 0.12s, box-shadow 0.12s;
+  box-shadow: 0 0 8px rgba(255,160,30,0.4);
+  pointer-events: auto !important;
+}
+.geo-rot-handle:hover {
+  background: rgba(255,160,30,0.45);
+  box-shadow: 0 0 14px rgba(255,160,30,0.7);
+}
+.geo-rot-handle:active { cursor: grabbing; }
+
+/* ── HOLD/DRAG handle — top, cyan capsule ── */
+.geo-drag-handle {
+  position: absolute !important;
+  top: -22px !important; left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 54px !important; height: 16px !important;
+  border-radius: 99px !important;
+  background: rgba(6,182,212,0.22) !important;
+  border: 1.5px solid rgba(6,182,212,0.7) !important;
+  cursor: grab !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  font-size: 9px !important; letter-spacing: 3px !important;
+  color: rgba(6,182,212,0.9) !important;
+  z-index: 62 !important; user-select: none !important;
+  pointer-events: auto !important;
+  transition: background 0.12s !important;
+  box-shadow: 0 0 6px rgba(6,182,212,0.25) !important;
+}
+.geo-drag-handle:hover {
+  background: rgba(6,182,212,0.4) !important;
+  box-shadow: 0 0 12px rgba(6,182,212,0.5) !important;
+}
+.geo-drag-handle:active { cursor: grabbing !important; }
+
+/* Selection highlight */
+.geo-selected {
+  outline: 2px dashed rgba(96,165,250,0.85) !important;
+  outline-offset: 3px;
+}
+
+/* Arc controls panel */
+#gbl-arc-panel {
+  position: absolute;
+  right: 12px; top: 10px;
+  background: rgba(10,7,28,0.95);
+  border: 1px solid rgba(255,200,80,0.3);
+  border-radius: 12px;
+  padding: 8px 12px;
+  z-index: 65;
+  color: rgba(255,200,80,0.9);
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  display: none;
+  min-width: 190px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+}
+#gbl-arc-panel label { display: block; margin-bottom: 3px; opacity: 0.75; }
+#gbl-arc-panel .arc-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+#gbl-arc-panel .arc-row span { min-width: 38px; text-align: right; font-weight: 700; font-size: 12px; }
+#gbl-arc-panel input[type=range] {
+  flex: 1; accent-color: rgba(255,200,80,0.9);
+  height: 4px; cursor: pointer;
+}
+#gbl-arc-panel .arc-btns { display: flex; gap: 6px; margin-top: 6px; }
+#gbl-arc-panel .arc-btn {
+  flex: 1; padding: 5px 8px; border-radius: 8px;
+  border: 1px solid rgba(255,200,80,0.5);
+  background: rgba(255,200,80,0.12);
+  color: rgba(255,200,80,1);
+  font-family: Inter,sans-serif; font-size: 11px; font-weight: 700;
+  cursor: pointer; transition: background 0.12s;
+}
+#gbl-arc-panel .arc-btn:hover { background: rgba(255,200,80,0.28); }
+
+/* Multi-select indicator badge */
+#geo-multisel-badge {
+  position: absolute;
+  top: 6px; left: 50%; transform: translateX(-50%);
+  background: rgba(96,165,250,0.18);
+  border: 1px solid rgba(96,165,250,0.5);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-family: Inter,sans-serif; font-size: 11px;
+  color: rgba(96,165,250,1);
+  z-index: 70;
+  pointer-events: none;
+  display: none;
+}
+</style>
+
+<script>
+(function() {
+'use strict';
+
+/* ══════════════════════════════════════════════════════════
+   WAIT FOR BLACKBOARD READY
+══════════════════════════════════════════════════════════ */
+function waitForBlackboard(cb) {
+  if (document.getElementById('gbl-canvas-area') && document.getElementById('gbl-canvas')) {
+    cb();
+  } else {
+    setTimeout(() => waitForBlackboard(cb), 300);
+  }
+}
+
+waitForBlackboard(function() {
+
+/* ══════════════════════════════════════════════════════════
+   MULTI-SELECT STATE
+══════════════════════════════════════════════════════════ */
+const GEO_IDS = [
+  'gbl-ruler-obj','gbl-protractor-obj','gbl-compass-obj',
+  'gbl-setsq45-obj','gbl-setsq30-obj','gbl-frenchcurve-obj'
+];
+let selectedGeos = new Set(); // ids of currently selected tools
+
+// Multi-select badge in canvas area
+const badge = document.createElement('div');
+badge.id = 'geo-multisel-badge';
+badge.textContent = '0 instruments selected — drag any to move group';
+const canvasArea = document.getElementById('gbl-canvas-area');
+if (canvasArea) canvasArea.appendChild(badge);
+
+function updateBadge() {
+  if (selectedGeos.size > 1) {
+    badge.textContent = `${selectedGeos.size} instruments selected — drag any to move group  [Esc to deselect]`;
+    badge.style.display = 'block';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function clearSelection() {
+  selectedGeos.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('geo-selected');
+  });
+  selectedGeos.clear();
+  updateBadge();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') clearSelection();
+});
+
+/* ══════════════════════════════════════════════════════════
+   FEATURE 3: DRAW THROUGH INSTRUMENT BODIES
+   All geo overlays get pointer-events:none on the SVG body,
+   but keep pointer-events on handles.
+   We also set the canvas to always capture pointer events.
+══════════════════════════════════════════════════════════ */
+function patchGeoPointerEvents(el) {
+  if (!el) return;
+  // SVG body transparent so canvas receives draw events
+  el.querySelectorAll('svg').forEach(svg => {
+    svg.style.pointerEvents = 'none';
+  });
+  // Container transparent
+  el.style.pointerEvents = 'none';
+  // Re-enable on ALL interactive handles (drag, rotate, resize, compass controls)
+  const handleSel = '.geo-drag-handle, .geo-rot-handle, .geo-resize-handle, .compass-tip-handle, .compass-draw-btn';
+  el.querySelectorAll(handleSel).forEach(h => {
+    h.style.pointerEvents = 'auto';
+    h.style.setProperty('pointer-events', 'auto', 'important');
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   FEATURE 4: ROTATION HANDLE — add to all geo tools
+══════════════════════════════════════════════════════════ */
+function addRotationHandle(el, geoId) {
+  if (!el || el.querySelector('.geo-rot-handle')) return; // already added
+
+  const rotH = document.createElement('div');
+  rotH.className = 'geo-rot-handle';
+  rotH.title = '↻ Rotate — drag to spin instrument';
+  rotH.textContent = '↻';
+  el.appendChild(rotH);
+
+  // Re-apply pointer-events fix now that all handles exist
+  setTimeout(() => patchGeoPointerEvents(el), 0);
+
+  let currentAngle = parseFloat(el.dataset.geoAngle || '0');
+
+  rotH.addEventListener('mousedown', e => {
+    e.preventDefault(); e.stopPropagation();
+
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const startMouseAngle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI;
+    const startAngle = currentAngle;
+
+    const mm = ev => {
+      const mouseAngle = Math.atan2(ev.clientY - cy, ev.clientX - cx) * 180 / Math.PI;
+      currentAngle = startAngle + (mouseAngle - startMouseAngle);
+      el.dataset.geoAngle = currentAngle;
+      applyGeoTransform(el);
+    };
+    const mu = () => {
+      document.removeEventListener('mousemove', mm);
+      document.removeEventListener('mouseup', mu);
+    };
+    document.addEventListener('mousemove', mm);
+    document.addEventListener('mouseup', mu);
+  });
+
+  // Touch support for rotation
+  rotH.addEventListener('touchstart', e => {
+    e.preventDefault(); e.stopPropagation();
+    const touch = e.touches[0];
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const startMouseAngle = Math.atan2(touch.clientY - cy, touch.clientX - cx) * 180 / Math.PI;
+    const startAngle = currentAngle;
+
+    const tm = ev => {
+      const t = ev.touches[0];
+      const mouseAngle = Math.atan2(t.clientY - cy, t.clientX - cx) * 180 / Math.PI;
+      currentAngle = startAngle + (mouseAngle - startMouseAngle);
+      el.dataset.geoAngle = currentAngle;
+      applyGeoTransform(el);
+    };
+    const tu = () => {
+      el.removeEventListener('touchmove', tm);
+      el.removeEventListener('touchend', tu);
+    };
+    el.addEventListener('touchmove', tm, { passive: false });
+    el.addEventListener('touchend', tu);
+  }, { passive: false });
+}
+
+function applyGeoTransform(el) {
+  const angle = parseFloat(el.dataset.geoAngle || '0');
+  const scaleX = parseFloat(el.dataset.geoScaleX || '1');
+  const scaleY = parseFloat(el.dataset.geoScaleY || '1');
+  el.style.transform = `rotate(${angle}deg)`;
+  el.style.transformOrigin = 'center center';
+}
+
+/* ══════════════════════════════════════════════════════════
+   FEATURE 4 cont.: MULTI-SELECT drag — patch drag handles
+══════════════════════════════════════════════════════════ */
+function patchDragHandleForMultiSelect(el) {
+  if (!el || el.dataset.multiPatched) return;
+  el.dataset.multiPatched = '1';
+
+  const dh = el.querySelector('.geo-drag-handle');
+  if (!dh) return;
+
+  // Shift+click on drag handle = add to selection
+  dh.addEventListener('click', e => {
+    if (e.shiftKey) {
+      e.stopPropagation();
+      const id = el.id;
+      if (selectedGeos.has(id)) {
+        selectedGeos.delete(id);
+        el.classList.remove('geo-selected');
+      } else {
+        selectedGeos.add(id);
+        el.classList.add('geo-selected');
+      }
+      updateBadge();
+    }
+  });
+
+  // Intercept mousedown: if this instrument is part of multi-selection,
+  // drag all selected instruments together
+  dh.addEventListener('mousedown', e => {
+    if (selectedGeos.size > 1 && selectedGeos.has(el.id)) {
+      e.preventDefault(); e.stopPropagation();
+
+      // Capture start positions of all selected
+      const starts = {};
+      selectedGeos.forEach(id => {
+        const target = document.getElementById(id);
+        if (target) {
+          starts[id] = {
+            x: parseFloat(target.style.left) || 0,
+            y: parseFloat(target.style.top) || 0,
+          };
+        }
+      });
+      const mx0 = e.clientX, my0 = e.clientY;
+
+      const mm = ev => {
+        const dx = ev.clientX - mx0, dy = ev.clientY - my0;
+        selectedGeos.forEach(id => {
+          const target = document.getElementById(id);
+          if (target && starts[id]) {
+            target.style.left = (starts[id].x + dx) + 'px';
+            target.style.top  = (starts[id].y + dy) + 'px';
+          }
+        });
+      };
+      const mu = () => {
+        document.removeEventListener('mousemove', mm);
+        document.removeEventListener('mouseup', mu);
+      };
+      document.addEventListener('mousemove', mm);
+      document.addEventListener('mouseup', mu);
+    }
+  }, true); // capture phase to intercept before original handler
+}
+
+/* ══════════════════════════════════════════════════════════
+   PATCH EXISTING GEO TOOLS
+   Called once shortly after page ready, then re-checked
+   every 500ms until all tools are found at least once
+══════════════════════════════════════════════════════════ */
+function patchAllGeoTools() {
+  GEO_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.dataset.geoPatchedV2) return; // already done
+    el.dataset.geoPatchedV2 = '1';
+
+    // 1. Add rotation handle
+    addRotationHandle(el, id);
+
+    // 2. Pointer-events: draw through body
+    patchGeoPointerEvents(el);
+
+    // 3. Multi-select drag
+    patchDragHandleForMultiSelect(el);
+  });
+}
+
+// Observe DOM changes to patch tools as they're created
+const patchObserver = new MutationObserver(() => patchAllGeoTools());
+if (canvasArea) patchObserver.observe(canvasArea, { childList: true, subtree: true });
+
+// Also poll briefly
+const patchTimer = setInterval(() => {
+  patchAllGeoTools();
+}, 300);
+setTimeout(() => clearInterval(patchTimer), 8000);
+
+patchAllGeoTools();
+
+/* ══════════════════════════════════════════════════════════
+   FEATURE 1: COMPASS ARC DRAWING
+   Replace/augment the compass tool to support:
+   - Arc start angle (degrees)
+   - Arc end angle (degrees)
+   - "Draw Arc" button (in addition to "Draw Circle")
+══════════════════════════════════════════════════════════ */
+
+// Arc state panel
+const arcPanel = document.createElement('div');
+arcPanel.id = 'gbl-arc-panel';
+arcPanel.innerHTML = `
+  <div style="font-weight:800;font-size:12px;letter-spacing:1px;margin-bottom:8px;opacity:0.9;">🧭 ARC SETTINGS</div>
+  <label>Start Angle</label>
+  <div class="arc-row">
+    <input type="range" id="arc-start-slider" min="0" max="360" step="1" value="0">
+    <span id="arc-start-val">0°</span>
+  </div>
+  <label>End Angle</label>
+  <div class="arc-row">
+    <input type="range" id="arc-end-slider" min="0" max="360" step="1" value="180">
+    <span id="arc-end-val">180°</span>
+  </div>
+  <div style="margin:4px 0 6px;padding:4px 8px;background:rgba(255,200,80,0.06);border-radius:6px;font-size:10px;opacity:0.7;">
+    Arc span: <span id="arc-span-val" style="font-weight:700;">180°</span>
+  </div>
+  <div class="arc-btns">
+    <button class="arc-btn" id="arc-draw-arc-btn">⌒  Draw Arc</button>
+    <button class="arc-btn" id="arc-draw-circle-btn" style="background:rgba(255,200,80,0.07);">⊙  Full Circle</button>
+  </div>
+`;
+if (canvasArea) canvasArea.appendChild(arcPanel);
+
+let arcStartDeg = 0, arcEndDeg = 180;
+
+function updateArcPanel() {
+  const startSlider = document.getElementById('arc-start-slider');
+  const endSlider   = document.getElementById('arc-end-slider');
+  if (!startSlider) return;
+  arcStartDeg = parseInt(startSlider.value, 10);
+  arcEndDeg   = parseInt(endSlider.value, 10);
+  document.getElementById('arc-start-val').textContent = arcStartDeg + '°';
+  document.getElementById('arc-end-val').textContent   = arcEndDeg   + '°';
+  let span = arcEndDeg - arcStartDeg;
+  if (span < 0) span += 360;
+  document.getElementById('arc-span-val').textContent = span + '°';
+}
+
+document.getElementById('arc-start-slider').addEventListener('input', updateArcPanel);
+document.getElementById('arc-end-slider').addEventListener('input', updateArcPanel);
+
+// Show/hide arc panel when compass tool is active/inactive
+// We watch the compass button for active class
+function watchCompassButton() {
+  const compassBtn = document.getElementById('gbl-t-compass-tool');
+  if (!compassBtn) return;
+  const observer = new MutationObserver(() => {
+    const active = compassBtn.classList.contains('active');
+    arcPanel.style.display = active ? 'block' : 'none';
+    if (active) {
+      // Also patch the compass obj when shown
+      setTimeout(() => {
+        patchCompassDrawButtons();
+        patchAllGeoTools();
+      }, 100);
+    }
+  });
+  observer.observe(compassBtn, { attributes: true, attributeFilter: ['class'] });
+}
+watchCompassButton();
+
+function getCompassState() {
+  const compassEl = document.getElementById('gbl-compass-obj');
+  if (!compassEl) return null;
+  const PX_PER_CM = 96 / 2.54;
+  const PIVOT_X = 46, PIVOT_Y = 74;
+
+  // Read radius from dataset (set by buildCompassTool on every drag)
+  let radiusCm = parseFloat(compassEl.dataset.compassRadiusCm);
+  if (!radiusCm || isNaN(radiusCm)) {
+    // fallback: parse readout text
+    const readout = compassEl.querySelector('text[font-size="15"]');
+    if (readout) {
+      const match = readout.textContent.match(/r\s*=\s*([\d.]+)/);
+      if (match) radiusCm = parseFloat(match[1]);
+    }
+  }
+  const radiusPx = (radiusCm || 0) * PX_PER_CM;
+
+  // compassScale affects where the pivot visually appears on screen
+  const compassScale = parseFloat(compassEl.dataset.compassScale) || 1;
+
+  const posX = parseFloat(compassEl.style.left) || 80;
+  const posY = parseFloat(compassEl.style.top)  || 80;
+
+  // Visual pivot = element origin + pivot offset scaled by compassScale
+  const cx = posX + PIVOT_X * compassScale;
+  const cy = posY + PIVOT_Y * compassScale;
+
+  // Radius is also visually scaled
+  return { cx, cy, r: radiusPx * compassScale };
+}
+
+function drawArcOnCanvas(startDeg, endDeg) {
+  const state = getCompassState();
+  if (!state || state.r < 1) {
+    alert('Please open the Compass tool and set a radius first.');
+    return;
+  }
+  // Dispatch saveUndoState via the global canvas context
+  const canvas = document.getElementById('gbl-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // Try to call saveUndoState from the IIFE scope indirectly
+  // We'll fire a custom event that the main script can listen to
+  document.dispatchEvent(new CustomEvent('geo-save-undo'));
+
+  const startRad = (startDeg - 90) * Math.PI / 180; // -90 so 0° = top
+  const endRad   = (endDeg   - 90) * Math.PI / 180;
+
+  ctx.save();
+  // Match current drawing color and size
+  const colorDot = document.getElementById('gbl-status-color-dot');
+  const color = colorDot ? colorDot.style.background : '#ffffff';
+  const szEl = document.querySelector('.gbl-sz.active');
+  const lw = szEl ? parseFloat(szEl.dataset.size) || 1.5 : 1.5;
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lw;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+
+  ctx.beginPath();
+  ctx.arc(state.cx, state.cy, state.r, startRad, endRad);
+  ctx.stroke();
+
+  // Center dot
+  ctx.beginPath();
+  ctx.fillStyle = color;
+  ctx.arc(state.cx, state.cy, 3, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+
+  // Push to stroke history via custom event
+  document.dispatchEvent(new CustomEvent('geo-add-stroke', {
+    detail: {
+      tool: 'arc',
+      color, size: lw,
+      x1: state.cx - state.r, y1: state.cy - state.r,
+      x2: state.cx + state.r, y2: state.cy + state.r,
+      arcStart: startRad, arcEnd: endRad,
+      pts: null
+    }
+  }));
+}
+
+function patchCompassDrawButtons() {
+  const drawCircleBtn = document.querySelector('.compass-draw-btn');
+  if (!drawCircleBtn || drawCircleBtn.dataset.arcPatched) return;
+  drawCircleBtn.dataset.arcPatched = '1';
+  // The original "Draw Circle" button still works. We just add "Draw Arc" via panel.
+}
+
+// Wire arc panel buttons
+document.getElementById('arc-draw-arc-btn').addEventListener('click', e => {
+  e.preventDefault();
+  drawArcOnCanvas(arcStartDeg, arcEndDeg);
+});
+
+document.getElementById('arc-draw-circle-btn').addEventListener('click', e => {
+  e.preventDefault();
+  drawArcOnCanvas(0, 360);
+});
+
+// Listen for undo state save requests from our arc drawing
+document.addEventListener('geo-save-undo', () => {
+  // Try to find the undo function in scope
+  // Since the IIFE doesn't expose it, we trigger Ctrl+Z undo save via canvas mutation
+  // Instead we just snapshot the canvas
+  const canvas = document.getElementById('gbl-canvas');
+  if (!canvas) return;
+  // Store snapshot on our own mini-stack
+  if (!window._geoUndoStack) window._geoUndoStack = [];
+  const ctx = canvas.getContext('2d');
+  window._geoUndoStack.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+  if (window._geoUndoStack.length > 30) window._geoUndoStack.shift();
+});
+
+/* ══════════════════════════════════════════════════════════
+   PROTRACTOR: add rotation handle
+══════════════════════════════════════════════════════════ */
+function addProtractorRotation() {
+  const el = document.getElementById('gbl-protractor-obj');
+  if (!el || el.dataset.rotPatched) return;
+  el.dataset.rotPatched = '1';
+  addRotationHandle(el, 'gbl-protractor-obj');
+}
+
+// ── Also observe when tools are SHOWN (display changes) ──
+const visObserver = new MutationObserver(mutations => {
+  mutations.forEach(m => {
+    if (m.type === 'attributes' && m.attributeName === 'style') {
+      const el = m.target;
+      if (GEO_IDS.includes(el.id) && el.style.display !== 'none') {
+        setTimeout(() => {
+          patchAllGeoTools();
+          addProtractorRotation();
+        }, 50);
+      }
+    }
+  });
+});
+GEO_IDS.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) visObserver.observe(el, { attributes: true, attributeFilter: ['style'] });
+});
+
+// Also watch for dynamically created elements
+const createObserver = new MutationObserver(() => {
+  GEO_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) visObserver.observe(el, { attributes: true, attributeFilter: ['style'] });
+  });
+  patchAllGeoTools();
+});
+if (canvasArea) createObserver.observe(canvasArea, { childList: true });
+
+/* ══════════════════════════════════════════════════════════
+   COMPASS ROTATION: add rotation handle to compass too
+══════════════════════════════════════════════════════════ */
+// The compass already has a drag handle. Add rotation.
+function patchCompassRotation() {
+  const el = document.getElementById('gbl-compass-obj');
+  if (!el || el.dataset.compassRotPatched) return;
+  el.dataset.compassRotPatched = '1';
+  addRotationHandle(el, 'gbl-compass-obj');
+  patchGeoPointerEvents(el);
+}
+
+// Re-run patches every 500ms for first 10s to catch late-created elements
+let patchCount = 0;
+const latePatcher = setInterval(() => {
+  patchAllGeoTools();
+  patchCompassRotation();
+  addProtractorRotation();
+  if (++patchCount > 20) clearInterval(latePatcher);
+}, 500);
+
+/* ══════════════════════════════════════════════════════════
+   TOUCH SUPPORT: patch drag handles for touch
+══════════════════════════════════════════════════════════ */
+function addTouchDrag(dh, el, posRef) {
+  if (!dh || dh.dataset.touchDrag) return;
+  dh.dataset.touchDrag = '1';
+  dh.addEventListener('touchstart', e => {
+    e.preventDefault(); e.stopPropagation();
+    const t = e.touches[0];
+    const ox = t.clientX - (parseFloat(el.style.left) || 0);
+    const oy = t.clientY - (parseFloat(el.style.top) || 0);
+    const tm = ev => {
+      const tt = ev.touches[0];
+      const nx = tt.clientX - ox;
+      const ny = tt.clientY - oy;
+      el.style.left = nx + 'px';
+      el.style.top  = ny + 'px';
+      if (posRef) { posRef.x = nx; posRef.y = ny; }
+    };
+    const tu = () => {
+      dh.removeEventListener('touchmove', tm);
+      dh.removeEventListener('touchend', tu);
+    };
+    dh.addEventListener('touchmove', tm, { passive: false });
+    dh.addEventListener('touchend', tu);
+  }, { passive: false });
+}
+
+function patchTouchForAllGeos() {
+  GEO_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const dh = el.querySelector('.geo-drag-handle');
+    if (dh) addTouchDrag(dh, el, null);
+  });
+}
+setTimeout(patchTouchForAllGeos, 1000);
+setTimeout(patchTouchForAllGeos, 3000);
+
+/* ══════════════════════════════════════════════════════════
+   KEYBOARD SHORTCUT: Shift+click on drag handles explained
+   Show help tooltip when multi-select first used
+══════════════════════════════════════════════════════════ */
+let helpShown = false;
+function showMultiSelectHelp() {
+  if (helpShown) return;
+  helpShown = true;
+  const tip = document.createElement('div');
+  Object.assign(tip.style, {
+    position: 'fixed', bottom: '80px', left: '50%', transform: 'translateX(-50%)',
+    background: 'rgba(10,7,28,0.95)', border: '1px solid rgba(96,165,250,0.4)',
+    borderRadius: '12px', padding: '8px 16px', zIndex: '9999',
+    fontFamily: 'Inter,sans-serif', fontSize: '12px', color: 'rgba(96,165,250,0.9)',
+    boxShadow: '0 8px 28px rgba(0,0,0,0.5)', pointerEvents: 'none',
+    transition: 'opacity 0.3s'
+  });
+  tip.textContent = '💡 Shift+click drag handle to multi-select. Drag any selected to move all.';
+  document.body.appendChild(tip);
+  setTimeout(() => { tip.style.opacity = '0'; setTimeout(() => tip.remove(), 400); }, 3500);
+}
+
+// Show help when protractor tool is first clicked
+const protBtn = document.getElementById('gbl-t-protractor-tool');
+if (protBtn) protBtn.addEventListener('click', showMultiSelectHelp);
+
+/* ══════════════════════════════════════════════════════════
+   ARC PANEL LIVE PREVIEW on canvas
+   Show a faint arc preview while dragging sliders
+══════════════════════════════════════════════════════════ */
+let arcPreviewAnimId = null;
+
+function drawArcPreview() {
+  const canvas = document.getElementById('gbl-canvas');
+  // We use a separate overlay canvas for preview
+  let preview = document.getElementById('gbl-arc-preview');
+  if (!preview) {
+    preview = document.createElement('canvas');
+    preview.id = 'gbl-arc-preview';
+    Object.assign(preview.style, {
+      position: 'absolute', inset: '0', pointerEvents: 'none', zIndex: '3'
+    });
+    if (canvasArea) canvasArea.appendChild(preview);
+  }
+  // Match size
+  if (canvas) {
+    preview.width  = canvas.width;
+    preview.height = canvas.height;
+    preview.style.width  = canvas.style.width;
+    preview.style.height = canvas.style.height;
+  }
+
+  const pctx = preview.getContext('2d');
+  pctx.clearRect(0, 0, preview.width, preview.height);
+
+  const compassBtn = document.getElementById('gbl-t-compass-tool');
+  if (!compassBtn || !compassBtn.classList.contains('active')) return;
+
+  const state = getCompassState();
+  if (!state || state.r < 1) return;
+
+  const startRad = (arcStartDeg - 90) * Math.PI / 180;
+  const endRad   = (arcEndDeg   - 90) * Math.PI / 180;
+
+  const dpr = window.devicePixelRatio || 1;
+  pctx.save();
+  pctx.scale(dpr, dpr);
+  pctx.strokeStyle = 'rgba(255,200,80,0.45)';
+  pctx.lineWidth = 2;
+  pctx.setLineDash([6, 4]);
+  pctx.lineCap = 'round';
+  pctx.shadowColor = 'rgba(255,200,80,0.3)';
+  pctx.shadowBlur = 6;
+  pctx.beginPath();
+  pctx.arc(state.cx, state.cy, state.r, startRad, endRad);
+  pctx.stroke();
+  pctx.setLineDash([]);
+  pctx.restore();
+}
+
+document.getElementById('arc-start-slider').addEventListener('input', drawArcPreview);
+document.getElementById('arc-end-slider').addEventListener('input', drawArcPreview);
+
+// Clear preview after arc is drawn
+document.getElementById('arc-draw-arc-btn').addEventListener('click', () => {
+  const preview = document.getElementById('gbl-arc-preview');
+  if (preview) preview.getContext('2d').clearRect(0, 0, preview.width, preview.height);
+});
+document.getElementById('arc-draw-circle-btn').addEventListener('click', () => {
+  const preview = document.getElementById('gbl-arc-preview');
+  if (preview) preview.getContext('2d').clearRect(0, 0, preview.width, preview.height);
+});
+
+// Also clear preview when compass is closed
+document.addEventListener('click', e => {
+  const compassBtn = document.getElementById('gbl-t-compass-tool');
+  if (compassBtn && !compassBtn.classList.contains('active')) {
+    const preview = document.getElementById('gbl-arc-preview');
+    if (preview) preview.getContext('2d').clearRect(0, 0, preview.width, preview.height);
+    arcPanel.style.display = 'none';
+  }
+});
+
+console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-through, multi-select.');
+
+}); // end waitForBlackboard
+})();
+</script>
+
 </body>
 
 
