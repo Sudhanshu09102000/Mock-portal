@@ -10461,8 +10461,8 @@ setTimeout(addBattleButtons, 1800);
 
       <!-- Stroke sizes -->
       <div id="gbl-stroke-size">
-        <div class="gbl-sz"        data-size="0.5" style="width:3px;height:3px;"   title="Ultra Thin"></div>
-        <div class="gbl-sz active" data-size="2"   style="width:6px;height:6px;"   title="Thin"></div>
+        <div class="gbl-sz active" data-size="0.8" style="width:3px;height:3px;"   title="Ultra Thin"></div>
+        <div class="gbl-sz"        data-size="2"   style="width:6px;height:6px;"   title="Thin"></div>
         <div class="gbl-sz"        data-size="4"   style="width:10px;height:10px;" title="Medium"></div>
         <div class="gbl-sz"        data-size="8"   style="width:14px;height:14px;" title="Thick"></div>
         <div class="gbl-sz"        data-size="16"  style="width:18px;height:18px;" title="Xl"></div>
@@ -10930,7 +10930,7 @@ setTimeout(addBattleButtons, 1800);
   // ── STATE ──
   let currentTool  = 'pen';
   let currentColor = '#ffffff';
-  let strokeSize   = 2;
+  let strokeSize   = 0.8;
   let fillShape    = false;
   let bgColor      = '#0d1117';
   let isDrawing    = false;
@@ -10959,19 +10959,36 @@ setTimeout(addBattleButtons, 1800);
   // Pre-draw snapshot for live shape preview
   let preDrawSnapshot = null;
 
+  // Device pixel ratio — keep strokes razor-sharp on retina/hi-DPI screens.
+  // Without this, drawn lines look like connected polygonal segments on hi-DPI displays.
+  function _dpr() { return Math.max(1, window.devicePixelRatio || 1); }
+
+  function _applyDpr(c, cssW, cssH) {
+    const dpr = _dpr();
+    c.width  = Math.round(cssW * dpr);
+    c.height = Math.round(cssH * dpr);
+    c.style.width  = cssW + 'px';
+    c.style.height = cssH + 'px';
+    c._cssW = cssW;
+    c._cssH = cssH;
+    const cx = c.getContext('2d');
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx.imageSmoothingEnabled = true;
+    cx.imageSmoothingQuality = 'high';
+  }
+
   function resizeCanvas() {
     const area = document.getElementById('gbl-canvas-area');
     const w = area.clientWidth;
     const h = area.clientHeight;
     if (w < 2 || h < 2) return;
 
-    const oldW = canvas.width;
-    const oldH = canvas.height;
+    const oldCssW = canvas._cssW || 0;
+    const oldCssH = canvas._cssH || 0;
 
     // First open: set size and fill bg
-    if (oldW < 2 || oldH < 2) {
-      canvas.width  = w;
-      canvas.height = h;
+    if (oldCssW < 2 || oldCssH < 2) {
+      _applyDpr(canvas, w, h);
       fillBg();
       redrawGeoOverlays();
       return;
@@ -10979,29 +10996,29 @@ setTimeout(addBattleButtons, 1800);
 
     // Only GROW the canvas, never shrink it.
     // Shrinking would cut off content — the container clips the view via overflow:hidden.
-    const newW = Math.max(oldW, w);
-    const newH = Math.max(oldH, h);
+    const newCssW = Math.max(oldCssW, w);
+    const newCssH = Math.max(oldCssH, h);
 
-    if (newW === oldW && newH === oldH) {
+    if (newCssW === oldCssW && newCssH === oldCssH) {
       // Container shrank but canvas is already bigger — content safe, just re-overlay.
       redrawGeoOverlays();
       return;
     }
 
-    // Canvas needs to grow — save drawing, expand, restore at (0,0) without scaling
+    // Canvas needs to grow — save drawing, expand, restore at (0,0) at original CSS scale
     const tmp = document.createElement('canvas');
-    tmp.width  = oldW;
-    tmp.height = oldH;
+    tmp.width  = canvas.width;
+    tmp.height = canvas.height;
     tmp.getContext('2d').drawImage(canvas, 0, 0);
 
-    canvas.width  = newW;
-    canvas.height = newH;
+    _applyDpr(canvas, newCssW, newCssH);
 
     // Keep live overlay in sync
-    if (_liveCanvas) { _liveCanvas.width = newW; _liveCanvas.height = newH; }
+    if (_liveCanvas) _applyDpr(_liveCanvas, newCssW, newCssH);
 
     fillBg();
-    ctx.drawImage(tmp, 0, 0);
+    // Draw old content at its original CSS size (transform handles dpr scaling)
+    ctx.drawImage(tmp, 0, 0, oldCssW, oldCssH);
 
     redrawGeoOverlays();
   }
@@ -11009,7 +11026,7 @@ setTimeout(addBattleButtons, 1800);
   function fillBg() {
     bgColor = pageBgColors[currentPage] || '#0d1117';
     ctx.fillStyle = bgColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, canvas._cssW || canvas.width, canvas._cssH || canvas.height);
   }
 
   // ── OPEN / CLOSE ──
@@ -11747,18 +11764,18 @@ setTimeout(addBattleButtons, 1800);
   // ── CANVAS DRAWING — Windows Ink + Pointer Events + Smooth Bezier ──
   function getXY(e) {
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width  / rect.width;
-    const scaleY = canvas.height / rect.height;
-    if (e.touches) {
+    // Return CSS-pixel coordinates. Drawing context has dpr transform applied,
+    // so all coords throughout the engine are in CSS pixels for sharp rendering.
+    if (e.touches && e.touches.length) {
       return {
-        x: (e.touches[0].clientX - rect.left) * scaleX,
-        y: (e.touches[0].clientY - rect.top)  * scaleY,
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top,
         pressure: 0.5
       };
     }
     return {
-      x: (e.clientX - rect.left) * scaleX,
-      y: (e.clientY - rect.top)  * scaleY,
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
       pressure: (e.pressure !== undefined && e.pressure > 0) ? e.pressure : 0.5
     };
   }
@@ -11802,22 +11819,23 @@ setTimeout(addBattleButtons, 1800);
   // (only the last 4-point window, not the whole path) = O(1) per frame.
 
   const SMOOTH_ALPHA = 0.55;   // EMA weight (unused now, kept for reference)
-  const MIN_DIST     = 1.0;    // min px between points — good density, avoids slowdown
+  const MIN_DIST     = 0.4;    // capture nearly every coalesced point — denser sampling = smoother curves
 
   // Live overlay canvas (same size as main canvas, positioned on top)
   let _liveCanvas = null;
   let _liveCtx    = null;
 
   function _ensureLiveCanvas() {
-    if (_liveCanvas && _liveCanvas.width === canvas.width && _liveCanvas.height === canvas.height) return;
+    const cssW = canvas._cssW || canvas.width;
+    const cssH = canvas._cssH || canvas.height;
+    if (_liveCanvas && _liveCanvas._cssW === cssW && _liveCanvas._cssH === cssH) return;
     if (!_liveCanvas) {
       _liveCanvas = document.createElement('canvas');
       _liveCanvas.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;z-index:5;';
       canvas.parentNode.insertBefore(_liveCanvas, canvas.nextSibling);
       _liveCtx = _liveCanvas.getContext('2d', { desynchronized: true, willReadFrequently: false });
     }
-    _liveCanvas.width  = canvas.width;
-    _liveCanvas.height = canvas.height;
+    _applyDpr(_liveCanvas, cssW, cssH);
   }
 
   let _rawPts = [];   // raw pointer positions collected this stroke
@@ -11829,7 +11847,10 @@ setTimeout(addBattleButtons, 1800);
     const n = _pts.length;
     if (n < 2) return;
 
-    _liveCtx.clearRect(0, 0, _liveCanvas.width, _liveCanvas.height);
+    // Clear in CSS-pixel coords (transform is applied)
+    const cw = _liveCanvas._cssW || _liveCanvas.width;
+    const ch = _liveCanvas._cssH || _liveCanvas.height;
+    _liveCtx.clearRect(0, 0, cw, ch);
 
     _liveCtx.strokeStyle = currentColor;
     _liveCtx.lineWidth   = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
@@ -11839,22 +11860,25 @@ setTimeout(addBattleButtons, 1800);
     _liveCtx.globalCompositeOperation = 'source-over';
     _liveCtx.shadowBlur  = 0;
 
-    _liveCtx.beginPath();
-    _liveCtx.moveTo(_pts[0].x, _pts[0].y);
+    // Apply 1 Chaikin pass on raw points for visibly smoother live preview
+    const drawPts = (n >= 3) ? _chaikinPass(_pts) : _pts;
+    const m = drawPts.length;
 
-    if (n === 2) {
-      _liveCtx.lineTo(_pts[1].x, _pts[1].y);
+    _liveCtx.beginPath();
+    _liveCtx.moveTo(drawPts[0].x, drawPts[0].y);
+
+    if (m === 2) {
+      _liveCtx.lineTo(drawPts[1].x, drawPts[1].y);
     } else {
       // Midpoint quadratic bezier — industry standard for smooth handwriting.
-      // Control point = actual raw point, curve passes through midpoints.
-      // Zero distortion on sharp turns, perfectly smooth on curves.
-      for (let i = 0; i < n - 1; i++) {
-        const mx = (_pts[i].x + _pts[i + 1].x) / 2;
-        const my = (_pts[i].y + _pts[i + 1].y) / 2;
-        _liveCtx.quadraticCurveTo(_pts[i].x, _pts[i].y, mx, my);
+      // Curve passes through midpoints with raw points as control points.
+      for (let i = 1; i < m - 1; i++) {
+        const mx = (drawPts[i].x + drawPts[i + 1].x) / 2;
+        const my = (drawPts[i].y + drawPts[i + 1].y) / 2;
+        _liveCtx.quadraticCurveTo(drawPts[i].x, drawPts[i].y, mx, my);
       }
       // End at last point
-      _liveCtx.lineTo(_pts[n - 1].x, _pts[n - 1].y);
+      _liveCtx.lineTo(drawPts[m - 1].x, drawPts[m - 1].y);
     }
     _liveCtx.stroke();
   }
@@ -11888,7 +11912,7 @@ setTimeout(addBattleButtons, 1800);
       c.lineTo(pts[1].x, pts[1].y);
     } else {
       // Midpoint quadratic bezier — same algorithm as live drawing for consistency
-      for (let i = 0; i < pts.length - 1; i++) {
+      for (let i = 1; i < pts.length - 1; i++) {
         const mx = (pts[i].x + pts[i + 1].x) / 2;
         const my = (pts[i].y + pts[i + 1].y) / 2;
         c.quadraticCurveTo(pts[i].x, pts[i].y, mx, my);
@@ -11937,8 +11961,11 @@ setTimeout(addBattleButtons, 1800);
   // Post-process raw stroke: simplify + Chaikin smoothing (runs once on pen-up)
   function _postProcessStroke(rawPts) {
     if (rawPts.length <= 2) return rawPts;
-    let pts = _dpSimplify(rawPts, 1.0);
-    pts = _chaikinPass(pts); // single pass — removes jitter, preserves shape
+    // Light simplification only — keep curve fidelity
+    let pts = _dpSimplify(rawPts, 0.4);
+    // Two Chaikin passes — corner-cutting yields visibly smoother curves
+    pts = _chaikinPass(pts);
+    pts = _chaikinPass(pts);
     return pts;
   }
 
@@ -11960,11 +11987,16 @@ setTimeout(addBattleButtons, 1800);
 
   function _flushBezier() {
     if (_rawPts.length === 0) return;
-    // Use raw points exactly as drawn — no post-processing
-    _pts = _rawPts;
-    // Clear live overlay
-    if (_liveCanvas) _liveCtx.clearRect(0, 0, _liveCanvas.width, _liveCanvas.height);
-    // Commit the stroke directly to the main canvas
+    // Apply Chaikin-based smoothing for the committed stroke — eliminates
+    // visible polygonal segments on curves, matching the live-preview look.
+    _pts = _postProcessStroke(_rawPts);
+    // Clear live overlay (CSS-pixel coords; ctx has dpr transform)
+    if (_liveCanvas) {
+      const cw = _liveCanvas._cssW || _liveCanvas.width;
+      const ch = _liveCanvas._cssH || _liveCanvas.height;
+      _liveCtx.clearRect(0, 0, cw, ch);
+    }
+    // Commit the smoothed stroke directly to the main canvas
     const lw    = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
     const alpha = currentTool === 'highlight' ? 0.35 : 1;
     _drawCatmullRom(_pts, lw, currentColor, alpha, ctx);
@@ -12280,14 +12312,12 @@ setTimeout(addBattleButtons, 1800);
 
     if (geoMode === 'compass' && compassState === 1) {
       const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
       const cx = e.changedTouches
-        ? (e.changedTouches[0].clientX - rect.left) * scaleX
-        : (e.clientX - rect.left) * scaleX;
+        ? (e.changedTouches[0].clientX - rect.left)
+        : (e.clientX - rect.left);
       const cy = e.changedTouches
-        ? (e.changedTouches[0].clientY - rect.top) * scaleY
-        : (e.clientY - rect.top) * scaleY;
+        ? (e.changedTouches[0].clientY - rect.top)
+        : (e.clientY - rect.top);
       if (preDrawSnapshot) ctx.putImageData(preDrawSnapshot, 0, 0);
       preDrawSnapshot = null;
       const r = Math.sqrt((cx - compassCx) ** 2 + (cy - compassCy) ** 2);
@@ -12320,14 +12350,12 @@ setTimeout(addBattleButtons, 1800);
     }
 
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
     const x = e.changedTouches
-      ? (e.changedTouches[0].clientX - rect.left) * scaleX
-      : (e.clientX - rect.left) * scaleX;
+      ? (e.changedTouches[0].clientX - rect.left)
+      : (e.clientX - rect.left);
     const y = e.changedTouches
-      ? (e.changedTouches[0].clientY - rect.top) * scaleY
-      : (e.clientY - rect.top) * scaleY;
+      ? (e.changedTouches[0].clientY - rect.top)
+      : (e.clientY - rect.top);
 
     if (['line','arrow','dbarrow','rect','roundrect','circle','ellipse','triangle','righttri','pentagon','hexagon','star','rhombus','parallelogram','arc','wave'].includes(currentTool)) {
       if (preDrawSnapshot) ctx.putImageData(preDrawSnapshot, 0, 0);
@@ -12618,12 +12646,11 @@ setTimeout(addBattleButtons, 1800);
     function commitText() {
       if (!wrapper.isConnected) return;
       const cRect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width  / cRect.width;
-      const scaleY = canvas.height / cRect.height;
+      // CSS-pixel coords throughout (ctx has dpr transform applied)
       const cssX = parseFloat(wrapper.style.left) - cRect.left;
       const cssY = parseFloat(wrapper.style.top)  - cRect.top;
-      const fx = cssX * scaleX;
-      const fy = cssY * scaleY;
+      const fx = cssX;
+      const fy = cssY;
       const text = textInput ? textInput.innerText.trim() : '';
       if (text) {
         saveUndoState();
@@ -12661,6 +12688,8 @@ setTimeout(addBattleButtons, 1800);
     const tmp = document.createElement('canvas');
     tmp.width  = canvas.width;
     tmp.height = canvas.height;
+    tmp._cssW  = canvas._cssW;
+    tmp._cssH  = canvas._cssH;
     tmp.getContext('2d').drawImage(canvas, 0, 0);
     pages[currentPage] = { canvas: tmp, strokes: strokeHistory[currentPage].map(s => Object.assign({}, s, { pts: s.pts ? [...s.pts] : null })) };
     pageBgColors[currentPage] = bgColor; // persist current page's bg
@@ -12670,12 +12699,17 @@ setTimeout(addBattleButtons, 1800);
     bgColor = pageBgColors[idx] || '#0d1117';
     fillBg();
     const saved = pages[idx];
+    const cssW = canvas._cssW || canvas.width;
+    const cssH = canvas._cssH || canvas.height;
     if (saved && saved.canvas && saved.canvas.width > 0) {
-      ctx.drawImage(saved.canvas, 0, 0);
+      // ctx has dpr transform; pass explicit dest size in CSS pixels
+      const dw = saved.canvas._cssW || (saved.canvas.width / _dpr());
+      const dh = saved.canvas._cssH || (saved.canvas.height / _dpr());
+      ctx.drawImage(saved.canvas, 0, 0, dw, dh);
       strokeHistory[idx] = saved.strokes || [];
     } else if (saved && saved.width > 0) {
       // legacy format
-      ctx.drawImage(saved, 0, 0);
+      ctx.drawImage(saved, 0, 0, cssW, cssH);
     }
   }
   function updatePageUI() {
@@ -12847,6 +12881,7 @@ setTimeout(addBattleButtons, 1800);
 })();
 </script>
 
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"7f7b0fd8732c4326aae4b9d58d5c514a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 
 
