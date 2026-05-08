@@ -908,11 +908,18 @@ function appendPageToOutput(pageData) {
   block.appendChild(textNode);
   container.appendChild(block);
 
-  // Auto-scroll to bottom
-  container.scrollTop = container.scrollHeight;
+  // Auto-scroll only if user is already near the bottom (not reading up)
+  smartScroll(container);
 
   // Update stats
   updateLiveStats();
+}
+
+// Scroll to bottom only if user hasn't manually scrolled up
+function smartScroll(el) {
+  const threshold = 80; // px from bottom — within this, auto-scroll
+  const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight <= threshold;
+  if (nearBottom) el.scrollTop = el.scrollHeight;
 }
 
 // Add a "pending" placeholder while OCR is running on a page
@@ -923,7 +930,7 @@ function addPendingPage(pageNum) {
   ph.className = 'page-pending';
   ph.textContent = `OCR running on page ${pageNum}…`;
   container.appendChild(ph);
-  container.scrollTop = container.scrollHeight;
+  smartScroll(container);
 }
 
 // ─── PDF MODE DETECTION ──────────────────────────────────────────────────────
