@@ -14311,8 +14311,9 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  z-index: 50 !important;
-  /* subtle frosted backing so strokes under it stay readable */
+  z-index: 300 !important;
+  pointer-events: all !important;
+  touch-action: pan-x !important;
   background: linear-gradient(90deg,
     rgba(13,17,23,0.72) 0%,
     rgba(124,58,237,0.18) 50%,
@@ -14320,6 +14321,16 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(10px) !important;
   border-bottom: 1px solid rgba(255,255,255,0.09) !important;
+}
+#gbl-titlebar * {
+  pointer-events: auto !important;
+}
+/* Hover zone only active when toolbar is hidden */
+#gbl-tb-hover-zone {
+  pointer-events: none !important;
+}
+.gbl-win-tb-hidden #gbl-tb-hover-zone {
+  pointer-events: all !important;
 }
 /* Canvas area now fills the full window height */
 #gbl-canvas-area {
