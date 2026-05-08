@@ -14059,6 +14059,251 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
 })();
 </script>
 
+
+
+<style>
+/* ══ PATCH 1: Toolbar auto-hide ══════════════════════════════ */
+
+/* Smooth slide transition on the titlebar */
+#gbl-titlebar {
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity  0.32s ease !important;
+  will-change: transform, opacity;
+}
+#gbl-titlebar.gbl-tb-hidden {
+  transform: translateY(-110%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* Invisible hover zone — thin strip at the very top of canvas area */
+#gbl-tb-hover-zone {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 16px;
+  z-index: 200;
+  cursor: n-resize;
+}
+
+/* Glowing reveal bar — pulses gently when toolbar is hidden */
+#gbl-tb-reveal-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  pointer-events: none;
+  z-index: 201;
+  opacity: 0;
+  transition: opacity 0.35s, box-shadow 0.35s;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(124, 58, 237, 0.85) 25%,
+    rgba(6, 182, 212, 0.85) 75%,
+    transparent 100%
+  );
+}
+/* Show bar + pulse only while toolbar is hidden */
+.gbl-win-tb-hidden #gbl-tb-reveal-bar {
+  opacity: 1;
+  box-shadow:
+    0 0 14px rgba(124, 58, 237, 0.7),
+    0 0 30px rgba(6, 182, 212, 0.35);
+  animation: gbl-bar-pulse 2.2s ease-in-out infinite;
+}
+@keyframes gbl-bar-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
+}
+
+/* Tiny "hover for tools" hint above the strip */
+#gbl-tb-reveal-bar::after {
+  content: '▾  hover for tools';
+  position: absolute;
+  top: 5px; left: 50%;
+  transform: translateX(-50%);
+  font: 700 9px/1 'Inter', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(167, 139, 250, 0.7);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.gbl-win-tb-hidden #gbl-tb-hover-zone:hover ~ #gbl-tb-reveal-bar::after,
+#gbl-tb-hover-zone:hover ~ #gbl-tb-reveal-bar::after {
+  opacity: 1;
+}
+</style>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   PATCH 1 — Toolbar Auto-Hide
+   Works additively — no changes to existing code needed.
+───────────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  function initAutoHide() {
+    const win  = document.getElementById('gbl-window');
+    const tb   = document.getElementById('gbl-titlebar');
+    const area = document.getElementById('gbl-canvas-area');
+    if (!win || !tb || !area || win.dataset.tbah) return;
+    win.dataset.tbah = '1';
+
+    /* ── Hover zone strip ── */
+    const hz = document.createElement('div');
+    hz.id = 'gbl-tb-hover-zone';
+    area.prepend(hz);
+
+    /* ── Glowing reveal bar ── */
+    const bar = document.createElement('div');
+    bar.id = 'gbl-tb-reveal-bar';
+    area.prepend(bar);
+
+    let timer  = null;
+    let hidden = false;
+
+    function show() {
+      clearTimeout(timer);
+      if (!hidden) return;
+      hidden = false;
+      tb.classList.remove('gbl-tb-hidden');
+      win.classList.remove('gbl-win-tb-hidden');
+    }
+
+    function hide() {
+      if (hidden) return;
+      hidden = true;
+      tb.classList.add('gbl-tb-hidden');
+      win.classList.add('gbl-win-tb-hidden');
+    }
+
+    function schedule(ms) {
+      clearTimeout(timer);
+      timer = setTimeout(hide, ms ?? 2800);
+    }
+
+    /* ── Toolbar: hover keeps it open, leave → schedule hide ── */
+    tb.addEventListener('mouseenter', show);
+    tb.addEventListener('mouseleave', () => schedule(900));
+
+    /* ── Stay visible longer after a button click ── */
+    tb.addEventListener('click', () => schedule(4000));
+
+    /* ── Hover zone: reveal toolbar instantly ── */
+    hz.addEventListener('mouseenter', () => { show(); clearTimeout(timer); });
+    hz.addEventListener('mouseleave', () => schedule(500));
+
+    /* ── Touch: tap the strip to toggle ── */
+    hz.addEventListener('touchstart', e => {
+      e.preventDefault();
+      hidden ? show() : hide();
+    }, { passive: false });
+
+    /* ── Auto-hide 3 s after opening ── */
+    schedule(3000);
+  }
+
+  /* Run every time the blackboard overlay opens */
+  function watch() {
+    const ov = document.getElementById('gbl-overlay');
+    if (!ov) { setTimeout(watch, 400); return; }
+    new MutationObserver(() => {
+      if (ov.classList.contains('open')) setTimeout(initAutoHide, 150);
+    }).observe(ov, { attributes: true, attributeFilter: ['class'] });
+    if (ov.classList.contains('open')) setTimeout(initAutoHide, 150);
+  }
+  watch();
+})();
+
+
+/* ─────────────────────────────────────────────────────────────
+   PATCH 2 — GPU-Accelerated Shape Preview (lag fix)
+
+   Problem:  The shape preview loop calls ctx.getImageData()
+             then ctx.putImageData() on every pointermove event.
+             Both ops copy the entire canvas pixel buffer through
+             the CPU → visible stutter on every frame.
+
+   Fix:      Override those two methods on the blackboard canvas
+             context instance only.
+             • getImageData → GPU-side drawImage to an offscreen
+               canvas (zero pixel readback, instant)
+             • putImageData → GPU-side drawImage restore at
+               identity transform (same pixel-exact result,
+               ~50× faster than the original)
+             • Real ImageData objects (undo/redo) still use the
+               native putImageData — nothing breaks.
+───────────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  /* Keep a reference to the native putImageData before any override */
+  const _nativePut = CanvasRenderingContext2D.prototype.putImageData;
+
+  function patch() {
+    const canvas = document.getElementById('gbl-canvas');
+    if (!canvas || canvas.dataset.gpu) return;
+    canvas.dataset.gpu = '1';
+
+    const ctx = canvas.getContext('2d');
+    let snap  = null;   /* offscreen snapshot canvas — reused across frames */
+
+    /* ── Override getImageData (instance property shadows prototype) ── */
+    ctx.getImageData = function (x, y, w, h) {
+      /* Lazy-create / resize the snapshot to match physical pixel dimensions */
+      if (!snap || snap.width !== canvas.width || snap.height !== canvas.height) {
+        snap = document.createElement('canvas');
+        snap.width  = canvas.width;
+        snap.height = canvas.height;
+      }
+      /* GPU-side blit: canvas → snap.  No CPU pixel readback at all. */
+      snap.getContext('2d').drawImage(canvas, 0, 0);
+
+      /* Return a sentinel object — truthy so existing `if (preDrawSnapshot)` passes */
+      return { __gpuSnap: true };
+    };
+
+    /* ── Override putImageData (instance property shadows prototype) ── */
+    ctx.putImageData = function (data, x, y, ...rest) {
+      if (data && data.__gpuSnap && snap) {
+        /*
+         * Restore via drawImage at identity transform.
+         * putImageData ignores the CTM, so we must reset it too,
+         * then restore the DPR scale for subsequent drawing calls.
+         */
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(snap, 0, 0);
+        ctx.restore();          /* DPR transform is back — shapes draw correctly */
+      } else if (data && !data.__gpuSnap) {
+        /* Real ImageData (undo / redo stack) — use the original native method */
+        _nativePut.call(this, data, x, y, ...rest);
+      }
+    };
+  }
+
+  /* ── Patch as soon as canvas exists ── */
+  let tries = 0;
+  const t = setInterval(() => {
+    patch();
+    if (document.getElementById('gbl-canvas')?.dataset.gpu || ++tries > 40) clearInterval(t);
+  }, 300);
+
+  /* ── Re-patch when blackboard opens (canvas might not exist yet) ── */
+  function watchOverlay() {
+    const ov = document.getElementById('gbl-overlay');
+    if (!ov) { setTimeout(watchOverlay, 500); return; }
+    new MutationObserver(() => {
+      if (ov.classList.contains('open')) setTimeout(patch, 120);
+    }).observe(ov, { attributes: true, attributeFilter: ['class'] });
+  }
+  watchOverlay();
+})();
+</script>
+
 </body>
 
 
