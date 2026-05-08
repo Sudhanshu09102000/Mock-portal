@@ -34,14 +34,12 @@
     overflow-x: hidden;
   }
 
-  /* Scanline overlay */
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 999; pointer-events: none;
     background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
   }
 
-  /* Grid bg */
   body::after {
     content: '';
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -58,7 +56,6 @@
     padding: 40px 24px 80px;
   }
 
-  /* ─── HEADER ─── */
   header {
     display: flex; align-items: flex-end; gap: 20px;
     margin-bottom: 48px;
@@ -94,7 +91,6 @@
     margin-bottom: 8px;
   }
 
-  /* ─── DROP ZONE ─── */
   .drop-zone {
     border: 2px dashed var(--border);
     border-radius: 8px;
@@ -145,7 +141,6 @@
   .drop-sub em { color: var(--amber); font-style: normal; }
   #fileInput { display: none; }
 
-  /* ─── STATUS BAR ─── */
   .status-bar {
     display: none;
     margin-top: 20px;
@@ -202,10 +197,9 @@
     box-shadow: 0 0 8px var(--amber);
   }
 
-  /* ─── LOG CONSOLE ─── */
   .log-console {
     padding: 12px 16px;
-    max-height: 180px;
+    max-height: 160px;
     overflow-y: auto;
     font-family: var(--mono);
     font-size: 11px;
@@ -221,7 +215,6 @@
   .log-msg.error { color: var(--red); }
   .log-msg.ocr { color: #a78bfa; }
 
-  /* ─── STATS ROW ─── */
   .stats-row {
     display: none;
     gap: 12px;
@@ -261,7 +254,6 @@
   .method-ocr { color: #a78bfa !important; }
   .method-mixed { color: var(--amber) !important; }
 
-  /* ─── OUTPUT ─── */
   .output-section {
     display: none;
     margin-top: 24px;
@@ -277,6 +269,31 @@
     letter-spacing: 0.06em;
     flex: 1;
   }
+
+  /* Live indicator badge */
+  .live-badge {
+    display: none;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid var(--red);
+    color: var(--red);
+    background: rgba(239,68,68,0.08);
+    animation: livePulse 1.2s infinite;
+  }
+  .live-badge.active { display: inline-flex; align-items: center; gap: 5px; }
+  @keyframes livePulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+  .live-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--red);
+  }
+
   .btn {
     font-family: var(--mono);
     font-size: 11px;
@@ -296,6 +313,7 @@
   .btn.primary:hover { background: rgba(245,158,11,0.2); }
   .btn svg { width: 13px; height: 13px; }
   .btn.copied { border-color: var(--green); color: var(--green); background: rgba(16,185,129,0.1); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
 
   .output-box {
     background: var(--surface);
@@ -346,7 +364,7 @@
   #outputText {
     width: 100%;
     min-height: 360px;
-    max-height: 560px;
+    max-height: 620px;
     overflow-y: auto;
     padding: 20px 24px;
     font-family: var(--mono);
@@ -358,7 +376,8 @@
     scrollbar-width: thin;
     scrollbar-color: var(--amber-dim) transparent;
     outline: none;
-    resize: none;
+    user-select: text;
+    -webkit-user-select: text;
   }
   #outputText .highlight {
     background: rgba(245,158,11,0.35);
@@ -369,7 +388,6 @@
     background: rgba(245,158,11,0.7);
   }
 
-  /* page separator */
   .page-sep {
     display: block;
     color: var(--amber-dim);
@@ -380,7 +398,35 @@
     padding-top: 8px;
   }
 
-  /* ─── PAGE RANGE PANEL ─── */
+  /* Newly appended page gets a subtle flash */
+  .page-block-new {
+    animation: pageIn 0.4s ease forwards;
+  }
+  @keyframes pageIn {
+    from { opacity: 0; background: rgba(245,158,11,0.05); }
+    to   { opacity: 1; background: transparent; }
+  }
+
+  /* OCR spinner placeholder while page is being processed */
+  .page-pending {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #a78bfa;
+    padding: 6px 0;
+    opacity: 0.7;
+  }
+  .page-pending::before {
+    content: '';
+    width: 10px; height: 10px;
+    border: 1px solid #a78bfa;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   .page-range-panel {
     display: none;
     margin-top: 20px;
@@ -478,7 +524,6 @@
   .extract-btn:hover { background: rgba(245,158,11,0.2); box-shadow: 0 0 16px rgba(245,158,11,0.12); }
   .extract-btn svg { width: 13px; height: 13px; }
 
-  /* ─── ENGLISH-ONLY TOGGLE ─── */
   .eng-toggle-row {
     display: flex; align-items: center; gap: 10px;
     margin-top: 14px;
@@ -547,7 +592,29 @@
     background: rgba(16,185,129,0.1);
   }
 
-  /* ─── RESET ─── */
+  .pdf-mode-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+  .pdf-mode-icon { font-size: 16px; flex-shrink: 0; }
+  .pdf-mode-label { flex: 1; color: var(--muted); }
+  .pdf-mode-label strong { display: block; font-size: 11px; margin-bottom: 2px; }
+  .pdf-mode-badge {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px;
+    border: 1px solid; white-space: nowrap; font-weight: 700;
+  }
+  .pdf-mode-badge.mode-native  { border-color: var(--green); color: var(--green); background: rgba(16,185,129,0.1); }
+  .pdf-mode-badge.mode-ocr     { border-color: #a78bfa; color: #a78bfa; background: rgba(167,139,250,0.1); }
+  .pdf-mode-badge.mode-hybrid  { border-color: var(--amber); color: var(--amber); background: var(--amber-glow); }
+
   .reset-btn {
     display: none;
     margin-top: 28px;
@@ -566,7 +633,6 @@
   }
   .reset-btn:hover { border-color: var(--red); color: var(--red); background: rgba(239,68,68,0.05); }
 
-  /* ─── FOOTER ─── */
   footer {
     position: relative; z-index: 1;
     text-align: center;
@@ -577,14 +643,12 @@
     letter-spacing: 0.12em;
   }
 
-  /* ─── ANIM ─── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .fade-up { animation: fadeUp 0.4s ease forwards; }
 
-  /* Responsive */
   @media(max-width: 600px) {
     .drop-zone { padding: 40px 20px; }
     .stats-row { gap: 8px; }
@@ -596,18 +660,16 @@
 
 <div class="container">
 
-  <!-- HEADER -->
   <header>
     <div class="logo-block">
       <div class="logo-eyebrow">// intelligent document processor</div>
       <h1>PDF <span>EXTRACTOR</span></h1>
     </div>
     <div>
-      <div class="header-badge">GOD MODE v2.0</div>
+      <div class="header-badge">GOD MODE v3.0</div>
     </div>
   </header>
 
-  <!-- DROP ZONE -->
   <div class="drop-zone" id="dropZone">
     <input type="file" id="fileInput" accept=".pdf" multiple/>
     <div class="drop-icon">
@@ -620,14 +682,21 @@
     </div>
     <div class="drop-title">DROP YOUR PDF HERE</div>
     <div class="drop-sub">
-      Drag & drop or <em>click to browse</em> — native text + <em>OCR fallback</em> per page
+      Drag & drop or <em>click to browse</em> — live page streaming, <em>copy text while OCR runs</em>
     </div>
   </div>
 
-  <!-- PAGE RANGE PANEL -->
   <div class="page-range-panel" id="pageRangePanel">
     <div class="page-range-title">Page Range Selection</div>
     <div class="page-range-body">
+      <div class="pdf-mode-row" id="pdfModeRow" style="display:none; width:100%;">
+        <div class="pdf-mode-icon" id="pdfModeIcon">📄</div>
+        <div class="pdf-mode-label">
+          <strong id="pdfModeTitle">Detecting…</strong>
+          <span id="pdfModeSub"></span>
+        </div>
+        <div class="pdf-mode-badge" id="pdfModeBadge">—</div>
+      </div>
       <div class="page-range-info">
         Detected <strong id="totalPagesLabel">—</strong> page(s) — set the range to extract below.
       </div>
@@ -641,12 +710,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="5 3 19 12 5 21 5 3"/>
           </svg>
-          Run OCR
+          <span id="extractBtnLabel">Extract Text</span>
         </button>
       </div>
       <div class="range-error" id="rangeError">⚠ Invalid range — from must be ≤ to, and within document bounds.</div>
-
-      <!-- ENGLISH-ONLY FILTER TOGGLE -->
       <div class="eng-toggle-row">
         <label class="toggle-switch">
           <input type="checkbox" id="engOnlyToggle" onchange="updateToggleBadge(this)"/>
@@ -661,7 +728,6 @@
     </div>
   </div>
 
-  <!-- STATUS BAR -->
   <div class="status-bar" id="statusBar">
     <div class="status-header">
       <div class="status-dot" id="statusDot"></div>
@@ -674,21 +740,20 @@
     <div class="log-console" id="logConsole"></div>
   </div>
 
-  <!-- STATS ROW -->
   <div class="stats-row" id="statsRow">
     <div class="stat-card">
-      <div class="stat-label">Total Pages</div>
-      <div class="stat-value" id="statPages">—</div>
-      <div class="stat-sub">processed</div>
+      <div class="stat-label">Pages Done</div>
+      <div class="stat-value" id="statPages">0</div>
+      <div class="stat-sub" id="statPagesSub">processing…</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Word Count</div>
-      <div class="stat-value" id="statWords">—</div>
-      <div class="stat-sub">words extracted</div>
+      <div class="stat-value" id="statWords">0</div>
+      <div class="stat-sub">words so far</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Characters</div>
-      <div class="stat-value" id="statChars">—</div>
+      <div class="stat-value" id="statChars">0</div>
       <div class="stat-sub">total chars</div>
     </div>
     <div class="stat-card">
@@ -698,22 +763,25 @@
     </div>
     <div class="stat-card">
       <div class="stat-label">Duration</div>
-      <div class="stat-value" id="statTime">—</div>
+      <div class="stat-value" id="statTime">0s</div>
       <div class="stat-sub">seconds</div>
     </div>
   </div>
 
-  <!-- OUTPUT -->
   <div class="output-section" id="outputSection">
     <div class="output-header">
       <div class="output-title">EXTRACTED TEXT</div>
+      <div class="live-badge" id="liveBadge">
+        <div class="live-dot"></div>
+        LIVE
+      </div>
       <button class="btn" id="copyBtn" onclick="copyText()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
         </svg>
         Copy All
       </button>
-      <button class="btn primary" onclick="downloadTxt()">
+      <button class="btn primary" id="downloadBtn" onclick="downloadTxt()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
@@ -737,7 +805,6 @@
     </div>
   </div>
 
-  <!-- RESET -->
   <button class="reset-btn" id="resetBtn" onclick="resetAll()">↺ &nbsp;Extract Another PDF</button>
 
 </div>
@@ -746,34 +813,31 @@
   PDF EXTRACTOR — NATIVE TEXT + TESSERACT OCR ENGINE — RUNS 100% IN YOUR BROWSER
 </footer>
 
-<!-- PDF.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<!-- Tesseract.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
 
 <script>
-// ─── GLOBAL STATE ───────────────────────────────────────────────────────────
+// ─── GLOBAL STATE ────────────────────────────────────────────────────────────
 let rawText = '';
 let extractedPages = [];
 let currentFileName = '';
 let nativePages = 0, ocrPages = 0;
 let startTime = 0;
-let searchMatches = [];
-let searchIndex = 0;
-let loadedPdf = null;      // holds the parsed PDF object between phases
-let totalNumPages = 0;     // total pages of loaded PDF
+let loadedPdf = null;
+let totalNumPages = 0;
+let pdfMode = 'hybrid';
+let isExtracting = false;
+let timerInterval = null;
 
-// ─── PDF.js WORKER ──────────────────────────────────────────────────────────
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-// ─── DROP ZONE ──────────────────────────────────────────────────────────────
+// ─── DROP ZONE ───────────────────────────────────────────────────────────────
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
 
 dropZone.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
-
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
 dropZone.addEventListener('drop', e => {
@@ -784,16 +848,16 @@ dropZone.addEventListener('drop', e => {
   else addLog('Only PDF files are supported.', 'error');
 });
 
-// ─── LOGGING ────────────────────────────────────────────────────────────────
+// ─── LOGGING ─────────────────────────────────────────────────────────────────
 function addLog(msg, type = 'default') {
-  const console_ = document.getElementById('logConsole');
+  const el = document.getElementById('logConsole');
   const now = new Date();
   const time = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
   const line = document.createElement('div');
   line.className = 'log-line';
   line.innerHTML = `<span class="log-time">[${time}]</span><span class="log-msg ${type}">${msg}</span>`;
-  console_.appendChild(line);
-  console_.scrollTop = console_.scrollHeight;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
 }
 
 function setProgress(pct, label) {
@@ -802,14 +866,126 @@ function setProgress(pct, label) {
   if (label) document.getElementById('statusLabel').textContent = label;
 }
 
-// ─── MAIN HANDLER — PHASE 1: load PDF, show range panel ─────────────────────
+// ─── LIVE STATS UPDATE ────────────────────────────────────────────────────────
+function updateLiveStats() {
+  const doneCount = extractedPages.filter(Boolean).length;
+  document.getElementById('statPages').textContent = doneCount;
+  const wordCount = rawText.split(/\s+/).filter(Boolean).length;
+  const charCount = rawText.length;
+  document.getElementById('statWords').textContent = wordCount.toLocaleString();
+  document.getElementById('statChars').textContent = charCount.toLocaleString();
+  const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
+  document.getElementById('statTime').textContent = elapsed + 's';
+}
+
+// ─── APPEND A SINGLE PAGE LIVE ───────────────────────────────────────────────
+function appendPageToOutput(pageData) {
+  // Store in array
+  extractedPages[pageData.page - 1] = pageData;
+
+  // Update rawText incrementally
+  const sep = `── PAGE ${pageData.page} [${pageData.method.toUpperCase()}] ──────────────────────────`;
+  rawText += (rawText.length ? '\n\n' : '') + sep + '\n' + pageData.text;
+
+  // Render into DOM live
+  const container = document.getElementById('outputText');
+
+  // Remove pending placeholder if exists
+  const pending = document.getElementById(`pending-${pageData.page}`);
+  if (pending) pending.remove();
+
+  const block = document.createElement('span');
+  block.id = `page-block-${pageData.page}`;
+  block.className = 'page-block-new';
+
+  const sep_el = document.createElement('span');
+  sep_el.className = 'page-sep';
+  const methodColor = pageData.method === 'native' ? '#10b981' : pageData.method === 'ocr' ? '#a78bfa' : '#ef4444';
+  sep_el.innerHTML = `── PAGE ${pageData.page} &nbsp;<span style="color:${methodColor}">[${pageData.method.toUpperCase()}]</span> ──────────────────────────────`;
+
+  block.appendChild(sep_el);
+  const textNode = document.createTextNode('\n' + pageData.text + '\n\n');
+  block.appendChild(textNode);
+  container.appendChild(block);
+
+  // Auto-scroll to bottom
+  container.scrollTop = container.scrollHeight;
+
+  // Update stats
+  updateLiveStats();
+}
+
+// Add a "pending" placeholder while OCR is running on a page
+function addPendingPage(pageNum) {
+  const container = document.getElementById('outputText');
+  const ph = document.createElement('div');
+  ph.id = `pending-${pageNum}`;
+  ph.className = 'page-pending';
+  ph.textContent = `OCR running on page ${pageNum}…`;
+  container.appendChild(ph);
+  container.scrollTop = container.scrollHeight;
+}
+
+// ─── PDF MODE DETECTION ──────────────────────────────────────────────────────
+async function detectPdfMode(pdf) {
+  const total = pdf.numPages;
+  const sampleCount = Math.min(8, total);
+  const step = Math.max(1, Math.floor(total / sampleCount));
+  const samplePages = [];
+  for (let i = 1; i <= total && samplePages.length < sampleCount; i += step) samplePages.push(i);
+
+  let textPages = 0, scannedPages = 0;
+  for (const pageNum of samplePages) {
+    const page = await pdf.getPage(pageNum);
+    const content = await page.getTextContent();
+    const text = content.items.map(item => item.str).join('').replace(/\s/g, '');
+    if (text.length >= 20) textPages++; else scannedPages++;
+  }
+  if (scannedPages === 0) return 'native';
+  if (textPages === 0) return 'ocr';
+  return 'hybrid';
+}
+
+function showPdfModeBadge(mode) {
+  const row = document.getElementById('pdfModeRow');
+  const icon = document.getElementById('pdfModeIcon');
+  const title = document.getElementById('pdfModeTitle');
+  const sub = document.getElementById('pdfModeSub');
+  const badge = document.getElementById('pdfModeBadge');
+  const btnLbl = document.getElementById('extractBtnLabel');
+  row.style.display = 'flex';
+  badge.className = 'pdf-mode-badge';
+  if (mode === 'native') {
+    icon.textContent = '📝';
+    title.textContent = 'Digital PDF — selectable text detected';
+    sub.textContent = 'OCR will be skipped entirely for maximum speed';
+    badge.textContent = 'NATIVE ONLY';
+    badge.classList.add('mode-native');
+    btnLbl.textContent = 'Extract Text';
+  } else if (mode === 'ocr') {
+    icon.textContent = '🖼️';
+    title.textContent = 'Scanned / Image PDF — no selectable text found';
+    sub.textContent = 'Full OCR will run on all pages via Tesseract engine';
+    badge.textContent = 'OCR ONLY';
+    badge.classList.add('mode-ocr');
+    btnLbl.textContent = 'Run OCR';
+  } else {
+    icon.textContent = '⚡';
+    title.textContent = 'Mixed PDF — text and scanned pages detected';
+    sub.textContent = 'Native extraction + OCR fallback per page (hybrid mode)';
+    badge.textContent = 'HYBRID';
+    badge.classList.add('mode-hybrid');
+    btnLbl.textContent = 'Extract (Hybrid)';
+  }
+}
+
+// ─── PHASE 1: load PDF ────────────────────────────────────────────────────────
 async function handleFile(file) {
   if (!file) return;
   resetUI();
   currentFileName = file.name.replace('.pdf', '');
   document.getElementById('fileNameLabel').textContent = file.name + ' → output.txt';
 
-  // Show status bar for loading feedback
   document.getElementById('statusBar').style.display = 'block';
   document.getElementById('statusBar').classList.add('fade-up');
   document.getElementById('statusDot').className = 'status-dot';
@@ -820,24 +996,29 @@ async function handleFile(file) {
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     const numPages = pdf.numPages;
-
     loadedPdf = pdf;
     totalNumPages = numPages;
 
     addLog(`Document parsed — ${numPages} page(s) detected`, 'success');
+    setProgress(10, 'Detecting PDF type…');
+
+    pdfMode = await detectPdfMode(pdf);
+    showPdfModeBadge(pdfMode);
+    addLog(`PDF type: ${pdfMode.toUpperCase()} — ${
+      pdfMode === 'native' ? 'OCR will be skipped' :
+      pdfMode === 'ocr'    ? 'full OCR required'   :
+                             'hybrid mode — per-page detection'
+    }`, pdfMode === 'native' ? 'success' : pdfMode === 'ocr' ? 'ocr' : 'warn');
+
     setProgress(0, 'Awaiting page range…');
     document.getElementById('statusDot').className = 'status-dot done';
 
-    // Populate range panel
     document.getElementById('totalPagesLabel').textContent = numPages;
     const fromInput = document.getElementById('rangeFrom');
     const toInput = document.getElementById('rangeTo');
-    fromInput.value = 1;
-    fromInput.max = numPages;
-    toInput.value = numPages;
-    toInput.max = numPages;
+    fromInput.value = 1; fromInput.max = numPages;
+    toInput.value = numPages; toInput.max = numPages;
     toInput.placeholder = numPages;
-
     document.getElementById('pageRangePanel').style.display = 'block';
 
   } catch (err) {
@@ -847,265 +1028,277 @@ async function handleFile(file) {
   }
 }
 
-// ─── ENGLISH-ONLY FILTER ─────────────────────────────────────────────────────
-function updateToggleBadge(checkbox) {
+// ─── ENGLISH FILTER ──────────────────────────────────────────────────────────
+function updateToggleBadge(cb) {
   const badge = document.getElementById('toggleBadge');
-  if (checkbox.checked) {
-    badge.textContent = 'ON';
-    badge.classList.add('active');
-  } else {
-    badge.textContent = 'OFF';
-    badge.classList.remove('active');
-  }
+  badge.textContent = cb.checked ? 'ON' : 'OFF';
+  cb.checked ? badge.classList.add('active') : badge.classList.remove('active');
 }
 
 function filterEnglishOnly(text) {
-  // Keep: A-Z a-z 0-9, common punctuation, whitespace, newlines
-  // Strip: anything outside basic ASCII printable range + newlines/tabs
-  return text
-    .split('\n')
-    .map(line =>
-      line
-        // Keep only ASCII printable chars (32–126) — covers all English letters,
-        // digits, punctuation and spaces. Everything else (Devanagari, Arabic,
-        // CJK, special Unicode symbols…) is removed.
-        .replace(/[^\x20-\x7E]/g, '')
-        // Collapse runs of spaces that result from stripping
-        .replace(/ {2,}/g, ' ')
-        .trim()
-    )
-    // Drop lines that became empty after filtering
+  return text.split('\n')
+    .map(line => line.replace(/[^\x20-\x7E]/g, '').replace(/ {2,}/g, ' ').trim())
     .filter(line => line.length > 0)
     .join('\n');
 }
 
-// ─── PHASE 2: validate range, run extraction ─────────────────────────────────
+// ─── RENDER PAGE TO IMAGE (optimised for speed) ───────────────────────────────
+async function renderPageToImage(pdfPage) {
+  // Scale 1.5 — good quality, ~44% fewer pixels than 2.0 → faster OCR
+  const scale = 1.5;
+  const viewport = pdfPage.getViewport({ scale });
+  const canvas = document.createElement('canvas');
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+  // willReadFrequently hints browser to optimise for getImageData calls
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  await pdfPage.render({ canvasContext: ctx, viewport }).promise;
+
+  // Convert to grayscale — Tesseract is faster on single-channel images
+  const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const d = imgData.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const gray = 0.299 * d[i] + 0.587 * d[i+1] + 0.114 * d[i+2];
+    d[i] = d[i+1] = d[i+2] = gray;
+  }
+  ctx.putImageData(imgData, 0, 0);
+
+  return canvas.toDataURL('image/png');
+}
+
+// ─── PHASE 2: EXTRACTION ─────────────────────────────────────────────────────
 async function beginExtraction() {
   const fromInput = document.getElementById('rangeFrom');
   const toInput   = document.getElementById('rangeTo');
   const errorEl   = document.getElementById('rangeError');
   const startPage = parseInt(fromInput.value, 10);
-  const endPage   = parseInt(toInput.value,   10);
+  const endPage   = parseInt(toInput.value, 10);
 
-  // Validate
   fromInput.classList.remove('invalid');
   toInput.classList.remove('invalid');
   errorEl.style.display = 'none';
 
-  if (
-    isNaN(startPage) || isNaN(endPage) ||
-    startPage < 1 || endPage < 1 ||
-    startPage > totalNumPages || endPage > totalNumPages ||
-    startPage > endPage
-  ) {
+  if (isNaN(startPage) || isNaN(endPage) ||
+      startPage < 1 || endPage < 1 ||
+      startPage > totalNumPages || endPage > totalNumPages ||
+      startPage > endPage) {
     fromInput.classList.add('invalid');
     toInput.classList.add('invalid');
     errorEl.style.display = 'block';
     return;
   }
 
-  // Hide range panel, reset progress, begin
   document.getElementById('pageRangePanel').style.display = 'none';
   document.getElementById('statusDot').className = 'status-dot';
   document.getElementById('logConsole').innerHTML = '';
   startTime = performance.now();
+  isExtracting = true;
 
-  const pdf = loadedPdf;
   const rangeLen = endPage - startPage + 1;
+  extractedPages = new Array(rangeLen);
+  nativePages = 0; ocrPages = 0;
+  rawText = '';
+
+  // Show output section IMMEDIATELY so user can read/copy as pages arrive
+  const outputSection = document.getElementById('outputSection');
+  outputSection.style.display = 'block';
+  outputSection.classList.add('fade-up');
+  document.getElementById('outputText').innerHTML = '';
+
+  // Show stats row live
+  const statsRow = document.getElementById('statsRow');
+  statsRow.style.display = 'flex';
+  statsRow.classList.add('fade-up');
+  document.getElementById('statPages').textContent = '0';
+  document.getElementById('statPagesSub').textContent = `of ${rangeLen}`;
+  document.getElementById('statWords').textContent = '0';
+  document.getElementById('statChars').textContent = '0';
+  document.getElementById('statTime').textContent = '0s';
+  document.getElementById('statMethod').textContent = pdfMode.toUpperCase();
+  document.getElementById('statMethod').className = `stat-value method-${pdfMode === 'native' ? 'native' : pdfMode === 'ocr' ? 'ocr' : 'mixed'}`;
+  document.getElementById('statMethodSub').textContent = pdfMode === 'native' ? 'digital text' : pdfMode === 'ocr' ? 'tesseract engine' : 'hybrid mode';
+
+  // Show LIVE badge
+  document.getElementById('liveBadge').classList.add('active');
+
+  // Live timer
+  timerInterval = setInterval(() => {
+    if (isExtracting) {
+      document.getElementById('statTime').textContent = ((performance.now() - startTime)/1000).toFixed(1) + 's';
+    }
+  }, 500);
+
+  const engOnly = document.getElementById('engOnlyToggle').checked;
+  if (engOnly) addLog('English-only filter: ON', 'warn');
 
   addLog(`Extracting pages ${startPage}–${endPage} (${rangeLen} page(s))…`, 'warn');
   setProgress(5, `Scanning ${rangeLen} page(s)…`);
 
-  const engOnly = document.getElementById('engOnlyToggle').checked;
-  if (engOnly) addLog('English-only filter: ON — non-ASCII characters will be stripped', 'warn');
-
-  extractedPages = [];
-  nativePages = 0; ocrPages = 0;
+  const pdf = loadedPdf;
 
   try {
-    // ── PHASE A: NATIVE TEXT EXTRACTION ──
-    addLog('Phase 1 — Native text extraction…');
-    const nativeResults = [];
+    // ── PHASE A: NATIVE TEXT — parallel extraction ────────────────────────
+    addLog('Phase 1 — Native text extraction (parallel)…');
+
+    const nativePromises = [];
     for (let i = startPage; i <= endPage; i++) {
-      const page = await pdf.getPage(i);
-      const content = await page.getTextContent();
-      const text = content.items.map(item => item.str).join(' ').trim();
-      nativeResults.push({ page: i, pdfPage: page, text });
-      setProgress(5 + ((i - startPage + 1) / rangeLen) * 40, `Native extraction: page ${i}/${endPage}`);
+      nativePromises.push(
+        pdf.getPage(i).then(async page => {
+          const content = await page.getTextContent();
+          const text = content.items.map(item => item.str).join(' ').trim();
+          return { page: i, pdfPage: page, text };
+        })
+      );
+    }
+    const nativeResults = await Promise.all(nativePromises);
+    setProgress(45, 'Native extraction done — routing pages…');
+
+    // ── PHASE B: ROUTING ──────────────────────────────────────────────────
+    let scannedPages, textPages;
+    if (pdfMode === 'native') {
+      scannedPages = [];
+      textPages = nativeResults;
+      addLog('Native PDF — skipping OCR entirely ⚡', 'success');
+    } else if (pdfMode === 'ocr') {
+      scannedPages = nativeResults;
+      textPages = [];
+      addLog('Scanned PDF — routing all pages to OCR…', 'ocr');
+    } else {
+      scannedPages = nativeResults.filter(r => r.text.replace(/\s/g,'').length < 20);
+      textPages    = nativeResults.filter(r => r.text.replace(/\s/g,'').length >= 20);
     }
 
-    // ── PHASE B: DETECT SCANNED PAGES, RUN OCR ──
-    const scannedPages = nativeResults.filter(r => r.text.replace(/\s/g,'').length < 20);
-    const textPages    = nativeResults.filter(r => r.text.replace(/\s/g,'').length >= 20);
-
-    addLog(`Native text found on ${textPages.length} page(s)`, 'success');
-    if (scannedPages.length > 0) {
+    addLog(`Native text on ${textPages.length} page(s)`, 'success');
+    if (scannedPages.length > 0)
       addLog(`${scannedPages.length} page(s) need OCR — initializing Tesseract…`, 'ocr');
-    }
 
+    // ── PHASE C: NATIVE PAGES → output immediately ───────────────────────
+    // Sort by page number so they appear in order
+    textPages.sort((a,b) => a.page - b.page);
     for (const r of textPages) {
       const t = engOnly ? filterEnglishOnly(r.text) : r.text;
-      extractedPages[r.page - 1] = { page: r.page, text: t, method: 'native' };
+      appendPageToOutput({ page: r.page, text: t, method: 'native' });
       nativePages++;
     }
 
-    // ── PHASE C: OCR on scanned pages ──
+    // ── PHASE D: OCR pages — one by one, each appended live ──────────────
     if (scannedPages.length > 0) {
+      scannedPages.sort((a,b) => a.page - b.page);
+
       let worker;
       try {
         worker = await Tesseract.createWorker('eng', 1, { logger: () => {} });
 
         for (let idx = 0; idx < scannedPages.length; idx++) {
           const r = scannedPages[idx];
-          addLog(`OCR: rendering page ${r.page} to canvas…`, 'ocr');
+
+          // Show pending placeholder immediately
+          addPendingPage(r.page);
+          addLog(`OCR: rendering page ${r.page}…`, 'ocr');
+
           const imgDataUrl = await renderPageToImage(r.pdfPage);
-          addLog(`OCR: running recognition on page ${r.page}…`, 'ocr');
+          addLog(`OCR: recognising page ${r.page}…`, 'ocr');
+
           const result = await worker.recognize(imgDataUrl);
           const ocrText = result.data.text.trim();
           const finalText = engOnly ? filterEnglishOnly(ocrText) : ocrText;
-          extractedPages[r.page - 1] = { page: r.page, text: finalText, method: 'ocr' };
+
+          // Append this page's result LIVE
+          appendPageToOutput({ page: r.page, text: finalText, method: 'ocr' });
           ocrPages++;
-          const overallPct = 45 + ((idx + 1) / scannedPages.length) * 45;
-          setProgress(overallPct, `OCR: page ${r.page} complete (${idx+1}/${scannedPages.length})`);
-          addLog(`✓ OCR done — page ${r.page} (${ocrText.split(/\s+/).filter(Boolean).length} words)`, 'success');
+
+          const overallPct = 45 + ((idx + 1) / scannedPages.length) * 50;
+          setProgress(overallPct, `OCR: page ${r.page} done (${idx+1}/${scannedPages.length})`);
+          addLog(`✓ OCR page ${r.page} — ${ocrText.split(/\s+/).filter(Boolean).length} words`, 'success');
         }
 
         await worker.terminate();
       } catch (ocrErr) {
         addLog(`OCR error: ${ocrErr.message}`, 'error');
         for (const r of scannedPages) {
-          if (!extractedPages[r.page - 1]) {
-            extractedPages[r.page - 1] = { page: r.page, text: '[OCR failed for this page]', method: 'error' };
+          if (!extractedPages[r.page - startPage]) {
+            appendPageToOutput({ page: r.page, text: '[OCR failed for this page]', method: 'error' });
           }
         }
       }
     }
 
-    // ── ASSEMBLE FINAL TEXT ──
-    setProgress(95, 'Assembling output…');
-    rawText = extractedPages
-      .filter(Boolean)
-      .map(p => {
-        const sep = `── PAGE ${p.page} [${p.method.toUpperCase()}] ──────────────────────────`;
-        return `${sep}\n${p.text}`;
-      })
-      .join('\n\n');
-
+    // ── DONE ──────────────────────────────────────────────────────────────
     setProgress(100, 'Extraction complete!');
     document.getElementById('statusDot').className = 'status-dot done';
-    addLog(`✓ Extraction complete — ${nativePages} native, ${ocrPages} OCR`, 'success');
+    isExtracting = false;
+    clearInterval(timerInterval);
+    document.getElementById('liveBadge').classList.remove('active');
+    document.getElementById('statPagesSub').textContent = 'completed';
 
     const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
-    addLog(`Total time: ${elapsed}s`, 'warn');
+    addLog(`✓ Done — ${nativePages} native, ${ocrPages} OCR — ${elapsed}s total`, 'success');
+    document.getElementById('statTime').textContent = elapsed + 's';
 
-    showResults(rangeLen, elapsed);
+    // Update method badge now we know exact split
+    const methodEl = document.getElementById('statMethod');
+    const methodSubEl = document.getElementById('statMethodSub');
+    if (ocrPages === 0) {
+      methodEl.textContent = 'NATIVE'; methodEl.className = 'stat-value method-native';
+      methodSubEl.textContent = 'digital text';
+    } else if (nativePages === 0) {
+      methodEl.textContent = 'OCR'; methodEl.className = 'stat-value method-ocr';
+      methodSubEl.textContent = 'tesseract engine';
+    } else {
+      methodEl.textContent = 'HYBRID'; methodEl.className = 'stat-value method-mixed';
+      methodSubEl.textContent = `${nativePages} native · ${ocrPages} OCR`;
+    }
+
+    document.getElementById('resetBtn').style.display = 'block';
 
   } catch (err) {
+    isExtracting = false;
+    clearInterval(timerInterval);
+    document.getElementById('liveBadge').classList.remove('active');
     document.getElementById('statusDot').className = 'status-dot error';
     addLog(`Fatal error: ${err.message}`, 'error');
     setProgress(100, 'Error occurred');
   }
 }
 
-// ─── RENDER PDF PAGE TO IMAGE (for OCR) ─────────────────────────────────────
-async function renderPageToImage(pdfPage, scale = 2.0) {
-  const viewport = pdfPage.getViewport({ scale });
-  const canvas = document.createElement('canvas');
-  canvas.width = viewport.width;
-  canvas.height = viewport.height;
-  const ctx = canvas.getContext('2d');
-  await pdfPage.render({ canvasContext: ctx, viewport }).promise;
-  return canvas.toDataURL('image/png');
-}
-
-// ─── SHOW RESULTS ────────────────────────────────────────────────────────────
-function showResults(numPages, elapsed) {
-  const words = rawText.split(/\s+/).filter(Boolean).length;
-  const chars = rawText.length;
-
-  // Stats
-  document.getElementById('statPages').textContent = numPages;
-  document.getElementById('statWords').textContent = words.toLocaleString();
-  document.getElementById('statChars').textContent = chars.toLocaleString();
-  document.getElementById('statTime').textContent = elapsed + 's';
-
-  const methodEl = document.getElementById('statMethod');
-  const methodSubEl = document.getElementById('statMethodSub');
-  if (ocrPages === 0) {
-    methodEl.textContent = 'NATIVE';
-    methodEl.className = 'stat-value method-native';
-    methodSubEl.textContent = 'digital text';
-  } else if (nativePages === 0) {
-    methodEl.textContent = 'OCR';
-    methodEl.className = 'stat-value method-ocr';
-    methodSubEl.textContent = 'tesseract engine';
-  } else {
-    methodEl.textContent = 'HYBRID';
-    methodEl.className = 'stat-value method-mixed';
-    methodSubEl.textContent = `${nativePages} native · ${ocrPages} OCR`;
-  }
-
-  const statsRow = document.getElementById('statsRow');
-  statsRow.style.display = 'flex';
-  statsRow.classList.add('fade-up');
-
-  // Output
-  renderOutput();
-  const outputSection = document.getElementById('outputSection');
-  outputSection.style.display = 'block';
-  outputSection.classList.add('fade-up');
-
-  document.getElementById('resetBtn').style.display = 'block';
-}
-
-// ─── RENDER OUTPUT ───────────────────────────────────────────────────────────
-function renderOutput() {
+// ─── SEARCH ──────────────────────────────────────────────────────────────────
+function searchText(query) {
+  // Re-render from extractedPages so we can highlight
   const container = document.getElementById('outputText');
   container.innerHTML = '';
-
   for (const page of extractedPages) {
     if (!page) continue;
     const sep = document.createElement('span');
     sep.className = 'page-sep';
-    const methodColor = page.method === 'native' ? '#10b981' : page.method === 'ocr' ? '#a78bfa' : '#ef4444';
-    sep.innerHTML = `── PAGE ${page.page} &nbsp;<span style="color:${methodColor}">[${page.method.toUpperCase()}]</span> ──────────────────────────────`;
+    const mc = page.method === 'native' ? '#10b981' : page.method === 'ocr' ? '#a78bfa' : '#ef4444';
+    sep.innerHTML = `── PAGE ${page.page} &nbsp;<span style="color:${mc}">[${page.method.toUpperCase()}]</span> ──────────────────────────────`;
     container.appendChild(sep);
-
-    const textNode = document.createTextNode('\n' + page.text + '\n\n');
-    container.appendChild(textNode);
+    const tn = document.createTextNode('\n' + page.text + '\n\n');
+    container.appendChild(tn);
   }
-}
 
-// ─── SEARCH ──────────────────────────────────────────────────────────────────
-function searchText(query) {
-  renderOutput(); // re-render clean
   const countEl = document.getElementById('searchCount');
   if (!query || query.length < 2) { countEl.textContent = ''; return; }
 
-  const container = document.getElementById('outputText');
-  const html = container.innerHTML;
-
-  // Escape regex
   const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const regex = new RegExp(escaped, 'gi');
   let count = 0;
-
   container.innerHTML = container.innerHTML.replace(regex, match => {
     count++;
-    const cls = count === 1 ? 'highlight active' : 'highlight';
-    return `<mark class="${cls}">${match}</mark>`;
+    return `<mark class="highlight${count === 1 ? ' active' : ''}">${match}</mark>`;
   });
-
   countEl.textContent = count > 0 ? `${count} match${count > 1 ? 'es' : ''}` : 'no matches';
 }
 
-// ─── COPY ────────────────────────────────────────────────────────────────────
+// ─── COPY — works at ANY time during extraction ───────────────────────────────
 async function copyText() {
+  if (!rawText) return;
   try {
     await navigator.clipboard.writeText(rawText);
     const btn = document.getElementById('copyBtn');
     btn.classList.add('copied');
-    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    const pagesDone = extractedPages.filter(Boolean).length;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied${isExtracting ? ` (${pagesDone} pages)` : ''}!`;
     setTimeout(() => {
       btn.classList.remove('copied');
       btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy All`;
@@ -1115,6 +1308,7 @@ async function copyText() {
 
 // ─── DOWNLOAD ────────────────────────────────────────────────────────────────
 function downloadTxt() {
+  if (!rawText) return;
   const blob = new Blob([rawText], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1122,10 +1316,14 @@ function downloadTxt() {
   a.click(); URL.revokeObjectURL(url);
 }
 
-// ─── RESET ───────────────────────────────────────────────────────────────────
+// ─── RESET ────────────────────────────────────────────────────────────────────
 function resetUI() {
   rawText = ''; extractedPages = []; nativePages = 0; ocrPages = 0;
-  loadedPdf = null; totalNumPages = 0;
+  loadedPdf = null; totalNumPages = 0; pdfMode = 'hybrid';
+  isExtracting = false;
+  clearInterval(timerInterval);
+  document.getElementById('pdfModeRow').style.display = 'none';
+  document.getElementById('pdfModeBadge').className = 'pdf-mode-badge';
   document.getElementById('logConsole').innerHTML = '';
   document.getElementById('outputText').innerHTML = '';
   document.getElementById('searchInput').value = '';
@@ -1142,6 +1340,7 @@ function resetUI() {
   document.getElementById('toggleBadge').textContent = 'OFF';
   document.getElementById('toggleBadge').classList.remove('active');
   document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('liveBadge').classList.remove('active');
   fileInput.value = '';
 }
 
