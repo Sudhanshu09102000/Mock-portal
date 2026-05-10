@@ -3720,12 +3720,17 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         const area = $('optionsArea');
         area.innerHTML = '';
+        let displayCounter = 0;
         opts.forEach((optHtml, i) => {
-          const metaId = String(i + 1); // displayed position
+          // Skip blank options — if the option text is empty, don't render a box
+          if (!optHtml || !String(optHtml).trim()) return;
+          displayCounter++;
+          const metaId = String(i + 1); // displayed position (keep original metaId for correct-answer logic)
+          const dispLabel = String(displayCounter);
           const div = document.createElement('div');
           div.className = 'option';
           div.setAttribute('data-meta', metaId);
-          div.innerHTML = `<span class="kbd">${metaId}</span><span class="opt-text">${optHtml}</span>`;
+          div.innerHTML = `<span class="kbd">${dispLabel}</span><span class="opt-text">${optHtml}</span>`;
           div.addEventListener('click', () => selectOption(metaId));
 
           area.appendChild(div);
@@ -6737,6 +6742,16 @@ function buildUI() {
       <div id="bmPlayerList"></div>
       <div id="bmHostCtrl" style="display:none;margin-top:12px;">
         <div id="bmTestStatus" class="bm-warn">⏳ Checking test status...</div>
+        <!-- ⏱ Optional per-question time limit (host only) -->
+        <div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(250,204,21,.07);border:1px solid rgba(250,204,21,.25);">
+          <label class="bm-label" style="font-size:12px;color:#fde68a;margin-bottom:6px;display:block;">⏱ Time Limit per Question <span style="font-weight:400;opacity:.65;">(optional)</span></label>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <input id="bmTimePerQ" class="bm-input" type="number" min="5" max="300" placeholder="seconds — leave blank = no limit"
+              style="flex:1;padding:7px 10px;font-size:13px;border-color:rgba(250,204,21,.35);background:rgba(250,204,21,.06);color:#fde68a;"/>
+            <span style="font-size:11px;color:rgba(253,230,138,.55);white-space:nowrap;">sec</span>
+          </div>
+          <div style="font-size:10.5px;color:rgba(253,230,138,.45);margin-top:5px;">When time runs out, question auto-advances for all players.</div>
+        </div>
         <button class="bm-btn bm-green bm-full" id="bmStartBtn" style="margin-top:10px;font-size:16px;padding:13px;">
           🚀 Start Battle!
         </button>
@@ -6762,6 +6777,7 @@ function buildUI() {
       <span class="bm-qbar-label" id="bmQLabel">Q 1/?</span>
       <span class="bm-qbar-timer" id="bmQTimer">0.0s</span>
       <span class="bm-qbar-score" id="bmMyScore">Score: 0</span>
+      <span id="bmTimePerQDisplay" style="display:none;font-size:12px;font-weight:700;padding:3px 9px;border-radius:8px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.12);color:#fde68a;letter-spacing:.3px;"></span>
       <span style="font-size:9px;color:rgba(180,200,255,.4);letter-spacing:.5px;display:none;" class="bm-kbd-hint d-none d-sm-inline">⌨ 1-4 to select</span>
       <button id="bmChatToggleBtn" onclick="toggleChat()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(6,182,212,.45);background:rgba(6,182,212,.1);color:#06b6d4;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Open battle chat">💬 Chat</button>
       <button id="bmSkipBtn" onclick="bmSkipQuestion()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.1);color:#facc15;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Send this question to the end of the queue">⏭ Skip →end</button>
@@ -7002,6 +7018,13 @@ async function doStart() {
   }
 
   // All good — fire!
+  const tpqInput = document.getElementById('bmTimePerQ');
+  const timePerQ = tpqInput ? (parseInt(tpqInput.value) || 0) : 0;
+  if (timePerQ > 0) {
+    await dbSet(`battle_rooms/${B.roomCode}/timePerQ`, timePerQ);
+  } else {
+    await dbSet(`battle_rooms/${B.roomCode}/timePerQ`, null);
+  }
   await dbSet(`battle_rooms/${B.roomCode}/status`, 'started');
   beginBattle();
 }
@@ -7024,13 +7047,22 @@ async function doLeave() {
 }
 
 // ── BEGIN BATTLE ──────────────────────────────────────────────────────────────
-function beginBattle() {
+async function beginBattle() {
   B.active      = true;
   B.battleIndex = 0;       // which question we're on in battle
   B.answered    = false;
   B.onceskipped = new Set();   // qids that have already been sent to end once
   B.timeSpent   = {};          // cumulative seconds spent per qid
+  B.timePerQ    = 0;           // per-question time limit (0 = no limit)
   closeModal();
+
+  // Read timePerQ from Firebase (works for both host and guests)
+  if (B.db && B.roomCode) {
+    try {
+      const snap = await B.db.ref(`battle_rooms/${B.roomCode}/timePerQ`).once('value');
+      B.timePerQ = parseInt(snap.val()) || 0;
+    } catch(_) { B.timePerQ = 0; }
+  }
 
   // Build the shuffled question order for this battle (use engine's qIds)
   const es = window.state;
@@ -7111,6 +7143,18 @@ function bmShowQuestion(idx) {
 
   // ── Per-question timer tick ──
   if (B._timerInterval) clearInterval(B._timerInterval);
+
+  // Show/hide per-question countdown display
+  const tpqDisplay = document.getElementById('bmTimePerQDisplay');
+  if (tpqDisplay) {
+    if (B.timePerQ > 0) {
+      tpqDisplay.style.display = 'inline-block';
+      tpqDisplay.textContent = `⏱ ${B.timePerQ}s`;
+    } else {
+      tpqDisplay.style.display = 'none';
+    }
+  }
+
   B._timerInterval = setInterval(() => {
     if (B.answered) return;
     const elapsed = (Date.now() - B.qStartTime) / 1000;
@@ -7119,6 +7163,45 @@ function bmShowQuestion(idx) {
       el.textContent = elapsed.toFixed(1) + 's';
       el.className = 'bm-qbar-timer' +
         (elapsed > 8 ? ' bm-timer-hot' : elapsed > 5 ? ' bm-timer-warn' : '');
+    }
+
+    // ── Per-question time limit countdown ──
+    if (B.timePerQ > 0) {
+      const remaining = B.timePerQ - elapsed;
+      if (tpqDisplay) {
+        if (remaining <= 0) {
+          tpqDisplay.textContent = '⏱ 0s';
+          tpqDisplay.style.color = '#f87171';
+          tpqDisplay.style.borderColor = 'rgba(239,68,68,.6)';
+          tpqDisplay.style.background = 'rgba(239,68,68,.15)';
+        } else {
+          const r = Math.ceil(remaining);
+          tpqDisplay.textContent = `⏱ ${r}s`;
+          if (r <= 5) {
+            tpqDisplay.style.color = '#f87171';
+            tpqDisplay.style.borderColor = 'rgba(239,68,68,.55)';
+            tpqDisplay.style.background = 'rgba(239,68,68,.13)';
+          } else if (r <= 10) {
+            tpqDisplay.style.color = '#fb923c';
+            tpqDisplay.style.borderColor = 'rgba(251,146,60,.5)';
+            tpqDisplay.style.background = 'rgba(251,146,60,.1)';
+          } else {
+            tpqDisplay.style.color = '#fde68a';
+            tpqDisplay.style.borderColor = 'rgba(250,204,21,.45)';
+            tpqDisplay.style.background = 'rgba(250,204,21,.12)';
+          }
+        }
+      }
+      // Time's up — auto-advance (treat as unanswered/skipped)
+      if (remaining <= 0) {
+        clearInterval(B._timerInterval);
+        B._timerInterval = null;
+        B.answered = true;
+        // Flash timeout badge
+        _bmShowSkipBadge('⏰ Time\'s up!', '#f87171', 'rgba(239,68,68,.16)', 'rgba(239,68,68,.45)');
+        // No score change — just move on
+        setTimeout(() => { B.answered = false; bmShowQuestion(idx + 1); }, 700);
+      }
     }
   }, 100);
 
@@ -7157,15 +7240,20 @@ function bmShowQuestion(idx) {
     wrap.appendChild(img);
   }
 
-  // Options
+  // Options — skip blank ones
   const keys = ['A','B','C','D'];
   const nums = ['1','2','3','4'];
+  let bmDispCounter = 0;
   sh.order.forEach((origIdx, displayPos) => {
     const metaId  = String(displayPos + 1);
     const optHtml = q.options[origIdx] || '';
+    // If the option text is empty/blank, skip rendering the button
+    if (!optHtml || !String(optHtml).trim()) return;
+    const dispNum = String(++bmDispCounter);
+    const dispKey = keys[bmDispCounter - 1] || dispNum;
     const btn = document.createElement('button');
     btn.className = 'bm-opt';
-    btn.innerHTML = `<span class="bm-opt-key" title="Press ${nums[displayPos]}">${nums[displayPos]}</span><span class="bm-opt-letter" style="font-size:10px;opacity:.5;margin-right:4px;">${keys[displayPos]}</span><span>${optHtml}</span>`;
+    btn.innerHTML = `<span class="bm-opt-key" title="Press ${dispNum}">${dispNum}</span><span class="bm-opt-letter" style="font-size:10px;opacity:.5;margin-right:4px;">${dispKey}</span><span>${optHtml}</span>`;
     btn.onclick = () => bmSelectOption(metaId, sh.correctMetaId, idx);
     wrap.appendChild(btn);
   });
