@@ -1,17 +1,6 @@
 const PORTAL_DATA = [
 
-  {
-    title: "For testing purpose",
-    colorClass: "testing",
-    topics: [
-      {
-        name: "testing",
-        subtopics: [
-          { name: "Name of test", file: "test" },
-        ]
-      }
-    ]
-  },
+  
   {
     title: "General Intelligence & Reasoning",
     colorClass: "reasoning",
@@ -57,87 +46,61 @@ const PORTAL_DATA = [
       },
 
       {
-        name: "Ancient History",
+        name: "History",
         subtopics: [
           { name: "Historical Sources of Ancient India", file: "historical-sources-of-ancient-india" },
-{ name: "Prehistoric Period", file: "prehistoric-period" },
-{ name: "Indus Valley Civilization", file: "indus-valley-civilization" },
-{ name: "Vedic Age", file: "vedic-age" },
-{ name: "Mahajanapadas, Rise of Magadha, Pre-Mauryan Empires", file: "mahajanapadas-rise-of-magadha-pre-mauryan-empires" },
-{ name: "Foreign Invasions on Ancient India", file: "foreign-invasions-on-ancient-india" },
-{ name: "The Maurya Empire (322-185 BC)", file: "the-maurya-empire" },
-{ name: "Post-Mauryan Period", file: "post-mauryan-period" },
-{ name: "Religious Movement in Ancient India (Jainism)", file: "religious-movement-ancient-india-jainism" },
-{ name: "Religious Movement in Ancient India (Buddhism)", file: "religious-movement-ancient-india-buddhism" },
-{ name: "Gupta Empire", file: "gupta-empire" },
-{ name: "Post Gupta Period / Pre Medieval Period", file: "post-gupta-period-pre-medieval-period" },
-{ name: "Other Later-Gupta Dynasties", file: "other-later-gupta-dynasties" },
-{ name: "Sangam Period", file: "sangam-period" },
-{ name: "Kingdom of South India", file: "kingdom-of-south-india" },
-{ name: "Medieval India - The Conquest of Sindh by the Arabs", file: "conquest-of-sindh-by-the-arabs" },
-{ name: "Sources of Medieval Indian History", file: "sources-of-medieval-indian-history" },
-{ name: "Invasion of the Turks", file: "invasion-of-the-turks" },
-{ name: "Delhi Sultanate (1206-1526 CE)", file: "delhi-sultanate" },
-{ name: "Khilji Dynasty (1290-1320 CE)", file: "khilji-dynasty" },
-{ name: "Tughlaq Dynasty (1320-1414 CE)", file: "tughlaq-dynasty" },
-{ name: "Sayyid Dynasty (1414-1451 CE)", file: "sayyid-dynasty" },
-{ name: "Lodi Dynasty (1451-1526 CE)", file: "lodi-dynasty" },
-{ name: "Disintegration of the Delhi Sultanate and Rise of Provincial Kingdoms", file: "disintegration-delhi-sultanate-rise-of-provincial-kingdoms" },
-{ name: "Mughal Period - Babur (1526-1530 CE)", file: "mughal-period-babur" },
-{ name: "Humayun (1530-40, 1555-56 CE)", file: "humayun" },
-{ name: "Jalaluddin Muhammad Akbar (1556-1605)", file: "akbar" },
-{ name: "Jahangir (1605-1627)", file: "jahangir" },
-{ name: "Shah Jahan (1627-1658)", file: "shah-jahan" },
-{ name: "Aurangzeb (1658-1707)", file: "aurangzeb" },
-{ name: "Post Mughal Period", file: "post-mughal-period" },
-{ name: "Sufi & Bhakti Movement", file: "sufi-and-bhakti-movement" },
-{ name: "Administrative Structure", file: "administrative-structure" },
-{ name: "Maratha Empire", file: "maratha-empire" },
-{ name: "Advent of Europeans", file: "advent-of-europeans" },
-{ name: "New Autonomous States in the 18th Century", file: "new-autonomous-states-18th-century" },
-{ name: "The British Conquest of India", file: "british-conquest-of-india" },
-{ name: "Expansion of British Power in India", file: "expansion-of-british-power-in-india" },
-{ name: "Economic & Administrative Policies During British Period", file: "economic-administrative-policies-british-period" },
-{ name: "Socio-Religious Reform Movements", file: "socio-religious-reform-movements" },
-{ name: "Peasant, Tribal & Other Movements During British Period", file: "peasant-tribal-movements-british-period" },
-{ name: "Revolt of 1857 / First War of Independence", file: "revolt-of-1857" },
-{ name: "The Development of Political Consciousness in India", file: "development-of-political-consciousness" },
-{ name: "Rise of Indian Nationalism / National Movement", file: "rise-of-indian-nationalism" },
-{ name: "2nd Phase of Indian National Movement (1905-1916)", file: "2nd-phase-indian-national-movement" },
-{ name: "Emergence of Gandhi / Last Phase of National Movement (1919-1947)", file: "emergence-of-gandhi-last-phase-national-movement" },
-{ name: "Revolutionary Extremism / Activities", file: "revolutionary-extremism" },
-{ name: "Freedom Struggle in the 1920s & 1930s", file: "freedom-struggle-1920s-1930s" },
-{ name: "Freedom with Partition / National Movement of 1940s", file: "freedom-with-partition-1940s" },
-{ name: "Governor Generals & Viceroys", file: "governor-generals-and-viceroys" },
+          { name: "Prehistoric Period", file: "prehistoric-period" },
+          { name: "Indus Valley Civilization", file: "indus-valley-civilization" },
+          { name: "Vedic Age", file: "vedic-age" },
+          { name: "Mahajanapadas, Rise of Magadha, Pre-Mauryan Empires", file: "mahajanapadas-rise-of-magadha-pre-mauryan-empires" },
+          { name: "Foreign Invasions on Ancient India", file: "foreign-invasions-on-ancient-india" },
+          { name: "The Maurya Empire (322-185 BC)", file: "the-maurya-empire" },
+          { name: "Post-Mauryan Period", file: "post-mauryan-period" },
+          { name: "Religious Movement in Ancient India (Jainism)", file: "religious-movement-ancient-india-jainism" },
+          { name: "Religious Movement in Ancient India (Buddhism)", file: "religious-movement-ancient-india-buddhism" },
+          { name: "Gupta Empire", file: "gupta-empire" },
+          { name: "Post Gupta Period / Pre Medieval Period", file: "post-gupta-period-pre-medieval-period" },
+          { name: "Other Later-Gupta Dynasties", file: "other-later-gupta-dynasties" },
+          { name: "Sangam Period", file: "sangam-period" },
+          { name: "Kingdom of South India", file: "kingdom-of-south-india" },
+          { name: "Medieval India - The Conquest of Sindh by the Arabs", file: "conquest-of-sindh-by-the-arabs" },
+          { name: "Sources of Medieval Indian History", file: "sources-of-medieval-indian-history" },
+          { name: "Invasion of the Turks", file: "invasion-of-the-turks" },
+          { name: "Delhi Sultanate (1206-1526 CE)", file: "delhi-sultanate" },
+          { name: "Khilji Dynasty (1290-1320 CE)", file: "khilji-dynasty" },
+          { name: "Tughlaq Dynasty (1320-1414 CE)", file: "tughlaq-dynasty" },
+          { name: "Sayyid Dynasty (1414-1451 CE)", file: "sayyid-dynasty" },
+          { name: "Lodi Dynasty (1451-1526 CE)", file: "lodi-dynasty" },
+          { name: "Disintegration of the Delhi Sultanate and Rise of Provincial Kingdoms", file: "disintegration-delhi-sultanate-rise-of-provincial-kingdoms" },
+          { name: "Mughal Period - Babur (1526-1530 CE)", file: "mughal-period-babur" },
+          { name: "Humayun (1530-40, 1555-56 CE)", file: "humayun" },
+          { name: "Jalaluddin Muhammad Akbar (1556-1605)", file: "akbar" },
+          { name: "Jahangir (1605-1627)", file: "jahangir" },
+          { name: "Shah Jahan (1627-1658)", file: "shah-jahan" },
+          { name: "Aurangzeb (1658-1707)", file: "aurangzeb" },
+          { name: "Post Mughal Period", file: "post-mughal-period" },
+          { name: "Sufi & Bhakti Movement", file: "sufi-and-bhakti-movement" },
+          { name: "Administrative Structure", file: "administrative-structure" },
+          { name: "Maratha Empire", file: "maratha-empire" },
+          { name: "Advent of Europeans", file: "advent-of-europeans" },
+          { name: "New Autonomous States in the 18th Century", file: "new-autonomous-states-18th-century" },
+          { name: "The British Conquest of India", file: "british-conquest-of-india" },
+          { name: "Expansion of British Power in India", file: "expansion-of-british-power-in-india" },
+          { name: "Economic & Administrative Policies During British Period", file: "economic-administrative-policies-british-period" },
+          { name: "Socio-Religious Reform Movements", file: "socio-religious-reform-movements" },
+          { name: "Peasant, Tribal & Other Movements During British Period", file: "peasant-tribal-movements-british-period" },
+          { name: "Revolt of 1857 / First War of Independence", file: "revolt-of-1857" },
+          { name: "The Development of Political Consciousness in India", file: "development-of-political-consciousness" },
+          { name: "Rise of Indian Nationalism / National Movement", file: "rise-of-indian-nationalism" },
+          { name: "2nd Phase of Indian National Movement (1905-1916)", file: "2nd-phase-indian-national-movement" },
+          { name: "Emergence of Gandhi / Last Phase of National Movement (1919-1947)", file: "emergence-of-gandhi-last-phase-national-movement" },
+          { name: "Revolutionary Extremism / Activities", file: "revolutionary-extremism" },
+          { name: "Freedom Struggle in the 1920s & 1930s", file: "freedom-struggle-1920s-1930s" },
+          { name: "Freedom with Partition / National Movement of 1940s", file: "freedom-with-partition-1940s" },
+          { name: "Governor Generals & Viceroys", file: "governor-generals-and-viceroys" },
         ]
       },
-
-      {
-        name: "Medieval History",
-        subtopics: [
-          { name: "Delhi Sultanate", file: "delhi-sultanate" },
-          { name: "Vijayanagara and Bahmani Kingdom", file: "vijayanagara-bahmani" },
-          { name: "Mughal Empire", file: "mughal-empire" },
-          { name: "Marathas", file: "marathas" },
-          { name: "Bhakti and Sufi Movements", file: "bhakti-sufi-movements" }
-        ]
-      },
-
-      {
-        name: "Modern History",
-        subtopics: [
-          { name: "Advent of Europeans", file: "advent-europeans" },
-          { name: "Socio Religious Reforms", file: "socio-religious-reforms" },
-          { name: "Revolt of 1857", file: "revolt-1857" },
-          { name: "Indian National Congress", file: "indian-national-congress" },
-          { name: "Bengal Partition", file: "bengal-partition" },
-          { name: "Gandhian Era", file: "gandhian-era" },
-          { name: "CDM and Simon Commission", file: "cdm-simon-commission" },
-          { name: "Quit India Movement", file: "quit-india-movement" },
-          { name: "Governor General and Viceroy", file: "governor-general-viceroy" }
-        ]
-      },
-
+      
       {
         name: "Polity",
         subtopics: [
