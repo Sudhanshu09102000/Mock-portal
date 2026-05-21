@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="theme-color" content="#0d1117" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -22,15 +22,15 @@
 
   <style>
     :root {
-      --bg1: #0b1020;
-      --bg2: #1a0b2e;
-      --glass: rgba(255, 255, 255, .10);
-      --glass2: rgba(255, 255, 255, .06);
-      --stroke: rgba(255, 255, 255, .18);
-      --txt: #eaf0ff;
-      --muted: rgba(234, 240, 255, .75);
-      --shadow: 0 10px 30px rgba(0, 0, 0, .35);
-      --purple: #8b5cf6;
+      --bg1: #0d1117;
+      --bg2: #111827;
+      --glass: rgba(255, 255, 255, .07);
+      --glass2: rgba(255, 255, 255, .04);
+      --stroke: rgba(255, 255, 255, .12);
+      --txt: #f1f5f9;
+      --muted: rgba(241, 245, 249, .70);
+      --shadow: 0 8px 24px rgba(0, 0, 0, .40);
+      --purple: #3b82f6;
       --green: #22c55e;
       --red: #ef4444;
       --yellow: #facc15;
@@ -40,10 +40,8 @@
     body {
       min-height: 100vh;
       color: var(--txt);
-
-      /* ✅ NO glow patch now */
-      background: linear-gradient(120deg, var(--bg1), var(--bg2));
-
+      /* Clean solid dark — no purple tint, easy on eyes */
+      background: #0d1117;
       overflow-x: hidden;
     }
 
@@ -110,7 +108,7 @@
     }
 
     .c-english {
-      --accent: #a78bfa;
+      --accent: #93c5fd;
     }
 
     .c-computer {
@@ -193,7 +191,7 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      background: rgba(10, 12, 20, .55);
+      background: rgba(13, 17, 23, .55);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255, 255, 255, .12);
     }
@@ -208,7 +206,7 @@
 
 
     .progress-bar {
-      background: linear-gradient(90deg, #22c55e, #a78bfa, #38bdf8);
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
     }
 
     .qbox {
@@ -252,8 +250,8 @@
     }
 
     .option.selected {
-      border-color: rgba(139, 92, 246, .75);
-      box-shadow: 0 0 0 2px rgba(139, 92, 246, .18) inset, 0 10px 25px rgba(0, 0, 0, .25);
+      border-color: rgba(59, 130, 246, .75);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, .18) inset, 0 10px 25px rgba(0, 0, 0, .25);
     }
 
     .option.selected::after {
@@ -358,7 +356,7 @@
       place-items: center;
       border: 1.5px solid rgba(255,255,255,.15);
       background: rgba(255,255,255,.04);
-      color: rgba(234,240,255,.7);
+      color: rgba(241, 245, 249,.7);
       font-size: 13px;
       font-weight: 600;
       transition: transform .14s ease, box-shadow .14s ease, background .14s ease, border-color .14s ease;
@@ -367,16 +365,16 @@
 
     .qdot:hover {
       transform: translateY(-2px) scale(1.08);
-      border-color: rgba(6,182,212,.6);
-      box-shadow: 0 0 12px rgba(6,182,212,.25);
+      border-color: rgba(59, 130, 246,.6);
+      box-shadow: 0 0 12px rgba(59, 130, 246,.25);
     }
 
     /* ── Current (active) question ── */
     .qdot.current {
-      border-color: rgba(139, 92, 246, .95) !important;
-      box-shadow: 0 0 0 2px rgba(139, 92, 246, .28) inset, 0 0 22px rgba(139, 92, 246, .4) !important;
-      background: rgba(139, 92, 246, .22) !important;
-      color: #e0d4ff !important;
+      border-color: rgba(59, 130, 246, .95) !important;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, .28) inset, 0 0 22px rgba(59, 130, 246, .4) !important;
+      background: rgba(59, 130, 246, .22) !important;
+      color: #dbeafe !important;
     }
 
     /* ── BEFORE SUBMIT states ── */
@@ -414,7 +412,7 @@
     .qdot.st-skipped {
       background: rgba(100, 116, 139, .18) !important;
       border-color: rgba(100, 116, 139, .5) !important;
-      color: rgba(234,240,255,.45) !important;
+      color: rgba(241, 245, 249,.45) !important;
     }
 
     /* ── AFTER SUBMIT final result colors ── */
@@ -434,8 +432,8 @@
 
     .qdot.st-final-unattempted {
       background: rgba(100, 116, 139, .20) !important;
-      border-color: rgba(148, 163, 184, .55) !important;
-      color: rgba(234,240,255,.4) !important;
+      border-color: rgba(100, 116, 139, .55) !important;
+      color: rgba(241, 245, 249,.4) !important;
     }
 
 
@@ -447,7 +445,7 @@
       padding: .7rem .8rem;
       border-radius: 14px;
       border: 1px solid rgba(255, 255, 255, .18);
-      background: rgba(10, 12, 20, .75);
+      background: rgba(13, 17, 23, .75);
       backdrop-filter: blur(10px);
       display: none;
       pointer-events: none;
@@ -502,7 +500,7 @@
       height: 64px;
       border-radius: 18px;
       border: 1px solid rgba(255, 255, 255, .22);
-      background: linear-gradient(135deg, rgba(139, 92, 246, .28), rgba(56, 189, 248, .18));
+      background: linear-gradient(135deg, rgba(59, 130, 246, .28), rgba(56, 189, 248, .18));
       color: #fff;
       font-weight: 900;
       font-size: 34px;
@@ -560,7 +558,7 @@
       padding: .75rem .85rem;
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, .18);
-      background: rgba(10, 12, 20, .86);
+      background: rgba(13, 17, 23, .86);
       backdrop-filter: blur(12px);
       box-shadow: 0 18px 40px rgba(0, 0, 0, .45);
       display: none;
@@ -574,7 +572,7 @@
       bottom: -10px;
       width: 18px;
       height: 18px;
-      background: rgba(10, 12, 20, .86);
+      background: rgba(13, 17, 23, .86);
       border-right: 1px solid rgba(255, 255, 255, .18);
       border-bottom: 1px solid rgba(255, 255, 255, .18);
       transform: rotate(45deg);
@@ -587,7 +585,7 @@
     }
 
     .qmark-pop .sub {
-      color: rgba(234, 240, 255, .82);
+      color: rgba(241, 245, 249, .82);
       font-size: 13px;
       line-height: 1.35;
     }
@@ -596,7 +594,7 @@
     .inline-hint-panel {
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, .18);
-      background: rgba(10, 12, 20, .55);
+      background: rgba(13, 17, 23, .55);
       backdrop-filter: blur(10px);
       box-shadow: 0 14px 35px rgba(0, 0, 0, .32);
       padding: 1rem;
@@ -1147,7 +1145,7 @@
       justify-content: center;
 
       border: 1px solid rgba(255, 255, 255, .20);
-      background: linear-gradient(135deg, rgba(139, 92, 246, .35), rgba(56, 189, 248, .18));
+      background: linear-gradient(135deg, rgba(59, 130, 246, .35), rgba(56, 189, 248, .18));
       box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
       transition: transform .15s ease, filter .15s ease;
     }
@@ -1342,31 +1340,23 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Enhanced CSS Variables ── */
 :root {
-  --c-cyan: #06b6d4;
-  --c-purple: #7c3aed;
+  --c-cyan: #3b82f6;
+  --c-purple: #2563eb;
   --c-blue: #3b82f6;
   --c-green: #22c55e;
   --c-red: #ef4444;
-  --glow-cyan: 0 0 20px rgba(6,182,212,.45), 0 0 60px rgba(6,182,212,.15);
-  --glow-purple: 0 0 20px rgba(124,58,237,.45), 0 0 60px rgba(124,58,237,.15);
+  --glow-cyan: 0 0 20px rgba(59, 130, 246,.45), 0 0 60px rgba(59, 130, 246,.15);
+  --glow-purple: 0 0 20px rgba(37, 99, 235,.45), 0 0 60px rgba(37, 99, 235,.15);
   --glow-green: 0 0 20px rgba(34,197,94,.45);
   --glow-red: 0 0 20px rgba(239,68,68,.45);
-  --hud-gradient: linear-gradient(135deg, rgba(6,182,212,.08), rgba(124,58,237,.08));
+  --hud-gradient: linear-gradient(135deg, rgba(59, 130, 246,.08), rgba(37, 99, 235,.08));
 }
 
-/* ── Animated Gradient Background ── */
+/* ── Clean Solid Background — no animation, no purple tint ── */
 body {
-  background: linear-gradient(225deg,
-    #050714 0%,
-    #0b1020 35%,
-    #0d0620 65%,
-    #050714 100%) !important;
-  background-size: 400% 400% !important;
-  animation: bgShift 18s ease infinite !important;
-}
-@keyframes bgShift {
-  0%,100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  background: #0d1117 !important;
+  background-size: unset !important;
+  animation: none !important;
 }
 
 /* ── Particle Canvas (re-enable) ── */
@@ -1374,13 +1364,13 @@ body {
 
 /* ── Brand Title - Neon Glow ── */
 .brand-title {
-  background: linear-gradient(90deg, #e0e7ff, #06b6d4, #7c3aed, #e0e7ff);
+  background: linear-gradient(90deg, #e0e7ff, #3b82f6, #2563eb, #e0e7ff);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: titleShimmer 4s linear infinite;
   font-size: clamp(1.6rem, 4vw, 2.4rem) !important;
-  filter: drop-shadow(0 0 12px rgba(6,182,212,.4));
+  filter: drop-shadow(0 0 12px rgba(59, 130, 246,.4));
 }
 @keyframes titleShimmer {
   0% { background-position: 0% center; }
@@ -1390,10 +1380,10 @@ body {
 /* ── Glass Cards - Enhanced ── */
 .glass {
   background: linear-gradient(135deg,
-    rgba(6,182,212,.07) 0%,
-    rgba(124,58,237,.07) 50%,
+    rgba(59, 130, 246,.07) 0%,
+    rgba(37, 99, 235,.07) 50%,
     rgba(255,255,255,.04) 100%) !important;
-  border: 1px solid rgba(6,182,212,.2) !important;
+  border: 1px solid rgba(59, 130, 246,.2) !important;
   box-shadow:
     0 10px 40px rgba(0,0,0,.4),
     inset 0 1px 0 rgba(255,255,255,.08) !important;
@@ -1401,8 +1391,8 @@ body {
   transition: border-color .25s ease, box-shadow .25s ease !important;
 }
 .glass:hover {
-  border-color: rgba(6,182,212,.38) !important;
-  box-shadow: 0 14px 50px rgba(0,0,0,.5), 0 0 25px rgba(6,182,212,.08) !important;
+  border-color: rgba(59, 130, 246,.38) !important;
+  box-shadow: 0 14px 50px rgba(0,0,0,.5), 0 0 25px rgba(59, 130, 246,.08) !important;
 }
 
 /* ── Subject Cards ── */
@@ -1414,20 +1404,20 @@ body {
 .subject-card::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(circle at 20% 80%, rgba(6,182,212,.08), transparent 60%);
+  background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246,.08), transparent 60%);
   pointer-events: none;
   opacity: 0; transition: opacity .3s;
 }
 .subject-card:hover::before { opacity: 1; }
 .subject-card:hover {
-  border-color: rgba(6,182,212,.45) !important;
-  box-shadow: 0 18px 50px rgba(0,0,0,.5), 0 0 30px rgba(6,182,212,.12) !important;
+  border-color: rgba(59, 130, 246,.45) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.5), 0 0 30px rgba(59, 130, 246,.12) !important;
 }
 
 /* ── OPTION BUTTONS - HUD Style ── */
 .option {
-  border: 1px solid rgba(6,182,212,.18) !important;
-  background: linear-gradient(135deg, rgba(6,182,212,.05), rgba(124,58,237,.04)) !important;
+  border: 1px solid rgba(59, 130, 246,.18) !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246,.05), rgba(37, 99, 235,.04)) !important;
   position: relative;
   overflow: hidden;
   transition: all .18s ease !important;
@@ -1441,17 +1431,17 @@ body {
   border-radius: 0 2px 2px 0;
 }
 .option:hover {
-  border-color: rgba(6,182,212,.55) !important;
-  background: linear-gradient(135deg, rgba(6,182,212,.12), rgba(124,58,237,.08)) !important;
-  box-shadow: 0 0 18px rgba(6,182,212,.12), inset 0 0 20px rgba(6,182,212,.05) !important;
+  border-color: rgba(59, 130, 246,.55) !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246,.12), rgba(37, 99, 235,.08)) !important;
+  box-shadow: 0 0 18px rgba(59, 130, 246,.12), inset 0 0 20px rgba(59, 130, 246,.05) !important;
   transform: translateX(4px) !important;
 }
 .option:hover::before { opacity: 1; }
 
 .option.selected {
-  border-color: rgba(124,58,237,.9) !important;
-  background: linear-gradient(135deg, rgba(124,58,237,.18), rgba(6,182,212,.12)) !important;
-  box-shadow: 0 0 25px rgba(124,58,237,.25), inset 0 0 20px rgba(124,58,237,.08) !important;
+  border-color: rgba(37, 99, 235,.9) !important;
+  background: linear-gradient(135deg, rgba(37, 99, 235,.18), rgba(59, 130, 246,.12)) !important;
+  box-shadow: 0 0 25px rgba(37, 99, 235,.25), inset 0 0 20px rgba(37, 99, 235,.08) !important;
 }
 .option.selected::before { opacity: 1; background: var(--c-purple); }
 
@@ -1471,9 +1461,9 @@ body {
 
 /* ── KBD keys in options ── */
 .option .kbd {
-  background: linear-gradient(135deg, rgba(6,182,212,.25), rgba(124,58,237,.2)) !important;
-  border: 1px solid rgba(6,182,212,.4) !important;
-  color: #06b6d4 !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246,.25), rgba(37, 99, 235,.2)) !important;
+  border: 1px solid rgba(59, 130, 246,.4) !important;
+  color: #3b82f6 !important;
   font-weight: 700 !important;
   border-radius: 8px !important;
   min-width: 26px;
@@ -1482,8 +1472,8 @@ body {
 
 /* ── Buttons ── */
 .btn-glass {
-  border: 1px solid rgba(6,182,212,.25) !important;
-  background: linear-gradient(135deg, rgba(6,182,212,.08), rgba(124,58,237,.06)) !important;
+  border: 1px solid rgba(59, 130, 246,.25) !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246,.08), rgba(37, 99, 235,.06)) !important;
   color: var(--txt) !important;
   border-radius: 12px !important;
   transition: all .18s ease !important;
@@ -1492,13 +1482,13 @@ body {
 .btn-glass::after {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(6,182,212,.0), rgba(6,182,212,.0));
+  background: linear-gradient(135deg, rgba(59, 130, 246,.0), rgba(59, 130, 246,.0));
   transition: background .18s ease;
 }
 .btn-glass:hover {
-  border-color: rgba(6,182,212,.6) !important;
-  background: linear-gradient(135deg, rgba(6,182,212,.18), rgba(124,58,237,.12)) !important;
-  box-shadow: 0 0 20px rgba(6,182,212,.2) !important;
+  border-color: rgba(59, 130, 246,.6) !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246,.18), rgba(37, 99, 235,.12)) !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246,.2) !important;
   color: #fff !important;
   transform: translateY(-1px);
 }
@@ -1506,13 +1496,13 @@ body {
 /* ── Topbar ── */
 .engine-topbar {
   background: rgba(5,7,20,.7) !important;
-  border-bottom: 1px solid rgba(6,182,212,.2) !important;
-  box-shadow: 0 2px 20px rgba(6,182,212,.08) !important;
+  border-bottom: 1px solid rgba(59, 130, 246,.2) !important;
+  box-shadow: 0 2px 20px rgba(59, 130, 246,.08) !important;
 }
 
 /* ── Progress bar ── */
 .progress-bar {
-  background: linear-gradient(90deg, #06b6d4, #7c3aed, #06b6d4) !important;
+  background: linear-gradient(90deg, #3b82f6, #2563eb, #3b82f6) !important;
   background-size: 200% 100% !important;
   animation: progressShimmer 2s linear infinite !important;
 }
@@ -1523,7 +1513,7 @@ body {
 
 /* ── Timer Pill ── */
 .timer-pill {
-  border: 1px solid rgba(6,182,212,.35) !important;
+  border: 1px solid rgba(59, 130, 246,.35) !important;
   background: rgba(5,7,25,.85) !important;
   box-shadow: var(--glow-cyan) !important;
   font-family: 'Courier New', monospace !important;
@@ -1532,10 +1522,10 @@ body {
   border-radius: 10px !important;
 }
 #timerText {
-  color: #06b6d4 !important;
+  color: #3b82f6 !important;
   font-weight: 800 !important;
   font-size: 13px !important;
-  text-shadow: 0 0 10px rgba(6,182,212,.5) !important;
+  text-shadow: 0 0 10px rgba(59, 130, 246,.5) !important;
 }
 
 /* ── Navigator dots ── */
@@ -1547,34 +1537,34 @@ body {
   font-weight: 600 !important;
 }
 .qdot:hover {
-  border-color: rgba(6,182,212,.6) !important;
-  background: rgba(6,182,212,.12) !important;
-  box-shadow: 0 0 14px rgba(6,182,212,.2) !important;
+  border-color: rgba(59, 130, 246,.6) !important;
+  background: rgba(59, 130, 246,.12) !important;
+  box-shadow: 0 0 14px rgba(59, 130, 246,.2) !important;
   transform: scale(1.08) translateY(-2px) !important;
 }
 .qdot.current {
-  border-color: rgba(124,58,237,.95) !important;
-  background: rgba(124,58,237,.22) !important;
-  box-shadow: 0 0 20px rgba(124,58,237,.4), 0 0 40px rgba(124,58,237,.15) !important;
+  border-color: rgba(37, 99, 235,.95) !important;
+  background: rgba(37, 99, 235,.22) !important;
+  box-shadow: 0 0 20px rgba(37, 99, 235,.4), 0 0 40px rgba(37, 99, 235,.15) !important;
 }
 
 /* ── Nav Panel ── */
 .nav-panel .glass {
-  border: 1px solid rgba(124,58,237,.3) !important;
-  box-shadow: -8px 0 40px rgba(124,58,237,.12) !important;
+  border: 1px solid rgba(37, 99, 235,.3) !important;
+  box-shadow: -8px 0 40px rgba(37, 99, 235,.12) !important;
 }
 .nav-toggle-icon {
-  border: 1px solid rgba(6,182,212,.3) !important;
-  background: rgba(6,182,212,.08) !important;
+  border: 1px solid rgba(59, 130, 246,.3) !important;
+  background: rgba(59, 130, 246,.08) !important;
   transition: all .18s ease !important;
 }
 .nav-toggle-icon:hover {
-  border-color: rgba(6,182,212,.7) !important;
-  box-shadow: 0 0 16px rgba(6,182,212,.3) !important;
+  border-color: rgba(59, 130, 246,.7) !important;
+  box-shadow: 0 0 16px rgba(59, 130, 246,.3) !important;
 }
 .nav-toggle-icon span {
-  background: rgba(6,182,212,.9) !important;
-  box-shadow: 0 0 6px rgba(6,182,212,.5);
+  background: rgba(59, 130, 246,.9) !important;
+  box-shadow: 0 0 6px rgba(59, 130, 246,.5);
 }
 
 /* ── Submit button ── */
@@ -1595,9 +1585,9 @@ body {
   line-height: 1.6 !important;
 }
 #questionText .badge {
-  background: linear-gradient(135deg, rgba(6,182,212,.3), rgba(124,58,237,.3)) !important;
-  border: 1px solid rgba(6,182,212,.4) !important;
-  color: #06b6d4 !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246,.3), rgba(37, 99, 235,.3)) !important;
+  border: 1px solid rgba(59, 130, 246,.4) !important;
+  color: #3b82f6 !important;
   font-weight: 700 !important;
   border-radius: 8px !important;
   padding: 3px 10px !important;
@@ -1605,59 +1595,59 @@ body {
 
 /* ── Badge-soft ── */
 .badge-soft {
-  background: linear-gradient(135deg, rgba(6,182,212,.1), rgba(124,58,237,.08)) !important;
-  border: 1px solid rgba(6,182,212,.25) !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246,.1), rgba(37, 99, 235,.08)) !important;
+  border: 1px solid rgba(59, 130, 246,.25) !important;
   color: rgba(200,220,255,.8) !important;
 }
 
 /* ── Pills ── */
 .pill {
-  background: rgba(6,182,212,.1) !important;
-  border: 1px solid rgba(6,182,212,.25) !important;
+  background: rgba(59, 130, 246,.1) !important;
+  border: 1px solid rgba(59, 130, 246,.25) !important;
   color: rgba(200,220,255,.8) !important;
 }
 
 /* ── Search input ── */
 #searchInput, .form-control {
-  background: rgba(6,182,212,.06) !important;
-  border: 1px solid rgba(6,182,212,.2) !important;
-  color: #eaf0ff !important;
+  background: rgba(59, 130, 246,.06) !important;
+  border: 1px solid rgba(59, 130, 246,.2) !important;
+  color: #f1f5f9 !important;
   border-radius: 12px !important;
   transition: all .2s ease !important;
 }
 #searchInput:focus, .form-control:focus {
-  border-color: rgba(6,182,212,.7) !important;
-  box-shadow: 0 0 0 3px rgba(6,182,212,.12), 0 0 20px rgba(6,182,212,.1) !important;
+  border-color: rgba(59, 130, 246,.7) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246,.12), 0 0 20px rgba(59, 130, 246,.1) !important;
   outline: none !important;
-  background: rgba(6,182,212,.1) !important;
+  background: rgba(59, 130, 246,.1) !important;
 }
 
 
 
 /* ── Topic/subtopic buttons ── */
 .topic-btn, .subtopic-btn {
-  border: 1px solid rgba(6,182,212,.18) !important;
-  background: rgba(6,182,212,.05) !important;
+  border: 1px solid rgba(59, 130, 246,.18) !important;
+  background: rgba(59, 130, 246,.05) !important;
   transition: all .18s ease !important;
 }
 .topic-btn:hover, .subtopic-btn:hover {
-  border-color: rgba(6,182,212,.55) !important;
-  background: rgba(6,182,212,.12) !important;
-  box-shadow: 0 0 16px rgba(6,182,212,.12) !important;
+  border-color: rgba(59, 130, 246,.55) !important;
+  background: rgba(59, 130, 246,.12) !important;
+  box-shadow: 0 0 16px rgba(59, 130, 246,.12) !important;
   transform: translateX(4px) !important;
 }
 
 /* ── Question mark button ── */
 #qmarkBtn {
-  background: linear-gradient(135deg, rgba(124,58,237,.4), rgba(6,182,212,.25)) !important;
-  border: 1px solid rgba(124,58,237,.5) !important;
-  box-shadow: 0 0 18px rgba(124,58,237,.25) !important;
+  background: linear-gradient(135deg, rgba(37, 99, 235,.4), rgba(59, 130, 246,.25)) !important;
+  border: 1px solid rgba(37, 99, 235,.5) !important;
+  box-shadow: 0 0 18px rgba(37, 99, 235,.25) !important;
 }
 
 /* ── Modal content ── */
 .modal-content.glass {
-  border: 1px solid rgba(124,58,237,.35) !important;
-  box-shadow: 0 0 60px rgba(124,58,237,.2) !important;
+  border: 1px solid rgba(37, 99, 235,.35) !important;
+  box-shadow: 0 0 60px rgba(37, 99, 235,.2) !important;
 }
 
 /* ── Feedback overlays ── */
@@ -1678,7 +1668,7 @@ body {
   content: '';
   position: absolute; left: 0; right: 0; bottom: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(6,182,212,.6), rgba(124,58,237,.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246,.6), rgba(37, 99, 235,.6), transparent);
 }
 
 /* ═══════════════════════════════════════════
@@ -1688,11 +1678,11 @@ body {
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: rgba(255,255,255,.04); border-radius: 99px; }
-::-webkit-scrollbar-thumb { background: rgba(6,182,212,.35); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(6,182,212,.65); }
+::-webkit-scrollbar-thumb { background: rgba(59, 130, 246,.35); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(59, 130, 246,.65); }
 
 /* ── Selection ── */
-::selection { background: rgba(124,58,237,.4); color: #fff; }
+::selection { background: rgba(37, 99, 235,.4); color: #fff; }
 
 /* ── Portal header responsive ── */
 @media (max-width: 576px) {
@@ -1712,8 +1702,8 @@ body {
   transition: border-color .2s, box-shadow .2s !important;
 }
 .topic-group-card:hover {
-  border-color: rgba(6,182,212,.4) !important;
-  box-shadow: 0 0 30px rgba(6,182,212,.1) !important;
+  border-color: rgba(59, 130, 246,.4) !important;
+  box-shadow: 0 0 30px rgba(59, 130, 246,.1) !important;
 }
 
 /* ── Topic toggle button ── */
@@ -1731,26 +1721,26 @@ body {
   border-radius: 10px !important;
   flex-shrink: 0;
   transition: all .18s ease !important;
-  color: rgba(6,182,212,.9) !important;
-  border-color: rgba(6,182,212,.35) !important;
-  background: rgba(6,182,212,.08) !important;
+  color: rgba(59, 130, 246,.9) !important;
+  border-color: rgba(59, 130, 246,.35) !important;
+  background: rgba(59, 130, 246,.08) !important;
 }
 .topic-toggle-btn:hover {
-  background: rgba(6,182,212,.18) !important;
-  border-color: rgba(6,182,212,.7) !important;
-  box-shadow: 0 0 14px rgba(6,182,212,.25) !important;
+  background: rgba(59, 130, 246,.18) !important;
+  border-color: rgba(59, 130, 246,.7) !important;
+  box-shadow: 0 0 14px rgba(59, 130, 246,.25) !important;
   transform: scale(1.1) !important;
 }
 
 /* ── PDF upload area ── */
 .pdf-upload-box {
-  background: rgba(6,182,212,.04) !important;
+  background: rgba(59, 130, 246,.04) !important;
   transition: all .2s ease !important;
 }
 .pdf-upload-box:hover {
-  border-color: rgba(6,182,212,.7) !important;
-  background: rgba(6,182,212,.08) !important;
-  box-shadow: 0 0 20px rgba(6,182,212,.12) !important;
+  border-color: rgba(59, 130, 246,.7) !important;
+  background: rgba(59, 130, 246,.08) !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246,.12) !important;
 }
 
 /* ── Engine view responsive ── */
@@ -1769,22 +1759,22 @@ body {
 
 /* ── Search input ── */
 #searchInput {
-  background: rgba(6,182,212,.06) !important;
-  border: 1px solid rgba(6,182,212,.25) !important;
+  background: rgba(59, 130, 246,.06) !important;
+  border: 1px solid rgba(59, 130, 246,.25) !important;
   padding: .65rem 1rem !important;
   font-size: 15px !important;
   transition: all .2s !important;
 }
 #searchInput:focus {
-  border-color: rgba(6,182,212,.7) !important;
-  box-shadow: 0 0 0 3px rgba(6,182,212,.12), 0 0 20px rgba(6,182,212,.08) !important;
+  border-color: rgba(59, 130, 246,.7) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246,.12), 0 0 20px rgba(59, 130, 246,.08) !important;
   outline: none !important;
 }
 
 /* ── Candidate modal improvements ── */
 #candidateModal .modal-content {
-  border: 1px solid rgba(124,58,237,.4) !important;
-  box-shadow: 0 0 60px rgba(124,58,237,.25) !important;
+  border: 1px solid rgba(37, 99, 235,.4) !important;
+  box-shadow: 0 0 60px rgba(37, 99, 235,.25) !important;
 }
 
 /* ── Summary cards responsive ── */
@@ -1824,13 +1814,13 @@ body {
   flex-shrink: 0;
   font-size: .75rem !important;
   padding: .18rem .5rem !important;
-  background: rgba(6,182,212,.12) !important;
-  border-color: rgba(6,182,212,.3) !important;
-  color: #06b6d4 !important;
+  background: rgba(59, 130, 246,.12) !important;
+  border-color: rgba(59, 130, 246,.3) !important;
+  color: #3b82f6 !important;
   transition: all .15s !important;
 }
 .subtopic-btn:hover .pill {
-  background: rgba(6,182,212,.25) !important;
+  background: rgba(59, 130, 246,.25) !important;
   color: #fff !important;
 }
 
@@ -1841,7 +1831,7 @@ body {
 /* ── qMetaLine ── */
 #qMetaLine {
   font-size: 12px !important;
-  color: rgba(6,182,212,.7) !important;
+  color: rgba(59, 130, 246,.7) !important;
   letter-spacing: .3px;
 }
 
@@ -1934,16 +1924,16 @@ body {
   flex-shrink: 0;
 }
 #pdfTutorToggleBtn {
-  background: linear-gradient(135deg, rgba(6,182,212,.1), rgba(124,58,237,.08)) !important;
-  border-color: rgba(6,182,212,.35) !important;
-  color: #06b6d4 !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246,.1), rgba(37, 99, 235,.08)) !important;
+  border-color: rgba(59, 130, 246,.35) !important;
+  color: #3b82f6 !important;
   font-weight: 700 !important;
   transition: all .18s !important;
 }
 #pdfTutorToggleBtn:hover {
-  background: rgba(6,182,212,.2) !important;
-  border-color: rgba(6,182,212,.7) !important;
-  box-shadow: 0 0 18px rgba(6,182,212,.25) !important;
+  background: rgba(59, 130, 246,.2) !important;
+  border-color: rgba(59, 130, 246,.7) !important;
+  box-shadow: 0 0 18px rgba(59, 130, 246,.25) !important;
 }
 @media (max-width: 576px) {
   #pdfTutorPanel { min-height: calc(100vh - 110px); height: calc(100vh - 110px); }
@@ -2033,13 +2023,13 @@ body {
 #submitConfirmBox .sc-title {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #eaf0ff;
+  color: #f1f5f9;
   margin-bottom: 6px;
   letter-spacing: .2px;
 }
 #submitConfirmBox .sc-sub {
   font-size: .85rem;
-  color: rgba(234,240,255,.55);
+  color: rgba(241, 245, 249,.55);
   margin-bottom: 22px;
   line-height: 1.5;
 }
@@ -2056,14 +2046,14 @@ body {
   border-radius: 12px;
   padding: 8px 14px;
   font-size: .78rem;
-  color: rgba(234,240,255,.75);
+  color: rgba(241, 245, 249,.75);
   font-weight: 600;
 }
 #submitConfirmBox .sc-stat span {
   display: block;
   font-size: 1.2rem;
   font-weight: 800;
-  color: #eaf0ff;
+  color: #f1f5f9;
   margin-bottom: 2px;
 }
 #submitConfirmBox .sc-btns {
@@ -2076,14 +2066,14 @@ body {
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,.18);
   background: rgba(255,255,255,.06);
-  color: rgba(234,240,255,.75);
+  color: rgba(241, 245, 249,.75);
   font-size: .92rem;
   font-weight: 700;
   cursor: pointer;
   transition: all .15s;
   -webkit-tap-highlight-color: transparent;
 }
-#scCancelBtn:hover { background: rgba(255,255,255,.10); color: #eaf0ff; }
+#scCancelBtn:hover { background: rgba(255,255,255,.10); color: #f1f5f9; }
 #scConfirmBtn {
   flex: 1;
   padding: 12px;
@@ -2107,9 +2097,9 @@ body {
   font-size: 11px !important;
   padding: 4px 9px !important;
   border-radius: 999px !important;
-  border: 1px solid rgba(6,182,212,.45) !important;
-  background: rgba(6,182,212,.08) !important;
-  color: #06b6d4 !important;
+  border: 1px solid rgba(59, 130, 246,.45) !important;
+  background: rgba(59, 130, 246,.08) !important;
+  color: #3b82f6 !important;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   cursor: pointer;
@@ -2121,7 +2111,7 @@ body {
 #timerHideBtn {
   background: none;
   border: none;
-  color: rgba(6,182,212,.6);
+  color: rgba(59, 130, 246,.6);
   font-size: 11px;
   line-height: 1;
   padding: 0 0 0 5px;
@@ -2130,7 +2120,7 @@ body {
   transition: color .15s;
   -webkit-tap-highlight-color: transparent;
 }
-#timerHideBtn:hover, #timerHideBtn:active { color: rgba(6,182,212,1); }
+#timerHideBtn:hover, #timerHideBtn:active { color: rgba(59, 130, 246,1); }
 
 </style>
 
@@ -2166,7 +2156,7 @@ body {
 .qdot.st-skipped:hover {
   background: rgba(100,116,139,.22) !important;
   border-color: rgba(100,116,139,.55) !important;
-  color: rgba(234,240,255,.5) !important;
+  color: rgba(241, 245, 249,.5) !important;
 }
 .qdot.st-final-correct,
 .qdot.st-final-correct:hover {
@@ -2186,7 +2176,7 @@ body {
 .qdot.st-final-unattempted:hover {
   background: rgba(100,116,139,.22) !important;
   border-color: rgba(148,163,184,.55) !important;
-  color: rgba(234,240,255,.4) !important;
+  color: rgba(241, 245, 249,.4) !important;
 }
 </style>
 
@@ -2201,11 +2191,8 @@ body {
 /* GPU & paint hints */
 html, body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 body {
-  background: radial-gradient(circle at 20% 30%, #0b1020, transparent 60%),
-              radial-gradient(circle at 80% 70%, #1a0b2e, transparent 60%),
-              #050714;
-
-  background-blend-mode: screen;
+  background: #0d1117 !important;
+  background-blend-mode: unset;
 }
 
 /* Fixed background layer that animates only via CSS transform (GPU) */
@@ -2219,7 +2206,7 @@ img, video, canvas { content-visibility: auto; }
 
 /* Improved focus rings */
 button:focus-visible, input:focus-visible, select:focus-visible, [role=button]:focus-visible {
-  outline: 2px solid rgba(6,182,212,.7) !important;
+  outline: 2px solid rgba(59, 130, 246,.7) !important;
   outline-offset: 2px;
   border-radius: 12px;
 }
@@ -2257,7 +2244,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, [role=button]:f
 /* Subject cards: subtle hover, no expensive box-shadow on mobile */
 .subject-card { border-radius: 18px; }
 @media (hover:hover) and (pointer:fine) {
-  .subject-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px rgba(0,0,0,.45), 0 0 0 1px rgba(124,58,237,.25); }
+  .subject-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px rgba(0,0,0,.45), 0 0 0 1px rgba(37, 99, 235,.25); }
 }
 
 /* Question navigator dots */
@@ -2353,21 +2340,14 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
   .glass { backdrop-filter: blur(10px) saturate(120%) !important; -webkit-backdrop-filter: blur(10px) saturate(120%) !important; }
   .engine-topbar { backdrop-filter: blur(8px) saturate(115%) !important; -webkit-backdrop-filter: blur(8px) saturate(115%) !important; }
 
-  /* Subtle moving aurora (CSS transform — GPU only, ~0% CPU) */
+  /* Subtle static vignette for depth — no animation, GPU-free */
   body::before {
     content: "";
-    position: fixed; inset: -20vmax;
+    position: fixed; inset: 0;
     background:
-      radial-gradient(40vmax 30vmax at 20% 20%, rgba(6,182,212,.12), transparent 60%),
-      radial-gradient(35vmax 28vmax at 80% 70%, rgba(124,58,237,.14), transparent 60%);
+      radial-gradient(ellipse at 0% 0%, rgba(59, 130, 246,.06), transparent 55%),
+      radial-gradient(ellipse at 100% 100%, rgba(37, 99, 235,.05), transparent 55%);
     z-index: 0; pointer-events: none;
-    animation: aurora 22s ease-in-out infinite alternate;
-    filter: blur(40px);
-  }
-  @keyframes aurora {
-    0%   { transform: translate3d(-3%,-2%,0) rotate(0deg); }
-    50%  { transform: translate3d(2%,3%,0) rotate(8deg); }
-    100% { transform: translate3d(-1%,-1%,0) rotate(-6deg); }
   }
 }
 
@@ -2392,8 +2372,8 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 }
 .form-control:focus, .bm-input:focus, #bmCodeInput:focus, #pdfCurPageInput:focus, #bmChatInput:focus {
   background: rgba(255,255,255,.07) !important;
-  border-color: rgba(6,182,212,.5) !important;
-  box-shadow: 0 0 0 3px rgba(6,182,212,.18) !important;
+  border-color: rgba(59, 130, 246,.5) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246,.18) !important;
   outline: none !important;
 }
 
@@ -2401,15 +2381,15 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: rgba(255,255,255,.03); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(6,182,212,.5), rgba(124,58,237,.5));
+  background: linear-gradient(180deg, rgba(59, 130, 246,.5), rgba(37, 99, 235,.5));
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
-::-webkit-scrollbar-thumb:hover { background-clip: padding-box; background-image: linear-gradient(180deg, rgba(6,182,212,.7), rgba(124,58,237,.7)); }
+::-webkit-scrollbar-thumb:hover { background-clip: padding-box; background-image: linear-gradient(180deg, rgba(59, 130, 246,.7), rgba(37, 99, 235,.7)); }
 
 /* Selection */
-::selection { background: rgba(6,182,212,.35); color:#fff; }
+::selection { background: rgba(59, 130, 246,.35); color:#fff; }
 
 /* Lazy heavy panels until visible */
 #pdfTutorPanel, #bmChatPanel, #bmOverlay, #bmFinished, #bmWaiting, #bmRaceTrack {
@@ -2478,17 +2458,17 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           margin-bottom: 2.2rem;
           border-radius: 24px;
           overflow: hidden;
-          background: linear-gradient(135deg, rgba(6,182,212,.10) 0%, rgba(124,58,237,.14) 50%, rgba(59,130,246,.10) 100%);
-          border: 1px solid rgba(6,182,212,.30);
-          box-shadow: 0 0 60px rgba(124,58,237,.12), 0 20px 60px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08);
+          background: linear-gradient(135deg, rgba(59, 130, 246,.10) 0%, rgba(37, 99, 235,.14) 50%, rgba(59,130,246,.10) 100%);
+          border: 1px solid rgba(59, 130, 246,.30);
+          box-shadow: 0 0 60px rgba(37, 99, 235,.12), 0 20px 60px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08);
           padding: clamp(1.4rem, 4vw, 2.4rem) clamp(1.4rem, 4vw, 2.6rem);
         ">
           <!-- animated corner accents -->
-          <div style="position:absolute;top:0;left:0;width:80px;height:80px;background:conic-gradient(from 180deg at 0% 0%, rgba(6,182,212,.5), transparent 45%);pointer-events:none;"></div>
-          <div style="position:absolute;bottom:0;right:0;width:80px;height:80px;background:conic-gradient(from 0deg at 100% 100%, rgba(124,58,237,.5), transparent 45%);pointer-events:none;"></div>
+          <div style="position:absolute;top:0;left:0;width:80px;height:80px;background:conic-gradient(from 180deg at 0% 0%, rgba(59, 130, 246,.5), transparent 45%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:0;right:0;width:80px;height:80px;background:conic-gradient(from 0deg at 100% 100%, rgba(37, 99, 235,.5), transparent 45%);pointer-events:none;"></div>
           <!-- glow orbs -->
-          <div style="position:absolute;top:-40px;right:80px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle, rgba(124,58,237,.18), transparent 70%);pointer-events:none;animation:orb1 6s ease-in-out infinite;"></div>
-          <div style="position:absolute;bottom:-30px;left:60px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle, rgba(6,182,212,.14), transparent 70%);pointer-events:none;animation:orb2 8s ease-in-out infinite;"></div>
+          <div style="position:absolute;top:-40px;right:80px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle, rgba(37, 99, 235,.18), transparent 70%);pointer-events:none;animation:orb1 6s ease-in-out infinite;"></div>
+          <div style="position:absolute;bottom:-30px;left:60px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle, rgba(59, 130, 246,.14), transparent 70%);pointer-events:none;animation:orb2 8s ease-in-out infinite;"></div>
           <style>
             @keyframes orb1 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-14px) scale(1.08)} }
             @keyframes orb2 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(12px) scale(1.06)} }
@@ -2497,9 +2477,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3" style="position:relative;z-index:1;">
             <div>
               <!-- small eyebrow label -->
-              <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:999px;padding:3px 12px;margin-bottom:12px;">
-                <span style="width:6px;height:6px;border-radius:50%;background:#06b6d4;box-shadow:0 0 8px #06b6d4;display:inline-block;animation:pulse-dot 1.4s ease-in-out infinite;"></span>
-                <span style="font-size:11px;font-weight:700;letter-spacing:1.2px;color:#06b6d4;">MOCK TEST PLATFORM</span>
+              <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(59, 130, 246,.12);border:1px solid rgba(59, 130, 246,.3);border-radius:999px;padding:3px 12px;margin-bottom:12px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#3b82f6;box-shadow:0 0 8px #3b82f6;display:inline-block;animation:pulse-dot 1.4s ease-in-out infinite;"></span>
+                <span style="font-size:11px;font-weight:700;letter-spacing:1.2px;color:#3b82f6;">MOCK TEST PLATFORM</span>
               </div>
               <style>@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.85)} }</style>
 
@@ -2511,14 +2491,14 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               <!-- stat pills -->
               <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;">
                 <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#4ade80;">✅ Exam Mode</span>
-                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#a78bfa;">⚔️ Battle Mode</span>
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(37, 99, 235,.12);border:1px solid rgba(37, 99, 235,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#93c5fd;">⚔️ Battle Mode</span>
                 <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(250,204,21,.10);border:1px solid rgba(250,204,21,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#facc15;">📄 PDF Tutor</span>
-                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(6,182,212,.10);border:1px solid rgba(6,182,212,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#06b6d4;">⌨️ Typing Test</span>
+                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(59, 130, 246,.10);border:1px solid rgba(59, 130, 246,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#3b82f6;">⌨️ Typing Test</span>
               </div>
             </div>
 
             <div class="d-flex gap-2 flex-wrap action-btn-row" style="flex-shrink:0;">
-              <button id="typingBtn" class="btn btn-glass" style="border-color:rgba(6,182,212,.4);color:#06b6d4;font-weight:600;">⌨️ Typing Test Engine</button>
+              <button id="typingBtn" class="btn btn-glass" style="border-color:rgba(59, 130, 246,.4);color:#3b82f6;font-weight:600;">⌨️ Typing Test Engine</button>
               <button onclick="location.href='pdfocr.html'" class="btn btn-glass" style="border-color:rgba(251,113,133,.55);color:#fb7185;font-weight:600;background:linear-gradient(135deg,rgba(251,113,133,.10),rgba(244,63,94,.06));box-shadow:0 0 18px rgba(251,113,133,.18);transition:all .18s ease;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='rgba(251,113,133,.9)';this.style.boxShadow='0 0 28px rgba(251,113,133,.38)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(251,113,133,.55)';this.style.boxShadow='0 0 18px rgba(251,113,133,.18)';this.style.transform='translateY(0)'">
                 <span style="display:inline-flex;align-items:center;gap:6px;">
                   <span style="font-size:15px;filter:drop-shadow(0 0 6px rgba(251,113,133,.7));">🔍</span>
@@ -2539,7 +2519,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             </div>
             <div class="col-12 col-lg-6">
               <div class="glass p-3">
-                <div class="small subtle mb-2 fw-semibold" style="color:rgba(6,182,212,.8);">⌨️ Keyboard shortcuts</div>
+                <div class="small subtle mb-2 fw-semibold" style="color:rgba(59, 130, 246,.8);">⌨️ Keyboard shortcuts</div>
                 <div class="d-flex flex-wrap gap-2">
                   <span class="pill">1–4: select option</span>
                   <span class="pill">Enter: save &amp; next</span>
@@ -2624,7 +2604,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
                 <div class="d-flex align-items-center gap-2">
                   <span style="font-size:1.3rem;">📄</span>
                   <div>
-                    <div class="fw-bold" style="font-size:.95rem;color:#06b6d4;" id="pdfTutorTitle">PDF Tutor</div>
+                    <div class="fw-bold" style="font-size:.95rem;color:#3b82f6;" id="pdfTutorTitle">PDF Tutor</div>
                     
                   </div>
                 </div>
@@ -2632,46 +2612,46 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               </div>
 
               <!-- Drop zone (shown when no PDF loaded) -->
-              <div id="pdfDropZone" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed rgba(6,182,212,.4);border-radius:16px;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(6,182,212,.03);">
+              <div id="pdfDropZone" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed rgba(59, 130, 246,.4);border-radius:16px;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(59, 130, 246,.03);">
                 <input type="file" id="pdfFileInput" accept=".pdf" style="display:none;">
                 <div style="font-size:3.5rem;margin-bottom:.75rem;">📄</div>
-                <div class="fw-semibold mb-1" style="color:#06b6d4;font-size:1.1rem;">Drop your PDF here</div>
+                <div class="fw-semibold mb-1" style="color:#3b82f6;font-size:1.1rem;">Drop your PDF here</div>
                 <div class="subtle mb-3" style="font-size:.85rem;">or click to choose a file</div>
-                <button class="btn btn-glass" id="pdfChooseBtn" style="padding:.45rem 1.2rem;border-color:rgba(6,182,212,.5);color:#06b6d4;">Choose PDF</button>
+                <button class="btn btn-glass" id="pdfChooseBtn" style="padding:.45rem 1.2rem;border-color:rgba(59, 130, 246,.5);color:#3b82f6;">Choose PDF</button>
               </div>
 
               <!-- PDF viewer (shown after load) -->
-              <div id="pdfViewerWrap" style="display:none;flex:1;min-height:0;flex-direction:column;overflow:hidden;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid rgba(6,182,212,.2);">
+              <div id="pdfViewerWrap" style="display:none;flex:1;min-height:0;flex-direction:column;overflow:hidden;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid rgba(59, 130, 246,.2);">
                 <!-- toolbar -->
-                <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(0,0,0,.45);border-bottom:1px solid rgba(6,182,212,.22);flex-shrink:0;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(0,0,0,.45);border-bottom:1px solid rgba(59, 130, 246,.22);flex-shrink:0;flex-wrap:wrap;">
 
                   <!-- Page navigator pill -->
-                  <div style="display:flex;align-items:center;gap:6px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.28);border-radius:12px;padding:4px 10px;">
+                  <div style="display:flex;align-items:center;gap:6px;background:rgba(59, 130, 246,.08);border:1px solid rgba(59, 130, 246,.28);border-radius:12px;padding:4px 10px;">
                     <button id="pdfPrevPage" title="Previous page"
-                      style="width:26px;height:26px;border-radius:8px;border:1px solid rgba(6,182,212,.35);background:rgba(6,182,212,.12);color:#06b6d4;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;line-height:1;">&#9664;</button>
+                      style="width:26px;height:26px;border-radius:8px;border:1px solid rgba(59, 130, 246,.35);background:rgba(59, 130, 246,.12);color:#3b82f6;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;line-height:1;">&#9664;</button>
 
                     <div style="display:flex;align-items:center;gap:5px;">
                       <input id="pdfCurPageInput"
                         type="number" min="1"
                         value="1"
                         title="Type a page number and press Enter"
-                        style="width:44px;height:28px;border-radius:8px;border:1px solid rgba(6,182,212,.45);background:rgba(6,182,212,.10);color:#06b6d4;font-size:.82rem;font-weight:700;text-align:center;outline:none;padding:0 4px;-moz-appearance:textfield;appearance:textfield;transition:border-color .15s,box-shadow .15s;">
-                      <span style="color:rgba(234,240,255,.45);font-size:.78rem;font-weight:500;">/</span>
-                      <span id="pdfPageTotal" style="color:rgba(234,240,255,.65);font-size:.82rem;font-weight:600;min-width:18px;">&#8212;</span>
+                        style="width:44px;height:28px;border-radius:8px;border:1px solid rgba(59, 130, 246,.45);background:rgba(59, 130, 246,.10);color:#3b82f6;font-size:.82rem;font-weight:700;text-align:center;outline:none;padding:0 4px;-moz-appearance:textfield;appearance:textfield;transition:border-color .15s,box-shadow .15s;">
+                      <span style="color:rgba(241, 245, 249,.45);font-size:.78rem;font-weight:500;">/</span>
+                      <span id="pdfPageTotal" style="color:rgba(241, 245, 249,.65);font-size:.82rem;font-weight:600;min-width:18px;">&#8212;</span>
                     </div>
 
                     <button id="pdfNextPage" title="Next page"
-                      style="width:26px;height:26px;border-radius:8px;border:1px solid rgba(6,182,212,.35);background:rgba(6,182,212,.12);color:#06b6d4;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;line-height:1;">&#9654;</button>
+                      style="width:26px;height:26px;border-radius:8px;border:1px solid rgba(59, 130, 246,.35);background:rgba(59, 130, 246,.12);color:#3b82f6;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;line-height:1;">&#9654;</button>
                   </div>
 
                   <!-- Zoom controls -->
-                  <div style="display:flex;align-items:center;gap:6px;margin-left:auto;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.25);border-radius:12px;padding:4px 10px;">
+                  <div style="display:flex;align-items:center;gap:6px;margin-left:auto;background:rgba(59, 130, 246,.08);border:1px solid rgba(59, 130, 246,.25);border-radius:12px;padding:4px 10px;">
                     <button class="btn btn-glass btn-sm" id="pdfZoomOut"
-                      style="width:26px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;border-color:rgba(139,92,246,.4);color:#a78bfa;font-size:16px;font-weight:700;">&#8722;</button>
+                      style="width:26px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;border-color:rgba(59, 130, 246,.4);color:#93c5fd;font-size:16px;font-weight:700;">&#8722;</button>
                     <span id="pdfZoomLabel"
-                      style="font-size:.8rem;font-weight:700;color:#a78bfa;min-width:38px;text-align:center;letter-spacing:.3px;">100%</span>
+                      style="font-size:.8rem;font-weight:700;color:#93c5fd;min-width:38px;text-align:center;letter-spacing:.3px;">100%</span>
                     <button class="btn btn-glass btn-sm" id="pdfZoomIn"
-                      style="width:26px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;border-color:rgba(139,92,246,.4);color:#a78bfa;font-size:16px;font-weight:700;">+</button>
+                      style="width:26px;height:26px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;border-color:rgba(59, 130, 246,.4);color:#93c5fd;font-size:16px;font-weight:700;">+</button>
                   </div>
 
                   <!-- Change PDF -->
@@ -2681,10 +2661,10 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
                 <style>
                   #pdfCurPageInput::-webkit-outer-spin-button,
                   #pdfCurPageInput::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-                  #pdfCurPageInput:focus { border-color:rgba(6,182,212,.9) !important; box-shadow:0 0 0 2px rgba(6,182,212,.18); }
+                  #pdfCurPageInput:focus { border-color:rgba(59, 130, 246,.9) !important; box-shadow:0 0 0 2px rgba(59, 130, 246,.18); }
                   #pdfPrevPage:hover, #pdfNextPage:hover {
-                    background:rgba(6,182,212,.28) !important;
-                    border-color:rgba(6,182,212,.8) !important;
+                    background:rgba(59, 130, 246,.28) !important;
+                    border-color:rgba(59, 130, 246,.8) !important;
                     transform:scale(1.1);
                   }
                   #pdfPrevPage:disabled, #pdfNextPage:disabled { opacity:.3; cursor:default; transform:none !important; }
@@ -2776,7 +2756,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               <div id="qNav" class="qnav mt-2"></div>
 
               <!-- Legend -->
-              <div class="mt-3" style="font-size:10px;color:rgba(234,240,255,.5);line-height:1.9;">
+              <div class="mt-3" style="font-size:10px;color:rgba(241, 245, 249,.5);line-height:1.9;">
                 <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.2);margin-right:5px;"></span>Not visited</div>
                 <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(251,146,60,.22);border:1.5px solid rgba(251,146,60,.75);margin-right:5px;"></span>Visited, no answer</div>
                 <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(34,197,94,.25);border:1.5px solid rgba(34,197,94,.85);margin-right:5px;"></span>Answered</div>
@@ -2836,7 +2816,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
     font-size: 13px;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
-    color: #eaf0ff;
+    color: #f1f5f9;
     letter-spacing: .5px;
     align-items: center;
     gap: 0;
@@ -2979,7 +2959,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
   let rt;
   window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 120); }, { passive: true });
 
-  const colors = ['rgba(6,182,212,', 'rgba(124,58,237,', 'rgba(59,130,246,'];
+  const colors = ['rgba(59, 130, 246,', 'rgba(37, 99, 235,', 'rgba(59,130,246,'];
   for (let i = 0; i < COUNT; i++) {
     particles.push({
       x: Math.random() * W, y: Math.random() * H,
@@ -3020,7 +3000,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = 'rgba(6,182,212,' + (0.06 * (1 - dist/MAX_LINK_DIST)).toFixed(3) + ')';
+          ctx.strokeStyle = 'rgba(59, 130, 246,' + (0.06 * (1 - dist/MAX_LINK_DIST)).toFixed(3) + ')';
           ctx.stroke();
         }
       }
@@ -3140,7 +3120,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               ${s.topics?.length || 0} topic groups &nbsp;·&nbsp; ${totalSubs} subtopics
             </div>
           </div>
-          <span class="pill" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:#06b6d4;">Open →</span>
+          <span class="pill" style="background:rgba(59, 130, 246,.12);border-color:rgba(59, 130, 246,.3);color:#3b82f6;">Open →</span>
         </div>
       </div>
     `;
@@ -3173,7 +3153,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           data-topic="${escapeHtml(tg.name)}"
           data-subtopic="${escapeHtml(st.name)}"
           title="Copy direct link to this test"
-          style="flex-shrink:0;width:36px;height:36px;border-radius:10px;border:1px solid rgba(6,182,212,.4);background:rgba(6,182,212,.10);color:#06b6d4;font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;">🔗</button>
+          style="flex-shrink:0;width:36px;height:36px;border-radius:10px;border:1px solid rgba(59, 130, 246,.4);background:rgba(59, 130, 246,.10);color:#3b82f6;font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;">🔗</button>
       </div>
     `).join('');
 
@@ -3187,10 +3167,10 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         </div>
         <div class="subtopic-area mt-2">${subBtns}</div>
         <div class="pdf-upload-area mt-2" style="display:none;">
-          <div class="pdf-upload-box glass p-3 text-center" style="border:2px dashed rgba(6,182,212,.4);border-radius:14px;cursor:pointer;transition:all .2s;">
+          <div class="pdf-upload-box glass p-3 text-center" style="border:2px dashed rgba(59, 130, 246,.4);border-radius:14px;cursor:pointer;transition:all .2s;">
             <input type="file" accept=".pdf" class="chapter-pdf-input" style="display:none;">
             <div class="pdf-upload-icon" style="font-size:2.5rem;margin-bottom:.5rem;">📄</div>
-            <div class="fw-semibold mb-1" style="color:#06b6d4;">Drop PDF here or click to choose</div>
+            <div class="fw-semibold mb-1" style="color:#3b82f6;">Drop PDF here or click to choose</div>
             <div class="small subtle">Upload a PDF for <strong>${escapeHtml(tg.name)}</strong></div>
             <div class="pdf-chosen-name mt-2 small" style="color:#22c55e;display:none;"></div>
           </div>
@@ -3215,13 +3195,13 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           // share button clicks
           topicCol.querySelectorAll('.share-btn').forEach(btn => {
             btn.addEventListener('mouseenter', () => {
-              btn.style.background = 'rgba(6,182,212,.22)';
-              btn.style.borderColor = 'rgba(6,182,212,.8)';
+              btn.style.background = 'rgba(59, 130, 246,.22)';
+              btn.style.borderColor = 'rgba(59, 130, 246,.8)';
               btn.style.transform = 'scale(1.08)';
             });
             btn.addEventListener('mouseleave', () => {
-              btn.style.background = 'rgba(6,182,212,.10)';
-              btn.style.borderColor = 'rgba(6,182,212,.4)';
+              btn.style.background = 'rgba(59, 130, 246,.10)';
+              btn.style.borderColor = 'rgba(59, 130, 246,.4)';
               btn.style.transform = '';
             });
             btn.addEventListener('click', (e) => {
@@ -3284,12 +3264,12 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             pdfBox.style.background = 'rgba(34,197,94,.07)';
           });
           pdfBox.addEventListener('dragleave', () => {
-            pdfBox.style.borderColor = 'rgba(6,182,212,.4)';
+            pdfBox.style.borderColor = 'rgba(59, 130, 246,.4)';
             pdfBox.style.background = '';
           });
           pdfBox.addEventListener('drop', e => {
             e.preventDefault();
-            pdfBox.style.borderColor = 'rgba(6,182,212,.4)';
+            pdfBox.style.borderColor = 'rgba(59, 130, 246,.4)';
             pdfBox.style.background = '';
             const file = e.dataTransfer.files[0];
             if (file && file.type === 'application/pdf') {
@@ -3369,16 +3349,16 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           // Share button (same style as subtopic list)
           const shareBtn = document.createElement('button');
           shareBtn.title = 'Copy direct link to this test';
-          shareBtn.style.cssText = 'flex-shrink:0;width:36px;height:36px;border-radius:10px;border:1px solid rgba(6,182,212,.4);background:rgba(6,182,212,.10);color:#06b6d4;font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;';
+          shareBtn.style.cssText = 'flex-shrink:0;width:36px;height:36px;border-radius:10px;border:1px solid rgba(59, 130, 246,.4);background:rgba(59, 130, 246,.10);color:#3b82f6;font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;';
           shareBtn.textContent = '🔗';
           shareBtn.addEventListener('mouseenter', () => {
-            shareBtn.style.background = 'rgba(6,182,212,.22)';
-            shareBtn.style.borderColor = 'rgba(6,182,212,.8)';
+            shareBtn.style.background = 'rgba(59, 130, 246,.22)';
+            shareBtn.style.borderColor = 'rgba(59, 130, 246,.8)';
             shareBtn.style.transform = 'scale(1.08)';
           });
           shareBtn.addEventListener('mouseleave', () => {
-            shareBtn.style.background = 'rgba(6,182,212,.10)';
-            shareBtn.style.borderColor = 'rgba(6,182,212,.4)';
+            shareBtn.style.background = 'rgba(59, 130, 246,.10)';
+            shareBtn.style.borderColor = 'rgba(59, 130, 246,.4)';
             shareBtn.style.transform = '';
           });
           shareBtn.addEventListener('click', (e) => {
@@ -4021,8 +4001,8 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           pdfTutorBtn.onclick = () => {
             pdfPanel.style.display    = 'flex';
             questionBox.style.display = 'none';
-            pdfTutorBtn.style.background = 'rgba(6,182,212,.2)';
-            pdfTutorBtn.style.borderColor = 'rgba(6,182,212,.7)';
+            pdfTutorBtn.style.background = 'rgba(59, 130, 246,.2)';
+            pdfTutorBtn.style.borderColor = 'rgba(59, 130, 246,.7)';
           };
         }
         if (pdfCloseBtn) {
@@ -4387,14 +4367,14 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
   <div class="col-6 col-md-4 col-lg-2">
     <div class="glass p-3 text-center">
       <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">TOTAL</div>
-      <div class="fs-3 fw-bold" style="color:#06b6d4;">${st.total}</div>
+      <div class="fs-3 fw-bold" style="color:#3b82f6;">${st.total}</div>
     </div>
   </div>
 
   <div class="col-6 col-md-4 col-lg-2">
     <div class="glass p-3 text-center">
       <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">ATTEMPTED</div>
-      <div class="fs-3 fw-bold" style="color:#a78bfa;">${st.attempted}</div>
+      <div class="fs-3 fw-bold" style="color:#93c5fd;">${st.attempted}</div>
     </div>
   </div>
 
@@ -4420,9 +4400,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
   </div>
 
   <div class="col-6 col-md-4 col-lg-2">
-    <div class="glass p-3 text-center" style="background:linear-gradient(135deg,rgba(6,182,212,.12),rgba(124,58,237,.12))!important;border-color:rgba(6,182,212,.4)!important;">
+    <div class="glass p-3 text-center" style="background:linear-gradient(135deg,rgba(59, 130, 246,.12),rgba(37, 99, 235,.12))!important;border-color:rgba(59, 130, 246,.4)!important;">
       <div class="subtle" style="font-size:.75rem;letter-spacing:.5px;">SCORE 🏆</div>
-      <div class="fs-3 fw-bold" style="color:#06b6d4;text-shadow:0 0 16px rgba(6,182,212,.5);">${st.score}</div>
+      <div class="fs-3 fw-bold" style="color:#3b82f6;text-shadow:0 0 16px rgba(59, 130, 246,.5);">${st.score}</div>
     </div>
   </div>
 `;
@@ -4857,7 +4837,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         // Progress toast
         const _toast = document.createElement('div');
-        _toast.style.cssText = 'position:fixed;bottom:28px;right:28px;z-index:9999;background:#1e2a50;border:1px solid rgba(139,92,246,.5);color:#e0e8ff;font:600 13px -apple-system,sans-serif;padding:12px 20px;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:220px;';
+        _toast.style.cssText = 'position:fixed;bottom:28px;right:28px;z-index:9999;background:#1e2a50;border:1px solid rgba(59, 130, 246,.5);color:#e0e8ff;font:600 13px -apple-system,sans-serif;padding:12px 20px;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:220px;';
         _toast.innerHTML = '⏳ Generating PDF… <span id="_pdfProg">0</span> / ' + state.qIds.length;
         document.body.appendChild(_toast);
         const _prog = document.getElementById('_pdfProg');
@@ -5122,8 +5102,8 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           toast.style.cssText = `
             position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
             z-index:99999;padding:.6rem 1.1rem;border-radius:14px;
-            background:rgba(6,182,212,.18);border:1px solid rgba(6,182,212,.55);
-            backdrop-filter:blur(12px);color:#06b6d4;font-weight:700;font-size:.93rem;
+            background:rgba(59, 130, 246,.18);border:1px solid rgba(59, 130, 246,.55);
+            backdrop-filter:blur(12px);color:#3b82f6;font-weight:700;font-size:.93rem;
             box-shadow:0 8px 28px rgba(0,0,0,.35);opacity:0;
             transition:opacity .22s ease, transform .22s ease;pointer-events:none;
             white-space:nowrap;
@@ -5371,13 +5351,13 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           dropZone.style.background  = 'rgba(34,197,94,.06)';
         });
         dropZone.addEventListener('dragleave', () => {
-          dropZone.style.borderColor = 'rgba(6,182,212,.4)';
-          dropZone.style.background  = 'rgba(6,182,212,.03)';
+          dropZone.style.borderColor = 'rgba(59, 130, 246,.4)';
+          dropZone.style.background  = 'rgba(59, 130, 246,.03)';
         });
         dropZone.addEventListener('drop', e => {
           e.preventDefault();
-          dropZone.style.borderColor = 'rgba(6,182,212,.4)';
-          dropZone.style.background  = 'rgba(6,182,212,.03)';
+          dropZone.style.borderColor = 'rgba(59, 130, 246,.4)';
+          dropZone.style.background  = 'rgba(59, 130, 246,.03)';
           const file = e.dataTransfer.files[0];
           if (file && file.type === 'application/pdf') loadPdfFile(file);
         });
@@ -5654,7 +5634,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
           const canvas = await html2canvas(document.documentElement, {
             scale: 2,
-            backgroundColor: "#0b1020",
+            backgroundColor: "#0d1117",
             useCORS: true,
             allowTaint: false,
             logging: false,
@@ -5921,7 +5901,7 @@ position:fixed;
 top:90px;
 right:20px;
 z-index:999999;
-background:rgba(10,12,20,.9);
+background:rgba(13, 17, 23,.9);
 border:1px solid rgba(255,255,255,.2);
 border-radius:14px;
 padding:14px;
@@ -6070,7 +6050,7 @@ document.addEventListener("keydown",(e)=>{
         width: "200px",
         padding: "12px",
         borderRadius: "16px",
-        background: "rgba(10,12,20,0.95)",
+        background: "rgba(13, 17, 23,0.95)",
         backdropFilter: "blur(20px)",
         border: "1px solid rgba(255,255,255,0.25)",
         boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
@@ -6227,9 +6207,9 @@ document.addEventListener("keydown",(e)=>{
       colorPanel.id = "color-picker-panel";
 
       // Read current applied colors as best-guess defaults
-      const curBg    = "#0b1020";
+      const curBg    = "#0d1117";
       const curBox   = "#131830";
-      const curText  = "#eaf0ff";
+      const curText  = "#f1f5f9";
 
       colorPanel.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
@@ -6251,7 +6231,7 @@ document.addEventListener("keydown",(e)=>{
         bottom: "60px",
         padding: "14px",
         borderRadius: "14px",
-        background: "rgba(10,12,20,0.98)",
+        background: "rgba(13, 17, 23,0.98)",
         backdropFilter: "blur(25px)",
         border: "1px solid rgba(255,255,255,0.25)",
         boxShadow: "0 25px 50px rgba(0,0,0,0.6)",
@@ -6446,41 +6426,41 @@ function injectStyles() {
   s.id = 'bm-styles';
   s.textContent = `
   .bm-glow-btn {
-    background:linear-gradient(135deg,#7c3aed,#06b6d4);
-    border:1px solid rgba(124,58,237,.6);color:#fff !important;
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    border:1px solid rgba(37, 99, 235,.6);color:#fff !important;
     border-radius:14px;padding:.45rem .9rem;font-weight:700;cursor:pointer;
-    box-shadow:0 0 20px rgba(124,58,237,.4);transition:all .2s;
+    box-shadow:0 0 20px rgba(37, 99, 235,.4);transition:all .2s;
   }
-  .bm-glow-btn:hover { box-shadow:0 0 35px rgba(124,58,237,.7);transform:translateY(-2px); }
+  .bm-glow-btn:hover { box-shadow:0 0 35px rgba(37, 99, 235,.7);transform:translateY(-2px); }
   #bmOverlay {
     display:none;position:fixed;inset:0;z-index:100000;
-    background:rgba(4,6,18,.9);backdrop-filter:blur(10px);
+    background:rgba(13, 17, 23,.9);backdrop-filter:blur(10px);
     justify-content:center;align-items:center;
   }
   #bmOverlay.open { display:flex; }
   .bm-modal {
     width:min(500px,95vw);max-height:92vh;overflow-y:auto;
     background:linear-gradient(140deg,rgba(8,12,35,.98),rgba(16,5,38,.98));
-    border:1px solid rgba(124,58,237,.5);border-radius:22px;padding:26px;
-    box-shadow:0 0 80px rgba(124,58,237,.3);
+    border:1px solid rgba(37, 99, 235,.5);border-radius:22px;padding:26px;
+    box-shadow:0 0 80px rgba(37, 99, 235,.3);
   }
   .bm-head { display:flex;justify-content:space-between;align-items:center;margin-bottom:20px; }
   .bm-logo {
     font-size:21px;font-weight:900;letter-spacing:2px;
-    background:linear-gradient(90deg,#7c3aed,#06b6d4);
+    background:linear-gradient(90deg,#2563eb,#3b82f6);
     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   }
   .bm-x {
     background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
     color:#fff;border-radius:10px;width:34px;height:34px;cursor:pointer;font-size:15px;
   }
-  .bm-label { display:block;color:rgba(180,200,255,.65);font-size:12px;margin:10px 0 5px; }
+  .bm-label { display:block;color:rgba(148, 163, 184,.65);font-size:12px;margin:10px 0 5px; }
   .bm-input {
     width:100%;padding:10px 13px;border-radius:11px;box-sizing:border-box;
     background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);
     color:#fff;font-size:15px;outline:none;transition:border .2s;
   }
-  .bm-input:focus { border-color:rgba(124,58,237,.85);box-shadow:0 0 0 3px rgba(124,58,237,.14); }
+  .bm-input:focus { border-color:rgba(37, 99, 235,.85);box-shadow:0 0 0 3px rgba(37, 99, 235,.14); }
   .bm-code-input {
     text-transform:uppercase;letter-spacing:5px;font-size:24px;
     text-align:center;font-weight:700;
@@ -6491,22 +6471,22 @@ function injectStyles() {
     font-weight:700;font-size:14px;color:#fff;transition:all .15s;
   }
   .bm-btn:hover { transform:translateY(-2px);filter:brightness(1.15); }
-  .bm-blue   { background:linear-gradient(135deg,#1d4ed8,#06b6d4); }
-  .bm-purple { background:linear-gradient(135deg,#7c3aed,#a855f7); }
+  .bm-blue   { background:linear-gradient(135deg,#1d4ed8,#3b82f6); }
+  .bm-purple { background:linear-gradient(135deg,#2563eb,#60a5fa); }
   .bm-green  { background:linear-gradient(135deg,#059669,#10b981); }
   .bm-red    { background:linear-gradient(135deg,#dc2626,#ef4444); }
   .bm-full   { width:100%;flex:none; }
   .bm-code-box {
     text-align:center;padding:16px;border-radius:13px;margin-bottom:14px;
-    background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.28);
+    background:rgba(59, 130, 246,.08);border:1px solid rgba(59, 130, 246,.28);
   }
   .bm-big-code {
     font-size:40px;font-weight:900;letter-spacing:8px;
-    background:linear-gradient(90deg,#7c3aed,#06b6d4);
+    background:linear-gradient(90deg,#2563eb,#3b82f6);
     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     margin:4px 0;
   }
-  .bm-hint { font-size:11px;color:rgba(180,200,255,.45);margin:3px 0; }
+  .bm-hint { font-size:11px;color:rgba(148, 163, 184,.45);margin:3px 0; }
   .bm-player-row {
     display:flex;align-items:center;gap:9px;padding:9px 13px;border-radius:11px;
     background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);margin-bottom:6px;
@@ -6515,11 +6495,11 @@ function injectStyles() {
   .bm-tag {
     font-size:10px;padding:2px 7px;border-radius:999px;font-weight:700;
   }
-  .bm-tag-you   { background:rgba(6,182,212,.22);border:1px solid rgba(6,182,212,.5);color:#06b6d4; }
+  .bm-tag-you   { background:rgba(59, 130, 246,.22);border:1px solid rgba(59, 130, 246,.5);color:#3b82f6; }
   .bm-tag-host  { background:rgba(250,204,21,.18);border:1px solid rgba(250,204,21,.45);color:#facc15; }
   .bm-info {
     text-align:center;padding:11px;border-radius:11px;font-size:13px;margin-top:10px;
-    background:rgba(6,182,212,.07);border:1px solid rgba(6,182,212,.2);color:#06b6d4;
+    background:rgba(59, 130, 246,.07);border:1px solid rgba(59, 130, 246,.2);color:#3b82f6;
   }
   .bm-warn {
     text-align:center;padding:11px;border-radius:11px;font-size:13px;margin-top:10px;
@@ -6532,7 +6512,7 @@ function injectStyles() {
   /* ── BATTLE QUESTION OVERLAY ── */
   #bmQuestionOverlay {
     display:none;position:fixed;inset:0;z-index:99980;
-    background:linear-gradient(160deg,#050714 0%,#0b1020 50%,#0d0620 100%);
+    background:#0d1117;
     flex-direction:column;overflow:hidden;
   }
   #bmQuestionOverlay.bm-active { display:flex; }
@@ -6549,7 +6529,7 @@ function injectStyles() {
     .bm-qbar-timer { font-size:12px;padding:2px 7px;min-width:42px; }
     #bmChatToggleBtn,#bmSkipBtn,#bmFinishBtn { font-size:10px!important;padding:3px 8px!important; }
   }
-  .bm-qbar-label { font-size:13px;font-weight:700;color:rgba(180,200,255,.8);letter-spacing:1px; }
+  .bm-qbar-label { font-size:13px;font-weight:700;color:rgba(148, 163, 184,.8);letter-spacing:1px; }
   .bm-qbar-score { font-size:14px;font-weight:800;color:#22c55e; }
   .bm-qbar-timer {
     font-size:15px;font-weight:900;
@@ -6580,7 +6560,7 @@ function injectStyles() {
     flex:1;display:flex;flex-direction:column;justify-content:flex-start;
     padding:18px 18px 200px;overflow-y:auto;
   }
-  .bm-qtext { font-size:17px;line-height:1.55;font-weight:500;color:#eaf0ff;margin-bottom:18px; }
+  .bm-qtext { font-size:17px;line-height:1.55;font-weight:500;color:#f1f5f9;margin-bottom:18px; }
   .bm-qimage {
     max-width:100%;max-height:38vh;object-fit:contain;border-radius:12px;
     border:1px solid rgba(255,255,255,.12);margin-bottom:14px;display:block;
@@ -6588,12 +6568,12 @@ function injectStyles() {
   .bm-opt {
     width:100%;padding:13px 16px;border-radius:14px;
     border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);
-    color:#eaf0ff;font-size:15px;text-align:left;cursor:pointer;margin-bottom:10px;
+    color:#f1f5f9;font-size:15px;text-align:left;cursor:pointer;margin-bottom:10px;
     transition:background .12s,border-color .12s,transform .08s;
     display:flex;align-items:center;gap:10px;box-sizing:border-box;
   }
   .bm-opt:active { transform:scale(.98); }
-  .bm-opt:hover  { background:rgba(255,255,255,.11);border-color:rgba(6,182,212,.5); }
+  .bm-opt:hover  { background:rgba(255,255,255,.11);border-color:rgba(59, 130, 246,.5); }
   .bm-opt.bm-correct {
     background:rgba(34,197,94,.25);border-color:rgba(34,197,94,.85);pointer-events:none;
   }
@@ -6613,7 +6593,7 @@ function injectStyles() {
   /* ── SCOREBOARD fixed at bottom ── */
   #bmScoreboard {
     display:none;position:fixed;bottom:0;left:0;right:0;z-index:99991;
-    background:rgba(4,6,22,.97);border-top:1px solid rgba(124,58,237,.38);
+    background:rgba(13, 17, 23,.97);border-top:1px solid rgba(37, 99, 235,.38);
     backdrop-filter:blur(14px);padding:0;max-height:160px;overflow:hidden;
     transition:max-height .3s ease;
   }
@@ -6625,17 +6605,17 @@ function injectStyles() {
   }
   .bm-sb-head {
     font-size:10px;font-weight:800;letter-spacing:2px;
-    color:#06b6d4;
+    color:#3b82f6;
   }
-  .bm-sb-toggle { font-size:11px;color:rgba(6,182,212,.6);padding:2px 7px;border-radius:6px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2); }
+  .bm-sb-toggle { font-size:11px;color:rgba(59, 130, 246,.6);padding:2px 7px;border-radius:6px;background:rgba(59, 130, 246,.08);border:1px solid rgba(59, 130, 246,.2); }
   #bmSbRows { padding:0 14px 8px;overflow-y:auto;max-height:calc(160px - 28px); }
   #bmScoreboard.bm-sb-expanded #bmSbRows { max-height:calc(40vh - 28px); }
   .bm-sb-row {
     display:flex;align-items:center;gap:7px;padding:4px 7px;
     border-radius:9px;margin-bottom:4px;
   }
-  .bm-sb-row.me { background:rgba(124,58,237,.14); }
-  .bm-sb-rank { font-size:10px;font-weight:700;min-width:16px;color:rgba(180,200,255,.5); }
+  .bm-sb-row.me { background:rgba(37, 99, 235,.14); }
+  .bm-sb-rank { font-size:10px;font-weight:700;min-width:16px;color:rgba(148, 163, 184,.5); }
   .bm-sb-name { font-size:12px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
   .bm-sb-track {
     flex:2;height:10px;background:rgba(255,255,255,.07);
@@ -6643,26 +6623,26 @@ function injectStyles() {
   }
   .bm-sb-fill {
     height:100%;border-radius:6px;
-    background:linear-gradient(90deg,#7c3aed,#06b6d4);
+    background:linear-gradient(90deg,#2563eb,#3b82f6);
     transition:width .55s cubic-bezier(.34,1.56,.64,1);min-width:3px;
   }
   .bm-sb-score { font-size:12px;font-weight:800;min-width:28px;text-align:right;color:#22c55e; }
   /* ── FINISHED SCREEN ── */
   #bmFinished {
     display:none;position:fixed;inset:0;z-index:100000;
-    background:rgba(4,6,18,.97);backdrop-filter:blur(10px);
+    background:rgba(13, 17, 23,.97);backdrop-filter:blur(10px);
     flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;
   }
   #bmFinished.bm-fin-active { display:flex; }
   .bm-fin-title { font-size:26px;font-weight:900;margin-bottom:4px; }
-  .bm-fin-sub   { font-size:14px;color:rgba(180,200,255,.7);margin-bottom:20px; }
+  .bm-fin-sub   { font-size:14px;color:rgba(148, 163, 184,.7);margin-bottom:20px; }
   .bm-fin-table { width:100%;max-width:420px;margin-bottom:22px; }
   .bm-fin-row {
     display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;
     margin-bottom:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
   }
-  .bm-fin-row.bm-fin-me { background:rgba(124,58,237,.18);border-color:rgba(124,58,237,.5); }
-  .bm-fin-rank-num { font-size:13px;font-weight:800;min-width:22px;color:rgba(180,200,255,.6); }
+  .bm-fin-row.bm-fin-me { background:rgba(37, 99, 235,.18);border-color:rgba(37, 99, 235,.5); }
+  .bm-fin-rank-num { font-size:13px;font-weight:800;min-width:22px;color:rgba(148, 163, 184,.6); }
   .bm-fin-name { flex:1;font-size:14px;font-weight:600; }
   .bm-fin-score { font-size:14px;font-weight:800;color:#22c55e; }
   /* OLD race track hidden */
@@ -6670,13 +6650,13 @@ function injectStyles() {
   /* Waiting screen */
   #bmWaiting {
     display:none;position:fixed;inset:0;z-index:99995;
-    background:rgba(4,6,18,.97);backdrop-filter:blur(10px);
+    background:rgba(13, 17, 23,.97);backdrop-filter:blur(10px);
     flex-direction:column;align-items:center;justify-content:center;
     padding:24px;text-align:center;gap:18px;
   }
   #bmWaiting.bm-wait-active { display:flex; }
-  .bm-wait-title { font-size:22px;font-weight:800;color:#eaf0ff; }
-  .bm-wait-sub   { font-size:14px;color:rgba(180,200,255,.6); }
+  .bm-wait-title { font-size:22px;font-weight:800;color:#f1f5f9; }
+  .bm-wait-sub   { font-size:14px;color:rgba(148, 163, 184,.6); }
   .bm-wait-list  { width:100%;max-width:360px; }
   .bm-wait-row {
     display:flex;align-items:center;gap:10px;padding:8px 12px;
@@ -6748,7 +6728,7 @@ function buildUI() {
       </div>
       <button class="bm-btn bm-red bm-full" id="bmLeaveBtn"
         style="margin-top:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
-        color:rgba(180,200,255,.65);font-weight:500;">
+        color:rgba(148, 163, 184,.65);font-weight:500;">
         ← Leave Room
       </button>
     </div>
@@ -6764,8 +6744,8 @@ function buildUI() {
       <span class="bm-qbar-label" id="bmQLabel" translate="no">Q 1/?</span>
       <span class="bm-qbar-timer" id="bmQTimer" translate="no">0.0s</span>
       <span class="bm-qbar-score" id="bmMyScore" translate="no">Score: 0</span>
-      <span style="font-size:9px;color:rgba(180,200,255,.4);letter-spacing:.5px;display:none;" class="bm-kbd-hint d-none d-sm-inline">⌨ 1-4 to select</span>
-      <button id="bmChatToggleBtn" onclick="toggleChat()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(6,182,212,.45);background:rgba(6,182,212,.1);color:#06b6d4;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Open battle chat">💬 Chat</button>
+      <span style="font-size:9px;color:rgba(148, 163, 184,.4);letter-spacing:.5px;display:none;" class="bm-kbd-hint d-none d-sm-inline">⌨ 1-4 to select</span>
+      <button id="bmChatToggleBtn" onclick="toggleChat()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(59, 130, 246,.45);background:rgba(59, 130, 246,.1);color:#3b82f6;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Open battle chat">💬 Chat</button>
       <button id="bmSkipBtn" onclick="bmSkipQuestion()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.1);color:#facc15;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Send this question to the end of the queue">⏭ Skip →end</button>
       <button id="bmFinishBtn" onclick="bmFinishBattle()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(239,68,68,.5);background:rgba(239,68,68,.13);color:#f87171;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Submit and finish battle now">🏁 Finish</button>
     </div>
@@ -7486,7 +7466,7 @@ function showLobby() {
       const chatBtn = document.createElement('button');
       chatBtn.id = 'bmLobbyChatBtn';
       chatBtn.className = 'bm-btn bm-full';
-      chatBtn.style.cssText = 'margin-top:8px;background:linear-gradient(135deg,rgba(6,182,212,.18),rgba(124,58,237,.18));border:1px solid rgba(6,182,212,.45);color:#06b6d4;';
+      chatBtn.style.cssText = 'margin-top:8px;background:linear-gradient(135deg,rgba(59, 130, 246,.18),rgba(37, 99, 235,.18));border:1px solid rgba(59, 130, 246,.45);color:#3b82f6;';
       chatBtn.innerHTML = '💬 Open Battle Chat';
       chatBtn.onclick = () => { closeModal(); openChat(); };
       lb.parentNode.insertBefore(chatBtn, lb);
@@ -7642,11 +7622,11 @@ function injectChatStyles() {
     left:16px;
     width:52px;height:52px;
     border-radius:50%;
-    border:2px solid rgba(6,182,212,.7);
-    background:linear-gradient(135deg,rgba(6,182,212,.25),rgba(124,58,237,.35));
+    border:2px solid rgba(59, 130, 246,.7);
+    background:linear-gradient(135deg,rgba(59, 130, 246,.25),rgba(37, 99, 235,.35));
     backdrop-filter:blur(16px);
     -webkit-backdrop-filter:blur(16px);
-    box-shadow:0 6px 28px rgba(6,182,212,.4),0 0 0 1px rgba(6,182,212,.1);
+    box-shadow:0 6px 28px rgba(59, 130, 246,.4),0 0 0 1px rgba(59, 130, 246,.1);
     cursor:grab;
     z-index:99980;
     align-items:center;justify-content:center;
@@ -7676,9 +7656,9 @@ function injectChatStyles() {
     width:min(340px,calc(100vw - 32px));
     max-height:520px;
     background:linear-gradient(160deg,rgba(6,8,28,.97),rgba(14,4,36,.97));
-    border:1px solid rgba(6,182,212,.4);
+    border:1px solid rgba(59, 130, 246,.4);
     border-radius:20px;
-    box-shadow:0 0 60px rgba(6,182,212,.2),0 20px 50px rgba(0,0,0,.6);
+    box-shadow:0 0 60px rgba(59, 130, 246,.2),0 20px 50px rgba(0,0,0,.6);
     z-index:99981;
     flex-direction:column;
     overflow:hidden;
@@ -7739,7 +7719,7 @@ function injectChatStyles() {
   #bmSsStatus {
     padding:10px 12px;border-radius:12px;font-size:12px;font-weight:600;text-align:center;
     background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-    color:rgba(180,200,255,.6);
+    color:rgba(148, 163, 184,.6);
   }
 
   /* Video viewer area */
@@ -7895,13 +7875,13 @@ function injectChatStyles() {
   #bmChatHeader {
     display:flex;align-items:center;gap:8px;
     padding:10px 14px;
-    border-bottom:1px solid rgba(6,182,212,.18);
-    background:rgba(6,182,212,.06);
+    border-bottom:1px solid rgba(59, 130, 246,.18);
+    background:rgba(59, 130, 246,.06);
     flex-shrink:0;cursor:pointer;user-select:none;
   }
   #bmChatHeader .bm-ch-title {
     flex:1;font-weight:800;font-size:13px;
-    background:linear-gradient(90deg,#06b6d4,#a78bfa);
+    background:linear-gradient(90deg,#3b82f6,#93c5fd);
     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     letter-spacing:.5px;
   }
@@ -7921,7 +7901,7 @@ function injectChatStyles() {
     font-size:13px;display:flex;align-items:center;justify-content:center;
     cursor:pointer;transition:all .15s;flex-shrink:0;
   }
-  .bm-ch-btn:hover { background:rgba(255,255,255,.12);border-color:rgba(6,182,212,.5);color:#06b6d4; }
+  .bm-ch-btn:hover { background:rgba(255,255,255,.12);border-color:rgba(59, 130, 246,.5);color:#3b82f6; }
 
   /* ── Tab Bar ── */
   #bmChatTabBar {
@@ -7936,8 +7916,8 @@ function injectChatStyles() {
     border-bottom:2px solid transparent;
   }
   .bm-tab-btn.active {
-    color:#06b6d4;border-bottom-color:#06b6d4;
-    background:rgba(6,182,212,.05);
+    color:#3b82f6;border-bottom-color:#3b82f6;
+    background:rgba(59, 130, 246,.05);
   }
   .bm-tab-btn:hover:not(.active) { color:rgba(150,170,220,.8); }
 
@@ -7949,7 +7929,7 @@ function injectChatStyles() {
     scroll-behavior:smooth;
   }
   #bmChatBody::-webkit-scrollbar{width:4px;}
-  #bmChatBody::-webkit-scrollbar-thumb{background:rgba(6,182,212,.3);border-radius:99px;}
+  #bmChatBody::-webkit-scrollbar-thumb{background:rgba(59, 130, 246,.3);border-radius:99px;}
 
   /* Empty state */
   .bm-chat-empty {
@@ -7966,12 +7946,12 @@ function injectChatStyles() {
   .bm-msg.bm-msg-me { flex-direction:row-reverse; }
   .bm-msg-avatar {
     width:28px;height:28px;border-radius:50%;
-    border:1.5px solid rgba(6,182,212,.35);
-    background:rgba(6,182,212,.1);
+    border:1.5px solid rgba(59, 130, 246,.35);
+    background:rgba(59, 130, 246,.1);
     display:flex;align-items:center;justify-content:center;
     font-size:14px;flex-shrink:0;
   }
-  .bm-msg-me .bm-msg-avatar { border-color:rgba(124,58,237,.45);background:rgba(124,58,237,.1); }
+  .bm-msg-me .bm-msg-avatar { border-color:rgba(37, 99, 235,.45);background:rgba(37, 99, 235,.1); }
   .bm-msg-content {
     max-width:calc(100% - 42px);min-width:0;
   }
@@ -7983,16 +7963,16 @@ function injectChatStyles() {
     color:rgba(220,235,255,.9);word-break:break-word;
   }
   .bm-msg-me .bm-msg-content { align-items:flex-end; display:flex; flex-direction:column; }
-  .bm-msg-me .bm-msg-bubble { background:rgba(124,58,237,.22);border-color:rgba(124,58,237,.4);color:#e0d4ff; }
-  .bm-msg-name { font-size:9px;font-weight:700;color:rgba(6,182,212,.8);margin-bottom:2px;letter-spacing:.3px; }
+  .bm-msg-me .bm-msg-bubble { background:rgba(37, 99, 235,.22);border-color:rgba(37, 99, 235,.4);color:#dbeafe; }
+  .bm-msg-name { font-size:9px;font-weight:700;color:rgba(59, 130, 246,.8);margin-bottom:2px;letter-spacing:.3px; }
   .bm-msg-me .bm-msg-name { color:rgba(167,139,250,.8);text-align:right; }
   .bm-msg-time { font-size:8.5px;color:rgba(150,170,220,.35);margin-top:2px; }
   .bm-msg-me .bm-msg-time { text-align:right; }
   .bm-msg-system {
     text-align:center;font-size:10.5px;
-    color:rgba(6,182,212,.55);padding:3px 8px;
-    background:rgba(6,182,212,.05);border-radius:999px;
-    border:1px solid rgba(6,182,212,.12);
+    color:rgba(59, 130, 246,.55);padding:3px 8px;
+    background:rgba(59, 130, 246,.05);border-radius:999px;
+    border:1px solid rgba(59, 130, 246,.12);
     align-self:center;
   }
 
@@ -8010,16 +7990,16 @@ function injectChatStyles() {
     font-family:'Inter',sans-serif;
   }
   #bmChatInput::placeholder{color:rgba(150,170,220,.35);}
-  #bmChatInput:focus{border-color:rgba(6,182,212,.65);box-shadow:0 0 0 2px rgba(6,182,212,.1);}
+  #bmChatInput:focus{border-color:rgba(59, 130, 246,.65);box-shadow:0 0 0 2px rgba(59, 130, 246,.1);}
   #bmChatSendBtn {
     width:36px;height:36px;border-radius:12px;
-    border:1px solid rgba(6,182,212,.5);
-    background:linear-gradient(135deg,rgba(6,182,212,.2),rgba(124,58,237,.2));
-    color:#06b6d4;font-size:16px;cursor:pointer;
+    border:1px solid rgba(59, 130, 246,.5);
+    background:linear-gradient(135deg,rgba(59, 130, 246,.2),rgba(37, 99, 235,.2));
+    color:#3b82f6;font-size:16px;cursor:pointer;
     display:flex;align-items:center;justify-content:center;
     transition:all .15s;flex-shrink:0;
   }
-  #bmChatSendBtn:hover { background:rgba(6,182,212,.3);border-color:rgba(6,182,212,.9); }
+  #bmChatSendBtn:hover { background:rgba(59, 130, 246,.3);border-color:rgba(59, 130, 246,.9); }
   #bmChatSendBtn:active { transform:scale(.92); }
 
   /* ── VOICE BODY ── */
@@ -8788,7 +8768,7 @@ function vcRenderParticipants() {
     <div class="bm-vc-card" data-vcid="me">
       <div class="bm-vc-av">${B.myAvatar || '🎮'}</div>
       <div class="bm-vc-info">
-        <div class="bm-vc-name">${escMsg(B.myName || 'You')} <span style="font-size:9px;color:#06b6d4;">(you)</span></div>
+        <div class="bm-vc-name">${escMsg(B.myName || 'You')} <span style="font-size:9px;color:#3b82f6;">(you)</span></div>
         <div class="bm-vc-sub">${VC.micOn ? '🎤 live' : '🔇 muted'}</div>
       </div>
       <div class="bm-vc-wave">${bars('me')}</div>
@@ -9006,8 +8986,8 @@ function ssRenderUI() {
     const alreadyRequested = SS.pendingRequest && SS.pendingRequest.requesterId === B.myId;
     if (isMobileDevice) {
       // Mobile: can't share, show informational note
-      html = `<div style="text-align:center;padding:10px 8px;color:rgba(234,240,255,.6);font-size:12px;line-height:1.5;">
-                📱 <strong style="color:rgba(234,240,255,.85);">Screen sharing is not supported on iOS.</strong><br>
+      html = `<div style="text-align:center;padding:10px 8px;color:rgba(241, 245, 249,.6);font-size:12px;line-height:1.5;">
+                📱 <strong style="color:rgba(241, 245, 249,.85);">Screen sharing is not supported on iOS.</strong><br>
                 Use a desktop or Android browser to share your screen.<br>You can still watch others share.
               </div>`;
     } else if (alreadyRequested) {
@@ -9530,7 +9510,7 @@ setTimeout(addBattleButtons, 1800);
   z-index: 2147483647;
   width: 12px;
   height: 60px;
-  background: linear-gradient(180deg, #7c3aed 0%, #06b6d4 50%, #7c3aed 100%);
+  background: linear-gradient(180deg, #2563eb 0%, #3b82f6 50%, #2563eb 100%);
   border-radius: 0 12px 12px 0;
   border: 1px solid rgba(255,255,255,0.30);
   border-left: none;
@@ -9551,7 +9531,7 @@ setTimeout(addBattleButtons, 1800);
 }
 #gcp-trigger:hover {
   width: 30px;
-  box-shadow: 5px 0 24px rgba(124,58,237,0.8), 0 0 48px rgba(6,182,212,0.45), inset -1px 0 0 rgba(255,255,255,0.18);
+  box-shadow: 5px 0 24px rgba(37, 99, 235,0.8), 0 0 48px rgba(59, 130, 246,0.45), inset -1px 0 0 rgba(255,255,255,0.18);
 }
 #gcp-trigger:active { opacity: 0.75; }
 #gcp-trigger-dots {
@@ -9591,21 +9571,21 @@ setTimeout(addBattleButtons, 1800);
     rgba(12,8,28,0.98) 50%,
     rgba(6,10,28,0.98) 100%
   );
-  border-right: 1px solid rgba(124,58,237,0.4);
-  box-shadow: 8px 0 60px rgba(0,0,0,0.7), inset -1px 0 0 rgba(6,182,212,0.15);
+  border-right: 1px solid rgba(37, 99, 235,0.4);
+  box-shadow: 8px 0 60px rgba(0,0,0,0.7), inset -1px 0 0 rgba(59, 130, 246,0.15);
   transform-origin: left center;
   transform: perspective(1400px) rotateY(-90deg);
   transition: transform 0.5s cubic-bezier(0.34,1.2,0.64,1);
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: rgba(124,58,237,0.4) transparent;
+  scrollbar-color: rgba(37, 99, 235,0.4) transparent;
 }
 #gcp-panel.open {
   transform: perspective(1400px) rotateY(0deg);
 }
 #gcp-panel::-webkit-scrollbar { width: 4px; }
-#gcp-panel::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.4); border-radius: 99px; }
+#gcp-panel::-webkit-scrollbar-thumb { background: rgba(37, 99, 235,0.4); border-radius: 99px; }
 
 /* ═══ PANEL HEADER ═══ */
 .gcp-header {
@@ -9622,14 +9602,14 @@ setTimeout(addBattleButtons, 1800);
   font-weight: 800;
   letter-spacing: 3px;
   text-transform: uppercase;
-  background: linear-gradient(90deg,#7c3aed,#06b6d4);
+  background: linear-gradient(90deg,#2563eb,#3b82f6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 2px;
 }
 .gcp-header-sub {
   font-size: 10px;
-  color: rgba(180,200,255,0.4);
+  color: rgba(148, 163, 184,0.4);
   font-family: 'Inter', sans-serif;
 }
 .gcp-close {
@@ -9661,7 +9641,7 @@ setTimeout(addBattleButtons, 1800);
   font-weight: 800;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: rgba(180,200,255,0.35);
+  color: rgba(148, 163, 184,0.35);
   margin-bottom: 10px;
 }
 
@@ -9672,7 +9652,7 @@ setTimeout(addBattleButtons, 1800);
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.1);
   background: rgba(255,255,255,0.05);
-  color: rgba(234,240,255,0.9);
+  color: rgba(241, 245, 249,0.9);
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
@@ -9691,15 +9671,15 @@ setTimeout(addBattleButtons, 1800);
   transform: translateX(3px);
 }
 .gcp-btn.accent-purple {
-  background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(124,58,237,0.08));
-  border-color: rgba(124,58,237,0.4);
+  background: linear-gradient(135deg, rgba(37, 99, 235,0.2), rgba(37, 99, 235,0.08));
+  border-color: rgba(37, 99, 235,0.4);
 }
-.gcp-btn.accent-purple:hover { border-color: rgba(124,58,237,0.7); background: rgba(124,58,237,0.25); }
+.gcp-btn.accent-purple:hover { border-color: rgba(37, 99, 235,0.7); background: rgba(37, 99, 235,0.25); }
 .gcp-btn.accent-cyan {
-  background: linear-gradient(135deg, rgba(6,182,212,0.18), rgba(6,182,212,0.07));
-  border-color: rgba(6,182,212,0.4);
+  background: linear-gradient(135deg, rgba(59, 130, 246,0.18), rgba(59, 130, 246,0.07));
+  border-color: rgba(59, 130, 246,0.4);
 }
-.gcp-btn.accent-cyan:hover { border-color: rgba(6,182,212,0.7); background: rgba(6,182,212,0.22); }
+.gcp-btn.accent-cyan:hover { border-color: rgba(59, 130, 246,0.7); background: rgba(59, 130, 246,0.22); }
 .gcp-btn.accent-green {
   background: linear-gradient(135deg, rgba(34,197,94,0.18), rgba(34,197,94,0.06));
   border-color: rgba(34,197,94,0.4);
@@ -9737,14 +9717,14 @@ setTimeout(addBattleButtons, 1800);
   flex: 1;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(234,240,255,0.9);
+  color: rgba(241, 245, 249,0.9);
   border-radius: 10px;
   padding: 7px 10px;
   font-size: 12px;
   font-family: 'Inter', sans-serif;
   outline: none;
 }
-.gcp-select:focus { border-color: rgba(124,58,237,0.6); }
+.gcp-select:focus { border-color: rgba(37, 99, 235,0.6); }
 .gcp-range-row {
   display: flex;
   align-items: center;
@@ -9752,13 +9732,13 @@ setTimeout(addBattleButtons, 1800);
 }
 .gcp-range {
   flex: 1;
-  accent-color: #7c3aed;
+  accent-color: #2563eb;
   height: 4px;
 }
 .gcp-range-val {
   font-size: 11px;
   font-family: monospace;
-  color: rgba(180,200,255,0.6);
+  color: rgba(148, 163, 184,0.6);
   min-width: 30px;
   text-align: right;
 }
@@ -9798,7 +9778,7 @@ setTimeout(addBattleButtons, 1800);
 }
 .gcp-shortcut-row .desc {
   font-size: 11px;
-  color: rgba(180,200,255,0.55);
+  color: rgba(148, 163, 184,0.55);
   font-family: 'Inter', sans-serif;
 }
 
@@ -9826,11 +9806,11 @@ setTimeout(addBattleButtons, 1800);
   width: min(760px, 52vw);
   height: 100vh;
   border-radius: 14px 0 0 14px;
-  border: 1px solid rgba(124,58,237,0.45);
+  border: 1px solid rgba(37, 99, 235,0.45);
   border-right: none;
   box-shadow:
     -8px 0 40px rgba(0,0,0,0.7),
-    0 0 0 1px rgba(6,182,212,0.08),
+    0 0 0 1px rgba(59, 130, 246,0.08),
     inset 0 1px 0 rgba(255,255,255,0.06);
   background: #0d1117;
   display: flex;
@@ -9856,7 +9836,7 @@ setTimeout(addBattleButtons, 1800);
   padding: 0 8px;
   height: 42px;
   min-height: 42px;
-  background: linear-gradient(90deg, rgba(124,58,237,0.22), rgba(6,182,212,0.10));
+  background: linear-gradient(90deg, rgba(37, 99, 235,0.22), rgba(59, 130, 246,0.10));
   border-bottom: 1px solid rgba(255,255,255,0.07);
   cursor: default;
   user-select: none;
@@ -9933,13 +9913,13 @@ setTimeout(addBattleButtons, 1800);
   color: #fff;
 }
 .gbl-tool.active {
-  background: linear-gradient(135deg,rgba(124,58,237,0.40),rgba(6,182,212,0.28));
-  border-color: rgba(124,58,237,0.65);
+  background: linear-gradient(135deg,rgba(37, 99, 235,0.40),rgba(59, 130, 246,0.28));
+  border-color: rgba(37, 99, 235,0.65);
   color: #c084fc;
-  box-shadow: 0 0 10px rgba(124,58,237,0.30);
+  box-shadow: 0 0 10px rgba(37, 99, 235,0.30);
 }
 /* Special glow colors for geo instrument buttons */
-#gbl-t-ruler-tool.active    { background:linear-gradient(135deg,rgba(6,182,212,.35),rgba(6,182,212,.15));border-color:rgba(6,182,212,.7);color:#67e8f9;box-shadow:0 0 12px rgba(6,182,212,.4); }
+#gbl-t-ruler-tool.active    { background:linear-gradient(135deg,rgba(59, 130, 246,.35),rgba(59, 130, 246,.15));border-color:rgba(59, 130, 246,.7);color:#67e8f9;box-shadow:0 0 12px rgba(59, 130, 246,.4); }
 #gbl-t-protractor-tool.active { background:linear-gradient(135deg,rgba(255,200,80,.3),rgba(255,200,80,.12));border-color:rgba(255,200,80,.7);color:#fde68a;box-shadow:0 0 12px rgba(255,200,80,.35); }
 #gbl-t-setsq45-tool.active  { background:linear-gradient(135deg,rgba(0,229,255,.28),rgba(0,229,255,.1));border-color:rgba(0,229,255,.6);color:#00e5ff;box-shadow:0 0 12px rgba(0,229,255,.35); }
 #gbl-t-setsq30-tool.active  { background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(168,85,247,.12));border-color:rgba(168,85,247,.7);color:#d8b4fe;box-shadow:0 0 12px rgba(168,85,247,.35); }
@@ -9948,7 +9928,7 @@ setTimeout(addBattleButtons, 1800);
 #gbl-t-frenchcurve-tool.active { background:linear-gradient(135deg,rgba(34,197,94,.28),rgba(34,197,94,.1));border-color:rgba(34,197,94,.6);color:#86efac;box-shadow:0 0 12px rgba(34,197,94,.35); }
 /* Shape tool subtle color coding */
 #gbl-t-star.active  { color:#fbbf24; border-color:rgba(251,191,36,.7); box-shadow:0 0 12px rgba(251,191,36,.3); }
-#gbl-t-pentagon.active,#gbl-t-hexagon.active { color:#a78bfa; border-color:rgba(167,139,250,.7); }
+#gbl-t-pentagon.active,#gbl-t-hexagon.active { color:#93c5fd; border-color:rgba(167,139,250,.7); }
 #gbl-t-wave.active  { color:#34d399; border-color:rgba(52,211,153,.7); }
 
 .gbl-tool[title]:hover::after {
@@ -9973,10 +9953,10 @@ setTimeout(addBattleButtons, 1800);
 #gbl-titlebar {
   overflow-x: auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(124,58,237,0.4) transparent;
+  scrollbar-color: rgba(37, 99, 235,0.4) transparent;
 }
 #gbl-titlebar::-webkit-scrollbar { height: 3px; }
-#gbl-titlebar::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.4); border-radius: 99px; }
+#gbl-titlebar::-webkit-scrollbar-thumb { background: rgba(37, 99, 235,0.4); border-radius: 99px; }
 
 /* Geometry section divider label */
 .gbl-tb-geo-label {
@@ -10080,7 +10060,7 @@ setTimeout(addBattleButtons, 1800);
   left: 50%;
   transform: translateX(-50%);
   background: rgba(8,6,30,0.98);
-  border: 1px solid rgba(124,58,237,0.4);
+  border: 1px solid rgba(37, 99, 235,0.4);
   border-radius: 14px;
   padding: 12px;
   z-index: 200;
@@ -10105,8 +10085,8 @@ setTimeout(addBattleButtons, 1800);
   gap: 7px;
   transition: all 0.12s;
 }
-.gbl-geo-btn:hover { background: rgba(124,58,237,0.2); border-color: rgba(124,58,237,0.5); }
-.gbl-geo-btn.active { background: rgba(124,58,237,0.3); border-color: rgba(124,58,237,0.7); color: #c084fc; }
+.gbl-geo-btn:hover { background: rgba(37, 99, 235,0.2); border-color: rgba(37, 99, 235,0.5); }
+.gbl-geo-btn.active { background: rgba(37, 99, 235,0.3); border-color: rgba(37, 99, 235,0.7); color: #c084fc; }
 
 /* ── CANVAS AREA — takes ALL space ── */
 #gbl-canvas-area {
@@ -10170,13 +10150,13 @@ setTimeout(addBattleButtons, 1800);
   font-size: 10px;
   transition: all 0.10s;
 }
-.gbl-page-btn:hover:not(:disabled) { background: rgba(124,58,237,0.22); }
+.gbl-page-btn:hover:not(:disabled) { background: rgba(37, 99, 235,0.22); }
 .gbl-page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 #gbl-page-indicator {
   font-size: 9px;
   font-weight: 700;
   font-family: 'Inter', sans-serif;
-  color: rgba(180,200,255,0.65);
+  color: rgba(148, 163, 184,0.65);
   min-width: 44px;
   text-align: center;
 }
@@ -10214,16 +10194,16 @@ setTimeout(addBattleButtons, 1800);
 #gbl-resize-handle::after {
   content: '⋮⋮';
   font-size: 13px;
-  color: rgba(124,58,237,0.55);
+  color: rgba(37, 99, 235,0.55);
   letter-spacing: -2px;
   pointer-events: none;
-  text-shadow: 0 0 6px rgba(124,58,237,0.4);
+  text-shadow: 0 0 6px rgba(37, 99, 235,0.4);
   transition: color 0.15s;
 }
 #gbl-resize-handle:hover::after,
 #gbl-resize-handle.dragging::after {
   color: rgba(167,139,250,0.95);
-  text-shadow: 0 0 10px rgba(124,58,237,0.8);
+  text-shadow: 0 0 10px rgba(37, 99, 235,0.8);
 }
 
 /* ── GEOMETRY TOOLS ON CANVAS ── */
@@ -10315,12 +10295,12 @@ setTimeout(addBattleButtons, 1800);
   left: 50%;
   transform: translateX(-50%);
   background: rgba(8,6,30,0.95);
-  border: 1px solid rgba(6,182,212,0.4);
+  border: 1px solid rgba(59, 130, 246,0.4);
   border-radius: 10px;
   padding: 6px 14px;
   font-size: 11px;
   font-family: 'Inter', sans-serif;
-  color: rgba(6,182,212,0.9);
+  color: rgba(59, 130, 246,0.9);
   pointer-events: none;
   white-space: nowrap;
   z-index: 200;
@@ -10344,9 +10324,9 @@ setTimeout(addBattleButtons, 1800);
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 3px solid rgba(124,58,237,0.2);
-  border-top-color: #7c3aed;
-  border-right-color: #06b6d4;
+  border: 3px solid rgba(37, 99, 235,0.2);
+  border-top-color: #2563eb;
+  border-right-color: #3b82f6;
   animation: gbl-spin 0.9s linear infinite;
 }
 @keyframes gbl-spin { to { transform: rotate(360deg); } }
@@ -10411,7 +10391,7 @@ setTimeout(addBattleButtons, 1800);
       </select>
     </div>
     <div class="gcp-range-row">
-      <span style="font-size:10px;color:rgba(180,200,255,0.45);font-family:'Inter',sans-serif;">Size</span>
+      <span style="font-size:10px;color:rgba(148, 163, 184,0.45);font-family:'Inter',sans-serif;">Size</span>
       <input type="range" class="gcp-range" id="gcp-font-size" min="12" max="28" value="16">
       <span class="gcp-range-val" id="gcp-font-size-val">16px</span>
     </div>
@@ -10429,7 +10409,7 @@ setTimeout(addBattleButtons, 1800);
           Website Text
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
-          <input type="color" id="gcp-text-color" value="#eaf0ff"
+          <input type="color" id="gcp-text-color" value="#f1f5f9"
             style="width:32px;height:28px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;">
           <button id="gcp-text-color-reset" style="font-size:9px;padding:3px 7px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">Reset</button>
         </div>
@@ -10441,7 +10421,7 @@ setTimeout(addBattleButtons, 1800);
           Page Background
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
-          <input type="color" id="gcp-bg-color" value="#050714"
+          <input type="color" id="gcp-bg-color" value="#0d1117"
             style="width:32px;height:28px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;">
           <button id="gcp-bg-color-reset" style="font-size:9px;padding:3px 7px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">Reset</button>
         </div>
@@ -10461,10 +10441,10 @@ setTimeout(addBattleButtons, 1800);
 
       <!-- Quick Preset Themes -->
       <div style="margin-top:4px;">
-        <div style="font-size:10px;color:rgba(180,200,255,0.35);font-family:'Inter',sans-serif;margin-bottom:6px;letter-spacing:0.5px;">QUICK THEMES</div>
+        <div style="font-size:10px;color:rgba(148, 163, 184,0.35);font-family:'Inter',sans-serif;margin-bottom:6px;letter-spacing:0.5px;">QUICK THEMES</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button class="gcp-theme-btn" data-theme="dark" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(124,58,237,0.4);background:rgba(124,58,237,0.15);color:#c084fc;cursor:pointer;font-family:'Inter',sans-serif;">🌌 Dark</button>
-          <button class="gcp-theme-btn" data-theme="midnight" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(6,182,212,0.4);background:rgba(6,182,212,0.1);color:#67e8f9;cursor:pointer;font-family:'Inter',sans-serif;">🌊 Midnight</button>
+          <button class="gcp-theme-btn" data-theme="dark" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(37, 99, 235,0.4);background:rgba(37, 99, 235,0.15);color:#c084fc;cursor:pointer;font-family:'Inter',sans-serif;">🌌 Dark</button>
+          <button class="gcp-theme-btn" data-theme="midnight" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(59, 130, 246,0.4);background:rgba(59, 130, 246,0.1);color:#67e8f9;cursor:pointer;font-family:'Inter',sans-serif;">🌊 Midnight</button>
           <button class="gcp-theme-btn" data-theme="forest" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(34,197,94,0.4);background:rgba(34,197,94,0.1);color:#4ade80;cursor:pointer;font-family:'Inter',sans-serif;">🌿 Forest</button>
           <button class="gcp-theme-btn" data-theme="light" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(200,200,200,0.4);background:rgba(240,240,255,0.12);color:#c8d8ff;cursor:pointer;font-family:'Inter',sans-serif;">☀️ Light</button>
           <button class="gcp-theme-btn" data-theme="sepia" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(234,179,8,0.4);background:rgba(234,179,8,0.1);color:#fde047;cursor:pointer;font-family:'Inter',sans-serif;">📜 Sepia</button>
@@ -10487,7 +10467,7 @@ setTimeout(addBattleButtons, 1800);
 
   <!-- FOOTER -->
   <div style="padding:14px 16px;text-align:center;">
-    <div style="font-size:10px;color:rgba(180,200,255,0.2);font-family:'Inter',sans-serif;">GOD LEVEL TOOLS v3.0</div>
+    <div style="font-size:10px;color:rgba(148, 163, 184,0.2);font-family:'Inter',sans-serif;">GOD LEVEL TOOLS v3.0</div>
   </div>
 </div>
 
@@ -10552,7 +10532,7 @@ setTimeout(addBattleButtons, 1800);
       <div class="gbl-tb-sep"></div>
 
       <!-- Status info -->
-      <div class="gbl-stat" style="font-size:9px;color:rgba(180,200,255,0.5);font-family:'Inter',sans-serif;gap:4px;display:flex;align-items:center;">
+      <div class="gbl-stat" style="font-size:9px;color:rgba(148, 163, 184,0.5);font-family:'Inter',sans-serif;gap:4px;display:flex;align-items:center;">
         <span id="gbl-status-color" style="display:inline-flex;align-items:center;gap:3px;">
           <span id="gbl-status-color-dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;flex-shrink:0;"></span>
           <span id="gbl-status-tool" style="white-space:nowrap;">Pen</span>
@@ -10579,7 +10559,7 @@ setTimeout(addBattleButtons, 1800);
       <button class="gbl-tb-btn" id="gbl-undo-btn"      title="Undo (Ctrl+Z)">↩</button>
       <button class="gbl-tb-btn" id="gbl-redo-btn"      title="Redo (Ctrl+Y)">↪</button>
       <button class="gbl-tb-btn fullscreen-btn" id="gbl-fullscreen-btn" title="Toggle Fullscreen">⛶</button>
-      <button class="gbl-tb-btn" id="gbl-save-ppt-btn"  title="Save as PPT" style="background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(6,182,212,0.2));border-color:rgba(124,58,237,0.5);color:#c084fc;">💾</button>
+      <button class="gbl-tb-btn" id="gbl-save-ppt-btn"  title="Save as PPT" style="background:linear-gradient(135deg,rgba(37, 99, 235,0.3),rgba(59, 130, 246,0.2));border-color:rgba(37, 99, 235,0.5);color:#c084fc;">💾</button>
       <button class="gbl-tb-btn danger" id="gbl-close-btn" title="Close">✕</button>
       <div class="gbl-tb-sep"></div>
 
@@ -10746,13 +10726,13 @@ setTimeout(addBattleButtons, 1800);
   document.head.appendChild(themeStyle);
 
   const THEME_DEFAULTS = {
-    textColor: '#eaf0ff',
-    bgColor:   '#050714',
+    textColor: '#f1f5f9',
+    bgColor:   '#0d1117',
     boxColor:  '#111827'
   };
 
   const THEMES = {
-    dark:     { textColor:'#eaf0ff', bgColor:'#050714',  boxColor:'#111827' },
+    dark:     { textColor:'#f1f5f9', bgColor:'#0d1117',  boxColor:'#111827' },
     midnight: { textColor:'#e0f7ff', bgColor:'#020d18',  boxColor:'#041624' },
     forest:   { textColor:'#e0ffe8', bgColor:'#020f06',  boxColor:'#051a09' },
     light:    { textColor:'#1a1a2e', bgColor:'#f0f4ff',  boxColor:'#ffffff' },
@@ -10946,7 +10926,7 @@ setTimeout(addBattleButtons, 1800);
         document.head.appendChild(cs);
         await new Promise(r => setTimeout(r, 80));
         const cv = await html2canvas(document.documentElement, {
-          scale:2, backgroundColor:'#0b1020', useCORS:true, allowTaint:false, logging:false,
+          scale:2, backgroundColor:'#0d1117', useCORS:true, allowTaint:false, logging:false,
           width:window.innerWidth, height:window.innerHeight,
           ignoreElements: el => {
             const c = typeof el.className === 'string' ? el.className : '';
@@ -11220,7 +11200,7 @@ setTimeout(addBattleButtons, 1800);
     const svg=document.createElementNS(svgNS,'svg');
     svg.setAttribute('width',rulerW); svg.setAttribute('height',rulerH);
     svg.setAttribute('viewBox',`0 0 ${rulerW} ${rulerH}`);
-    svg.style.cssText='display:block;overflow:visible;filter:drop-shadow(0 6px 18px rgba(6,182,212,0.3))';
+    svg.style.cssText='display:block;overflow:visible;filter:drop-shadow(0 6px 18px rgba(59, 130, 246,0.3))';
 
     function rebuildRulerContent() {
       while(svg.firstChild) svg.removeChild(svg.firstChild);
@@ -11230,8 +11210,8 @@ setTimeout(addBattleButtons, 1800);
       body.setAttribute('x',0); body.setAttribute('y',0);
       body.setAttribute('width',rulerW); body.setAttribute('height',rulerH);
       body.setAttribute('rx','6');
-      body.setAttribute('fill','rgba(6,182,212,0.08)');
-      body.setAttribute('stroke','rgba(6,182,212,0.75)');
+      body.setAttribute('fill','rgba(59, 130, 246,0.08)');
+      body.setAttribute('stroke','rgba(59, 130, 246,0.75)');
       body.setAttribute('stroke-width','1.2');
       svg.appendChild(body);
       // Ticks & labels
@@ -11242,13 +11222,13 @@ setTimeout(addBattleButtons, 1800);
         const tick=document.createElementNS(svgNS,'line');
         tick.setAttribute('x1',x); tick.setAttribute('y1',rulerH);
         tick.setAttribute('x2',x); tick.setAttribute('y2',rulerH-(isMajor?20:isMid?14:10));
-        tick.setAttribute('stroke',isMajor?'rgba(6,182,212,0.85)':'rgba(6,182,212,0.5)');
+        tick.setAttribute('stroke',isMajor?'rgba(59, 130, 246,0.85)':'rgba(59, 130, 246,0.5)');
         tick.setAttribute('stroke-width',isMajor?'1.2':'0.8');
         svg.appendChild(tick);
         if(isMajor){
           const lbl=document.createElementNS(svgNS,'text');
           lbl.setAttribute('x',x); lbl.setAttribute('y',rulerH-22);
-          lbl.setAttribute('fill','rgba(6,182,212,0.9)'); lbl.setAttribute('font-size','8');
+          lbl.setAttribute('fill','rgba(59, 130, 246,0.9)'); lbl.setAttribute('font-size','8');
           lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('font-family','Inter,sans-serif');
           lbl.textContent=i/2; svg.appendChild(lbl);
         }
@@ -11258,14 +11238,14 @@ setTimeout(addBattleButtons, 1800);
           const ht=document.createElementNS(svgNS,'line');
           ht.setAttribute('x1',xh); ht.setAttribute('y1',rulerH);
           ht.setAttribute('x2',xh); ht.setAttribute('y2',rulerH-8);
-          ht.setAttribute('stroke','rgba(6,182,212,0.35)'); ht.setAttribute('stroke-width','0.6');
+          ht.setAttribute('stroke','rgba(59, 130, 246,0.35)'); ht.setAttribute('stroke-width','0.6');
           svg.appendChild(ht);
         }
       }
       // Label
       const lbl2=document.createElementNS(svgNS,'text');
       lbl2.setAttribute('x',rulerW/2); lbl2.setAttribute('y','13');
-      lbl2.setAttribute('fill','rgba(6,182,212,0.5)'); lbl2.setAttribute('font-size','9');
+      lbl2.setAttribute('fill','rgba(59, 130, 246,0.5)'); lbl2.setAttribute('font-size','9');
       lbl2.setAttribute('text-anchor','middle'); lbl2.setAttribute('font-family','Inter,sans-serif');
       lbl2.setAttribute('letter-spacing','2'); lbl2.textContent='cm'; svg.appendChild(lbl2);
     }
@@ -11284,7 +11264,7 @@ setTimeout(addBattleButtons, 1800);
     Object.assign(resH.style,{
       position:'absolute', right:'-8px', bottom:'-8px',
       width:'14px', height:'14px', borderRadius:'3px',
-      background:'rgba(6,182,212,0.7)', border:'2px solid rgba(6,182,212,1)',
+      background:'rgba(59, 130, 246,0.7)', border:'2px solid rgba(59, 130, 246,1)',
       cursor:'se-resize', zIndex:'61', pointerEvents:'auto'
     });
     resH.title='Drag to resize';
@@ -11510,7 +11490,7 @@ setTimeout(addBattleButtons, 1800);
     Object.assign(rh.style, {
       position:'absolute', right:'-10px', bottom:'-10px',
       width:'18px', height:'18px', borderRadius:'4px',
-      background:'rgba(6,182,212,0.7)', border:'2px solid rgba(6,182,212,1)',
+      background:'rgba(59, 130, 246,0.7)', border:'2px solid rgba(59, 130, 246,1)',
       cursor:'se-resize', zIndex:'60', pointerEvents:'auto'
     });
     rh.title = 'Drag to scale';
@@ -12547,16 +12527,16 @@ setTimeout(addBattleButtons, 1800);
     if (!b) return;
     ctx.save();
     ctx.setLineDash([7, 4]);
-    ctx.strokeStyle = 'rgba(6,182,212,0.95)';
+    ctx.strokeStyle = 'rgba(59, 130, 246,0.95)';
     ctx.lineWidth = 1.5;
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
-    ctx.shadowColor = 'rgba(6,182,212,0.6)';
+    ctx.shadowColor = 'rgba(59, 130, 246,0.6)';
     ctx.shadowBlur = 8;
     ctx.strokeRect(b.x, b.y, b.w, b.h);
     // Draw small move-icon label
     ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(6,182,212,0.95)';
+    ctx.fillStyle = 'rgba(59, 130, 246,0.95)';
     ctx.font = 'bold 11px Inter, sans-serif';
     ctx.shadowBlur = 0;
     ctx.fillText('MOVE', b.x + 4, b.y - 4 > 0 ? b.y - 4 : b.y + 14);
@@ -12997,7 +12977,7 @@ setTimeout(addBattleButtons, 1800);
     // ── Drag handle — bright, impossible to miss ──
     const handle = document.createElement('div');
     handle.style.cssText = [
-      'background:#7c3aed',
+      'background:#2563eb',
       'color:#fff',
       'font-size:12px',
       'font-weight:600',
@@ -13024,7 +13004,7 @@ setTimeout(addBattleButtons, 1800);
       "font-family:'Merriweather',serif",
       'font-weight:600',
       'outline:none',
-      'border:2px solid #7c3aed',
+      'border:2px solid #2563eb',
       'border-top:none',
       'padding:5px 8px',
       'border-radius:0 0 8px 8px',
@@ -13343,20 +13323,20 @@ setTimeout(addBattleButtons, 1800);
   transform: translateX(-50%) !important;
   width: 54px !important; height: 16px !important;
   border-radius: 99px !important;
-  background: rgba(6,182,212,0.22) !important;
-  border: 1.5px solid rgba(6,182,212,0.7) !important;
+  background: rgba(59, 130, 246,0.22) !important;
+  border: 1.5px solid rgba(59, 130, 246,0.7) !important;
   cursor: grab !important;
   display: flex !important; align-items: center !important; justify-content: center !important;
   font-size: 9px !important; letter-spacing: 3px !important;
-  color: rgba(6,182,212,0.9) !important;
+  color: rgba(59, 130, 246,0.9) !important;
   z-index: 62 !important; user-select: none !important;
   pointer-events: auto !important;
   transition: background 0.12s !important;
-  box-shadow: 0 0 6px rgba(6,182,212,0.25) !important;
+  box-shadow: 0 0 6px rgba(59, 130, 246,0.25) !important;
 }
 .geo-drag-handle:hover {
-  background: rgba(6,182,212,0.4) !important;
-  box-shadow: 0 0 12px rgba(6,182,212,0.5) !important;
+  background: rgba(59, 130, 246,0.4) !important;
+  box-shadow: 0 0 12px rgba(59, 130, 246,0.5) !important;
 }
 .geo-drag-handle:active { cursor: grabbing !important; }
 
@@ -14105,8 +14085,8 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   transition: opacity 0.35s, box-shadow 0.35s;
   background: linear-gradient(90deg,
     transparent 0%,
-    rgba(124, 58, 237, 0.85) 25%,
-    rgba(6, 182, 212, 0.85) 75%,
+    rgba(37, 99, 235, 0.85) 25%,
+    rgba(59, 130, 246, 0.85) 75%,
     transparent 100%
   );
 }
@@ -14114,8 +14094,8 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
 .gbl-win-tb-hidden #gbl-tb-reveal-bar {
   opacity: 1;
   box-shadow:
-    0 0 14px rgba(124, 58, 237, 0.7),
-    0 0 30px rgba(6, 182, 212, 0.35);
+    0 0 14px rgba(37, 99, 235, 0.7),
+    0 0 30px rgba(59, 130, 246, 0.35);
   animation: gbl-bar-pulse 2.2s ease-in-out infinite;
 }
 @keyframes gbl-bar-pulse {
@@ -14132,7 +14112,7 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   font: 700 9px/1 'Inter', sans-serif;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(167, 139, 250, 0.7);
+  color: rgba(147, 197, 253, 0.7);
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
@@ -14323,9 +14303,8 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   pointer-events: all !important;
   touch-action: pan-x !important;
   background: linear-gradient(90deg,
-    rgba(13,17,23,0.72) 0%,
-    rgba(124,58,237,0.18) 50%,
-    rgba(6,182,212,0.10) 100%) !important;
+    rgba(13, 17, 23,0.92) 0%,
+    rgba(22, 27, 39,0.88) 100%) !important;
   backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(10px) !important;
   border-bottom: 1px solid rgba(255,255,255,0.09) !important;
