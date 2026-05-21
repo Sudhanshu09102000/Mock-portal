@@ -1,4 +1,17 @@
 const PORTAL_DATA = [
+
+  {
+    title: "For testing purpose",
+    colorClass: "testing",
+    topics: [
+      {
+        name: "testing",
+        subtopics: [
+          { name: "Name of test", file: "test" },
+        ]
+      }
+    ]
+  },
   {
     title: "General Intelligence & Reasoning",
     colorClass: "reasoning",
@@ -89,22 +102,50 @@ const PORTAL_DATA = [
       {
         name: "Polity",
         subtopics: [
-          { name: "Making of Constitution", file: "making-of-constitution" },
-          { name: "Salient Features of Constitution", file: "salient-features-constitution" },
-          { name: "Preamble", file: "preamble" },
-          { name: "Part 1 and Part 2", file: "part-1-part-2" },
-          { name: "Fundamental Rights", file: "fundamental-rights" },
-          { name: "DPSP and Fundamental Duties", file: "dpsp-fundamental-duties" },
-          { name: "President and Vice President", file: "president-vice-president" },
-          { name: "Prime Minister and Council of Ministers", file: "prime-minister-council" },
+          { name: "Historical Background", file: "historical-background" },
+          { name: "Making of the Constitution", file: "making-of-the-constitution" },
+          { name: "Salient Features of the Constitution", file: "salient-features-constitution" },
+          { name: "Union and its Territory, Part-I (Article 1-4)", file: "union-territory-part-1" },
+          { name: "Citizenship, Part-II (Article 5-11)", file: "citizenship-part-2" },
+          { name: "Fundamental Rights, Part-III (Article 12-35)", file: "fundamental-rights-part-3" },
+          { name: "Directive Principles of State Policy, Part-IV (Article 36-51)", file: "dpsp-part-4" },
+          { name: "Fundamental Duties, Part-IV-A (Article 51A)", file: "fundamental-duties-part-4a" },
+          { name: "Amendment of the Constitution", file: "amendment-constitution" },
+          { name: "Basic Structure of the Constitution", file: "basic-structure-constitution" },
+          { name: "Parliamentary System", file: "parliamentary-system" },
+          { name: "Federal System", file: "federal-system" },
+          { name: "The Executive", file: "the-executive" },
+          { name: "President of India", file: "president-of-india" },
+          { name: "Vice-President", file: "vice-president" },
+          { name: "Prime Minister", file: "prime-minister" },
+          { name: "Central Council of Ministers", file: "central-council-of-ministers" },
+          { name: "Cabinet Committees", file: "cabinet-committees" },
+          { name: "Attorney General of India", file: "attorney-general-india" },
+          { name: "State Government/State Executive, Part-VI (Article 153-167)", file: "state-executive-part-6" },
+          { name: "Governor", file: "governor" },
+          { name: "Chief Minister", file: "chief-minister" },
+          { name: "State Council of Ministers", file: "state-council-of-ministers" },
+          { name: "Advocate General of the State (Article 165)", file: "advocate-general-state" },
+          { name: "Legislature", file: "legislature" },
           { name: "Parliament", file: "parliament" },
-          { name: "State Legislature", file: "state-legislature" },
-          { name: "Emergency and Constitutional Amendment", file: "emergency-constitutional-amendment" },
-          { name: "Supreme Court and High Court", file: "supreme-court-high-court" },
-          { name: "Local Government", file: "local-government" },
-          { name: "Constitutional and Non Constitutional Bodies", file: "constitutional-nonconstitutional-bodies" },
-          { name: "Important Acts", file: "important-acts" },
-          { name: "Sources of Indian Constitution", file: "sources-indian-constitution" }
+          { name: "Rajya Sabha", file: "rajya-sabha" },
+          { name: "Lok Sabha", file: "lok-sabha" },
+          { name: "State Legislature (Article 168-212)", file: "state-legislature" },
+          { name: "Judiciary", file: "judiciary" },
+          { name: "Supreme Court, Part-V (Article 124-147)", file: "supreme-court-part-5" },
+          { name: "High Court, Part-VI (Article 214-231)", file: "high-court-part-6" },
+          { name: "Subordinate Judiciary, Part-VI (Articles 233-237)", file: "subordinate-judiciary" },
+          { name: "Tribunals", file: "tribunals" },
+          { name: "Centre-State Relations", file: "centre-state-relations" },
+          { name: "Governance System of Union Territories", file: "governance-union-territories" },
+          { name: "The Scheduled and Tribal Areas", file: "scheduled-tribal-areas" },
+          { name: "Special Provisions for Some States, Part-XXI (Article 370 & 371)", file: "special-provisions-states" },
+          { name: "Provisions Related to Language, Part-XVII (Article 343-351)", file: "provisions-language-part-17" },
+          { name: "Emergency Provisions", file: "emergency-provisions" },
+          { name: "Local Self Government", file: "local-self-government" },
+          { name: "Elections and Party System in India", file: "elections-party-system" },
+          { name: "Good Governance in India", file: "good-governance-india" },
+          { name: "Commission/Council/Tribunal", file: "commission-council-tribunal" },
         ]
       },
 
@@ -203,17 +244,7 @@ const PORTAL_DATA = [
         name: "Current Affairs",
         subtopics: [
           { name: "February and March 2026 Current Affiars", file: "ca-feb-march-2026" },
-          { name: "January 2026 Current Affiars", file: "ca-jan-2026" },
-          { name: "December 2025 Current Affairs", file: "ca-dec-2025" },
-          { name: "November 2025 Current Affairs", file: "ca-nov-2025" },
-          { name: "September and October 2025 Current Affairs", file: "ca-sep-oct-2025" },
-          { name: "August 2025 Current Affairs", file: "ca-aug-2025" },
-          { name: "July 2025 Current Affairs", file: "ca-jul-2025" },
-          { name: "June 2025 Current Affairs", file: "ca-jun-2025" },
-          { name: "May 2025 Current Affairs", file: "ca-may-2025" },
-          { name: "April 2025 Current Affairs", file: "ca-apr-2025" },
-          { name: "March 2025 Current Affairs", file: "ca-mar-2025" }
-          
+
         ]
       }
     ]
