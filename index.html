@@ -2025,6 +2025,9 @@ body {
   justify-content: center;
   padding: 20px;
 }
+/* Legend items use CSS variable for color */
+.nav-legend-wrap { color: var(--txt, rgba(241,245,249,0.5)); opacity: 0.75; }
+.nav-legend-item { color: inherit; }
 #submitConfirmOverlay.show { display: flex; }
 #submitConfirmBox {
   background: linear-gradient(145deg, rgba(12,16,32,.97), rgba(18,10,38,.97));
@@ -2049,13 +2052,13 @@ body {
 #submitConfirmBox .sc-title {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #f1f5f9;
+  color: var(--txt, #f1f5f9);
   margin-bottom: 6px;
   letter-spacing: .2px;
 }
 #submitConfirmBox .sc-sub {
   font-size: .85rem;
-  color: rgba(241, 245, 249,.55);
+  color: var(--muted, rgba(241,245,249,.55));
   margin-bottom: 22px;
   line-height: 1.5;
 }
@@ -2072,14 +2075,14 @@ body {
   border-radius: 12px;
   padding: 8px 14px;
   font-size: .78rem;
-  color: rgba(241, 245, 249,.75);
+  color: var(--muted, rgba(241,245,249,.75));
   font-weight: 600;
 }
 #submitConfirmBox .sc-stat span {
   display: block;
   font-size: 1.2rem;
   font-weight: 800;
-  color: #f1f5f9;
+  color: var(--txt, #f1f5f9);
   margin-bottom: 2px;
 }
 #submitConfirmBox .sc-btns {
@@ -2092,14 +2095,14 @@ body {
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,.18);
   background: rgba(255,255,255,.06);
-  color: rgba(241, 245, 249,.75);
+  color: var(--muted, rgba(241,245,249,.75));
   font-size: .92rem;
   font-weight: 700;
   cursor: pointer;
   transition: all .15s;
   -webkit-tap-highlight-color: transparent;
 }
-#scCancelBtn:hover { background: rgba(255,255,255,.10); color: #f1f5f9; }
+#scCancelBtn:hover { background: rgba(255,255,255,.10); color: var(--txt, #f1f5f9); }
 #scConfirmBtn {
   flex: 1;
   padding: 12px;
@@ -2782,12 +2785,12 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               <div id="qNav" class="qnav mt-2"></div>
 
               <!-- Legend -->
-              <div class="mt-3" style="font-size:10px;color:rgba(241, 245, 249,.5);line-height:1.9;">
-                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.2);margin-right:5px;"></span>Not visited</div>
-                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(251,146,60,.22);border:1.5px solid rgba(251,146,60,.75);margin-right:5px;"></span>Visited, no answer</div>
-                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(34,197,94,.25);border:1.5px solid rgba(34,197,94,.85);margin-right:5px;"></span>Answered</div>
-                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(250,204,21,.22);border:1.5px solid rgba(250,204,21,.85);margin-right:5px;"></span>Review (no answer)</div>
-                <div><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,rgba(250,204,21,.35) 0 50%,rgba(34,197,94,.3) 50% 100%);border:1.5px solid rgba(250,204,21,.75);margin-right:5px;"></span>Review + answered</div>
+              <div class="mt-3 nav-legend-wrap" style="font-size:10px;line-height:1.9;">
+                <div class="nav-legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.2);margin-right:5px;"></span>Not visited</div>
+                <div class="nav-legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(251,146,60,.22);border:1.5px solid rgba(251,146,60,.75);margin-right:5px;"></span>Visited, no answer</div>
+                <div class="nav-legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(34,197,94,.25);border:1.5px solid rgba(34,197,94,.85);margin-right:5px;"></span>Answered</div>
+                <div class="nav-legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(250,204,21,.22);border:1.5px solid rgba(250,204,21,.85);margin-right:5px;"></span>Review (no answer)</div>
+                <div class="nav-legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,rgba(250,204,21,.35) 0 50%,rgba(34,197,94,.3) 50% 100%);border:1.5px solid rgba(250,204,21,.75);margin-right:5px;"></span>Review + answered</div>
               </div>
 
               <!-- ✅ Buttons under Navigator -->
@@ -6295,10 +6298,16 @@ document.addEventListener("keydown",(e)=>{
           }
           body, body p, body div, body span, body button, body label,
           #questionText, .opt-text, .subtle, .qbox, .option, .btn-glass,
-          #qMetaLine, #navLegend, .badge-soft, .pill {
+          #qMetaLine, #navLegend, .badge-soft, .pill,
+          h1, h2, h3, h4, h5, h6,
+          #subjectTitle, #subjectHint,
+          .topic-btn, .subtopic-btn,
+          .topic-btn *, .subtopic-btn *,
+          .fw-semibold, .fw-bold,
+          .btn-glass, .btn-glass * {
             color: ${txt} !important;
           }
-          :root { --txt: ${txt} !important; }
+          :root { --txt: ${txt} !important; --muted: ${txt} !important; }
         `;
       }
 
@@ -10433,16 +10442,23 @@ setTimeout(addBattleButtons, 1800);
 
     <div style="display:flex;flex-direction:column;gap:10px;padding:2px 0;">
 
-      <!-- Website Text Color -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-        <div style="font-size:11px;color:rgba(200,220,255,0.7);font-family:'Inter',sans-serif;flex:1;">
-          Website Text
+      <!-- Website Text Color — Rich Picker -->
+      <div style="display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:13px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.04);">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-size:11px;color:rgba(200,220,255,0.7);font-family:'Inter',sans-serif;font-weight:600;letter-spacing:0.4px;">🔤 Website Text</div>
+          <button id="gcp-text-color-reset" style="font-size:9px;padding:3px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">↺ Reset</button>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;">
+        <!-- Swatches grid -->
+        <div id="gcp-txt-swatches" style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px;"></div>
+        <!-- Color wheel + hex input -->
+        <div style="display:flex;align-items:center;gap:8px;">
           <input type="color" id="gcp-text-color" value="#f1f5f9"
-            style="width:32px;height:28px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;">
-          <button id="gcp-text-color-reset" style="font-size:9px;padding:3px 7px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">Reset</button>
+            style="width:34px;height:30px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;flex-shrink:0;">
+          <input type="text" id="gcp-txt-hex" value="#f1f5f9" maxlength="7" placeholder="#rrggbb"
+            style="flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:8px;color:#f1f5f9;font-size:12px;font-family:'Inter',monospace;padding:5px 9px;outline:none;">
         </div>
+        <!-- Live preview -->
+        <div id="gcp-txt-preview" style="font-size:12px;font-family:'Inter',sans-serif;color:#f1f5f9;text-align:center;padding:5px 8px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);">The quick brown fox…</div>
       </div>
 
       <!-- Page Background Color -->
@@ -10899,6 +10915,20 @@ setTimeout(addBattleButtons, 1800);
       #navPanel h5, #navPanel .fw-bold {
         color: ${textColor} !important;
       }
+      /* ── Navigator legend items ── */
+      .nav-legend-wrap, .nav-legend-item, .nav-legend-wrap div {
+        color: ${textColor} !important;
+        opacity: 0.85 !important;
+      }
+      /* ── Submit confirm modal ── */
+      #submitConfirmBox .sc-title,
+      #submitConfirmBox .sc-sub,
+      #submitConfirmBox .sc-stat,
+      #submitConfirmBox .sc-stat span,
+      #submitConfirmBox .sc-stat label,
+      #scCancelBtn {
+        color: ${textColor} !important;
+      }
       .option {
         border-color: rgba(128,128,200,0.25) !important;
         background: color-mix(in srgb, ${boxColor} 80%, transparent) !important;
@@ -10913,6 +10943,68 @@ setTimeout(addBattleButtons, 1800);
   function clearThemeColors() {
     themeStyle.textContent = '';
   }
+
+  /* ── Rich text-colour picker: swatches + hex input ── */
+  (function () {
+    const SWATCHES = [
+      '#f1f5f9','#ffffff','#e2e8f0',
+      '#93c5fd','#6ee7b7','#fde68a','#fca5a5',
+      '#38bdf8','#34d399','#fb923c','#facc15',
+      '#a78bfa','#f472b6','#67e8f9','#86efac',
+      '#ff6b6b','#4ade80','#60a5fa','#c084fc',
+      '#fbbf24','#f87171',
+    ];
+    const wrap    = document.getElementById('gcp-txt-swatches');
+    const picker  = document.getElementById('gcp-text-color');
+    const hexInp  = document.getElementById('gcp-txt-hex');
+    const preview = document.getElementById('gcp-txt-preview');
+
+    function setTxtColor(hex, fromSwatch) {
+      if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+      picker.value  = hex;
+      hexInp.value  = hex;
+      preview.style.color = hex;
+      wrap.querySelectorAll('.gcp-tsw').forEach(s => {
+        s.style.outline = s.dataset.hex === hex ? '2px solid rgba(255,255,255,0.75)' : 'none';
+      });
+      const bg  = document.getElementById('gcp-bg-color').value;
+      const box = document.getElementById('gcp-box-color').value;
+      applyThemeColors(hex, bg, box);
+    }
+
+    SWATCHES.forEach(hex => {
+      const s = document.createElement('div');
+      s.className = 'gcp-tsw';
+      s.dataset.hex = hex;
+      s.style.cssText = 'width:100%;aspect-ratio:1;border-radius:50%;cursor:pointer;border:1.5px solid transparent;transition:transform .12s;background:' + hex;
+      s.title = hex;
+      s.addEventListener('mouseenter', () => s.style.transform = 'scale(1.2)');
+      s.addEventListener('mouseleave', () => s.style.transform = '');
+      s.addEventListener('click', () => setTxtColor(hex, true));
+      wrap.appendChild(s);
+    });
+
+    picker.addEventListener('input', e => setTxtColor(e.target.value, false));
+
+    hexInp.addEventListener('input', () => {
+      let v = hexInp.value.trim();
+      if (/^#[0-9a-fA-F]{6}$/.test(v)) setTxtColor(v, false);
+    });
+    hexInp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        let v = hexInp.value.trim();
+        if (!v.startsWith('#')) v = '#' + v;
+        if (/^#[0-9a-fA-F]{6}$/.test(v)) setTxtColor(v, false);
+      }
+    });
+    hexInp.style.transition = 'border-color .15s';
+    hexInp.addEventListener('focus', () => hexInp.style.borderColor = 'rgba(59,130,246,0.6)');
+    hexInp.addEventListener('blur',  () => hexInp.style.borderColor = 'rgba(255,255,255,0.14)');
+
+    // Mark default swatch on load
+    const firstSwatch = wrap.querySelector('.gcp-tsw[data-hex="#f1f5f9"]');
+    if (firstSwatch) firstSwatch.style.outline = '2px solid rgba(255,255,255,0.75)';
+  })();
 
   document.getElementById('gcp-text-color').addEventListener('input', e => {
     const bg  = document.getElementById('gcp-bg-color').value;
@@ -14467,277 +14559,6 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
 }
 </style>
 
-
-<!-- ═══════════════════════════════════════════════
-     FLOATING TEXT COLOR PICKER
-════════════════════════════════════════════════ -->
-<style>
-#txt-color-picker-fab {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  font-family: 'Inter', sans-serif;
-}
-
-
-
-#txt-color-panel {
-  display: none;
-  flex-direction: column;
-  gap: 12px;
-  background: rgba(13,17,23,0.95);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 18px;
-  padding: 16px 18px;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.55);
-  backdrop-filter: blur(16px);
-  min-width: 230px;
-}
-#txt-color-panel.open { display: flex; }
-
-#txt-color-panel .tcp-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: rgba(241,245,249,0.45);
-  margin-bottom: 2px;
-}
-#txt-color-panel .tcp-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: rgba(241,245,249,0.9);
-  margin-bottom: 4px;
-}
-
-/* Preset swatches */
-.tcp-swatches {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 7px;
-}
-.tcp-swatch {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: transform .13s ease, border-color .13s ease;
-}
-.tcp-swatch:hover { transform: scale(1.18); }
-.tcp-swatch.active { border-color: rgba(255,255,255,0.75); }
-
-/* Custom color input row */
-.tcp-custom-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 2px;
-}
-#tcp-color-input {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.18);
-  cursor: pointer;
-  background: none;
-  padding: 2px;
-}
-#tcp-hex-input {
-  flex: 1;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 10px;
-  color: #f1f5f9;
-  font-size: 13px;
-  font-family: 'Inter', monospace;
-  padding: 6px 10px;
-  outline: none;
-  transition: border-color .15s;
-}
-#tcp-hex-input:focus { border-color: rgba(59,130,246,0.6); }
-
-/* Reset button */
-#tcp-reset-btn {
-  width: 100%;
-  padding: 8px;
-  border-radius: 11px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06);
-  color: rgba(241,245,249,0.6);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background .13s, color .13s;
-  letter-spacing: .4px;
-}
-#tcp-reset-btn:hover {
-  background: rgba(255,255,255,0.10);
-  color: rgba(241,245,249,0.9);
-}
-
-/* Preview bar */
-.tcp-preview {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--txt-user, #f1f5f9);
-  text-align: center;
-  padding: 6px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.04);
-  transition: color 0.2s;
-  letter-spacing: .3px;
-}
-</style>
-
-<div id="txt-color-picker-fab">
-  <!-- Panel -->
-  <div id="txt-color-panel">
-    <div>
-      <div class="tcp-label">Text Color</div>
-      <div class="tcp-title">Pick any color</div>
-    </div>
-
-    <!-- Presets -->
-    <div class="tcp-swatches" id="tcp-swatches"></div>
-
-    <!-- Custom picker -->
-    <div class="tcp-custom-row">
-      <input type="color" id="tcp-color-input" value="#f1f5f9" title="Custom color">
-      <input type="text" id="tcp-hex-input" value="#f1f5f9" maxlength="7" placeholder="#rrggbb">
-    </div>
-
-    <!-- Live preview -->
-    <div class="tcp-preview" id="tcp-preview">The quick brown fox jumps over the lazy dog</div>
-
-    <!-- Reset -->
-    <button id="tcp-reset-btn">↺ Reset to default</button>
-  </div>
-
-
-</div>
-
-<script>
-(function () {
-  'use strict';
-
-  const DEFAULT_TXT   = '#f1f5f9';
-  const DEFAULT_MUTED = '#f1f5f9b3'; // same hue, 70% opacity
-  const STORAGE_KEY   = 'tcp_text_color';
-
-  const PRESETS = [
-    '#f1f5f9','#ffffff','#e2e8f0',
-    '#93c5fd','#6ee7b7','#fde68a',
-    '#fca5a5','#f9a8d4','#c4b5fd',
-    '#38bdf8','#34d399','#fb923c',
-    '#facc15','#a78bfa','#f472b6',
-    '#67e8f9','#86efac','#fbbf24',
-    '#ff6b6b','#4ade80','#60a5fa',
-  ];
-
-  const panel      = document.getElementById('txt-color-panel');
-  const colorInput = document.getElementById('tcp-color-input');
-  const hexInput   = document.getElementById('tcp-hex-input');
-  const preview    = document.getElementById('tcp-preview');
-  const resetBtn   = document.getElementById('tcp-reset-btn');
-  const swatchWrap = document.getElementById('tcp-swatches');
-
-  /* ── Build swatches ── */
-  PRESETS.forEach(hex => {
-    const s = document.createElement('div');
-    s.className = 'tcp-swatch';
-    s.style.background = hex;
-    s.dataset.hex = hex;
-    s.title = hex;
-    s.addEventListener('click', () => applyColor(hex, s));
-    swatchWrap.appendChild(s);
-  });
-
-  /* ── Apply color to entire site ── */
-  function applyColor(hex, activeSwatch) {
-    // Validate hex
-    if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
-
-    // Update CSS variables on :root
-    document.documentElement.style.setProperty('--txt', hex);
-    document.documentElement.style.setProperty('--txt-user', hex);
-
-    // Muted = same color at 70% — recreate as rgba
-    const r = parseInt(hex.slice(1,3),16);
-    const g = parseInt(hex.slice(3,5),16);
-    const b = parseInt(hex.slice(5,7),16);
-    document.documentElement.style.setProperty('--muted', `rgba(${r},${g},${b},0.70)`);
-
-    // Sync inputs
-    colorInput.value = hex;
-    hexInput.value   = hex;
-    preview.style.color = hex;
-
-    // Active swatch highlight
-    document.querySelectorAll('.tcp-swatch').forEach(s => s.classList.remove('active'));
-    if (activeSwatch) activeSwatch.classList.add('active');
-
-    // Persist
-    localStorage.setItem(STORAGE_KEY, hex);
-  }
-
-  /* ── Reset ── */
-  function resetColor() {
-    document.documentElement.style.removeProperty('--txt');
-    document.documentElement.style.removeProperty('--txt-user');
-    document.documentElement.style.removeProperty('--muted');
-    colorInput.value    = DEFAULT_TXT;
-    hexInput.value      = DEFAULT_TXT;
-    preview.style.color = DEFAULT_TXT;
-    document.querySelectorAll('.tcp-swatch').forEach(s => s.classList.remove('active'));
-    localStorage.removeItem(STORAGE_KEY);
-  }
-
-  /* ── Events ── */
-  fab.addEventListener('click', () => panel.classList.toggle('open'));
-
-  // Close panel on outside click
-  document.addEventListener('click', e => {
-    if (!document.getElementById('txt-color-picker-fab').contains(e.target)) {
-      panel.classList.remove('open');
-    }
-  });
-
-  colorInput.addEventListener('input', () => applyColor(colorInput.value, null));
-
-  hexInput.addEventListener('input', () => {
-    const v = hexInput.value.trim();
-    if (/^#[0-9a-fA-F]{6}$/.test(v)) applyColor(v, null);
-  });
-  hexInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      let v = hexInput.value.trim();
-      if (!v.startsWith('#')) v = '#' + v;
-      if (/^#[0-9a-fA-F]{6}$/.test(v)) applyColor(v, null);
-    }
-  });
-
-  resetBtn.addEventListener('click', resetColor);
-
-  /* ── Restore saved color ── */
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved && /^#[0-9a-fA-F]{6}$/.test(saved)) {
-    const match = document.querySelector(`.tcp-swatch[data-hex="${saved}"]`);
-    applyColor(saved, match || null);
-  } else {
-    // Mark default swatch active
-    const defaultSwatch = document.querySelector(`.tcp-swatch[data-hex="${DEFAULT_TXT}"]`);
-    if (defaultSwatch) defaultSwatch.classList.add('active');
-    preview.style.color = DEFAULT_TXT;
-  }
-})();
-</script>
 
 </body>
 
