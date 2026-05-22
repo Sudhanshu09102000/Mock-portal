@@ -1,4 +1,4 @@
-{
+window.TEST_DATA = {
   "1": {
     "questext": "<b>The Indus Valley Civilization was essentially an <u>urban culture</u>. During which approximate time period did it exist?</b>",
     "options": [
