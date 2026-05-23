@@ -3093,6 +3093,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         views[name].classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+      window.showView = showView; // expose for battle mode exit
 
       /* ========= PORTAL RENDER ========= */
       const state = window.state = {
@@ -6640,10 +6641,23 @@ function injectStyles() {
     border-radius:7px;padding:2px 7px;min-width:22px;text-align:center;flex-shrink:0;
   }
   .bm-flash {
-    position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;transition:opacity .15s;
+    position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;
+    transition:opacity .12s ease-in;
   }
-  .bm-flash.bm-flash-good { background:rgba(34,197,94,.2);opacity:1; }
-  .bm-flash.bm-flash-bad  { background:rgba(239,68,68,.2);opacity:1; }
+  .bm-flash.bm-flash-good {
+    background: radial-gradient(ellipse at center, rgba(34,197,94,.55) 0%, rgba(34,197,94,.30) 50%, rgba(34,197,94,.10) 100%);
+    box-shadow: inset 0 0 80px rgba(34,197,94,.6), inset 0 0 160px rgba(34,197,94,.25);
+    opacity:1;
+  }
+  .bm-flash.bm-flash-bad {
+    background: radial-gradient(ellipse at center, rgba(239,68,68,.55) 0%, rgba(239,68,68,.30) 50%, rgba(239,68,68,.10) 100%);
+    box-shadow: inset 0 0 80px rgba(239,68,68,.6), inset 0 0 160px rgba(239,68,68,.25);
+    opacity:1;
+  }
+  .bm-flash.bm-flash-fade {
+    opacity:0 !important;
+    transition:opacity .35s ease-out !important;
+  }
   /* ── SCOREBOARD fixed at bottom ── */
   #bmScoreboard {
     display:none;position:fixed;bottom:0;left:0;right:0;z-index:99991;
@@ -7243,6 +7257,8 @@ async function doLeave() {
   document.getElementById('bmLobby').style.display  = 'none';
   document.getElementById('bmSetup').style.display  = 'block';
   document.getElementById('bmRaceTrack').style.display = 'none';
+  // ── Navigate away from the test so it's not visible in background ──
+  if (typeof window.showView === 'function') window.showView('portal');
 }
 
 // ── BEGIN BATTLE ──────────────────────────────────────────────────────────────
@@ -7434,7 +7450,9 @@ function bmSelectOption(metaId, correctMetaId, qIdx) {
   const flash = document.getElementById('bmFlash');
   if (flash) {
     flash.className = 'bm-flash ' + (isCorrect ? 'bm-flash-good' : 'bm-flash-bad');
-    setTimeout(() => { flash.className = 'bm-flash'; }, 380);
+    clearTimeout(flash._t1); clearTimeout(flash._t2);
+    flash._t1 = setTimeout(() => { flash.classList.add('bm-flash-fade'); }, 300);
+    flash._t2 = setTimeout(() => { flash.className = 'bm-flash'; }, 700);
   }
 
   // ── SCORING ──────────────────────────────────────────────────────────────────
