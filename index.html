@@ -6296,18 +6296,13 @@ document.addEventListener("keydown",(e)=>{
             background: ${box}cc !important;
             background-image: none !important;
           }
-          body, body p, body div, body span, body button, body label,
-          #questionText, .opt-text, .subtle, .qbox, .option, .btn-glass,
-          #qMetaLine, #navLegend, .badge-soft, .pill,
-          h1, h2, h3, h4, h5, h6,
-          #subjectTitle, #subjectHint,
-          .topic-btn, .subtopic-btn,
-          .topic-btn *, .subtopic-btn *,
-          .fw-semibold, .fw-bold,
-          .btn-glass, .btn-glass * {
+          *, *::before, *::after {
             color: ${txt} !important;
           }
-          :root { --txt: ${txt} !important; --muted: ${txt} !important; }
+          :root {
+            --txt: ${txt} !important;
+            --muted: ${txt} !important;
+          }
         `;
       }
 
@@ -10787,6 +10782,10 @@ setTimeout(addBattleButtons, 1800);
 
   function applyThemeColors(textColor, bgColor, boxColor) {
     themeStyle.textContent = `
+      :root {
+        --txt: ${textColor} !important;
+        --muted: ${textColor} !important;
+      }
       html, body { color: ${textColor} !important; }
       body {
         background: ${bgColor} !important;
@@ -10800,17 +10799,23 @@ setTimeout(addBattleButtons, 1800);
         background: ${boxColor} !important;
         backdrop-filter: none !important;
       }
-      #questionText, .qbox, .option, .opt-text,
-      .badge-soft, .pill, h1, h2, h3, h4, h5, h6,
-      p, span:not(.badge):not(.gcp-icon), label,
-      #qmarkModalBody, #qmarkModalBody *,
-      #inlineHintBody, #inlineHintBody *,
-      #hoverHelp, #hoverHelp *,
-      .qmark-pop, .qmark-pop *,
-      .inline-hint-panel, .inline-hint-panel *,
-      #qmarkHelpModal .modal-body, #qmarkHelpModal .modal-body *,
-      #qmarkHelpModal .modal-title {
+      /* ── Universal text colour — catches every element ── */
+      *, *::before, *::after {
         color: ${textColor} !important;
+      }
+      /* ── Submit confirm modal box background ── */
+      #submitConfirmBox {
+        background: ${boxColor} !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+      }
+      /* ── Control panel background follows page background ── */
+      #gcp-panel {
+        background: color-mix(in srgb, ${bgColor} 97%, ${textColor} 3%) !important;
+        border-right-color: color-mix(in srgb, ${textColor} 25%, transparent) !important;
+      }
+      .gcp-header {
+        background: color-mix(in srgb, ${bgColor} 95%, ${textColor} 5%) !important;
+        border-bottom-color: color-mix(in srgb, ${textColor} 10%, transparent) !important;
       }
       /* ── Action buttons adapt to theme ── */
       .btn-glass {
