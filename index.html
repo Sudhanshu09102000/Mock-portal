@@ -445,7 +445,7 @@
       padding: .7rem .8rem;
       border-radius: 14px;
       border: 1px solid rgba(255, 255, 255, .18);
-      background: rgba(13, 17, 23, .92);
+      background: var(--expl-bg, rgba(13, 17, 23, .92));
       backdrop-filter: blur(10px);
       display: none;
       pointer-events: none;
@@ -6316,6 +6316,13 @@ document.addEventListener("keydown",(e)=>{
             background: color-mix(in srgb, ${box} 92%, ${txt} 8%) !important;
             border-bottom-color: rgba(128,128,128,0.2) !important;
           }
+          /* ── Explanation / hint box ── */
+          .hover-help, #hoverHelp {
+            --expl-bg: ${box} !important;
+            background: ${box} !important;
+            border-color: rgba(128,128,128,0.25) !important;
+            backdrop-filter: none !important;
+          }
         `;
       }
 
@@ -6699,19 +6706,36 @@ function injectStyles() {
     display:none;position:fixed;inset:0;z-index:99995;
     background:rgba(13, 17, 23,.97);backdrop-filter:blur(10px);
     flex-direction:column;align-items:center;justify-content:center;
-    padding:24px;text-align:center;gap:18px;
+    padding:24px;text-align:center;gap:14px;
   }
   #bmWaiting.bm-wait-active { display:flex; }
   .bm-wait-title { font-size:22px;font-weight:800;color:#f1f5f9; }
-  .bm-wait-sub   { font-size:14px;color:rgba(148, 163, 184,.6); }
-  .bm-wait-list  { width:100%;max-width:360px; }
-  .bm-wait-row {
-    display:flex;align-items:center;gap:10px;padding:8px 12px;
-    border-radius:11px;margin-bottom:6px;
-    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
+  .bm-wait-sub   { font-size:13px;color:rgba(148, 163, 184,.6); }
+  .bm-wait-list  { width:100%;max-width:420px; }
+  /* My score hero card */
+  #bmWaitMyScore {
+    width:100%;max-width:420px;
+    background:linear-gradient(135deg,rgba(37,99,235,.22),rgba(59,130,246,.12));
+    border:1px solid rgba(59,130,246,.45);border-radius:16px;
+    padding:14px 20px;display:flex;align-items:center;gap:14px;
   }
-  .bm-wait-name { flex:1;font-size:13px; }
-  .bm-wait-status { font-size:16px; }
+  #bmWaitMyScore .wms-label { font-size:12px;color:rgba(148,163,184,.7);font-weight:600;text-transform:uppercase;letter-spacing:1px; }
+  #bmWaitMyScore .wms-score { font-size:36px;font-weight:900;color:#3b82f6;line-height:1; }
+  #bmWaitMyScore .wms-rank  { font-size:13px;color:rgba(148,163,184,.8);margin-top:3px; }
+  /* Live leaderboard rows */
+  .bm-wait-row {
+    display:flex;align-items:center;gap:10px;padding:9px 14px;
+    border-radius:12px;margin-bottom:5px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
+    transition:background .25s,border-color .25s;
+  }
+  .bm-wait-row.bm-wait-me {
+    background:rgba(37,99,235,.14);border-color:rgba(59,130,246,.4);
+  }
+  .bm-wait-rank  { font-size:12px;font-weight:800;min-width:22px;color:rgba(148,163,184,.55); }
+  .bm-wait-name  { flex:1;font-size:13px;font-weight:500; }
+  .bm-wait-score { font-size:15px;font-weight:800;color:#22c55e;min-width:36px;text-align:right; }
+  .bm-wait-status{ font-size:15px;margin-left:6px; }
   @media(max-width:640px){
     .bm-qtext { font-size:15px; }
     .bm-opt   { font-size:14px;padding:11px 13px; }
@@ -6722,9 +6746,124 @@ function injectStyles() {
 }
 
 // ── UI BUILD ────────────────────────────────────────────────────────────────
-function buildUI() {
-  if (document.getElementById('bmOverlay')) return;
+function injectReportCardStyles() {
+  if (document.getElementById('bm-rc-styles')) return;
+  const s = document.createElement('style');
+  s.id = 'bm-rc-styles';
+  s.textContent = `
+  /* ── REPORT CARD ── */
+  #bmFinished {
+    overflow-y:auto;justify-content:flex-start;padding-top:32px;padding-bottom:100px;
+  }
+  #bmReportCard {
+    width:100%;max-width:560px;margin-top:18px;
+  }
+  .bm-rc-header {
+    background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(59,130,246,.08));
+    border:1px solid rgba(59,130,246,.3);
+    border-radius:16px;padding:16px;margin-bottom:14px;
+  }
+  .bm-rc-title {
+    font-size:11px;font-weight:900;letter-spacing:2px;
+    color:rgba(59,130,246,.9);margin-bottom:12px;text-transform:uppercase;
+  }
+  .bm-rc-stats {
+    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;
+  }
+  .bm-rc-stat {
+    display:flex;flex-direction:column;align-items:center;
+    padding:9px 6px;border-radius:11px;border:1px solid;
+  }
+  .bm-rc-correct { background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.35);color:#22c55e; }
+  .bm-rc-wrong   { background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.35);color:#ef4444; }
+  .bm-rc-skip    { background:rgba(100,116,139,.1);border-color:rgba(100,116,139,.3);color:#94a3b8; }
+  .bm-rc-acc     { background:rgba(250,204,21,.1);border-color:rgba(250,204,21,.35);color:#facc15; }
+  .bm-rc-stat-num { font-size:20px;font-weight:900;line-height:1; }
+  .bm-rc-stat-lbl { font-size:10px;font-weight:700;opacity:.7;margin-top:3px;letter-spacing:.5px; }
+  .bm-rc-bar-wrap {
+    height:5px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;
+  }
+  .bm-rc-bar {
+    height:100%;border-radius:99px;transition:width 1.2s cubic-bezier(.34,1.56,.64,1);
+  }
+  .bm-rc-list {
+    display:flex;flex-direction:column;gap:7px;
+  }
+  .bm-rci {
+    border-radius:13px;border:1px solid;overflow:hidden;
+    animation:bmMsgIn .25s ease;
+    transition:box-shadow .2s;
+  }
+  .bm-rci:hover { box-shadow:0 4px 20px rgba(0,0,0,.3); }
+  .bm-rci-correct { border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.05); }
+  .bm-rci-wrong   { border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.05); }
+  .bm-rci-skip    { border-color:rgba(100,116,139,.3);background:rgba(100,116,139,.04); }
+  .bm-rci-top {
+    display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;
+    user-select:none;
+  }
+  .bm-rci-top:hover .bm-rci-toggle { color:rgba(148,163,184,.8); }
+  .bm-rci-num {
+    font-size:10px;font-weight:900;letter-spacing:.5px;
+    color:rgba(148,163,184,.5);min-width:24px;
+  }
+  .bm-rci-status {
+    flex:1;font-size:12px;font-weight:700;color:rgba(241,245,249,.8);
+  }
+  .bm-rci-toggle {
+    background:none;border:none;color:rgba(148,163,184,.4);cursor:pointer;
+    font-size:14px;padding:0 4px;flex-shrink:0;transition:color .15s;
+  }
+  .bm-rci-qtext {
+    padding:0 12px 10px;font-size:13px;line-height:1.55;color:rgba(241,245,249,.75);
+    font-family:'Merriweather',serif;
+  }
+  .bm-rci-opts {
+    padding:0 12px 12px;
+    flex-direction:column;gap:5px;
+  }
+  .bm-rci-hidden { display:none !important; }
+  .bm-rci-open   { display:flex !important; }
+  .bm-rci-opt {
+    padding:7px 10px;border-radius:9px;font-size:12px;line-height:1.45;
+    border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);
+    color:rgba(241,245,249,.65);
+  }
+  .bm-rci-opt-correct {
+    border-color:rgba(34,197,94,.7) !important;
+    background:rgba(34,197,94,.14) !important;
+    color:#bbf7d0 !important;font-weight:700;
+  }
+  .bm-rci-opt-wrong {
+    border-color:rgba(239,68,68,.65) !important;
+    background:rgba(239,68,68,.12) !important;
+    color:#fca5a5 !important;font-weight:700;
+  }
+  .bm-rci-actions {
+    display:flex;gap:8px;margin-top:8px;
+  }
+  .bm-rci-exp-btn {
+    padding:6px 14px;border-radius:9px;font-size:11px;font-weight:800;
+    cursor:pointer;transition:all .15s;
+    background:linear-gradient(135deg,rgba(59,130,246,.18),rgba(37,99,235,.14));
+    border:1px solid rgba(59,130,246,.5);color:#3b82f6;
+    letter-spacing:.3px;
+  }
+  .bm-rci-exp-btn:hover {
+    background:linear-gradient(135deg,rgba(59,130,246,.3),rgba(37,99,235,.25));
+    box-shadow:0 0 14px rgba(59,130,246,.25);transform:translateY(-1px);
+  }
+  /* Direct invite link CSS */
+  #bmDirectLinkInput:focus { border-color:rgba(59,130,246,.7) !important;outline:none; }
+  @media(max-width:480px){
+    .bm-rc-stats { grid-template-columns:repeat(2,1fr); }
+    .bm-rc-stat-num { font-size:16px; }
+  }
+  `;
+  document.head.appendChild(s);
+}
 
+function buildUI() {
   // Overlay modal
   const ov = document.createElement('div');
   ov.id = 'bmOverlay';
@@ -6765,6 +6904,15 @@ function buildUI() {
       </div>
       <div id="bmPlayerList"></div>
       <div id="bmHostCtrl" style="display:none;margin-top:12px;">
+        <div id="bmDirectLinkBox" style="display:none;margin-bottom:12px;padding:12px 14px;border-radius:13px;background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(59,130,246,.07));border:1px solid rgba(59,130,246,.35);">
+          <div style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:rgba(59,130,246,.8);margin-bottom:7px;">⚡ DIRECT INVITE LINK</div>
+          <div style="font-size:11px;color:rgba(148,163,184,.6);margin-bottom:8px;line-height:1.5;">Share this link — anyone who opens it will land directly in your battle room. They just need to enter their name.</div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <input id="bmDirectLinkInput" readonly style="flex:1;padding:7px 10px;border-radius:9px;background:rgba(0,0,0,.3);border:1px solid rgba(59,130,246,.3);color:#93c5fd;font-size:11px;font-family:monospace;outline:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" />
+            <button id="bmCopyLinkBtn" onclick="bmCopyDirectLink()" style="flex-shrink:0;padding:7px 13px;border-radius:9px;border:1px solid rgba(59,130,246,.55);background:rgba(59,130,246,.18);color:#3b82f6;font-size:12px;font-weight:800;cursor:pointer;transition:all .15s;white-space:nowrap;">📋 Copy</button>
+          </div>
+          <div id="bmLinkCopiedMsg" style="display:none;margin-top:6px;font-size:11px;color:#22c55e;font-weight:700;text-align:center;">✅ Link copied to clipboard!</div>
+        </div>
         <div id="bmTestStatus" class="bm-warn">⏳ Checking test status...</div>
         <button class="bm-btn bm-green bm-full" id="bmStartBtn" style="margin-top:10px;font-size:16px;padding:13px;">
           🚀 Start Battle!
@@ -6823,7 +6971,8 @@ function buildUI() {
     <div class="bm-fin-title" id="bmFinTitle">🏆 Battle Over!</div>
     <div class="bm-fin-sub"  id="bmFinSub"></div>
     <div class="bm-fin-table" id="bmFinTable"></div>
-    <button class="bm-btn bm-purple" style="min-width:180px;max-width:260px;width:100%;padding:13px;flex:0 0 auto;" onclick="bmExitBattle()">Back to test</button>
+    <div id="bmReportCard" style="display:none;"></div>
+    <button class="bm-btn bm-purple" style="min-width:180px;max-width:260px;width:100%;padding:13px;flex:0 0 auto;margin-top:20px;" onclick="bmExitBattle()">← Back to test</button>
   `;
   document.body.appendChild(fin);
 
@@ -6832,7 +6981,15 @@ function buildUI() {
   wt.id = 'bmWaiting';
   wt.innerHTML = `
     <div class="bm-wait-title">⏳ You finished!</div>
-    <div class="bm-wait-sub">Waiting for other players to complete...</div>
+    <div class="bm-wait-sub" id="bmWaitSub">Waiting for other players to complete…</div>
+    <div id="bmWaitMyScore" style="display:none;">
+      <div style="flex:1;">
+        <div class="wms-label">Your Score</div>
+        <div class="wms-score" id="bmWaitMyScoreVal">0</div>
+        <div class="wms-rank"  id="bmWaitMyRank"></div>
+      </div>
+      <div style="font-size:36px;" id="bmWaitMyAvatar">🎮</div>
+    </div>
     <div class="bm-wait-list" id="bmWaitList"></div>
   `;
   document.body.appendChild(wt);
@@ -6927,9 +7084,9 @@ async function doCreate() {
 
   listenRoom();
   showLobby();
+  // Show the direct invite link for host
+  setTimeout(() => bmShowDirectLink(), 100);
 }
-
-// ── JOIN ──────────────────────────────────────────────────────────────────────
 async function doJoin() {
   const name = document.getElementById('bmName').value.trim();
   const code = (document.getElementById('bmCodeInput').value || '').trim().toUpperCase();
@@ -6979,7 +7136,8 @@ function listenRoom() {
     }
 
     renderPlayerList();
-    if (B.active) renderRace();
+    // Keep race bar live during battle AND while waiting/finished
+    renderRace();
 
     // Check if ALL players are done — works whether we're on waiting screen OR just finished last
     const playerList = Object.values(B.players);
@@ -6999,11 +7157,35 @@ function listenRoom() {
     if (waitEl && waitEl.classList.contains('bm-wait-active')) {
       bmRenderWaitList();
     }
+
+    // Live-refresh the finished table whenever scores change (others still finishing)
+    if (isFinished) {
+      bmRefreshFinishedTable();
+    }
   });
 
-  // Status — triggers battle start for guests
-  dbListen(`${base}/status`, (status) => {
+  // Status — triggers battle start for guests (invitees auto-load questions from Firebase)
+  dbListen(`${base}/status`, async (status) => {
     if (status === 'started' && !B.active) {
+      if (!isTestLoaded()) {
+        try {
+          const qSnap = await B.db.ref(`battle_rooms/${B.roomCode}/questionsData`).once('value');
+          const qd = qSnap.val();
+          if (qd && qd.questionsMap && Object.keys(qd.questionsMap).length > 0) {
+            if (!window.state || typeof window.state !== 'object') window.state = {};
+            window.state.questionsMap    = qd.questionsMap;
+            window.state.explanationsMap = qd.explanationsMap || {};
+            window.state.qIds = qd.qIds
+              || Object.keys(qd.questionsMap).map(Number).sort((a, b) => a - b);
+            window.state.qCount       = window.state.qIds.length;
+            window.state.selectedTest = qd.selectedTest || {};
+            window.state.qState       = {};
+            window.state.shuffled     = {};
+          }
+        } catch (e) {
+          console.warn('Battle: could not fetch questionsData from Firebase', e);
+        }
+      }
       beginBattle();
     }
   });
@@ -7030,7 +7212,18 @@ async function doStart() {
     return;
   }
 
-  // All good — fire!
+  // All good — push questions to Firebase so invitees don't need to load a test
+  const qMap = engineState.questionsMap;
+  const exMap = engineState.explanationsMap || {};
+  const qIds  = engineState.qIds || Object.keys(qMap).map(Number).sort((a,b)=>a-b);
+  await dbSet(`battle_rooms/${B.roomCode}/questionsData`, {
+    questionsMap:    qMap,
+    explanationsMap: exMap,
+    qIds:            qIds,
+    selectedTest:    engineState.selectedTest || {}
+  });
+
+  // Fire!
   await dbSet(`battle_rooms/${B.roomCode}/status`, 'started');
   beginBattle();
 }
@@ -7060,6 +7253,7 @@ function beginBattle() {
   B.finishedShown = false; // ← reset so result screen shows fresh each battle
   B.onceskipped = new Set();   // qids that have already been sent to end once
   B.timeSpent   = {};          // cumulative seconds spent per qid
+  B.battleAnswers = {};        // record of answers for report card
   closeModal();
 
   // Build the shuffled question order for this battle (use engine's qIds)
@@ -7217,6 +7411,11 @@ function bmSelectOption(metaId, correctMetaId, qIdx) {
 
   const isCorrect = (metaId === correctMetaId);
   const secs      = (Date.now() - B.qStartTime) / 1000;
+
+  // Record answer for report card
+  if (!B.battleAnswers) B.battleAnswers = {};
+  const qid = B.battleQIds[qIdx];
+  B.battleAnswers[qid] = { metaId, correctMetaId, isCorrect, secs };
 
   // Freeze timer display at final value
   const timerEl = document.getElementById('bmQTimer');
@@ -7438,10 +7637,35 @@ function bmPlayerDone() {
 function bmRenderWaitList() {
   const el = document.getElementById('bmWaitList');
   if (!el) return;
-  el.innerHTML = Object.entries(B.players).map(([id, p]) => `
-    <div class="bm-wait-row">
-      <span style="font-size:16px;">${p.avatar||'🎮'}</span>
-      <span class="bm-wait-name">${esc(p.name)}${id===B.myId?' (you)':''}</span>
+
+  // Sort by score descending for live leaderboard
+  const entries = Object.entries(B.players).sort((a,b) => (b[1].score||0)-(a[1].score||0));
+  const medals  = ['🥇','🥈','🥉'];
+  const myRank  = entries.findIndex(([id]) => id === B.myId) + 1;
+  const myScore = (B.players[B.myId]||{}).score || 0;
+  const myAvatar= (B.players[B.myId]||{}).avatar || '🎮';
+  const doneCount = entries.filter(([,p]) => p.done).length;
+  const total     = entries.length;
+
+  // Update hero score card
+  const heroEl  = document.getElementById('bmWaitMyScore');
+  const scoreEl = document.getElementById('bmWaitMyScoreVal');
+  const rankEl  = document.getElementById('bmWaitMyRank');
+  const avEl    = document.getElementById('bmWaitMyAvatar');
+  const subEl   = document.getElementById('bmWaitSub');
+  if (heroEl)  { heroEl.style.display = 'flex'; }
+  if (scoreEl) { scoreEl.textContent = myScore; }
+  if (rankEl)  { rankEl.textContent  = myRank <= 3 ? medals[myRank-1] + ' Rank #' + myRank : 'Rank #' + myRank; }
+  if (avEl)    { avEl.textContent    = myAvatar; }
+  if (subEl)   { subEl.textContent   = doneCount + ' / ' + total + ' players finished'; }
+
+  // Render leaderboard rows
+  el.innerHTML = entries.map(([id, p], i) => `
+    <div class="bm-wait-row ${id===B.myId?'bm-wait-me':''}">
+      <span class="bm-wait-rank">${medals[i]||'#'+(i+1)}</span>
+      <span style="font-size:15px;margin-right:2px;">${p.avatar||'🎮'}</span>
+      <span class="bm-wait-name">${esc(p.name)}${id===B.myId?' <span style="font-size:10px;opacity:.55;">(you)</span>':''}</span>
+      <span class="bm-wait-score">${p.score||0}</span>
       <span class="bm-wait-status">${p.done ? '✅' : '⏳'}</span>
     </div>
   `).join('');
@@ -7454,17 +7678,20 @@ function bmShowFinished() {
   if (B._pollInterval) { clearInterval(B._pollInterval); B._pollInterval = null; }
   document.getElementById('bmQuestionOverlay').classList.remove('bm-active');
   document.getElementById('bmWaiting').classList.remove('bm-wait-active');
-  document.getElementById('bmScoreboard').classList.remove('bm-sb-active');
+  // Keep scoreboard visible so live scores stay shown
+  document.getElementById('bmScoreboard').classList.add('bm-sb-active');
 
   const entries = Object.entries(B.players).sort((a,b) => (b[1].score||0)-(a[1].score||0));
   const myRank  = entries.findIndex(([id]) => id === B.myId) + 1;
   const myScore = (B.players[B.myId] || {}).score || 0;
 
   const medals = ['🥇','🥈','🥉'];
+  const allNowDone = entries.length > 0 && entries.every(([,p]) => p.done);
   document.getElementById('bmFinTitle').textContent =
     (myRank <= 3 ? medals[myRank-1] + ' ' : '') + 'Battle Over!';
-  document.getElementById('bmFinSub').textContent =
-    `You finished #${myRank} with ${myScore} points`;
+  document.getElementById('bmFinSub').textContent = allNowDone
+    ? `Final result — you finished #${myRank} with ${myScore} points`
+    : `Live scores updating… you're #${myRank} with ${myScore} points`;
 
   const table = document.getElementById('bmFinTable');
   table.innerHTML = entries.map(([id, p], i) => `
@@ -7475,8 +7702,174 @@ function bmShowFinished() {
     </div>
   `).join('');
 
+  // Render report card
+  bmRenderReportCard();
+
   document.getElementById('bmFinished').classList.add('bm-fin-active');
 }
+
+// ── LIVE-REFRESH FINISHED TABLE (called on every Firebase player update) ────────
+function bmRefreshFinishedTable() {
+  const table = document.getElementById('bmFinTable');
+  const subEl = document.getElementById('bmFinSub');
+  const titleEl = document.getElementById('bmFinTitle');
+  if (!table) return;
+
+  const entries = Object.entries(B.players).sort((a,b) => (b[1].score||0)-(a[1].score||0));
+  const myRank  = entries.findIndex(([id]) => id === B.myId) + 1;
+  const myScore = (B.players[B.myId] || {}).score || 0;
+  const medals  = ['🥇','🥈','🥉'];
+  const allNowDone = entries.length > 0 && entries.every(([,p]) => p.done);
+
+  if (titleEl) {
+    titleEl.textContent = (myRank <= 3 ? medals[myRank-1] + ' ' : '') + 'Battle Over!';
+  }
+  if (subEl) {
+    subEl.textContent = allNowDone
+      ? `Final result — you finished #${myRank} with ${myScore} points`
+      : `Live scores updating… you're #${myRank} with ${myScore} points`;
+  }
+
+  table.innerHTML = entries.map(([id, p], i) => `
+    <div class="bm-fin-row ${id === B.myId ? 'bm-fin-me' : ''}" style="transition:background .3s;">
+      <span class="bm-fin-rank-num">${medals[i] || '#'+(i+1)}</span>
+      <span class="bm-fin-name">${p.avatar||'🎮'} ${esc(p.name)}${p.done?'':' <span style="font-size:10px;opacity:.55;color:#facc15;">● live</span>'}</span>
+      <span class="bm-fin-score" style="color:${id===B.myId?'#3b82f6':'#22c55e'};">${p.score||0}</span>
+    </div>
+  `).join('');
+}
+
+// ── BATTLE REPORT CARD ────────────────────────────────────────────────────────
+function bmRenderReportCard() {
+  const rc = document.getElementById('bmReportCard');
+  if (!rc) return;
+
+  const es = window.state;
+  if (!es || !es.questionsMap || !B.battleQIds) { rc.style.display = 'none'; return; }
+
+  const answers = B.battleAnswers || {};
+  const totalQ  = B.battleQIds.length;
+  let correct = 0, wrong = 0, unattempted = 0;
+
+  B.battleQIds.forEach(qid => {
+    const ans = answers[qid];
+    if (!ans) unattempted++;
+    else if (ans.isCorrect) correct++;
+    else wrong++;
+  });
+
+  const accuracy = totalQ > 0 ? Math.round((correct / totalQ) * 100) : 0;
+
+  rc.style.display = 'block';
+  rc.innerHTML = `
+    <div class="bm-rc-header">
+      <div class="bm-rc-title">📋 YOUR REPORT CARD</div>
+      <div class="bm-rc-stats">
+        <div class="bm-rc-stat bm-rc-correct"><span class="bm-rc-stat-num">${correct}</span><span class="bm-rc-stat-lbl">Correct</span></div>
+        <div class="bm-rc-stat bm-rc-wrong"><span class="bm-rc-stat-num">${wrong}</span><span class="bm-rc-stat-lbl">Wrong</span></div>
+        <div class="bm-rc-stat bm-rc-skip"><span class="bm-rc-stat-num">${unattempted}</span><span class="bm-rc-stat-lbl">Skipped</span></div>
+        <div class="bm-rc-stat bm-rc-acc"><span class="bm-rc-stat-num">${accuracy}%</span><span class="bm-rc-stat-lbl">Accuracy</span></div>
+      </div>
+      <div class="bm-rc-bar-wrap">
+        <div class="bm-rc-bar" style="background:linear-gradient(90deg,#22c55e,#3b82f6);width:${accuracy}%;"></div>
+      </div>
+    </div>
+    <div class="bm-rc-list" id="bmRcList">
+      ${B.battleQIds.map((qid, i) => bmRenderRCItem(qid, i, answers[qid])).join('')}
+    </div>
+  `;
+}
+
+function bmRenderRCItem(qid, idx, ans) {
+  const es = window.state;
+  if (!es || !es.questionsMap) return '';
+  const q  = es.questionsMap[qid];
+  if (!q) return '';
+  const sh = (es.shuffled && es.shuffled[qid]) || null;
+
+  let statusClass = 'bm-rci-skip';
+  let statusIcon  = '⬜';
+  let statusLabel = 'Skipped';
+  if (ans) {
+    if (ans.isCorrect) { statusClass = 'bm-rci-correct'; statusIcon = '✅'; statusLabel = `Correct · ${ans.secs.toFixed(1)}s`; }
+    else               { statusClass = 'bm-rci-wrong';   statusIcon = '❌'; statusLabel = `Wrong · ${ans.secs.toFixed(1)}s`; }
+  }
+
+  // Build options display
+  let optHtml = '';
+  if (sh) {
+    optHtml = sh.order.map((origIdx, displayPos) => {
+      const metaId  = String(displayPos + 1);
+      const text    = q.options[origIdx] || '';
+      let cls = 'bm-rci-opt';
+      let indicator = '';
+      if (metaId === sh.correctMetaId) { cls += ' bm-rci-opt-correct'; indicator = ' ✓'; }
+      else if (ans && metaId === ans.metaId && !ans.isCorrect) { cls += ' bm-rci-opt-wrong'; indicator = ' ✗'; }
+      return `<div class="${cls}">${metaId}. ${text}${indicator}</div>`;
+    }).join('');
+  } else {
+    optHtml = q.options.map((opt, i) => `<div class="bm-rci-opt">${i+1}. ${opt}</div>`).join('');
+  }
+
+  // Check if explanation exists
+  const expMap = es.explanationsMap || {};
+  const hasExp = expMap[qid] != null;
+  const expBtn = hasExp
+    ? `<button class="bm-rci-exp-btn" onclick="bmShowRCExplanation(${qid})" title="See explanation">💡 Explanation</button>`
+    : '';
+
+  return `
+    <div class="bm-rci ${statusClass}" id="bm-rci-${qid}">
+      <div class="bm-rci-top">
+        <span class="bm-rci-num">Q${idx+1}</span>
+        <span class="bm-rci-status">${statusIcon} ${statusLabel}</span>
+        <button class="bm-rci-toggle" onclick="bmToggleRCI(${qid})" aria-label="Expand">▾</button>
+      </div>
+      <div class="bm-rci-qtext">${q.text}</div>
+      <div class="bm-rci-opts bm-rci-hidden" id="bm-rci-opts-${qid}">
+        ${optHtml}
+        <div class="bm-rci-actions">${expBtn}</div>
+      </div>
+    </div>
+  `;
+}
+
+window.bmToggleRCI = function(qid) {
+  const opts   = document.getElementById(`bm-rci-opts-${qid}`);
+  const toggle = document.querySelector(`#bm-rci-${qid} .bm-rci-toggle`);
+  if (!opts) return;
+  const open = opts.classList.toggle('bm-rci-open');
+  opts.classList.toggle('bm-rci-hidden', !open);
+  if (toggle) toggle.textContent = open ? '▴' : '▾';
+};
+
+window.bmShowRCExplanation = function(qid) {
+  const es   = window.state;
+  const expMap = (es && es.explanationsMap) || {};
+  const exp  = expMap[qid];
+  if (!exp) return;
+
+  // Build and show explanation modal
+  let modal = document.getElementById('bmExpModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'bmExpModal';
+    modal.style.cssText = 'display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;';
+    modal.innerHTML = `
+      <div id="bmExpModalBox" style="width:min(600px,100%);max-height:85vh;overflow-y:auto;background:linear-gradient(145deg,rgba(8,12,35,.98),rgba(5,7,25,.98));border:1px solid rgba(59,130,246,.45);border-radius:20px;padding:24px;box-shadow:0 0 80px rgba(59,130,246,.25);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div style="font-size:15px;font-weight:900;background:linear-gradient(90deg,#3b82f6,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.5px;">💡 EXPLANATION</div>
+          <button onclick="document.getElementById('bmExpModal').style.display='none'" style="width:32px;height:32px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;font-size:15px;">✕</button>
+        </div>
+        <div id="bmExpContent" style="color:#e2e8f0;line-height:1.7;font-size:14px;"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+  }
+  document.getElementById('bmExpContent').innerHTML = typeof exp === 'object' ? (exp.text || exp.explanation || JSON.stringify(exp)) : String(exp);
+  modal.style.display = 'flex';
+};
 
 window.bmExitBattle = function() {
   if (B._pollInterval) { clearInterval(B._pollInterval); B._pollInterval = null; }
@@ -7593,6 +7986,61 @@ function showFbHelp() {
     'Done! Battle works across all devices.'
   );
 }
+
+// ── DIRECT INVITE LINK ────────────────────────────────────────────────────────
+function bmShowDirectLink() {
+  const box = document.getElementById('bmDirectLinkBox');
+  const input = document.getElementById('bmDirectLinkInput');
+  if (!box || !input || !B.roomCode) return;
+  const url = new URL(location.href);
+  url.search = '';
+  url.searchParams.set('battle', B.roomCode);
+  input.value = url.toString();
+  box.style.display = 'block';
+}
+
+window.bmCopyDirectLink = function() {
+  const input = document.getElementById('bmDirectLinkInput');
+  const msg   = document.getElementById('bmLinkCopiedMsg');
+  const btn   = document.getElementById('bmCopyLinkBtn');
+  if (!input) return;
+  navigator.clipboard.writeText(input.value).then(() => {
+    if (msg) { msg.style.display = 'block'; setTimeout(() => { msg.style.display = 'none'; }, 2500); }
+    if (btn) { const orig = btn.textContent; btn.textContent = '✅ Copied!'; btn.style.color = '#22c55e'; btn.style.borderColor = 'rgba(34,197,94,.6)'; setTimeout(() => { btn.textContent = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 2000); }
+  }).catch(() => {
+    prompt('Copy this battle link:', input.value);
+  });
+};
+
+// Auto-join from URL ?battle=ROOMCODE
+(function() {
+  function tryAutoJoin() {
+    const params = new URLSearchParams(location.search);
+    const roomCode = (params.get('battle') || '').trim().toUpperCase();
+    if (!roomCode) return;
+    // Open battle modal in join mode with the code pre-filled
+    openModal();
+    const joinArea = document.getElementById('bmJoinArea');
+    const codeInput = document.getElementById('bmCodeInput');
+    const joinShowBtn = document.getElementById('bmJoinShowBtn');
+    if (joinArea) joinArea.style.display = 'block';
+    if (codeInput) codeInput.value = roomCode;
+    if (joinShowBtn) joinShowBtn.style.display = 'none';
+    // Show a hint
+    const setupDiv = document.getElementById('bmSetup');
+    if (setupDiv && !document.getElementById('bmAutoJoinBanner')) {
+      const banner = document.createElement('div');
+      banner.id = 'bmAutoJoinBanner';
+      banner.style.cssText = 'padding:10px 12px;border-radius:11px;background:linear-gradient(135deg,rgba(37,99,235,.15),rgba(59,130,246,.1));border:1px solid rgba(59,130,246,.4);color:#93c5fd;font-size:12px;font-weight:700;text-align:center;margin-bottom:12px;';
+      banner.innerHTML = `⚔️ You've been invited to Battle Room <span style="color:#fff;font-size:14px;letter-spacing:2px;">${roomCode}</span><br><span style="font-weight:400;opacity:.7;font-size:11px;">Enter your name and join!</span>`;
+      setupDiv.insertBefore(banner, setupDiv.firstChild);
+    }
+  }
+  // Run after DOM is ready and battle mode is initialized
+  document.addEventListener('DOMContentLoaded', () => setTimeout(tryAutoJoin, 800));
+  // Also try after a short delay in case battle code runs after DOMContentLoaded
+  setTimeout(tryAutoJoin, 1200);
+})();
 
 // ── KEYBOARD SHORTCUTS IN BATTLE MODE ────────────────────────────────────────
 document.addEventListener('keydown', function(e) {
@@ -9461,6 +9909,7 @@ window.addEventListener('beforeunload', () => {
 function boot() {
   injectStyles();
   injectChatStyles();
+  injectReportCardStyles();
   initFirebase();  // try early init (may fail if config is demo — that's ok)
   buildUI();
   buildChatUI();
@@ -10889,8 +11338,13 @@ setTimeout(addBattleButtons, 1800);
       }
       /* ── Hint box + Answer modal background ── */
       .hover-help, #hoverHelp {
+        --expl-bg: ${boxColor} !important;
         background: ${boxColor} !important;
         border-color: color-mix(in srgb, ${textColor} 25%, transparent) !important;
+        backdrop-filter: none !important;
+      }
+      #hoverHelp::-webkit-scrollbar-thumb {
+        background: color-mix(in srgb, ${textColor} 22%, transparent) !important;
       }
       #qmarkHelpModal .modal-content {
         background: ${boxColor} !important;
