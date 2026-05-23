@@ -6303,6 +6303,19 @@ document.addEventListener("keydown",(e)=>{
             --txt: ${txt} !important;
             --muted: ${txt} !important;
           }
+          /* ── Pills have hardcoded !important colour — must beat with class specificity ── */
+          span.pill, a.pill, div.pill, button.pill,
+          .pill, .subtopic-btn .pill, .subject-card .pill,
+          [class*="pill"] {
+            color: ${txt} !important;
+            border-color: rgba(128,128,128,0.3) !important;
+            background: rgba(128,128,128,0.1) !important;
+          }
+          /* ── Blackboard toolbar ── */
+          #gbl-titlebar {
+            background: color-mix(in srgb, ${box} 92%, ${txt} 8%) !important;
+            border-bottom-color: rgba(128,128,128,0.2) !important;
+          }
         `;
       }
 
@@ -10764,7 +10777,7 @@ setTimeout(addBattleButtons, 1800);
   // ── THEME COLOR CUSTOMIZATION ──
   let themeStyle = document.createElement('style');
   themeStyle.id = 'gcp-theme-style';
-  document.head.appendChild(themeStyle);
+  document.body.appendChild(themeStyle);
 
   const THEME_DEFAULTS = {
     textColor: '#f1f5f9',
@@ -10816,6 +10829,43 @@ setTimeout(addBattleButtons, 1800);
       .gcp-header {
         background: color-mix(in srgb, ${bgColor} 95%, ${textColor} 5%) !important;
         border-bottom-color: color-mix(in srgb, ${textColor} 10%, transparent) !important;
+      }
+      /* ── Blackboard toolbar: background + all elements inside ── */
+      #gbl-titlebar {
+        background: color-mix(in srgb, ${boxColor} 92%, ${textColor} 8%) !important;
+        border-bottom-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      #gbl-titlebar *,
+      .gbl-tool, .gbl-tb-btn, .gbl-tool-sep, .gbl-tb-sep {
+        color: ${textColor} !important;
+        -webkit-text-fill-color: ${textColor} !important;
+      }
+      .gbl-tool, .gbl-tb-btn {
+        background: color-mix(in srgb, ${boxColor} 70%, ${textColor} 10%) !important;
+        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
+      }
+      .gbl-tool.active {
+        background: color-mix(in srgb, ${boxColor} 50%, ${textColor} 20%) !important;
+        border-color: color-mix(in srgb, ${textColor} 50%, transparent) !important;
+        box-shadow: 0 0 8px color-mix(in srgb, ${textColor} 20%, transparent) !important;
+      }
+      .gbl-tool-sep, .gbl-tb-sep {
+        background: color-mix(in srgb, ${textColor} 15%, transparent) !important;
+      }
+      .gbl-tb-title {
+        background: linear-gradient(90deg, ${textColor}, ${textColor}) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+      }
+      /* ── Pills — class selector beats * so must be explicit ── */
+      span.pill, a.pill, div.pill, button.pill,
+      .pill, .subtopic-btn .pill, .subject-card .pill,
+      [class*="pill"] {
+        color: ${textColor} !important;
+        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
+        background: color-mix(in srgb, ${textColor} 9%, transparent) !important;
       }
       /* ── Action buttons adapt to theme ── */
       .btn-glass {
