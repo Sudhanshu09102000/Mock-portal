@@ -649,6 +649,99 @@
   }
   .fade-up { animation: fadeUp 0.4s ease forwards; }
 
+  /* ── CUSTOM COPY FLOATING TOOLBAR ── */
+  #selectionToolbar {
+    position: fixed;
+    z-index: 9000;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: #1a1a1f;
+    border: 1px solid var(--amber-dim);
+    border-radius: 6px;
+    padding: 5px 8px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 0 20px rgba(245,158,11,0.12);
+    animation: toolbarPop 0.15s ease forwards;
+    pointer-events: all;
+  }
+  @keyframes toolbarPop {
+    from { opacity: 0; transform: translateY(4px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  #selectionToolbar::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-bottom: none;
+    border-top-color: var(--amber-dim);
+  }
+  .sel-toolbar-count {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    padding-right: 4px;
+    border-right: 1px solid var(--border);
+  }
+  .sel-toolbar-count em {
+    color: var(--amber);
+    font-style: normal;
+    font-weight: 600;
+  }
+  .sel-toolbar-btn {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--amber-dim);
+    background: var(--amber-glow);
+    color: var(--amber);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; gap: 5px;
+    white-space: nowrap;
+  }
+  .sel-toolbar-btn:hover { background: rgba(245,158,11,0.22); }
+  .sel-toolbar-btn svg { width: 11px; height: 11px; }
+  .sel-toolbar-btn.done { border-color: var(--green); background: rgba(16,185,129,0.1); color: var(--green); }
+  .sel-toolbar-dismiss {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .sel-toolbar-dismiss:hover { color: var(--red); }
+
+  /* Copy Selection header button — lights up when selection exists */
+  #copySelBtn {
+    opacity: 0.4;
+    pointer-events: none;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+  }
+  #copySelBtn.active {
+    opacity: 1;
+    pointer-events: all;
+    border-color: var(--amber-dim);
+    color: var(--amber);
+    background: var(--amber-glow);
+  }
+  #copySelBtn.done {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(16,185,129,0.1);
+    opacity: 1;
+    pointer-events: all;
+  }
+
   @media(max-width: 600px) {
     .drop-zone { padding: 40px 20px; }
     .stats-row { gap: 8px; }
@@ -779,6 +872,14 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         AI Fix Text
       </button>
+      <button class="btn" id="copySelBtn" onclick="copySelection()" title="Copy your current text selection">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M9 9h6M9 12h6M9 15h4"/>
+          <rect x="3" y="3" width="14" height="18" rx="2"/>
+          <path d="M17 3h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2"/>
+        </svg>
+        Copy Selection
+      </button>
       <button class="btn" id="copyBtn" onclick="copyText()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -799,13 +900,14 @@
         <div class="toolbar-dot d-amber"></div>
         <div class="toolbar-dot d-green"></div>
         <div class="toolbar-label" id="fileNameLabel">output.txt</div>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--amber);letter-spacing:0.12em;border:1px solid var(--amber-dim);padding:2px 7px;border-radius:3px;background:var(--amber-glow);white-space:nowrap;">✎ EDITABLE</span>
         <div class="search-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input class="search-input" id="searchInput" placeholder="search text…" oninput="searchText(this.value)"/>
           <span class="search-count" id="searchCount"></span>
         </div>
       </div>
-      <div id="outputText" tabindex="0"></div>
+      <div id="outputText" tabindex="0" contenteditable="true" spellcheck="false"></div>
     </div>
   </div>
 
@@ -832,6 +934,18 @@
     </div>
     <div style="font-family:var(--mono); font-size:9px; color:var(--muted); margin-top:12px; line-height:1.5;">Key is stored locally in your browser only. Never sent anywhere except Anthropic's API.</div>
   </div>
+</div>
+
+<!-- Floating Selection Toolbar -->
+<div id="selectionToolbar">
+  <span class="sel-toolbar-count"><em id="selCharCount">0</em> chars&nbsp;·&nbsp;<em id="selWordCount">0</em> words</span>
+  <button class="sel-toolbar-btn" id="selCopyBtn" onclick="copySelectionFromToolbar()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </svg>
+    Copy
+  </button>
+  <span class="sel-toolbar-dismiss" onclick="dismissSelToolbar()" title="Dismiss">✕</span>
 </div>
 
 <footer>
@@ -1542,33 +1656,220 @@ function searchText(query) {
   countEl.textContent = count > 0 ? `${count} match${count > 1 ? 'es' : ''}` : 'no matches';
 }
 
-// ─── COPY — works at ANY time during extraction ───────────────────────────────
+// ─── UNIVERSAL CLIPBOARD HELPER (works on content://, file://, http) ─────────
+function copyToClipboard(text) {
+  // Try modern API first (works on HTTPS)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text).then(() => true).catch(() => execCommandCopy(text));
+  }
+  return Promise.resolve(execCommandCopy(text));
+}
+
+function execCommandCopy(text) {
+  // Fallback: hidden textarea + execCommand — works on local/content:// files
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;pointer-events:none;';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  ta.setSelectionRange(0, ta.value.length); // Android needs this
+  const ok = document.execCommand('copy');
+  document.body.removeChild(ta);
+  return ok;
+}
+
+// ─── COPY ALL — works at ANY time during extraction ───────────────────────────
+function getLiveText() {
+  // Prefer the edited content of the output box; fall back to rawText
+  const el = document.getElementById('outputText');
+  return el ? (el.innerText || el.textContent || rawText) : rawText;
+}
+
 async function copyText() {
-  if (!rawText) return;
-  try {
-    await navigator.clipboard.writeText(rawText);
-    const btn = document.getElementById('copyBtn');
+  const text = getLiveText();
+  if (!text) return;
+  const btn = document.getElementById('copyBtn');
+  const pagesDone = extractedPages.filter(Boolean).length;
+  const ok = await copyToClipboard(text);
+  if (ok !== false) {
     btn.classList.add('copied');
-    const pagesDone = extractedPages.filter(Boolean).length;
     btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied${isExtracting ? ` (${pagesDone} pages)` : ''}!`;
     setTimeout(() => {
       btn.classList.remove('copied');
       btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy All`;
     }, 2000);
-  } catch { alert('Copy failed — please select text manually.'); }
+  } else {
+    alert('Copy failed — please long-press the text and copy manually.');
+  }
 }
 
 // ─── DOWNLOAD ────────────────────────────────────────────────────────────────
 function downloadTxt() {
-  if (!rawText) return;
-  const blob = new Blob([rawText], { type: 'text/plain' });
+  const text = getLiveText();
+  if (!text) return;
+  const blob = new Blob([text], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = (currentFileName || 'extracted') + '.txt';
   a.click(); URL.revokeObjectURL(url);
 }
 
-// ─── RESET ────────────────────────────────────────────────────────────────────
+// ─── CUSTOM / SELECTION COPY ─────────────────────────────────────────────────
+let _lastSelText = '';
+let _selToolbarVisible = false;
+
+function getOutputSelection() {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.rangeCount === 0) return null;
+  const outputEl = document.getElementById('outputText');
+  if (!outputEl) return null;
+  // Check that at least one end is inside the output box
+  const range = sel.getRangeAt(0);
+  if (!outputEl.contains(range.commonAncestorContainer)) return null;
+  return sel.toString();
+}
+
+function showSelectionToolbar(selText, x, y) {
+  const toolbar = document.getElementById('selectionToolbar');
+  const words = selText.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('selCharCount').textContent = selText.length.toLocaleString();
+  document.getElementById('selWordCount').textContent = words.toLocaleString();
+  _lastSelText = selText;
+  // Reset copy btn state
+  const btn = document.getElementById('selCopyBtn');
+  btn.className = 'sel-toolbar-btn';
+  btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+  // Position above cursor
+  toolbar.style.display = 'flex';
+  // Clamp to viewport
+  const tw = toolbar.offsetWidth || 200;
+  const left = Math.min(Math.max(x - tw / 2, 8), window.innerWidth - tw - 8);
+  const top = Math.max(y - 52, 8);
+  toolbar.style.left = left + 'px';
+  toolbar.style.top = top + 'px';
+  _selToolbarVisible = true;
+}
+
+function dismissSelToolbar() {
+  document.getElementById('selectionToolbar').style.display = 'none';
+  _selToolbarVisible = false;
+  _lastSelText = '';
+  // Deactivate header button
+  const hBtn = document.getElementById('copySelBtn');
+  hBtn.classList.remove('active', 'done');
+}
+
+async function copySelectionFromToolbar() {
+  if (!_lastSelText) return;
+  const ok = await copyToClipboard(_lastSelText);
+  if (ok !== false) {
+    const btn = document.getElementById('selCopyBtn');
+    btn.className = 'sel-toolbar-btn done';
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => dismissSelToolbar(), 1400);
+  } else {
+    alert('Copy failed — please long-press the selected text and copy manually.');
+  }
+}
+
+async function copySelection() {
+  const selText = getOutputSelection() || _lastSelText;
+  if (!selText) return;
+  const ok = await copyToClipboard(selText);
+  if (ok !== false) {
+    const hBtn = document.getElementById('copySelBtn');
+    hBtn.classList.add('done');
+    hBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => {
+      hBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 9h6M9 12h6M9 15h4"/><rect x="3" y="3" width="14" height="18" rx="2"/><path d="M17 3h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2"/></svg> Copy Selection`;
+      hBtn.classList.remove('done');
+      const stillSel = getOutputSelection();
+      if (!stillSel) { hBtn.classList.remove('active'); hBtn.style.opacity=''; }
+    }, 1800);
+    if (_selToolbarVisible) dismissSelToolbar();
+  } else {
+    alert('Copy failed — please long-press the selected text and copy manually.');
+  }
+}
+
+// ─── SELECTION DETECTION (mouse + touch + mobile) ────────────────────────────
+let _lastTouchX = 0, _lastTouchY = 0;
+
+// Track last touch position for toolbar placement
+document.addEventListener('touchend', (e) => {
+  if (e.changedTouches && e.changedTouches.length > 0) {
+    _lastTouchX = e.changedTouches[0].clientX;
+    _lastTouchY = e.changedTouches[0].clientY;
+  }
+});
+
+// selectionchange fires on BOTH desktop and mobile when user selects text
+document.addEventListener('selectionchange', () => {
+  // Debounce — mobile fires this rapidly while dragging handles
+  clearTimeout(window._selDebounce);
+  window._selDebounce = setTimeout(() => {
+    const selText = getOutputSelection();
+    const hBtn = document.getElementById('copySelBtn');
+    const toolbar = document.getElementById('selectionToolbar');
+
+    if (selText && selText.length > 0) {
+      // Activate header button
+      hBtn.classList.add('active');
+      hBtn.classList.remove('done');
+      hBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 9h6M9 12h6M9 15h4"/><rect x="3" y="3" width="14" height="18" rx="2"/><path d="M17 3h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2"/></svg> Copy Selection`;
+      _lastSelText = selText;
+
+      // Position toolbar — use touch coords on mobile, else try selection rect
+      let x = _lastTouchX, y = _lastTouchY;
+      try {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) {
+          const rect = sel.getRangeAt(0).getBoundingClientRect();
+          if (rect && rect.width > 0) {
+            x = rect.left + rect.width / 2;
+            y = rect.top;
+          }
+        }
+      } catch(e) {}
+
+      if (!toolbar.contains(document.activeElement)) {
+        showSelectionToolbar(selText, x, y);
+      }
+    } else {
+      // No selection — deactivate (but don't hide toolbar if user clicked its button)
+      if (!toolbar.matches(':hover') && !toolbar.contains(document.activeElement)) {
+        hBtn.classList.remove('active', 'done');
+        // Don't auto-dismiss toolbar here — let user tap Copy first
+      }
+    }
+  }, 200); // 200ms debounce handles mobile handle-drag
+});
+
+// Hide floating toolbar on scroll
+const _outEl = document.getElementById('outputText');
+if (_outEl) _outEl.addEventListener('scroll', () => {
+  if (_selToolbarVisible) dismissSelToolbar();
+});
+
+// Hide toolbar on mousedown/touchstart outside it
+function _onPointerDown(e) {
+  const toolbar = document.getElementById('selectionToolbar');
+  if (_selToolbarVisible && !toolbar.contains(e.target)) {
+    toolbar.style.display = 'none';
+    _selToolbarVisible = false;
+  }
+}
+document.addEventListener('mousedown', _onPointerDown);
+document.addEventListener('touchstart', _onPointerDown, { passive: true });
+
+// Keyboard shortcut: Ctrl+Shift+C = copy selection
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
+    e.preventDefault();
+    copySelection();
+  }
+});
 function resetUI() {
   rawText = ''; extractedPages = []; nativePages = 0; ocrPages = 0;
   loadedPdf = null; totalNumPages = 0; pdfMode = 'hybrid';
