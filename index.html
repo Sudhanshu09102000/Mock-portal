@@ -15087,6 +15087,204 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
 </style>
 
 
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PATCH: Battle Results — Clean Animated Background
+     Problem: When bmFinished opens, #bmOverlay (exam questions) bleeds
+              through the semi-transparent overlay, making review hard.
+     Fix:     Hide #bmOverlay + show particle canvas when results are shown.
+              Restore everything when the user exits battle.
+════════════════════════════════════════════════════════════════════════ -->
+<style>
+/* Make #bmFinished fully transparent so OUR particle bg shows through */
+#bmFinished {
+  background: rgba(8, 12, 22, 0.97) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Animated star/particle layer behind the results screen */
+#bmResultBg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999; /* just below bmFinished (z:100000) */
+  background: radial-gradient(ellipse at 20% 30%, rgba(37,99,235,0.18) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.13) 0%, transparent 55%),
+              #080c16;
+  overflow: hidden;
+  pointer-events: none;
+}
+#bmFinished.bm-fin-active ~ #bmResultBg,
+#bmResultBg.bm-rb-active  { display: block; }
+
+/* Floating orb animations */
+.bm-rb-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.25;
+  animation: bm-orb-float linear infinite;
+}
+@keyframes bm-orb-float {
+  0%   { transform: translateY(0px)   scale(1);   opacity: .20; }
+  45%  { transform: translateY(-40px) scale(1.08); opacity: .32; }
+  100% { transform: translateY(0px)   scale(1);   opacity: .20; }
+}
+
+/* Twinkling stars */
+.bm-rb-star {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  animation: bm-star-twinkle ease-in-out infinite;
+}
+@keyframes bm-star-twinkle {
+  0%, 100% { opacity: 0.08; transform: scale(1); }
+  50%       { opacity: 0.9;  transform: scale(1.8); }
+}
+
+/* Subtle grid lines (like a battle arena) */
+#bmResultBg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Scan-line sweep */
+#bmResultBg::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.5), transparent);
+  animation: bm-scan 6s linear infinite;
+  opacity: 0.4;
+}
+@keyframes bm-scan {
+  0%   { top: -2px; }
+  100% { top: 100%; }
+}
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Build the animated background layer ── */
+  function buildResultBg() {
+    if (document.getElementById('bmResultBg')) return;
+
+    const bg = document.createElement('div');
+    bg.id = 'bmResultBg';
+
+    /* Coloured glow orbs */
+    const orbs = [
+      { w:340, h:340, top:'5%',  left:'-8%',  color:'#2563eb', dur:'11s' },
+      { w:280, h:280, top:'60%', left:'70%',  color:'#7c3aed', dur:'14s' },
+      { w:200, h:200, top:'35%', left:'50%',  color:'#0ea5e9', dur:'9s'  },
+      { w:180, h:180, top:'80%', left:'10%',  color:'#6d28d9', dur:'17s' },
+    ];
+    orbs.forEach(o => {
+      const d = document.createElement('div');
+      d.className = 'bm-rb-orb';
+      d.style.cssText = `width:${o.w}px;height:${o.h}px;top:${o.top};left:${o.left};
+        background:${o.color};animation-duration:${o.dur};`;
+      bg.appendChild(d);
+    });
+
+    /* Stars */
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'bm-rb-star';
+      s.style.cssText = `
+        top:${Math.random()*100}%;
+        left:${Math.random()*100}%;
+        animation-duration:${(1.5 + Math.random()*3.5).toFixed(2)}s;
+        animation-delay:${(Math.random()*4).toFixed(2)}s;
+        opacity:${(0.05 + Math.random()*0.2).toFixed(2)};
+        width:${Math.random() < 0.3 ? 3 : 2}px;
+        height:${Math.random() < 0.3 ? 3 : 2}px;
+      `;
+      bg.appendChild(s);
+    }
+
+    document.body.appendChild(bg);
+    return bg;
+  }
+
+  /* ── Toggle helpers ── */
+  function showResultBg() {
+    const bg = buildResultBg();
+    if (bg) bg.classList.add('bm-rb-active');
+
+    /* Hide the battle question overlay so it can't bleed through */
+    const ov = document.getElementById('bmOverlay');
+    if (ov) { ov.dataset.bmHidden = '1'; ov.style.display = 'none'; }
+
+    /* Also hide the normal exam engine view so nothing shows behind */
+    const ev = document.getElementById('engineView');
+    if (ev) { ev.dataset.bmHidden = '1'; ev.style.visibility = 'hidden'; }
+
+    /* Make the main particle canvas also visible for depth */
+    const pc = document.getElementById('particleCanvas');
+    if (pc) { pc.style.opacity = '0'; } /* keep off — our custom bg is nicer */
+  }
+
+  function hideResultBg() {
+    const bg = document.getElementById('bmResultBg');
+    if (bg) bg.classList.remove('bm-rb-active');
+
+    /* Restore battle question overlay if we hid it */
+    const ov = document.getElementById('bmOverlay');
+    if (ov && ov.dataset.bmHidden) {
+      ov.style.display = '';
+      delete ov.dataset.bmHidden;
+    }
+
+    /* Restore engine view */
+    const ev = document.getElementById('engineView');
+    if (ev && ev.dataset.bmHidden) {
+      ev.style.visibility = '';
+      delete ev.dataset.bmHidden;
+    }
+
+    /* Restore particle canvas opacity */
+    const pc = document.getElementById('particleCanvas');
+    if (pc) pc.style.opacity = '';
+  }
+
+  /* ── Watch #bmFinished for class changes ── */
+  function watchFinished() {
+    const fin = document.getElementById('bmFinished');
+    if (!fin) { setTimeout(watchFinished, 400); return; }
+
+    new MutationObserver(() => {
+      if (fin.classList.contains('bm-fin-active')) {
+        showResultBg();
+      } else {
+        hideResultBg();
+      }
+    }).observe(fin, { attributes: true, attributeFilter: ['class'] });
+
+    /* Handle case where it's already active on load */
+    if (fin.classList.contains('bm-fin-active')) showResultBg();
+  }
+
+  /* Run once DOM is ready */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', watchFinished);
+  } else {
+    watchFinished();
+  }
+})();
+</script>
+
 </body>
 
 
