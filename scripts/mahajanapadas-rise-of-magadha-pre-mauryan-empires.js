@@ -1,4 +1,4 @@
-const mcqData = {
+window.TEST_DATA = {
 
 "1": {
   "questext": "<b>Around which century BCE did the increasing use of <u>iron</u> provide conditions for the rise of large territorial states in India?</b>",
