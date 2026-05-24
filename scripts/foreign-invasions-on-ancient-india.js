@@ -311,3 +311,4 @@ window.TEST_DATA={
   "exptext": "<b>✅ Correct Answer: 500 BC</b><br><br><b>📌 Explanation:</b><br>The <b>Lichchhavi Republic of Vaishali</b> was formed in <b>500 BC</b>. It is considered to be the <b>first republic of the world</b> and was the capital of the <b>Vajji Sangha</b>.<br><br><b>🔑 Key Points:</b><ul><li>It was a <b>republican system</b> of governance.</li><li>The <b>Second Buddhist Council</b> was held at Vaishali in <b>383 BCE</b>.</li><li>The Lichchhavis were the dominant clan of this republic.</li></ul>",
   "expimage": ""
 }
+};
