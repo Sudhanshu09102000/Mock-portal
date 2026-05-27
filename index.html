@@ -2191,7 +2191,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 10100;
+  z-index: 2147483640;
   background: rgba(0,0,0,.65);
   backdrop-filter: blur(7px);
   -webkit-backdrop-filter: blur(7px);
@@ -3422,6 +3422,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         let _busy = false;        // prevent re-entrant popstate handling
         let _allowLeave = false;  // set true just before intentional navigation away
+        let _guardDepth = 1;      // how many guard entries we've pushed (starts at 1 from line below)
 
         /* Expose the askBack helper so battle mode buttons can reuse it */
         window._backGuard = { _askBack: null };
@@ -3475,11 +3476,16 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         window.addEventListener('popstate', async (e) => {
           if (_allowLeave) { _allowLeave = false; return; }
-          if (_busy) return;
+
+          // ALWAYS push back first — ensures browser can never navigate away,
+          // even if a dialog is already open or we bail out early
+          history.pushState({ appGuard: true }, '', location.pathname);
+          _guardDepth++;
+
+          if (_busy) return;   // dialog already showing; navigation blocked above
           _busy = true;
 
-          // Immediately push back to neutralise the back press
-          history.pushState({ appGuard: true }, '', location.pathname);
+          try {
 
           /* ── Battle mode layers take priority over normal views ── */
           const bmQuestion = document.getElementById('bmQuestionOverlay');
@@ -3597,15 +3603,15 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
                 danger: true,
               });
               if (ok) {
-                // Go back 2 steps: our guard push + the initial guard push
                 _allowLeave = true;
-                history.go(-2);
+                history.go(-_guardDepth);
               }
             }
 
           }
 
-          _busy = false;
+          } catch(err) { console.error('[backGuard] error:', err); }
+          finally { _busy = false; }
         });
 
         /* ── Also guard the in-app back buttons with the same confirm ── */
