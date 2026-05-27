@@ -3998,9 +3998,13 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         // ✅ Apply dual-language translation if enabled
         if (state.dualLang) {
-          setTimeout(() => applyDualLangToCurrentQuestion(), 0);
-          // Pre-translate next 5 questions in background for zero-wait translations ahead
-          setTimeout(() => preTranslateUpcoming(state.currentIndex), 400);
+          // Pre-translate current + next 10 questions immediately (parallel, populates cache)
+          preTranslateUpcoming(state.currentIndex).then(() => {
+            // After cache is warm, apply to currently visible question (near-instant if cached)
+            applyDualLangToCurrentQuestion();
+          });
+          // Also apply right away with cached results (instant if already in cache)
+          applyDualLangToCurrentQuestion();
         }
       }
 
@@ -4138,24 +4142,28 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         };
         const labelText = langNames[lang] || lang.toUpperCase();
 
-        /* ── Question text ── */
+        /* ── Gather all elements ── */
         const qEl = document.getElementById('questionText');
-        if (qEl) {
-          injectSpinner(qEl);
-          const rawQ = qEl.innerHTML;
-          const tr = await tlFetch(rawQ, lang);
-          injectTranslation(qEl, tr, labelText);
-        }
+        const optEls = [...document.querySelectorAll('#optionsArea .option')];
+        const optTextEls = optEls.map(o => o.querySelector('.opt-text')).filter(Boolean);
 
-        /* ── Options ── */
-        const opts = document.querySelectorAll('#optionsArea .option');
-        for (const opt of opts) {
-          const textEl = opt.querySelector('.opt-text');
-          if (!textEl) continue;
-          injectSpinner(opt);
-          const tr = await tlFetch(textEl.innerHTML, lang);
-          injectTranslation(opt, tr, null);
-        }
+        /* ── Show spinners for all at once ── */
+        if (qEl) injectSpinner(qEl);
+        optEls.forEach(opt => { if (opt.querySelector('.opt-text')) injectSpinner(opt); });
+
+        /* ── Fire ALL translation requests in parallel (single network round-trip wait) ── */
+        const allTexts = [
+          qEl ? qEl.innerHTML : '',
+          ...optTextEls.map(el => el.innerHTML)
+        ];
+        const results = await Promise.all(allTexts.map(t => tlFetch(t, lang)));
+
+        /* ── Inject results ── */
+        if (qEl) injectTranslation(qEl, results[0], labelText);
+        optTextEls.forEach((el, i) => {
+          const opt = el.closest('.option');
+          if (opt) injectTranslation(opt, results[i + 1], null);
+        });
 
         /* ── Explanation (inline hint panel if visible) ── */
         const hintPanel = document.querySelector('.inline-hint-panel.show');
@@ -4169,21 +4177,24 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         }
       }
 
-      /* ── Pre-translate the next 5 questions silently in the background ──
+      /* ── Pre-translate the current + next 10 questions silently in the background ──
          Results are stored in tlCache so the next render is instant.        */
       async function preTranslateUpcoming(fromIndex) {
         const lang = state.dualLang;
         if (!lang) return;
-        const PREFETCH = 5;
-        for (let i = 1; i <= PREFETCH; i++) {
+        const PREFETCH = 10;
+        const fetches = [];
+        for (let i = 0; i <= PREFETCH; i++) {   // i=0 includes the current question
           const idx = fromIndex + i;
           if (idx >= state.qIds.length) break;
           const q = state.questionsMap[state.qIds[idx]];
           if (!q) continue;
-          // Fire-and-forget: result goes into tlCache, no await needed
-          tlFetch(q.text || '', lang);
-          for (const opt of (q.options || [])) tlFetch(opt || '', lang);
+          // Collect all texts for this question
+          fetches.push(tlFetch(q.text || '', lang));
+          for (const opt of (q.options || [])) fetches.push(tlFetch(opt || '', lang));
         }
+        // Fire all in parallel — results land in tlCache automatically
+        await Promise.all(fetches);
       }
       // Expose so battle mode can call it
       window._preTranslateUpcoming = (fromIndex) => preTranslateUpcoming(fromIndex);
@@ -4273,8 +4284,8 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
             dd.classList.remove('open');
             applyDualLangToCurrentQuestion();
-            // Pre-translate upcoming questions immediately after a lang change
-            if (lang) setTimeout(() => preTranslateUpcoming(state.currentIndex), 200);
+            // Pre-translate current + upcoming questions immediately after a lang change
+            if (lang) preTranslateUpcoming(state.currentIndex);
             // If battle is currently active, re-translate the displayed battle question too
             if (lang && document.getElementById('bmQuestionOverlay')?.classList.contains('bm-active')) {
               setTimeout(() => { if (typeof bmApplyDualLang === 'function') bmApplyDualLang(); }, 150);
@@ -8335,19 +8346,128 @@ window.bmSkipQuestion = bmSkipQuestion;
 // ── FINISH BATTLE (manual early submit) ──────────────────────────────────────
 function bmFinishBattle() {
   if (!B.active) return;
+  bmShowFinishConfirm();
+}
+window.bmFinishBattle = bmFinishBattle;
 
-  // Confirm before finishing
-  const confirmed = confirm('🏁 Finish Battle?\n\nThis will submit your current score and end your battle session.\nUnanswered questions will be counted as skipped.');
-  if (!confirmed) return;
+/* ── Beautiful Finish-Battle confirmation modal ── */
+function bmShowFinishConfirm() {
+  // Remove any existing instance
+  document.getElementById('bmFinishConfirm')?.remove();
 
+  const answered  = B.battleAnswers ? Object.keys(B.battleAnswers).length : 0;
+  const total     = B.battleQIds ? B.battleQIds.length : 0;
+  const unanswered = total - answered;
+
+  const el = document.createElement('div');
+  el.id = 'bmFinishConfirm';
+  el.style.cssText = `
+    position:fixed;inset:0;z-index:2147483647;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(8,12,22,.72);backdrop-filter:blur(6px);
+    animation:bmFcFadeIn .18s ease;
+  `;
+  el.innerHTML = `
+    <style>
+      @keyframes bmFcFadeIn  { from{opacity:0;transform:scale(.93)} to{opacity:1;transform:scale(1)} }
+      @keyframes bmFcFadeOut { from{opacity:1;transform:scale(1)}  to{opacity:0;transform:scale(.93)} }
+      #bmFinishConfirm .bm-fc-card {
+        background:linear-gradient(145deg,rgba(22,27,39,.98),rgba(13,17,23,.98));
+        border:1px solid rgba(239,68,68,.35);
+        border-radius:22px;
+        box-shadow:0 0 0 1px rgba(239,68,68,.12),0 32px 64px rgba(0,0,0,.65);
+        padding:2rem 2.2rem 1.6rem;
+        width:min(400px,90vw);
+        text-align:center;
+        position:relative;
+        overflow:hidden;
+      }
+      #bmFinishConfirm .bm-fc-card::before {
+        content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);
+        width:200px;height:200px;border-radius:50%;
+        background:radial-gradient(circle,rgba(239,68,68,.18) 0%,transparent 70%);
+        pointer-events:none;
+      }
+      #bmFinishConfirm .bm-fc-icon  { font-size:3rem;line-height:1;margin-bottom:.6rem; }
+      #bmFinishConfirm .bm-fc-title {
+        font-size:1.35rem;font-weight:800;color:#f1f5f9;margin-bottom:.35rem;letter-spacing:.3px;
+      }
+      #bmFinishConfirm .bm-fc-sub   { font-size:.88rem;color:rgba(241,245,249,.62);line-height:1.55;margin-bottom:1.1rem; }
+      #bmFinishConfirm .bm-fc-stats {
+        display:flex;gap:.75rem;justify-content:center;margin-bottom:1.4rem;
+      }
+      #bmFinishConfirm .bm-fc-stat  {
+        flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+        border-radius:12px;padding:.55rem .4rem;
+      }
+      #bmFinishConfirm .bm-fc-stat-val { font-size:1.4rem;font-weight:800;color:#f1f5f9; }
+      #bmFinishConfirm .bm-fc-stat-lbl { font-size:.72rem;color:rgba(241,245,249,.5);margin-top:1px; }
+      #bmFinishConfirm .bm-fc-actions  { display:flex;gap:.75rem; }
+      #bmFinishConfirm .bm-fc-cancel {
+        flex:1;padding:.72rem;border-radius:13px;border:1px solid rgba(255,255,255,.18);
+        background:rgba(255,255,255,.07);color:rgba(241,245,249,.8);font-weight:600;
+        font-size:.92rem;cursor:pointer;transition:all .15s;
+      }
+      #bmFinishConfirm .bm-fc-cancel:hover { background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3); }
+      #bmFinishConfirm .bm-fc-confirm {
+        flex:1.4;padding:.72rem;border-radius:13px;border:1px solid rgba(239,68,68,.6);
+        background:linear-gradient(135deg,rgba(239,68,68,.28),rgba(220,38,38,.18));
+        color:#fca5a5;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .15s;
+        box-shadow:0 0 20px rgba(239,68,68,.18);
+      }
+      #bmFinishConfirm .bm-fc-confirm:hover {
+        background:linear-gradient(135deg,rgba(239,68,68,.42),rgba(220,38,38,.30));
+        border-color:rgba(239,68,68,.9);box-shadow:0 0 28px rgba(239,68,68,.35);
+        transform:translateY(-1px);
+      }
+    </style>
+    <div class="bm-fc-card">
+      <div class="bm-fc-icon">🏁</div>
+      <div class="bm-fc-title">Finish Battle?</div>
+      <div class="bm-fc-sub">Your score will be submitted and the battle session will end.</div>
+      <div class="bm-fc-stats">
+        <div class="bm-fc-stat">
+          <div class="bm-fc-stat-val" style="color:#4ade80;">${answered}</div>
+          <div class="bm-fc-stat-lbl">Answered</div>
+        </div>
+        <div class="bm-fc-stat">
+          <div class="bm-fc-stat-val" style="color:#facc15;">${unanswered}</div>
+          <div class="bm-fc-stat-lbl">Skipped</div>
+        </div>
+        <div class="bm-fc-stat">
+          <div class="bm-fc-stat-val" style="color:#60a5fa;">${B.myScore || 0}</div>
+          <div class="bm-fc-stat-lbl">Your Score</div>
+        </div>
+      </div>
+      <div class="bm-fc-actions">
+        <button class="bm-fc-cancel"  onclick="bmDismissFinishConfirm()">✕ Keep Playing</button>
+        <button class="bm-fc-confirm" onclick="bmConfirmFinish()">🏁 Submit &amp; Finish</button>
+      </div>
+    </div>
+  `;
+
+  // Click backdrop to cancel
+  el.addEventListener('click', (e) => { if (e.target === el) bmDismissFinishConfirm(); });
+  document.body.appendChild(el);
+}
+
+function bmDismissFinishConfirm() {
+  const el = document.getElementById('bmFinishConfirm');
+  if (!el) return;
+  el.style.animation = 'bmFcFadeOut .16s ease forwards';
+  setTimeout(() => el.remove(), 160);
+}
+
+function bmConfirmFinish() {
+  bmDismissFinishConfirm();
+  if (!B.active) return;
   if (B._timerInterval) { clearInterval(B._timerInterval); B._timerInterval = null; }
   B.answered = true;
   B.active   = false;
-
-  // Push final score to Firebase and mark done
   bmPlayerDone();
 }
-window.bmFinishBattle = bmFinishBattle;
+window.bmDismissFinishConfirm = bmDismissFinishConfirm;
+window.bmConfirmFinish        = bmConfirmFinish;
 
 // ── FALLBACK SHUFFLE (in case engine function not ready) ──────────────────────
 function bmBuildShuffle(qid) {
