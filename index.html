@@ -2186,7 +2186,99 @@ body {
 
 
 
-/* ── Submit Confirm Modal ── */
+/* 25002500 Back Confirm Overlay 25002500 */
+#backConfirmOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10100;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#backConfirmOverlay.show { display: flex; }
+#backConfirmBox {
+  background: linear-gradient(145deg, rgba(12,16,32,.98), rgba(10,14,28,.98));
+  border: 1px solid rgba(59,130,246,.30);
+  border-radius: 22px;
+  box-shadow: 0 30px 70px rgba(0,0,0,.70), 0 0 0 1px rgba(255,255,255,.05) inset;
+  padding: 28px 24px 22px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+  animation: bcPop .22s cubic-bezier(.34,1.45,.64,1);
+}
+@keyframes bcPop {
+  from { transform: scale(.88) translateY(14px); opacity: 0; }
+  to   { transform: scale(1)   translateY(0);    opacity: 1; }
+}
+#backConfirmBox .bc-icon  { font-size: 2.4rem; display: block; margin-bottom: 10px; }
+#backConfirmBox .bc-step  {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+  color: rgba(59,130,246,.85); background: rgba(59,130,246,.10);
+  border: 1px solid rgba(59,130,246,.25); border-radius: 999px;
+  padding: .18rem .55rem; margin-bottom: 10px;
+}
+#backConfirmBox .bc-title {
+  font-size: 1.12rem; font-weight: 800;
+  color: var(--txt,#f1f5f9); margin-bottom: 6px; letter-spacing: .2px;
+}
+#backConfirmBox .bc-sub {
+  font-size: .84rem; color: var(--muted,rgba(241,245,249,.58));
+  margin-bottom: 22px; line-height: 1.55;
+}
+#backConfirmBox .bc-path {
+  display: flex; align-items: center; justify-content: center;
+  gap: 5px; margin-bottom: 20px; flex-wrap: wrap;
+}
+#backConfirmBox .bc-path .bc-node {
+  font-size: .75rem; font-weight: 600;
+  padding: .22rem .55rem; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: rgba(241,245,249,.55);
+}
+#backConfirmBox .bc-path .bc-node.bc-active {
+  border-color: rgba(59,130,246,.55);
+  background: rgba(59,130,246,.14);
+  color: #93c5fd; font-weight: 700;
+}
+#backConfirmBox .bc-path .bc-arrow { font-size: .7rem; color: rgba(255,255,255,.25); }
+#backConfirmBox .bc-btns { display: flex; gap: 10px; }
+#bcStayBtn {
+  flex: 1; padding: 11px;
+  border-radius: 13px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  color: var(--muted,rgba(241,245,249,.75));
+  font-size: .91rem; font-weight: 700; cursor: pointer;
+  transition: all .15s; -webkit-tap-highlight-color: transparent;
+}
+#bcStayBtn:hover { background: rgba(255,255,255,.10); color: var(--txt,#f1f5f9); }
+#bcGoBtn {
+  flex: 1; padding: 11px;
+  border-radius: 13px;
+  border: 1px solid rgba(59,130,246,.55);
+  background: linear-gradient(135deg, rgba(59,130,246,.85), rgba(37,99,235,.9));
+  color: #fff; font-size: .91rem; font-weight: 700; cursor: pointer;
+  transition: all .15s;
+  box-shadow: 0 6px 18px rgba(59,130,246,.28);
+  -webkit-tap-highlight-color: transparent;
+}
+#bcGoBtn:hover { box-shadow: 0 8px 26px rgba(59,130,246,.45); transform: translateY(-1px); }
+#bcGoBtn:active { transform: translateY(0); }
+#bcGoBtn.danger {
+  border-color: rgba(239,68,68,.55);
+  background: linear-gradient(135deg, rgba(220,38,38,.85), rgba(153,27,27,.9));
+  box-shadow: 0 6px 18px rgba(239,68,68,.28);
+}
+#bcGoBtn.danger:hover { box-shadow: 0 8px 26px rgba(239,68,68,.45); }
+
+/* 25002500 Submit Confirm Modal 25002500 */
 #submitConfirmOverlay {
   display: none;
   position: fixed;
@@ -3319,6 +3411,179 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       }
       window.showView = showView; // expose for battle mode exit
 
+      /* ══════════════════════════════════════════════════════════════
+         BACK BUTTON INTERCEPTION — step-by-step navigation with confirm
+         Flow: exam ← subject list ← portal ← (confirm leave site)
+      ══════════════════════════════════════════════════════════════ */
+      (function initBackGuard() {
+
+        // Push an initial history entry so popstate can fire on first back press
+        history.pushState({ appGuard: true }, '', location.pathname);
+
+        let _busy = false;        // prevent re-entrant popstate handling
+        let _allowLeave = false;  // set true just before intentional navigation away
+
+        /* Returns the currently active view name */
+        function activeView() {
+          return Object.entries(views).find(([, v]) => v.classList.contains('active'))?.[0] || 'portal';
+        }
+
+        /* Show the styled back confirm dialog.
+           Returns a Promise<boolean> — true = user confirmed go back */
+        function askBack({ icon, stepLabel, title, sub, pathNodes, btnLabel, danger }) {
+          return new Promise(resolve => {
+            document.getElementById('bcIcon').textContent  = icon      || '⬅️';
+            document.getElementById('bcStep').textContent  = stepLabel || 'Navigation';
+            document.getElementById('bcTitle').textContent = title     || 'Go Back?';
+            document.getElementById('bcSub').textContent   = sub       || 'Are you sure?';
+
+            // Breadcrumb path
+            const pathEl = document.getElementById('bcPath');
+            pathEl.innerHTML = pathNodes.map((n, i) => {
+              const cls = n.active ? ' bc-active' : '';
+              const arrow = i < pathNodes.length - 1 ? '<span class="bc-arrow">›</span>' : '';
+              return `<span class="bc-node${cls}">${n.label}</span>${arrow}`;
+            }).join('');
+
+            const goBtn = document.getElementById('bcGoBtn');
+            goBtn.textContent = btnLabel || '← Go Back';
+            goBtn.className   = danger ? 'danger' : '';
+
+            document.getElementById('backConfirmOverlay').classList.add('show');
+
+            function cleanup() {
+              document.getElementById('backConfirmOverlay').classList.remove('show');
+              document.getElementById('bcStayBtn').removeEventListener('click', onStay);
+              document.getElementById('bcGoBtn').removeEventListener('click', onGo);
+              document.getElementById('backConfirmOverlay').removeEventListener('click', onOverlay);
+            }
+            function onStay()    { cleanup(); resolve(false); }
+            function onGo()      { cleanup(); resolve(true);  }
+            function onOverlay(e){ if (e.target === document.getElementById('backConfirmOverlay')) { cleanup(); resolve(false); } }
+
+            document.getElementById('bcStayBtn').addEventListener('click', onStay);
+            document.getElementById('bcGoBtn').addEventListener('click', onGo);
+            document.getElementById('backConfirmOverlay').addEventListener('click', onOverlay);
+          });
+        }
+
+        window.addEventListener('popstate', async (e) => {
+          if (_allowLeave) { _allowLeave = false; return; }
+          if (_busy) return;
+          _busy = true;
+
+          // Immediately push back to neutralise the back press
+          history.pushState({ appGuard: true }, '', location.pathname);
+
+          const view = activeView();
+
+          if (view === 'engine') {
+            const ok = await askBack({
+              icon: '📝', stepLabel: 'In Test',
+              title: 'Leave the Test?',
+              sub: 'Going back will exit the test. You can return to the subject list.',
+              pathNodes: [
+                { label: '🏠 Portal' },
+                { label: '📂 Subject' },
+                { label: '📝 Test', active: true },
+              ],
+              btnLabel: '← Back to Subject',
+              danger: true,
+            });
+            if (ok) {
+              if (typeof cleanupEngine === 'function') cleanupEngine();
+              const tp = document.getElementById('timerPill');
+              if (tp) tp.style.display = 'none';
+              showView('subject');
+            }
+
+          } else if (view === 'subject') {
+            const ok = await askBack({
+              icon: '📂', stepLabel: 'Subject List',
+              title: 'Back to Portal?',
+              sub: 'Return to the main subjects portal?',
+              pathNodes: [
+                { label: '🏠 Portal' },
+                { label: '📂 Subject', active: true },
+              ],
+              btnLabel: '← Back to Portal',
+              danger: false,
+            });
+            if (ok) showView('portal');
+
+          } else {
+            // portal — ask before leaving the site entirely
+            const ok = await askBack({
+              icon: '🚪', stepLabel: 'Home',
+              title: 'Leave the Portal?',
+              sub: 'You are about to leave the Mock Test Portal and go to the previous page.',
+              pathNodes: [
+                { label: '🏠 Portal', active: true },
+              ],
+              btnLabel: '🚪 Leave Site',
+              danger: true,
+            });
+            if (ok) {
+              // Go back 2 steps: our guard push + the initial guard push
+              _allowLeave = true;
+              history.go(-2);
+            }
+          }
+
+          _busy = false;
+        });
+
+        /* ── Also guard the in-app back buttons with the same confirm ── */
+        const engineBackEl  = document.getElementById('engineBackBtn');
+        const subjectBackEl = document.getElementById('backToPortalBtn');
+
+        if (engineBackEl) {
+          // Replace existing listener by cloning the element
+          const fresh = engineBackEl.cloneNode(true);
+          engineBackEl.parentNode.replaceChild(fresh, engineBackEl);
+          fresh.addEventListener('click', async () => {
+            const ok = await askBack({
+              icon: '📝', stepLabel: 'In Test',
+              title: 'Leave the Test?',
+              sub: 'Exit this test and go back to the subject list?',
+              pathNodes: [
+                { label: '🏠 Portal' },
+                { label: '📂 Subject' },
+                { label: '📝 Test', active: true },
+              ],
+              btnLabel: '← Back to Subject',
+              danger: true,
+            });
+            if (ok) {
+              if (typeof cleanupEngine === 'function') cleanupEngine();
+              const tp = document.getElementById('timerPill');
+              if (tp) tp.style.display = 'none';
+              showView('subject');
+            }
+          });
+        }
+
+        if (subjectBackEl) {
+          const fresh = subjectBackEl.cloneNode(true);
+          subjectBackEl.parentNode.replaceChild(fresh, subjectBackEl);
+          fresh.addEventListener('click', async () => {
+            const ok = await askBack({
+              icon: '📂', stepLabel: 'Subject List',
+              title: 'Back to Portal?',
+              sub: 'Return to the main subjects portal?',
+              pathNodes: [
+                { label: '🏠 Portal' },
+                { label: '📂 Subject', active: true },
+              ],
+              btnLabel: '← Back to Portal',
+              danger: false,
+            });
+            if (ok) showView('portal');
+          });
+        }
+
+      })();
+
       /* ========= PORTAL RENDER ========= */
       const state = window.state = {
         selectedSubjectIndex: null,
@@ -3548,13 +3813,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         showView('subject');
       }
 
-      $('backToPortalBtn').addEventListener('click', () => showView('portal'));
-      $('engineBackBtn').addEventListener('click', () => {
-        cleanupEngine();
-        const tp = document.getElementById('timerPill');
-        if (tp) tp.style.display = 'none';
-        showView('portal');
-      });
+      // Back button listeners are handled by initBackGuard() above
 
       $('typingBtn').addEventListener('click', () => { location.href = 'typing-test.html'; });
 
@@ -10889,6 +11148,21 @@ setTimeout(addBattleButtons, 1800);
     <div class="sc-btns">
       <button id="scCancelBtn">✕ Cancel</button>
       <button id="scConfirmBtn">✓ Yes, Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Back Navigation Confirm ── -->
+<div id="backConfirmOverlay">
+  <div id="backConfirmBox">
+    <span class="bc-icon" id="bcIcon">⬅️</span>
+    <div class="bc-step" id="bcStep">Navigation</div>
+    <div class="bc-title" id="bcTitle">Go Back?</div>
+    <div class="bc-sub" id="bcSub">Are you sure you want to go back?</div>
+    <div class="bc-path" id="bcPath"></div>
+    <div class="bc-btns">
+      <button id="bcStayBtn">✕ Stay</button>
+      <button id="bcGoBtn">← Go Back</button>
     </div>
   </div>
 </div>
