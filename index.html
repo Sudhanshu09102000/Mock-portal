@@ -3423,6 +3423,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         let _busy = false;        // prevent re-entrant popstate handling
         let _allowLeave = false;  // set true just before intentional navigation away
 
+        /* Expose the askBack helper so battle mode buttons can reuse it */
+        window._backGuard = { _askBack: null };
+
         /* Returns the currently active view name */
         function activeView() {
           return Object.entries(views).find(([, v]) => v.classList.contains('active'))?.[0] || 'portal';
@@ -3467,6 +3470,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           });
         }
 
+        // Expose so battle mode buttons can use the same dialog
+        window._backGuard._askBack = askBack;
+
         window.addEventListener('popstate', async (e) => {
           if (_allowLeave) { _allowLeave = false; return; }
           if (_busy) return;
@@ -3475,59 +3481,128 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           // Immediately push back to neutralise the back press
           history.pushState({ appGuard: true }, '', location.pathname);
 
-          const view = activeView();
+          /* ── Battle mode layers take priority over normal views ── */
+          const bmQuestion = document.getElementById('bmQuestionOverlay');
+          const bmFinished = document.getElementById('bmFinished');
+          const bmOverlay  = document.getElementById('bmOverlay');
 
-          if (view === 'engine') {
+          if (bmQuestion && bmQuestion.classList.contains('bm-active')) {
+            // Active battle in progress
             const ok = await askBack({
-              icon: '📝', stepLabel: 'In Test',
-              title: 'Leave the Test?',
-              sub: 'Going back will exit the test. You can return to the subject list.',
+              icon: '⚔️', stepLabel: 'Battle Active',
+              title: 'Leave the Battle?',
+              sub: 'Leaving now will exit the battle. Your opponent will continue.',
               pathNodes: [
                 { label: '🏠 Portal' },
-                { label: '📂 Subject' },
-                { label: '📝 Test', active: true },
+                { label: '⚔️ Battle', active: true },
               ],
-              btnLabel: '← Back to Subject',
+              btnLabel: '🚪 Leave Battle',
               danger: true,
             });
             if (ok) {
-              if (typeof cleanupEngine === 'function') cleanupEngine();
-              const tp = document.getElementById('timerPill');
-              if (tp) tp.style.display = 'none';
-              showView('subject');
+              if (typeof window.bmExitBattle === 'function') window.bmExitBattle();
             }
 
-          } else if (view === 'subject') {
+          } else if (bmFinished && bmFinished.classList.contains('bm-fin-active')) {
+            // Battle results screen
             const ok = await askBack({
-              icon: '📂', stepLabel: 'Subject List',
-              title: 'Back to Portal?',
-              sub: 'Return to the main subjects portal?',
+              icon: '🏆', stepLabel: 'Battle Results',
+              title: 'Exit Results?',
+              sub: 'Close the results screen and return to the test?',
               pathNodes: [
                 { label: '🏠 Portal' },
-                { label: '📂 Subject', active: true },
+                { label: '📝 Test' },
+                { label: '🏆 Results', active: true },
               ],
-              btnLabel: '← Back to Portal',
+              btnLabel: '← Exit Results',
               danger: false,
             });
-            if (ok) showView('portal');
+            if (ok) {
+              if (typeof window.bmExitBattle === 'function') window.bmExitBattle();
+            }
+
+          } else if (bmOverlay && bmOverlay.classList.contains('open')) {
+            // Battle setup/lobby modal is open
+            const inRoom = window.B && window.B.roomCode;
+            if (inRoom) {
+              const ok = await askBack({
+                icon: '🚪', stepLabel: 'Battle Lobby',
+                title: 'Leave the Room?',
+                sub: 'You are in a battle room. Leaving will remove you from the room.',
+                pathNodes: [
+                  { label: '🏠 Portal' },
+                  { label: '⚔️ Lobby', active: true },
+                ],
+                btnLabel: '🚪 Leave Room',
+                danger: true,
+              });
+              if (ok) {
+                if (typeof doLeave === 'function') doLeave();
+                if (typeof closeModal === 'function') closeModal();
+              }
+            } else {
+              // Just in the setup screen — close without confirming
+              if (typeof closeModal === 'function') closeModal();
+            }
 
           } else {
-            // portal — ask before leaving the site entirely
-            const ok = await askBack({
-              icon: '🚪', stepLabel: 'Home',
-              title: 'Leave the Portal?',
-              sub: 'You are about to leave the Mock Test Portal and go to the previous page.',
-              pathNodes: [
-                { label: '🏠 Portal', active: true },
-              ],
-              btnLabel: '🚪 Leave Site',
-              danger: true,
-            });
-            if (ok) {
-              // Go back 2 steps: our guard push + the initial guard push
-              _allowLeave = true;
-              history.go(-2);
+
+            /* ── Normal app views ── */
+            const view = activeView();
+
+            if (view === 'engine') {
+              const ok = await askBack({
+                icon: '📝', stepLabel: 'In Test',
+                title: 'Leave the Test?',
+                sub: 'Going back will exit the test. You can return to the subject list.',
+                pathNodes: [
+                  { label: '🏠 Portal' },
+                  { label: '📂 Subject' },
+                  { label: '📝 Test', active: true },
+                ],
+                btnLabel: '← Back to Subject',
+                danger: true,
+              });
+              if (ok) {
+                if (typeof cleanupEngine === 'function') cleanupEngine();
+                const tp = document.getElementById('timerPill');
+                if (tp) tp.style.display = 'none';
+                showView('subject');
+              }
+
+            } else if (view === 'subject') {
+              const ok = await askBack({
+                icon: '📂', stepLabel: 'Subject List',
+                title: 'Back to Portal?',
+                sub: 'Return to the main subjects portal?',
+                pathNodes: [
+                  { label: '🏠 Portal' },
+                  { label: '📂 Subject', active: true },
+                ],
+                btnLabel: '← Back to Portal',
+                danger: false,
+              });
+              if (ok) showView('portal');
+
+            } else {
+              // portal — ask before leaving the site entirely
+              const ok = await askBack({
+                icon: '🚪', stepLabel: 'Home',
+                title: 'Leave the Portal?',
+                sub: 'You are about to leave the Mock Test Portal and go to the previous page.',
+                pathNodes: [
+                  { label: '🏠 Portal', active: true },
+                ],
+                btnLabel: '🚪 Leave Site',
+                danger: true,
+              });
+              if (ok) {
+                // Go back 2 steps: our guard push + the initial guard push
+                _allowLeave = true;
+                history.go(-2);
+              }
             }
+
           }
 
           _busy = false;
@@ -7946,9 +8021,28 @@ function buildUI() {
     <div class="bm-fin-sub"  id="bmFinSub"></div>
     <div class="bm-fin-table" id="bmFinTable"></div>
     <div id="bmReportCard" style="display:none;"></div>
-    <button class="bm-btn bm-purple" style="min-width:180px;max-width:260px;width:100%;padding:13px;flex:0 0 auto;margin-top:20px;" onclick="bmExitBattle()">← Back to test</button>
+    <button class="bm-btn bm-purple" style="min-width:180px;max-width:260px;width:100%;padding:13px;flex:0 0 auto;margin-top:20px;" id="bmExitResultsBtn">← Back to test</button>
   `;
   document.body.appendChild(fin);
+  // Wire exit results button through the guard
+  setTimeout(() => {
+    const exitBtn = document.getElementById('bmExitResultsBtn');
+    if (exitBtn) {
+      exitBtn.onclick = async function() {
+        const { _askBack } = window._backGuard || {};
+        if (_askBack) {
+          const ok = await _askBack({
+            icon: '🏆', stepLabel: 'Battle Results',
+            title: 'Exit Results?',
+            sub: 'Close the results screen and return to the test?',
+            pathNodes: [{ label: '🏠 Portal' }, { label: '📝 Test' }, { label: '🏆 Results', active: true }],
+            btnLabel: '← Exit Results', danger: false,
+          });
+          if (ok) bmExitBattle();
+        } else { bmExitBattle(); }
+      };
+    }
+  }, 0);
 
   // Waiting screen
   const wt = document.createElement('div');
@@ -7976,7 +8070,25 @@ function buildUI() {
   document.body.appendChild(rt);
 
   // Wire all events
-  document.getElementById('bmClose').onclick     = closeModal;
+  document.getElementById('bmClose').onclick = async function() {
+    const inRoom = window.B && window.B.roomCode;
+    if (inRoom) {
+      // In a lobby room — ask before leaving
+      const { _askBack } = window._backGuard || {};
+      if (_askBack) {
+        const ok = await _askBack({
+          icon: '🚪', stepLabel: 'Battle Lobby',
+          title: 'Leave the Room?',
+          sub: 'You are in a battle room. Leaving will remove you from the room.',
+          pathNodes: [{ label: '🏠 Portal' }, { label: '⚔️ Lobby', active: true }],
+          btnLabel: '🚪 Leave Room', danger: true,
+        });
+        if (ok) { doLeave(); closeModal(); }
+      } else { doLeave(); closeModal(); }
+    } else {
+      closeModal(); // just in setup screen — close freely
+    }
+  };
   document.getElementById('bmCreateBtn').onclick = doCreate;
   document.getElementById('bmJoinShowBtn').onclick = () => {
     const a = document.getElementById('bmJoinArea');
@@ -7984,7 +8096,19 @@ function buildUI() {
   };
   document.getElementById('bmJoinBtn').onclick   = doJoin;
   document.getElementById('bmStartBtn').onclick  = doStart;
-  document.getElementById('bmLeaveBtn').onclick  = doLeave;
+  document.getElementById('bmLeaveBtn').onclick  = async function() {
+    const { _askBack } = window._backGuard || {};
+    if (_askBack) {
+      const ok = await _askBack({
+        icon: '🚪', stepLabel: 'Battle Lobby',
+        title: 'Leave the Room?',
+        sub: 'You are in a battle room. Leaving will remove you from the room.',
+        pathNodes: [{ label: '🏠 Portal' }, { label: '⚔️ Lobby', active: true }],
+        btnLabel: '🚪 Leave Room', danger: true,
+      });
+      if (ok) doLeave();
+    } else { doLeave(); }
+  };
   document.getElementById('bmFbHelpLink').onclick = e => { e.preventDefault(); showFbHelp(); };
 }
 
