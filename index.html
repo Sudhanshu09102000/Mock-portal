@@ -785,6 +785,180 @@
       color: #fff;
     }
 
+    /* ════════════════════════════════════════════════
+       DUAL-LANGUAGE TRANSLATION STYLES
+    ════════════════════════════════════════════════ */
+    .dual-lang-wrap {
+      margin-top: .38rem;
+      padding: .38rem .6rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(59,130,246,.10), rgba(56,189,248,.06));
+      border-left: 3px solid rgba(59,130,246,.55);
+      font-size: .88em;
+      color: rgba(148,210,255,.92);
+      line-height: 1.55;
+      font-style: italic;
+      animation: fadeInTl .35s ease;
+    }
+    @keyframes fadeInTl {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .dual-lang-label {
+      font-size: .72em;
+      font-weight: 700;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      color: rgba(96,165,250,.80);
+      margin-bottom: .15rem;
+      font-style: normal;
+    }
+    .dual-lang-opt-wrap {
+      margin-top: .28rem;
+      font-size: .84em;
+      color: rgba(148,210,255,.85);
+      font-style: italic;
+      padding-left: .3rem;
+      border-left: 2px solid rgba(59,130,246,.35);
+      line-height: 1.45;
+      animation: fadeInTl .35s ease;
+    }
+    /* Language selector pill */
+    #dualLangBtn {
+      position: relative;
+    }
+    #dualLangDropdown {
+      display: none;
+      position: fixed;          /* fixed to viewport — never clipped */
+      min-width: 200px;
+      background: rgba(13,17,23,.97);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+      backdrop-filter: blur(14px);
+      z-index: 2147483646;      /* just below absolute max — above everything */
+      padding: .5rem;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    #dualLangDropdown.open { display: block; }
+    .dlang-item {
+      padding: .42rem .7rem;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: .88rem;
+      color: var(--muted);
+      transition: background .12s ease, color .12s ease;
+      white-space: nowrap;
+    }
+    .dlang-item:hover { background: rgba(59,130,246,.18); color: #fff; }
+    .dlang-item.active { background: rgba(59,130,246,.28); color: #93c5fd; font-weight: 700; }
+    #dualLangBtn.dl-active {
+      border-color: rgba(59,130,246,.75);
+      background: linear-gradient(135deg,rgba(59,130,246,.25),rgba(56,189,248,.12));
+      color: #93c5fd;
+    }
+    .dl-spinner {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border: 2px solid rgba(148,210,255,.25);
+      border-top-color: rgba(148,210,255,.9);
+      border-radius: 50%;
+      animation: dl-spin .7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes dl-spin { to { transform: rotate(360deg); } }
+
+    /* ════════════════════════════════════════════════
+       JS-FILE-NOT-FOUND ERROR BOX
+    ════════════════════════════════════════════════ */
+    #jsErrorBox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(0,0,0,.72);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+    }
+    #jsErrorBox.show { display: flex; }
+    #jsErrorBoxInner {
+      max-width: 480px;
+      width: 90vw;
+      background: linear-gradient(160deg, rgba(20,12,14,.97), rgba(13,9,9,.99));
+      border: 1px solid rgba(239,68,68,.45);
+      border-radius: 20px;
+      padding: 2rem 1.8rem 1.6rem;
+      box-shadow: 0 0 0 1px rgba(239,68,68,.15), 0 30px 60px rgba(0,0,0,.65), 0 0 50px rgba(239,68,68,.12);
+      animation: errPop .35s cubic-bezier(.22,.68,0,1.2);
+    }
+    @keyframes errPop {
+      from { opacity:0; transform: scale(.88) translateY(14px); }
+      to   { opacity:1; transform: scale(1) translateY(0); }
+    }
+    #jsErrorBox .err-icon {
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,rgba(239,68,68,.28),rgba(239,68,68,.12));
+      border: 1px solid rgba(239,68,68,.4);
+      display: grid; place-items: center;
+      font-size: 24px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 20px rgba(239,68,68,.22);
+    }
+    #jsErrorBox .err-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fca5a5;
+      margin-bottom: .35rem;
+      letter-spacing: .2px;
+    }
+    #jsErrorBox .err-subtitle {
+      font-size: .88rem;
+      color: rgba(241,245,249,.55);
+      margin-bottom: 1rem;
+    }
+    #jsErrorBox .err-filename {
+      background: rgba(239,68,68,.10);
+      border: 1px solid rgba(239,68,68,.35);
+      border-radius: 12px;
+      padding: .75rem 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: .95rem;
+      font-weight: 700;
+      color: #fb923c;
+      word-break: break-all;
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      margin-bottom: 1.2rem;
+    }
+    #jsErrorBox .err-filename .file-icon {
+      font-size: 1.1em; flex-shrink: 0;
+    }
+    #jsErrorBox .err-tip {
+      font-size: .82rem;
+      color: rgba(241,245,249,.4);
+      line-height: 1.55;
+    }
+    #jsErrorBox .err-close-btn {
+      margin-top: 1.1rem;
+      border: 1px solid rgba(239,68,68,.40);
+      background: rgba(239,68,68,.12);
+      color: #fca5a5;
+      border-radius: 12px;
+      padding: .5rem 1.4rem;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .14s ease, border-color .14s ease;
+    }
+    #jsErrorBox .err-close-btn:hover {
+      background: rgba(239,68,68,.22);
+      border-color: rgba(239,68,68,.70);
+    }
+
     /* ✅ RESIZABLE QUESTION CONTAINER */
     /* ✅ RESIZABLE QUESTION CONTAINER (HEIGHT + WIDTH) */
     /* ✅ FIX: resizable box + image question never hides bottom buttons */
@@ -2766,6 +2940,11 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
                 <button id="examModeBtn" class="btn btn-glass btn-sm">Exam Mode: On</button>
                 <button id="helpBtn" class="btn btn-glass btn-sm" style="display: none;">Help</button>
 
+                <!-- ✅ Dual-Language Translation Button -->
+                <div id="dualLangBtn" class="btn btn-glass btn-sm" title="Show translation alongside English" style="cursor:pointer;user-select:none;position:relative;">
+                  🌐 Translate
+                </div>
+
               </div>
             </div><!-- end #questionBox -->
           </div><!-- end col-lg-8 -->
@@ -2830,6 +3009,51 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
   <!-- Feedback overlay -->
   <div id="feedbackOverlay" class="feedback-overlay"></div>
+
+  <!-- ✅ JS File Not Found — Beautiful Error Box -->
+  <div id="jsErrorBox">
+    <div id="jsErrorBoxInner">
+      <div class="err-icon">📂</div>
+      <div class="err-title">Script File Not Found</div>
+      <div class="err-subtitle">The following file could not be loaded:</div>
+      <div class="err-filename">
+        <span class="file-icon">📄</span>
+        <span id="jsErrorFilename">unknown.js</span>
+      </div>
+      <div class="err-tip">
+        Make sure the <strong style="color:rgba(251,191,36,.85);">.js</strong> file exists in the
+        <code style="background:rgba(255,255,255,.08);padding:.1rem .35rem;border-radius:6px;font-size:.92em;">scripts/</code>
+        folder and the filename exactly matches the test key (case-sensitive).
+      </div>
+      <button class="err-close-btn" onclick="document.getElementById('jsErrorBox').classList.remove('show')">
+        ✕ &nbsp; Close
+      </button>
+    </div>
+  </div>
+
+  <!-- ✅ Dual-Language Dropdown — direct body child, position:fixed, never clipped -->
+  <div id="dualLangDropdown">
+    <div class="dlang-item active" data-lang="">Off (English only)</div>
+    <div class="dlang-item" data-lang="hi">🇮🇳 Hindi</div>
+    <div class="dlang-item" data-lang="bn">🇧🇩 Bengali</div>
+    <div class="dlang-item" data-lang="ta">🇮🇳 Tamil</div>
+    <div class="dlang-item" data-lang="te">🇮🇳 Telugu</div>
+    <div class="dlang-item" data-lang="mr">🇮🇳 Marathi</div>
+    <div class="dlang-item" data-lang="gu">🇮🇳 Gujarati</div>
+    <div class="dlang-item" data-lang="kn">🇮🇳 Kannada</div>
+    <div class="dlang-item" data-lang="ml">🇮🇳 Malayalam</div>
+    <div class="dlang-item" data-lang="ur">🇵🇰 Urdu</div>
+    <div class="dlang-item" data-lang="pa">🇮🇳 Punjabi</div>
+    <div class="dlang-item" data-lang="fr">🇫🇷 French</div>
+    <div class="dlang-item" data-lang="de">🇩🇪 German</div>
+    <div class="dlang-item" data-lang="es">🇪🇸 Spanish</div>
+    <div class="dlang-item" data-lang="zh">🇨🇳 Chinese</div>
+    <div class="dlang-item" data-lang="ar">🇸🇦 Arabic</div>
+    <div class="dlang-item" data-lang="ja">🇯🇵 Japanese</div>
+    <div class="dlang-item" data-lang="ko">🇰🇷 Korean</div>
+    <div class="dlang-item" data-lang="ru">🇷🇺 Russian</div>
+    <div class="dlang-item" data-lang="pt">🇧🇷 Portuguese</div>
+  </div>
 
   <!-- ⏱ Timer — fixed bottom-left, collapsible via ✕ button -->
   <div id="timerPill" style="
@@ -3112,6 +3336,10 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         timerHandle: null,
         soundEnabled: true,
         examMode: true,          // ON = hide explanations until submit (or until turned off)
+
+        /* ── Dual-language translation ── */
+        dualLang: '',            // '' = off, else BCP-47 like 'hi', 'bn', etc.
+        tlCache: {},             // cache: lang|text → translated string
         cluelessMode: true,
         submitted: false,
 
@@ -3517,7 +3745,11 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           showView('engine');
         } catch (err) {
           console.error(err);
-          alert('Failed to load test scripts. Check console and file paths.');
+          // ✅ Beautiful error box showing the exact missing filename
+          const box = document.getElementById('jsErrorBox');
+          const fnEl = document.getElementById('jsErrorFilename');
+          if (fnEl) fnEl.textContent = qFile;
+          if (box) box.classList.add('show');
         }
 
       }
@@ -3578,6 +3810,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         state.examMode = true;
         state.cluelessMode = true;  // ADD THIS LINE
         updateExamModeUI();
+        initDualLangUI(); // ✅ Dual-language translation button
 
 
         state.submitted = false;
@@ -3762,6 +3995,13 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         // meta line
         $('qMetaLine').textContent = buildStatusLine(qid);
         updateNavigator();
+
+        // ✅ Apply dual-language translation if enabled
+        if (state.dualLang) {
+          setTimeout(() => applyDualLangToCurrentQuestion(), 0);
+          // Pre-translate next 5 questions in background for zero-wait translations ahead
+          setTimeout(() => preTranslateUpcoming(state.currentIndex), 400);
+        }
       }
 
       function buildStatusLine(qid) {
@@ -3774,6 +4014,282 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         if (qs.answeredFeedback) bits.push('Saved: ' + qs.answeredFeedback.toUpperCase());
         if (state.submitted) bits.push('Submitted');
         return 'Status: ' + (bits.length ? bits.join(' • ') : '-');
+      }
+
+      /* ══════════════════════════════════════════════════════
+         DUAL-LANGUAGE TRANSLATION ENGINE
+      ══════════════════════════════════════════════════════ */
+
+      /* Strip HTML tags to get plain text for translation */
+      function stripHtml(html) {
+        const d = document.createElement('div');
+        d.innerHTML = html;
+        // Remove all non-text elements before extracting visible text
+        d.querySelectorAll('img, script, style, svg, canvas, video, audio, iframe, noscript').forEach(el => el.remove());
+        let text = (d.innerText || d.textContent || '').trim();
+        // Strip file paths — handles compact (file.kgm) AND spaced/dashed variants
+        // like "waters_ world- class. kgm" where spaces appear around separators
+        const FILE_EXT = /(?:jpg|jpeg|png|gif|webp|svg|kgm|mp4|mp3|pdf|js|css)/gi;
+        // Pass 1: compact paths  e.g. waters_world-class.kgm
+        text = text.replace(/\S+\.(?:jpg|jpeg|png|gif|webp|svg|kgm|mp4|mp3|pdf|js|css)\S*/gi, '');
+        // Pass 2: spaced paths   e.g. waters_ world- class. kgm
+        text = text.replace(/[\w\-]+(?:\s*[\-_.]\s*[\w\-]+)+\s*\.\s*(?:jpg|jpeg|png|gif|webp|svg|kgm|mp4|mp3|pdf|js|css)\b/gi, '');
+        text = text.replace(/https?:\/\/\S+/g, '');
+        text = text.replace(/\s{2,}/g, ' ').trim();
+        return text;
+      }
+
+      /* ── Translation engine: Google Translate (unofficial, free, no key needed)
+         Falls back to MyMemory if Google is unreachable.
+         Both results are cleaned of leaked file-path tokens.               ── */
+
+      /* Shared post-processing: strip file-path garbage from any API result */
+      function cleanTr(tr) {
+        tr = tr.replace(/\S+\.(?:jpg|jpeg|png|gif|webp|svg|kgm|mp4|mp3|pdf|js|css)\S*/gi, '');
+        tr = tr.replace(/[\w\-]+(?:\s*[\-_.]\s*[\w\-]+)+\s*\.\s*(?:jpg|jpeg|png|gif|webp|svg|kgm|mp4|mp3|pdf|js|css)\b/gi, '');
+        tr = tr.replace(/https?:\/\/\S+/g, '').replace(/\s{2,}/g, ' ').trim();
+        // Suppress API warning messages (e.g. MyMemory quota warnings)
+        if (/MYMEMORY WARNING|NEXT AVAILABLE|VISIT HTTP/i.test(tr)) return '';
+        return tr;
+      }
+
+      async function tlFetch(text, lang) {
+        if (!text || !text.trim() || !lang) return '';
+        const plain = stripHtml(text).trim();
+        if (!plain) return '';
+        const cacheKey = lang + '|' + plain;
+        if (state.tlCache[cacheKey]) return state.tlCache[cacheKey];
+
+        /* ── Primary: unofficial Google Translate endpoint ── */
+        try {
+          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${encodeURIComponent(lang)}&dt=t&q=${encodeURIComponent(plain.slice(0, 800))}`;
+          const res  = await fetch(url);
+          const data = await res.json();
+          // Response: [ [ ["translated","original",...], ... ], ..., "en" ]
+          let tr = '';
+          if (Array.isArray(data) && Array.isArray(data[0])) {
+            tr = data[0].map(seg => (Array.isArray(seg) ? seg[0] : '')).join('');
+          }
+          tr = cleanTr(tr);
+          if (tr && tr.toLowerCase() !== plain.toLowerCase()) {
+            state.tlCache[cacheKey] = tr;
+            return tr;
+          }
+        } catch(_) { /* Google failed — try fallback */ }
+
+        /* ── Fallback: MyMemory (free tier, ~1000 words/day) ── */
+        try {
+          const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(plain.slice(0,500))}&langpair=en|${lang}`;
+          const res  = await fetch(url);
+          const data = await res.json();
+          let tr = data?.responseData?.translatedText || '';
+          tr = cleanTr(tr);
+          if (tr && tr.toLowerCase() !== plain.toLowerCase()) {
+            state.tlCache[cacheKey] = tr;
+            return tr;
+          }
+        } catch(_) {}
+
+        return '';
+      }
+
+      /* Render translated text under a container element */
+      function injectTranslation(el, translated, labelText) {
+        // Remove any previous translation
+        el.querySelectorAll('.dual-lang-wrap,.dual-lang-opt-wrap').forEach(n => n.remove());
+        if (!translated) return;
+        const wrap = document.createElement('div');
+        wrap.className = el.classList.contains('option') ? 'dual-lang-opt-wrap' : 'dual-lang-wrap';
+        if (!el.classList.contains('option') && labelText) {
+          const lbl = document.createElement('div');
+          lbl.className = 'dual-lang-label';
+          lbl.textContent = labelText;
+          wrap.appendChild(lbl);
+        }
+        const txt = document.createElement('div');
+        txt.textContent = translated;
+        wrap.appendChild(txt);
+        el.appendChild(wrap);
+      }
+
+      /* Spinner placeholder while fetching */
+      function injectSpinner(el) {
+        el.querySelectorAll('.dual-lang-wrap,.dual-lang-opt-wrap,.dl-spinner-wrap').forEach(n => n.remove());
+        const sp = document.createElement('div');
+        sp.className = 'dual-lang-opt-wrap dl-spinner-wrap';
+        sp.innerHTML = '<span class="dl-spinner"></span>';
+        el.appendChild(sp);
+      }
+
+      /* Main: translate the currently visible question+options and add inline text */
+      async function applyDualLangToCurrentQuestion() {
+        const lang = state.dualLang;
+        if (!lang) {
+          // Remove all existing translations
+          document.querySelectorAll('.dual-lang-wrap,.dual-lang-opt-wrap').forEach(n => n.remove());
+          return;
+        }
+
+        const langNames = {
+          hi:'Hindi',bn:'Bengali',ta:'Tamil',te:'Telugu',mr:'Marathi',gu:'Gujarati',
+          kn:'Kannada',ml:'Malayalam',ur:'Urdu',pa:'Punjabi',
+          fr:'French',de:'German',es:'Spanish',zh:'Chinese',ar:'Arabic',
+          ja:'Japanese',ko:'Korean',ru:'Russian',pt:'Portuguese'
+        };
+        const labelText = langNames[lang] || lang.toUpperCase();
+
+        /* ── Question text ── */
+        const qEl = document.getElementById('questionText');
+        if (qEl) {
+          injectSpinner(qEl);
+          const rawQ = qEl.innerHTML;
+          const tr = await tlFetch(rawQ, lang);
+          injectTranslation(qEl, tr, labelText);
+        }
+
+        /* ── Options ── */
+        const opts = document.querySelectorAll('#optionsArea .option');
+        for (const opt of opts) {
+          const textEl = opt.querySelector('.opt-text');
+          if (!textEl) continue;
+          injectSpinner(opt);
+          const tr = await tlFetch(textEl.innerHTML, lang);
+          injectTranslation(opt, tr, null);
+        }
+
+        /* ── Explanation (inline hint panel if visible) ── */
+        const hintPanel = document.querySelector('.inline-hint-panel.show');
+        if (hintPanel) {
+          injectSpinner(hintPanel);
+          const expBody = hintPanel.querySelector('.exp-text, div');
+          if (expBody) {
+            const tr = await tlFetch(expBody.innerHTML, lang);
+            injectTranslation(hintPanel, tr, labelText + ' (Explanation)');
+          }
+        }
+      }
+
+      /* ── Pre-translate the next 5 questions silently in the background ──
+         Results are stored in tlCache so the next render is instant.        */
+      async function preTranslateUpcoming(fromIndex) {
+        const lang = state.dualLang;
+        if (!lang) return;
+        const PREFETCH = 5;
+        for (let i = 1; i <= PREFETCH; i++) {
+          const idx = fromIndex + i;
+          if (idx >= state.qIds.length) break;
+          const q = state.questionsMap[state.qIds[idx]];
+          if (!q) continue;
+          // Fire-and-forget: result goes into tlCache, no await needed
+          tlFetch(q.text || '', lang);
+          for (const opt of (q.options || [])) tlFetch(opt || '', lang);
+        }
+      }
+      // Expose so battle mode can call it
+      window._preTranslateUpcoming = (fromIndex) => preTranslateUpcoming(fromIndex);
+      // Expose core translation helpers for battle mode
+      window._tlFetch = (text, lang) => tlFetch(text, lang);
+
+      /* Patch buildHelpContentHtml to also inject translation in popover/modal */
+      async function applyDualLangToHelpHtml(containerEl) {
+        const lang = state.dualLang;
+        if (!lang || !containerEl) return;
+        const langNames = {
+          hi:'Hindi',bn:'Bengali',ta:'Tamil',te:'Telugu',mr:'Marathi',gu:'Gujarati',
+          kn:'Kannada',ml:'Malayalam',ur:'Urdu',pa:'Punjabi',
+          fr:'French',de:'German',es:'Spanish',zh:'Chinese',ar:'Arabic',
+          ja:'Japanese',ko:'Korean',ru:'Russian',pt:'Portuguese'
+        };
+        const labelText = langNames[lang] || lang.toUpperCase();
+        // Translate all text nodes inside the help container
+        const divs = containerEl.querySelectorAll('div');
+        for (const d of divs) {
+          if (d.children.length === 0 && d.textContent.trim()) {
+            const tr = await tlFetch(d.textContent, lang);
+            injectTranslation(d.parentElement || d, tr, labelText);
+            break; // only first meaningful block to avoid duplication
+          }
+        }
+      }
+
+      /* ── Wire up the dual-lang dropdown ── */
+      function initDualLangUI() {
+        const btn = document.getElementById('dualLangBtn');
+        const dd  = document.getElementById('dualLangDropdown');
+        if (!btn || !dd) return;
+
+        // Guard: only wire once
+        if (btn._dlInited) return;
+        btn._dlInited = true;
+
+        /* Position dropdown above the button using fixed coords */
+        function positionDropdown() {
+          const r = btn.getBoundingClientRect();
+          dd.style.bottom = (window.innerHeight - r.top + 6) + 'px';
+          dd.style.right  = (window.innerWidth - r.right) + 'px';
+          dd.style.left   = 'auto';
+          dd.style.top    = 'auto';
+        }
+
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = dd.classList.contains('open');
+          if (isOpen) {
+            dd.classList.remove('open');
+          } else {
+            positionDropdown();
+            dd.classList.add('open');
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          // Also allow the battle-mode lang button to keep the dropdown open
+          const bmLBtn = document.getElementById('bmLangBtn');
+          if (!dd.contains(e.target) && e.target !== btn && e.target !== bmLBtn) {
+            dd.classList.remove('open');
+          }
+        });
+
+        dd.querySelectorAll('.dlang-item').forEach(item => {
+          item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const lang = item.getAttribute('data-lang');
+            state.dualLang = lang;
+            state.tlCache = {}; // clear stale cache on language change
+
+            // Update active highlight
+            dd.querySelectorAll('.dlang-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+
+            // Update button label text (btn has one text node as first child)
+            const labelNode = [...btn.childNodes].find(n => n.nodeType === 3);
+            if (lang) {
+              btn.classList.add('dl-active');
+              if (labelNode) labelNode.textContent = ' 🌐 ' + item.textContent.replace(/^\S+\s*/, '').trim() + ' ';
+            } else {
+              btn.classList.remove('dl-active');
+              if (labelNode) labelNode.textContent = '🌐 Translate';
+            }
+
+            dd.classList.remove('open');
+            applyDualLangToCurrentQuestion();
+            // Pre-translate upcoming questions immediately after a lang change
+            if (lang) setTimeout(() => preTranslateUpcoming(state.currentIndex), 200);
+            // If battle is currently active, re-translate the displayed battle question too
+            if (lang && document.getElementById('bmQuestionOverlay')?.classList.contains('bm-active')) {
+              setTimeout(() => { if (typeof bmApplyDualLang === 'function') bmApplyDualLang(); }, 150);
+              const bmLBtn = document.getElementById('bmLangBtn');
+              if (bmLBtn) {
+                const shortName = item.textContent.replace(/^\S+\s*/, '').trim().split(' ')[0];
+                bmLBtn.textContent = '🌐 ' + shortName;
+                bmLBtn.style.borderColor = 'rgba(34,197,94,.9)';
+              }
+            } else if (!lang) {
+              const bmLBtn = document.getElementById('bmLangBtn');
+              if (bmLBtn) { bmLBtn.textContent = '🌐 Lang'; bmLBtn.style.borderColor = 'rgba(34,197,94,.45)'; }
+            }
+          });
+        });
       }
 
       function selectOption(metaId) {
@@ -5054,6 +5570,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           img.removeAttribute('src');
         }
         pop.style.display = 'block';
+
+        // ✅ Translate popover content
+        if (state.dualLang) setTimeout(() => translateHelpContainer(body, qid), 80);
       }
 
       function hideQmarkPopover() {
@@ -5121,7 +5640,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       function stripHtml(html) {
         const d = document.createElement('div');
         d.innerHTML = html || '';
-        return (d.textContent || d.innerText || '').trim();
+        d.querySelectorAll('img, script, style, svg, canvas, video, audio, iframe, noscript').forEach(el => el.remove());
+        const text = (d.innerText || d.textContent || '').trim();
+        return text.replace(/\S+\.(jpg|jpeg|png|gif|webp|svg|kgm|mp4|mp3|pdf|js|css)\S*/gi, '').replace(/https?:\/\/\S+/g, '').trim();
       }
 
       /* ========= INIT ========= */
@@ -5224,6 +5745,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         box.style.bottom = "110px";
 
         moveMouseHelp(e);
+
+        // ✅ Translate hover help content
+        if (state.dualLang) setTimeout(() => translateHelpContainer(body, qid), 80);
       }
 
       function moveMouseHelp(e) {
@@ -5261,6 +5785,171 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         const modal = new bootstrap.Modal(document.getElementById('qmarkHelpModal'));
         modal.show();
+
+        // ✅ Inject translation into modal after it opens
+        if (state.dualLang) {
+          setTimeout(() => translateModalBody(qid), 120);
+        }
+      }
+
+      /* Translate the Answer & Explanation modal body */
+      /* ── Parse exp.text HTML into clean structured sections ── */
+      function parseExpHtml(htmlStr) {
+        if (!htmlStr) return { mainText: '', bullets: [] };
+        const tmp = document.createElement('div');
+        tmp.innerHTML = htmlStr;
+
+        // Remove emoji-only / label nodes (📌 Explanation:, 🔑 Key Points: etc.)
+        const emojiLabelRe = /^[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\s]*[\w\s]+:[\s]*$/u;
+
+        // Extract bullet list items
+        const bullets = [];
+        tmp.querySelectorAll('li').forEach(li => {
+          const t = li.innerText.trim();
+          if (t) bullets.push(t);
+          li.remove();
+        });
+        // Remove empty ul/ol after extracting li
+        tmp.querySelectorAll('ul,ol').forEach(l => { if (!l.children.length) l.remove(); });
+
+        // Remove heading/label paragraphs (those that are short and end with ':')
+        tmp.querySelectorAll('p,div,span,b,strong').forEach(el => {
+          const t = (el.innerText || '').trim();
+          if (t.length < 40 && t.endsWith(':')) el.remove();
+        });
+
+        // Get the remaining main text, strip residual HTML
+        let mainText = (tmp.innerText || tmp.textContent || '').trim();
+        // Remove leading emojis / label lines
+        mainText = mainText.replace(/^[\u{1F300}-\u{1FAFF}✅📌🔑🎯💡⚡🏆🌟\s]+[\w\s]+:\s*/gmu, '').trim();
+        // Collapse excessive newlines
+        mainText = mainText.replace(/\n{3,}/g, '\n\n').trim();
+
+        return { mainText, bullets };
+      }
+
+      /* ── Build the formatted translated block HTML ── */
+      function buildTlBlockHtml(labelText, trAnswer, trMain, trBullets, compact) {
+        const pad   = compact ? '.5rem .7rem' : '.75rem 1rem';
+        const fMain = compact ? '.86em' : '.92em';
+        const fBull = compact ? '.83em' : '.89em';
+        const gap   = compact ? '.3rem' : '.5rem';
+
+        let html = `<div style="font-size:.70em;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:rgba(96,165,250,.85);margin-bottom:.45rem;display:flex;align-items:center;gap:.4rem;">
+          <span style="display:inline-block;width:3px;height:12px;border-radius:2px;background:rgba(96,165,250,.7);"></span>
+          ${labelText} Translation
+        </div>`;
+
+        // Answer pill
+        if (trAnswer) {
+          html += `<div style="display:inline-flex;align-items:center;gap:.4rem;margin-bottom:${gap};padding:.38rem .75rem;border-radius:8px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.30);">
+            <span style="font-size:.9em;color:rgba(134,239,172,.7);">✓</span>
+            <span style="font-size:${fMain};font-weight:700;color:rgba(134,239,172,.95);">${trAnswer}</span>
+          </div><br>`;
+        }
+
+        // Main explanation paragraph
+        if (trMain) {
+          html += `<p style="margin:${gap} 0;font-size:${fMain};color:rgba(200,220,255,.90);line-height:1.70;font-style:normal;">${trMain}</p>`;
+        }
+
+        // Bullet key points
+        if (trBullets && trBullets.length) {
+          html += `<div style="margin-top:${gap};font-size:.72em;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(250,204,21,.70);margin-bottom:.3rem;">Key Points</div>`;
+          html += `<ul style="margin:0;padding-left:1.15rem;list-style:none;">`;
+          trBullets.forEach(b => {
+            html += `<li style="font-size:${fBull};color:rgba(200,220,255,.85);line-height:1.65;margin-bottom:.25rem;padding-left:.1rem;">
+              <span style="color:rgba(96,165,250,.7);margin-right:.35rem;">›</span>${b}
+            </li>`;
+          });
+          html += `</ul>`;
+        }
+
+        return html;
+      }
+
+      async function translateModalBody(qid) {
+        const lang = state.dualLang;
+        if (!lang) return;
+
+        const langNames = {
+          hi:'Hindi',bn:'Bengali',ta:'Tamil',te:'Telugu',mr:'Marathi',gu:'Gujarati',
+          kn:'Kannada',ml:'Malayalam',ur:'Urdu',pa:'Punjabi',
+          fr:'French',de:'German',es:'Spanish',zh:'Chinese',ar:'Arabic',
+          ja:'Japanese',ko:'Korean',ru:'Russian',pt:'Portuguese'
+        };
+        const labelText = langNames[lang] || lang.toUpperCase();
+
+        const modalBody = document.getElementById('qmarkModalBody');
+        if (!modalBody) return;
+
+        modalBody.querySelectorAll('.modal-tl-block').forEach(n => n.remove());
+
+        // Loading indicator
+        const loadEl = document.createElement('div');
+        loadEl.className = 'modal-tl-block';
+        loadEl.style.cssText = `margin-top:1rem;padding:.75rem 1rem;border-radius:14px;
+          background:linear-gradient(135deg,rgba(59,130,246,.10),rgba(56,189,248,.06));
+          border:1px solid rgba(59,130,246,.22);border-left:3px solid rgba(59,130,246,.65);`;
+        loadEl.innerHTML = `<span style="font-size:.72em;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:rgba(96,165,250,.80);">${labelText} Translation</span>
+          <span class="dl-spinner" style="margin-left:.6rem;"></span>`;
+        modalBody.appendChild(loadEl);
+
+        const sh  = getOrBuildShuffle(qid);
+        const correctText = getOptionTextByMeta(qid, sh.correctMetaId) || sh.correctMetaId;
+        const exp = state.explanationsMap[qid] || {};
+        const { mainText, bullets } = parseExpHtml(exp.text || '');
+
+        // Translate all parts in parallel
+        const [trAnswer, trMain, ...trBullets] = await Promise.all([
+          tlFetch(correctText, lang),
+          tlFetch(mainText, lang),
+          ...bullets.map(b => tlFetch(b, lang))
+        ]);
+
+        if (!trAnswer && !trMain && !trBullets.length) {
+          loadEl.innerHTML = `<span style="opacity:.5;font-size:.88em;">Translation unavailable.</span>`;
+          return;
+        }
+
+        loadEl.innerHTML = buildTlBlockHtml(labelText, trAnswer, trMain, trBullets, false);
+      }
+
+      /* Generic: translate answer+explanation into popover / hover help container */
+      async function translateHelpContainer(containerEl, qid) {
+        const lang = state.dualLang;
+        if (!lang || !containerEl) return;
+
+        const langNames = {
+          hi:'Hindi',bn:'Bengali',ta:'Tamil',te:'Telugu',mr:'Marathi',gu:'Gujarati',
+          kn:'Kannada',ml:'Malayalam',ur:'Urdu',pa:'Punjabi',
+          fr:'French',de:'German',es:'Spanish',zh:'Chinese',ar:'Arabic',
+          ja:'Japanese',ko:'Korean',ru:'Russian',pt:'Portuguese'
+        };
+        const labelText = langNames[lang] || lang.toUpperCase();
+
+        containerEl.querySelectorAll('.help-tl-block').forEach(n => n.remove());
+
+        const sh  = getOrBuildShuffle(qid);
+        const correctText = getOptionTextByMeta(qid, sh.correctMetaId) || sh.correctMetaId;
+        const exp = state.explanationsMap[qid] || {};
+        const { mainText, bullets } = parseExpHtml(exp.text || '');
+
+        const [trAnswer, trMain, ...trBullets] = await Promise.all([
+          tlFetch(correctText, lang),
+          tlFetch(mainText, lang),
+          ...bullets.map(b => tlFetch(b, lang))
+        ]);
+
+        if (!trAnswer && !trMain && !trBullets.length) return;
+
+        const block = document.createElement('div');
+        block.className = 'help-tl-block';
+        block.style.cssText = `margin-top:.7rem;padding:.6rem .8rem;border-radius:12px;
+          background:linear-gradient(135deg,rgba(59,130,246,.10),rgba(56,189,248,.06));
+          border:1px solid rgba(59,130,246,.20);border-left:3px solid rgba(59,130,246,.60);`;
+        block.innerHTML = buildTlBlockHtml(labelText, trAnswer, trMain, trBullets, true);
+        containerEl.appendChild(block);
       }
       function toggleHintBox() {
         // only in practice mode
@@ -6954,6 +7643,7 @@ function buildUI() {
       <span class="bm-qbar-timer" id="bmQTimer" translate="no">0.0s</span>
       <span class="bm-qbar-score" id="bmMyScore" translate="no">Score: 0</span>
       <span style="font-size:9px;color:rgba(148, 163, 184,.4);letter-spacing:.5px;display:none;" class="bm-kbd-hint d-none d-sm-inline">⌨ 1-4 to select</span>
+      <button id="bmLangBtn" onclick="bmOpenLangPicker(event,this)" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(34,197,94,.45);background:rgba(34,197,94,.1);color:#4ade80;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Translate question to another language">🌐 Lang</button>
       <button id="bmChatToggleBtn" onclick="toggleChat()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(59, 130, 246,.45);background:rgba(59, 130, 246,.1);color:#3b82f6;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Open battle chat">💬 Chat</button>
       <button id="bmSkipBtn" onclick="bmSkipQuestion()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.1);color:#facc15;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Send this question to the end of the queue">⏭ Skip →end</button>
       <button id="bmFinishBtn" onclick="bmFinishBattle()" style="font-size:11px;font-weight:700;padding:4px 11px;border-radius:8px;border:1px solid rgba(239,68,68,.5);background:rgba(239,68,68,.13);color:#f87171;cursor:pointer;transition:all .15s;white-space:nowrap;" title="Submit and finish battle now">🏁 Finish</button>
@@ -7415,7 +8105,91 @@ function bmShowQuestion(idx) {
   const pad = document.createElement('div');
   pad.style.height = '180px';
   wrap.appendChild(pad);
+
+  // ✅ Apply dual-language translation if enabled (shared with exam engine)
+  if (window.state && window.state.dualLang) {
+    setTimeout(() => bmApplyDualLang(), 60);
+    setTimeout(() => bmPreTranslateUpcoming(idx), 400);
+  }
 }
+
+// ── BATTLE DUAL-LANGUAGE ──────────────────────────────────────────────────────
+
+/* Open the shared language picker dropdown anchored to the battle lang button */
+function bmOpenLangPicker(evt, btn) {
+  if (evt) evt.stopPropagation(); // prevent document click-listener from closing immediately
+  const dd = document.getElementById('dualLangDropdown');
+  if (!dd) return;
+  if (dd.classList.contains('open')) { dd.classList.remove('open'); return; }
+  const r = btn.getBoundingClientRect();
+  // Position below the button, align left edge
+  dd.style.top    = (r.bottom + 6) + 'px';
+  dd.style.left   = Math.min(r.left, window.innerWidth - 220) + 'px';
+  dd.style.bottom = 'auto';
+  dd.style.right  = 'auto';
+  dd.classList.add('open');
+  // Make sure clicks inside the dropdown don't bubble to document and auto-close it
+  dd._bmOpen = true;
+}
+window.bmOpenLangPicker = bmOpenLangPicker;
+
+/* Translate the currently visible battle question + options */
+async function bmApplyDualLang() {
+  const lang = window.state && window.state.dualLang;
+  const fetchFn = window._tlFetch;
+  if (!lang || typeof fetchFn !== 'function') return;
+
+  const wrap = document.getElementById('bmQCardWrap');
+  if (!wrap) return;
+
+  // ── Question text ──
+  const qtxt = wrap.querySelector('.bm-qtext');
+  if (qtxt) {
+    const tr = await fetchFn(qtxt.innerHTML, lang);
+    if (tr) {
+      qtxt.querySelectorAll('.bm-dl').forEach(n => n.remove());
+      const d = document.createElement('div');
+      d.className = 'bm-dl';
+      d.style.cssText = 'font-size:13px;color:rgba(241,245,249,.72);font-style:italic;margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.10);line-height:1.45;';
+      d.textContent = tr;
+      qtxt.appendChild(d);
+    }
+  }
+
+  // ── Options ──
+  wrap.querySelectorAll('.bm-opt').forEach(async (btn) => {
+    // The option text is the LAST <span> child (after key badge + letter badge)
+    const spans = btn.querySelectorAll('span');
+    const textSpan = spans[spans.length - 1];
+    if (!textSpan || !textSpan.innerHTML.trim()) return;
+    const tr = await fetchFn(textSpan.innerHTML, lang);
+    if (tr) {
+      btn.querySelectorAll('.bm-dl').forEach(n => n.remove());
+      const d = document.createElement('div');
+      d.className = 'bm-dl';
+      d.style.cssText = 'font-size:11px;color:rgba(241,245,249,.60);font-style:italic;margin-top:3px;display:block;padding-left:2px;';
+      d.textContent = tr;
+      btn.appendChild(d);
+    }
+  });
+}
+window.bmApplyDualLang = bmApplyDualLang;
+
+/* Pre-translate the next 5 battle questions silently in the background */
+async function bmPreTranslateUpcoming(fromIdx) {
+  const lang = window.state && window.state.dualLang;
+  const fetchFn = window._tlFetch;
+  if (!lang || typeof fetchFn !== 'function') return;
+  for (let i = 1; i <= 5; i++) {
+    const nextIdx = fromIdx + i;
+    if (!B.battleQIds || nextIdx >= B.battleQIds.length) break;
+    const q = window.state.questionsMap && window.state.questionsMap[B.battleQIds[nextIdx]];
+    if (!q) continue;
+    fetchFn(q.text || '', lang);
+    for (const opt of (q.options || [])) fetchFn(opt || '', lang);
+  }
+}
+window.bmPreTranslateUpcoming = bmPreTranslateUpcoming;
 
 // ── BATTLE OPTION SELECT ──────────────────────────────────────────────────────
 function bmSelectOption(metaId, correctMetaId, qIdx) {
