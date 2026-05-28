@@ -442,13 +442,26 @@
       position: fixed;
       z-index: 9998;
       max-width: 360px;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
       padding: .7rem .8rem;
       border-radius: 14px;
       border: 1px solid rgba(255, 255, 255, .18);
       background: var(--expl-bg, rgba(13, 17, 23, .92));
       backdrop-filter: blur(10px);
       display: none;
-      pointer-events: none;
+      pointer-events: auto;
+    }
+
+    .hover-help::-webkit-scrollbar {
+      width: 5px;
+    }
+    .hover-help::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .hover-help::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, .22);
+      border-radius: 99px;
     }
 
     @media (hover:none) {
@@ -4451,7 +4464,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           wrap.appendChild(lbl);
         }
         const txt = document.createElement('div');
-        txt.textContent = translated;
+        txt.innerHTML = translated.replace(/\n/g, '<br>');
         wrap.appendChild(txt);
         el.appendChild(wrap);
       }
@@ -4538,6 +4551,45 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       }
       // Expose so battle mode can call it
       window._preTranslateUpcoming = (fromIndex) => preTranslateUpcoming(fromIndex);
+      /* ── HTML-aware translation: preserves <b>, <u>, <em>, <br> etc. ──
+         Uses numbered placeholders {0},{1}… that translation APIs keep intact,
+         then restores the original tags after translation.                    */
+      async function tlFetchHtml(html, lang) {
+        if (!html || !lang) return '';
+
+        const saved = [];
+        // Convert block-level line breaks first
+        let work = html
+          .replace(/<br\s*\/?>/gi, '\n')
+          .replace(/<\/p>/gi, '\n')
+          .replace(/<\/div>/gi, '\n');
+
+        // Replace inline formatting tags with numbered placeholders
+        work = work.replace(/<\/?(b|strong|u|em|i|s|mark|sup|sub)\b[^>]*>/gi, (m) => {
+          const idx = saved.length;
+          saved.push(m);
+          return `{${idx}}`;
+        });
+
+        // Strip any remaining HTML to get plain text with placeholders + \n
+        const tmp = document.createElement('div');
+        tmp.innerHTML = work;
+        let plain = (tmp.innerText || tmp.textContent || '')
+          .replace(/\s{2,}/g, ' ').trim();
+        if (!plain) return '';
+
+        // Translate the plain text (placeholders like {0} are usually kept)
+        const tr = await tlFetch(plain, lang);
+        if (!tr) return '';
+
+        // Restore saved HTML tags wherever placeholders survived
+        let result = tr.replace(/\{(\d+)\}/g, (_, i) => saved[+i] || '');
+        // Drop any orphaned placeholders the translation may have moved/dropped
+        result = result.replace(/\{\d+\}/g, '');
+        // Convert newlines to <br>
+        return result.replace(/\n/g, '<br>');
+      }
+
       // Expose core translation helpers for battle mode
       window._tlFetch = (text, lang) => tlFetch(text, lang);
 
@@ -6201,7 +6253,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         // Main explanation paragraph
         if (trMain) {
-          html += `<p style="margin:${gap} 0;font-size:${fMain};color:rgba(200,220,255,.90);line-height:1.70;font-style:normal;">${trMain}</p>`;
+          html += `<p style="margin:${gap} 0;font-size:${fMain};color:rgba(200,220,255,.90);line-height:1.70;font-style:normal;">${trMain.replace(/\n/g, '<br>')}</p>`;
         }
 
         // Bullet key points
@@ -6251,10 +6303,10 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         const exp = state.explanationsMap[qid] || {};
         const { mainText, bullets } = parseExpHtml(exp.text || '');
 
-        // Translate all parts in parallel
+        // Translate all parts in parallel — use HTML-aware fetch for main explanation
         const [trAnswer, trMain, ...trBullets] = await Promise.all([
           tlFetch(correctText, lang),
-          tlFetch(mainText, lang),
+          tlFetchHtml(exp.text || mainText, lang),
           ...bullets.map(b => tlFetch(b, lang))
         ]);
 
@@ -6288,7 +6340,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         const [trAnswer, trMain, ...trBullets] = await Promise.all([
           tlFetch(correctText, lang),
-          tlFetch(mainText, lang),
+          tlFetchHtml(exp.text || mainText, lang),
           ...bullets.map(b => tlFetch(b, lang))
         ]);
 
@@ -9062,9 +9114,14 @@ function bmRenderReportCard() {
   const accuracy = totalQ > 0 ? Math.round((correct / totalQ) * 100) : 0;
 
   rc.style.display = 'block';
+  // Sync language with main exam language if set
+  if (!window._bmRcLang && window.state && window.state.dualLang) window._bmRcLang = window.state.dualLang;
   rc.innerHTML = `
     <div class="bm-rc-header">
-      <div class="bm-rc-title">📋 YOUR REPORT CARD</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
+        <div class="bm-rc-title">📋 YOUR REPORT CARD</div>
+        <button id="bmRcLangBtn" onclick="bmRcToggleLang()" title="Translate questions &amp; explanations" style="font-size:11px;font-weight:700;padding:5px 13px;border-radius:10px;border:1px solid rgba(99,102,241,.45);background:rgba(99,102,241,.1);color:#a5b4fc;cursor:pointer;transition:all .2s;white-space:nowrap;">🌐 Translate</button>
+      </div>
       <div class="bm-rc-stats">
         <div class="bm-rc-stat bm-rc-correct"><span class="bm-rc-stat-num">${correct}</span><span class="bm-rc-stat-lbl">Correct</span></div>
         <div class="bm-rc-stat bm-rc-wrong"><span class="bm-rc-stat-num">${wrong}</span><span class="bm-rc-stat-lbl">Wrong</span></div>
@@ -9079,6 +9136,18 @@ function bmRenderReportCard() {
       ${B.battleQIds.map((qid, i) => bmRenderRCItem(qid, i, answers[qid])).join('')}
     </div>
   `;
+  // Auto-apply translation if language already chosen
+  if (window._bmRcLang) setTimeout(() => window.bmRcApplyTranslation(), 150);
+  // Update button label if lang already active
+  setTimeout(() => {
+    const rcBtn = document.getElementById('bmRcLangBtn');
+    if (rcBtn && window._bmRcLang) {
+      const n = (window._bmLangNames || {})[window._bmRcLang] || window._bmRcLang;
+      rcBtn.textContent = '🌐 ' + n.split(' ')[0];
+      rcBtn.style.borderColor = 'rgba(99,102,241,.9)';
+      rcBtn.style.color = '#818cf8';
+    }
+  }, 50);
 }
 
 function bmRenderRCItem(qid, idx, ans) {
@@ -9168,8 +9237,195 @@ window.bmShowRCExplanation = function(qid) {
     document.body.appendChild(modal);
     modal.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
   }
-  document.getElementById('bmExpContent').innerHTML = typeof exp === 'object' ? (exp.text || exp.explanation || JSON.stringify(exp)) : String(exp);
+  const expHtml = typeof exp === 'object' ? (exp.text || exp.explanation || JSON.stringify(exp)) : String(exp);
+  const expContent = document.getElementById('bmExpContent');
+  expContent.innerHTML = expHtml;
+  // Remove any previous translation
+  const prevTr = document.getElementById('bmExpTranslation');
+  if (prevTr) prevTr.remove();
   modal.style.display = 'flex';
+
+  // ── Translate explanation if a language is active ──
+  const lang = window._bmRcLang || (window.state && window.state.dualLang) || '';
+  if (lang && window._tlFetch) {
+    const tlFetch = window._tlFetch;
+    const langNames = {
+      hi:'Hindi',bn:'Bengali',ta:'Tamil',te:'Telugu',mr:'Marathi',gu:'Gujarati',
+      kn:'Kannada',ml:'Malayalam',ur:'Urdu',pa:'Punjabi',
+      fr:'French',de:'German',es:'Spanish',zh:'Chinese',ar:'Arabic',
+      ja:'Japanese',ko:'Korean',ru:'Russian',pt:'Portuguese'
+    };
+    const langLabel = langNames[lang] || lang.toUpperCase();
+    const spinner = document.createElement('div');
+    spinner.id = 'bmExpTrSpinner';
+    spinner.style.cssText = 'margin-top:10px;font-size:12px;color:#93c5fd;opacity:.7;';
+    spinner.textContent = 'Translating to ' + langLabel + '…';
+    expContent.after(spinner);
+    const plainText = (expContent.innerText || expContent.textContent || '').trim();
+    tlFetch(plainText, lang).then(tr => {
+      const sp = document.getElementById('bmExpTrSpinner');
+      if (sp) sp.remove();
+      if (!tr) return;
+      const wrap = document.createElement('div');
+      wrap.id = 'bmExpTranslation';
+      wrap.style.cssText = 'margin-top:12px;padding:10px 12px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);border-radius:10px;color:#93c5fd;font-size:13px;line-height:1.7;';
+      wrap.innerHTML = '<div style="font-size:10px;font-weight:700;color:#60a5fa;margin-bottom:6px;letter-spacing:.5px;">' + langLabel.toUpperCase() + ' TRANSLATION</div>' + tr.replace(/\n/g, '<br>');
+      expContent.after(wrap);
+    });
+  }
+};
+
+// ── BATTLE REPORT CARD TRANSLATION ──────────────────────────────────────────
+
+/* State for battle report language picker */
+window._bmRcLang = '';
+
+const _bmLangNames = {
+  hi:'Hindi',bn:'Bengali',ta:'Tamil',te:'Telugu',mr:'Marathi',gu:'Gujarati',
+  kn:'Kannada',ml:'Malayalam',ur:'Urdu',pa:'Punjabi',
+  fr:'French',de:'German',es:'Spanish',zh:'Chinese',ar:'Arabic',
+  ja:'Japanese',ko:'Korean',ru:'Russian',pt:'Portuguese'
+};
+
+/* Show a compact language picker inline beneath the button */
+window.bmRcToggleLang = function() {
+  let picker = document.getElementById('bmRcLangPicker');
+  if (picker) { picker.remove(); return; }
+
+  const btn = document.getElementById('bmRcLangBtn');
+  if (!btn) return;
+
+  picker = document.createElement('div');
+  picker.id = 'bmRcLangPicker';
+  picker.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;margin-bottom:4px;';
+
+  // "Off" option
+  const offBtn = document.createElement('button');
+  offBtn.textContent = '✕ Off';
+  offBtn.style.cssText = 'font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#e2e8f0;cursor:pointer;';
+  offBtn.onclick = () => { window._bmRcLang = ''; bmRcApplyTranslation(); picker.remove(); btn.textContent = '🌐 Translate'; btn.style.borderColor = 'rgba(99,102,241,.45)'; btn.style.color = '#a5b4fc'; };
+  picker.appendChild(offBtn);
+
+  const langs = [
+    ['hi','🇮🇳 Hindi'],['bn','🇧🇩 Bengali'],['ta','Tamil'],['te','Telugu'],
+    ['mr','Marathi'],['gu','Gujarati'],['kn','Kannada'],['ml','Malayalam'],
+    ['ur','اردو Urdu'],['pa','ਪੰਜਾਬੀ Punjabi'],
+    ['fr','🇫🇷 French'],['de','🇩🇪 German'],['es','🇪🇸 Spanish'],
+    ['zh','🇨🇳 Chinese'],['ar','🇸🇦 Arabic'],['ja','🇯🇵 Japanese'],
+    ['ko','🇰🇷 Korean'],['ru','🇷🇺 Russian'],['pt','🇧🇷 Portuguese']
+  ];
+  langs.forEach(([code, label]) => {
+    const b = document.createElement('button');
+    b.textContent = label;
+    b.style.cssText = 'font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid rgba(99,102,241,.4);background:rgba(99,102,241,.12);color:#c7d2fe;cursor:pointer;transition:background .15s;';
+    if (code === window._bmRcLang) b.style.background = 'rgba(99,102,241,.4)';
+    b.onclick = () => {
+      window._bmRcLang = code;
+      picker.remove();
+      const shortName = label.replace(/^\S+\s*/, '').trim().split(' ')[0];
+      btn.textContent = '🌐 ' + shortName;
+      btn.style.borderColor = 'rgba(99,102,241,.9)';
+      btn.style.color = '#818cf8';
+      bmRcApplyTranslation();
+    };
+    picker.appendChild(b);
+  });
+
+  // Insert picker right after the button's parent row
+  const headerDiv = btn.closest('div');
+  if (headerDiv && headerDiv.parentNode) {
+    headerDiv.parentNode.insertBefore(picker, headerDiv.nextSibling);
+  }
+};
+
+/* Translate all visible question texts and options in the report card */
+window.bmRcApplyTranslation = async function() {
+  const lang = window._bmRcLang;
+  const tlFetch = window._tlFetch;
+  if (!tlFetch) return;
+
+  const es = window.state;
+  if (!es || !B.battleQIds) return;
+
+  // Remove all existing translations in report card
+  document.querySelectorAll('#bmRcList .bm-rc-tr').forEach(n => n.remove());
+
+  if (!lang) return;
+
+  const langLabel = _bmLangNames[lang] || lang.toUpperCase();
+
+  // For each question card, inject translation below question text and each option
+  const items = document.querySelectorAll('#bmRcList .bm-rci');
+  for (const item of items) {
+    const qid = parseInt(item.id.replace('bm-rci-',''), 10);
+    if (!qid || isNaN(qid)) continue;
+    const q = es.questionsMap && es.questionsMap[qid];
+    if (!q) continue;
+
+    // Translate question text
+    const qTextEl = item.querySelector('.bm-rci-qtext');
+    if (qTextEl) {
+      const tr = await tlFetch(q.text || '', lang);
+      if (tr) {
+        item.querySelectorAll('.bm-rc-tr.bm-rc-tr-q').forEach(n => n.remove());
+        const wrap = document.createElement('div');
+        wrap.className = 'bm-rc-tr bm-rc-tr-q';
+        wrap.style.cssText = 'font-size:12px;color:#93c5fd;margin-top:4px;padding:4px 6px;background:rgba(59,130,246,.08);border-radius:6px;line-height:1.5;';
+        wrap.innerHTML = '<span style="font-size:10px;opacity:.7;margin-right:4px;">' + langLabel + ':</span>' + tr;
+        qTextEl.after(wrap);
+      }
+    }
+
+    // Translate options (only when expanded)
+    const optsEl = item.querySelector('.bm-rci-opts');
+    if (optsEl) {
+      const optEls = optsEl.querySelectorAll('.bm-rci-opt');
+      for (const optEl of optEls) {
+        // Get plain text of option (strip indicator ✓/✗)
+        const rawText = (optEl.textContent || '').replace(/[✓✗]$/, '').replace(/^\d+\.\s*/, '').trim();
+        if (!rawText) continue;
+        const tr = await tlFetch(rawText, lang);
+        if (tr) {
+          optEl.querySelectorAll('.bm-rc-tr').forEach(n => n.remove());
+          const wrap = document.createElement('div');
+          wrap.className = 'bm-rc-tr';
+          wrap.style.cssText = 'font-size:11px;color:#7dd3fc;margin-top:2px;opacity:.85;';
+          wrap.textContent = tr;
+          optEl.appendChild(wrap);
+        }
+      }
+    }
+  }
+};
+
+/* Also hook bmToggleRCI to translate options when a card is expanded */
+const _origBmToggleRCI = window.bmToggleRCI;
+window.bmToggleRCI = function(qid) {
+  _origBmToggleRCI(qid);
+  // After toggling, if lang is set, translate the newly-visible options
+  if (window._bmRcLang && window._tlFetch) {
+    const es = window.state;
+    const q = es && es.questionsMap && es.questionsMap[qid];
+    if (!q) return;
+    const lang = window._bmRcLang;
+    const langLabel = _bmLangNames[lang] || lang.toUpperCase();
+    const optsEl = document.getElementById('bm-rci-opts-' + qid);
+    if (!optsEl || !optsEl.classList.contains('bm-rci-open')) return;
+    const optEls = optsEl.querySelectorAll('.bm-rci-opt');
+    optEls.forEach(async (optEl) => {
+      if (optEl.querySelector('.bm-rc-tr')) return; // already translated
+      const rawText = (optEl.textContent || '').replace(/[✓✗]$/, '').replace(/^\d+\.\s*/, '').trim();
+      if (!rawText) return;
+      const tr = await window._tlFetch(rawText, lang);
+      if (tr) {
+        const wrap = document.createElement('div');
+        wrap.className = 'bm-rc-tr';
+        wrap.style.cssText = 'font-size:11px;color:#7dd3fc;margin-top:2px;opacity:.85;';
+        wrap.textContent = tr;
+        optEl.appendChild(wrap);
+      }
+    });
+  }
 };
 
 window.bmExitBattle = function() {
