@@ -5113,7 +5113,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         }
         else if (e.key === '0') {
           e.preventDefault();
-          toggleHintBox(); // ✅ toggle hint box open/close
+          toggleCenterHintBox(); // ✅ toggle large Answer & Explanation modal
         }
         else if (e.key === 'ArrowLeft') {
           e.preventDefault();
@@ -6186,7 +6186,13 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           im.removeAttribute('src');
         }
 
-        const modal = new bootstrap.Modal(document.getElementById('qmarkHelpModal'));
+        const modalEl = document.getElementById('qmarkHelpModal');
+        const existingModal = bootstrap.Modal.getInstance(modalEl);
+        if (existingModal && modalEl.classList.contains('show')) {
+          existingModal.hide();
+          return;
+        }
+        const modal = existingModal || new bootstrap.Modal(modalEl);
         modal.show();
 
         // ✅ Inject translation into modal after it opens
