@@ -3,6 +3,17 @@
 
 <head>
   <meta charset="utf-8" />
+  <!-- CRITICAL: capture ?battle= into sessionStorage BEFORE any pushState strips it -->
+  <script>
+  (function(){
+    var b = new URLSearchParams(location.search).get("battle");
+    if (b) {
+      sessionStorage.setItem("_bmInviteCode", b.trim().toUpperCase());
+      // Clean the URL now so pushState in initBackGuard sees a clean pathname
+      history.replaceState({}, "", location.pathname);
+    }
+  })();
+  </script>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0d1117" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -9578,34 +9589,116 @@ window.bmCopyDirectLink = function() {
 };
 
 // Auto-join from URL ?battle=ROOMCODE
-(function() {
-  function tryAutoJoin() {
-    const params = new URLSearchParams(location.search);
-    const roomCode = (params.get('battle') || '').trim().toUpperCase();
-    if (!roomCode) return;
-    // Open battle modal in join mode with the code pre-filled
-    openModal();
-    const joinArea = document.getElementById('bmJoinArea');
+// Read from sessionStorage (set by <head> script before initBackGuard's pushState strips the URL)
+const _autoJoinCode = (function() {
+  try {
+    var ss = sessionStorage.getItem('_bmInviteCode') || '';
+    if (ss) { sessionStorage.removeItem('_bmInviteCode'); return ss.toUpperCase(); }
+  } catch(e) {}
+  // Fallback: <head> script may not have run - read directly from URL
+  var b = new URLSearchParams(location.search).get('battle') || '';
+  if (b) history.replaceState({}, '', location.pathname);
+  return b.trim().toUpperCase();
+})();
+
+function runAutoJoinIfNeeded() {
+  if (!_autoJoinCode) return;
+
+  function doOpen() {
+    const overlay   = document.getElementById('bmOverlay');
+    const joinArea  = document.getElementById('bmJoinArea');
     const codeInput = document.getElementById('bmCodeInput');
+    const setupDiv  = document.getElementById('bmSetup');
+    const nameInput = document.getElementById('bmName');
+    const joinBtn   = document.getElementById('bmJoinBtn');
+    if (!overlay || !joinArea || !codeInput || !setupDiv) return false;
+
+    // Open modal
+    overlay.classList.add('open');
+
+    // Trigger firebase init
+    if (!B.db) initFirebase();
+    const fbErr = document.getElementById('bmFirebaseErr');
+    if (fbErr) fbErr.style.display = B.db ? 'none' : 'block';
+
+    // Show join area pre-filled with the room code
+    joinArea.style.display = 'block';
+    codeInput.value = _autoJoinCode;
+
+    // Hide the "Join Room" toggle button since join area is already visible
     const joinShowBtn = document.getElementById('bmJoinShowBtn');
-    if (joinArea) joinArea.style.display = 'block';
-    if (codeInput) codeInput.value = roomCode;
     if (joinShowBtn) joinShowBtn.style.display = 'none';
-    // Show a hint
-    const setupDiv = document.getElementById('bmSetup');
-    if (setupDiv && !document.getElementById('bmAutoJoinBanner')) {
+
+    // Hide "Create Room" button — this is a join-only flow from an invite link
+    const createBtn = document.getElementById('bmCreateBtn');
+    if (createBtn) createBtn.style.display = 'none';
+
+    // Invite banner
+    if (!document.getElementById('bmAutoJoinBanner')) {
       const banner = document.createElement('div');
       banner.id = 'bmAutoJoinBanner';
-      banner.style.cssText = 'padding:10px 12px;border-radius:11px;background:linear-gradient(135deg,rgba(37,99,235,.15),rgba(59,130,246,.1));border:1px solid rgba(59,130,246,.4);color:#93c5fd;font-size:12px;font-weight:700;text-align:center;margin-bottom:12px;';
-      banner.innerHTML = `⚔️ You've been invited to Battle Room <span style="color:#fff;font-size:14px;letter-spacing:2px;">${roomCode}</span><br><span style="font-weight:400;opacity:.7;font-size:11px;">Enter your name and join!</span>`;
+      banner.style.cssText = `
+        padding:12px 16px;border-radius:13px;margin-bottom:16px;text-align:center;
+        background:linear-gradient(135deg,rgba(37,99,235,.22),rgba(59,130,246,.12));
+        border:1px solid rgba(59,130,246,.5);
+        box-shadow:0 0 24px rgba(59,130,246,.15);
+      `;
+      banner.innerHTML = `
+        <div style="font-size:22px;margin-bottom:4px;">\u2694\ufe0f</div>
+        <div style="color:#93c5fd;font-size:13px;font-weight:800;letter-spacing:.3px;margin-bottom:3px;">
+          Battle Invite
+        </div>
+        <div style="color:#fff;font-size:22px;font-weight:900;letter-spacing:4px;margin:4px 0;">
+          ${_autoJoinCode}
+        </div>
+        <div style="color:rgba(148,163,184,.7);font-size:11px;margin-top:4px;">
+          Enter your name and tap <strong style="color:#4ade80;">\u26d4\ufe0f Join Battle \u2192</strong>
+        </div>`;
       setupDiv.insertBefore(banner, setupDiv.firstChild);
     }
+
+    // Style the Join button as the primary CTA
+    if (joinBtn) {
+      joinBtn.textContent = '\u26d4\ufe0f Join Battle \u2192';
+      joinBtn.style.background = 'linear-gradient(135deg,#059669,#10b981)';
+      joinBtn.style.boxShadow  = '0 0 24px rgba(16,185,129,.35)';
+      joinBtn.style.fontSize   = '15px';
+      joinBtn.style.fontWeight = '800';
+      joinBtn.style.padding    = '13px';
+    }
+
+    // Enter key on name field \u2192 join immediately
+    if (nameInput && !nameInput._autoJoinBound) {
+      nameInput._autoJoinBound = true;
+      nameInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); doJoin(); }
+      });
+      // Auto-focus after a short delay
+      setTimeout(() => nameInput.focus(), 80);
+    }
+
+    return true;
   }
-  // Run after DOM is ready and battle mode is initialized
-  document.addEventListener('DOMContentLoaded', () => setTimeout(tryAutoJoin, 800));
-  // Also try after a short delay in case battle code runs after DOMContentLoaded
-  setTimeout(tryAutoJoin, 1200);
-})();
+
+  // Try immediately — works if boot() already ran synchronously
+  if (doOpen()) return;
+
+  // Otherwise wait for buildUI() to inject #bmOverlay into the DOM
+  const observer = new MutationObserver(() => {
+    if (doOpen()) observer.disconnect();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // Safety: stop observing after 15 s
+  setTimeout(() => observer.disconnect(), 15000);
+}
+
+// Register for DOMContentLoaded (fires before or after boot() depending on script order)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', runAutoJoinIfNeeded);
+} else {
+  runAutoJoinIfNeeded();
+}
 
 // ── KEYBOARD SHORTCUTS IN BATTLE MODE ────────────────────────────────────────
 document.addEventListener('keydown', function(e) {
@@ -11476,9 +11569,11 @@ function boot() {
   injectChatStyles();
   injectReportCardStyles();
   initFirebase();  // try early init (may fail if config is demo — that's ok)
-  buildUI();
+  buildUI();       // injects #bmOverlay, #bmSetup, #bmJoinArea, etc.
   buildChatUI();
   addBattleButtons();
+  // Run auto-join AFTER buildUI() so #bmOverlay is guaranteed to exist
+  if (typeof runAutoJoinIfNeeded === 'function') runAutoJoinIfNeeded();
 
   // ── Measure real topbar height and keep CSS var updated (fixes mobile cut-off) ──
   function updateTopbarHeight() {
