@@ -7984,6 +7984,102 @@ function injectReportCardStyles() {
     .bm-rc-stats { grid-template-columns:repeat(2,1fr); }
     .bm-rc-stat-num { font-size:16px; }
   }
+
+  /* ── MINIMIZABLE REPORT CARD ── */
+  #bmReportCardWrapper {
+    width:100%;max-width:560px;margin-top:18px;
+    transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  /* Collapsed pill — floats to top-right corner */
+  #bmReportCardWrapper.bm-rc-minimized {
+    position:fixed;
+    top:14px;
+    right:14px;
+    width:auto;
+    max-width:none;
+    margin:0;
+    z-index:200001;
+  }
+
+  /* The sticky pill shown when minimized */
+  #bmRcMiniPill {
+    display:none;
+    align-items:center;
+    gap:8px;
+    padding:9px 16px;
+    border-radius:999px;
+    border:1px solid rgba(59,130,246,.7);
+    background:linear-gradient(135deg,rgba(37,99,235,.55),rgba(59,130,246,.40));
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 8px 32px rgba(59,130,246,.35),0 0 0 1px rgba(59,130,246,.12);
+    cursor:pointer;
+    font-size:13px;font-weight:800;color:#dbeafe;
+    letter-spacing:.3px;
+    white-space:nowrap;
+    user-select:none;
+    transition:transform .2s ease, box-shadow .2s ease;
+    animation:bmRcPillIn .45s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes bmRcPillIn {
+    from { transform:scale(0.4) translateX(60px); opacity:0; }
+    to   { transform:scale(1)   translateX(0);    opacity:1; }
+  }
+  #bmRcMiniPill:hover {
+    transform:scale(1.06);
+    box-shadow:0 12px 40px rgba(59,130,246,.5),0 0 0 2px rgba(59,130,246,.3);
+  }
+  #bmRcMiniPill:active { transform:scale(.95); }
+  #bmRcMiniPill .bm-rc-pill-dot {
+    width:8px;height:8px;border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 8px #22c55e;
+    animation:bmRcPillDot 1.4s ease-in-out infinite;
+    flex-shrink:0;
+  }
+  @keyframes bmRcPillDot {
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.5;transform:scale(0.75)}
+  }
+
+  #bmRcMiniPill .bm-rc-pill-badge {
+    background:rgba(0,0,0,.25);
+    border-radius:999px;padding:2px 8px;
+    font-size:11px;font-weight:900;color:#93c5fd;
+    border:1px solid rgba(59,130,246,.3);
+  }
+
+  /* Minimise toggle button on the card header */
+  #bmRcMinToggleBtn {
+    position:absolute;
+    top:14px;right:14px;
+    width:30px;height:30px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.07);
+    color:rgba(200,220,255,.8);
+    font-size:16px;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s, transform .15s, box-shadow .15s;
+    z-index:2;
+    line-height:1;
+  }
+  #bmRcMinToggleBtn:hover {
+    background:rgba(59,130,246,.25);
+    box-shadow:0 0 12px rgba(59,130,246,.3);
+    transform:scale(1.1);
+  }
+
+  /* Animation when expanding back */
+  #bmReportCardWrapper:not(.bm-rc-minimized) #bmReportCard {
+    animation:bmRcExpand .4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes bmRcExpand {
+    from { transform:scale(0.85) translateY(-18px); opacity:0; }
+    to   { transform:scale(1)    translateY(0);     opacity:1; }
+  }
   `;
   document.head.appendChild(s);
 }
@@ -8097,7 +8193,16 @@ function buildUI() {
     <div class="bm-fin-title" id="bmFinTitle">🏆 Battle Over!</div>
     <div class="bm-fin-sub"  id="bmFinSub"></div>
     <div class="bm-fin-table" id="bmFinTable"></div>
-    <div id="bmReportCard" style="display:none;"></div>
+    <button onclick="toggleChat()" id="bmFinChatBtn" style="font-size:13px;font-weight:800;padding:9px 22px;border-radius:12px;border:1px solid rgba(59,130,246,.55);background:linear-gradient(135deg,rgba(59,130,246,.2),rgba(37,99,235,.15));color:#93c5fd;cursor:pointer;transition:all .2s;white-space:nowrap;margin-bottom:6px;letter-spacing:.3px;box-shadow:0 0 18px rgba(59,130,246,.18);" title="Open Battle Chat">💬 Battle Chat</button>
+    <div id="bmReportCardWrapper">
+      <div id="bmRcMiniPill" onclick="bmRcExpand()" title="Open Report Card">
+        <span class="bm-rc-pill-dot"></span>
+        📋 Report Card
+        <span class="bm-rc-pill-badge" id="bmRcPillBadge">—</span>
+        <span style="font-size:11px;opacity:.6;margin-left:2px;">tap to open</span>
+      </div>
+      <div id="bmReportCard" style="display:none;position:relative;"></div>
+    </div>
     <button class="bm-btn bm-purple" style="min-width:180px;max-width:260px;width:100%;padding:13px;flex:0 0 auto;margin-top:20px;" id="bmExitResultsBtn">← Back to test</button>
   `;
   document.body.appendChild(fin);
@@ -9032,15 +9137,20 @@ function bmRenderWaitList() {
   if (subEl)   { subEl.textContent   = doneCount + ' / ' + total + ' players finished'; }
 
   // Render leaderboard rows
-  el.innerHTML = entries.map(([id, p], i) => `
+  const totalQ2 = (B.battleQIds && B.battleQIds.length) || 0;
+  el.innerHTML = entries.map(([id, p], i) => {
+    const qNum = p.done ? (totalQ2 || '?') : ((p.qIndex != null ? p.qIndex + 1 : 1));
+    const qLabel = totalQ2 ? `Q${qNum}/${totalQ2}` : `Q${qNum}`;
+    return `
     <div class="bm-wait-row ${id===B.myId?'bm-wait-me':''}">
       <span class="bm-wait-rank">${medals[i]||'#'+(i+1)}</span>
       <span style="font-size:15px;margin-right:2px;">${p.avatar||'🎮'}</span>
       <span class="bm-wait-name">${esc(p.name)}${id===B.myId?' <span style="font-size:10px;opacity:.55;">(you)</span>':''}</span>
+      <span style="font-size:10px;font-weight:700;color:${p.done?'rgba(34,197,94,.8)':'rgba(148,163,184,.5)'};white-space:nowrap;margin-right:4px;">${p.done?'✅':'📍'}${qLabel}</span>
       <span class="bm-wait-score">${p.score||0}</span>
       <span class="bm-wait-status">${p.done ? '✅' : '⏳'}</span>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 // ── SHOW FINAL SCOREBOARD (called when ALL players are done) ──────────────────
@@ -9066,13 +9176,18 @@ function bmShowFinished() {
     : `Live scores updating… you're #${myRank} with ${myScore} points`;
 
   const table = document.getElementById('bmFinTable');
-  table.innerHTML = entries.map(([id, p], i) => `
+  const totalQf = (B.battleQIds && B.battleQIds.length) || 0;
+  table.innerHTML = entries.map(([id, p], i) => {
+    const qNum = p.done ? (totalQf || '?') : ((p.qIndex != null ? p.qIndex + 1 : 1));
+    const qLabel = totalQf ? `Q${qNum}/${totalQf}` : `Q${qNum}`;
+    return `
     <div class="bm-fin-row ${id === B.myId ? 'bm-fin-me' : ''}">
       <span class="bm-fin-rank-num">${medals[i] || '#'+(i+1)}</span>
       <span class="bm-fin-name">${p.avatar||'🎮'} ${esc(p.name)}</span>
+      <span style="font-size:10px;font-weight:700;color:${p.done?'rgba(34,197,94,.75)':'rgba(148,163,184,.5)'};white-space:nowrap;">${p.done?'✅':'📍'}${qLabel}</span>
       <span class="bm-fin-score">${p.score||0}</span>
     </div>
-  `).join('');
+  `}).join('');
 
   // Render report card
   bmRenderReportCard();
@@ -9102,13 +9217,18 @@ function bmRefreshFinishedTable() {
       : `Live scores updating… you're #${myRank} with ${myScore} points`;
   }
 
-  table.innerHTML = entries.map(([id, p], i) => `
+  const totalQr = (B.battleQIds && B.battleQIds.length) || 0;
+  table.innerHTML = entries.map(([id, p], i) => {
+    const qNum = p.done ? (totalQr || '?') : ((p.qIndex != null ? p.qIndex + 1 : 1));
+    const qLabel = totalQr ? `Q${qNum}/${totalQr}` : `Q${qNum}`;
+    return `
     <div class="bm-fin-row ${id === B.myId ? 'bm-fin-me' : ''}" style="transition:background .3s;">
       <span class="bm-fin-rank-num">${medals[i] || '#'+(i+1)}</span>
       <span class="bm-fin-name">${p.avatar||'🎮'} ${esc(p.name)}${p.done?'':' <span style="font-size:10px;opacity:.55;color:#facc15;">● live</span>'}</span>
+      <span style="font-size:10px;font-weight:700;color:${p.done?'rgba(34,197,94,.75)':'rgba(148,163,184,.5)'};white-space:nowrap;">${p.done?'✅':'📍'}${qLabel}</span>
       <span class="bm-fin-score" style="color:${id===B.myId?'#3b82f6':'#22c55e'};">${p.score||0}</span>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 // ── BATTLE REPORT CARD ────────────────────────────────────────────────────────
@@ -9136,8 +9256,9 @@ function bmRenderReportCard() {
   // Sync language with main exam language if set
   if (!window._bmRcLang && window.state && window.state.dualLang) window._bmRcLang = window.state.dualLang;
   rc.innerHTML = `
-    <div class="bm-rc-header">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
+    <div class="bm-rc-header" style="position:relative;">
+      <button id="bmRcMinToggleBtn" onclick="bmRcMinimize()" title="Minimise Report Card">−</button>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px;padding-right:40px;">
         <div class="bm-rc-title">📋 YOUR REPORT CARD</div>
         <button id="bmRcLangBtn" onclick="bmRcToggleLang()" title="Translate questions &amp; explanations" style="font-size:11px;font-weight:700;padding:5px 13px;border-radius:10px;border:1px solid rgba(99,102,241,.45);background:rgba(99,102,241,.1);color:#a5b4fc;cursor:pointer;transition:all .2s;white-space:nowrap;">🌐 Translate</button>
       </div>
@@ -9166,8 +9287,49 @@ function bmRenderReportCard() {
       rcBtn.style.borderColor = 'rgba(99,102,241,.9)';
       rcBtn.style.color = '#818cf8';
     }
+    // Update pill badge stats
+    const pill = document.getElementById('bmRcPillBadge');
+    if (pill) pill.textContent = `✅${correct} ❌${wrong} ⬜${unattempted}`;
   }, 50);
 }
+
+// ── REPORT CARD MINIMIZE / EXPAND ─────────────────────────────────────────────
+window.bmRcMinimize = function() {
+  const wrapper = document.getElementById('bmReportCardWrapper');
+  const rc      = document.getElementById('bmReportCard');
+  const pill    = document.getElementById('bmRcMiniPill');
+  if (!wrapper || !rc || !pill) return;
+
+  // Animate card out first, then switch to pill
+  rc.style.transition = 'transform .3s cubic-bezier(0.55,0,1,0.45), opacity .3s ease';
+  rc.style.transform  = 'scale(0.85) translateX(60px)';
+  rc.style.opacity    = '0';
+
+  setTimeout(() => {
+    rc.style.display   = 'none';
+    rc.style.transform = '';
+    rc.style.opacity   = '';
+    rc.style.transition = '';
+    pill.style.display = 'flex';
+    wrapper.classList.add('bm-rc-minimized');
+  }, 280);
+};
+
+window.bmRcExpand = function() {
+  const wrapper = document.getElementById('bmReportCardWrapper');
+  const rc      = document.getElementById('bmReportCard');
+  const pill    = document.getElementById('bmRcMiniPill');
+  if (!wrapper || !rc || !pill) return;
+
+  pill.style.display = 'none';
+  wrapper.classList.remove('bm-rc-minimized');
+  rc.style.display = 'block';
+  // animation is handled by CSS keyframe bmRcExpand
+  // Scroll into view smoothly
+  setTimeout(() => {
+    rc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+};
 
 function bmRenderRCItem(qid, idx, ans) {
   const es = window.state;
@@ -9460,6 +9622,11 @@ window.bmExitBattle = function() {
   document.getElementById('bmScoreboard').classList.remove('bm-sb-active');
   document.getElementById('bmWaiting').classList.remove('bm-wait-active');
   bmHideNormalUI(false);
+  // Remove centered chat mode since we're back in normal exam view
+  const panel = document.getElementById('bmChatPanel');
+  if (panel) panel.classList.remove('bm-chat-center');
+  const bd = document.getElementById('bmChatBackdrop');
+  if (bd) bd.classList.remove('show');
   B.active = false;
   B.battleQIds = [];
   // Do NOT reset finishedShown here — only reset in beginBattle()
@@ -9524,8 +9691,12 @@ function renderRace() {
   if (!el) return;
   const entries = Object.entries(B.players).sort((a,b) => (b[1].score||0)-(a[1].score||0));
   const maxScore = Math.max(1, ...entries.map(([,p]) => p.score||0));
+  const totalQ = (B.battleQIds && B.battleQIds.length) || 0;
   el.innerHTML = entries.map(([id,p], i) => {
     const pct = maxScore > 0 ? Math.max(3, Math.min(100, ((p.score||0)/maxScore)*100)) : 3;
+    const qNum = p.done ? (totalQ || '?') : ((p.qIndex != null ? p.qIndex + 1 : 1));
+    const qLabel = totalQ ? `Q${qNum}/${totalQ}` : `Q${qNum}`;
+    const qColor = p.done ? 'rgba(34,197,94,.75)' : 'rgba(148,163,184,.55)';
     return `
     <div class="bm-sb-row ${id===B.myId?'me':''}">
       <span class="bm-sb-rank">${i+1}</span>
@@ -9533,6 +9704,7 @@ function renderRace() {
       <div class="bm-sb-track">
         <div class="bm-sb-fill" style="width:${pct}%"></div>
       </div>
+      <span style="font-size:10px;font-weight:700;color:${qColor};min-width:36px;text-align:right;white-space:nowrap;">${p.done?'✅':'📍'}${qLabel}</span>
       <span class="bm-sb-score">${p.score||0}</span>
     </div>`;
   }).join('');
@@ -9769,27 +9941,8 @@ function injectChatStyles() {
   s.textContent = `
   /* ── Chat FAB Bubble ── */
   #bmChatFab {
-    display:none;
-    position:fixed;
-    bottom:72px;
-    left:16px;
-    width:52px;height:52px;
-    border-radius:50%;
-    border:2px solid rgba(59, 130, 246,.7);
-    background:linear-gradient(135deg,rgba(59, 130, 246,.25),rgba(37, 99, 235,.35));
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
-    box-shadow:0 6px 28px rgba(59, 130, 246,.4),0 0 0 1px rgba(59, 130, 246,.1);
-    cursor:grab;
-    z-index:99980;
-    align-items:center;justify-content:center;
-    font-size:22px;
-    transition:box-shadow .2s ease;
-    touch-action:none;user-select:none;-webkit-user-select:none;
-    flex-direction:column;gap:2px;
+    display:none !important;  /* FAB removed — Chat accessed via toolbar button */
   }
-  #bmChatFab:active { cursor:grabbing; transform:scale(.92); }
-  #bmChatFab.bm-chat-show { display:flex; }
   #bmChatFab .bm-chat-badge {
     position:absolute;top:-4px;right:-4px;
     min-width:18px;height:18px;border-radius:999px;
@@ -9834,6 +9987,40 @@ function injectChatStyles() {
   #bmChatPanel.bm-chat-mini #bmVoiceBody,
   #bmChatPanel.bm-chat-mini #bmScreenBody,
   #bmChatPanel.bm-chat-mini #bmChatFooter { display:none !important; }
+
+  /* ── Centered modal style when opened from results screen ── */
+  #bmChatPanel.bm-chat-center {
+    top: 50% !important;
+    left: 50% !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: translate(-50%, -50%) scale(.85) !important;
+    opacity: 0 !important;
+    width: min(380px, calc(100vw - 32px)) !important;
+    max-height: min(580px, 85vh) !important;
+    z-index: 100002 !important;
+  }
+  #bmChatPanel.bm-chat-center.bm-chat-open {
+    transform: translate(-50%, -50%) scale(1) !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+  }
+  /* Dark backdrop behind panel when centered */
+  #bmChatBackdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100001;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: bmBackdropIn .2s ease;
+  }
+  @keyframes bmBackdropIn {
+    from { opacity:0; }
+    to   { opacity:1; }
+  }
+  #bmChatBackdrop.show { display:block; }
 
   /* ── Screen Share Tab Body ── */
   #bmScreenBody {
@@ -10533,6 +10720,27 @@ function openChat() {
   if (!fab || !panel) return;
   CHAT.visible = true;
   CHAT.unread = 0;
+
+  // If battle results screen is active, show centered with backdrop
+  const finEl = document.getElementById('bmFinished');
+  const isFinished = finEl && finEl.classList.contains('bm-fin-active');
+  if (isFinished) {
+    panel.classList.add('bm-chat-center');
+    // Create backdrop if not present
+    let bd = document.getElementById('bmChatBackdrop');
+    if (!bd) {
+      bd = document.createElement('div');
+      bd.id = 'bmChatBackdrop';
+      bd.addEventListener('click', closeChat);
+      document.body.appendChild(bd);
+    }
+    bd.classList.add('show');
+  } else {
+    panel.classList.remove('bm-chat-center');
+    const bd = document.getElementById('bmChatBackdrop');
+    if (bd) bd.classList.remove('show');
+  }
+
   fab.classList.add('bm-chat-show');
   panel.classList.add('bm-chat-open');
   panel.classList.remove('bm-chat-mini');
@@ -10550,6 +10758,9 @@ function closeChat() {
   const panel = document.getElementById('bmChatPanel');
   const fab = document.getElementById('bmChatFab');
   if (panel) panel.classList.remove('bm-chat-open');
+  // Remove backdrop
+  const bd = document.getElementById('bmChatBackdrop');
+  if (bd) bd.classList.remove('show');
   // Keep FAB if in battle
   if (!B.roomCode) {
     if (fab) fab.classList.remove('bm-chat-show');
