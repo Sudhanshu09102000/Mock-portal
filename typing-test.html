@@ -116,11 +116,22 @@ header{
   letter-spacing:.02em;color:var(--muted);cursor:text;
   position:relative;overflow:hidden;
   height:calc(1.35rem * 1.9 * 3 + 4px);
-  border-left:3px solid transparent;
-  transition:border-color .3s;
 }
-#text-display:focus-within{border-left-color:var(--accent);}
-#text-display.active-test{border-left-color:var(--accent);}
+
+/* Current-line indicator bar */
+#line-indicator{
+  position:absolute;
+  left:0;right:0;
+  border-radius:3px;
+  background:color-mix(in srgb, var(--accent) 7%, transparent);
+  border-left:3px solid var(--accent);
+  box-shadow:0 0 20px var(--glow);
+  pointer-events:none;
+  transition:top 100ms ease, height 80ms ease, opacity .3s;
+  opacity:0;
+  z-index:1;
+}
+#line-indicator.visible{opacity:1;}
 
 #text-inner{position:relative;transition:transform 120ms ease;will-change:transform;}
 
@@ -385,6 +396,7 @@ footer{
 <div class="tsec">
   <div style="position:relative">
     <div id="text-display" tabindex="0" onclick="focusGhost()">
+      <div id="line-indicator"></div>
       <div id="text-inner"></div>
       <div id="caret-el"></div>
     </div>
@@ -652,22 +664,29 @@ function updateDisplay(){
 }
 
 function getCaretLine(){
-  for(let i=0;i<S.lineMap.length;i++){
-    const line=S.lineMap[i];
-    if(S.caretPos<=line.chars[line.chars.length-1]) return i;
+  if(!S.lineMap.length) return 0;
+  // Find which line contains caretPos (or the char just before it)
+  const idx = Math.max(0, S.caretPos - 1);
+  for(let i = 0; i < S.lineMap.length; i++){
+    const chars = S.lineMap[i].chars;
+    if(idx >= chars[0] && idx <= chars[chars.length-1]) return i;
   }
-  return S.lineMap.length-1;
+  // caretPos is at the very end — return last line
+  return S.lineMap.length - 1;
 }
 
 function positionCaret(){
   const display=document.getElementById('text-display');
   const inner=document.getElementById('text-inner');
   const caret=document.getElementById('caret-el');
+  const lineInd=document.getElementById('line-indicator');
   const spans=inner.querySelectorAll('.ch');
   if(!spans.length||!caret) return;
 
-  // Scroll
+  // Determine current line
   const cLine=getCaretLine();
+
+  // Scroll: keep active line at row 1 (second visible row) once past it
   if(cLine>1){
     S._scrollY=-(cLine-1)*S.lineHeight;
   } else {
@@ -685,6 +704,18 @@ function positionCaret(){
   caret.style.left=Math.max(0,left-1)+'px';
   caret.style.top=top+'px';
   caret.style.height=tRect.height+'px';
+
+  // Position line indicator: use the lineMap entry for the active line
+  if(S.lineMap.length && cLine < S.lineMap.length){
+    const activeLine = S.lineMap[cLine];
+    // top of active line relative to display, adjusted for scroll
+    const lineTop = activeLine.top + S._scrollY;
+    lineInd.style.top = lineTop + 'px';
+    lineInd.style.height = S.lineHeight + 'px';
+    lineInd.classList.add('visible');
+  } else {
+    lineInd.classList.remove('visible');
+  }
 }
 
 // ──────────────────────────────────────────────
@@ -981,6 +1012,7 @@ function initTest(){
   document.getElementById('ptxt').textContent='0 / '+S.text.length;
   document.getElementById('idle-o').classList.remove('gone');
   document.getElementById('text-display').classList.remove('active-test');
+  document.getElementById('line-indicator').classList.remove('visible');
 
   if(S.mode==='time'){
     document.getElementById('s-counter').textContent=S.timeLimit;
