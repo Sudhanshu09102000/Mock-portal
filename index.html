@@ -988,7 +988,8 @@
     /* ✅ FIX: resizable box + image question never hides bottom buttons */
     .resizable-question-box {
       resize: both;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       position: relative;
 
       display: flex;
@@ -1398,8 +1399,12 @@
     /* ✅ Swipe classic slide transition for Question Box */
     .resizable-question-box {
       position: relative;
-      overflow: hidden;
-      /* important for slide effect */
+      /* overflow handled by base rule; clip only during slide animation */
+    }
+
+    /* Clip overflow only while slide animation is active */
+    .resizable-question-box.q-swipe-anim {
+      overflow: hidden !important;
     }
 
     /* animation states */
