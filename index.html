@@ -1817,14 +1817,14 @@ body {
 .badge-soft {
   background: linear-gradient(135deg, rgba(59, 130, 246,.1), rgba(37, 99, 235,.08)) !important;
   border: 1px solid rgba(59, 130, 246,.25) !important;
-  color: rgba(200,220,255,.8) !important;
+  color: var(--txt, rgba(200,220,255,.8)) !important;
 }
 
 /* ── Pills ── */
 .pill {
   background: rgba(59, 130, 246,.1) !important;
   border: 1px solid rgba(59, 130, 246,.25) !important;
-  color: rgba(200,220,255,.8) !important;
+  color: var(--txt, rgba(200,220,255,.8)) !important;
 }
 
 /* ── Search input ── */
@@ -13400,6 +13400,15 @@ setTimeout(addBattleButtons, 1800);
         border-color: rgba(128,128,200,0.25) !important;
         background: color-mix(in srgb, ${boxColor} 80%, transparent) !important;
       }
+      /* ── Badge-soft & pill heading text — must beat hardcoded rgba !important ── */
+      .badge-soft, .pill, #testInfoTop,
+      span.badge-soft, span.pill,
+      [class*="badge-soft"], [class*="pill"] {
+        color: ${textColor} !important;
+        -webkit-text-fill-color: ${textColor} !important;
+        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
+        background: color-mix(in srgb, ${textColor} 8%, ${boxColor} 60%) !important;
+      }
       /* ── Translate language dropdown follows theme ── */
       #dualLangDropdown {
         background: color-mix(in srgb, ${boxColor} 97%, ${textColor} 3%) !important;
@@ -13414,6 +13423,53 @@ setTimeout(addBattleButtons, 1800);
       }
       .dlang-item.active {
         background: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      /* ── Back/Exit confirm dialog follows theme ── */
+      #backConfirmBox {
+        background: ${boxColor} !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+        box-shadow: 0 30px 70px rgba(0,0,0,.55), 0 0 0 1px color-mix(in srgb, ${textColor} 5%, transparent) inset !important;
+      }
+      #backConfirmBox .bc-step {
+        color: rgba(59,130,246,.85) !important;
+        background: rgba(59,130,246,.10) !important;
+        border-color: rgba(59,130,246,.25) !important;
+      }
+      #backConfirmBox .bc-path .bc-node {
+        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 60%, transparent) !important;
+      }
+      #backConfirmBox .bc-path .bc-node.bc-active {
+        background: rgba(59,130,246,.15) !important;
+        border-color: rgba(59,130,246,.55) !important;
+        color: #93c5fd !important;
+      }
+      #backConfirmBox .bc-path .bc-arrow {
+        color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
+      }
+      #bcStayBtn {
+        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
+      }
+      #bcStayBtn:hover {
+        background: color-mix(in srgb, ${textColor} 14%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      /* ── Submit confirm stat boxes follow theme ── */
+      #submitConfirmBox .sc-stat {
+        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 13%, transparent) !important;
+      }
+      #scCancelBtn {
+        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
+      }
+      #scCancelBtn:hover {
+        background: color-mix(in srgb, ${textColor} 14%, transparent) !important;
         color: ${textColor} !important;
       }
     `;
