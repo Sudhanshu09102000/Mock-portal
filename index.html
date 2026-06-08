@@ -1438,6 +1438,52 @@
       opacity: 1;
     }
 
+    /* ── Swipe hint indicator (mobile only) ── */
+    @media (hover:none) {
+      .swipe-hint {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 14px;
+        border-radius: 999px;
+        background: rgba(59,130,246,.15);
+        border: 1px solid rgba(59,130,246,.30);
+        color: rgba(255,255,255,.65);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .3px;
+        pointer-events: none;
+        white-space: nowrap;
+        animation: swipeHintFade 3.2s ease forwards;
+        z-index: 5;
+      }
+      .swipe-hint .sh-arrow {
+        display: inline-block;
+        animation: swipeHintBounce 1s ease-in-out infinite alternate;
+      }
+    }
+    @keyframes swipeHintFade {
+      0%   { opacity: 0; }
+      15%  { opacity: 1; }
+      70%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    @keyframes swipeHintBounce {
+      from { transform: translateX(-3px); }
+      to   { transform: translateX(3px); }
+    }
+
+    /* ── Swipe live-drag feedback ── */
+    #questionBox {
+      transition: transform 0.08s ease;
+    }
+    #questionBox.swiping-left  { transform: translateX(-8px); }
+    #questionBox.swiping-right { transform: translateX(8px); }
+
     /* ✅ ONLY question+options scroll, buttons always visible */
     .question-scroll-area {
       flex: 1;
@@ -3000,7 +3046,11 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             </div>
 
             <!-- QUESTION BOX (normal test mode) -->
-            <div class="glass p-3 p-md-4 resizable-question-box" id="questionBox">
+            <div class="glass p-3 p-md-4 resizable-question-box" id="questionBox" style="position:relative;">
+              <!-- Swipe hint (mobile only, auto-hides) -->
+              <div id="swipeHint" class="swipe-hint" style="display:none;">
+                <span class="sh-arrow">←</span> swipe to navigate <span class="sh-arrow">→</span>
+              </div>
 
               <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
                 <div class="subtle" id="qMetaLine" style="display: none;">Status: -</div>
@@ -4919,7 +4969,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         if (swipeLocked) return;
         swipeLocked = true;
 
-        const box = document.querySelector(".resizable-question-box");
+        const box = document.getElementById("questionBox");
         if (!box) { goFn(); swipeLocked = false; return; }
 
         box.classList.add("q-swipe-anim");
@@ -4949,8 +4999,21 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       }
 
       function enableSwipeNavigation() {
-        const box = document.querySelector(".resizable-question-box");
+        const box = document.getElementById("questionBox");
         if (!box) return;
+
+        // Show swipe hint once on mobile (touch devices only)
+        if ('ontouchstart' in window) {
+          const hint = document.getElementById("swipeHint");
+          if (hint) {
+            // Slight delay so it appears after test renders
+            setTimeout(() => {
+              hint.style.display = "flex";
+              // Remove after animation completes
+              setTimeout(() => { hint.style.display = "none"; }, 3400);
+            }, 900);
+          }
+        }
 
         // Touch swipe (mobile)
         box.addEventListener("touchstart", (e) => {
@@ -4972,11 +5035,25 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           // if vertical scroll -> ignore
           if (Math.abs(dy) > Math.abs(dx)) {
             swipeActive = false;
+            box.classList.remove("swiping-left", "swiping-right");
             return;
+          }
+
+          // Live drag visual feedback (subtle tilt)
+          const TH = 22;
+          if (dx < -TH) {
+            box.classList.add("swiping-left");
+            box.classList.remove("swiping-right");
+          } else if (dx > TH) {
+            box.classList.add("swiping-right");
+            box.classList.remove("swiping-left");
+          } else {
+            box.classList.remove("swiping-left", "swiping-right");
           }
         }, { passive: true });
 
         box.addEventListener("touchend", (e) => {
+          box.classList.remove("swiping-left", "swiping-right");
           if (!swipeActive || swipeLocked) return;
           swipeActive = false;
 
@@ -4990,11 +5067,21 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             // swipe left -> Next
             if (state.currentIndex < state.qCount - 1) {
               animateQuestionSwipe("next", goNext);
+            } else {
+              // Edge bounce — already on last question
+              box.style.transition = "transform .18s cubic-bezier(.36,.07,.19,.97)";
+              box.style.transform = "translateX(-14px)";
+              setTimeout(() => { box.style.transform = ""; setTimeout(() => { box.style.transition = ""; }, 200); }, 160);
             }
           } else if (dx >= TH) {
             // swipe right -> Prev
             if (state.currentIndex > 0) {
               animateQuestionSwipe("prev", goPrev);
+            } else {
+              // Edge bounce — already on first question
+              box.style.transition = "transform .18s cubic-bezier(.36,.07,.19,.97)";
+              box.style.transform = "translateX(14px)";
+              setTimeout(() => { box.style.transform = ""; setTimeout(() => { box.style.transition = ""; }, 200); }, 160);
             }
           }
         }, { passive: true });
