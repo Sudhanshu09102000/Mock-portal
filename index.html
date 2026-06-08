@@ -12303,9 +12303,9 @@ setTimeout(addBattleButtons, 1800);
   width: 24px;
   height: 24px;
   border-radius: 7px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.05);
-  color: rgba(200,220,255,0.8);
+  border: 1px solid rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.14);
+  color: rgba(220,235,255,1);
   cursor: pointer;
   display: grid;
   place-items: center;
@@ -12313,7 +12313,7 @@ setTimeout(addBattleButtons, 1800);
   transition: all 0.12s;
   flex-shrink: 0;
 }
-.gbl-tb-btn:hover { background: rgba(255,255,255,0.12); }
+.gbl-tb-btn:hover { background: rgba(255,255,255,0.24); border-color: rgba(255,255,255,0.45); }
 .gbl-tb-btn.danger:hover { background: rgba(239,68,68,0.25); color: #f87171; border-color: rgba(239,68,68,0.4); }
 .gbl-tb-btn.fullscreen-btn { font-size: 10px; }
 
@@ -12330,9 +12330,9 @@ setTimeout(addBattleButtons, 1800);
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: rgba(200,220,255,0.75);
+  border: 1px solid rgba(255,255,255,0.20);
+  background: rgba(255,255,255,0.10);
+  color: rgba(220,235,255,0.95);
   cursor: pointer;
   display: grid;
   place-items: center;
@@ -12342,8 +12342,8 @@ setTimeout(addBattleButtons, 1800);
   flex-shrink: 0;
 }
 .gbl-tool:hover {
-  background: rgba(255,255,255,0.09);
-  border-color: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.38);
   color: #fff;
 }
 .gbl-tool.active {
@@ -12458,9 +12458,9 @@ setTimeout(addBattleButtons, 1800);
 .gbl-sz {
   cursor: pointer;
   border-radius: 50%;
-  background: transparent;
+  background: rgba(255,255,255,0.07);
   flex-shrink: 0;
-  border: 2px solid transparent;
+  border: 2px solid rgba(255,255,255,0.18);
   transition: all 0.10s;
   width: 28px;
   height: 28px;
@@ -12474,7 +12474,7 @@ setTimeout(addBattleButtons, 1800);
   width: var(--dot);
   height: var(--dot);
   border-radius: 50%;
-  background: rgba(200,220,255,0.45);
+  background: rgba(200,220,255,0.80);
   transition: background 0.10s;
   flex-shrink: 0;
 }
@@ -12884,11 +12884,21 @@ setTimeout(addBattleButtons, 1800);
       <div style="margin-top:4px;">
         <div style="font-size:10px;color:rgba(148, 163, 184,0.35);font-family:'Inter',sans-serif;margin-bottom:6px;letter-spacing:0.5px;">QUICK THEMES</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button class="gcp-theme-btn" data-theme="dark" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(37, 99, 235,0.4);background:rgba(37, 99, 235,0.15);color:#c084fc;cursor:pointer;font-family:'Inter',sans-serif;">🌌 Dark</button>
-          <button class="gcp-theme-btn" data-theme="midnight" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(59, 130, 246,0.4);background:rgba(59, 130, 246,0.1);color:#67e8f9;cursor:pointer;font-family:'Inter',sans-serif;">🌊 Midnight</button>
-          <button class="gcp-theme-btn" data-theme="forest" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(34,197,94,0.4);background:rgba(34,197,94,0.1);color:#4ade80;cursor:pointer;font-family:'Inter',sans-serif;">🌿 Forest</button>
-          <button class="gcp-theme-btn" data-theme="light" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(200,200,200,0.4);background:rgba(240,240,255,0.12);color:#c8d8ff;cursor:pointer;font-family:'Inter',sans-serif;">☀️ Light</button>
-          <button class="gcp-theme-btn" data-theme="sepia" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(234,179,8,0.4);background:rgba(234,179,8,0.1);color:#fde047;cursor:pointer;font-family:'Inter',sans-serif;">📜 Sepia</button>
+          <button class="gcp-theme-btn" data-theme="dark"     style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(99,130,235,0.55);background:rgba(37,99,235,0.22);color:#a5b4fc;cursor:pointer;font-family:'Inter',sans-serif;">🌌 Dark</button>
+          <button class="gcp-theme-btn" data-theme="midnight" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(56,189,248,0.55);background:rgba(14,116,144,0.22);color:#7dd3fc;cursor:pointer;font-family:'Inter',sans-serif;">🌊 Midnight</button>
+          <button class="gcp-theme-btn" data-theme="forest"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(34,197,94,0.55);background:rgba(20,83,45,0.30);color:#86efac;cursor:pointer;font-family:'Inter',sans-serif;">🌿 Forest</button>
+          <button class="gcp-theme-btn" data-theme="light"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(148,163,184,0.60);background:rgba(226,232,240,0.18);color:#e2e8f0;cursor:pointer;font-family:'Inter',sans-serif;">☀️ Light</button>
+          <button class="gcp-theme-btn" data-theme="sepia"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(234,179,8,0.55);background:rgba(120,80,20,0.30);color:#fcd34d;cursor:pointer;font-family:'Inter',sans-serif;">📜 Sepia</button>
+          <button class="gcp-theme-btn" data-theme="ocean"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(6,182,212,0.55);background:rgba(8,51,68,0.35);color:#67e8f9;cursor:pointer;font-family:'Inter',sans-serif;">🐋 Ocean</button>
+          <button class="gcp-theme-btn" data-theme="sunset"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(249,115,22,0.55);background:rgba(124,45,18,0.30);color:#fdba74;cursor:pointer;font-family:'Inter',sans-serif;">🌇 Sunset</button>
+          <button class="gcp-theme-btn" data-theme="rose"     style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(244,63,94,0.55);background:rgba(136,19,55,0.30);color:#fda4af;cursor:pointer;font-family:'Inter',sans-serif;">🌸 Rose</button>
+          <button class="gcp-theme-btn" data-theme="slate"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(100,116,139,0.55);background:rgba(30,41,59,0.40);color:#cbd5e1;cursor:pointer;font-family:'Inter',sans-serif;">🩶 Slate</button>
+          <button class="gcp-theme-btn" data-theme="aurora"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(168,85,247,0.55);background:rgba(59,7,100,0.35);color:#e879f9;cursor:pointer;font-family:'Inter',sans-serif;">✨ Aurora</button>
+          <button class="gcp-theme-btn" data-theme="coffee"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(180,120,60,0.55);background:rgba(87,55,25,0.35);color:#d4a96a;cursor:pointer;font-family:'Inter',sans-serif;">☕ Coffee</button>
+          <button class="gcp-theme-btn" data-theme="nord"     style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(136,192,208,0.55);background:rgba(46,52,64,0.45);color:#88c0d0;cursor:pointer;font-family:'Inter',sans-serif;">❄️ Nord</button>
+          <button class="gcp-theme-btn" data-theme="lemon"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(234,179,8,0.55);background:rgba(113,63,18,0.25);color:#fef08a;cursor:pointer;font-family:'Inter',sans-serif;">🍋 Lemon</button>
+          <button class="gcp-theme-btn" data-theme="candy"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(236,72,153,0.55);background:rgba(131,24,67,0.28);color:#f9a8d4;cursor:pointer;font-family:'Inter',sans-serif;">🍬 Candy</button>
+          <button class="gcp-theme-btn" data-theme="matrix"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(34,197,94,0.55);background:rgba(0,20,0,0.50);color:#4ade80;cursor:pointer;font-family:'Inter',sans-serif;">💻 Matrix</button>
         </div>
       </div>
     </div>
@@ -13178,6 +13188,16 @@ setTimeout(addBattleButtons, 1800);
     forest:   { textColor:'#e0ffe8', bgColor:'#020f06',  boxColor:'#051a09' },
     light:    { textColor:'#1a1a2e', bgColor:'#f0f4ff',  boxColor:'#ffffff' },
     sepia:    { textColor:'#3d2b1f', bgColor:'#f5ead7',  boxColor:'#ece1c8' },
+    ocean:    { textColor:'#cffafe', bgColor:'#021b26',  boxColor:'#062030' },
+    sunset:   { textColor:'#fff1e6', bgColor:'#1a0800',  boxColor:'#2d1200' },
+    rose:     { textColor:'#ffe4e6', bgColor:'#1a000a',  boxColor:'#2d0015' },
+    slate:    { textColor:'#e2e8f0', bgColor:'#0f172a',  boxColor:'#1e293b' },
+    aurora:   { textColor:'#fae8ff', bgColor:'#130520',  boxColor:'#1e0838' },
+    coffee:   { textColor:'#fdf0dc', bgColor:'#1c0e04',  boxColor:'#2e1a08' },
+    nord:     { textColor:'#eceff4', bgColor:'#2e3440',  boxColor:'#3b4252' },
+    lemon:    { textColor:'#fefce8', bgColor:'#1a1400',  boxColor:'#2a2000' },
+    candy:    { textColor:'#fce7f3', bgColor:'#1a0010',  boxColor:'#2d001e' },
+    matrix:   { textColor:'#4ade80', bgColor:'#000a00',  boxColor:'#001400' },
   };
 
   function applyThemeColors(textColor, bgColor, boxColor) {
@@ -13379,6 +13399,22 @@ setTimeout(addBattleButtons, 1800);
       .option {
         border-color: rgba(128,128,200,0.25) !important;
         background: color-mix(in srgb, ${boxColor} 80%, transparent) !important;
+      }
+      /* ── Translate language dropdown follows theme ── */
+      #dualLangDropdown {
+        background: color-mix(in srgb, ${boxColor} 97%, ${textColor} 3%) !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+      }
+      .dlang-item {
+        color: ${textColor} !important;
+      }
+      .dlang-item:hover {
+        background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      .dlang-item.active {
+        background: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        color: ${textColor} !important;
       }
     `;
     // Sync pickers
@@ -14808,9 +14844,10 @@ setTimeout(addBattleButtons, 1800);
 
   // ── UNDO / REDO ──
   function saveUndoState() {
-    // Save both pixel snapshot AND stroke list snapshot
+    // Use native getImageData to bypass the GPU-accelerated patch (which returns a sentinel)
+    const getNative = ctx._nativeGetImageData || ctx.getImageData.bind(ctx);
     undoStacks[currentPage].push({
-      img: ctx.getImageData(0,0,canvas.width,canvas.height),
+      img: getNative(0,0,canvas.width,canvas.height),
       strokes: strokeHistory[currentPage].map(s => Object.assign({}, s, { pts: s.pts ? [...s.pts] : null }))
     });
     if (undoStacks[currentPage].length > 50) undoStacks[currentPage].shift();
@@ -14819,23 +14856,27 @@ setTimeout(addBattleButtons, 1800);
   function undo() {
     const stack = undoStacks[currentPage];
     if (!stack.length) return;
+    const getNative = ctx._nativeGetImageData || ctx.getImageData.bind(ctx);
+    const putNative = ctx._nativePutImageData || ctx.putImageData.bind(ctx);
     redoStacks[currentPage].push({
-      img: ctx.getImageData(0,0,canvas.width,canvas.height),
+      img: getNative(0,0,canvas.width,canvas.height),
       strokes: strokeHistory[currentPage].map(s => Object.assign({}, s, { pts: s.pts ? [...s.pts] : null }))
     });
     const state = stack.pop();
-    ctx.putImageData(state.img, 0, 0);
+    putNative(state.img, 0, 0);
     strokeHistory[currentPage] = state.strokes;
   }
   function redo() {
     const stack = redoStacks[currentPage];
     if (!stack.length) return;
+    const getNative = ctx._nativeGetImageData || ctx.getImageData.bind(ctx);
+    const putNative = ctx._nativePutImageData || ctx.putImageData.bind(ctx);
     undoStacks[currentPage].push({
-      img: ctx.getImageData(0,0,canvas.width,canvas.height),
+      img: getNative(0,0,canvas.width,canvas.height),
       strokes: strokeHistory[currentPage].map(s => Object.assign({}, s, { pts: s.pts ? [...s.pts] : null }))
     });
     const state = stack.pop();
-    ctx.putImageData(state.img, 0, 0);
+    putNative(state.img, 0, 0);
     strokeHistory[currentPage] = state.strokes;
   }
   document.getElementById('gbl-undo-btn').addEventListener('click', undo);
@@ -16908,6 +16949,7 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
 
   /* Keep a reference to the native putImageData before any override */
   const _nativePut = CanvasRenderingContext2D.prototype.putImageData;
+  const _nativeGet = CanvasRenderingContext2D.prototype.getImageData;
 
   function patch() {
     const canvas = document.getElementById('gbl-canvas');
@@ -16916,6 +16958,10 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
 
     const ctx = canvas.getContext('2d');
     let snap  = null;   /* offscreen snapshot canvas — reused across frames */
+
+    /* Expose native methods so undo/redo (in a different IIFE) can bypass the GPU patch */
+    ctx._nativeGetImageData = function(x, y, w, h) { return _nativeGet.call(ctx, x, y, w, h); };
+    ctx._nativePutImageData = function(data, x, y) { return _nativePut.call(ctx, data, x, y); };
 
     /* ── Override getImageData (instance property shadows prototype) ── */
     ctx.getImageData = function (x, y, w, h) {
