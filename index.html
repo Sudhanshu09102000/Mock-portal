@@ -13559,6 +13559,103 @@ setTimeout(addBattleButtons, 1800);
         background: color-mix(in srgb, ${textColor} 14%, transparent) !important;
         color: ${textColor} !important;
       }
+      /* ── Battle Mode modal & lobby follow theme ── */
+      #bmOverlay {
+        background: color-mix(in srgb, ${bgColor} 92%, transparent) !important;
+      }
+      .bm-modal {
+        background: color-mix(in srgb, ${boxColor} 97%, ${textColor} 3%) !important;
+        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
+        box-shadow: 0 0 60px color-mix(in srgb, ${textColor} 12%, transparent) !important;
+      }
+      .bm-label {
+        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
+      }
+      .bm-input {
+        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      .bm-input:focus {
+        border-color: color-mix(in srgb, ${textColor} 70%, transparent) !important;
+      }
+      .bm-x {
+        background: color-mix(in srgb, ${textColor} 10%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      .bm-hint {
+        color: color-mix(in srgb, ${textColor} 45%, transparent) !important;
+      }
+      .bm-code-box {
+        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+      }
+      .bm-player-row {
+        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 10%, transparent) !important;
+      }
+      .bm-player-name {
+        color: ${textColor} !important;
+      }
+      .bm-info {
+        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
+      }
+      .bm-warn {
+        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
+      }
+      .bm-err {
+        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 85%, transparent) !important;
+      }
+      #bmDirectLinkBox {
+        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
+      }
+      #bmDirectLinkInput {
+        background: color-mix(in srgb, ${bgColor} 85%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      #bmCopyLinkBtn {
+        background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      /* ── Finish Battle confirm dialog follows theme ── */
+      #bmFinishConfirm .bm-fc-card {
+        background: color-mix(in srgb, ${boxColor} 97%, ${textColor} 3%) !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+        box-shadow: 0 32px 64px rgba(0,0,0,.55), 0 0 0 1px color-mix(in srgb, ${textColor} 6%, transparent) inset !important;
+      }
+      #bmFinishConfirm .bm-fc-title {
+        color: ${textColor} !important;
+      }
+      #bmFinishConfirm .bm-fc-sub {
+        color: color-mix(in srgb, ${textColor} 62%, transparent) !important;
+      }
+      #bmFinishConfirm .bm-fc-stat {
+        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
+      }
+      #bmFinishConfirm .bm-fc-stat-lbl {
+        color: color-mix(in srgb, ${textColor} 50%, transparent) !important;
+      }
+      #bmFinishConfirm .bm-fc-cancel {
+        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
+      }
+      #bmFinishConfirm .bm-fc-cancel:hover {
+        background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
+        color: ${textColor} !important;
+      }
     `;
     // Sync pickers
     document.getElementById('gcp-text-color').value = textColor;
