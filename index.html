@@ -4426,6 +4426,53 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         return tr;
       }
 
+      /* ── Split long text into chunks at sentence/paragraph boundaries ── */
+      function splitIntoChunks(text, maxLen) {
+        if (text.length <= maxLen) return [text];
+        const chunks = [];
+        // Split on paragraph breaks first, then sentence boundaries
+        const paragraphs = text.split(/\n+/);
+        let current = '';
+        for (const para of paragraphs) {
+          if (!para.trim()) continue;
+          if ((current + '\n' + para).length <= maxLen) {
+            current = current ? current + '\n' + para : para;
+          } else {
+            // Para itself too long — split by sentences
+            if (current) { chunks.push(current); current = ''; }
+            const sentences = para.split(/(?<=[।.!?])\s+/);
+            for (const sent of sentences) {
+              if ((current + ' ' + sent).length <= maxLen) {
+                current = current ? current + ' ' + sent : sent;
+              } else {
+                if (current) chunks.push(current);
+                // If single sentence still too long, hard-slice it
+                if (sent.length > maxLen) {
+                  for (let i = 0; i < sent.length; i += maxLen) chunks.push(sent.slice(i, i + maxLen));
+                  current = '';
+                } else {
+                  current = sent;
+                }
+              }
+            }
+          }
+        }
+        if (current) chunks.push(current);
+        return chunks.length ? chunks : [text.slice(0, maxLen)];
+      }
+
+      /* ── Single-chunk Google Translate call (no slicing) ── */
+      async function tlFetchChunk(chunk, lang) {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${encodeURIComponent(lang)}&dt=t&q=${encodeURIComponent(chunk)}`;
+        const res  = await fetch(url);
+        const data = await res.json();
+        let tr = '';
+        if (Array.isArray(data) && Array.isArray(data[0])) {
+          tr = data[0].map(seg => (Array.isArray(seg) ? seg[0] : '')).join('');
+        }
+        return cleanTr(tr);
+      }
+
       async function tlFetch(text, lang) {
         if (!text || !text.trim() || !lang) return '';
         const plain = stripHtml(text).trim();
@@ -4433,16 +4480,12 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         const cacheKey = lang + '|' + plain;
         if (state.tlCache[cacheKey]) return state.tlCache[cacheKey];
 
-        /* ── Primary: unofficial Google Translate endpoint ── */
+        /* ── Primary: unofficial Google Translate endpoint (chunked for long text) ── */
         try {
-          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${encodeURIComponent(lang)}&dt=t&q=${encodeURIComponent(plain.slice(0, 800))}`;
-          const res  = await fetch(url);
-          const data = await res.json();
-          // Response: [ [ ["translated","original",...], ... ], ..., "en" ]
-          let tr = '';
-          if (Array.isArray(data) && Array.isArray(data[0])) {
-            tr = data[0].map(seg => (Array.isArray(seg) ? seg[0] : '')).join('');
-          }
+          const GOOGLE_CHUNK = 4800; // safe limit well below URL constraints
+          const chunks = splitIntoChunks(plain, GOOGLE_CHUNK);
+          const parts = await Promise.all(chunks.map(c => tlFetchChunk(c, lang)));
+          let tr = parts.join('\n').trim();
           tr = cleanTr(tr);
           if (tr && tr.toLowerCase() !== plain.toLowerCase()) {
             state.tlCache[cacheKey] = tr;
@@ -4450,13 +4493,17 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           }
         } catch(_) { /* Google failed — try fallback */ }
 
-        /* ── Fallback: MyMemory (free tier, ~1000 words/day) ── */
+        /* ── Fallback: MyMemory (free tier — 1500 char limit per request, chunked) ── */
         try {
-          const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(plain.slice(0,500))}&langpair=en|${lang}`;
-          const res  = await fetch(url);
-          const data = await res.json();
-          let tr = data?.responseData?.translatedText || '';
-          tr = cleanTr(tr);
+          const MM_CHUNK = 1500;
+          const chunks = splitIntoChunks(plain, MM_CHUNK);
+          const parts = await Promise.all(chunks.map(async chunk => {
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=en|${lang}`;
+            const res  = await fetch(url);
+            const data = await res.json();
+            return cleanTr(data?.responseData?.translatedText || '');
+          }));
+          let tr = parts.filter(Boolean).join('\n').trim();
           if (tr && tr.toLowerCase() !== plain.toLowerCase()) {
             state.tlCache[cacheKey] = tr;
             return tr;
