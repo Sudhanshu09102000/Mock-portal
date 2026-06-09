@@ -9502,19 +9502,31 @@ function bmRenderRCItem(qid, idx, ans) {
   }
 
   // Build options display
+  // correctMeta priority: ans.correctMetaId (live battle) > sh.correctMetaId (shuffle) > q.correct (raw data)
+  // This ensures even skipped questions (ans=null) always show the correct answer in green.
   let optHtml = '';
   if (sh) {
+    const correctMeta = (ans && ans.correctMetaId) ? ans.correctMetaId : sh.correctMetaId;
     optHtml = sh.order.map((origIdx, displayPos) => {
-      const metaId  = String(displayPos + 1);
-      const text    = q.options[origIdx] || '';
+      const metaId = String(displayPos + 1);
+      const text   = q.options[origIdx] || '';
       let cls = 'bm-rci-opt';
       let indicator = '';
-      if (metaId === sh.correctMetaId) { cls += ' bm-rci-opt-correct'; indicator = ' ✓'; }
+      if (metaId === correctMeta) { cls += ' bm-rci-opt-correct'; indicator = ' ✓'; }
       else if (ans && metaId === ans.metaId && !ans.isCorrect) { cls += ' bm-rci-opt-wrong'; indicator = ' ✗'; }
       return `<div class="${cls}">${metaId}. ${text}${indicator}</div>`;
     }).join('');
   } else {
-    optHtml = q.options.map((opt, i) => `<div class="bm-rci-opt">${i+1}. ${opt}</div>`).join('');
+    // No shuffle data — options in original order; derive correctMeta from q.correct when skipped
+    const correctMeta = (ans && ans.correctMetaId) ? ans.correctMetaId : String(q.correct || '');
+    optHtml = q.options.map((opt, i) => {
+      const metaId = String(i + 1);
+      let cls = 'bm-rci-opt';
+      let indicator = '';
+      if (correctMeta && metaId === correctMeta) { cls += ' bm-rci-opt-correct'; indicator = ' ✓'; }
+      else if (ans && metaId === ans.metaId && !ans.isCorrect) { cls += ' bm-rci-opt-wrong'; indicator = ' ✗'; }
+      return `<div class="${cls}">${metaId}. ${opt}${indicator}</div>`;
+    }).join('');
   }
 
   // Check if explanation exists
