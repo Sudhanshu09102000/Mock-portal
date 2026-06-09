@@ -768,13 +768,20 @@
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
     }
 
-    /* ✅ CLOSE BUTTON glow style */
-    #answerModal .btn-close {
-      filter: invert(1);
-      opacity: 0.7;
+    /* ✅ CLOSE BUTTON — always matches theme text color */
+    .btn-close,
+    .btn-close.btn-close-white {
+      filter: none !important;
+      opacity: 0.75;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%23f1f5f9' d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c%2fsvg%3e") !important;
+      background-size: 0.75em !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
     }
 
-    #answerModal .btn-close:hover {
+    #answerModal .btn-close:hover,
+    #qmarkHelpModal .btn-close:hover,
+    .btn-close:hover {
       opacity: 1;
       transform: scale(1.06);
     }
@@ -7573,6 +7580,15 @@ document.addEventListener("keydown",(e)=>{
             background: ${box} !important;
             border-color: rgba(128,128,128,0.25) !important;
             backdrop-filter: none !important;
+          }
+          /* ── Close button: always visible using theme text color ── */
+          .btn-close {
+            filter: none !important;
+            opacity: 1 !important;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='${encodeURIComponent(txt)}' d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") !important;
+            background-size: 0.75em !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
           }
         `;
       }
