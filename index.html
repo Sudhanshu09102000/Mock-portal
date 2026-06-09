@@ -9546,12 +9546,12 @@ window.bmShowRCExplanation = function(qid) {
     modal.id = 'bmExpModal';
     modal.style.cssText = 'display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;';
     modal.innerHTML = `
-      <div id="bmExpModalBox" style="width:min(600px,100%);max-height:85vh;overflow-y:auto;background:linear-gradient(145deg,rgba(8,12,35,.98),rgba(5,7,25,.98));border:1px solid rgba(59,130,246,.45);border-radius:20px;padding:24px;box-shadow:0 0 80px rgba(59,130,246,.25);">
+      <div id="bmExpModalBox" style="width:min(600px,100%);max-height:85vh;overflow-y:auto;border-radius:20px;padding:24px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
           <div style="font-size:15px;font-weight:900;background:linear-gradient(90deg,#3b82f6,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.5px;">💡 EXPLANATION</div>
-          <button onclick="document.getElementById('bmExpModal').style.display='none'" style="width:32px;height:32px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;font-size:15px;">✕</button>
+          <button onclick="document.getElementById('bmExpModal').style.display='none'" style="width:32px;height:32px;border-radius:10px;cursor:pointer;font-size:15px;">✕</button>
         </div>
-        <div id="bmExpContent" style="color:#e2e8f0;line-height:1.7;font-size:14px;"></div>
+        <div id="bmExpContent" style="line-height:1.7;font-size:14px;"></div>
       </div>
     `;
     document.body.appendChild(modal);
@@ -10100,10 +10100,7 @@ function injectChatStyles() {
     left:16px;
     width:min(340px,calc(100vw - 32px));
     max-height:520px;
-    background:linear-gradient(160deg,rgba(6,8,28,.97),rgba(14,4,36,.97));
-    border:1px solid rgba(59, 130, 246,.4);
     border-radius:20px;
-    box-shadow:0 0 60px rgba(59, 130, 246,.2),0 20px 50px rgba(0,0,0,.6);
     z-index:99981;
     flex-direction:column;
     overflow:hidden;
@@ -13655,6 +13652,240 @@ setTimeout(addBattleButtons, 1800);
         background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
         border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
         color: ${textColor} !important;
+      }
+      /* ── Battle Results screen follows theme ── */
+      #bmFinished {
+        background: color-mix(in srgb, ${bgColor} 97%, transparent) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      #bmResultBg {
+        background: radial-gradient(ellipse at 20% 30%, color-mix(in srgb, ${textColor} 10%, transparent) 0%, transparent 55%),
+                    radial-gradient(ellipse at 80% 70%, color-mix(in srgb, ${textColor} 7%, transparent) 0%, transparent 55%),
+                    ${bgColor} !important;
+      }
+      .bm-fin-row {
+        background: color-mix(in srgb, ${boxColor} 85%, ${textColor} 5%) !important;
+        border-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      .bm-fin-row.bm-fin-me {
+        background: color-mix(in srgb, ${textColor} 12%, ${boxColor}) !important;
+        border-color: color-mix(in srgb, ${textColor} 40%, transparent) !important;
+      }
+      .bm-fin-rank-num {
+        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
+      }
+      .bm-fin-sub {
+        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
+      }
+      /* ── Report Card wrapper & card body ── */
+      #bmReportCard {
+        background: color-mix(in srgb, ${boxColor} 92%, ${textColor} 5%) !important;
+        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+      }
+      .bm-rc-header {
+        background: color-mix(in srgb, ${boxColor} 88%, ${textColor} 8%) !important;
+        border-bottom-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
+      }
+      .bm-rc-title {
+        color: ${textColor} !important;
+      }
+      /* ── Stat boxes: keep semantic tint but adapt bg/border to theme ── */
+      .bm-rc-stat {
+        background: color-mix(in srgb, ${boxColor} 75%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
+      }
+      .bm-rc-correct {
+        background: rgba(34,197,94,.12) !important;
+        border-color: rgba(34,197,94,.40) !important;
+        color: #22c55e !important;
+      }
+      .bm-rc-wrong {
+        background: rgba(239,68,68,.12) !important;
+        border-color: rgba(239,68,68,.40) !important;
+        color: #ef4444 !important;
+      }
+      .bm-rc-skip {
+        background: color-mix(in srgb, ${boxColor} 70%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 75%, transparent) !important;
+      }
+      .bm-rc-acc {
+        background: rgba(250,204,21,.12) !important;
+        border-color: rgba(250,204,21,.40) !important;
+        color: #facc15 !important;
+      }
+      .bm-rc-stat-num, .bm-rc-stat-lbl {
+        color: inherit !important;
+      }
+      /* ── Question list items in report card ── */
+      .bm-rci {
+        background: color-mix(in srgb, ${boxColor} 82%, ${textColor} 5%) !important;
+        border-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
+      }
+      .bm-rci-correct {
+        border-color: rgba(34,197,94,.45) !important;
+        background: rgba(34,197,94,.07) !important;
+      }
+      .bm-rci-wrong {
+        border-color: rgba(239,68,68,.45) !important;
+        background: rgba(239,68,68,.07) !important;
+      }
+      .bm-rci-skip {
+        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        background: color-mix(in srgb, ${textColor} 3%, transparent) !important;
+      }
+      .bm-rci-qtext, .bm-rci-num, .bm-rci-toggle {
+        color: ${textColor} !important;
+      }
+      .bm-rci-status {
+        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
+      }
+      .bm-rci-opt {
+        background: color-mix(in srgb, ${boxColor} 80%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 85%, transparent) !important;
+      }
+      .bm-rci-opt-correct {
+        background: rgba(34,197,94,.12) !important;
+        border-color: rgba(34,197,94,.45) !important;
+        color: #22c55e !important;
+      }
+      .bm-rci-opt-wrong {
+        background: rgba(239,68,68,.12) !important;
+        border-color: rgba(239,68,68,.45) !important;
+        color: #ef4444 !important;
+      }
+      .bm-rci-exp-btn {
+        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
+      }
+      .bm-rci-exp-btn:hover {
+        background: color-mix(in srgb, ${textColor} 14%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      /* ── Minimised pill adapts to theme ── */
+      #bmRcMiniPill {
+        background: linear-gradient(135deg,
+          color-mix(in srgb, ${textColor} 18%, ${boxColor}),
+          color-mix(in srgb, ${textColor} 12%, ${boxColor})) !important;
+        border-color: color-mix(in srgb, ${textColor} 40%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      #bmRcMiniPill .bm-rc-pill-badge {
+        background: color-mix(in srgb, ${textColor} 10%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      /* ── Minimise toggle btn ── */
+      #bmRcMinToggleBtn {
+        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      /* ── Battle Mode explanation modal follows theme ── */
+      #bmExpModal {
+        background: rgba(0,0,0,.65) !important;
+      }
+      #bmExpModalBox {
+        background: ${boxColor} !important;
+        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
+        box-shadow: 0 0 60px color-mix(in srgb, ${textColor} 15%, transparent) !important;
+      }
+      #bmExpContent, #bmExpContent * {
+        color: ${textColor} !important;
+        -webkit-text-fill-color: ${textColor} !important;
+      }
+      #bmExpTranslation, #bmExpTranslation * {
+        color: ${textColor} !important;
+        -webkit-text-fill-color: ${textColor} !important;
+      }
+      /* ── Battle Comms chat panel follows theme ── */
+      #bmChatPanel {
+        background: ${boxColor} !important;
+        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
+        box-shadow: 0 0 60px color-mix(in srgb, ${textColor} 12%, transparent), 0 20px 50px rgba(0,0,0,.4) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      #bmChatHeader {
+        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
+        border-bottom-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
+      }
+      #bmChatTabBar {
+        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
+        border-bottom-color: color-mix(in srgb, ${textColor} 10%, transparent) !important;
+      }
+      .bm-tab-btn {
+        color: color-mix(in srgb, ${textColor} 50%, transparent) !important;
+      }
+      .bm-tab-btn.active {
+        color: ${textColor} !important;
+        border-bottom-color: ${textColor} !important;
+        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
+      }
+      .bm-tab-btn:hover:not(.active) {
+        color: color-mix(in srgb, ${textColor} 75%, transparent) !important;
+      }
+      #bmChatFooter {
+        background: color-mix(in srgb, ${textColor} 4%, transparent) !important;
+        border-top-color: color-mix(in srgb, ${textColor} 10%, transparent) !important;
+      }
+      #bmChatInput {
+        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      #bmChatInput::placeholder {
+        color: color-mix(in srgb, ${textColor} 35%, transparent) !important;
+      }
+      #bmChatInput:focus {
+        border-color: color-mix(in srgb, ${textColor} 55%, transparent) !important;
+      }
+      #bmChatSendBtn {
+        background: color-mix(in srgb, ${textColor} 15%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 35%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      .bm-ch-btn {
+        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 16%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
+      }
+      .bm-ch-btn:hover {
+        background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 40%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      .bm-msg-bubble {
+        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      .bm-msg-me .bm-msg-bubble {
+        background: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 32%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      .bm-msg-name, .bm-msg-me .bm-msg-name {
+        color: color-mix(in srgb, ${textColor} 75%, transparent) !important;
+        -webkit-text-fill-color: color-mix(in srgb, ${textColor} 75%, transparent) !important;
+      }
+      .bm-msg-time {
+        color: color-mix(in srgb, ${textColor} 38%, transparent) !important;
+      }
+      .bm-msg-system {
+        color: color-mix(in srgb, ${textColor} 60%, transparent) !important;
+        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
+      }
+      .bm-chat-empty {
+        color: color-mix(in srgb, ${textColor} 40%, transparent) !important;
+      }
+      #bmChatBody::-webkit-scrollbar-thumb {
+        background: color-mix(in srgb, ${textColor} 22%, transparent) !important;
       }
     `;
     // Sync pickers
@@ -17302,11 +17533,13 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
               Restore everything when the user exits battle.
 ════════════════════════════════════════════════════════════════════════ -->
 <style>
-/* Make #bmFinished fully transparent so OUR particle bg shows through */
+/* Make #bmFinished use the theme bg; fallback to dark when no theme set.
+   No !important here — dynamic theme style (injected into <head>) uses
+   !important and wins over this static block, which is the intended behaviour. */
 #bmFinished {
-  background: rgba(8, 12, 22, 0.97) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  background: rgba(8, 12, 22, 0.97);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 /* Animated star/particle layer behind the results screen */
