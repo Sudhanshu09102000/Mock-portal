@@ -1,6 +1,4 @@
-Here is the converted `window.TEST_DATA` JavaScript object:
 
-```javascript
 window.TEST_DATA = {
 "1": {
 "questext": "Who founded the Slave (Mamluk) Dynasty and thereby laid the foundation of the Delhi Sultanate?",
@@ -147,4 +145,3 @@ window.TEST_DATA = {
 "expimage": ""
 }
 };
-```
