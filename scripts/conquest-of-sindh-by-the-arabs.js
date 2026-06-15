@@ -1,4 +1,3 @@
-
 window.TEST_DATA = {
   "1": {
     "questext": "Who led the first successful Muslim attack on India in 712 AD?",
