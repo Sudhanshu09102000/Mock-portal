@@ -152,7 +152,8 @@ window.TEST_DATA = {
     ],
     "correct": "2",
     "quesimage": "",
-    "exptext": "<b>Lanepool</b><br><br>Regarding the impact of the Sindh conquest, <b>Lanepool</b> stated that <i>"Sindh was conquered by the Arabs, but this conquest was merely a historical and Islamic event. It was an <b>ineffective conquest</b>."</i><br><br>Despite this, the Arab conquest had significant cultural consequences. <b>Vishnu Sharma's</b> <b>'Panchatantra'</b> was translated into Arabic under the name <b>'Kalilawadadimna'</b>.<br><br>In the <b>eighth century</b>, Arab scholars took with them <b>'Brahmasiddhanta'</b> written by <b>Brahmagupta</b> and <b>'Khandankhandkhady'</b> written by <b>Shri Harsha</b> to Arabia, where they were translated into Arabic with the help of Indian scholars.<br><br><b>Muhammad bin Qasim</b> was the <b>first Muslim invader in India</b> who collected <b>Jaziya tax</b>.",
+     "exptext": "<b>Lane-Poole</b><br><br>Regarding the impact of the conquest of Sindh, <b>Lane-Poole</b> stated that <i>Sindh was conquered by the Arabs, but this conquest was merely a historical and Islamic event. It was an <b>ineffective conquest</b>.</i><br><br>Despite this, the Arab conquest had significant cultural consequences. <b>Vishnu Sharma's</b> <b>'Panchatantra'</b> was translated into Arabic under the name <b>'Kalila wa Dimna'</b>.<br><br>In the <b>eighth century</b>, Arab scholars took <b>'Brahmasiddhanta'</b> written by <b>Brahmagupta</b> and <b>'Khandakhadyaka'</b> written by <b>Brahmagupta</b> to Arabia, where they were translated into Arabic with the help of Indian scholars.<br><br><b>Muhammad bin Qasim</b> was the <b>first Muslim invader of India</b> who collected <b>Jizya tax</b>.", 
+
     "expimage": ""
   }
 };
