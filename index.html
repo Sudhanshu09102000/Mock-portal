@@ -648,12 +648,12 @@
       padding: 14px 14px;
       border-radius: 16px;
 
-      /* ✅ safe place */
+      /* ✅ safe place — JS will override right/left depending on blackboard state */
       right: 18px;
       bottom: 110px;
 
-      left: auto !important;
-      top: auto !important;
+      left: auto;
+      top: auto;
 
       z-index: 9999;
     }
@@ -683,6 +683,15 @@
     }
     #qmarkHelpModal .modal-title {
       color: var(--txt);
+    }
+    /* When blackboard is open, constrain modal backdrop to quiz area only */
+    body.bb-open-modal .modal-backdrop {
+      right: var(--bb-width, 0px) !important;
+      width: auto !important;
+    }
+    body.bb-open-modal #qmarkHelpModal {
+      right: var(--bb-width, 0px) !important;
+      width: auto !important;
     }
     /* Inline hint + hover help inherit text color too */
     .inline-hint-panel, .inline-hint-panel *,
@@ -5224,22 +5233,11 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         const qbtn = $('qmarkBtn');
         if (qbtn) {
 
-          if (IS_TOUCH) {
-            // ✅ Kill hover events forcefully
-            qbtn.onmouseenter = null;
-            qbtn.onmousemove = null;
-            qbtn.onmouseleave = null;
-
-            // ✅ Mobile should ONLY work by click
-            qbtn.onclick = () => openCenterHelpModal();
-
-          } else {
-            // ✅ PC hover tooltip
-            qbtn.addEventListener("mouseenter", (e) => showMouseHelp(e));
-            qbtn.addEventListener("mousemove", (e) => moveMouseHelp(e));
-            qbtn.addEventListener("mouseleave", () => hideMouseHelp());
-            qbtn.onclick = () => openCenterHelpModal();
-          }
+          // Click/tap only — hover hint box removed
+          qbtn.onmouseenter = null;
+          qbtn.onmousemove  = null;
+          qbtn.onmouseleave = null;
+          qbtn.onclick = () => openCenterHelpModal();
         }
 
 
@@ -6307,8 +6305,25 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         }
 
         box.style.display = "block";
-        box.style.right = "24px";
-        box.style.bottom = "110px";
+
+        // ── Reposition hint box so it's fully visible when blackboard is open ──
+        const gblWindow = document.getElementById('gbl-window');
+        const bbOpen = document.getElementById('gbl-overlay')?.classList.contains('open');
+        const bbFullscreen = gblWindow?.dataset?.fullscreen === '1';
+
+        if (bbOpen && !bbFullscreen) {
+          // Blackboard occupies the right side — put hint on the left
+          box.style.right   = 'auto';
+          box.style.left    = '16px';
+          box.style.bottom  = '110px';
+          box.style.top     = 'auto';
+        } else {
+          // Normal position (right side)
+          box.style.left    = 'auto';
+          box.style.right   = '24px';
+          box.style.bottom  = '110px';
+          box.style.top     = 'auto';
+        }
 
         moveMouseHelp(e);
 
@@ -6349,6 +6364,35 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           im.removeAttribute('src');
         }
 
+        // ── Size modal to fill the quiz area (left of blackboard) when open ──
+        const gblWindow    = document.getElementById('gbl-window');
+        const bbOpen       = document.getElementById('gbl-overlay')?.classList.contains('open');
+        const bbFullscreen = gblWindow?.dataset?.fullscreen === '1';
+        const dlg          = document.querySelector('#qmarkHelpModal .modal-dialog');
+        if (bbOpen && !bbFullscreen) {
+          const bbW      = gblWindow ? gblWindow.offsetWidth : 0;
+          const quizW    = window.innerWidth - bbW;          // available quiz area
+          const pad      = 16;                               // breathing room each side
+          const modalW   = Math.max(280, quizW - pad * 2);  // fill it, min 280px
+          document.body.style.setProperty('--bb-width', bbW + 'px');
+          document.body.classList.add('bb-open-modal');
+          if (dlg) {
+            dlg.style.width      = modalW + 'px';
+            dlg.style.maxWidth   = modalW + 'px';
+            dlg.style.marginLeft = pad + 'px';
+            dlg.style.marginRight= (bbW + pad) + 'px';
+          }
+        } else {
+          document.body.classList.remove('bb-open-modal');
+          document.body.style.removeProperty('--bb-width');
+          if (dlg) {
+            dlg.style.width      = '';
+            dlg.style.maxWidth   = '';
+            dlg.style.marginLeft = '';
+            dlg.style.marginRight= '';
+          }
+        }
+
         const modalEl = document.getElementById('qmarkHelpModal');
         const existingModal = bootstrap.Modal.getInstance(modalEl);
         if (existingModal && modalEl.classList.contains('show')) {
@@ -6357,6 +6401,21 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         }
         const modal = existingModal || new bootstrap.Modal(modalEl);
         modal.show();
+
+        // Reset dialog size/margins and body class when modal closes
+        const _onHide = () => {
+          if (dlg) {
+            dlg.style.width       = '';
+            dlg.style.maxWidth    = '';
+            dlg.style.marginLeft  = '';
+            dlg.style.marginRight = '';
+          }
+          document.body.classList.remove('bb-open-modal');
+          document.body.style.removeProperty('--bb-width');
+          modalEl.removeEventListener('hidden.bs.modal', _onHide);
+        };
+        modalEl.removeEventListener('hidden.bs.modal', _onHide); // guard duplicates
+        modalEl.addEventListener('hidden.bs.modal', _onHide);
 
         // ✅ Inject translation into modal after it opens
         if (state.dualLang) {
@@ -6524,16 +6583,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         containerEl.appendChild(block);
       }
       function toggleHintBox() {
-        // only in practice mode
+        // only in practice mode — delegates to center modal (hover box removed)
         if (state.examMode) return;
-
-        // if hoverHelp is visible -> hide, else show
-        if ($('hoverHelp').style.display === 'block') {
-          hideMouseHelp();
-        } else {
-          // show hint box at fixed position (no mouse needed)
-          showMouseHelp({ clientX: window.innerWidth - 50, clientY: window.innerHeight - 200 });
-        }
+        openCenterHelpModal();
       }
       function toggleCenterHintBox() {
         // ✅ only in practice mode
