@@ -390,5 +390,5 @@ window.TEST_DATA = {
 "correct": "4",
 "quesimage": "",
 "exptext": "<b>Ghiyas-ud-din Balban</b><br><br><b>Ghiyas-ud-
-};
+}
 };
