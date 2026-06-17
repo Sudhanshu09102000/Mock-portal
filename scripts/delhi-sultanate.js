@@ -389,6 +389,6 @@ window.TEST_DATA = {
 "options": ["Qutb-ud-din Aibak","Aram Shah","Shams-ud-din Iltutmish","Ghiyas-ud-din Balban"],
 "correct": "4",
 "quesimage": "",
-"exptext": "<b>Ghiyas-ud-din Balban</b><br><br><b>Ghiyas-ud-
+"exptext": "<b>Ghiyas-ud-din Balban</b>"
 }
 };
