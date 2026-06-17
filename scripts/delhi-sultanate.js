@@ -143,5 +143,252 @@ window.TEST_DATA = {
 "quesimage": "",
 "exptext": "<b>Qaiqabad</b><br><br>Balban died in <b>1287 CE</b> after ruling for 20 years as Sultan (and having served earlier as a general and minister for another 20 years). The burial chamber of <b>Ghiyas-ud-din Balban</b> is located in the <b>Archaeological Park, Mehrauli, Delhi</b>.<br><br>Balban had chosen his grandson <b>Kai Khusrau</b> as heir apparent. His younger son <b>Bughra Khan</b>, who was the governor of Bengal, was offered the throne but preferred to remain in Bengal.<br><br>After Balban's death, the nobles nominated <b>Qaiqabad</b> as Sultan. His reign lasted from <b>1287 to 1290 CE</b>. Qaiqabad was weak and incompetent and eventually suffered a stroke, passing power to his three-year-old son <b>Shamsuddin Kayumars</b>.<br><br>Kayumars was ultimately dethroned by his guardian, <b>Jalal-ud-din Firoz Khilji</b>, the founder of the <b>Khilji Dynasty</b>, in <b>1290 CE</b>, bringing the <b>Slave Dynasty to an end</b>.",
 "expimage": ""
-}
+},
+"19": {
+"questext": "Which administrative system of the Delhi Sultanate had an influence on regimes such as the Deccan and Vijayanagara kingdoms? [SSC CGL 17/07/2023 (2nd shift)]",
+"options": ["Walis","Chahalgani","Bitikchi","Iqtadari"],
+"correct": "4",
+"quesimage": "",
+"exptext": "<b>Iqtadari</b><br><br>The <b>Iqtadari (Iqta) system</b> of the Delhi Sultanate, introduced by <b>Iltutmish</b>, was a territorial revenue-assignment system under which officers (muqtis) were granted revenue from a territory in lieu of salary. This administrative model had a notable influence on later regimes, including the <b>Deccan Sultanates and the Vijayanagara Empire</b>, which adapted similar revenue-assignment frameworks for their own administration.",
+"expimage": ""
+},
+"20": {
+"questext": "The 'Diwan-i-Arz' was essentially the department of which function under the Delhi Sultanate? [SSC CGL 18/07/2023 (4th shift)]",
+"options": ["Financial services","Court ceremonies","Military services","Royal Karkhanas"],
+"correct": "3",
+"quesimage": "",
+"exptext": "<b>Military services</b><br><br>The <b>'Diwan-i-Arz'</b> (also spelt Diwan-i-Ariz) was the <b>department of military affairs</b> under the Delhi Sultanate. It was responsible for the organisation, recruitment, and maintenance of the army. This department was notably strengthened during the reign of <b>Ghiyas-ud-din Balban</b> to counter the growing Mongol threat.",
+"expimage": ""
+},
+"21": {
+"questext": "Who among the following was the head of the 'Diwan-i-Insha' department under the Delhi Sultanate? [SSC CGL 26/07/2023 (2nd shift)]",
+"options": ["Dabir-i-Khas","Barid-i-Mumalik","Amir-i-Dad","Wakil-i-Dar"],
+"correct": "1",
+"quesimage": "",
+"exptext": "<b>Dabir-i-Khas</b><br><br>The <b>'Diwan-i-Insha'</b> was the department of <b>state correspondence</b> under the Delhi Sultanate, responsible for drafting and issuing royal orders and official letters. It was headed by an officer known as the <b>'Dabir-i-Khas'</b>.<br><br>In contrast, <b>'Barid-i-Mumalik'</b> headed the intelligence department, <b>'Amir-i-Dad'</b> was responsible for justice, and <b>'Wakil-i-Dar'</b> looked after royal household affairs.",
+"expimage": ""
+},
+"22": {
+"questext": "Which Delhi Sultan started the court practices of 'Sijda' (prostration) and 'Paibos' (kissing the monarch's feet)? [SSC CGL 26/07/2023 (3rd shift)]",
+"options": ["Firoz Shah Tughlaq","Ghiyas-ud-din Balban","Iltutmish","Ibrahim Lodi"],
+"correct": "2",
+"quesimage": "",
+"exptext": "<b>Ghiyas-ud-din Balban</b><br><br>To enhance the prestige and dignity of the monarchy, <b>Ghiyas-ud-din Balban</b> introduced the Persian court practices of <b>'Sijda'</b> (prostrating before the emperor) and <b>'Paibos'</b> (kissing the monarch's feet) in the Delhi court. He also introduced the celebration of the Persian New Year, <b>'Nauroz'</b>, and believed in the theory of kingship as the <b>vice-regency of God on earth (niyabat-i-khudai)</b>.",
+"expimage": ""
+},
+"23": {
+"questext": "The tomb of Razia Sultan in the state of Haryana is made of which building material? [Graduate Level 28/06/2023 (Shift-3)]",
+"options": ["Red sandstone","Granite","Marble","Baked bricks"],
+"correct": "4",
+"quesimage": "",
+"exptext": "<b>Baked bricks</b><br><br>Razia Sultan was defeated and killed near <b>Kaithal</b> in present-day <b>Haryana</b> on <b>October 13, 1240 CE</b>. Her tomb, located in Kaithal, is a simple structure built primarily of <b>baked bricks</b>, reflecting the modest and unadorned nature of the memorial compared to grander imperial tombs of later periods.",
+"expimage": ""
+},
+"24": {
+"questext": "Who introduced the silver 'Tanka' and copper 'Jital' — the two basic coins of the Delhi Sultanate period? [SSC MTS 02/05/2023 (Afternoon)]",
+"options": ["Alauddin Khilji","Iltutmish","Ibrahim Lodi","Qutb-ud-din Aibak"],
+"correct": "2",
+"quesimage": "",
+"exptext": "<b>Iltutmish</b><br><br><b>Iltutmish</b> introduced a standardised coinage system for the Delhi Sultanate, consisting of the silver <b>'Tanka'</b> and the copper <b>'Jital'</b>. These became the two basic coins of the Sultanate period and remained in circulation for a long time, forming the monetary backbone of the early Delhi Sultanate economy.",
+"expimage": ""
+},
+"25": {
+"questext": "During the Delhi Sultanate, the term 'Ulema' was associated with which of the following? [SSC MTS 03/05/2023 (Afternoon)]",
+"options": ["Learned theologians and jurists","Commander-in-chief","Postal officer","Village revenue officer"],
+"correct": "1",
+"quesimage": "",
+"exptext": "<b>Learned theologians and jurists</b><br><br>The term <b>'Ulema'</b> referred to the class of <b>learned Islamic theologians and jurists</b> during the Delhi Sultanate. They held significant influence in religious and legal matters and often advised the Sultan on questions of Islamic law (Sharia), though the Sultanate's administration generally remained distinct from purely theocratic rule.",
+"expimage": ""
+},
+"26": {
+"questext": "The 'Hauz-i-Sultani' was constructed by which ruler? [SSC MTS 18/05/2023 (Afternoon)]",
+"options": ["Iltutmish","Sikandar Lodi","Babur","Akbar"],
+"correct": "1",
+"quesimage": "",
+"exptext": "<b>Iltutmish</b><br><br>The <b>'Hauz-i-Sultani'</b> (also known as Shamsi Talab), a large water reservoir, was constructed by <b>Iltutmish</b> to provide a reliable water supply for the residents of Delhi. It stands as an example of the public infrastructure works undertaken by the early Delhi Sultans.",
+"expimage": ""
+},
+"27": {
+"questext": "Who among the following was the daughter of Iltutmish, a ruler of the Slave (Mamluk) Dynasty? [SSC MTS 15/06/2023 (Afternoon)]",
+"options": ["Kubra Noorzai","Harkha","Razia Sultan","Shafiqa Ziayee"],
+"correct": "3",
+"quesimage": "",
+"exptext": "<b>Razia Sultan</b><br><br><b>Razia Sultan</b> was the daughter of <b>Iltutmish</b>, a ruler of the Slave (Mamluk) Dynasty. Iltutmish nominated her as his successor, and after defeating her brother Ruknuddin Firoz in <b>1236 CE</b>, she became the <b>first lady Sultan of India</b>.",
+"expimage": ""
+},
+"28": {
+"questext": "Under the Delhi Sultanate, a religious tax imposed on wealthy and rich Muslims was known as: [SSC MTS 16/06/2023 (Evening)]",
+"options": ["Firuz","Mamluk","Zakat","Kismat"],
+"correct": "3",
+"quesimage": "",
+"exptext": "<b>Zakat</b><br><br><b>'Zakat'</b> was a religious tax imposed on wealthy and prosperous Muslims in India during the Delhi Sultanate, in accordance with Islamic law. It was meant to be utilised for charitable and welfare purposes among the Muslim community, distinct from taxes such as 'Jizya' which were levied on non-Muslims.",
+"expimage": ""
+},
+"29": {
+"questext": "In which year was Razia Sultan removed from the throne of the Delhi Sultanate? [SSC CHSL 09/03/2023 (1st Shift)]",
+"options": ["1244","1240","1238","1236"],
+"correct": "2",
+"quesimage": "",
+"exptext": "<b>1240</b><br><br>Razia Sultan was dethroned in <b>1240 CE</b> by rebelling Turkish nobles while she was away from Delhi suppressing a rebellion in Bhatinda. She was subsequently defeated and killed near <b>Kaithal</b> on <b>October 13, 1240 CE</b>, along with her husband <b>Malik Altunia</b>.",
+"expimage": ""
+},
+"30": {
+"questext": "Who was the first female Muslim ruler of India? [SSC CHSL 10/03/2023 (2nd Shift)]",
+"options": ["Zebunnissa","Razia Sultan","Chand Bibi","Jahanara"],
+"correct": "2",
+"quesimage": "",
+"exptext": "<b>Razia Sultan</b><br><br><b>Razia Sultan</b>, daughter of Iltutmish, became the <b>first female Muslim ruler of India</b> in <b>1236 CE</b> after defeating her brother Ruknuddin Firoz with the support of the people of Delhi. She ruled until her overthrow and death in 1240 CE.",
+"expimage": ""
+},
+"31": {
+"questext": "Who composed 'Tabaqat-i-Nasiri' during the Delhi Sultanate period? [SSC CGL Tier II 02/03/2023]",
+"options": ["Hasan Nizami","Amir Khusrau","Minhaj-us-Siraj","Ziauddin Barani"],
+"correct": "3",
+"quesimage": "",
+"exptext": "<b>Minhaj-us-Siraj</b><br><br>The historian <b>Minhaj-us-Siraj</b>, who lived in the court of <b>Iltutmish</b>, composed <b>'Tabaqat-i-Nasiri'</b>, an important chronicle providing valuable knowledge of early medieval Indian history, particularly the early Delhi Sultanate period.",
+"expimage": ""
+},
+"32": {
+"questext": "Zafar Khan was a famous general of which of the following rulers of the Delhi Sultanate? [SSC CGL Tier II 03/03/2023]",
+"options": ["Alauddin Khilji","Iltutmish","Muhammad bin Tughluq","Balban"],
+"correct": "1",
+"quesimage": "",
+"exptext": "<b>Alauddin Khilji</b><br><br><b>Zafar Khan</b> was a famous and able general serving under <b>Alauddin Khilji</b> of the Khilji dynasty. He played a significant role in Alauddin Khilji's military campaigns, particularly against Mongol invasions.",
+"expimage": ""
+},
+"33": {
+"questext": "Which of the following 'Ruler – Predecessor' combinations is correct with respect to the Delhi Sultanate? [SSC CGL 02/12/2022 (1st Shift)]",
+"options": ["Alauddin Khilji – Jalaluddin Khilji","Jalaluddin Khilji – Alauddin Khilji","Muhammad Tughlaq – Firuz Shah Tughlaq","Ghiyasuddin Tughlaq – Muhammad Tughlaq"],
+"correct": "1",
+"quesimage": "",
+"exptext": "<b>Alauddin Khilji – Jalaluddin Khilji</b><br><br><b>Alauddin Khilji</b> succeeded his uncle and father-in-law <b>Jalaluddin Khilji</b> as the Sultan of Delhi in <b>1296 CE</b>, after assassinating him. This makes 'Alauddin Khilji – Jalaluddin Khilji' the correct Ruler–Predecessor pair, unlike the other options, which reverse or mismatch the actual succession order (Firuz Shah Tughlaq succeeded Muhammad bin Tughlaq, and Muhammad Tughlaq succeeded Ghiyasuddin Tughlaq, not the reverse).",
+"expimage": ""
+},
+"34": {
+"questext": "Which of the following represents the correct chronological sequence of Delhi Sultanate dynasties? [SSC CGL 03/12/2022 (1st Shift)]",
+"options": ["Khilji dynasty, Lodi dynasty, Sayyid dynasty","Tughlaq dynasty, Khilji dynasty, Sayyid dynasty","Early Turkish Rulers, Rajput dynasties, Khilji dynasty","Slave (Mamluk) dynasty, Khilji dynasty, Tughlaq dynasty"],
+"correct": "4",
+"quesimage": "",
+"exptext": "<b>Slave (Mamluk) dynasty, Khilji dynasty, Tughlaq dynasty</b><br><br>The correct chronological order of the major Delhi Sultanate dynasties is:<br><br>• <b>Slave (Mamluk) Dynasty</b> (1206–1290 CE)<br>• <b>Khilji Dynasty</b> (1290–1320 CE)<br>• <b>Tughlaq Dynasty</b> (1320–1414 CE)<br>• <b>Sayyid Dynasty</b> (1414–1451 CE)<br>• <b>Lodi Dynasty</b> (1451–1526 CE)<br><br>This sequence reflects the successive transfer of power among Turkish, Afghan, and other ruling groups over the Delhi Sultanate period.",
+"expimage": ""
+},
+"35": {
+"questext": "Which of the following rulers ruled over Delhi before Prithviraj Chauhan? [SSC CGL 05/12/2022 (2nd Shift)]",
+"options": ["Ghiyas-ud-din Balban","Ananga Pala","Jalaluddin Khilji","Qutb-ud-din Aibak"],
+"correct": "2",
+"quesimage": "",
+"exptext": "<b>Ananga Pala</b><br><br><b>Ananga Pala</b> (Anangpal Tomar), a ruler of the <b>Tomara dynasty</b>, ruled over Delhi prior to the rise of the Chauhan dynasty under <b>Prithviraj Chauhan</b>. The other options — Qutb-ud-din Aibak, Jalaluddin Khilji, and Ghiyas-ud-din Balban — all ruled Delhi much later, after the establishment of the Delhi Sultanate (post-1206 CE).",
+"expimage": ""
+},
+"36": {
+"questext": "Who was the author of 'Tarikh-i-Mubarak Shahi', a Persian-language chronicle of the Delhi Sultanate? [SSC CPO 10/11/2022 (Afternoon)]",
+"options": ["Jawahar-ul-Jawahir","Khazain-ul-Futuh","Tarikh-i-Firoz Shahi","Yahya bin Ahmad Sirhindi"],
+"correct": "4",
+"quesimage": "",
+"exptext": "<b>Yahya bin Ahmad Sirhindi</b><br><br><b>'Tarikh-i-Mubarak Shahi'</b> was authored by <b>Yahya bin Ahmad Sirhindi</b>. It is an important Persian-language chronicle covering the history of the Delhi Sultanate, particularly valuable for its account of the Sayyid dynasty period.<br><br>The other listed works — <b>Khazain-ul-Futuh</b> (by Amir Khusrau) and <b>Tarikh-i-Firoz Shahi</b> (by Ziauddin Barani/Shams Siraf Afif) — are separate, distinct chronicles of the Sultanate period.",
+"expimage": ""
+},
+"37": {
+"questext": "In the Delhi Sultanate, which of the following groups were known as 'Bandagan'? [SSC CPO 10/11/2022 (Evening)]",
+"options": ["Special persons appointed for religious conversion","Special officers for land revenue recovery","Specialised artisans employed in the royal Karkhanas","Special slaves purchased for military service"],
+"correct": "4",
+"quesimage": "",
+"exptext": "<b>Special slaves purchased for military service</b><br><br>The term <b>'Bandagan'</b> referred to <b>special slaves purchased specifically for military service</b> during the Delhi Sultanate. These slaves were trained and often rose to high military and administrative positions, as exemplified by rulers like Qutb-ud-din Aibak, Iltutmish, and Balban, all of whom began as Bandagan/Mamluk slaves before ascending the throne.",
+"expimage": ""
+},
+"38": {
+"questext": "What was the term for a territorial assignment given to administrative officers and nobles in lieu of services rendered to the state during the Delhi Sultanate? [SSC CPO 11/11/2022 (Evening)]",
+"options": ["Usharaf","Iqta","Muhtasib","Nazir"],
+"correct": "2",
+"quesimage": "",
+"exptext": "<b>Iqta</b><br><br>The <b>'Iqta'</b> was a territorial assignment given to administrative officers and nobles in lieu of the services they performed for the state during the Delhi Sultanate. The holder of an iqta was called a <b>'Muqti'</b> and was responsible for collecting land revenue and maintaining troops in that territory, in exchange for performing administrative and military duties for the Sultan.",
+"expimage": ""
+},
+"39": {
+"questext": "With reference to the administration of the Delhi Sultanate, which of the following was the department of State Correspondence? [SSC CGL 18/04/2022 (Evening)]",
+"options": ["Diwan-i-Arz","Diwan-i-Khairat","Diwan-i-Risalat","Diwan-i-Insha"],
+"correct": "4",
+"quesimage": "",
+"exptext": "<b>Diwan-i-Insha</b><br><br>The <b>'Diwan-i-Insha'</b> was the department responsible for <b>state correspondence</b> in the Delhi Sultanate, drafting and dispatching royal letters and orders. It is distinct from <b>'Diwan-i-Arz'</b> (military affairs), <b>'Diwan-i-Risalat'</b> (religious affairs and appeals), and <b>'Diwan-i-Khairat'</b> (charity).",
+"expimage": ""
+},
+"40": {
+"questext": "Which Sultan of the Delhi Sultanate appointed Ghiyas-ud-din Balban as his/her Prime Minister (Wazir)? [SSC CHSL 13/04/2021 (Morning)]",
+"options": ["Raziyya","Nasiruddin Mahmud","Muizuddin Bahram","Shamsuddin Iltutmish"],
+"correct": "2",
+"quesimage": "",
+"exptext": "<b>Nasiruddin Mahmud</b><br><br><b>Nasiruddin Mahmud</b>, who was largely a nominal ruler, handed over the actual reins of governance to <b>Ghiyas-ud-din Balban</b>, granting him the title of <b>'Ulugh Khan'</b> and the position equivalent to Prime Minister. Balban got his own daughter married to the Sultan, further consolidating his influence at court.",
+"expimage": ""
+},
+"41": {
+"questext": "Who was the ruler of the Delhi Sultanate when the traveller Ibn Battuta came to India? [SSC CHSL 04/08/2021 (Afternoon)]",
+"options": ["Alauddin Khilji","Firuz Shah Tughlaq","Muhammad bin Tughlaq","Ibrahim Lodi"],
+"correct": "3",
+"quesimage": "",
+"exptext": "<b>Muhammad bin Tughlaq</b><br><br>The Moroccan traveller <b>Ibn Battuta</b> visited India during the reign of <b>Muhammad bin Tughlaq</b> and served at his court for several years. His travel accounts provide valuable insight into the administration, society, and economy of the Delhi Sultanate during this period.",
+"expimage": ""
+},
+"42": {
+"questext": "Iltutmish introduced a copper coin in place of the silver coin, known as the: [SSC CGL 18/07/2023 (2nd shift)]",
+"options": ["Rupak","Rupee","Jital","Tanka"],
+"correct": "3",
+"quesimage": "",
+"exptext": "<b>Jital</b><br><br><b>Iltutmish</b> introduced the copper coin known as the <b>'Jital'</b> as a complement to the silver <b>'Tanka'</b>, establishing a dual-metal coinage system for the Delhi Sultanate. This monetary reform helped standardise transactions across the Sultanate.",
+"expimage": ""
+},
+"43": {
+"questext": "Who revolted against Balban, Sultan of Delhi, and declared himself an independent ruler of Bengal in 1279? [SSC CGL 27/07/2023 (1st shift)]",
+"options": ["Muhammad Khan","Tughril Beg","Bughra Khan","Nasir-ud-din Mahmud"],
+"correct": "2",
+"quesimage": "",
+"exptext": "<b>Tughril Beg</b><br><br><b>Tughril Beg</b>, the governor of Bengal under Balban, revolted in <b>1279 CE</b> and declared himself an independent ruler. Balban responded with a determined military campaign and had Tughril Beg defeated and executed, reasserting central control over Bengal.",
+"expimage": ""
+},
+"44": {
+"questext": "Who occupied Badaun (1197-98 CE) and appointed Iltutmish as its first Muslim Governor? [SSC MTS 12/05/2023 (Evening)]",
+"options": ["Prithviraj Chauhan","Maharana Pratap","Muhammad Ghori","Qutb-ud-din Aibak"],
+"correct": "3",
+"quesimage": "",
+"exptext": "<b>Muhammad Ghori</b><br><br><b>Muhammad Ghori</b> occupied <b>Badaun</b> in <b>1197-98 CE</b> and appointed <b>Iltutmish</b> as its first Muslim Governor. Iltutmish continued to hold this position even after Aibak's death, before being invited to Delhi to depose Aramshah and become Sultan in 1211 CE.",
+"expimage": ""
+},
+"45": {
+"questext": "The Qutub Minar is an example of which style of architecture? [SSC CHSL 21/03/2023 (2nd Shift)]",
+"options": ["Indo-Islamic","Dravidian","Sufi","Mauryan"],
+"correct": "1",
+"quesimage": "",
+"exptext": "<b>Indo-Islamic</b><br><br>The <b>Qutub Minar</b>, built in Delhi in memory of the Sufi saint <b>Qutb-ud-din Bakhtiyar Kaki</b>, is a celebrated example of <b>Indo-Islamic architecture</b> — a style that blends Islamic architectural elements with indigenous Indian craftsmanship and materials. It was begun by Qutb-ud-din Aibak and completed by Iltutmish.",
+"expimage": ""
+},
+"46": {
+"questext": "Who had assumed the title 'Ulugh Khan'? [SSC CGL Tier II (07/03/2023)]",
+"options": ["Kabir Khan","Farid Khan","Ulugh Khan (Balban)","Ayaz Khan"],
+"correct": "3",
+"quesimage": "",
+"exptext": "<b>Ulugh Khan (Balban)</b><br><br><b>Ghiyas-ud-din Balban</b> assumed/was given the title <b>'Ulugh Khan'</b> by Sultan <b>Nasiruddin Mahmud</b>, in recognition of his growing power and influence as the de facto head of administration during the Sultan's nominal reign.",
+"expimage": ""
+},
+"47": {
+"questext": "Minhaj-us-Siraj was a chronicler during the rule of which Delhi Sultan? [SSC CGL 08/12/2022 (2nd Shift)]",
+"options": ["Sultan Iltutmish","Qutb-ud-din Aibak","Ghiyas-ud-din Balban","Alauddin Khilji"],
+"correct": "1",
+"quesimage": "",
+"exptext": "<b>Sultan Iltutmish</b><br><br><b>Minhaj-us-Siraj</b> served as a chronicler in the court of <b>Sultan Iltutmish</b> and authored <b>'Tabaqat-i-Nasiri'</b>, a key historical source for the early Delhi Sultanate period.",
+"expimage": ""
+},
+"48": {
+"questext": "The Quwwat-ul-Islam mosque and its minaret (Qutub Minar) were built during the last decade of which century? [SSC CGL 08/12/2022 (4th Shift)]",
+"options": ["Eleventh century","Thirteenth century","Fourteenth century","Twelfth century"],
+"correct": "4",
+"quesimage": "",
+"exptext": "<b>Twelfth century</b><br><br>Construction of the <b>Quwwat-ul-Islam Mosque</b> and its accompanying minaret, the <b>Qutub Minar</b>, was begun by <b>Qutb-ud-din Aibak</b> in the last decade of the <b>twelfth century</b> (around 1192-1198 CE), shortly after the establishment of Muslim rule in Delhi. The Qutub Minar was later completed by his successor, Iltutmish, in the thirteenth century.",
+"expimage": ""
+},
+"49": {
+"questext": "Who among the following ruled in India between 1266 and 1287 CE? [SSC CGL 13/12/2022 (3rd Shift)]",
+"options": ["Qutb-ud-din Aibak","Aram Shah","Shams-ud-din Iltutmish","Ghiyas-ud-din Balban"],
+"correct": "4",
+"quesimage": "",
+"exptext": "<b>Ghiyas-ud-din Balban</b><br><br><b>Ghiyas-ud-
+};
 };
