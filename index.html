@@ -3186,7 +3186,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
                   <span class="pill">← →: prev/next</span>
                   <span class="pill">☰: navigator</span>
                   <span class="pill">0: hint toggle</span>
-                  <span class="pill">Space: blakboard</span>
+                  <span class="pill">Space: blackboard</span>
                 </div>
               </div>
             </div>
@@ -12620,6 +12620,11 @@ setTimeout(addBattleButtons, 1800);
   font-size: 12px;
   font-family: 'Inter', sans-serif;
   outline: none;
+  color-scheme: dark;
+}
+.gcp-select option {
+  background: #1e2a3a;
+  color: #f1f5f9;
 }
 .gcp-select:focus { border-color: rgba(37, 99, 235,0.6); }
 .gcp-range-row {
@@ -13259,7 +13264,7 @@ setTimeout(addBattleButtons, 1800);
     <button class="gcp-btn accent-purple" id="gcp-open-blackboard">
       <span class="gcp-icon">🖊️</span>
       <span>Open Blackboard</span>
-      <span class="gcp-kbd">.</span>
+      <span class="gcp-kbd">_</span>
     </button>
   </div>
 
@@ -14265,6 +14270,22 @@ setTimeout(addBattleButtons, 1800);
       }
       #bmChatBody::-webkit-scrollbar-thumb {
         background: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+      }
+      /* ── Font & Display dropdown follows theme ── */
+      .gcp-select,
+      #gcp-font-select {
+        background: color-mix(in srgb, ${bgColor} 85%, ${textColor} 5%) !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+        color: ${textColor} !important;
+      }
+      .gcp-select:focus,
+      #gcp-font-select:focus {
+        border-color: color-mix(in srgb, ${textColor} 55%, transparent) !important;
+      }
+      .gcp-select option,
+      #gcp-font-select option {
+        background: color-mix(in srgb, ${bgColor} 90%, ${textColor} 10%) !important;
+        color: ${textColor} !important;
       }
     `;
     // Sync pickers
