@@ -7596,6 +7596,7 @@ function applySize(size){
 styleTag.innerHTML+=`
 #questionText,
 .option,
+.opt-text,
 .qbox,
 body{
 font-size:${size}px !important;
@@ -13622,7 +13623,7 @@ setTimeout(addBattleButtons, 1800);
       html, body, *:not(button):not(.gbl-toolbar *):not(.gcp-panel *) {
         font-family: ${font} !important;
       }
-      #questionText, .qbox, .opt-text, .option {
+      #questionText, .qbox, .opt-text, .option, .subtopic-btn {
         font-family: ${font} !important;
       }
     `;
@@ -13630,7 +13631,7 @@ setTimeout(addBattleButtons, 1800);
   function applySize(size) {
     fontStyle.textContent = fontStyle.textContent.replace(/font-size:[^!;]*!important;?\s*/g,'');
     fontStyle.textContent += `
-      #questionText, .qbox, .option { font-size: ${size}px !important; }
+      #questionText, .qbox, .option, .opt-text { font-size: ${size}px !important; }
     `;
   }
   fontSelect.addEventListener('change', () => applyFont(fontSelect.value));
