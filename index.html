@@ -7598,6 +7598,8 @@ styleTag.innerHTML+=`
 .option,
 .opt-text,
 .qbox,
+#qmarkModalBody,
+#qmarkModalBody *,
 body{
 font-size:${size}px !important;
 }
@@ -13631,7 +13633,8 @@ setTimeout(addBattleButtons, 1800);
   function applySize(size) {
     fontStyle.textContent = fontStyle.textContent.replace(/font-size:[^!;]*!important;?\s*/g,'');
     fontStyle.textContent += `
-      #questionText, .qbox, .option, .opt-text { font-size: ${size}px !important; }
+      #questionText, .qbox, .option, .opt-text,
+      #qmarkModalBody, #qmarkModalBody * { font-size: ${size}px !important; }
     `;
   }
   fontSelect.addEventListener('change', () => applyFont(fontSelect.value));
