@@ -1985,10 +1985,279 @@ body {
 /* ── Topic group card polish ── */
 .topic-group-card {
   transition: border-color .2s, box-shadow .2s !important;
+  overflow: hidden;
 }
 .topic-group-card:hover {
   border-color: rgba(59, 130, 246,.4) !important;
   box-shadow: 0 0 30px rgba(59, 130, 246,.1) !important;
+}
+
+/* ══════════════════════════════════════════
+   TOPIC DROPDOWN HEADER (god-tier)
+   ══════════════════════════════════════════ */
+.topic-dropdown-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  text-align: left;
+  border: 1px solid rgba(59, 130, 246,.22);
+  background: linear-gradient(135deg, rgba(59,130,246,.14), rgba(37,99,235,.05) 60%, rgba(59,130,246,.02));
+  color: var(--txt);
+  border-radius: 16px;
+  padding: .85rem 1rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease, transform .15s ease;
+}
+.topic-dropdown-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg, transparent, rgba(59,130,246,.35), transparent);
+  background-size: 200% 100%;
+  background-position: 200% 0;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.topic-dropdown-header:hover {
+  border-color: rgba(59, 130, 246,.55);
+  box-shadow: 0 6px 22px rgba(37,99,235,.18), 0 0 0 1px rgba(59,130,246,.12) inset;
+  transform: translateY(-1px);
+}
+.topic-dropdown-header:hover::before {
+  opacity: 1;
+  animation: dropdownSheen 1.4s ease forwards;
+}
+@keyframes dropdownSheen {
+  from { background-position: 200% 0; }
+  to   { background-position: -50% 0; }
+}
+.topic-dropdown-header:active { transform: translateY(0) scale(.99); }
+
+.topic-dropdown-header.is-open {
+  border-color: rgba(59, 130, 246,.65);
+  background: linear-gradient(135deg, rgba(59,130,246,.22), rgba(37,99,235,.08) 60%, rgba(59,130,246,.03));
+  box-shadow: 0 0 0 1px rgba(59,130,246,.25) inset, 0 8px 26px rgba(37,99,235,.22);
+  border-radius: 16px 16px 10px 10px;
+}
+
+.topic-dropdown-title {
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  min-width: 0;
+}
+.topic-dropdown-name {
+  font-weight: 650;
+  font-size: 1.02rem;
+  letter-spacing: .1px;
+  color: var(--txt);
+  white-space: normal;
+  line-height: 1.25;
+}
+.topic-dropdown-count {
+  font-size: .74rem;
+  font-weight: 500;
+  color: #60a5fa;
+  letter-spacing: .3px;
+  opacity: .85;
+}
+
+.topic-dropdown-chevron {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #60a5fa;
+  background: rgba(59,130,246,.12);
+  border: 1px solid rgba(59,130,246,.3);
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .25s ease, color .25s ease, border-color .25s ease;
+}
+.topic-dropdown-header:hover .topic-dropdown-chevron {
+  background: rgba(59,130,246,.22);
+  border-color: rgba(59,130,246,.55);
+}
+.topic-dropdown-header.is-open .topic-dropdown-chevron {
+  transform: rotate(180deg);
+  background: rgba(59,130,246,.3);
+  color: #fff;
+  border-color: rgba(59,130,246,.7);
+  box-shadow: 0 0 14px rgba(59,130,246,.45);
+}
+
+/* collapsible panel */
+.subtopic-collapse {
+  height: 0px;
+  overflow: hidden;
+  transition: height .38s cubic-bezier(.4,0,.2,1);
+}
+.subtopic-collapse-inner {
+  padding-top: 2px;
+}
+
+/* ── Subtopic rows (children of dropdown) get a subtle staggered fade ── */
+.topic-dropdown-header.is-open ~ .subtopic-collapse .subtopic-row {
+  animation: subRowIn .32s ease both;
+}
+.topic-dropdown-header.is-open ~ .subtopic-collapse .subtopic-row:nth-child(1) { animation-delay: .02s; }
+.topic-dropdown-header.is-open ~ .subtopic-collapse .subtopic-row:nth-child(2) { animation-delay: .05s; }
+.topic-dropdown-header.is-open ~ .subtopic-collapse .subtopic-row:nth-child(3) { animation-delay: .08s; }
+.topic-dropdown-header.is-open ~ .subtopic-collapse .subtopic-row:nth-child(4) { animation-delay: .11s; }
+.topic-dropdown-header.is-open ~ .subtopic-collapse .subtopic-row:nth-child(5) { animation-delay: .14s; }
+.topic-dropdown-header.is-open ~ .subtopic-collapse .subtopic-row:nth-child(n+6) { animation-delay: .16s; }
+@keyframes subRowIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════════
+   SUBJECT VIEW — CENTERED HERO HEADER (god-tier)
+   ══════════════════════════════════════════ */
+.subject-hero {
+  position: relative;
+  margin-bottom: 2rem;
+  border-radius: 26px;
+  overflow: hidden;
+  isolation: isolate;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1.8rem, 5vw, 3rem) clamp(1.2rem, 5vw, 2.6rem);
+  background: linear-gradient(135deg, rgba(59,130,246,.12) 0%, rgba(37,99,235,.16) 50%, rgba(59,130,246,.10) 100%);
+  border: 1px solid rgba(59,130,246,.30);
+  box-shadow: 0 0 70px rgba(37,99,235,.14), 0 24px 60px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.subject-hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+.subject-hero-orb-1 {
+  top: -50px; left: 8%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(37,99,235,.22), transparent 70%);
+  animation: orb1 6.5s ease-in-out infinite;
+}
+.subject-hero-orb-2 {
+  bottom: -60px; right: 8%;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(59,130,246,.18), transparent 70%);
+  animation: orb2 8.5s ease-in-out infinite;
+}
+
+.subject-hero-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  border: 1px solid rgba(96,165,250,.14);
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+  z-index: -1;
+  animation: heroRingSpin 22s linear infinite;
+}
+.subject-hero-ring::before {
+  content: "";
+  position: absolute;
+  inset: 28px;
+  border-radius: 50%;
+  border: 1px dashed rgba(96,165,250,.10);
+}
+@keyframes heroRingSpin {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+.subject-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(59,130,246,.12);
+  border: 1px solid rgba(59,130,246,.32);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: #60a5fa;
+}
+.subject-hero-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #3b82f6;
+  box-shadow: 0 0 8px #3b82f6;
+  display: inline-block;
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+.subject-hero-title {
+  font-size: clamp(1.9rem, 6vw, 2.7rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: .2px;
+  background: linear-gradient(135deg, #ffffff 30%, #93c5fd 70%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 40px rgba(59,130,246,.25);
+  position: relative;
+  z-index: 1;
+}
+
+.subject-hero-divider {
+  width: 64px;
+  height: 3px;
+  border-radius: 999px;
+  margin: 14px 0 12px;
+  background: linear-gradient(90deg, transparent, #3b82f6, #60a5fa, #3b82f6, transparent);
+  box-shadow: 0 0 12px rgba(59,130,246,.6);
+  position: relative;
+  z-index: 1;
+}
+
+.subject-hero-hint {
+  max-width: 520px;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgba(180,210,255,.78);
+  position: relative;
+  z-index: 1;
+}
+
+.subject-hero-actions {
+  margin-top: 22px;
+  position: relative;
+  z-index: 1;
+}
+.subject-hero-back {
+  font-weight: 650 !important;
+  border-color: rgba(59,130,246,.4) !important;
+  background: linear-gradient(135deg, rgba(59,130,246,.10), rgba(37,99,235,.05)) !important;
+  padding: .6rem 1.3rem !important;
+  border-radius: 999px !important;
+  transition: all .2s ease !important;
+}
+.subject-hero-back:hover {
+  border-color: rgba(59,130,246,.75) !important;
+  box-shadow: 0 0 22px rgba(59,130,246,.28) !important;
+  transform: translateY(-2px) !important;
+}
+
+@media (max-width: 576px) {
+  .subject-hero { border-radius: 20px; }
+  .subject-hero-ring { width: 260px; height: 260px; }
 }
 
 /* ── Topic toggle button ── */
@@ -2864,7 +3133,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             @keyframes orb2 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(12px) scale(1.06)} }
           </style>
 
-          <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3" style="position:relative;z-index:1;">
+          <div class="d-flex flex-column align-items-center text-center gap-3" style="position:relative;z-index:1;">
             <div>
               <!-- small eyebrow label -->
               <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(59, 130, 246,.12);border:1px solid rgba(59, 130, 246,.3);border-radius:999px;padding:3px 12px;margin-bottom:12px;">
@@ -2873,13 +3142,14 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               </div>
               <style>@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.85)} }</style>
 
-              <h1 class="brand-title mb-0" style="line-height:1.1;">Mock Test Portal</h1>
-              <div style="font-size:1rem;color:rgba(180,210,255,.75);margin-top:8px;max-width:480px;line-height:1.5;">
+              <h1 class="brand-title mb-0" style="line-height:1.1;background:linear-gradient(135deg, #ffffff 30%, #93c5fd 70%, #60a5fa 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 40px rgba(59,130,246,.25);">Mock Test Portal</h1>
+              <div style="width:64px;height:3px;border-radius:999px;margin:14px auto 12px;background:linear-gradient(90deg, transparent, #3b82f6, #60a5fa, #3b82f6, transparent);box-shadow:0 0 12px rgba(59,130,246,.6);"></div>
+              <div style="font-size:1rem;color:rgba(180,210,255,.75);margin-top:8px;max-width:480px;line-height:1.5;margin-left:auto;margin-right:auto;">
                 Practice smarter with AI-powered tests, battle mode, and instant feedback.
               </div>
 
               <!-- stat pills -->
-              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;">
+              <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:16px;">
                 <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#4ade80;">✅ Exam Mode</span>
                 <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(37, 99, 235,.12);border:1px solid rgba(37, 99, 235,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#93c5fd;">⚔️ Battle Mode</span>
                 <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(250,204,21,.10);border:1px solid rgba(250,204,21,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#facc15;">📄 PDF Tutor</span>
@@ -2887,7 +3157,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               </div>
             </div>
 
-            <div class="d-flex gap-2 flex-wrap action-btn-row" style="flex-shrink:0;">
+            <div class="d-flex gap-2 flex-wrap justify-content-center action-btn-row" style="flex-shrink:0;">
               <button id="typingBtn" class="btn btn-glass" style="border-color:rgba(59, 130, 246,.4);color:#3b82f6;font-weight:600;">⌨️ Typing Test Engine</button>
               <button onclick="location.href='pdfocr.html'" class="btn btn-glass" style="border-color:rgba(251,113,133,.55);color:#fb7185;font-weight:600;background:linear-gradient(135deg,rgba(251,113,133,.10),rgba(244,63,94,.06));box-shadow:0 0 18px rgba(251,113,133,.18);transition:all .18s ease;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='rgba(251,113,133,.9)';this.style.boxShadow='0 0 28px rgba(251,113,133,.38)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(251,113,133,.55)';this.style.boxShadow='0 0 18px rgba(251,113,133,.18)';this.style.transform='translateY(0)'">
                 <span style="display:inline-flex;align-items:center;gap:6px;">
@@ -2932,13 +3202,27 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
     <!-- SUBJECT VIEW -->
     <div id="subjectView" class="view">
       <div class="container py-4 py-md-5">
-        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
-          <div>
-            <h2 id="subjectTitle" class="mb-1"></h2>
-            <div id="subjectHint" class="subtle">Choose a topic group, then a chapter/subtopic to start a test.</div>
+
+        <!-- ✨ SUBJECT HERO HEADER -->
+        <div class="subject-hero">
+          <div class="subject-hero-orb subject-hero-orb-1"></div>
+          <div class="subject-hero-orb subject-hero-orb-2"></div>
+          <div class="subject-hero-ring"></div>
+
+          <div class="subject-hero-eyebrow">
+            <span class="subject-hero-dot"></span>
+            <span>TOPIC EXPLORER</span>
           </div>
-          <div class="d-flex gap-2">
-            <button id="backToPortalBtn" class="btn btn-glass">Back to portal</button>
+
+          <h2 id="subjectTitle" class="subject-hero-title mb-0"></h2>
+          <div class="subject-hero-divider"></div>
+          <div id="subjectHint" class="subject-hero-hint">Choose a topic group, then a chapter/subtopic to start a test.</div>
+
+          <div class="subject-hero-actions">
+            <button id="backToPortalBtn" class="btn btn-glass subject-hero-back">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              Back to portal
+            </button>
           </div>
         </div>
 
@@ -2946,6 +3230,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           <div id="topicsArea" class="row g-3"></div>
         </div>
       </div>
+
     </div>
 
     <!-- ENGINE VIEW -->
@@ -3860,22 +4145,31 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       </div>
     `).join('');
 
+          const subCount = tg.subtopics.length;
+
           topicCol.innerHTML = `
       <div class="glass p-3 h-100 topic-group-card">
-        <div class="d-flex align-items-center gap-2 mb-1">
-          <button class="topic-btn fw-semibold flex-grow-1" type="button" data-topic="${escapeHtml(tg.name)}">
-            ${escapeHtml(tg.name)}
-          </button>
-
-        </div>
-        <div class="subtopic-area mt-2">${subBtns}</div>
-        <div class="pdf-upload-area mt-2" style="display:none;">
-          <div class="pdf-upload-box glass p-3 text-center" style="border:2px dashed rgba(59, 130, 246,.4);border-radius:14px;cursor:pointer;transition:all .2s;">
-            <input type="file" accept=".pdf" class="chapter-pdf-input" style="display:none;">
-            <div class="pdf-upload-icon" style="font-size:2.5rem;margin-bottom:.5rem;">📄</div>
-            <div class="fw-semibold mb-1" style="color:#3b82f6;">Drop PDF here or click to choose</div>
-            <div class="small subtle">Upload a PDF for <strong>${escapeHtml(tg.name)}</strong></div>
-            <div class="pdf-chosen-name mt-2 small" style="color:#22c55e;display:none;"></div>
+        <button class="topic-dropdown-header" type="button" data-topic="${escapeHtml(tg.name)}" aria-expanded="false">
+          <span class="topic-dropdown-title">
+            <span class="topic-dropdown-name">${escapeHtml(tg.name)}</span>
+            <span class="topic-dropdown-count">${subCount} ${subCount === 1 ? 'topic' : 'topics'}</span>
+          </span>
+          <span class="topic-dropdown-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </span>
+        </button>
+        <div class="subtopic-collapse">
+          <div class="subtopic-collapse-inner">
+            <div class="subtopic-area mt-2">${subBtns}</div>
+            <div class="pdf-upload-area mt-2" style="display:none;">
+              <div class="pdf-upload-box glass p-3 text-center" style="border:2px dashed rgba(59, 130, 246,.4);border-radius:14px;cursor:pointer;transition:all .2s;">
+                <input type="file" accept=".pdf" class="chapter-pdf-input" style="display:none;">
+                <div class="pdf-upload-icon" style="font-size:2.5rem;margin-bottom:.5rem;">📄</div>
+                <div class="fw-semibold mb-1" style="color:#3b82f6;">Drop PDF here or click to choose</div>
+                <div class="small subtle">Upload a PDF for <strong>${escapeHtml(tg.name)}</strong></div>
+                <div class="pdf-chosen-name mt-2 small" style="color:#22c55e;display:none;"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -3929,30 +4223,31 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             });
           });
 
-          // + / - toggle button (removed from UI — guard against null)
-          const toggleBtn = topicCol.querySelector('.topic-toggle-btn');
-          const subtopicArea = topicCol.querySelector('.subtopic-area');
-          const pdfArea = topicCol.querySelector('.pdf-upload-area');
-          let pdfOpen = false;
+          // dropdown header toggle (collapsed by default)
+          const dropdownHeader = topicCol.querySelector('.topic-dropdown-header');
+          const collapseEl = topicCol.querySelector('.subtopic-collapse');
+          const collapseInner = topicCol.querySelector('.subtopic-collapse-inner');
 
-          if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => {
-              pdfOpen = !pdfOpen;
-              if (pdfOpen) {
-                subtopicArea.style.display = 'none';
-                pdfArea.style.display = 'block';
-                toggleBtn.textContent = '−';
-                toggleBtn.style.color = '#ef4444';
-                toggleBtn.style.borderColor = 'rgba(239,68,68,.5)';
-              } else {
-                subtopicArea.style.display = '';
-                pdfArea.style.display = 'none';
-                toggleBtn.textContent = '+';
-                toggleBtn.style.color = '';
-                toggleBtn.style.borderColor = '';
-              }
-            });
-          }
+          dropdownHeader.addEventListener('click', () => {
+            const isOpen = dropdownHeader.classList.contains('is-open');
+            if (isOpen) {
+              collapseEl.style.height = collapseEl.scrollHeight + 'px';
+              requestAnimationFrame(() => { collapseEl.style.height = '0px'; });
+              dropdownHeader.classList.remove('is-open');
+              dropdownHeader.setAttribute('aria-expanded', 'false');
+            } else {
+              dropdownHeader.classList.add('is-open');
+              dropdownHeader.setAttribute('aria-expanded', 'true');
+              collapseEl.style.height = collapseInner.scrollHeight + 'px';
+            }
+          });
+
+          // keep open panels correctly sized if content reflows (e.g. window resize)
+          collapseEl.addEventListener('transitionend', () => {
+            if (dropdownHeader.classList.contains('is-open')) {
+              collapseEl.style.height = 'auto';
+            }
+          });
 
           // PDF drop/click handling
           const pdfBox = topicCol.querySelector('.pdf-upload-box');
