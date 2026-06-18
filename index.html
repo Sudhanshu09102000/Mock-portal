@@ -2347,6 +2347,88 @@ body {
   opacity: .75;
 }
 
+/* ── Summary Q-card status colors (theme-aware) ── */
+/* Uses CSS variables so every theme (dark/light/sepia/etc.) looks great */
+
+/* Correct = green accent */
+.summary-q-card.sqc-correct {
+  background: color-mix(in srgb, #22c55e 18%, transparent) !important;
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 1px rgba(34,197,94,.25) inset !important;
+}
+
+/* Wrong = red accent */
+.summary-q-card.sqc-wrong {
+  background: color-mix(in srgb, #ef4444 18%, transparent) !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 1px rgba(239,68,68,.25) inset !important;
+}
+
+/* Unattempted = neutral grey (no harsh brown) */
+.summary-q-card.sqc-unattempted {
+  background: color-mix(in srgb, var(--grey, #64748b) 14%, transparent) !important;
+  border-color: color-mix(in srgb, var(--grey, #64748b) 55%, transparent) !important;
+}
+
+/* ── Status badges inside each card ── */
+.sqc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .3px;
+  border-radius: 999px;
+  padding: .18rem .55rem;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.sqc-badge-correct {
+  background: rgba(34,197,94,.18);
+  border-color: rgba(34,197,94,.65);
+  color: #16a34a;
+}
+/* Light mode: ensure green text is visible on light backgrounds */
+body:not(.dark-mode) .sqc-badge-correct {
+  background: rgba(34,197,94,.15);
+  color: #15803d;
+}
+
+.sqc-badge-wrong {
+  background: rgba(239,68,68,.18);
+  border-color: rgba(239,68,68,.65);
+  color: #dc2626;
+}
+body:not(.dark-mode) .sqc-badge-wrong {
+  background: rgba(239,68,68,.12);
+  color: #b91c1c;
+}
+
+.sqc-badge-unattempted {
+  background: color-mix(in srgb, var(--grey, #64748b) 14%, transparent);
+  border-color: color-mix(in srgb, var(--grey, #64748b) 50%, transparent);
+  color: var(--grey, #64748b);
+}
+
+/* Dark mode: make badge text bright enough to read */
+.dark-mode .sqc-badge-correct { color: #4ade80; }
+.dark-mode .sqc-badge-wrong   { color: #f87171; }
+.dark-mode .sqc-badge-unattempted { color: #94a3b8; }
+
+/* ── Summary legend row ── */
+.sqc-legend {
+  border-bottom: 1px solid color-mix(in srgb, var(--txt, #f1f5f9) 12%, transparent);
+  padding-bottom: .6rem !important;
+}
+.sqc-legend-label {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--muted, rgba(241,245,249,.70));
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+
 /* ── Grand control box fix for mobile ── */
 @media (max-width: 576px) {
   #grandControlBox {
@@ -5817,7 +5899,16 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 `;
 
         const cards = $('summaryCards');
-        cards.innerHTML = '';
+        cards.innerHTML = `
+          <div class="col-12">
+            <div class="sqc-legend d-flex flex-wrap gap-3 align-items-center py-2 px-1 mb-1">
+              <span class="sqc-legend-label">Legend:</span>
+              <span class="sqc-badge sqc-badge-correct">✓ Correct</span>
+              <span class="sqc-badge sqc-badge-wrong">✗ Wrong</span>
+              <span class="sqc-badge sqc-badge-unattempted">— Unattempted</span>
+            </div>
+          </div>
+        `;
 
         state.qIds.forEach((qid, idx) => {
           const q = state.questionsMap[qid];
@@ -5827,25 +5918,18 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           const hasSel = !!qs.selectedMetaId;
           const isCorrect = hasSel && (qs.selectedMetaId === sh.correctMetaId);
 
-          // ✅ Final Summary Colors
-          // Green = correct, Red = wrong, Brown = unattempted
-          let bg = 'rgba(78, 68, 51, 0.35)';     // strong brown
-          let border = 'rgba(255,170,50,.85)'; // bright brown border
-          let textColor = 'rgba(255,240,210,.95)';
-
+          // Semantic status class — CSS handles all theme-aware colors
+          let statusClass, statusBadge;
           if (hasSel && isCorrect) {
-            bg = 'rgba(34,197,94,.22)';        // green
-            border = 'rgba(34,197,94,.85)';
-            textColor = 'rgba(230,255,240,.95)';
+            statusClass = 'sqc-correct';
+            statusBadge = '<span class="sqc-badge sqc-badge-correct">✓ Correct</span>';
+          } else if (hasSel && !isCorrect) {
+            statusClass = 'sqc-wrong';
+            statusBadge = '<span class="sqc-badge sqc-badge-wrong">✗ Wrong</span>';
+          } else {
+            statusClass = 'sqc-unattempted';
+            statusBadge = '<span class="sqc-badge sqc-badge-unattempted">— Unattempted</span>';
           }
-          else if (hasSel && !isCorrect) {
-            bg = 'rgba(239,68,68,.22)';        // red
-            border = 'rgba(239,68,68,.85)';
-            textColor = 'rgba(255,235,235,.95)';
-          }
-          // else = brown stays (unattempted)
-
-          // else => unattempted stays brown
 
           const your = qs.selectedMetaId ? qs.selectedMetaId : '—';
           const corr = sh.correctMetaId;
@@ -5853,13 +5937,15 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           const col = document.createElement('div');
           col.className = 'col-12 col-lg-6';
           col.innerHTML = `
-      <div class="glass p-3 summary-q-card" style="background:${bg}; border-color:${border};">
-
+      <div class="glass p-3 summary-q-card ${statusClass}">
         <div class="d-flex justify-content-between align-items-center">
-          <div class="fw-semibold summary-q-num">Q${idx + 1}</div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="fw-semibold summary-q-num">Q${idx + 1}</div>
+            ${statusBadge}
+          </div>
           <button class="btn btn-sm btn-glass">Go</button>
         </div>
-<div class="summary-q-detail mt-2">Answer: <span class="fw-semibold">${escapeHtml(String(your))}</span> • Correct: <span class="fw-semibold">${escapeHtml(String(corr))}</span></div>
+        <div class="summary-q-detail mt-2">Answer: <span class="fw-semibold">${escapeHtml(String(your))}</span> • Correct: <span class="fw-semibold">${escapeHtml(String(corr))}</span></div>
       </div>
     `;
           col.querySelector('button').addEventListener('click', () => {
@@ -13796,6 +13882,39 @@ setTimeout(addBattleButtons, 1800);
         background: color-mix(in srgb, ${boxColor} 80%, ${textColor} 10%) !important;
         border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
       }
+      /* ── Summary card status colors — theme-safe ── */
+      /* Card backgrounds tinted with semantic colors, always readable */
+      .summary-q-card.sqc-correct {
+        background: color-mix(in srgb, #22c55e 16%, ${boxColor}) !important;
+        border-color: #22c55e !important;
+      }
+      .summary-q-card.sqc-wrong {
+        background: color-mix(in srgb, #ef4444 16%, ${boxColor}) !important;
+        border-color: #ef4444 !important;
+      }
+      .summary-q-card.sqc-unattempted {
+        background: color-mix(in srgb, ${textColor} 6%, ${boxColor}) !important;
+        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
+      }
+      /* Badge labels — always readable against theme */
+      .sqc-badge-correct {
+        background: color-mix(in srgb, #22c55e 20%, ${boxColor}) !important;
+        border-color: color-mix(in srgb, #22c55e 70%, transparent) !important;
+        color: color-mix(in srgb, #22c55e 90%, ${textColor}) !important;
+      }
+      .sqc-badge-wrong {
+        background: color-mix(in srgb, #ef4444 20%, ${boxColor}) !important;
+        border-color: color-mix(in srgb, #ef4444 70%, transparent) !important;
+        color: color-mix(in srgb, #ef4444 90%, ${textColor}) !important;
+      }
+      .sqc-badge-unattempted {
+        background: color-mix(in srgb, ${textColor} 10%, transparent) !important;
+        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
+        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
+      }
+      /* Legend label color */
+      .sqc-legend-label { color: color-mix(in srgb, ${textColor} 60%, transparent) !important; }
+      .sqc-legend { border-bottom-color: color-mix(in srgb, ${textColor} 14%, transparent) !important; }
       /* ── Battle mode overlay adapts to theme ── */
       #bmQuestionOverlay {
         background: ${bgColor} !important;
