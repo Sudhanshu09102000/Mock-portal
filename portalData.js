@@ -1,6 +1,6 @@
 const PORTAL_DATA = [
 
-  
+
   {
     title: "General Intelligence & Reasoning",
     colorClass: "reasoning",
@@ -46,7 +46,7 @@ const PORTAL_DATA = [
       },
 
       {
-        name: "History",
+        name: "Ancient History",
         subtopics: [
           { name: "Historical Sources of Ancient India", file: "historical-sources-of-ancient-india" },
           { name: "Prehistoric Period", file: "prehistoric-period" },
@@ -63,6 +63,12 @@ const PORTAL_DATA = [
           { name: "Other Later-Gupta Dynasties", file: "other-later-gupta-dynasties" },
           { name: "Sangam Period", file: "sangam-period" },
           { name: "Kingdom of South India", file: "kingdom-of-south-india" },
+        ]
+      },
+
+      {
+        name: "Medieval History",
+        subtopics: [
           { name: "Medieval India - The Conquest of Sindh by the Arabs", file: "conquest-of-sindh-by-the-arabs" },
           { name: "Sources of Medieval Indian History", file: "sources-of-medieval-indian-history" },
           { name: "Invasion of the Turks", file: "invasion-of-the-turks" },
@@ -82,6 +88,11 @@ const PORTAL_DATA = [
           { name: "Sufi & Bhakti Movement", file: "sufi-and-bhakti-movement" },
           { name: "Administrative Structure", file: "administrative-structure" },
           { name: "Maratha Empire", file: "maratha-empire" },
+        ]
+      },
+        {
+        name: "Modern History",
+        subtopics: [
           { name: "Advent of Europeans", file: "advent-of-europeans" },
           { name: "New Autonomous States in the 18th Century", file: "new-autonomous-states-18th-century" },
           { name: "The British Conquest of India", file: "british-conquest-of-india" },
@@ -100,7 +111,6 @@ const PORTAL_DATA = [
           { name: "Governor Generals & Viceroys", file: "governor-generals-and-viceroys" },
         ]
       },
-      
       {
         name: "Polity",
         subtopics: [
