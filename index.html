@@ -3,13 +3,27 @@
 
 <head>
   <meta charset="utf-8" />
-  <!-- CRITICAL: capture ?battle= into sessionStorage BEFORE any pushState strips it -->
+  <!-- CRITICAL: capture ?battle= and ?launch= into sessionStorage BEFORE any pushState strips it -->
   <script>
   (function(){
-    var b = new URLSearchParams(location.search).get("battle");
+    var qs = new URLSearchParams(location.search);
+    var b = qs.get("battle");
     if (b) {
       sessionStorage.setItem("_bmInviteCode", b.trim().toUpperCase());
-      // Clean the URL now so pushState in initBackGuard sees a clean pathname
+    }
+    // Shared direct-test links (?launch=1&file=...&subject=...&topic=...&subtopic=...)
+    // must be captured here too, otherwise initBackGuard's pushState(..., location.pathname)
+    // wipes the query string before the test can be auto-launched.
+    if (qs.get("launch") === "1" && qs.get("file")) {
+      sessionStorage.setItem("_directLaunch", JSON.stringify({
+        fileKey:      qs.get("file")     || "",
+        subjectTitle: qs.get("subject")  || "",
+        topicName:    qs.get("topic")    || "",
+        subtopicName: qs.get("subtopic") || ""
+      }));
+    }
+    // Clean the URL now so pushState in initBackGuard sees a clean pathname
+    if (b || qs.get("launch") === "1") {
       history.replaceState({}, "", location.pathname);
     }
   })();
@@ -6622,19 +6636,18 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         }, 2800);
       }
 
-      /* ── Auto-launch from shared URL ── */
+      /* ── Auto-launch from shared URL ──
+         The query string itself is long gone by this point (initBackGuard's
+         pushState wipes it earlier in page load), so read the copy that was
+         captured into sessionStorage at the very top of <head>, before that
+         pushState ever ran. */
       (function checkDirectLaunch() {
-        const p = new URLSearchParams(location.search);
-        if (p.get('launch') !== '1') return;
-        const sel = {
-          fileKey:      p.get('file')     || '',
-          subjectTitle: p.get('subject')  || '',
-          topicName:    p.get('topic')    || '',
-          subtopicName: p.get('subtopic') || '',
-        };
-        if (!sel.fileKey) return;
-        // Clean URL so refresh doesn't re-trigger
-        history.replaceState({}, '', location.pathname);
+        const raw = sessionStorage.getItem('_directLaunch');
+        if (!raw) return;
+        sessionStorage.removeItem('_directLaunch'); // one-shot: don't re-trigger on refresh
+        let sel;
+        try { sel = JSON.parse(raw); } catch (e) { return; }
+        if (!sel || !sel.fileKey) return;
         // Small delay to let page finish rendering
         setTimeout(() => startTestFromPortal(sel), 350);
       })();
