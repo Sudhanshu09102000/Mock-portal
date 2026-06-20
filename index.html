@@ -7623,12 +7623,34 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
 <script>
 (function(){
+/* ── DISABLED ──────────────────────────────────────────────────────────
+   This legacy "/" font panel has been superseded by the God Control
+   Panel's font controls (gcp-font-select / gcp-font-size), which now
+   correctly cover Battle Mode (.bm-qtext / .bm-opt) and override the
+   #optionsArea .option mobile rule. Keeping this old panel's style
+   injection alive caused it to silently fight the new panel and skip
+   Battle Mode text, so it is fully disabled here rather than removed,
+   to avoid touching unrelated code paths.
+   ────────────────────────────────────────────────────────────────────── */
+})();
+</script>
+
+<script>
+(function(){
 
 /* ===== Load Google Fonts ===== */
 const fontLink=document.createElement("link");
 fontLink.rel="stylesheet";
 fontLink.href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Inter:wght@400;500&family=Roboto:wght@400;500&family=Nunito:wght@400;600&family=Merriweather:wght@400;700&display=swap";
 document.head.appendChild(fontLink);
+
+/* NOTE: panel intentionally not created/appended — see disabled block above */
+
+})();
+</script>
+
+<script type="text/disabled-legacy-font-panel" data-disabled="legacy-font-panel">
+(function(){
 
 /* ===== Create style controller ===== */
 const styleTag=document.createElement("style");
@@ -8344,8 +8366,15 @@ function injectStyles() {
     border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);
     color:#f1f5f9;font-size:15px;text-align:left;cursor:pointer;margin-bottom:10px;
     transition:background .12s,border-color .12s,transform .08s;
-    display:flex;align-items:center;gap:10px;box-sizing:border-box;
+    display:flex;align-items:flex-start;gap:10px;box-sizing:border-box;
+    height:auto;min-height:0;white-space:normal;
   }
+  .bm-opt > span:last-child {
+    flex:1 1 auto;min-width:0;white-space:normal;word-break:break-word;
+    overflow-wrap:anywhere;line-height:1.45;
+  }
+  .bm-opt-key { margin-top:1px; }
+  .bm-opt-letter { margin-top:2px; }
   .bm-opt:active { transform:scale(.98); }
   .bm-opt:hover  { background:rgba(255,255,255,.11);border-color:rgba(59, 130, 246,.5); }
   .bm-opt.bm-correct {
@@ -13716,24 +13745,40 @@ setTimeout(addBattleButtons, 1800);
   const fontSelect = document.getElementById('gcp-font-select');
   const fontSizeSlider = document.getElementById('gcp-font-size');
   const fontSizeVal = document.getElementById('gcp-font-size-val');
-  let fontStyle = document.createElement('style');
-  document.head.appendChild(fontStyle);
+  // Separate style tags for family vs size so setting one never wipes the other out
+  let fontFamilyStyle = document.createElement('style');
+  let fontSizeStyle = document.createElement('style');
+  document.head.appendChild(fontFamilyStyle);
+  document.head.appendChild(fontSizeStyle);
 
   function applyFont(font) {
-    fontStyle.textContent = `
+    fontFamilyStyle.textContent = `
       html, body, *:not(button):not(.gbl-toolbar *):not(.gcp-panel *) {
         font-family: ${font} !important;
       }
-      #questionText, .qbox, .opt-text, .option, .subtopic-btn {
+      #questionText, .qbox, .opt-text, .option, .subtopic-btn,
+      .bm-qtext, .bm-opt, .bm-opt *, #bmQCardWrap * {
         font-family: ${font} !important;
       }
     `;
   }
   function applySize(size) {
-    fontStyle.textContent = fontStyle.textContent.replace(/font-size:[^!;]*!important;?\s*/g,'');
-    fontStyle.textContent += `
-      #questionText, .qbox, .option, .opt-text,
-      #qmarkModalBody, #qmarkModalBody * { font-size: ${size}px !important; }
+    // High-specificity selectors so this beats #optionsArea .option,
+    // #questionText, and other !important rules defined earlier in the sheet
+    fontSizeStyle.textContent = `
+      html body #questionText,
+      html body .qbox,
+      html body .option,
+      html body #optionsArea .option,
+      html body .opt-text,
+      html body #qmarkModalBody,
+      html body #qmarkModalBody *,
+      html body .bm-qtext,
+      html body .bm-opt,
+      html body #bmQCardWrap .bm-opt,
+      html body .bm-opt > span:last-child {
+        font-size: ${size}px !important;
+      }
     `;
   }
   fontSelect.addEventListener('change', () => applyFont(fontSelect.value));
