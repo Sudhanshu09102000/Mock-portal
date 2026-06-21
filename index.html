@@ -8366,7 +8366,7 @@ function injectStyles() {
     border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);
     color:#f1f5f9;font-size:15px;text-align:left;cursor:pointer;margin-bottom:10px;
     transition:background .12s,border-color .12s,transform .08s;
-    display:flex;align-items:flex-start;gap:10px;box-sizing:border-box;
+    display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px;box-sizing:border-box;
     height:auto;min-height:0;white-space:normal;
   }
   .bm-opt > span:last-child {
@@ -9380,7 +9380,7 @@ async function bmApplyDualLang() {
       btn.querySelectorAll('.bm-dl').forEach(n => n.remove());
       const d = document.createElement('div');
       d.className = 'bm-dl';
-      d.style.cssText = 'font-size:11px;color:rgba(241,245,249,.60);font-style:italic;margin-top:3px;display:block;padding-left:2px;';
+      d.style.cssText = 'font-size:11px;color:rgba(241,245,249,.60);font-style:italic;margin-top:3px;display:block;padding-left:2px;flex-basis:100%;width:100%;white-space:normal;word-break:break-word;overflow-wrap:anywhere;';
       d.textContent = tr;
       btn.appendChild(d);
     }
