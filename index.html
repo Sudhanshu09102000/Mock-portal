@@ -6240,21 +6240,26 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           }));
         }
 
+        // Read live theme colours for PDF card rendering
+        const _pdfTxt = document.getElementById('gcp-text-color') ? document.getElementById('gcp-text-color').value : '#dde8ff';
+        const _pdfBg  = document.getElementById('gcp-bg-color')   ? document.getElementById('gcp-bg-color').value   : '#0d1117';
+        const _pdfBox = document.getElementById('gcp-box-color')  ? document.getElementById('gcp-box-color').value  : '#111827';
+
         // Build per-option HTML with exact test colours
         function _optHtml(optText, mid, your, corr) {
           const isCC = corr === mid, isY = your === mid;
           let bg, border, clr, leftBar = '';
           if (isCC) {
-            bg = 'rgba(34,197,94,0.12)'; border = isY ? '#22c55e' : '#16a34a'; clr = '#4ade80';
+            bg = 'rgba(34,197,94,0.18)'; border = isY ? '#22c55e' : '#16a34a'; clr = '#4ade80';
             leftBar = '<div style="position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:14px 0 0 14px;background:linear-gradient(180deg,#22c55e,#22c55e55);"></div>';
           } else if (isY) {
-            bg = 'rgba(239,68,68,0.12)'; border = '#ef4444'; clr = '#f87171';
+            bg = 'rgba(239,68,68,0.18)'; border = '#ef4444'; clr = '#f87171';
             leftBar = '<div style="position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:14px 0 0 14px;background:linear-gradient(180deg,#ef4444,#ef444433);"></div>';
           } else {
-            bg = 'rgba(255,255,255,0.04)'; border = 'rgba(255,255,255,0.14)'; clr = '#c0cff0';
+            bg = 'rgba(128,128,128,0.08)'; border = 'rgba(128,128,128,0.25)'; clr = _pdfTxt;
           }
-          const numBg  = isCC ? '#14532d' : isY ? '#7f1d1d' : '#182038';
-          const numClr = isCC ? '#4ade80' : isY ? '#f87171' : '#64748b';
+          const numBg  = isCC ? 'rgba(34,197,94,0.22)' : isY ? 'rgba(239,68,68,0.22)' : 'rgba(128,128,128,0.15)';
+          const numClr = isCC ? '#4ade80' : isY ? '#f87171' : _pdfTxt;
           const icon   = (isCC || isY) ? `<span style="margin-left:auto;padding-left:8px;font-size:17px;font-weight:700;color:${isCC?'#4ade80':'#f87171'};">${isCC?'✓':'✗'}</span>` : '';
           return `
             <div style="position:relative;display:flex;align-items:center;gap:12px;
@@ -6270,7 +6275,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             </div>`;
         }
 
-        // Build full question-card HTML (exactly like the test screen)
+        // Build full question-card HTML — uses live theme colours
         function _buildQCardHtml(q, exp, qs, sh, idx) {
           const your = qs.selectedMetaId || null;
           const corr = sh.correctMetaId;
@@ -6278,10 +6283,11 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           const isUn = !your;
 
           const statusLabel = isUn ? 'UNATTEMPTED' : isC ? '✓ CORRECT' : '✗ WRONG';
-          const statusBg    = isUn ? 'rgba(129,140,248,0.15)' : isC ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)';
+          const statusBg    = isUn ? 'rgba(129,140,248,0.18)' : isC ? 'rgba(34,197,94,0.18)' : 'rgba(239,68,68,0.18)';
           const statusClr   = isUn ? '#a5b4fc' : isC ? '#4ade80' : '#f87171';
-          const hdrBg       = isUn ? '#0e1530' : isC ? '#071c10' : '#1a0707';
+          // Header bg = tinted version of box color toward accent
           const accentClr   = isUn ? '#818cf8' : isC ? '#22c55e' : '#ef4444';
+          const hdrBg       = _pdfBox; // use theme box colour for header
 
           const opts     = sh.order.map(i => q.options[i]);
           const optsHtml = opts.map((o, i) => _optHtml(o, String(i+1), your, corr)).join('');
@@ -6290,32 +6296,32 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             ? (isC ? `✓&nbsp; Your answer (${your}) is CORRECT`
                    : `✗&nbsp; Your answer: ${your} &nbsp;—&nbsp; Correct answer: ${corr}`)
             : `Not attempted &nbsp;—&nbsp; Correct answer: ${corr}`;
-          const stripClr = isUn ? '#7c8db5' : isC ? '#4ade80' : '#f87171';
+          const stripClr = isUn ? _pdfTxt : isC ? '#4ade80' : '#f87171';
 
           const expText   = (exp && exp.text)  ? exp.text  : '';
           const expImgSrc = (exp && exp.image) ? exp.image : '';
           const expSection = (expText || expImgSrc) ? `
-            <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.09);">
+            <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(128,128,128,0.18);">
               <div style="display:inline-block;margin-bottom:10px;padding:3px 14px;
                           border-radius:999px;border:1px solid rgba(34,211,238,0.45);
-                          background:rgba(34,211,238,0.08);color:#22d3ee;
+                          background:rgba(34,211,238,0.10);color:#22d3ee;
                           font-size:11px;font-weight:700;letter-spacing:0.6px;">EXPLANATION</div>
-              ${expText ? `<div style="color:#d8e4ff;font-size:14.5px;line-height:1.75;">${expText}</div>` : ''}
+              ${expText ? `<div style="color:${_pdfTxt};font-size:14.5px;line-height:1.75;">${expText}</div>` : ''}
               ${expImgSrc ? `<img src="${expImgSrc}" crossorigin="anonymous"
                                   style="max-width:100%;border-radius:12px;margin-top:10px;
-                                         border:1px solid rgba(255,255,255,0.14);" />` : ''}
+                                         border:1px solid rgba(128,128,128,0.2);" />` : ''}
             </div>` : '';
 
           return `
-            <div style="background:linear-gradient(160deg,#0c1224,#090d1c);
+            <div style="background:${_pdfBg};
                         border-radius:18px;overflow:hidden;
                         font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
-                        border:1px solid rgba(255,255,255,0.09);">
+                        border:1px solid rgba(128,128,128,0.18);">
               <!-- Header bar -->
               <div style="background:${hdrBg};padding:13px 20px;display:flex;
                           align-items:center;justify-content:space-between;
                           border-left:5px solid ${accentClr};">
-                <span style="color:#fff;font-weight:700;font-size:17px;">Q${idx+1}</span>
+                <span style="color:${_pdfTxt};font-weight:700;font-size:17px;">Q${idx+1}</span>
                 <span style="padding:4px 16px;border-radius:999px;background:${statusBg};
                              color:${statusClr};font-size:11px;font-weight:700;
                              border:1px solid ${accentClr}55;">${statusLabel}</span>
@@ -6323,18 +6329,18 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               <!-- Body -->
               <div style="padding:20px 22px 22px;">
                 <!-- Question text (full HTML preserved) -->
-                <div style="color:#dde8ff;font-size:16px;line-height:1.75;
+                <div style="color:${_pdfTxt};font-size:16px;line-height:1.75;
                             font-weight:600;margin-bottom:${q.image?'10px':'16px'};">${q.text}</div>
                 <!-- Question image -->
                 ${q.image ? `<img src="${q.image}" crossorigin="anonymous"
                                   style="max-width:100%;border-radius:12px;margin-bottom:16px;
-                                         border:1px solid rgba(255,255,255,0.14);" />` : ''}
+                                         border:1px solid rgba(128,128,128,0.2);" />` : ''}
                 <!-- Options (full HTML preserved, with correct/wrong colours) -->
                 <div style="margin-bottom:10px;">${optsHtml}</div>
                 <!-- Answer strip -->
                 <div style="padding:10px 18px;border-radius:10px;
-                            background:linear-gradient(90deg,#0b1230,#0f1a3c);
-                            border:1px solid #1a2848;margin-bottom:4px;">
+                            background:${_pdfBox};
+                            border:1px solid rgba(128,128,128,0.2);margin-bottom:4px;">
                   <span style="font-size:13px;font-weight:600;color:${stripClr};">${stripTxt}</span>
                 </div>
                 <!-- Explanation -->
@@ -6343,10 +6349,12 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             </div>`;
         }
 
-        // Progress toast
+        // Progress toast — read live theme colours so it always matches the active theme
+        const _thTxt = document.getElementById('gcp-text-color') ? document.getElementById('gcp-text-color').value : '#e0e8ff';
+        const _thBox = document.getElementById('gcp-box-color')  ? document.getElementById('gcp-box-color').value  : '#1e2a50';
         const _toast = document.createElement('div');
-        _toast.style.cssText = 'position:fixed;bottom:28px;right:28px;z-index:9999;background:#1e2a50;border:1px solid rgba(59, 130, 246,.5);color:#e0e8ff;font:600 13px -apple-system,sans-serif;padding:12px 20px;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:220px;';
-        _toast.innerHTML = '⏳ Generating PDF… <span id="_pdfProg">0</span> / ' + state.qIds.length;
+        _toast.style.cssText = `position:fixed;bottom:28px;right:28px;z-index:9999;background:${_thBox};border:1px solid color-mix(in srgb,${_thTxt} 35%,transparent);color:${_thTxt};font:600 13px -apple-system,sans-serif;padding:12px 20px;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:220px;`;
+        _toast.innerHTML = '⏳ Generating PDF… <span id="_pdfProg" style="color:' + _thTxt + '">0</span> / ' + state.qIds.length;
         document.body.appendChild(_toast);
         const _prog = document.getElementById('_pdfProg');
 
@@ -6376,7 +6384,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           // Capture as image
           const qCanvas = await html2canvas(_wrap.firstElementChild, {
             scale: 2,
-            backgroundColor: '#0c1224',
+            backgroundColor: _pdfBg,
             useCORS: true,
             allowTaint: true,
             logging: false,
@@ -6469,7 +6477,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             await new Promise(r => setTimeout(r, 30));
 
             const rCanvas = await html2canvas(_wrap2.firstElementChild, {
-              scale: 2, backgroundColor: '#0c1224', useCORS: true, allowTaint: true, logging: false, removeContainer: false,
+              scale: 2, backgroundColor: _pdfBg, useCORS: true, allowTaint: true, logging: false, removeContainer: false,
             });
 
             const rImgH = cW * rCanvas.height / rCanvas.width;
