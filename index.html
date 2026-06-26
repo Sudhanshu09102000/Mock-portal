@@ -5043,13 +5043,18 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         state.currentIndex = Math.max(0, Math.min(index, state.qCount - 1));
         const qid = state.qIds[state.currentIndex];
 
-        // ── Close/update mobile hint panel on question change ──
+        // ── Update mobile hint panel content on question change (stays open like desktop) ──
         (function() {
           const mp = document.getElementById('mobileHintPanel');
-          if (mp && mp.classList.contains('visible')) {
-            // Auto-close on question change so stale hint isn't shown
-            mp.classList.remove('visible');
-            mp.style.display = 'none';
+          const mb = document.getElementById('mobileHintPanel-body');
+          if (mp && mp.classList.contains('visible') && !state.examMode && mb) {
+            if (typeof buildHelpContentHtml === 'function') {
+              const { html } = buildHelpContentHtml(qid);
+              mb.innerHTML = html;
+              if (state.dualLang && typeof translateStickyPanelBody === 'function') {
+                setTimeout(() => translateStickyPanelBody(qid), 120);
+              }
+            }
           }
         })();
 
