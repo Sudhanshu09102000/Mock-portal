@@ -7460,7 +7460,13 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       async function translateStickyPanelBody(qid) {
         const lang = state.dualLang;
         if (!lang) return;
-        const stickyBody = document.getElementById('stickyExpPanel-body');
+
+        // Determine which body element to update — mobile panel or desktop panel
+        const mobilePanel = document.getElementById('mobileHintPanel');
+        const isMobileVisible = mobilePanel && mobilePanel.classList.contains('visible');
+        const stickyBody = isMobileVisible
+          ? document.getElementById('mobileHintPanel-body')
+          : document.getElementById('stickyExpPanel-body');
         if (!stickyBody) return;
 
         const langNames = {
