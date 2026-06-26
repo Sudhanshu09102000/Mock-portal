@@ -7173,10 +7173,16 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       function showStickyPanel(qid) {
         if (state.examMode) return;
 
-        // Copy content from modal body (minus the stick-on button itself)
-        const modalBody = document.getElementById('qmarkModalBody');
-        const clone = modalBody ? modalBody.cloneNode(true) : null;
-        if (clone) clone.querySelectorAll('.stick-on-btn-wrap').forEach(n => n.remove());
+        // ✅ Build fresh content directly from the data layer instead of cloning
+        // the modal body — cloning could "freeze" a half-finished translation
+        // (still showing its spinner, or not yet appended) if the user taps
+        // "Stick On" before the modal's own async translation fetch resolves.
+        const { html, img } = (typeof buildHelpContentHtml === 'function')
+          ? buildHelpContentHtml(qid)
+          : { html: '', img: '' };
+        const imgHtml = img
+          ? `<div class="text-center mt-2"><img src="${img}" style="max-width:100%;border-radius:12px;" /></div>`
+          : '';
 
         // ── Mobile: render inside question box, below buttons ──
         const isMobile = window.matchMedia('(max-width: 767px)').matches;
@@ -7186,12 +7192,18 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           const mBody  = document.getElementById('mobileHintPanel-body');
           if (!slot || !mPanel || !mBody) return;
 
-          mBody.innerHTML = clone ? clone.innerHTML : '';
+          mBody.innerHTML = html + imgHtml;
           // Move panel into slot (inside question box) so scroll is natural
           slot.innerHTML = '';
           slot.appendChild(mPanel);
           mPanel.classList.add('visible');
           mPanel.style.display = 'block';
+
+          // ✅ Independently (re)trigger translation for this panel — don't
+          // rely on the modal's translation having already finished.
+          if (state.dualLang && typeof translateStickyPanelBody === 'function') {
+            setTimeout(() => translateStickyPanelBody(qid), 80);
+          }
 
           // Smooth scroll to hint panel
           setTimeout(() => {
@@ -7215,9 +7227,14 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         const body  = document.getElementById('stickyExpPanel-body');
         if (!panel || !body) return;
 
-        body.innerHTML = clone ? clone.innerHTML : '';
+        body.innerHTML = html + imgHtml;
         panel.classList.add('visible');
         initStickyPanelDrag(panel);
+
+        // ✅ Independently (re)trigger translation for this panel.
+        if (state.dualLang && typeof translateStickyPanelBody === 'function') {
+          setTimeout(() => translateStickyPanelBody(qid), 80);
+        }
       }
 
       /* ── Drag logic for sticky panel ── */
@@ -15074,6 +15091,56 @@ setTimeout(addBattleButtons, 1800);
       #gcp-font-select option {
         background: color-mix(in srgb, ${bgColor} 90%, ${textColor} 10%) !important;
         color: ${textColor} !important;
+      }
+      /* ── 📌 Sticky "Answer & Explanation" panel (desktop floating) follows theme ── */
+      #stickyExpPanel {
+        background: color-mix(in srgb, ${boxColor} 95%, ${textColor} 5%) !important;
+        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
+        box-shadow: 0 8px 40px rgba(0,0,0,.45), 0 2px 12px color-mix(in srgb, ${textColor} 15%, transparent) !important;
+      }
+      #stickyExpPanel-header {
+        background: color-mix(in srgb, ${boxColor} 80%, ${textColor} 14%) !important;
+        border-bottom-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
+      }
+      #stickyExpPanel-title {
+        color: ${textColor} !important;
+        -webkit-text-fill-color: ${textColor} !important;
+      }
+      #stickyExpPanel-body {
+        color: ${textColor} !important;
+      }
+      #stickyExpPanel-body::-webkit-scrollbar-thumb {
+        background: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+      }
+      #stickyExpPanel-footer {
+        border-top-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
+      }
+      /* ── 📌 Mobile "Answer & Explanation" sticky panel follows theme ── */
+      #mobileHintPanel {
+        background: color-mix(in srgb, ${boxColor} 95%, ${textColor} 5%) !important;
+        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
+        box-shadow: 0 8px 32px rgba(0,0,0,.50), 0 2px 12px color-mix(in srgb, ${textColor} 15%, transparent) !important;
+      }
+      #mobileHintPanel-header {
+        background: color-mix(in srgb, ${boxColor} 80%, ${textColor} 14%) !important;
+        border-bottom-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
+      }
+      #mobileHintPanel-title {
+        color: ${textColor} !important;
+        -webkit-text-fill-color: ${textColor} !important;
+      }
+      #mobileHintPanel-body {
+        color: ${textColor} !important;
+      }
+      #mobileHintPanel-footer {
+        border-top-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
+      }
+      /* Translation blocks inside the sticky/mobile panels also follow theme */
+      #stickyExpPanel-body .modal-tl-block,
+      #mobileHintPanel-body .modal-tl-block {
+        background: linear-gradient(135deg, color-mix(in srgb, ${textColor} 10%, transparent), color-mix(in srgb, ${textColor} 6%, transparent)) !important;
+        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
+        border-left-color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
       }
     `;
     // Sync pickers
