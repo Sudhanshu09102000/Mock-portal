@@ -854,6 +854,112 @@
       color: var(--txt);
     }
 
+    /* ── Mobile Sticky Hint Panel (below question box, scrollable) ── */
+    #mobileHintPanel {
+      display: none;
+    }
+    @media (max-width: 767px) {
+      #mobileHintPanel {
+        display: none; /* shown via JS only */
+        margin-top: 1rem;
+        border-radius: 16px;
+        border: 1.5px solid rgba(96,165,250,.40);
+        background: linear-gradient(160deg, rgba(13,20,35,.96), rgba(10,15,28,.98));
+        backdrop-filter: blur(18px) saturate(1.4);
+        -webkit-backdrop-filter: blur(18px) saturate(1.4);
+        box-shadow: 0 8px 32px rgba(0,0,0,.50), 0 0 0 1px rgba(96,165,250,.08), 0 2px 12px rgba(59,130,246,.15);
+        overflow: hidden;
+        animation: mobileHintSlideIn .32s cubic-bezier(.22,.68,0,1.12) forwards;
+      }
+      #mobileHintPanel.visible {
+        display: block;
+      }
+      @keyframes mobileHintSlideIn {
+        from { opacity: 0; transform: translateY(14px) scale(.98); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      #mobileHintPanel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: .7rem 1rem .6rem;
+        background: linear-gradient(90deg, rgba(59,130,246,.20), rgba(56,189,248,.08));
+        border-bottom: 1px solid rgba(96,165,250,.18);
+      }
+      #mobileHintPanel-title {
+        font-size: .80em;
+        font-weight: 800;
+        letter-spacing: .6px;
+        text-transform: uppercase;
+        color: rgba(147,197,253,.92);
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+      }
+      #mobileHintPanel-close {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 1px solid rgba(248,113,113,.40);
+        background: rgba(239,68,68,.10);
+        color: rgba(252,165,165,.90);
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background .15s ease, border-color .15s ease, transform .15s ease;
+        flex-shrink: 0;
+      }
+      #mobileHintPanel-close:hover {
+        background: rgba(239,68,68,.25);
+        border-color: rgba(248,113,113,.75);
+        transform: scale(1.08);
+      }
+      #mobileHintPanel-body {
+        padding: .9rem 1rem 1rem;
+        font-size: .91em;
+        color: var(--txt, #e2e8f0);
+        line-height: 1.68;
+      }
+      #mobileHintPanel-body img {
+        max-width: 100%;
+        border-radius: 12px;
+        margin-top: .5rem;
+        border: 1px solid rgba(255,255,255,.12);
+      }
+      #mobileHintPanel-footer {
+        padding: .55rem .9rem .7rem;
+        border-top: 1px solid rgba(96,165,250,.12);
+        display: flex;
+        justify-content: center;
+      }
+      #mobileHintDismissBtn {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .42rem 1.2rem;
+        border-radius: 20px;
+        border: 1.5px solid rgba(248,113,113,.45);
+        background: rgba(239,68,68,.12);
+        color: rgba(252,165,165,.90);
+        font-size: .80em;
+        font-weight: 700;
+        letter-spacing: .4px;
+        cursor: pointer;
+        transition: all .18s ease;
+      }
+      #mobileHintDismissBtn:hover {
+        background: rgba(239,68,68,.25);
+        border-color: rgba(248,113,113,.80);
+      }
+      /* On mobile, hide the desktop floating panel */
+      #stickyExpPanel.visible {
+        display: none !important;
+      }
+    }
+
     /* ✅ CLASSIC PREMIUM FONT + LOOK FOR ANSWER MODAL / HELP BOX */
     /* @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap'); */
 
@@ -3627,6 +3733,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
                 <button id="showSummaryBtn" class="btn btn-glass d-none">Show summary</button>
               </div>
 
+              <!-- ── Mobile Hint Panel slot (populated via JS on mobile) ── -->
+              <div id="mobileHintSlot"></div>
+
               
               <div class="top-toolbar ms-auto mobile-move-toolbar" ">
                 <!-- ✅ Answer / Explanation (?) button (ONLY Practice Mode) -->
@@ -3865,6 +3974,18 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
     <div id="stickyExpPanel-body"></div>
     <div id="stickyExpPanel-footer">
       <button id="removeFromHereBtn">✕ Remove This From Here</button>
+    </div>
+  </div>
+
+  <!-- ── Mobile Inline Hint Panel (appears below question box on small screens) ── -->
+  <div id="mobileHintPanel" role="region" aria-label="Hint & Explanation" style="display:none;">
+    <div id="mobileHintPanel-header">
+      <span id="mobileHintPanel-title">📌 Answer &amp; Explanation</span>
+      <button id="mobileHintPanel-close" aria-label="Close hint">✕</button>
+    </div>
+    <div id="mobileHintPanel-body"></div>
+    <div id="mobileHintPanel-footer">
+      <button id="mobileHintDismissBtn">✕ Close Explanation</button>
     </div>
   </div>
 
@@ -4921,6 +5042,16 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       function renderQuestion(index) {
         state.currentIndex = Math.max(0, Math.min(index, state.qCount - 1));
         const qid = state.qIds[state.currentIndex];
+
+        // ── Close/update mobile hint panel on question change ──
+        (function() {
+          const mp = document.getElementById('mobileHintPanel');
+          if (mp && mp.classList.contains('visible')) {
+            // Auto-close on question change so stale hint isn't shown
+            mp.classList.remove('visible');
+            mp.style.display = 'none';
+          }
+        })();
 
         // ── Update sticky panel if visible ──
         (function() {
@@ -7036,18 +7167,50 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       /* ── Sticky Panel: show with current Q content ── */
       function showStickyPanel(qid) {
         if (state.examMode) return;
-        const panel = document.getElementById('stickyExpPanel');
-        const body  = document.getElementById('stickyExpPanel-body');
-        if (!panel || !body) return;
 
         // Copy content from modal body (minus the stick-on button itself)
         const modalBody = document.getElementById('qmarkModalBody');
         const clone = modalBody ? modalBody.cloneNode(true) : null;
-        if (clone) {
-          clone.querySelectorAll('.stick-on-btn-wrap').forEach(n => n.remove());
-          body.innerHTML = clone.innerHTML;
+        if (clone) clone.querySelectorAll('.stick-on-btn-wrap').forEach(n => n.remove());
+
+        // ── Mobile: render inside question box, below buttons ──
+        const isMobile = window.matchMedia('(max-width: 767px)').matches;
+        if (isMobile) {
+          const slot   = document.getElementById('mobileHintSlot');
+          const mPanel = document.getElementById('mobileHintPanel');
+          const mBody  = document.getElementById('mobileHintPanel-body');
+          if (!slot || !mPanel || !mBody) return;
+
+          mBody.innerHTML = clone ? clone.innerHTML : '';
+          // Move panel into slot (inside question box) so scroll is natural
+          slot.innerHTML = '';
+          slot.appendChild(mPanel);
+          mPanel.classList.add('visible');
+          mPanel.style.display = 'block';
+
+          // Smooth scroll to hint panel
+          setTimeout(() => {
+            mPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 80);
+
+          // Close buttons
+          const closeBtn   = document.getElementById('mobileHintPanel-close');
+          const dismissBtn = document.getElementById('mobileHintDismissBtn');
+          function closeMobileHint() {
+            mPanel.classList.remove('visible');
+            mPanel.style.display = 'none';
+          }
+          if (closeBtn)   closeBtn.onclick   = closeMobileHint;
+          if (dismissBtn) dismissBtn.onclick  = closeMobileHint;
+          return;
         }
 
+        // ── Desktop: floating draggable panel ──
+        const panel = document.getElementById('stickyExpPanel');
+        const body  = document.getElementById('stickyExpPanel-body');
+        if (!panel || !body) return;
+
+        body.innerHTML = clone ? clone.innerHTML : '';
         panel.classList.add('visible');
         initStickyPanelDrag(panel);
       }
