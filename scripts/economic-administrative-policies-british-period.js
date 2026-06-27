@@ -126,7 +126,7 @@ window.TEST_DATA = {
     ],
     "correct": "2",
     "quesimage": "",
-    "exptext": "<b>Indigo, cotton, opium, tea, jute, and coffee</b><br><br>To promote the export of raw material, emphasis was laid on the commercialization of agriculture, in which farmers were forced to produce <b>indigo, cotton, opium, tea, jute, coffee</b>, etc. As a result, food shortage started increasing in India.<br><br>The Indian handicraft cottage industry started declining. Due to the destruction of industries, <b>poverty, unemployment, and hunger</b> increased in India.<br><br>Important Statements:<br>• <b>Karl Marx</b> — "The world's cloth house was filled with foreign cloth."<br>• <b>Lord William Bentinck</b> — "The land of India became white with the bones of weavers."",
+    "exptext": `<b>Indigo, cotton, opium, tea, jute, and coffee</b><br><br>To promote the export of raw material, emphasis was laid on the commercialization of agriculture, in which farmers were forced to produce <b>indigo, cotton, opium, tea, jute, coffee</b>, etc. As a result, food shortage started increasing in India.<br><br>The Indian handicraft cottage industry started declining. Due to the destruction of industries, <b>poverty, unemployment, and hunger</b> increased in India.<br><br>Important Statements:<br>• <b>Karl Marx</b> — "The world's cloth house was filled with foreign cloth."<br>• <b>Lord William Bentinck</b> — "The land of India became white with the bones of weavers."`,
     "expimage": ""
   },
   "11": {
@@ -165,7 +165,7 @@ window.TEST_DATA = {
     ],
     "correct": "1",
     "quesimage": "",
-    "exptext": "<b>Thomas Robertson</b><br><br>In <b>1903</b>, <b>Curzon</b> established a <b>Railway Board</b> under the leadership of <b>Thomas Robertson</b>. It is worth remembering that the fastest development of railways took place during <b>Curzon's</b> reign.<br><br>On the basis of the report of the <b>'Eckbarth Commission' (1921-22)</b>, the railway budget was separated from the general budget in <b>1925</b>. Before independence, in <b>1947</b>, a committee was formed under the chairmanship of <b>K.C. Niyogi</b> to inspect facts related to railway finance.<br><br><b>Tilak</b> remarked — "To be happy over the development of railways by the British in India is like being happy over the ornaments of another's wife."",
+    "exptext": `<b>Thomas Robertson</b><br><br>In <b>1903</b>, <b>Curzon</b> established a <b>Railway Board</b> under the leadership of <b>Thomas Robertson</b>. It is worth remembering that the fastest development of railways took place during <b>Curzon's</b> reign.<br><br>On the basis of the report of the <b>'Eckbarth Commission' (1921-22)</b>, the railway budget was separated from the general budget in <b>1925</b>. Before independence, in <b>1947</b>, a committee was formed under the chairmanship of <b>K.C. Niyogi</b> to inspect facts related to railway finance.<br><br><b>Tilak</b> remarked — "To be happy over the development of railways by the British in India is like being happy over the ornaments of another's wife."`,
     "expimage": ""
   },
   "14": {
@@ -334,7 +334,7 @@ window.TEST_DATA = {
     ],
     "correct": "3",
     "quesimage": "",
-    "exptext": "<b>Poverty of India and Wants and Means of India</b><br><br>Initially, Dadabhai was not vehement in his attack, but later, with publication of his views, he became more aggressive when he prepared the draft of his paper <b>Poverty of India and Wants and Means of India</b> in <b>1876</b>.<br><br>He launched an aggressive campaign against the so-called drain, declaring it to be the fundamental evil of British rule in India. He named it <b>"The evil of all evils"</b> and <b>"The root cause of India's poverty."</b>",
+    "exptext": `<b>Poverty of India and Wants and Means of India</b><br><br>Initially, Dadabhai was not vehement in his attack, but later, with publication of his views, he became more aggressive when he prepared the draft of his paper <b>Poverty of India and Wants and Means of India</b> in <b>1876</b>.<br><br>He launched an aggressive campaign against the so-called drain, declaring it to be the fundamental evil of British rule in India. He named it <b>"The evil of all evils"</b> and <b>"The root cause of India's poverty."</b>`,
     "expimage": ""
   },
   "27": {
