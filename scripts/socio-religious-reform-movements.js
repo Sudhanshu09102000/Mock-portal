@@ -1,6 +1,6 @@
 window.TEST_DATA = {
   "1": {
-    "questext": "Which of the following was a direct consequence of British rule that led to the emergence of new social classes in India during the 19th century? [SSC CGL]",
+    "questext": "Which of the following was a direct consequence of British rule that led to the emergence of new social classes in India during the 19th century? ",
     "options": [
       "Decline of indigenous crafts due to British taxation",
       "Establishment of a new state system, new economy and spread of modern education",
@@ -13,7 +13,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "2": {
-    "questext": "In which cities did the modern Indian middle class make its first appearance? [SSC CGL]",
+    "questext": "In which cities did the modern Indian middle class make its first appearance? ",
     "options": [
       "Delhi, Lahore and Agra",
       "Patna, Banaras and Allahabad",
@@ -26,7 +26,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "3": {
-    "questext": "Who constituted the first group of modern intelligentsia in India who studied Western culture and imbibed its rationalist and democratic doctrines? [SSC CGL]",
+    "questext": "Who constituted the first group of modern intelligentsia in India who studied Western culture and imbibed its rationalist and democratic doctrines? ",
     "options": [
       "Swami Vivekananda and his disciples",
       "Raja Ram Mohan Roy and his group",
@@ -39,7 +39,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "4": {
-    "questext": "Under which Act did Christian missionaries arrive in India, and what was the real motive behind their activities? [SSC CGL]",
+    "questext": "Under which Act did Christian missionaries arrive in India, and what was the real motive behind their activities? ",
     "options": [
       "Charter Act of 1793; to spread literacy among Indians",
       "Regulating Act of 1773; to promote trade with the East",
@@ -52,7 +52,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "5": {
-    "questext": "Where did the earliest expression of socio-religious reform take place in India, and who initiated it? [SSC CGL]",
+    "questext": "Where did the earliest expression of socio-religious reform take place in India, and who initiated it? ",
     "options": [
       "Punjab, initiated by Dayanand Saraswati",
       "Maharashtra, initiated by Mahadev Govind Ranade",
@@ -65,7 +65,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "6": {
-    "questext": "Which of the following correctly identifies the four major trends of nature of socio-religious reform movements in 19th century India? [SSC CGL]",
+    "questext": "Which of the following correctly identifies the four major trends of nature of socio-religious reform movements in 19th century India? ",
     "options": [
       "Reform from within; Reform through legislation; Reform through symbols; Reform through social work",
       "Reform through protest; Reform through migration; Reform through scriptures; Reform through armed struggle",
@@ -78,7 +78,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "7": {
-    "questext": "What was Ishwar Chandra Vidyasagar's most significant contribution to the cause of women's reform in India? [SSC CGL]",
+    "questext": "What was Ishwar Chandra Vidyasagar's most significant contribution to the cause of women's reform in India? ",
     "options": [
       "He founded the Brahmo Samaj to promote women's education",
       "He established the first women's college in India",
@@ -91,7 +91,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "8": {
-    "questext": "Which advocates of 'Reform through Legislation' believed that reforms cannot be effective unless supported by the State? [SSC CGL]",
+    "questext": "Which advocates of 'Reform through Legislation' believed that reforms cannot be effective unless supported by the State? ",
     "options": [
       "Ram Mohan Roy, Dayanand Saraswati and Swami Vivekananda",
       "Keshab Chandra Sen, M.G. Ranade and Viresalingam",
@@ -104,7 +104,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "9": {
-    "questext": "Who led the Young Bengal Movement and at which institution was he a teacher? [SSC CGL]",
+    "questext": "Who led the Young Bengal Movement and at which institution was he a teacher? ",
     "options": [
       "Ram Mohan Roy; Calcutta Madrasa",
       "Henry Louis Vivian Derozio; Hindu College, Calcutta",
@@ -117,7 +117,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "10": {
-    "questext": "The Arya Samaj was founded by Dayanand Saraswati in which year and city? [SSC CGL]",
+    "questext": "The Arya Samaj was founded by Dayanand Saraswati in which year and city? ",
     "options": [
       "1875 in Lahore",
       "1875 in Bombay",
@@ -130,7 +130,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "11": {
-    "questext": "Which slogan is associated with Dayanand Saraswati and what does his famous book 'Satyarth Prakash' deal with? [SSC CGL]",
+    "questext": "Which slogan is associated with Dayanand Saraswati and what does his famous book 'Satyarth Prakash' deal with? ",
     "options": [
       "'Vande Mataram' — a commentary on the Puranas",
       "'Back to the Vedas' — a text expounding his religious and social philosophy",
@@ -143,7 +143,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "12": {
-    "questext": "The Brahmo Samaj was founded by Raja Ram Mohan Roy in which year? [SSC CGL]",
+    "questext": "The Brahmo Samaj was founded by Raja Ram Mohan Roy in which year? ",
     "options": [
       "1814",
       "1820",
@@ -156,7 +156,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "13": {
-    "questext": "Raja Ram Mohan Roy founded the Atmiya Sabha in Calcutta in which year? [SSC CGL]",
+    "questext": "Raja Ram Mohan Roy founded the Atmiya Sabha in Calcutta in which year? ",
     "options": [
       "1803",
       "1814",
@@ -169,7 +169,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "14": {
-    "questext": "Raja Ram Mohan Roy's anti-Sati struggle led to which government regulation and under whose Governor-Generalship was it passed? [SSC CGL]",
+    "questext": "Raja Ram Mohan Roy's anti-Sati struggle led to which government regulation and under whose Governor-Generalship was it passed? ",
     "options": [
       "Government Regulation Act XIV (1828) — Lord Cornwallis",
       "Government Regulation XVII (1829) — Lord Bentinck",
@@ -182,7 +182,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "15": {
-    "questext": "Who gave a new life to Brahmo Samaj after Raja Ram Mohan Roy and what organization did he head? [SSC CGL]",
+    "questext": "Who gave a new life to Brahmo Samaj after Raja Ram Mohan Roy and what organization did he head? ",
     "options": [
       "Keshab Chandra Sen; Brahmo Samaj of India",
       "Debendranath Tagore; Tattvabodhini Sabha",
@@ -195,7 +195,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "16": {
-    "questext": "The Sadharana Brahmo Samaj was formed in 1878 as a result of a split caused by which controversy involving Keshub Chandra Sen? [SSC CGL]",
+    "questext": "The Sadharana Brahmo Samaj was formed in 1878 as a result of a split caused by which controversy involving Keshub Chandra Sen? ",
     "options": [
       "His opposition to the Brahmo Marriage Act of 1872",
       "His support for the caste system against the Samaj's principles",
@@ -208,7 +208,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "17": {
-    "questext": "The Prarthana Samaj was founded by Dr. Atmaram Pandurang in which year and which prominent leader later joined and gave it an all-India character? [SSC CGL]",
+    "questext": "The Prarthana Samaj was founded by Dr. Atmaram Pandurang in which year and which prominent leader later joined and gave it an all-India character? ",
     "options": [
       "1857; Bal Gangadhar Tilak",
       "1867; Mahadev Govind Ranade",
@@ -221,7 +221,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "18": {
-    "questext": "Jyotiba Phule founded the Satya Shodhak Samaj in which year and for what purpose? [SSC CGL]",
+    "questext": "Jyotiba Phule founded the Satya Shodhak Samaj in which year and for what purpose? ",
     "options": [
       "1854; to promote education for the upper castes",
       "1870; to establish widow ashrams in Maharashtra",
@@ -234,7 +234,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "19": {
-    "questext": "Ramakrishna Paramahansa worshipped at which temple, and who formed the Ramakrishna Mission after his death? [SSC CGL]",
+    "questext": "Ramakrishna Paramahansa worshipped at which temple, and who formed the Ramakrishna Mission after his death? ",
     "options": [
       "Jagannath Temple, Puri; Swami Dayanand Saraswati",
       "Kali Temple at Dakshineswar; Swami Vivekananda",
@@ -247,7 +247,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "20": {
-    "questext": "Swami Vivekananda represented India at the first World's Religion Conference held in 1893. Where was this conference held? [SSC CGL]",
+    "questext": "Swami Vivekananda represented India at the first World's Religion Conference held in 1893. Where was this conference held? ",
     "options": [
       "London, England",
       "Paris, France",
@@ -260,7 +260,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "21": {
-    "questext": "Which concept, later popularized by Gandhiji, had its origin in Vivekananda's philosophy? [SSC CGL]",
+    "questext": "Which concept, later popularized by Gandhiji, had its origin in Vivekananda's philosophy? ",
     "options": [
       "Satyagraha",
       "Non-cooperation",
@@ -273,7 +273,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "22": {
-    "questext": "The Theosophical Society was founded in New York in 1875 by which two people? [SSC CGL]",
+    "questext": "The Theosophical Society was founded in New York in 1875 by which two people? ",
     "options": [
       "Annie Besant and Colonel Olcott",
       "Madame H.P. Blavatsky and Colonel Olcott",
@@ -286,7 +286,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "23": {
-    "questext": "Annie Besant was elected as the first woman president of the Indian National Congress at which session? [SSC CGL]",
+    "questext": "Annie Besant was elected as the first woman president of the Indian National Congress at which session? ",
     "options": [
       "Surat Session, 1907",
       "Lucknow Session, 1916",
@@ -299,7 +299,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "24": {
-    "questext": "The Veda Samaj (Brahmo Samaj of South India) was founded in Madras in 1864 by whom? [SSC CGL]",
+    "questext": "The Veda Samaj (Brahmo Samaj of South India) was founded in Madras in 1864 by whom? ",
     "options": [
       "K. Sridharalu Naidu",
       "Doraiswami Iyengar",
@@ -312,7 +312,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "25": {
-    "questext": "The Swami Narayan Sect, founded in Gujarat in the early 19th century, was a protest against which practice? [SSC CGL]",
+    "questext": "The Swami Narayan Sect, founded in Gujarat in the early 19th century, was a protest against which practice? ",
     "options": [
       "Idolatry and polytheism in Shaivism",
       "The epicurean and luxurious practices of Vaishnavism",
@@ -325,7 +325,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "26": {
-    "questext": "The Paramahamsa Mandali was founded in Mumbai in 1849–50 by whom? [SSC CGL]",
+    "questext": "The Paramahamsa Mandali was founded in Mumbai in 1849–50 by whom? ",
     "options": [
       "Jyotiba Phule and Gopal Hari Deshmukh",
       "M.G. Ranade and Vishnu Shastri Pandit",
@@ -338,7 +338,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "27": {
-    "questext": "The Rahnumai Mazdayasnan Sabha was launched in 1851 by educated Parsis to reform which community? [SSC CGL]",
+    "questext": "The Rahnumai Mazdayasnan Sabha was launched in 1851 by educated Parsis to reform which community? ",
     "options": [
       "Sikh community",
       "Christian community of Goa",
@@ -351,7 +351,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "28": {
-    "questext": "The Nirankari Movement within Sikhism was founded in the 1840s by whom, and what was its central emphasis? [SSC CGL]",
+    "questext": "The Nirankari Movement within Sikhism was founded in the 1840s by whom, and what was its central emphasis? ",
     "options": [
       "Baba Ram Singh; worship of sacred Granth",
       "Baba Dayal Das; worship of God as Nirankar (formless God)",
@@ -364,7 +364,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "29": {
-    "questext": "The Aravipuram Movement was launched by Sri Narayana Guru in 1888. What was the significance of this event? [SSC CGL]",
+    "questext": "The Aravipuram Movement was launched by Sri Narayana Guru in 1888. What was the significance of this event? ",
     "options": [
       "Sri Narayana Guru led a march demanding temple entry rights for all Hindus",
       "Sri Narayana Guru consecrated a Shiva idol at Aravipuram, defying the caste-based restrictions on temple entry",
@@ -377,7 +377,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "30": {
-    "questext": "Who led the Mahar Movement from 1920 onwards and what was his major strategy for the upliftment of the untouchable community? [SSC CGL]",
+    "questext": "Who led the Mahar Movement from 1920 onwards and what was his major strategy for the upliftment of the untouchable community? ",
     "options": [
       "Baba Mavlankar; encouraging conversion to Islam",
       "B.R. Ambedkar; aggressive protest and political action against caste discrimination",
@@ -390,7 +390,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "31": {
-    "questext": "The Justice Party, formed in 1916, was a movement to secure representation for which group in Madras Presidency? [SSC CGL]",
+    "questext": "The Justice Party, formed in 1916, was a movement to secure representation for which group in Madras Presidency? ",
     "options": [
       "Scheduled Tribes in Tamil Nadu government jobs",
       "Non-Brahmin Hindus in government jobs and the legislature",
@@ -403,7 +403,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "32": {
-    "questext": "The Self-Respect Movement was launched in 1925 by which leader and what was its primary aim? [SSC CGL]",
+    "questext": "The Self-Respect Movement was launched in 1925 by which leader and what was its primary aim? ",
     "options": [
       "B.R. Ambedkar; to secure separate electorates for untouchables",
       "E.V. Ramaswamy Naicker (Periyar); to awaken non-Brahmins and expose Brahmin tyranny",
@@ -416,7 +416,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "33": {
-    "questext": "The Poona Pact of 1932 was signed between Mahatma Gandhi and B.R. Ambedkar to settle a dispute over which issue? [SSC CGL]",
+    "questext": "The Poona Pact of 1932 was signed between Mahatma Gandhi and B.R. Ambedkar to settle a dispute over which issue? ",
     "options": [
       "Representation of Muslims in the central legislature",
       "Separate electorates for untouchables (depressed classes)",
@@ -429,7 +429,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "34": {
-    "questext": "Dr. B.R. Ambedkar was made the Chairman of which important body that drafted the Indian Constitution? [SSC CGL]",
+    "questext": "Dr. B.R. Ambedkar was made the Chairman of which important body that drafted the Indian Constitution? ",
     "options": [
       "Constituent Assembly of India",
       "Drafting Committee of the Indian Constitution",
@@ -442,7 +442,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "35": {
-    "questext": "The Aligarh Movement was pioneered by Sir Syed Ahmad Khan. What was the name of the school he founded in 1875 at Aligarh? [SSC CGL]",
+    "questext": "The Aligarh Movement was pioneered by Sir Syed Ahmad Khan. What was the name of the school he founded in 1875 at Aligarh? ",
     "options": [
       "Dar-ul-Uloom, Deoband",
       "Mohammedan Anglo-Oriental College, Aligarh",
@@ -455,7 +455,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "36": {
-    "questext": "The Ahmadiya Movement was founded in 1889 by whom, and in which Punjab town? [SSC CGL]",
+    "questext": "The Ahmadiya Movement was founded in 1889 by whom, and in which Punjab town? ",
     "options": [
       "Shah Waliullah; Delhi",
       "Syed Ahmed Barelavi; Rae Bareli",
@@ -468,7 +468,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "37": {
-    "questext": "The Deoband Movement was established in 1866 in Saharanpur district by which two scholars? [SSC CGL]",
+    "questext": "The Deoband Movement was established in 1866 in Saharanpur district by which two scholars? ",
     "options": [
       "Shah Waliullah and Shah Abdul Aziz",
       "Mohammad Qasim Nanotavi and Rashid Ahmad Gangohi",
@@ -481,7 +481,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "38": {
-    "questext": "The Wahabi Movement in India was inspired by which two religious figures and what was its primary objective? [SSC CGL]",
+    "questext": "The Wahabi Movement in India was inspired by which two religious figures and what was its primary objective? ",
     "options": [
       "Mirza Ghulam Ahmad and Rashid Gangohi; to promote Western education among Muslims",
       "Abdul Wahab of Arabia and Shah Waliullah; to purify Islam by eliminating un-Islamic practices",
@@ -494,7 +494,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "39": {
-    "questext": "The Faraizi Movement was founded by Haji Shariatullah in the 19th century. What does the term 'Faraizi' mean? [SSC CGL]",
+    "questext": "The Faraizi Movement was founded by Haji Shariatullah in the 19th century. What does the term 'Faraizi' mean? ",
     "options": [
       "Purification through charity",
       "Obligatory duties enjoined by Allah",
@@ -507,7 +507,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "40": {
-    "questext": "Which Social Reform Act abolished Sati in India, and which Governor-General was responsible for it? [SSC CGL]",
+    "questext": "Which Social Reform Act abolished Sati in India, and which Governor-General was responsible for it? ",
     "options": [
       "Bengal Regulation IV (1829) — Lord Dalhousie",
       "Government Regulation XVII (1829) — Lord Bentinck",
@@ -520,7 +520,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "41": {
-    "questext": "The Child Marriage Restraint Act (Sharda Act) of 1929 was passed due to the efforts of which person, and what minimum marriage ages did it fix? [SSC CGL]",
+    "questext": "The Child Marriage Restraint Act (Sharda Act) of 1929 was passed due to the efforts of which person, and what minimum marriage ages did it fix? ",
     "options": [
       "Behramji Malabari; 12 years for girls and 16 years for boys",
       "Ishwar Chandra Vidyasagar; 10 years for girls and 14 years for boys",
@@ -533,7 +533,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "42": {
-    "questext": "The Thuggee system was suppressed by Lord William Bentinck. Which officer was appointed for this purpose and by what name did he become popularly known? [SSC CGL]",
+    "questext": "The Thuggee system was suppressed by Lord William Bentinck. Which officer was appointed for this purpose and by what name did he become popularly known? ",
     "options": [
       "Colonel Mackeson; known as 'Frontier Mackeson'",
       "Colonel Sleeman; known as 'Thuggee Sleeman'",
@@ -546,7 +546,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "43": {
-    "questext": "Which of the following correctly matches social reformers with their contributions regarding women's welfare? [SSC CGL]",
+    "questext": "Which of the following correctly matches social reformers with their contributions regarding women's welfare? ",
     "options": [
       "Pandita Ramabai — founded Satya Shodhak Samaj; Dhondo Keshav Karve — started Age of Consent Act",
       "Pandita Ramabai — founded Sharda Sadan school for widows; Dhondo Keshav Karve — founded first Indian women's university in 1916",
@@ -559,7 +559,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "44": {
-    "questext": "Shah Waliullah founded the Wahabi/Walliullah Movement. Who founded the Radhaswami Movement and in which year? [SSC CGL]",
+    "questext": "Shah Waliullah founded the Wahabi/Walliullah Movement. Who founded the Radhaswami Movement and in which year? ",
     "options": [
       "Rai Salig Ram; 1861",
       "Tulsi Ram (also known as Shiv Dayal Saheb); 1861",
@@ -572,7 +572,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "45": {
-    "questext": "Which of the following correctly lists institutions and their founders as per major socio-religious reform movements in India? [SSC CGL]",
+    "questext": "Which of the following correctly lists institutions and their founders as per major socio-religious reform movements in India? ",
     "options": [
       "Asiatic Society of Bengal — Ram Mohan Roy (1814); Brahmo Samaj — Keshub Chandra Sen (1866)",
       "Asiatic Society of Bengal — William Jones (1784); Brahmo Samaj — Raja Rammohan Roy (1828)",
@@ -585,7 +585,7 @@ window.TEST_DATA = {
     "expimage": ""
   },
   "46": {
-    "questext": "Henry Vivian Derozio is known by which distinction in modern India? [SSC CGL]",
+    "questext": "Henry Vivian Derozio is known by which distinction in modern India? ",
     "options": [
       "First nationalist leader to demand dominion status for India",
       "First nationalist poet of Modern India",
