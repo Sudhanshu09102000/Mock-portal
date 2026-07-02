@@ -1,6 +1,6 @@
 window.TEST_DATA = {
 "1": {
-"questext": "What characterized the politics of the Indian National Congress during the first twenty years after its establishment? [SSC CGL]",
+"questext": "What characterized the politics of the Indian National Congress during the first twenty years after its establishment?",
 "options": [
 "Aggressive mass mobilization against British rule",
 "Moderate politics limited by their goals and methods",
@@ -13,7 +13,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "2": {
-"questext": "The Extremist phase of the Indian National Congress is dated to which period? [SSC CGL]",
+"questext": "The Extremist phase of the Indian National Congress is dated to which period?",
 "options": [
 "1885-1905",
 "1905-1919",
@@ -26,7 +26,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "3": {
-"questext": "What was the Extremists' approach to achieving Swaraj, in contrast to the Moderates? [SSC CGL]",
+"questext": "What was the Extremists' approach to achieving Swaraj, in contrast to the Moderates?",
 "options": [
 "Petitions, prayers and memorandums",
 "Self-reliant and independent mass-based methods",
@@ -39,7 +39,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "4": {
-"questext": "Which group of leaders, known by the phrase 'Lal-Bal-Pal', were prominent Extremist leaders of the Congress? [SSC CGL]",
+"questext": "Which group of leaders, known by the phrase 'Lal-Bal-Pal', were prominent Extremist leaders of the Congress?",
 "options": [
 "Lala Lajpat Rai, Bal Gangadhar Tilak, Bipin Chandra Pal",
 "Lala Lajpat Rai, Badruddin Tyabji, Pherozeshah Mehta",
@@ -52,7 +52,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "5": {
-"questext": "Which Act of 1892, along with reduction of Indian Calcutta Corporation members and the Indian Universities Act of 1904, caused discontentment among nationalists leading to the rise of Extremism? [SSC CGL]",
+"questext": "Which Act of 1892, along with reduction of Indian Calcutta Corporation members and the Indian Universities Act of 1904, caused discontentment among nationalists leading to the rise of Extremism?",
 "options": [
 "Indian Council Act, 1892",
 "Government of India Act, 1892",
@@ -65,7 +65,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "6": {
-"questext": "Which 19th-century reform movements instilled values of nationalism and self-respect among Indians, contributing to the rise of Extremism? [SSC CGL]",
+"questext": "Which 19th-century reform movements instilled values of nationalism and self-respect among Indians, contributing to the rise of Extremism?",
 "options": [
 "Brahmo Samaj and Theosophical Society",
 "Arya Samaj and reformers like Vivekananda",
@@ -78,7 +78,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "7": {
-"questext": "In which journal did Aurobindo Ghosh criticize the Moderate leadership in his article 'New Lamps for Old'? [SSC CGL]",
+"questext": "In which journal did Aurobindo Ghosh criticize the Moderate leadership in his article 'New Lamps for Old'?",
 "options": [
 "Kesari",
 "Indu Prakash",
@@ -91,7 +91,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "8": {
-"questext": "Which international developments inspired Indian nationalists and helped break the myth of European invincibility before the rise of Extremism? [SSC CGL]",
+"questext": "Which international developments inspired Indian nationalists and helped break the myth of European invincibility before the rise of Extremism?",
 "options": [
 "Defeat of Italy by Ethiopia (1895-96) and Russia by Japan (1904-05)",
 "Defeat of France by Germany (1870-71)",
@@ -104,7 +104,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "9": {
-"questext": "Which of the following was NOT among Lord Curzon's reactionary policies that fuelled Extremism? [SSC CGL]",
+"questext": "Which of the following was NOT among Lord Curzon's reactionary policies that fuelled Extremism?",
 "options": [
 "Calcutta Corporation Act, 1899",
 "Indian Universities Act, 1904",
@@ -117,7 +117,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "10": {
-"questext": "The severe famine of 1896-97 and the subsequent plague that devastated which Presidency exposed the inadequacy of British relief machinery? [SSC CGL]",
+"questext": "The severe famine of 1896-97 and the subsequent plague that devastated which Presidency exposed the inadequacy of British relief machinery?",
 "options": [
 "Madras Presidency",
 "Bombay Presidency",
@@ -130,7 +130,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "11": {
-"questext": "Which extremist nationalist emerged as the most outstanding representative of the extremist school of thought that developed by the early 20th century? [SSC CGL]",
+"questext": "Which extremist nationalist emerged as the most outstanding representative of the extremist school of thought that developed by the early 20th century?",
 "options": [
 "Bal Gangadhar Tilak",
 "Bipin Chandra Pal",
@@ -143,7 +143,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "12": {
-"questext": "Who described India as \"a mighty shakti and a divinity composed of the shaktis of millions of units that make up the nation\"? [SSC CGL]",
+"questext": "Who described India as \"a mighty shakti and a divinity composed of the shaktis of millions of units that make up the nation\"?",
 "options": [
 "Bipin Chandra Pal",
 "Aurobindo Ghosh",
@@ -156,7 +156,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "13": {
-"questext": "Tilak popularized the celebration of which festivals in 1893 and 1895 respectively to link nationalism with Indian tradition? [SSC CGL]",
+"questext": "Tilak popularized the celebration of which festivals in 1893 and 1895 respectively to link nationalism with Indian tradition?",
 "options": [
 "Durga Puja and Ram Navami",
 "Ganpati festival and Shivaji Jayanti",
@@ -169,7 +169,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "14": {
-"questext": "Who criticized the Congress saying, \"We had been brought up for too long a period, upon political lollipops\"? [SSC CGL]",
+"questext": "Who criticized the Congress saying, \"We had been brought up for too long a period, upon political lollipops\"?",
 "options": [
 "Bal Gangadhar Tilak",
 "Bipin Chandra Pal",
@@ -182,7 +182,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "15": {
-"questext": "Who gave the famous slogan, \"Swaraj is my birth right, I will have it\"? [SSC CGL]",
+"questext": "Who gave the famous slogan, \"Swaraj is my birth right, I will have it\"?",
 "options": [
 "Bal Gangadhar Tilak",
 "Bipin Chandra Pal",
@@ -195,7 +195,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "16": {
-"questext": "What new political methods did the Extremists adopt, terming the liberal politics of petitions and memoranda as 'political beggary'? [SSC CGL]",
+"questext": "What new political methods did the Extremists adopt, terming the liberal politics of petitions and memoranda as 'political beggary'?",
 "options": [
 "Non-cooperation, sit-ins, demonstrations, strikes and boycotts",
 "Armed insurrection and guerrilla warfare",
@@ -208,7 +208,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "17": {
-"questext": "To make the national education movement effective, who formed the 'Bengal National Education Council', while the 'DAV' movement spread in Punjab? [SSC CGL]",
+"questext": "To make the national education movement effective, who formed the 'Bengal National Education Council', while the 'DAV' movement spread in Punjab?",
 "options": [
 "Sir Gurudas Banerjee",
 "Aurobindo Ghosh",
@@ -221,7 +221,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "18": {
-"questext": "What new ideas did the Extremists bring at the theoretical and practical levels, regarding India's representation and education? [SSC CGL]",
+"questext": "What new ideas did the Extremists bring at the theoretical and practical levels, regarding India's representation and education?",
 "options": [
 "India represented as a Goddess and nationally organized education",
 "India represented as a constitutional monarchy",
@@ -234,7 +234,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "19": {
-"questext": "Which movement, that culminated from the anti-partition agitation in Bengal, was the first mass movement led by nationalists, with women actively participating? [SSC CGL]",
+"questext": "Which movement, that culminated from the anti-partition agitation in Bengal, was the first mass movement led by nationalists, with women actively participating?",
 "options": [
 "Home Rule Movement",
 "Swadeshi Movement",
@@ -247,7 +247,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "20": {
-"questext": "Which two terms did the Extremists coin to give a new meaning to the concept of the Indian nation and make nationalism a politico-cultural creed? [SSC CGL]",
+"questext": "Which two terms did the Extremists coin to give a new meaning to the concept of the Indian nation and make nationalism a politico-cultural creed?",
 "options": [
 "'Bharat Mata' and 'Swaraj'",
 "'Vande Mataram' and 'Sarfaroshi'",
@@ -260,7 +260,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "21": {
-"questext": "Whose celebration of the Ganesh Utsav and Shiv Jayanti, while instilling self-confidence among the masses, is criticized for distancing the Muslim community from the national movement? [SSC CGL]",
+"questext": "Whose celebration of the Ganesh Utsav and Shiv Jayanti, while instilling self-confidence among the masses, is criticized for distancing the Muslim community from the national movement?",
 "options": [
 "Lala Lajpat Rai",
 "Bal Gangadhar Tilak",
@@ -273,7 +273,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "22": {
-"questext": "Which of the following correctly distinguishes the social background and ideological inspiration of Moderates from Extremists? [SSC CGL]",
+"questext": "Which of the following correctly distinguishes the social background and ideological inspiration of Moderates from Extremists?",
 "options": [
 "Moderates: Zamindars/upper middle class, Western liberal thought; Extremists: educated/lower middle class, Indian history and Hindu traditional symbols",
 "Moderates: peasants, Marxist ideology; Extremists: industrialists, capitalist ideology",
@@ -286,7 +286,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "23": {
-"questext": "Lord Curzon partitioned Bengal in 1905 primarily on religious lines, creating East Bengal with its capital at which city? [SSC CGL]",
+"questext": "Lord Curzon partitioned Bengal in 1905 primarily on religious lines, creating East Bengal with its capital at which city?",
 "options": [
 "Calcutta",
 "Dhaka",
@@ -299,7 +299,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "24": {
-"questext": "What official reason did Lord Curzon give for the Partition of Bengal in 1905? [SSC CGL]",
+"questext": "What official reason did Lord Curzon give for the Partition of Bengal in 1905?",
 "options": [
 "Religious differences between Hindus and Muslims",
 "Administrative convenience as Bengal was too large for one man to govern",
@@ -312,7 +312,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "25": {
-"questext": "How did the Muslim community, particularly in East Bengal, generally react to the Partition of Bengal, and what major communal organization was founded a year later? [SSC CGL]",
+"questext": "How did the Muslim community, particularly in East Bengal, generally react to the Partition of Bengal, and what major communal organization was founded a year later?",
 "options": [
 "They opposed the partition; Indian National Congress was founded",
 "They welcomed the partition; the All-India Muslim League was founded in Dhaka",
@@ -325,7 +325,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "26": {
-"questext": "What was the actual underlying motive behind the Partition of Bengal, according to historical assessment, beyond the stated administrative reason? [SSC CGL]",
+"questext": "What was the actual underlying motive behind the Partition of Bengal, according to historical assessment, beyond the stated administrative reason?",
 "options": [
 "To improve agricultural productivity in East Bengal",
 "To weaken Bengali nationalist consciousness and serve the policy of divide and rule",
@@ -338,7 +338,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "27": {
-"questext": "On which date was the Partition of Bengal officially announced, and on what date was it actually implemented? [SSC CGL]",
+"questext": "On which date was the Partition of Bengal officially announced, and on what date was it actually implemented?",
 "options": [
 "Announced July 20, 1905; implemented October 16, 1905",
 "Announced October 16, 1905; implemented July 20, 1905",
@@ -351,7 +351,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "28": {
-"questext": "How was 16 October 1905, the day the Partition of Bengal was implemented, observed by the people of Bengal? [SSC CGL]",
+"questext": "How was 16 October 1905, the day the Partition of Bengal was implemented, observed by the people of Bengal?",
 "options": [
 "As a day of celebration with fireworks",
 "As a day of mourning, with fasting, singing Vande Mataram, and tying Rakhi",
@@ -364,7 +364,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "29": {
-"questext": "At which meeting on August 7, 1905, did Aurobindo Ghosh reject the moderate model of constitutional agitation and pass the boycott resolution that launched the Swadeshi Movement? [SSC CGL]",
+"questext": "At which meeting on August 7, 1905, did Aurobindo Ghosh reject the moderate model of constitutional agitation and pass the boycott resolution that launched the Swadeshi Movement?",
 "options": [
 "Calcutta Town Hall meeting",
 "Banaras Congress session",
@@ -377,7 +377,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "30": {
-"questext": "Which song was adopted as the national song during the Swadeshi Movement, with Swadeshi and Boycott used as political-cum-economic instruments? [SSC CGL]",
+"questext": "Which song was adopted as the national song during the Swadeshi Movement, with Swadeshi and Boycott used as political-cum-economic instruments?",
 "options": [
 "Jana Gana Mana",
 "Vande Mataram",
@@ -390,7 +390,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "31": {
-"questext": "Who proposed the Rakhi-Bandhan programme during the Swadeshi Movement to promote Hindu-Muslim unity? [SSC CGL]",
+"questext": "Who proposed the Rakhi-Bandhan programme during the Swadeshi Movement to promote Hindu-Muslim unity?",
 "options": [
 "Rabindranath Tagore",
 "Bal Gangadhar Tilak",
@@ -403,7 +403,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "32": {
-"questext": "Which English officer called Tilak the 'father of Indian unrest' during the propagation of the Swadeshi and Boycott Movement across the country? [SSC CGL]",
+"questext": "Which English officer called Tilak the 'father of Indian unrest' during the propagation of the Swadeshi and Boycott Movement across the country?",
 "options": [
 "Lord Curzon",
 "Valentine Chirol",
@@ -416,7 +416,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "33": {
-"questext": "Apart from foreign clothes, which other institutions were boycotted under the Swadeshi/Boycott movement? [SSC CGL]",
+"questext": "Apart from foreign clothes, which other institutions were boycotted under the Swadeshi/Boycott movement?",
 "options": [
 "Only banks and stock markets",
 "Schools, courts, titles and government jobs",
@@ -429,7 +429,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "34": {
-"questext": "Bengal's first revolutionary organization, 'Anushilan Samiti', was established under the leadership of which two leaders, and what was its main newspaper? [SSC CGL]",
+"questext": "Bengal's first revolutionary organization, 'Anushilan Samiti', was established under the leadership of which two leaders, and what was its main newspaper?",
 "options": [
 "Barindra Kumar Ghosh and Bhupendra Nath Dutt; Yugantar",
 "Tilak and Lala Lajpat Rai; Kesari",
@@ -442,7 +442,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "35": {
-"questext": "Which song, written by Tagore during the Swadeshi Movement, later became the national anthem of Bangladesh in 1971? [SSC CGL]",
+"questext": "Which song, written by Tagore during the Swadeshi Movement, later became the national anthem of Bangladesh in 1971?",
 "options": [
 "Vande Mataram",
 "Amar Sonar Bangla",
@@ -455,7 +455,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "36": {
-"questext": "Who founded the 'Bengal Chemicals Swadeshi Stores' following the establishment of a National Education Council in August 1906? [SSC CGL]",
+"questext": "Who founded the 'Bengal Chemicals Swadeshi Stores' following the establishment of a National Education Council in August 1906?",
 "options": [
 "Jagadish Chandra Bose",
 "Acharya Prafulla Chandra Roy",
@@ -468,7 +468,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "37": {
-"questext": "The Swadeshi Movement is considered an important and successful landmark because the Partition of Bengal against which it was launched was annulled in which year? [SSC CGL]",
+"questext": "The Swadeshi Movement is considered an important and successful landmark because the Partition of Bengal against which it was launched was annulled in which year?",
 "options": [
 "1908",
 "1911",
@@ -481,7 +481,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "38": {
-"questext": "How did the Swadeshi Movement contribute to spreading nationalistic sentiments and economic development across society? [SSC CGL]",
+"questext": "How did the Swadeshi Movement contribute to spreading nationalistic sentiments and economic development across society?",
 "options": [
 "It boosted indigenous industries, brought students into the movement for the first time, and sparked industrial strikes",
 "It led to the immediate withdrawal of British troops",
@@ -494,7 +494,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "39": {
-"questext": "Who wrote in 1908 that the real awakening of India took place after the Partition of Bengal, calling it \"the day of the partition of the British Empire\"? [SSC CGL]",
+"questext": "Who wrote in 1908 that the real awakening of India took place after the Partition of Bengal, calling it \"the day of the partition of the British Empire\"?",
 "options": [
 "Gopal Krishna Gokhale",
 "Mahatma Gandhi",
@@ -507,7 +507,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "40": {
-"questext": "What were the key weaknesses of the Swadeshi Movement, including the split it caused within Congress? [SSC CGL]",
+"questext": "What were the key weaknesses of the Swadeshi Movement, including the split it caused within Congress?",
 "options": [
 "It maintained vitality permanently and achieved full economic regeneration",
 "Its nationalistic vitality could not be maintained, boycott had only temporary success, and it led to the Surat Split of 1907",
@@ -520,7 +520,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "41": {
-"questext": "The first Delhi Durbar in 1877, held during Lord Lytton's tenure, proclaimed Queen Victoria as Empress of India with which title? [SSC CGL]",
+"questext": "The first Delhi Durbar in 1877, held during Lord Lytton's tenure, proclaimed Queen Victoria as Empress of India with which title?",
 "options": [
 "Kaiser-i-Hind",
 "Malika-e-Hind",
@@ -533,7 +533,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "42": {
-"questext": "The second Delhi Durbar of 1903, held during Lord Curzon's tenure, celebrated the succession of which monarchs as Emperor and Empress of India? [SSC CGL]",
+"questext": "The second Delhi Durbar of 1903, held during Lord Curzon's tenure, celebrated the succession of which monarchs as Emperor and Empress of India?",
 "options": [
 "George V and Queen Mary",
 "Edward VII and Alexandra of Denmark",
@@ -546,7 +546,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "43": {
-"questext": "Lord Hardinge organized the third Delhi Durbar in 1911 to celebrate the coronation of which monarchs, and what major announcement was made regarding India's capital? [SSC CGL]",
+"questext": "Lord Hardinge organized the third Delhi Durbar in 1911 to celebrate the coronation of which monarchs, and what major announcement was made regarding India's capital?",
 "options": [
 "George V and Queen Mary; capital shifted from Calcutta to Delhi",
 "Edward VII and Alexandra; capital shifted from Bombay to Delhi",
@@ -559,7 +559,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "44": {
-"questext": "The Delhi Conspiracy Case of 1912, in which a bomb was thrown at Viceroy Hardinge's procession in Chandni Chowk, was carried out under whose leadership? [SSC CGL]",
+"questext": "The Delhi Conspiracy Case of 1912, in which a bomb was thrown at Viceroy Hardinge's procession in Chandni Chowk, was carried out under whose leadership?",
 "options": [
 "Rasbihari Bose and Sachin Sanyal",
 "Lala Hardayal and Bhagwan Singh",
@@ -572,7 +572,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "45": {
-"questext": "A Muslim delegation led by Agha Khan met which Viceroy at Shimla in 1906, leading to the eventual formation of the Muslim League? [SSC CGL]",
+"questext": "A Muslim delegation led by Agha Khan met which Viceroy at Shimla in 1906, leading to the eventual formation of the Muslim League?",
 "options": [
 "Lord Curzon",
 "Lord Minto",
@@ -585,7 +585,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "46": {
-"questext": "The All India Muslim League was established on 30 December 1906 under whose leadership, and who is considered its founder versus its first president? [SSC CGL]",
+"questext": "The All India Muslim League was established on 30 December 1906 under whose leadership, and who is considered its founder versus its first president?",
 "options": [
 "Salimullah is considered founder; Aga Khan was first president",
 "Aga Khan is considered founder; Salimullah was first president",
@@ -598,7 +598,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "47": {
-"questext": "The Muslim League's demand for separate electorates, raised at its 1908 Amritsar session, was accepted under which reform of 1909? [SSC CGL]",
+"questext": "The Muslim League's demand for separate electorates, raised at its 1908 Amritsar session, was accepted under which reform of 1909?",
 "options": [
 "Indian Councils Act/Morley-Minto Reforms, 1909",
 "Government of India Act, 1909",
@@ -611,7 +611,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "48": {
-"questext": "The Ahrar Movement of 1906, aimed at increasing Muslim participation in the freedom struggle and dissuading loyalty to the British, was led by which leaders? [SSC CGL]",
+"questext": "The Ahrar Movement of 1906, aimed at increasing Muslim participation in the freedom struggle and dissuading loyalty to the British, was led by which leaders?",
 "options": [
 "Maulana Mohammad Ali, Hakim Ajmal Khan, Maulana Zafar Ali Khan",
 "Aga Khan, Nawab Salimullah, Mohsin-ul-Mulk",
@@ -624,7 +624,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "49": {
-"questext": "In the Calcutta session of Congress (1906), who was elected president, resolving the dispute between Moderates and Extremists, and what major demand did he present? [SSC CGL]",
+"questext": "In the Calcutta session of Congress (1906), who was elected president, resolving the dispute between Moderates and Extremists, and what major demand did he present?",
 "options": [
 "Dadabhai Naoroji; presented the demand for 'Swaraj'",
 "Gopal Krishna Gokhale; presented the demand for separate electorates",
@@ -637,7 +637,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "50": {
-"questext": "At which 1905 Congress session, presided over by Gopal Krishna Gokhale, did the Moderate-Extremist differences first come to the fore over extending the Boycott and Swadeshi Movement beyond Bengal? [SSC CGL]",
+"questext": "At which 1905 Congress session, presided over by Gopal Krishna Gokhale, did the Moderate-Extremist differences first come to the fore over extending the Boycott and Swadeshi Movement beyond Bengal?",
 "options": [
 "Calcutta session",
 "Banaras session",
@@ -650,7 +650,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "51": {
-"questext": "At the Calcutta session in December 1906, whose name did the Extremists propose for the presidentship, while Moderates proposed Dadabhai Naoroji? [SSC CGL]",
+"questext": "At the Calcutta session in December 1906, whose name did the Extremists propose for the presidentship, while Moderates proposed Dadabhai Naoroji?",
 "options": [
 "B.G. Tilak or Lala Lajpat Rai",
 "Rash Behari Ghosh",
@@ -663,7 +663,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "52": {
-"questext": "What were the key disputes between Moderates and Extremists that led to the Surat Split of 1907 regarding the 1907 Congress session venue and presidency? [SSC CGL]",
+"questext": "What were the key disputes between Moderates and Extremists that led to the Surat Split of 1907 regarding the 1907 Congress session venue and presidency?",
 "options": [
 "Extremists wanted Nagpur with Tilak/Lajpat Rai as president; Moderates wanted Surat with Rash Behari Ghosh as president",
 "Both factions agreed on Surat as the venue",
@@ -676,7 +676,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "53": {
-"questext": "After the Surat Split, a new constitution and rules for Congress, prepared at an April 1908 Allahabad conference, was approved at which session in 1908? [SSC CGL]",
+"questext": "After the Surat Split, a new constitution and rules for Congress, prepared at an April 1908 Allahabad conference, was approved at which session in 1908?",
 "options": [
 "Madras session",
 "Calcutta session",
@@ -689,7 +689,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "54": {
-"questext": "Between 1907 and 1911, the British Government enforced several laws to check anti-government activity. Which of the following was NOT one of these laws? [SSC CGL]",
+"questext": "Between 1907 and 1911, the British Government enforced several laws to check anti-government activity. Which of the following was NOT one of these laws?",
 "options": [
 "Seditious Meetings Act, 1907",
 "Indian Press Act, 1910",
@@ -702,7 +702,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "55": {
-"questext": "Following the crackdown after the Surat Split, what happened to extremist leaders B.C. Pal, Lala Lajpat Rai and Aurobindo Ghosh, and which year is regarded as the 'Black year'? [SSC CGL]",
+"questext": "Following the crackdown after the Surat Split, what happened to extremist leaders B.C. Pal, Lala Lajpat Rai and Aurobindo Ghosh, and which year is regarded as the 'Black year'?",
 "options": [
 "B.C. Pal retired, Lalaji left for the USA, Aurobindo was tried in the Alipore Conspiracy case; 1908",
 "All three were exiled to the Andaman Islands; 1907",
@@ -715,7 +715,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "56": {
-"questext": "What was a key shared failure of both Moderates and Extremists in not visualizing the long-term consequences of the Surat Split? [SSC CGL]",
+"questext": "What was a key shared failure of both Moderates and Extremists in not visualizing the long-term consequences of the Surat Split?",
 "options": [
 "Neither realized that only a broad-based nationalist movement could succeed against a powerful imperialist country",
 "Both believed the split would lead to immediate independence",
@@ -728,7 +728,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "57": {
-"questext": "The Morley-Minto Reforms (Indian Councils Act, 1909) fell short of Congress demands and sowed communal division by introducing what feature? [SSC CGL]",
+"questext": "The Morley-Minto Reforms (Indian Councils Act, 1909) fell short of Congress demands and sowed communal division by introducing what feature?",
 "options": [
 "Universal adult franchise",
 "Separate Electorates",
@@ -741,7 +741,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "58": {
-"questext": "Under which Act of 1911 was organizing meetings critical of government policy made a criminal offence, leading to the arrest of Lala Lajpat Rai and Ajit Singh? [SSC CGL]",
+"questext": "Under which Act of 1911 was organizing meetings critical of government policy made a criminal offence, leading to the arrest of Lala Lajpat Rai and Ajit Singh?",
 "options": [
 "Indian Press Act, 1910",
 "Prevention of Seditious Meetings Act, 1911",
@@ -754,7 +754,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "59": {
-"questext": "The capital of British India was transferred from Calcutta to Delhi on which date, and Calcutta had served as capital since which year? [SSC CGL]",
+"questext": "The capital of British India was transferred from Calcutta to Delhi on which date, and Calcutta had served as capital since which year?",
 "options": [
 "Calcutta was capital from 1772 to Dec 21, 1912; transfer on Dec 22, 1912",
 "Calcutta was capital from 1857 to 1911; transfer on Dec 12, 1911",
@@ -767,7 +767,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "60": {
-"questext": "What were the real underlying reasons for transferring the capital from Calcutta to Delhi, beyond the stated geographical ground? [SSC CGL]",
+"questext": "What were the real underlying reasons for transferring the capital from Calcutta to Delhi, beyond the stated geographical ground?",
 "options": [
 "To escape the hostile political climate of Calcutta after partition, please Indian Muslims by evoking Mughal history, and proximity to Shimla",
 "Purely for improved trade connectivity with Europe",
@@ -780,7 +780,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "61": {
-"questext": "The First World War, which broke out in 1914 and lasted till 1919, was fought between the Allied Powers and which opposing bloc? [SSC CGL]",
+"questext": "The First World War, which broke out in 1914 and lasted till 1919, was fought between the Allied Powers and which opposing bloc?",
 "options": [
 "Central Powers, headed by Germany with Austria, Hungary and Turkey",
 "Axis Powers, headed by Japan",
@@ -793,7 +793,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "62": {
-"questext": "During World War I, why did most sections of Indian leadership, including Gandhi, support Britain despite none of India's territories being attacked? [SSC CGL]",
+"questext": "During World War I, why did most sections of Indian leadership, including Gandhi, support Britain despite none of India's territories being attacked?",
 "options": [
 "In the hope that Britain would grant major concessions to India after the war",
 "Because India was directly attacked by Germany",
@@ -806,7 +806,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "63": {
-"questext": "What major economic and industrial impacts did World War I have on India? [SSC CGL]",
+"questext": "What major economic and industrial impacts did World War I have on India?",
 "options": [
 "Defence expenditure and taxes rose, modern industries emerged, and trade union movement began in 1917-18",
 "Defence expenditure decreased and all taxes were abolished",
@@ -819,7 +819,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "64": {
-"questext": "Turkey's defeat in World War I raised concerns over the dismemberment of the Ottoman Empire and the position of its Sultan-Caliph, leading to which pact between Congress and the Muslim League in 1916? [SSC CGL]",
+"questext": "Turkey's defeat in World War I raised concerns over the dismemberment of the Ottoman Empire and the position of its Sultan-Caliph, leading to which pact between Congress and the Muslim League in 1916?",
 "options": [
 "Lucknow Pact",
 "Gandhi-Irwin Pact",
@@ -832,7 +832,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "65": {
-"questext": "During World War I, Lala Hardayal formed the Indian Independence Committee in which European city to inspire overseas Indians for independence? [SSC CGL]",
+"questext": "During World War I, Lala Hardayal formed the Indian Independence Committee in which European city to inspire overseas Indians for independence?",
 "options": [
 "Paris",
 "Berlin",
@@ -845,7 +845,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "66": {
-"questext": "A provisional Indian government was formed in Kabul, Afghanistan, in December 1915 under the leadership of which revolutionary, with Barkatulla as Prime Minister? [SSC CGL]",
+"questext": "A provisional Indian government was formed in Kabul, Afghanistan, in December 1915 under the leadership of which revolutionary, with Barkatulla as Prime Minister?",
 "options": [
 "Mahendra Pratap",
 "Lala Hardayal",
@@ -858,7 +858,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "67": {
-"questext": "The Ghadar Party was founded on November 1, 1913, in San Francisco, America, by whom? [SSC CGL]",
+"questext": "The Ghadar Party was founded on November 1, 1913, in San Francisco, America, by whom?",
 "options": [
 "Lala Hardayal",
 "Ramchandra",
@@ -871,7 +871,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "68": {
-"questext": "What was the main magazine of the Ghadar Party, and in which language was its first issue published on 1 November 1913? [SSC CGL]",
+"questext": "What was the main magazine of the Ghadar Party, and in which language was its first issue published on 1 November 1913?",
 "options": [
 "'Gadar'; published in Urdu",
 "'Kesari'; published in Marathi",
@@ -884,7 +884,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "69": {
-"questext": "The Komagatamaru incident of 1914 involved which Indian-origin businessman hiring a Japanese ship to take Indian passengers to Canada? [SSC CGL]",
+"questext": "The Komagatamaru incident of 1914 involved which Indian-origin businessman hiring a Japanese ship to take Indian passengers to Canada?",
 "options": [
 "Guru Dutt Singh",
 "Husain Rahim",
@@ -897,7 +897,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "70": {
-"questext": "Who led the 'Shore Committee' formed to fight for the rights of Komagatamaru passengers in Canada, collecting funds and planning a legal battle? [SSC CGL]",
+"questext": "Who led the 'Shore Committee' formed to fight for the rights of Komagatamaru passengers in Canada, collecting funds and planning a legal battle?",
 "options": [
 "Husain Rahim, Balwant Singh, Sohanlal Pathak",
 "Lala Hardayal, Ramchandra, Barkatulla",
@@ -910,7 +910,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "71": {
-"questext": "After the Canadian government's strict stance forced the Komagatamaru ship to leave Vancouver, where was it ordered to be brought, and what happened upon its arrival? [SSC CGL]",
+"questext": "After the Canadian government's strict stance forced the Komagatamaru ship to leave Vancouver, where was it ordered to be brought, and what happened upon its arrival?",
 "options": [
 "Calcutta; clashes with police killed about 18 passengers",
 "Bombay; all passengers were released unharmed",
@@ -923,7 +923,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "72": {
-"questext": "The Home Rule Movement of 1916, inspired by the Irish Home Rule Movement led by Redmond, emerged to demand what kind of governance? [SSC CGL]",
+"questext": "The Home Rule Movement of 1916, inspired by the Irish Home Rule Movement led by Redmond, emerged to demand what kind of governance?",
 "options": [
 "Complete independence from the British Empire",
 "Self-rule within the structure of the British Empire",
@@ -936,7 +936,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "73": {
-"questext": "Tilak's Home Rule League, set up in April 1916, was restricted to which regions, and what were its main demands? [SSC CGL]",
+"questext": "Tilak's Home Rule League, set up in April 1916, was restricted to which regions, and what were its main demands?",
 "options": [
 "Maharashtra (excluding Bombay city), Karnataka, Central Provinces and Berar; Swaraj, linguistic states, vernacular education",
 "All of India including Bombay city; complete independence only",
@@ -949,7 +949,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "74": {
-"questext": "Annie Besant's Home Rule League, set up in September 1916 in Madras, had how many branches, and who served as its organizing secretary? [SSC CGL]",
+"questext": "Annie Besant's Home Rule League, set up in September 1916 in Madras, had how many branches, and who served as its organizing secretary?",
 "options": [
 "200 branches; George Arundale",
 "50 branches; B.W. Wadia",
@@ -962,7 +962,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "75": {
-"questext": "Which of the following national leaders did NOT join the Home Rule agitation? [SSC CGL]",
+"questext": "Which of the following national leaders did NOT join the Home Rule agitation?",
 "options": [
 "Motilal Nehru and Jawaharlal Nehru",
 "Madan Mohan Malaviya and Mohammad Ali Jinnah",
@@ -975,7 +975,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "76": {
-"questext": "Due to the influence of the Home Rule League, Annie Besant became the first woman president of the Congress session in which year? [SSC CGL]",
+"questext": "Due to the influence of the Home Rule League, Annie Besant became the first woman president of the Congress session in which year?",
 "options": [
 "1915",
 "1916",
@@ -988,7 +988,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "77": {
-"questext": "What were the key achievements of the Home Rule Movement, including the major British policy declaration it influenced in August 1917? [SSC CGL]",
+"questext": "What were the key achievements of the Home Rule Movement, including the major British policy declaration it influenced in August 1917?",
 "options": [
 "It gave birth to militant nationalists and influenced the Montagu Manifesto of 1917 and Montagu-Chelmsford Reforms of 1919",
 "It led to immediate complete independence for India",
@@ -1001,7 +1001,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "78": {
-"questext": "What was the British Government's response to the Home Rule Movement, including the arrest of Annie Besant in June 1917? [SSC CGL]",
+"questext": "What was the British Government's response to the Home Rule Movement, including the arrest of Annie Besant in June 1917?",
 "options": [
 "A case against Tilak was rescinded by the High Court and he was barred from Punjab and Delhi; Besant was arrested with Wadia and Arundale",
 "Tilak was immediately released and made Viceroy",
@@ -1014,7 +1014,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "79": {
-"questext": "The Lucknow Pact of 1916, the first united Congress session after 9 years, was the initiative of which leaders? [SSC CGL]",
+"questext": "The Lucknow Pact of 1916, the first united Congress session after 9 years, was the initiative of which leaders?",
 "options": [
 "Jinnah, Tilak and Mrs. Besant",
 "Dadabhai Naoroji and Gokhale",
@@ -1027,7 +1027,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "80": {
-"questext": "Under the Lucknow Pact (also called the 'Congress League Plan'), what key demand of the Muslims did the Congress accept? [SSC CGL]",
+"questext": "Under the Lucknow Pact (also called the 'Congress League Plan'), what key demand of the Muslims did the Congress accept?",
 "options": [
 "Separate communal electorate",
 "Complete autonomy for Muslim-majority provinces",
@@ -1040,7 +1040,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "81": {
-"questext": "Which issue brought the Muslim League closer to the Congress after the Lucknow Pact, leading eventually to recurring communal riots? [SSC CGL]",
+"questext": "Which issue brought the Muslim League closer to the Congress after the Lucknow Pact, leading eventually to recurring communal riots?",
 "options": [
 "Khilafat issue",
 "Partition of Bengal",
@@ -1053,7 +1053,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "82": {
-"questext": "After World War I, British PM Lloyd George appointed Montague as Secretary of State to India. His 1917 resolution promising representative self-government was hailed as what? [SSC CGL]",
+"questext": "After World War I, British PM Lloyd George appointed Montague as Secretary of State to India. His 1917 resolution promising representative self-government was hailed as what?",
 "options": [
 "\"Magna Carta of India\"",
 "\"Charter of Indian Freedom\"",
@@ -1066,7 +1066,7 @@ window.TEST_DATA = {
 "expimage": ""
 },
 "83": {
-"questext": "Despite Montague's 1917 declaration of working towards representative self-government, what feature of the Government of India Act, 1919, fell far short of this promise? [SSC CGL]",
+"questext": "Despite Montague's 1917 declaration of working towards representative self-government, what feature of the Government of India Act, 1919, fell far short of this promise?",
 "options": [
 "The system of diarchy",
 "Complete dominion status",
