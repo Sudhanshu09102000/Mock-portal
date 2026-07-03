@@ -742,6 +742,8 @@
       width: 340px;
       min-width: 200px;
       min-height: 140px;
+      height: min(70vh, 560px);
+      max-height: calc(100vh - 40px);
       z-index: 1600;
       border-radius: 16px;
       border: 1.5px solid rgba(96,165,250,.45);
@@ -8224,151 +8226,6 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       })();
     </script>
 
-<script>
-(function(){
-/* ── DISABLED ──────────────────────────────────────────────────────────
-   This legacy "/" font panel has been superseded by the God Control
-   Panel's font controls (gcp-font-select / gcp-font-size), which now
-   correctly cover Battle Mode (.bm-qtext / .bm-opt) and override the
-   #optionsArea .option mobile rule. Keeping this old panel's style
-   injection alive caused it to silently fight the new panel and skip
-   Battle Mode text, so it is fully disabled here rather than removed,
-   to avoid touching unrelated code paths.
-   ────────────────────────────────────────────────────────────────────── */
-})();
-</script>
-
-<script>
-(function(){
-
-/* ===== Load Google Fonts ===== */
-const fontLink=document.createElement("link");
-fontLink.rel="stylesheet";
-fontLink.href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Inter:wght@400;500&family=Roboto:wght@400;500&family=Nunito:wght@400;600&family=Merriweather:wght@400;700&display=swap";
-document.head.appendChild(fontLink);
-
-/* NOTE: panel intentionally not created/appended — see disabled block above */
-
-})();
-</script>
-
-<script type="text/disabled-legacy-font-panel" data-disabled="legacy-font-panel">
-(function(){
-
-/* ===== Create style controller ===== */
-const styleTag=document.createElement("style");
-document.head.appendChild(styleTag);
-
-/* ===== Floating Panel ===== */
-const panel=document.createElement("div");
-
-panel.style.cssText=`
-position:fixed;
-top:90px;
-right:20px;
-z-index:999999;
-background:rgba(13, 17, 23,.9);
-border:1px solid rgba(255,255,255,.2);
-border-radius:14px;
-padding:14px;
-width:220px;
-color:white;
-display:none;
-backdrop-filter:blur(12px);
-box-shadow:0 10px 40px rgba(0,0,0,.5);
-`;
-
-panel.innerHTML=`
-
-<div style="font-weight:600;margin-bottom:8px;">Font Style</div>
-
-<select id="fontSelect" style="width:100%;padding:6px;border-radius:8px;background:#111;color:white;border:1px solid rgba(255,255,255,.3);margin-bottom:12px;">
-
-<option value="Arial, Helvetica, sans-serif">SSC Default</option>
-<option value="'Poppins', sans-serif">Poppins</option>
-<option value="'Inter', sans-serif">Inter</option>
-<option value="'Roboto', sans-serif">Roboto</option>
-<option value="'Nunito', sans-serif">Nunito</option>
-<option value="'Merriweather', serif">Merriweather</option>
-
-</select>
-
-<div style="font-weight:600;margin-bottom:4px;">Font Size</div>
-
-<input id="fontSizeSlider" type="range" min="14" max="28" value="16" style="width:100%">
-
-<div id="fontSizeValue" style="text-align:center;margin-top:5px;">16px</div>
-
-`;
-
-document.body.appendChild(panel);
-
-/* ===== Apply font ===== */
-function applyFont(font){
-
-styleTag.innerHTML=`
-html, body, *{
-font-family:${font} !important;
-}
-`;
-
-}
-
-/* ===== Apply size ===== */
-function applySize(size){
-
-styleTag.innerHTML+=`
-#questionText,
-.option,
-.opt-text,
-.qbox,
-#qmarkModalBody,
-#qmarkModalBody *,
-#stickyExpPanel-body,
-#stickyExpPanel-body *,
-#mobileHintPanel-body,
-#mobileHintPanel-body *,
-body{
-font-size:${size}px !important;
-}
-`;
-
-}
-
-/* ===== Controls ===== */
-const fontSelect=document.getElementById("fontSelect");
-const slider=document.getElementById("fontSizeSlider");
-const sizeValue=document.getElementById("fontSizeValue");
-
-fontSelect.addEventListener("change",()=>{
-applyFont(fontSelect.value);
-});
-
-slider.addEventListener("input",()=>{
-sizeValue.innerText=slider.value+"px";
-applySize(slider.value);
-});
-
-/* ===== Toggle panel with "/" key ===== */
-document.addEventListener("keydown",(e)=>{
-  // ✅ Don't intercept when typing in any input
-  const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
-  if (['input','textarea','select'].includes(tag)) return;
-  if (document.activeElement && document.activeElement.closest && (
-    document.activeElement.closest('#bmChatPanel') ||
-    document.activeElement.closest('#bmVoicePanel')
-  )) return;
-
-  if(e.key==="/" || e.code==="Slash"){
-    panel.style.display=
-    panel.style.display==="none"
-    ? "block"
-    : "none";
-  }
-});
-
-})();
-</script>
 
 
 <script>
@@ -13352,47 +13209,6 @@ setTimeout(addBattleButtons, 1800);
   font-family: monospace;
 }
 
-/* ═══ FONT CONTROLS ═══ */
-.gcp-font-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 8px;
-}
-.gcp-select {
-  flex: 1;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(241, 245, 249,0.9);
-  border-radius: 10px;
-  padding: 7px 10px;
-  font-size: 12px;
-  font-family: 'Inter', sans-serif;
-  outline: none;
-  color-scheme: dark;
-}
-.gcp-select option {
-  background: #1e2a3a;
-  color: #f1f5f9;
-}
-.gcp-select:focus { border-color: rgba(37, 99, 235,0.6); }
-.gcp-range-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.gcp-range {
-  flex: 1;
-  accent-color: #2563eb;
-  height: 4px;
-}
-.gcp-range-val {
-  font-size: 11px;
-  font-family: monospace;
-  color: rgba(148, 163, 184,0.6);
-  min-width: 30px;
-  text-align: right;
-}
 
 /* ═══ PPT PROGRESS ═══ */
 #gcp-ppt-status {
@@ -14027,101 +13843,6 @@ setTimeout(addBattleButtons, 1800);
     <div id="gcp-ppt-status"></div>
   </div>
 
-  <!-- FONT SETTINGS -->
-  <div class="gcp-section">
-    <div class="gcp-section-title">🎨 Font & Display</div>
-    <div class="gcp-font-row">
-      <select class="gcp-select" id="gcp-font-select">
-        <option value="'Merriweather', Georgia, serif">Merriweather (Default)</option>
-        <option value="'Inter', system-ui, sans-serif">Inter (Clean)</option>
-        <option value="Georgia, 'Times New Roman', serif">Georgia</option>
-        <option value="'Courier New', monospace">Courier New</option>
-        <option value="'Segoe UI', system-ui, sans-serif">Segoe UI</option>
-        <option value="Arial, sans-serif">Arial</option>
-        <option value="'Comic Sans MS', cursive">Comic Sans</option>
-      </select>
-    </div>
-    <div class="gcp-range-row">
-      <span style="font-size:10px;color:rgba(148, 163, 184,0.45);font-family:'Inter',sans-serif;">Size</span>
-      <input type="range" class="gcp-range" id="gcp-font-size" min="12" max="28" value="16">
-      <span class="gcp-range-val" id="gcp-font-size-val">16px</span>
-    </div>
-  </div>
-
-  <!-- THEME COLORS -->
-  <div class="gcp-section">
-    <div class="gcp-section-title">🖌️ Theme Colors</div>
-
-    <div style="display:flex;flex-direction:column;gap:10px;padding:2px 0;">
-
-      <!-- Website Text Color — Rich Picker -->
-      <div style="display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:13px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.04);">
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div style="font-size:11px;color:rgba(200,220,255,0.7);font-family:'Inter',sans-serif;font-weight:600;letter-spacing:0.4px;">🔤 Website Text</div>
-          <button id="gcp-text-color-reset" style="font-size:9px;padding:3px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">↺ Reset</button>
-        </div>
-        <!-- Swatches grid -->
-        <div id="gcp-txt-swatches" style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px;"></div>
-        <!-- Color wheel + hex input -->
-        <div style="display:flex;align-items:center;gap:8px;">
-          <input type="color" id="gcp-text-color" value="#f1f5f9"
-            style="width:34px;height:30px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;flex-shrink:0;">
-          <input type="text" id="gcp-txt-hex" value="#f1f5f9" maxlength="7" placeholder="#rrggbb"
-            style="flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:8px;color:#f1f5f9;font-size:12px;font-family:'Inter',monospace;padding:5px 9px;outline:none;">
-        </div>
-        <!-- Live preview -->
-        <div id="gcp-txt-preview" style="font-size:12px;font-family:'Inter',sans-serif;color:#f1f5f9;text-align:center;padding:5px 8px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);">The quick brown fox…</div>
-      </div>
-
-      <!-- Page Background Color -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-        <div style="font-size:11px;color:rgba(200,220,255,0.7);font-family:'Inter',sans-serif;flex:1;">
-          Page Background
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <input type="color" id="gcp-bg-color" value="#0d1117"
-            style="width:32px;height:28px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;">
-          <button id="gcp-bg-color-reset" style="font-size:9px;padding:3px 7px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">Reset</button>
-        </div>
-      </div>
-
-      <!-- Test Box Color -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-        <div style="font-size:11px;color:rgba(200,220,255,0.7);font-family:'Inter',sans-serif;flex:1;">
-          Test Box / Cards
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <input type="color" id="gcp-box-color" value="#111827"
-            style="width:32px;height:28px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;cursor:pointer;padding:2px;">
-          <button id="gcp-box-color-reset" style="font-size:9px;padding:3px 7px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(200,220,255,0.6);cursor:pointer;font-family:'Inter',sans-serif;">Reset</button>
-        </div>
-      </div>
-
-      <!-- Quick Preset Themes -->
-      <div style="margin-top:4px;">
-        <div style="font-size:10px;color:rgba(148, 163, 184,0.35);font-family:'Inter',sans-serif;margin-bottom:6px;letter-spacing:0.5px;">QUICK THEMES</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button class="gcp-theme-btn" data-theme="dark"     style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(99,130,235,0.55);background:rgba(37,99,235,0.22);color:#a5b4fc;cursor:pointer;font-family:'Inter',sans-serif;">🌌 Dark</button>
-          <button class="gcp-theme-btn" data-theme="midnight" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(56,189,248,0.55);background:rgba(14,116,144,0.22);color:#7dd3fc;cursor:pointer;font-family:'Inter',sans-serif;">🌊 Midnight</button>
-          <button class="gcp-theme-btn" data-theme="forest"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(34,197,94,0.55);background:rgba(20,83,45,0.30);color:#86efac;cursor:pointer;font-family:'Inter',sans-serif;">🌿 Forest</button>
-          <button class="gcp-theme-btn" data-theme="light"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(148,163,184,0.60);background:rgba(226,232,240,0.18);color:#e2e8f0;cursor:pointer;font-family:'Inter',sans-serif;">☀️ Light</button>
-          <button class="gcp-theme-btn" data-theme="sepia"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(234,179,8,0.55);background:rgba(120,80,20,0.30);color:#fcd34d;cursor:pointer;font-family:'Inter',sans-serif;">📜 Sepia</button>
-          <button class="gcp-theme-btn" data-theme="ocean"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(6,182,212,0.55);background:rgba(8,51,68,0.35);color:#67e8f9;cursor:pointer;font-family:'Inter',sans-serif;">🐋 Ocean</button>
-          <button class="gcp-theme-btn" data-theme="sunset"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(249,115,22,0.55);background:rgba(124,45,18,0.30);color:#fdba74;cursor:pointer;font-family:'Inter',sans-serif;">🌇 Sunset</button>
-          <button class="gcp-theme-btn" data-theme="rose"     style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(244,63,94,0.55);background:rgba(136,19,55,0.30);color:#fda4af;cursor:pointer;font-family:'Inter',sans-serif;">🌸 Rose</button>
-          <button class="gcp-theme-btn" data-theme="slate"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(100,116,139,0.55);background:rgba(30,41,59,0.40);color:#cbd5e1;cursor:pointer;font-family:'Inter',sans-serif;">🩶 Slate</button>
-          <button class="gcp-theme-btn" data-theme="aurora"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(168,85,247,0.55);background:rgba(59,7,100,0.35);color:#e879f9;cursor:pointer;font-family:'Inter',sans-serif;">✨ Aurora</button>
-          <button class="gcp-theme-btn" data-theme="coffee"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(180,120,60,0.55);background:rgba(87,55,25,0.35);color:#d4a96a;cursor:pointer;font-family:'Inter',sans-serif;">☕ Coffee</button>
-          <button class="gcp-theme-btn" data-theme="nord"     style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(136,192,208,0.55);background:rgba(46,52,64,0.45);color:#88c0d0;cursor:pointer;font-family:'Inter',sans-serif;">❄️ Nord</button>
-          <button class="gcp-theme-btn" data-theme="lemon"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(234,179,8,0.55);background:rgba(113,63,18,0.25);color:#fef08a;cursor:pointer;font-family:'Inter',sans-serif;">🍋 Lemon</button>
-          <button class="gcp-theme-btn" data-theme="candy"    style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(236,72,153,0.55);background:rgba(131,24,67,0.28);color:#f9a8d4;cursor:pointer;font-family:'Inter',sans-serif;">🍬 Candy</button>
-          <button class="gcp-theme-btn" data-theme="matrix"   style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(34,197,94,0.55);background:rgba(0,20,0,0.50);color:#4ade80;cursor:pointer;font-family:'Inter',sans-serif;">💻 Matrix</button>
-          <button class="gcp-theme-btn" data-theme="testbook" style="font-size:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(0,184,212,0.65);background:rgba(0,184,212,0.15);color:#00b8d4;cursor:pointer;font-family:'Inter',sans-serif;">📝 Testbook</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- SHORTCUTS -->
   <div class="gcp-section">
     <div class="gcp-section-title">⌨️ Shortcuts</div>
@@ -14132,6 +13853,44 @@ setTimeout(addBattleButtons, 1800);
     <div class="gcp-shortcut-row"><span class="k">←→</span><span class="desc">Navigate questions</span></div>
     <div class="gcp-shortcut-row"><span class="k">0</span><span class="desc">Toggle hint</span></div>
     <div class="gcp-shortcut-row"><span class="k">Esc</span><span class="desc">Close panel/blackboard</span></div>
+  </div>
+
+  <!-- APPEARANCE -->
+  <div class="gcp-section">
+    <div class="gcp-section-title">🎨 Appearance</div>
+
+    <div class="gcp-appear-label">Font Style</div>
+    <div id="gpFontGrid" class="gcp-font-grid"></div>
+
+    <div class="gcp-appear-label">Font Size</div>
+    <div class="gcp-size-row">
+      <button class="gcp-size-btn" id="gpSizeMinus">A−</button>
+      <input type="range" id="gpSizeSlider" min="13" max="22" step="1" value="16" />
+      <button class="gcp-size-btn" id="gpSizePlus">A+</button>
+      <span id="gpSizeLabel" class="gcp-size-label">16px</span>
+    </div>
+
+    <div class="gcp-appear-label">Custom Colours</div>
+    <div class="gcp-color-row">
+      <span class="gcp-c-label">🖼️ Background</span>
+      <input type="color" id="gpBgColor" class="gcp-color-input" value="#0d1117" />
+    </div>
+    <div class="gcp-color-row">
+      <span class="gcp-c-label">🗂️ Box colour</span>
+      <input type="color" id="gpBoxColor" class="gcp-color-input" value="#8b5cf6" />
+    </div>
+    <div class="gcp-color-row">
+      <span class="gcp-c-label">🔤 Text colour</span>
+      <input type="color" id="gpTextColor" class="gcp-color-input" value="#f1f5f9" />
+    </div>
+
+    <div class="gcp-appear-label">One-Tap Themes</div>
+    <div id="gpPresets" class="gcp-presets-grid"></div>
+
+    <button class="gcp-btn" id="gpResetBtn" style="margin-top:10px;">
+      <span class="gcp-icon">↺</span>
+      <span>Reset to Georgia Default</span>
+    </button>
   </div>
 
   <!-- FOOTER -->
@@ -14358,903 +14117,6 @@ setTimeout(addBattleButtons, 1800);
   document.getElementById('gcp-ppt-btn').addEventListener('click', () => {
     closePanel();
     runPPTCapture();
-  });
-
-  // Font selector
-  const fontSelect = document.getElementById('gcp-font-select');
-  const fontSizeSlider = document.getElementById('gcp-font-size');
-  const fontSizeVal = document.getElementById('gcp-font-size-val');
-  // Separate style tags for family vs size so setting one never wipes the other out
-  let fontFamilyStyle = document.createElement('style');
-  let fontSizeStyle = document.createElement('style');
-  document.head.appendChild(fontFamilyStyle);
-  document.head.appendChild(fontSizeStyle);
-
-  function applyFont(font) {
-    fontFamilyStyle.textContent = `
-      html, body, *:not(button):not(.gbl-toolbar *):not(.gcp-panel *) {
-        font-family: ${font} !important;
-      }
-      #questionText, .qbox, .opt-text, .option, .subtopic-btn,
-      .bm-qtext, .bm-opt, .bm-opt *, #bmQCardWrap * {
-        font-family: ${font} !important;
-      }
-    `;
-  }
-  function applySize(size) {
-    // High-specificity selectors so this beats #optionsArea .option,
-    // #questionText, and other !important rules defined earlier in the sheet
-    fontSizeStyle.textContent = `
-      html body #questionText,
-      html body .qbox,
-      html body .option,
-      html body #optionsArea .option,
-      html body .opt-text,
-      html body #qmarkModalBody,
-      html body #qmarkModalBody *,
-      html body #stickyExpPanel-body,
-      html body #stickyExpPanel-body *,
-      html body #mobileHintPanel-body,
-      html body #mobileHintPanel-body *,
-      html body .bm-qtext,
-      html body .bm-opt,
-      html body #bmQCardWrap .bm-opt,
-      html body .bm-opt > span:last-child {
-        font-size: ${size}px !important;
-      }
-    `;
-  }
-  fontSelect.addEventListener('change', () => applyFont(fontSelect.value));
-  fontSizeSlider.addEventListener('input', () => {
-    fontSizeVal.textContent = fontSizeSlider.value + 'px';
-    applySize(fontSizeSlider.value);
-  });
-
-  // ── THEME COLOR CUSTOMIZATION ──
-  let themeStyle = document.createElement('style');
-  themeStyle.id = 'gcp-theme-style';
-  document.body.appendChild(themeStyle);
-
-  const THEME_DEFAULTS = {
-    textColor: '#f1f5f9',
-    bgColor:   '#0d1117',
-    boxColor:  '#111827'
-  };
-
-  const THEMES = {
-    dark:     { textColor:'#f1f5f9', bgColor:'#0d1117',  boxColor:'#111827' },
-    midnight: { textColor:'#e0f7ff', bgColor:'#020d18',  boxColor:'#041624' },
-    forest:   { textColor:'#e0ffe8', bgColor:'#020f06',  boxColor:'#051a09' },
-    light:    { textColor:'#1a1a2e', bgColor:'#f0f4ff',  boxColor:'#ffffff' },
-    sepia:    { textColor:'#3d2b1f', bgColor:'#f5ead7',  boxColor:'#ece1c8' },
-    ocean:    { textColor:'#cffafe', bgColor:'#021b26',  boxColor:'#062030' },
-    sunset:   { textColor:'#fff1e6', bgColor:'#1a0800',  boxColor:'#2d1200' },
-    rose:     { textColor:'#ffe4e6', bgColor:'#1a000a',  boxColor:'#2d0015' },
-    slate:    { textColor:'#e2e8f0', bgColor:'#0f172a',  boxColor:'#1e293b' },
-    aurora:   { textColor:'#fae8ff', bgColor:'#130520',  boxColor:'#1e0838' },
-    coffee:   { textColor:'#fdf0dc', bgColor:'#1c0e04',  boxColor:'#2e1a08' },
-    nord:     { textColor:'#eceff4', bgColor:'#2e3440',  boxColor:'#3b4252' },
-    lemon:    { textColor:'#fefce8', bgColor:'#1a1400',  boxColor:'#2a2000' },
-    candy:    { textColor:'#fce7f3', bgColor:'#1a0010',  boxColor:'#2d001e' },
-    matrix:   { textColor:'#4ade80', bgColor:'#000a00',  boxColor:'#001400' },
-    testbook: { textColor:'#1e293b', bgColor:'#ffffff',  boxColor:'#f0f4f8' },
-  };
-
-  function applyThemeColors(textColor, bgColor, boxColor) {
-    themeStyle.textContent = `
-      :root {
-        --txt: ${textColor} !important;
-        --muted: ${textColor} !important;
-      }
-      html, body { color: ${textColor} !important; }
-      body {
-        background: ${bgColor} !important;
-        background-image: none !important;
-        animation: none !important;
-      }
-      #particleCanvas { display: none !important; }
-      body::before { display: none !important; }
-      .glass, .resizable-question-box, #questionBox,
-      .nav-panel .glass, .engine-topbar {
-        background: ${boxColor} !important;
-        backdrop-filter: none !important;
-      }
-      /* ── Universal text colour — catches every element ── */
-      *, *::before, *::after {
-        color: ${textColor} !important;
-      }
-      /* ── Submit confirm modal box background ── */
-      #submitConfirmBox {
-        background: ${boxColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-      }
-      /* ── Control panel background follows page background ── */
-      #gcp-panel {
-        background: color-mix(in srgb, ${bgColor} 97%, ${textColor} 3%) !important;
-        border-right-color: color-mix(in srgb, ${textColor} 25%, transparent) !important;
-      }
-      .gcp-header {
-        background: color-mix(in srgb, ${bgColor} 95%, ${textColor} 5%) !important;
-        border-bottom-color: color-mix(in srgb, ${textColor} 10%, transparent) !important;
-      }
-      /* ── Blackboard toolbar: background + all elements inside ── */
-      #gbl-titlebar {
-        background: color-mix(in srgb, ${boxColor} 92%, ${textColor} 8%) !important;
-        border-bottom-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-      }
-      #gbl-titlebar *,
-      .gbl-tool, .gbl-tb-btn, .gbl-tool-sep, .gbl-tb-sep {
-        color: ${textColor} !important;
-        -webkit-text-fill-color: ${textColor} !important;
-      }
-      .gbl-tool, .gbl-tb-btn {
-        background: color-mix(in srgb, ${boxColor} 70%, ${textColor} 10%) !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-      }
-      .gbl-tool.active {
-        background: color-mix(in srgb, ${boxColor} 50%, ${textColor} 20%) !important;
-        border-color: color-mix(in srgb, ${textColor} 50%, transparent) !important;
-        box-shadow: 0 0 8px color-mix(in srgb, ${textColor} 20%, transparent) !important;
-      }
-      .gbl-tool-sep, .gbl-tb-sep {
-        background: color-mix(in srgb, ${textColor} 15%, transparent) !important;
-      }
-      .gbl-tb-title {
-        background: linear-gradient(90deg, ${textColor}, ${textColor}) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-      }
-      /* ── Pills — class selector beats * so must be explicit ── */
-      span.pill, a.pill, div.pill, button.pill,
-      .pill, .subtopic-btn .pill, .subject-card .pill,
-      [class*="pill"] {
-        color: ${textColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
-        background: color-mix(in srgb, ${textColor} 9%, transparent) !important;
-      }
-      /* ── Action buttons adapt to theme ── */
-      .btn-glass {
-        color: ${textColor} !important;
-        background: color-mix(in srgb, ${boxColor} 60%, ${textColor} 10%) !important;
-        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
-      }
-      .btn-glass * {
-        color: ${textColor} !important;
-      }
-      .btn-glass:hover {
-        color: ${textColor} !important;
-        background: color-mix(in srgb, ${boxColor} 40%, ${textColor} 20%) !important;
-        border-color: color-mix(in srgb, ${textColor} 55%, transparent) !important;
-        box-shadow: 0 2px 12px color-mix(in srgb, ${textColor} 15%, transparent) !important;
-      }
-      /* ── Toolbar strip background ── */
-      .top-toolbar.mobile-move-toolbar,
-      .action-btn-row {
-        background: color-mix(in srgb, ${boxColor} 90%, ${textColor} 10%) !important;
-      }
-      /* ── Hint box + Answer modal background ── */
-      .hover-help, #hoverHelp {
-        --expl-bg: ${boxColor} !important;
-        background: ${boxColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 25%, transparent) !important;
-        backdrop-filter: none !important;
-      }
-      #hoverHelp::-webkit-scrollbar-thumb {
-        background: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-      }
-      #qmarkHelpModal .modal-content {
-        background: ${boxColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-      }
-      /* ── Summary modal background & text ── */
-      #summaryModal .modal-content {
-        background: ${boxColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-      }
-      #summaryModal .modal-title,
-      #summaryStats .subtle,
-      #summaryCards .subtle,
-      #summaryStats div:not(.fs-3),
-      .summary-q-num, .summary-q-detail, .summary-q-detail * {
-        color: ${textColor} !important;
-      }
-      #summaryStats .glass {
-        background: color-mix(in srgb, ${boxColor} 80%, ${textColor} 10%) !important;
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-      }
-      /* ── Summary card status colors — theme-safe ── */
-      /* Card backgrounds tinted with semantic colors, always readable */
-      .summary-q-card.sqc-correct {
-        background: color-mix(in srgb, #22c55e 16%, ${boxColor}) !important;
-        border-color: #22c55e !important;
-      }
-      .summary-q-card.sqc-wrong {
-        background: color-mix(in srgb, #ef4444 16%, ${boxColor}) !important;
-        border-color: #ef4444 !important;
-      }
-      .summary-q-card.sqc-unattempted {
-        background: color-mix(in srgb, ${textColor} 6%, ${boxColor}) !important;
-        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
-      }
-      /* Badge labels — always readable against theme */
-      .sqc-badge-correct {
-        background: color-mix(in srgb, #22c55e 20%, ${boxColor}) !important;
-        border-color: color-mix(in srgb, #22c55e 70%, transparent) !important;
-        color: color-mix(in srgb, #22c55e 90%, ${textColor}) !important;
-      }
-      .sqc-badge-wrong {
-        background: color-mix(in srgb, #ef4444 20%, ${boxColor}) !important;
-        border-color: color-mix(in srgb, #ef4444 70%, transparent) !important;
-        color: color-mix(in srgb, #ef4444 90%, ${textColor}) !important;
-      }
-      .sqc-badge-unattempted {
-        background: color-mix(in srgb, ${textColor} 10%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
-      }
-      /* Legend label color */
-      .sqc-legend-label { color: color-mix(in srgb, ${textColor} 60%, transparent) !important; }
-      .sqc-legend { border-bottom-color: color-mix(in srgb, ${textColor} 14%, transparent) !important; }
-      /* ── Battle mode overlay adapts to theme ── */
-      #bmQuestionOverlay {
-        background: ${bgColor} !important;
-      }
-      .bm-qtext, .bm-qbar-label {
-        color: ${textColor} !important;
-      }
-      .bm-opt {
-        color: ${textColor} !important;
-        background: color-mix(in srgb, ${boxColor} 82%, ${textColor} 8%) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-      }
-      .bm-opt:hover {
-        background: color-mix(in srgb, ${boxColor} 65%, ${textColor} 15%) !important;
-        border-color: color-mix(in srgb, ${textColor} 45%, transparent) !important;
-      }
-      .bm-opt-key {
-        background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      #bmScoreboard {
-        background: color-mix(in srgb, ${bgColor} 97%, ${textColor} 3%) !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-      }
-      .bm-qbar {
-        background: color-mix(in srgb, ${boxColor} 90%, ${textColor} 5%) !important;
-        border-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-      }
-      .nav-panel .glass, #navPanel .glass {
-        background: ${boxColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-      }
-      /* ── Navigator dots — default (untouched) state ── */
-      .qdot {
-        border-color: color-mix(in srgb, ${textColor} 38%, transparent) !important;
-        background: color-mix(in srgb, ${boxColor} 78%, ${textColor} 10%) !important;
-        color: ${textColor} !important;
-      }
-      .qdot:hover {
-        border-color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
-        background: color-mix(in srgb, ${boxColor} 60%, ${textColor} 18%) !important;
-      }
-      /* Fix unattempted/skipped dot text so it's visible on any bg */
-      .qdot.st-final-unattempted {
-        color: color-mix(in srgb, ${textColor} 55%, transparent) !important;
-        background: color-mix(in srgb, ${boxColor} 78%, ${textColor} 10%) !important;
-        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
-      }
-      .qdot.st-skipped {
-        color: color-mix(in srgb, ${textColor} 50%, transparent) !important;
-        background: color-mix(in srgb, ${boxColor} 78%, ${textColor} 10%) !important;
-        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
-      }
-      /* Nav legend + header text */
-      #navLegend, .nav-wrap .subtle,
-      #navPanel h5, #navPanel .fw-bold {
-        color: ${textColor} !important;
-      }
-      /* ── Navigator legend items ── */
-      .nav-legend-wrap, .nav-legend-item, .nav-legend-wrap div {
-        color: ${textColor} !important;
-        opacity: 0.85 !important;
-      }
-      /* ── Submit confirm modal ── */
-      #submitConfirmBox .sc-title,
-      #submitConfirmBox .sc-sub,
-      #submitConfirmBox .sc-stat,
-      #submitConfirmBox .sc-stat span,
-      #submitConfirmBox .sc-stat label,
-      #scCancelBtn {
-        color: ${textColor} !important;
-      }
-      .option {
-        border-color: rgba(128,128,200,0.25) !important;
-        background: color-mix(in srgb, ${boxColor} 80%, transparent) !important;
-      }
-      /* ── Badge-soft & pill heading text — must beat hardcoded rgba !important ── */
-      .badge-soft, .pill, #testInfoTop,
-      span.badge-soft, span.pill,
-      [class*="badge-soft"], [class*="pill"] {
-        color: ${textColor} !important;
-        -webkit-text-fill-color: ${textColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
-        background: color-mix(in srgb, ${textColor} 8%, ${boxColor} 60%) !important;
-      }
-      /* ── Translate language dropdown follows theme ── */
-      #dualLangDropdown {
-        background: color-mix(in srgb, ${boxColor} 97%, ${textColor} 3%) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-      }
-      .dlang-item {
-        color: ${textColor} !important;
-      }
-      .dlang-item:hover {
-        background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      .dlang-item.active {
-        background: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      /* ── Back/Exit confirm dialog follows theme ── */
-      #backConfirmBox {
-        background: ${boxColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-        box-shadow: 0 30px 70px rgba(0,0,0,.55), 0 0 0 1px color-mix(in srgb, ${textColor} 5%, transparent) inset !important;
-      }
-      #backConfirmBox .bc-step {
-        color: rgba(59,130,246,.85) !important;
-        background: rgba(59,130,246,.10) !important;
-        border-color: rgba(59,130,246,.25) !important;
-      }
-      #backConfirmBox .bc-path .bc-node {
-        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 60%, transparent) !important;
-      }
-      #backConfirmBox .bc-path .bc-node.bc-active {
-        background: rgba(59,130,246,.15) !important;
-        border-color: rgba(59,130,246,.55) !important;
-        color: #93c5fd !important;
-      }
-      #backConfirmBox .bc-path .bc-arrow {
-        color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
-      }
-      #bcStayBtn {
-        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
-      }
-      #bcStayBtn:hover {
-        background: color-mix(in srgb, ${textColor} 14%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      /* ── Submit confirm stat boxes follow theme ── */
-      #submitConfirmBox .sc-stat {
-        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 13%, transparent) !important;
-      }
-      #scCancelBtn {
-        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
-      }
-      #scCancelBtn:hover {
-        background: color-mix(in srgb, ${textColor} 14%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      /* ── Battle Mode modal & lobby follow theme ── */
-      #bmOverlay {
-        background: color-mix(in srgb, ${bgColor} 92%, transparent) !important;
-      }
-      .bm-modal {
-        background: color-mix(in srgb, ${boxColor} 97%, ${textColor} 3%) !important;
-        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
-        box-shadow: 0 0 60px color-mix(in srgb, ${textColor} 12%, transparent) !important;
-      }
-      .bm-label {
-        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
-      }
-      .bm-input {
-        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      .bm-input:focus {
-        border-color: color-mix(in srgb, ${textColor} 70%, transparent) !important;
-      }
-      .bm-x {
-        background: color-mix(in srgb, ${textColor} 10%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      .bm-hint {
-        color: color-mix(in srgb, ${textColor} 45%, transparent) !important;
-      }
-      .bm-code-box {
-        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-      }
-      .bm-player-row {
-        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 10%, transparent) !important;
-      }
-      .bm-player-name {
-        color: ${textColor} !important;
-      }
-      .bm-info {
-        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
-      }
-      .bm-warn {
-        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
-      }
-      .bm-err {
-        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 85%, transparent) !important;
-      }
-      #bmDirectLinkBox {
-        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-      }
-      #bmDirectLinkInput {
-        background: color-mix(in srgb, ${bgColor} 85%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      #bmCopyLinkBtn {
-        background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      /* ── Finish Battle confirm dialog follows theme ── */
-      #bmFinishConfirm .bm-fc-card {
-        background: color-mix(in srgb, ${boxColor} 97%, ${textColor} 3%) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-        box-shadow: 0 32px 64px rgba(0,0,0,.55), 0 0 0 1px color-mix(in srgb, ${textColor} 6%, transparent) inset !important;
-      }
-      #bmFinishConfirm .bm-fc-title {
-        color: ${textColor} !important;
-      }
-      #bmFinishConfirm .bm-fc-sub {
-        color: color-mix(in srgb, ${textColor} 62%, transparent) !important;
-      }
-      #bmFinishConfirm .bm-fc-stat {
-        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-      }
-      #bmFinishConfirm .bm-fc-stat-lbl {
-        color: color-mix(in srgb, ${textColor} 50%, transparent) !important;
-      }
-      #bmFinishConfirm .bm-fc-cancel {
-        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
-      }
-      #bmFinishConfirm .bm-fc-cancel:hover {
-        background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 30%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      /* ── Battle Results screen follows theme ── */
-      #bmFinished {
-        background: color-mix(in srgb, ${bgColor} 97%, transparent) !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-      }
-      #bmResultBg {
-        background: radial-gradient(ellipse at 20% 30%, color-mix(in srgb, ${textColor} 10%, transparent) 0%, transparent 55%),
-                    radial-gradient(ellipse at 80% 70%, color-mix(in srgb, ${textColor} 7%, transparent) 0%, transparent 55%),
-                    ${bgColor} !important;
-      }
-      .bm-fin-row {
-        background: color-mix(in srgb, ${boxColor} 85%, ${textColor} 5%) !important;
-        border-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      .bm-fin-row.bm-fin-me {
-        background: color-mix(in srgb, ${textColor} 12%, ${boxColor}) !important;
-        border-color: color-mix(in srgb, ${textColor} 40%, transparent) !important;
-      }
-      .bm-fin-rank-num {
-        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
-      }
-      .bm-fin-sub {
-        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
-      }
-      /* ── Report Card wrapper & card body ── */
-      #bmReportCard {
-        background: color-mix(in srgb, ${boxColor} 92%, ${textColor} 5%) !important;
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-      }
-      .bm-rc-header {
-        background: color-mix(in srgb, ${boxColor} 88%, ${textColor} 8%) !important;
-        border-bottom-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-      }
-      .bm-rc-title {
-        color: ${textColor} !important;
-      }
-      /* ── Stat boxes: keep semantic tint but adapt bg/border to theme ── */
-      .bm-rc-stat {
-        background: color-mix(in srgb, ${boxColor} 75%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-      }
-      .bm-rc-correct {
-        background: rgba(34,197,94,.12) !important;
-        border-color: rgba(34,197,94,.40) !important;
-        color: #22c55e !important;
-      }
-      .bm-rc-wrong {
-        background: rgba(239,68,68,.12) !important;
-        border-color: rgba(239,68,68,.40) !important;
-        color: #ef4444 !important;
-      }
-      .bm-rc-skip {
-        background: color-mix(in srgb, ${boxColor} 70%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 75%, transparent) !important;
-      }
-      .bm-rc-acc {
-        background: rgba(250,204,21,.12) !important;
-        border-color: rgba(250,204,21,.40) !important;
-        color: #facc15 !important;
-      }
-      .bm-rc-stat-num, .bm-rc-stat-lbl {
-        color: inherit !important;
-      }
-      /* ── Question list items in report card ── */
-      .bm-rci {
-        background: color-mix(in srgb, ${boxColor} 82%, ${textColor} 5%) !important;
-        border-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
-      }
-      .bm-rci-correct {
-        border-color: rgba(34,197,94,.45) !important;
-        background: rgba(34,197,94,.07) !important;
-      }
-      .bm-rci-wrong {
-        border-color: rgba(239,68,68,.45) !important;
-        background: rgba(239,68,68,.07) !important;
-      }
-      .bm-rci-skip {
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        background: color-mix(in srgb, ${textColor} 3%, transparent) !important;
-      }
-      .bm-rci-qtext, .bm-rci-num, .bm-rci-toggle {
-        color: ${textColor} !important;
-      }
-      .bm-rci-status {
-        color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
-      }
-      .bm-rci-opt {
-        background: color-mix(in srgb, ${boxColor} 80%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 85%, transparent) !important;
-      }
-      .bm-rci-opt-correct {
-        background: rgba(34,197,94,.12) !important;
-        border-color: rgba(34,197,94,.45) !important;
-        color: #22c55e !important;
-      }
-      .bm-rci-opt-wrong {
-        background: rgba(239,68,68,.12) !important;
-        border-color: rgba(239,68,68,.45) !important;
-        color: #ef4444 !important;
-      }
-      .bm-rci-exp-btn {
-        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
-      }
-      .bm-rci-exp-btn:hover {
-        background: color-mix(in srgb, ${textColor} 14%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      /* ── Minimised pill adapts to theme ── */
-      #bmRcMiniPill {
-        background: linear-gradient(135deg,
-          color-mix(in srgb, ${textColor} 18%, ${boxColor}),
-          color-mix(in srgb, ${textColor} 12%, ${boxColor})) !important;
-        border-color: color-mix(in srgb, ${textColor} 40%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      #bmRcMiniPill .bm-rc-pill-badge {
-        background: color-mix(in srgb, ${textColor} 10%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      /* ── Minimise toggle btn ── */
-      #bmRcMinToggleBtn {
-        background: color-mix(in srgb, ${textColor} 8%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      /* ── Battle Mode explanation modal follows theme ── */
-      #bmExpModal {
-        background: rgba(0,0,0,.65) !important;
-      }
-      #bmExpModalBox {
-        background: ${boxColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
-        box-shadow: 0 0 60px color-mix(in srgb, ${textColor} 15%, transparent) !important;
-      }
-      #bmExpContent, #bmExpContent * {
-        color: ${textColor} !important;
-        -webkit-text-fill-color: ${textColor} !important;
-      }
-      #bmExpTranslation, #bmExpTranslation * {
-        color: ${textColor} !important;
-        -webkit-text-fill-color: ${textColor} !important;
-      }
-      /* ── Battle Comms chat panel follows theme ── */
-      #bmChatPanel {
-        background: ${boxColor} !important;
-        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
-        box-shadow: 0 0 60px color-mix(in srgb, ${textColor} 12%, transparent), 0 20px 50px rgba(0,0,0,.4) !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-      }
-      #bmChatHeader {
-        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
-        border-bottom-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
-      }
-      #bmChatTabBar {
-        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
-        border-bottom-color: color-mix(in srgb, ${textColor} 10%, transparent) !important;
-      }
-      .bm-tab-btn {
-        color: color-mix(in srgb, ${textColor} 50%, transparent) !important;
-      }
-      .bm-tab-btn.active {
-        color: ${textColor} !important;
-        border-bottom-color: ${textColor} !important;
-        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
-      }
-      .bm-tab-btn:hover:not(.active) {
-        color: color-mix(in srgb, ${textColor} 75%, transparent) !important;
-      }
-      #bmChatFooter {
-        background: color-mix(in srgb, ${textColor} 4%, transparent) !important;
-        border-top-color: color-mix(in srgb, ${textColor} 10%, transparent) !important;
-      }
-      #bmChatInput {
-        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      #bmChatInput::placeholder {
-        color: color-mix(in srgb, ${textColor} 35%, transparent) !important;
-      }
-      #bmChatInput:focus {
-        border-color: color-mix(in srgb, ${textColor} 55%, transparent) !important;
-      }
-      #bmChatSendBtn {
-        background: color-mix(in srgb, ${textColor} 15%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 35%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      .bm-ch-btn {
-        background: color-mix(in srgb, ${textColor} 6%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 16%, transparent) !important;
-        color: color-mix(in srgb, ${textColor} 80%, transparent) !important;
-      }
-      .bm-ch-btn:hover {
-        background: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 40%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      .bm-msg-bubble {
-        background: color-mix(in srgb, ${textColor} 7%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      .bm-msg-me .bm-msg-bubble {
-        background: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 32%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      .bm-msg-name, .bm-msg-me .bm-msg-name {
-        color: color-mix(in srgb, ${textColor} 75%, transparent) !important;
-        -webkit-text-fill-color: color-mix(in srgb, ${textColor} 75%, transparent) !important;
-      }
-      .bm-msg-time {
-        color: color-mix(in srgb, ${textColor} 38%, transparent) !important;
-      }
-      .bm-msg-system {
-        color: color-mix(in srgb, ${textColor} 60%, transparent) !important;
-        background: color-mix(in srgb, ${textColor} 5%, transparent) !important;
-        border-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-      }
-      .bm-chat-empty {
-        color: color-mix(in srgb, ${textColor} 40%, transparent) !important;
-      }
-      #bmChatBody::-webkit-scrollbar-thumb {
-        background: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-      }
-      /* ── Font & Display dropdown follows theme ── */
-      .gcp-select,
-      #gcp-font-select {
-        background: color-mix(in srgb, ${bgColor} 85%, ${textColor} 5%) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-        color: ${textColor} !important;
-      }
-      .gcp-select:focus,
-      #gcp-font-select:focus {
-        border-color: color-mix(in srgb, ${textColor} 55%, transparent) !important;
-      }
-      .gcp-select option,
-      #gcp-font-select option {
-        background: color-mix(in srgb, ${bgColor} 90%, ${textColor} 10%) !important;
-        color: ${textColor} !important;
-      }
-      /* ── 📌 Sticky "Answer & Explanation" panel (desktop floating) follows theme ── */
-      #stickyExpPanel {
-        background: color-mix(in srgb, ${boxColor} 95%, ${textColor} 5%) !important;
-        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
-        box-shadow: 0 8px 40px rgba(0,0,0,.45), 0 2px 12px color-mix(in srgb, ${textColor} 15%, transparent) !important;
-      }
-      #stickyExpPanel-header {
-        background: color-mix(in srgb, ${boxColor} 80%, ${textColor} 14%) !important;
-        border-bottom-color: color-mix(in srgb, ${textColor} 20%, transparent) !important;
-      }
-      #stickyExpPanel-title {
-        color: ${textColor} !important;
-        -webkit-text-fill-color: ${textColor} !important;
-      }
-      #stickyExpPanel-body {
-        color: ${textColor} !important;
-      }
-      #stickyExpPanel-body::-webkit-scrollbar-thumb {
-        background: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-      }
-      #stickyExpPanel-footer {
-        border-top-color: color-mix(in srgb, ${textColor} 15%, transparent) !important;
-      }
-      /* ── 📌 Mobile "Answer & Explanation" sticky panel follows theme ── */
-      #mobileHintPanel {
-        background: color-mix(in srgb, ${boxColor} 95%, ${textColor} 5%) !important;
-        border-color: color-mix(in srgb, ${textColor} 28%, transparent) !important;
-        box-shadow: 0 8px 32px rgba(0,0,0,.50), 0 2px 12px color-mix(in srgb, ${textColor} 15%, transparent) !important;
-      }
-      #mobileHintPanel-header {
-        background: color-mix(in srgb, ${boxColor} 80%, ${textColor} 14%) !important;
-        border-bottom-color: color-mix(in srgb, ${textColor} 18%, transparent) !important;
-      }
-      #mobileHintPanel-title {
-        color: ${textColor} !important;
-        -webkit-text-fill-color: ${textColor} !important;
-      }
-      #mobileHintPanel-body {
-        color: ${textColor} !important;
-      }
-      #mobileHintPanel-footer {
-        border-top-color: color-mix(in srgb, ${textColor} 12%, transparent) !important;
-      }
-      /* Translation blocks inside the sticky/mobile panels also follow theme */
-      #stickyExpPanel-body .modal-tl-block,
-      #mobileHintPanel-body .modal-tl-block {
-        background: linear-gradient(135deg, color-mix(in srgb, ${textColor} 10%, transparent), color-mix(in srgb, ${textColor} 6%, transparent)) !important;
-        border-color: color-mix(in srgb, ${textColor} 22%, transparent) !important;
-        border-left-color: color-mix(in srgb, ${textColor} 65%, transparent) !important;
-      }
-    `;
-    // Sync pickers
-    document.getElementById('gcp-text-color').value = textColor;
-    document.getElementById('gcp-bg-color').value   = bgColor;
-    document.getElementById('gcp-box-color').value  = boxColor;
-  }
-
-  function clearThemeColors() {
-    themeStyle.textContent = '';
-  }
-
-  /* ── Rich text-colour picker: swatches + hex input ── */
-  (function () {
-    const SWATCHES = [
-      '#f1f5f9','#ffffff','#e2e8f0',
-      '#93c5fd','#6ee7b7','#fde68a','#fca5a5',
-      '#38bdf8','#34d399','#fb923c','#facc15',
-      '#a78bfa','#f472b6','#67e8f9','#86efac',
-      '#ff6b6b','#4ade80','#60a5fa','#c084fc',
-      '#fbbf24','#f87171',
-    ];
-    const wrap    = document.getElementById('gcp-txt-swatches');
-    const picker  = document.getElementById('gcp-text-color');
-    const hexInp  = document.getElementById('gcp-txt-hex');
-    const preview = document.getElementById('gcp-txt-preview');
-
-    function setTxtColor(hex, fromSwatch) {
-      if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
-      picker.value  = hex;
-      hexInp.value  = hex;
-      preview.style.color = hex;
-      wrap.querySelectorAll('.gcp-tsw').forEach(s => {
-        s.style.outline = s.dataset.hex === hex ? '2px solid rgba(255,255,255,0.75)' : 'none';
-      });
-      const bg  = document.getElementById('gcp-bg-color').value;
-      const box = document.getElementById('gcp-box-color').value;
-      applyThemeColors(hex, bg, box);
-    }
-
-    SWATCHES.forEach(hex => {
-      const s = document.createElement('div');
-      s.className = 'gcp-tsw';
-      s.dataset.hex = hex;
-      s.style.cssText = 'width:100%;aspect-ratio:1;border-radius:50%;cursor:pointer;border:1.5px solid transparent;transition:transform .12s;background:' + hex;
-      s.title = hex;
-      s.addEventListener('mouseenter', () => s.style.transform = 'scale(1.2)');
-      s.addEventListener('mouseleave', () => s.style.transform = '');
-      s.addEventListener('click', () => setTxtColor(hex, true));
-      wrap.appendChild(s);
-    });
-
-    picker.addEventListener('input', e => setTxtColor(e.target.value, false));
-
-    hexInp.addEventListener('input', () => {
-      let v = hexInp.value.trim();
-      if (/^#[0-9a-fA-F]{6}$/.test(v)) setTxtColor(v, false);
-    });
-    hexInp.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        let v = hexInp.value.trim();
-        if (!v.startsWith('#')) v = '#' + v;
-        if (/^#[0-9a-fA-F]{6}$/.test(v)) setTxtColor(v, false);
-      }
-    });
-    hexInp.style.transition = 'border-color .15s';
-    hexInp.addEventListener('focus', () => hexInp.style.borderColor = 'rgba(59,130,246,0.6)');
-    hexInp.addEventListener('blur',  () => hexInp.style.borderColor = 'rgba(255,255,255,0.14)');
-
-    // Mark default swatch on load
-    const firstSwatch = wrap.querySelector('.gcp-tsw[data-hex="#f1f5f9"]');
-    if (firstSwatch) firstSwatch.style.outline = '2px solid rgba(255,255,255,0.75)';
-  })();
-
-  document.getElementById('gcp-text-color').addEventListener('input', e => {
-    const bg  = document.getElementById('gcp-bg-color').value;
-    const box = document.getElementById('gcp-box-color').value;
-    applyThemeColors(e.target.value, bg, box);
-  });
-  document.getElementById('gcp-bg-color').addEventListener('input', e => {
-    const txt = document.getElementById('gcp-text-color').value;
-    const box = document.getElementById('gcp-box-color').value;
-    applyThemeColors(txt, e.target.value, box);
-  });
-  document.getElementById('gcp-box-color').addEventListener('input', e => {
-    const txt = document.getElementById('gcp-text-color').value;
-    const bg  = document.getElementById('gcp-bg-color').value;
-    applyThemeColors(txt, bg, e.target.value);
-  });
-
-  document.getElementById('gcp-text-color-reset').addEventListener('click', () => {
-    document.getElementById('gcp-text-color').value = THEME_DEFAULTS.textColor;
-    applyThemeColors(THEME_DEFAULTS.textColor,
-      document.getElementById('gcp-bg-color').value,
-      document.getElementById('gcp-box-color').value);
-  });
-  document.getElementById('gcp-bg-color-reset').addEventListener('click', () => {
-    document.getElementById('gcp-bg-color').value = THEME_DEFAULTS.bgColor;
-    applyThemeColors(document.getElementById('gcp-text-color').value,
-      THEME_DEFAULTS.bgColor,
-      document.getElementById('gcp-box-color').value);
-  });
-  document.getElementById('gcp-box-color-reset').addEventListener('click', () => {
-    document.getElementById('gcp-box-color').value = THEME_DEFAULTS.boxColor;
-    applyThemeColors(document.getElementById('gcp-text-color').value,
-      document.getElementById('gcp-bg-color').value,
-      THEME_DEFAULTS.boxColor);
-  });
-
-  document.querySelectorAll('.gcp-theme-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const t = THEMES[btn.dataset.theme];
-      if (t) applyThemeColors(t.textColor, t.bgColor, t.boxColor);
-    });
   });
 
   /* ── GLOBAL KEYBOARD SHORTCUTS ── */
@@ -19044,6 +17906,292 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   } else {
     watchFinished();
   }
+})();
+</script>
+
+
+<!-- ════════════════════════════════════════════════════════════════════
+     ✨ APPEARANCE ENGINE  (font / size / colour studio)
+     Controls now live inside the existing left "⚡ Control Panel" (#gcp-panel)
+     as a new "🎨 Appearance" section — see the HTML injected near
+     #gcp-ppt-status further up the file. This block only carries the
+     CSS-variable application layer + the compact widget styling, injected
+     last so it wins cascade ties against the app's own !important rules.
+     ════════════════════════════════════════════════════════════════════ -->
+<style id="gpAppearanceStyle">
+  :root{
+    --gp-font: Georgia, 'Times New Roman', Times, serif;
+    --gp-fs: 16px;
+    --gp-bg1: #0d1117;
+    --gp-bg2: #111827;
+    --gp-box1: rgba(255,255,255,.09);
+    --gp-box2: rgba(255,255,255,.045);
+    --gp-boxb: rgba(255,255,255,.16);
+    --gp-text: #f1f5f9;
+    --gp-accent: #8b5cf6;
+    --gp-accent2: #3b82f6;
+  }
+
+  /* ---- Root scale (cascades through Bootstrap's rem-based sizing too) ---- */
+  html{ font-size: var(--gp-fs) !important; }
+
+  /* ---- Global typography ---- */
+  body, body *{ font-family: var(--gp-font) !important; }
+  svg text, svg tspan,
+  code, pre, kbd, .font-mono, #jsErrorBox .err-filename,
+  [style*="monospace"]{ font-family: 'Courier New', monospace !important; }
+  /* keep the Appearance widgets themselves in the panel's own UI font */
+  #gcp-panel, #gcp-panel *{ font-family: 'Inter', sans-serif !important; }
+  #gcp-panel .gcp-font-item{ font-family: var(--gp-preview-font, inherit) !important; }
+
+  /* ---- Page background ---- */
+  html, body{
+    background: linear-gradient(160deg, var(--gp-bg1) 0%, var(--gp-bg2) 100%) !important;
+  }
+  body{ color: var(--gp-text) !important; }
+
+  /* ---- "Boxes" — every glass / card / modal / option / preset surface ----
+     Older parts of the app (question options, subject cards, the
+     translate-language dropdown, battle-mode options, etc.) each carry
+     their own hardcoded background from earlier style blocks, so they
+     never picked up a theme change. Adding them here — this <style> tag
+     is last in the document, so on equal specificity it wins — makes
+     every "box" in the app follow the chosen theme.
+     .option.correct / .wrong / .selected / .active etc. use 2+ classes,
+     so they stay MORE specific than the plain rules below and keep their
+     green/red/blue feedback colours untouched. ---- */
+  .glass, .card, .modal-content,
+  #stickyExpPanel, #mobileHintPanel,
+  #answerModal .modal-content, #helpPopup, #hoverTooltip,
+  .option, .subject-card, .dlang-item, .bm-opt,
+  #dualLangDropdown, .qdot, .qmark-pop, .inline-hint-panel,
+  #gcp-panel{
+    background: linear-gradient(135deg, var(--gp-box1), var(--gp-box2)) !important;
+    border-color: var(--gp-boxb) !important;
+  }
+  /* #gcp-panel had no blur behind its old near-opaque background; now that
+     it uses the same translucent theme tint as the glass cards, it needs
+     one too or page content bleeds through and text gets hard to read. */
+  #gcp-panel{
+    backdrop-filter: blur(18px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
+  }
+
+  /* ---- "Text" — force every piece of text to follow the theme's text
+     colour, not just the <body> element. A great deal of text throughout
+     the app (badges, translated labels, sticky/hover panel copy, close
+     buttons, etc.) has its own hardcoded colour from earlier style blocks
+     that never reacted to a theme change — that's what caused some text
+     to stay black/white/blue regardless of the chosen theme.
+     Elements that legitimately need a distinct colour (correct/wrong/
+     selected feedback, the numbered kbd circles, active dropdown items,
+     accent labels) are targeted with 2+ classes elsewhere in the file, so
+     they remain more specific than this rule and keep their own colour. ---- */
+  *, *::before, *::after{
+    color: var(--gp-text) !important;
+  }
+
+  /* ═══════════════ Compact widgets embedded in the left Control Panel ═══════════════ */
+  .gcp-appear-label{
+    font-family:'Inter',sans-serif !important; font-size:9px; font-weight:800;
+    letter-spacing:1.5px; text-transform:uppercase; color: rgba(200,220,255,0.55);
+    margin: 12px 0 8px;
+  }
+  .gcp-appear-label:first-child{ margin-top:0; }
+
+  .gcp-font-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:6px; }
+  .gcp-font-item{
+    border:1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04);
+    border-radius:10px; padding:7px 3px; text-align:center; cursor:pointer;
+    transition: all .15s ease;
+  }
+  .gcp-font-item:hover{ background: rgba(37,99,235,0.18); border-color: rgba(37,99,235,0.5); transform: translateY(-1px); }
+  .gcp-font-item.gp-active{ background: linear-gradient(135deg, rgba(37,99,235,0.32), rgba(59,130,246,0.18)); border-color:#3b82f6; box-shadow: 0 3px 10px rgba(37,99,235,.35); }
+  .gcp-font-item .gp-fpreview{ font-size:14px; line-height:1.1; }
+  .gcp-font-item .gp-fname{ font-size:7.5px; opacity:.6; margin-top:3px; font-family:'Inter',sans-serif !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .gcp-font-item.gp-active .gp-fname{ opacity:1; color:#bfdbfe; }
+
+  .gcp-size-row{ display:flex; align-items:center; gap:6px; }
+  .gcp-size-btn{
+    width:26px; height:26px; border-radius:8px; border:1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05); color:#fff; font-size:11px; font-weight:800; cursor:pointer; flex-shrink:0;
+    transition: all .15s ease;
+  }
+  .gcp-size-btn:hover{ background: rgba(37,99,235,0.2); border-color: rgba(37,99,235,0.5); }
+  .gcp-size-btn:active{ transform: scale(.9); }
+  #gpSizeSlider{ flex:1; accent-color:#3b82f6; height:4px; }
+  .gcp-size-label{ font-size:10px; font-weight:700; min-width:32px; text-align:center; color: rgba(200,220,255,0.8); font-family:'Inter',sans-serif !important; }
+
+  .gcp-color-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom:7px; }
+  .gcp-c-label{ font-size:11px; color: rgba(241,245,249,0.8); font-family:'Inter',sans-serif !important; display:flex; align-items:center; gap:6px; }
+  .gcp-color-input{ width:32px; height:24px; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:none; cursor:pointer; padding:0; }
+
+  .gcp-presets-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:6px; }
+  .gcp-preset{
+    height:32px; border-radius:8px; cursor:pointer; border:2px solid rgba(255,255,255,0.1);
+    transition: all .15s ease;
+  }
+  .gcp-preset:hover{ transform: translateY(-2px) scale(1.05); border-color: rgba(255,255,255,0.4); }
+
+  #gpResetBtn{ justify-content:center; }
+</style>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- helpers ---------- */
+  function hexToRgb(hex){
+    hex = (hex||'#000000').replace('#','');
+    if(hex.length===3) hex = hex.split('').map(function(c){return c+c;}).join('');
+    var num = parseInt(hex,16)||0;
+    return { r:(num>>16)&255, g:(num>>8)&255, b:num&255 };
+  }
+  function toRgba(hex,a){ var c=hexToRgb(hex); return 'rgba('+c.r+','+c.g+','+c.b+','+a+')'; }
+  function shade(hex,percent){
+    var c = hexToRgb(hex);
+    var t = percent<0?0:255, p = Math.abs(percent);
+    var r = Math.round((t-c.r)*p)+c.r, g = Math.round((t-c.g)*p)+c.g, b = Math.round((t-c.b)*p)+c.b;
+    return 'rgb('+r+','+g+','+b+')';
+  }
+
+  var root = document.documentElement;
+
+  /* ---------- load a curated set of extra Google Fonts ---------- */
+  try{
+    var gf = document.createElement('link');
+    gf.rel = 'stylesheet';
+    gf.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;600;700&family=EB+Garamond:wght@400;600;700&family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@400;600;700&display=swap';
+    document.head.appendChild(gf);
+  }catch(e){}
+
+  /* ---------- font catalogue (Georgia is default) ---------- */
+  var FONTS = [
+    { name:'Georgia',         stack:"Georgia, 'Times New Roman', Times, serif" },
+    { name:'Merriweather',    stack:"'Merriweather', Georgia, serif" },
+    { name:'Playfair',        stack:"'Playfair Display', Georgia, serif" },
+    { name:'Lora',            stack:"'Lora', Georgia, serif" },
+    { name:'EB Garamond',     stack:"'EB Garamond', Georgia, serif" },
+    { name:'Times New Roman', stack:"'Times New Roman', Times, serif" },
+    { name:'Inter',           stack:"'Inter', system-ui, sans-serif" },
+    { name:'Poppins',         stack:"'Poppins', system-ui, sans-serif" },
+    { name:'Roboto Slab',     stack:"'Roboto Slab', Georgia, serif" },
+    { name:'Trebuchet',       stack:"'Trebuchet MS', system-ui, sans-serif" },
+    { name:'Verdana',         stack:"Verdana, Geneva, sans-serif" },
+    { name:'Courier New',     stack:"'Courier New', monospace" }
+  ];
+
+  var PRESETS = [
+    { name:'Midnight',    bg:'#0d1117', box:'#3b82f6', text:'#f1f5f9' },
+    { name:'Testbook',    bg:'#f4f7fb', box:'#1b4f9c', text:'#1a2233' },
+    { name:'Royal',       bg:'#1a1025', box:'#a855f7', text:'#f3e8ff' },
+    { name:'Forest',      bg:'#0a1f17', box:'#10b981', text:'#ecfdf5' },
+    { name:'Sunset',      bg:'#1f130a', box:'#f97316', text:'#fff7ed' },
+    { name:'Ocean',       bg:'#071a2b', box:'#06b6d4', text:'#e0f7fa' },
+    { name:'Rose Gold',   bg:'#20141a', box:'#f472b6', text:'#fff0f5' },
+    { name:'Parchment',   bg:'#f2e7cf', box:'#8b6b3d', text:'#2b1d0e' },
+    { name:'Crimson',     bg:'#1a0a0d', box:'#ef4444', text:'#fef2f2' },
+    { name:'Classic Exam',bg:'#f8fafc', box:'#334155', text:'#0f172a' },
+    { name:'Slate',       bg:'#161b22', box:'#64748b', text:'#e2e8f0' },
+    { name:'Amber Focus', bg:'#161310', box:'#f59e0b', text:'#fef3c7' },
+    { name:'Cyber Neon',  bg:'#05010f', box:'#22d3ee', text:'#cffafe' },
+    { name:'Lavender',    bg:'#1c1730', box:'#c084fc', text:'#f3e8ff' },
+    { name:'Mint Fresh',  bg:'#0a1f1a', box:'#34d399', text:'#ecfdf5' },
+    { name:'Charcoal Gold',bg:'#121212', box:'#d4af37', text:'#f5f0e6' }
+  ];
+
+  var DEFAULTS = { font: FONTS[0].stack, fs: 16, bg:'#0d1117', box:'#8b5cf6', text:'#f1f5f9' };
+  var state = { font: DEFAULTS.font, fs: DEFAULTS.fs, bg: DEFAULTS.bg, box: DEFAULTS.box, text: DEFAULTS.text };
+
+  /* ---------- persistence (best-effort; safe on file://) ---------- */
+  function loadSaved(){
+    try{
+      var raw = localStorage.getItem('gpAppearanceSettings');
+      if(raw){ var s = JSON.parse(raw); if(s && typeof s==='object'){ for(var k in DEFAULTS){ if(s[k]!==undefined) state[k]=s[k]; } } }
+    }catch(e){ /* localStorage unavailable (e.g. some file:// contexts) — fall back to defaults */ }
+  }
+  function persist(){
+    try{ localStorage.setItem('gpAppearanceSettings', JSON.stringify(state)); }catch(e){}
+  }
+
+  /* ---------- apply ---------- */
+  function applyAll(){
+    root.style.setProperty('--gp-font', state.font);
+    root.style.setProperty('--gp-fs', state.fs+'px');
+
+    root.style.setProperty('--gp-bg1', state.bg);
+    root.style.setProperty('--gp-bg2', shade(state.bg, -0.42));
+
+    root.style.setProperty('--gp-box1', toRgba(state.box, .16));
+    root.style.setProperty('--gp-box2', toRgba(state.box, .06));
+    root.style.setProperty('--gp-boxb', toRgba(state.box, .40));
+    root.style.setProperty('--gp-accent', state.box);
+    root.style.setProperty('--gp-accent2', shade(state.box, 0.25));
+
+    root.style.setProperty('--gp-text', state.text);
+
+    // sync controls
+    var bgIn=document.getElementById('gpBgColor'), boxIn=document.getElementById('gpBoxColor'),
+        txtIn=document.getElementById('gpTextColor'), sizeSlider=document.getElementById('gpSizeSlider'),
+        sizeLabel=document.getElementById('gpSizeLabel');
+    if(bgIn) bgIn.value = /^#/.test(state.bg) ? state.bg : '#0d1117';
+    if(boxIn) boxIn.value = /^#/.test(state.box) ? state.box : '#8b5cf6';
+    if(txtIn) txtIn.value = /^#/.test(state.text) ? state.text : '#f1f5f9';
+    if(sizeSlider) sizeSlider.value = state.fs;
+    if(sizeLabel) sizeLabel.textContent = state.fs+'px';
+
+    // highlight active font tile
+    document.querySelectorAll('.gcp-font-item').forEach(function(el){
+      el.classList.toggle('gp-active', el.dataset.stack === state.font);
+    });
+  }
+
+  /* ---------- build font grid ---------- */
+  var grid = document.getElementById('gpFontGrid');
+  FONTS.forEach(function(f){
+    var item = document.createElement('div');
+    item.className = 'gcp-font-item';
+    item.dataset.stack = f.stack;
+    item.style.setProperty('--gp-preview-font', f.stack);
+    item.innerHTML = '<div class="gp-fpreview">Aa</div><div class="gp-fname">'+f.name+'</div>';
+    item.addEventListener('click', function(){
+      state.font = f.stack; applyAll(); persist();
+    });
+    grid.appendChild(item);
+  });
+
+  /* ---------- build presets ---------- */
+  var presetsWrap = document.getElementById('gpPresets');
+  PRESETS.forEach(function(p){
+    var sw = document.createElement('div');
+    sw.className = 'gcp-preset';
+    sw.dataset.name = p.name;
+    sw.style.background = 'linear-gradient(135deg,'+p.bg+' 45%,'+p.box+' 150%)';
+    sw.title = p.name;
+    sw.addEventListener('click', function(){
+      state.bg = p.bg; state.box = p.box; state.text = p.text;
+      applyAll(); persist();
+    });
+    presetsWrap.appendChild(sw);
+  });
+
+  /* ---------- wire up controls ---------- */
+  document.getElementById('gpBgColor').addEventListener('input', function(e){ state.bg = e.target.value; applyAll(); persist(); });
+  document.getElementById('gpBoxColor').addEventListener('input', function(e){ state.box = e.target.value; applyAll(); persist(); });
+  document.getElementById('gpTextColor').addEventListener('input', function(e){ state.text = e.target.value; applyAll(); persist(); });
+
+  document.getElementById('gpSizeSlider').addEventListener('input', function(e){ state.fs = parseInt(e.target.value,10); applyAll(); persist(); });
+  document.getElementById('gpSizeMinus').addEventListener('click', function(){ state.fs = Math.max(13, state.fs-1); applyAll(); persist(); });
+  document.getElementById('gpSizePlus').addEventListener('click', function(){ state.fs = Math.min(22, state.fs+1); applyAll(); persist(); });
+
+  document.getElementById('gpResetBtn').addEventListener('click', function(){
+    state = { font: DEFAULTS.font, fs: DEFAULTS.fs, bg: DEFAULTS.bg, box: DEFAULTS.box, text: DEFAULTS.text };
+    applyAll(); persist();
+  });
+
+  /* ---------- init ---------- */
+  loadSaved();
+  applyAll();
 })();
 </script>
 
