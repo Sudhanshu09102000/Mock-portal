@@ -471,8 +471,8 @@
       padding: .7rem .8rem;
       border-radius: 14px;
       border: 1px solid rgba(255, 255, 255, .18);
-      background: var(--expl-bg, rgba(13, 17, 23, .92));
-      backdrop-filter: blur(10px);
+      background: var(--expl-bg, #0d1117);
+      backdrop-filter: none;
       display: none;
       pointer-events: auto;
     }
@@ -1061,7 +1061,7 @@
     body:not(.dark-mode) #answerModal .modal-content,
     body:not(.dark-mode) #helpPopup,
     body:not(.dark-mode) #hoverTooltip {
-      background: rgba(255, 255, 255, 0.92);
+      background: #ffffff;
       color: #111;
     }
 
@@ -1076,7 +1076,7 @@
     body.dark-mode #answerModal .modal-content,
     body.dark-mode #helpPopup,
     body.dark-mode #hoverTooltip {
-      background: rgba(10, 10, 16, 0.82);
+      background: #0a0a10;
       color: #f3f3f3;
     }
 
@@ -1096,7 +1096,7 @@
       border-radius: 10px;
       background: linear-gradient(135deg, rgba(59,130,246,.10), rgba(56,189,248,.06));
       border-left: 3px solid rgba(59,130,246,.55);
-      font-size: .88em;
+      font-size: calc(var(--gp-fs, 16px) * 0.88);
       color: rgba(148,210,255,.92);
       line-height: 1.55;
       font-style: italic;
@@ -1107,7 +1107,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
     .dual-lang-label {
-      font-size: .72em;
+      font-size: calc(var(--gp-fs, 16px) * 0.72);
       font-weight: 700;
       letter-spacing: .6px;
       text-transform: uppercase;
@@ -1117,7 +1117,7 @@
     }
     .dual-lang-opt-wrap {
       margin-top: .28rem;
-      font-size: .84em;
+      font-size: calc(var(--gp-fs, 16px) * 0.84);
       color: rgba(148,210,255,.85);
       font-style: italic;
       padding-left: .3rem;
@@ -3263,10 +3263,10 @@ button:focus-visible, input:focus-visible, select:focus-visible, [role=button]:f
   #bmRaceTrack, .hover-help {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: rgba(12,16,28,.92) !important;
+    background: #0c101c !important;
   }
   .glass {
-    background: linear-gradient(135deg, rgba(20,24,40,.92), rgba(16,20,34,.92)) !important;
+    background: linear-gradient(135deg, #141828, #101222) !important;
     box-shadow: 0 8px 24px rgba(0,0,0,.45) !important;
   }
 
@@ -8490,7 +8490,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             background-image: none !important;
           }
           .glass, .resizable-question-box, .engine-topbar, .nav-panel .glass, #questionBox {
-            background: ${box}cc !important;
+            background: ${box} !important;
             background-image: none !important;
           }
           *, *::before, *::after {
@@ -13873,11 +13873,11 @@ setTimeout(addBattleButtons, 1800);
     <div class="gcp-appear-label">Custom Colours</div>
     <div class="gcp-color-row">
       <span class="gcp-c-label">🖼️ Background</span>
-      <input type="color" id="gpBgColor" class="gcp-color-input" value="#0d1117" />
+      <input type="color" id="gpBgColor" class="gcp-color-input" value="#060d1c" />
     </div>
     <div class="gcp-color-row">
       <span class="gcp-c-label">🗂️ Box colour</span>
-      <input type="color" id="gpBoxColor" class="gcp-color-input" value="#8b5cf6" />
+      <input type="color" id="gpBoxColor" class="gcp-color-input" value="#060d1c" />
     </div>
     <div class="gcp-color-row">
       <span class="gcp-c-label">🔤 Text colour</span>
@@ -16384,7 +16384,7 @@ setTimeout(addBattleButtons, 1800);
       'border-top:none',
       'padding:5px 8px',
       'border-radius:0 0 8px 8px',
-      'background:rgba(10,8,30,0.92)',
+      'background:#0a081e',
       'line-height:1.4',
       'text-shadow:0 1px 3px rgba(0,0,0,0.8)',
       'cursor:text',
@@ -17684,10 +17684,10 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   pointer-events: all !important;
   touch-action: pan-x !important;
   background: linear-gradient(90deg,
-    rgba(13, 17, 23,0.92) 0%,
-    rgba(22, 27, 39,0.88) 100%) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
+    #0d1117 0%,
+    #161b27 100%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border-bottom: 1px solid rgba(255,255,255,0.09) !important;
 }
 #gbl-titlebar * {
@@ -17922,14 +17922,14 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   :root{
     --gp-font: Georgia, 'Times New Roman', Times, serif;
     --gp-fs: 16px;
-    --gp-bg1: #0d1117;
-    --gp-bg2: #111827;
-    --gp-box1: rgba(255,255,255,.09);
-    --gp-box2: rgba(255,255,255,.045);
-    --gp-boxb: rgba(255,255,255,.16);
+    --gp-bg1: #060d1c;
+    --gp-bg2: #030810;
+    --gp-box1: #060d1c;
+    --gp-box2: #050b17;
+    --gp-boxb: #3d424e;
     --gp-text: #f1f5f9;
-    --gp-accent: #8b5cf6;
-    --gp-accent2: #3b82f6;
+    --gp-accent: #060d1c;
+    --gp-accent2: #444a55;
   }
 
   /* ---- Root scale (cascades through Bootstrap's rem-based sizing too) ---- */
@@ -17965,6 +17965,7 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   #answerModal .modal-content, #helpPopup, #hoverTooltip,
   .option, .subject-card, .dlang-item, .bm-opt,
   #dualLangDropdown, .qdot, .qmark-pop, .inline-hint-panel,
+  #submitConfirmBox, #submitConfirmBox .sc-stat, #scCancelBtn,
   #gcp-panel{
     background: linear-gradient(135deg, var(--gp-box1), var(--gp-box2)) !important;
     border-color: var(--gp-boxb) !important;
@@ -18082,7 +18083,7 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   ];
 
   var PRESETS = [
-    { name:'Midnight',    bg:'#0d1117', box:'#3b82f6', text:'#f1f5f9' },
+    { name:'Midnight',    bg:'#060d1c', box:'#060d1c', text:'#f1f5f9' },
     { name:'Testbook',    bg:'#f4f7fb', box:'#1b4f9c', text:'#1a2233' },
     { name:'Royal',       bg:'#1a1025', box:'#a855f7', text:'#f3e8ff' },
     { name:'Forest',      bg:'#0a1f17', box:'#10b981', text:'#ecfdf5' },
@@ -18097,10 +18098,24 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     { name:'Cyber Neon',  bg:'#05010f', box:'#22d3ee', text:'#cffafe' },
     { name:'Lavender',    bg:'#1c1730', box:'#c084fc', text:'#f3e8ff' },
     { name:'Mint Fresh',  bg:'#0a1f1a', box:'#34d399', text:'#ecfdf5' },
-    { name:'Charcoal Gold',bg:'#121212', box:'#d4af37', text:'#f5f0e6' }
+    { name:'Charcoal Gold',bg:'#121212', box:'#d4af37', text:'#f5f0e6' },
+    { name:'Deep Space',  bg:'#05070d', box:'#6366f1', text:'#e5e7ff' },
+    { name:'Sakura',      bg:'#1a0e14', box:'#ec4899', text:'#ffe4f1' },
+    { name:'Autumn',      bg:'#1c1006', box:'#c2410c', text:'#fff1e6' },
+    { name:'Emerald Night',bg:'#031510', box:'#059669', text:'#d1fae5' },
+    { name:'Graphite',    bg:'#1e1e1e', box:'#9ca3af', text:'#f3f4f6' },
+    { name:'Arctic',      bg:'#eef4f9', box:'#0284c7', text:'#0c2233' },
+    { name:'Sepia',       bg:'#faf3e0', box:'#92400e', text:'#3a2a15' },
+    { name:'Blush',       bg:'#fdf1f5', box:'#db2777', text:'#3b0a20' },
+    { name:'Steel Blue',  bg:'#0b141d', box:'#4a7ba6', text:'#dbe9f7' },
+    { name:'Maroon',      bg:'#1a0508', box:'#9f1239', text:'#ffe4e6' },
+    { name:'Olive Field', bg:'#12140a', box:'#6b7d1f', text:'#eef2d9' },
+    { name:'Plum',        bg:'#170a1c', box:'#86198f', text:'#fae8ff' },
+    { name:'Ink Sky',     bg:'#020617', box:'#38bdf8', text:'#e0f2fe' },
+    { name:'Onyx',        bg:'#000000', box:'#525252', text:'#e5e5e5' }
   ];
 
-  var DEFAULTS = { font: FONTS[0].stack, fs: 16, bg:'#0d1117', box:'#8b5cf6', text:'#f1f5f9' };
+  var DEFAULTS = { font: FONTS[0].stack, fs: 16, bg:'#060d1c', box:'#060d1c', text:'#f1f5f9' };
   var state = { font: DEFAULTS.font, fs: DEFAULTS.fs, bg: DEFAULTS.bg, box: DEFAULTS.box, text: DEFAULTS.text };
 
   /* ---------- persistence (best-effort; safe on file://) ---------- */
@@ -18122,9 +18137,9 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     root.style.setProperty('--gp-bg1', state.bg);
     root.style.setProperty('--gp-bg2', shade(state.bg, -0.42));
 
-    root.style.setProperty('--gp-box1', toRgba(state.box, .16));
-    root.style.setProperty('--gp-box2', toRgba(state.box, .06));
-    root.style.setProperty('--gp-boxb', toRgba(state.box, .40));
+    root.style.setProperty('--gp-box1', state.box);
+    root.style.setProperty('--gp-box2', shade(state.box, -0.18));
+    root.style.setProperty('--gp-boxb', shade(state.box, 0.22));
     root.style.setProperty('--gp-accent', state.box);
     root.style.setProperty('--gp-accent2', shade(state.box, 0.25));
 
@@ -18134,8 +18149,8 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     var bgIn=document.getElementById('gpBgColor'), boxIn=document.getElementById('gpBoxColor'),
         txtIn=document.getElementById('gpTextColor'), sizeSlider=document.getElementById('gpSizeSlider'),
         sizeLabel=document.getElementById('gpSizeLabel');
-    if(bgIn) bgIn.value = /^#/.test(state.bg) ? state.bg : '#0d1117';
-    if(boxIn) boxIn.value = /^#/.test(state.box) ? state.box : '#8b5cf6';
+    if(bgIn) bgIn.value = /^#/.test(state.bg) ? state.bg : '#060d1c';
+    if(boxIn) boxIn.value = /^#/.test(state.box) ? state.box : '#060d1c';
     if(txtIn) txtIn.value = /^#/.test(state.text) ? state.text : '#f1f5f9';
     if(sizeSlider) sizeSlider.value = state.fs;
     if(sizeLabel) sizeLabel.textContent = state.fs+'px';
