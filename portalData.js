@@ -255,7 +255,13 @@ const PORTAL_DATA = [
       {
         name: "Current Affairs",
         subtopics: [
+          { name: "July 2025 Current Affiars", file: "ca-jul-2025" },
+          { name: "August 2025 Current Affiars", file: "ca-aug-2025" },
+          { name: "September October 2025 Current Affiars", file: "ca-sep-oct-2025" },
           { name: "November 2025 Current Affiars", file: "ca-nov-2025" },
+          { name: "December 2025 Current Affiars", file: "ca-dec-2025" },
+          { name: "January 2026 Current Affiars", file: "ca-jan-2026" },
+          { name: "February March 2026 Current Affiars", file: "ca-feb-mar-2026" },
 
         ]
       }
