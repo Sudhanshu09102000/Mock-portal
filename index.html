@@ -8076,15 +8076,24 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       })();
     </script>
     <script>
+      /* ─────────────────────────────────────────────────────────────
+         Top bar: always visible by default (no hover-to-reveal).
+         A polished drag handle sits directly under the bar, in normal
+         document flow — so it never overlaps the question card below.
+         Drag it up to shrink the bar's height AND scale its text/icons
+         down together (all the way to 0, fully collapsed). Drag down
+         to grow it back. Size is remembered across visits.
+      ───────────────────────────────────────────────────────────── */
       (() => {
         const topBar = document.querySelector('.engine-topbar');
         if (!topBar) return;
 
         const IS_TOUCH = window.matchMedia('(hover: none)').matches || navigator.maxTouchPoints > 0;
         const IS_SMALL = () => window.innerWidth <= 640;
+        const STORAGE_KEY = 'engineTopbarNarrowness';
 
         if (IS_TOUCH || IS_SMALL()) {
-          // Mobile / touch: always fully visible, no hide/show tricks
+          // Mobile / touch: always fully visible, no resizing tricks
           topBar.style.height = '';
           topBar.style.opacity = '1';
           topBar.style.overflow = '';
@@ -8092,33 +8101,240 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           return;
         }
 
-        // Desktop only: hide topbar until hover at top of screen
-        topBar.style.transition = 'height 0.25s ease, opacity 0.25s ease';
-        topBar.style.height = '0px';
-        topBar.style.opacity = '0';
-        topBar.style.overflow = 'hidden';
+        // ── Wrap the topbar's existing content so it can be scaled as one unit ──
+        let inner = topBar.querySelector(':scope > .engine-topbar-scale-inner');
+        if (!inner) {
+          inner = document.createElement('div');
+          inner.className = 'engine-topbar-scale-inner';
+          while (topBar.firstChild) inner.appendChild(topBar.firstChild);
+          topBar.appendChild(inner);
+        }
 
-        const hoverZone = document.createElement('div');
-        hoverZone.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:18px;z-index:99999;background:transparent;';
-        document.body.appendChild(hoverZone);
+        // No manual height juggling on the bar itself — it auto-sizes to
+        // (scaled content + handle strip), so nothing ever overlaps.
+        topBar.style.position = topBar.style.position || 'sticky';
+        topBar.style.height = '';
+        topBar.style.overflow = 'visible';
+        topBar.style.display = 'block';
+        inner.style.transformOrigin = 'top center';
+        inner.style.overflow = 'hidden';
 
-        hoverZone.addEventListener('mouseenter', () => {
-          topBar.style.height = '';
-          topBar.style.opacity = '1';
+        // ── Drag handle strip — lives in normal flow, right after the content ──
+        let handle = document.getElementById('engineTopbarResizeHandle');
+        if (!handle) {
+          handle = document.createElement('div');
+          handle.id = 'engineTopbarResizeHandle';
+          handle.setAttribute('role', 'slider');
+          handle.setAttribute('tabindex', '0');
+          handle.setAttribute('aria-label', 'Resize toolbar');
+          handle.title = 'Drag to resize • Double-click to reset • Arrow keys to nudge';
+          handle.innerHTML = '<div class="etb-line"></div><div class="etb-grip"><span></span><span></span><span></span></div><div class="etb-badge">100%</div>';
+          topBar.appendChild(handle);
+        }
+
+        if (!document.getElementById('engineTopbarResizeStyle')) {
+          const style = document.createElement('style');
+          style.id = 'engineTopbarResizeStyle';
+          style.textContent = `
+            #engineTopbarResizeHandle{
+              position:relative; width:100%; height:7px;
+              cursor:ns-resize; z-index:6; touch-action:none;
+              -webkit-tap-highlight-color:transparent;
+              outline:none;
+            }
+            #engineTopbarResizeHandle .etb-line{
+              position:absolute; left:0; right:0; top:50%;
+              height:1px; transform:translateY(-50%);
+              background:linear-gradient(90deg,
+                transparent 0%,
+                rgba(59,130,246,.16) 18%,
+                rgba(59,130,246,.28) 50%,
+                rgba(59,130,246,.16) 82%,
+                transparent 100%);
+              transition:background .2s ease;
+            }
+            /* Grip is a floating overlay — it does NOT take up flow space.
+               It's invisible at rest and only pops in on hover/drag, so the
+               handle's resting footprint stays a hairline. */
+            #engineTopbarResizeHandle .etb-grip{
+              position:absolute; top:50%; left:50%;
+              transform:translate(-50%,-50%) scale(.5);
+              display:flex; align-items:center; gap:3px;
+              padding:4px 12px; border-radius:99px;
+              background:rgba(17,20,28,.65);
+              border:1px solid rgba(255,255,255,.10);
+              box-shadow:0 2px 10px rgba(0,0,0,.25);
+              opacity:0; pointer-events:none;
+              transition:all .18s cubic-bezier(.4,0,.2,1);
+            }
+            #engineTopbarResizeHandle .etb-grip span{
+              width:4px; height:4px; border-radius:50%;
+              background:rgba(255,255,255,.35);
+              transition:all .18s cubic-bezier(.4,0,.2,1);
+            }
+            #engineTopbarResizeHandle:hover .etb-line,
+            #engineTopbarResizeHandle.dragging .etb-line{
+              background:linear-gradient(90deg,
+                transparent 0%,
+                rgba(59,130,246,.45) 12%,
+                rgba(34,197,94,.45) 50%,
+                rgba(59,130,246,.45) 88%,
+                transparent 100%);
+            }
+            #engineTopbarResizeHandle:hover .etb-grip,
+            #engineTopbarResizeHandle.dragging .etb-grip{
+              opacity:1; transform:translate(-50%,-50%) scale(1);
+              background:rgba(59,130,246,.14);
+              border-color:rgba(59,130,246,.55);
+              box-shadow:0 0 22px rgba(59,130,246,.35), 0 4px 14px rgba(0,0,0,.3);
+            }
+            #engineTopbarResizeHandle:hover .etb-grip span,
+            #engineTopbarResizeHandle.dragging .etb-grip span{
+              background:linear-gradient(135deg,#60a5fa,#34d399);
+              box-shadow:0 0 8px rgba(59,130,246,.8);
+              transform:scale(1.25);
+            }
+            #engineTopbarResizeHandle:focus-visible .etb-grip{
+              opacity:1; transform:translate(-50%,-50%) scale(1);
+              border-color:rgba(59,130,246,.8);
+              box-shadow:0 0 0 3px rgba(59,130,246,.25);
+            }
+            #engineTopbarResizeHandle .etb-badge{
+              position:absolute; top:-30px; left:50%;
+              transform:translateX(-50%) translateY(4px) scale(.9);
+              background:linear-gradient(135deg, rgba(30,41,59,.96), rgba(15,23,42,.96));
+              color:#93c5fd; font:800 11px/1 'Inter',-apple-system,sans-serif;
+              letter-spacing:.4px; padding:5px 10px; border-radius:8px;
+              border:1px solid rgba(59,130,246,.45);
+              box-shadow:0 8px 22px rgba(0,0,0,.4);
+              opacity:0; pointer-events:none; white-space:nowrap;
+              transition:opacity .15s ease, transform .15s ease;
+            }
+            #engineTopbarResizeHandle .etb-badge::after{
+              content:''; position:absolute; top:100%; left:50%;
+              transform:translateX(-50%); border:5px solid transparent;
+              border-top-color:rgba(15,23,42,.96);
+            }
+            #engineTopbarResizeHandle.dragging .etb-badge,
+            #engineTopbarResizeHandle:hover .etb-badge{
+              opacity:1; transform:translateX(-50%) translateY(0) scale(1);
+            }
+          `;
+          document.head.appendChild(style);
+        }
+
+        const badge = handle.querySelector('.etb-badge');
+
+        // NOTE: the bar can be hidden (display:none, via the parent view)
+        // when this script first runs, in which case offsetHeight reads 0.
+        // We only ever trust a measurement that came back > 0, and we
+        // re-measure every time the bar actually becomes visible.
+        let naturalHeight = 0;
+        function measureNatural() {
+          if (inner.offsetParent === null) return; // hidden right now — skip, keep last good value
+          const prev = inner.style.zoom;
+          inner.style.zoom = '1';
+          const h = inner.offsetHeight;
+          inner.style.zoom = prev || '1';
+          if (h > 0) naturalHeight = h;
+        }
+
+        function applyNarrowness(v, persist) {
+          v = Math.max(0, Math.min(1, v));
+          // Zoom alone shrinks both the text/icons AND the box's rendered
+          // height together — no separate max-height clipping needed
+          // (that clipping was the bug: it could get locked at 0 if measured
+          // while hidden).
+          inner.style.zoom = String(Math.max(v, 0.02));
+          badge.textContent = Math.round(v * 100) + '%';
+          if (persist !== false) localStorage.setItem(STORAGE_KEY, String(v));
+          return v;
+        }
+
+        measureNatural();
+        const saved = parseFloat(localStorage.getItem(STORAGE_KEY));
+        applyNarrowness(isNaN(saved) ? 1 : saved, false);
+
+        // Re-measure whenever the bar transitions from hidden -> visible
+        // (e.g. switching from the portal screen into the exam engine view)
+        const visibilityObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              measureNatural();
+              applyNarrowness(parseFloat(localStorage.getItem(STORAGE_KEY)) || 1, false);
+            }
+          });
         });
-        topBar.addEventListener('mouseleave', () => {
-          topBar.style.height = '0px';
-          topBar.style.opacity = '0';
+        visibilityObserver.observe(topBar);
+
+        // ── Smooth animated transition (used for reset / keyboard nudges) ──
+        let animFrame = null;
+        function animateTo(target, duration = 260) {
+          cancelAnimationFrame(animFrame);
+          const start = Math.max(0, Math.min(1, parseFloat(localStorage.getItem(STORAGE_KEY)) || 1));
+          const t0 = performance.now();
+          const ease = t => 1 - Math.pow(1 - t, 3); // easeOutCubic
+          function step(now) {
+            const p = Math.min(1, (now - t0) / duration);
+            applyNarrowness(start + (target - start) * ease(p));
+            if (p < 1) animFrame = requestAnimationFrame(step);
+          }
+          animFrame = requestAnimationFrame(step);
+        }
+
+        // ── Dragging ──
+        let dragging = false, startY = 0, startV = 1;
+        function dragStart(clientY) {
+          cancelAnimationFrame(animFrame);
+          measureNatural(); // bar is visible right now (user is dragging it) — safe to trust
+          dragging = true;
+          handle.classList.add('dragging');
+          startY = clientY;
+          startV = Math.max(0, Math.min(1, parseFloat(localStorage.getItem(STORAGE_KEY)) || 1));
+          document.body.style.userSelect = 'none';
+        }
+        function dragMove(clientY) {
+          if (!dragging) return;
+          const range = naturalHeight || 60;
+          const dv = (clientY - startY) / range;
+          applyNarrowness(startV + dv);
+        }
+        function dragEnd() {
+          if (!dragging) return;
+          dragging = false;
+          handle.classList.remove('dragging');
+          document.body.style.userSelect = '';
+        }
+
+        handle.addEventListener('mousedown', e => { dragStart(e.clientY); e.preventDefault(); });
+        window.addEventListener('mousemove', e => dragMove(e.clientY));
+        window.addEventListener('mouseup', dragEnd);
+
+        handle.addEventListener('touchstart', e => dragStart(e.touches[0].clientY), { passive: true });
+        window.addEventListener('touchmove', e => dragMove(e.touches[0].clientY), { passive: true });
+        window.addEventListener('touchend', dragEnd);
+
+        // Double-click / double-tap the handle to snap back to full size
+        handle.addEventListener('dblclick', () => animateTo(1));
+
+        // Keyboard: focus the handle, then Arrow Up/Down (or Home/End) to nudge
+        handle.addEventListener('keydown', e => {
+          const cur = Math.max(0, Math.min(1, parseFloat(localStorage.getItem(STORAGE_KEY)) || 1));
+          if (e.key === 'ArrowUp')   { animateTo(Math.min(1, cur + 0.1), 140); e.preventDefault(); }
+          if (e.key === 'ArrowDown') { animateTo(Math.max(0, cur - 0.1), 140); e.preventDefault(); }
+          if (e.key === 'Home')      { animateTo(0, 200); e.preventDefault(); }
+          if (e.key === 'End')       { animateTo(1, 200); e.preventDefault(); }
         });
 
-        // Also re-check if resized to mobile while on page
+        // Re-measure on resize (font/layout reflow can change natural height)
         window.addEventListener('resize', () => {
           if (IS_SMALL()) {
-            topBar.style.height = '';
-            topBar.style.opacity = '1';
-            topBar.style.overflow = '';
-            topBar.style.transition = '';
+            inner.style.maxHeight = '';
+            inner.style.zoom = '1';
+            return;
           }
+          measureNatural();
+          applyNarrowness(parseFloat(localStorage.getItem(STORAGE_KEY)) || 1, false);
         });
       })();
     </script>
