@@ -1846,14 +1846,14 @@ html, body {
 /* Question & option text — Merriweather for exam feel */
 #questionText, .qbox, .opt-text, .bm-qtext {
   font-family: 'Merriweather', Georgia, serif !important;
-  font-size: 15.5px !important;
+  font-size: calc(var(--gp-fs, 16px) * 0.96875) !important;
   line-height: 1.68 !important;
   font-weight: 400 !important;
 }
 
 .option, .bm-opt {
   font-family: 'Merriweather', Georgia, serif !important;
-  font-size: 14.5px !important;
+  font-size: calc(var(--gp-fs, 16px) * 0.90625) !important;
   line-height: 1.5 !important;
 }
 
@@ -2567,7 +2567,7 @@ body {
 }
 @media (max-width: 576px) {
   .resizable-question-box { padding: 12px !important; border-radius: 14px !important; }
-  #optionsArea .option { padding: .6rem .7rem !important; font-size: 14px !important; }
+  #optionsArea .option { padding: .6rem .7rem !important; font-size: calc(var(--gp-fs, 16px) * 0.875) !important; }
   .engine-topbar .container-fluid { padding: 6px 10px !important; }
   .timer-pill { padding: .45rem .6rem !important; font-size: 13px !important; }
   #timerText { font-size: 15px !important; }
