@@ -262,6 +262,10 @@ const PORTAL_DATA = [
           { name: "December 2025 Current Affiars", file: "ca-dec-2025" },
           { name: "January 2026 Current Affiars", file: "ca-jan-2026" },
           { name: "February March 2026 Current Affiars", file: "ca-feb-mar-2026" },
+          { name: "April 2026 Current Affiars", file: "ca-apr-2026" }, 
+          { name: "May 2026 Current Affiars", file: "ca-may-2026" },
+         { name: "June 2026 Current Affiars", file: "ca-jun-2026" },
+         
 
         ]
       }
