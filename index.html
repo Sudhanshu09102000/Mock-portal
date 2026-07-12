@@ -1286,7 +1286,7 @@
 
 
     #testInfoTop {
-      max-width: 420px;
+      max-width: 150px;
       display: inline-block;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1296,6 +1296,14 @@
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.15);
       font-size: 14px;
+      transition: max-width .2s ease;
+    }
+
+    /* ✅ Top Bar toggle (from Control Panel) — fully removes the whole
+       horizontal header bar (Portal/badge/EXAM/PDF Tutor/Battle/nav) so it
+       takes zero space when hidden */
+    body.hide-top-bar .engine-topbar {
+      display: none !important;
     }
 
 
@@ -3727,7 +3735,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               <!-- ✅ FIXED FOOTER (always visible) -->
               <hr class="border-white border-opacity-10 my-3">
 
-              <div class="d-flex flex-wrap gap-2" style="padding-bottom: 10px;">
+              <div id="qaFooterButtonsRow" class="d-flex flex-wrap gap-2" style="padding-bottom: 10px;">
                 <button id="prevBtn" class="btn btn-glass">◀ Previous </button>
                 <button id="saveNextBtn" class="btn btn-glass">Save & Next ▶</button>
                 <button id="reviewNextBtn" class="btn btn-glass">Mark for Review & Next</button>
@@ -3739,7 +3747,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               <div id="mobileHintSlot"></div>
 
               
-              <div class="top-toolbar ms-auto mobile-move-toolbar" ">
+              <div id="qaToolbarRow" class="top-toolbar ms-auto mobile-move-toolbar" ">
                 <!-- ✅ Answer / Explanation (?) button (ONLY Practice Mode) -->
                 <button id="qmarkBtn" class="btn btn-glass btn-sm" title="Answer & Explanation">
                   &nbsp;&nbsp;&nbsp;Hint?&nbsp;&nbsp;&nbsp;
@@ -4837,6 +4845,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
 
         $('testInfoTop').textContent = `${sel.topicName} • ${sel.subtopicName}`;
+        $('testInfoTop').title = `${sel.topicName} • ${sel.subtopicName}`;
 
         // Reset globals expected from external scripts
         window.questions = undefined;
@@ -4874,6 +4883,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         if (!state.selectedTest) {
           el.textContent = "Topic • Subtopic • Test";
+          el.title = "";
           return;
         }
 
@@ -4882,6 +4892,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         const subject = state.selectedTest.subjectTitle || "Subject";
 
         el.textContent = `${subject} • ${topic} • ${subtopic}`;
+        el.title = `${subject} • ${topic} • ${subtopic}`;
       }
 
       /* ========= ENGINE CORE ========= */
@@ -5107,16 +5118,29 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         const area = $('optionsArea');
         area.innerHTML = '';
-        opts.forEach((optHtml, i) => {
-          const metaId = String(i + 1); // displayed position
-          const div = document.createElement('div');
-          div.className = 'option';
-          div.setAttribute('data-meta', metaId);
-          div.innerHTML = `<span class="kbd">${metaId}</span><span class="opt-text">${optHtml}</span>`;
-          div.addEventListener('click', () => selectOption(metaId));
 
-          area.appendChild(div);
+        // ✅ If every option is blank (no text/HTML content), don't render any
+        // option boxes at all for this question.
+        const hasRealOptions = opts.some(optHtml => {
+          if (optHtml === undefined || optHtml === null) return false;
+          return String(optHtml).replace(/<[^>]*>/g, '').replace(/&nbsp;/gi, '').trim() !== '';
         });
+
+        if (!hasRealOptions) {
+          area.style.display = 'none';
+        } else {
+          area.style.display = '';
+          opts.forEach((optHtml, i) => {
+            const metaId = String(i + 1); // displayed position
+            const div = document.createElement('div');
+            div.className = 'option';
+            div.setAttribute('data-meta', metaId);
+            div.innerHTML = `<span class="kbd">${metaId}</span><span class="opt-text">${optHtml}</span>`;
+            div.addEventListener('click', () => selectOption(metaId));
+
+            area.appendChild(div);
+          });
+        }
 
         // restore selection
         const qs = state.qState[qid];
@@ -13404,6 +13428,31 @@ setTimeout(addBattleButtons, 1800);
   border-color: rgba(34,197,94,0.4);
 }
 .gcp-btn.accent-green:hover { border-color: rgba(34,197,94,0.7); }
+.gcp-btn.accent-orange {
+  background: linear-gradient(135deg, rgba(251,146,60,0.18), rgba(251,146,60,0.06));
+  border-color: rgba(251,146,60,0.4);
+}
+.gcp-btn.accent-orange:hover { border-color: rgba(251,146,60,0.7); }
+.gcp-btn.accent-orange.qa-active {
+  background: linear-gradient(135deg, rgba(34,197,94,0.28), rgba(34,197,94,0.1));
+  border-color: rgba(34,197,94,0.65);
+}
+.gcp-btn.accent-orange.qa-active .gcp-icon { background: rgba(34,197,94,0.25); }
+.gcp-btn.accent-orange.qa-active .gcp-kbd { background: rgba(34,197,94,0.3); border-color: rgba(34,197,94,0.5); color: #bbf7d0; }
+
+.gcp-btn.accent-cyan.topbar-hidden {
+  background: linear-gradient(135deg, rgba(239,68,68,0.22), rgba(239,68,68,0.08));
+  border-color: rgba(239,68,68,0.5);
+}
+.gcp-btn.accent-cyan.topbar-hidden .gcp-icon { background: rgba(239,68,68,0.22); }
+.gcp-btn.accent-cyan.topbar-hidden .gcp-kbd { background: rgba(239,68,68,0.3); border-color: rgba(239,68,68,0.5); color: #fecaca; }
+
+/* ✅ Question Answer Mode: hides the nav / footer control rows so only the
+   question + options are visible */
+body.qa-only-mode #qaFooterButtonsRow,
+body.qa-only-mode #qaToolbarRow {
+  display: none !important;
+}
 .gcp-btn .gcp-icon {
   width: 28px;
   height: 28px;
@@ -14071,6 +14120,21 @@ setTimeout(addBattleButtons, 1800);
     <div class="gcp-shortcut-row"><span class="k">Esc</span><span class="desc">Close panel/blackboard</span></div>
   </div>
 
+  <!-- QUESTION ANSWER MODE -->
+  <div class="gcp-section">
+    <div class="gcp-section-title">📝 Focus</div>
+    <button class="gcp-btn accent-orange" id="gcp-qa-mode-btn">
+      <span class="gcp-icon" id="gcp-qa-mode-icon">👁️</span>
+      <span>Question Answer Mode</span>
+      <span class="gcp-kbd" id="gcp-qa-mode-kbd">Off</span>
+    </button>
+    <button class="gcp-btn accent-cyan" id="gcp-topbar-btn">
+      <span class="gcp-icon" id="gcp-topbar-icon">🧭</span>
+      <span>Top Bar</span>
+      <span class="gcp-kbd" id="gcp-topbar-kbd">On</span>
+    </button>
+  </div>
+
   <!-- APPEARANCE -->
   <div class="gcp-section">
     <div class="gcp-section-title">🎨 Appearance</div>
@@ -14098,6 +14162,40 @@ setTimeout(addBattleButtons, 1800);
     <div class="gcp-color-row">
       <span class="gcp-c-label">🔤 Text colour</span>
       <input type="color" id="gpTextColor" class="gcp-color-input" value="#f1f5f9" />
+    </div>
+
+    <div class="gcp-appear-label">Background Image</div>
+    <div class="gcp-img-control" id="gpBgImgControl">
+      <div class="gcp-img-row">
+        <label class="gcp-img-upload-btn" for="gpBgImgInput" id="gpBgImgUploadLbl">
+          <span class="gcp-img-upload-icon">🖼️</span>
+          <span id="gpBgImgBtnText">Upload background image</span>
+        </label>
+        <input type="file" id="gpBgImgInput" accept="image/*" hidden />
+        <button class="gcp-img-remove-btn" id="gpBgImgRemove" title="Remove image" style="display:none;">✕</button>
+      </div>
+      <div class="gcp-img-slider-row" id="gpBgImgSliderRow" style="display:none;">
+        <span class="gcp-img-slider-label">👁️</span>
+        <input type="range" id="gpBgImgOpacity" min="0" max="100" step="1" value="70" />
+        <span class="gcp-img-slider-val" id="gpBgImgOpacityVal">70%</span>
+      </div>
+    </div>
+
+    <div class="gcp-appear-label">Box Image</div>
+    <div class="gcp-img-control" id="gpBoxImgControl">
+      <div class="gcp-img-row">
+        <label class="gcp-img-upload-btn" for="gpBoxImgInput" id="gpBoxImgUploadLbl">
+          <span class="gcp-img-upload-icon">🗂️</span>
+          <span id="gpBoxImgBtnText">Upload box image</span>
+        </label>
+        <input type="file" id="gpBoxImgInput" accept="image/*" hidden />
+        <button class="gcp-img-remove-btn" id="gpBoxImgRemove" title="Remove image" style="display:none;">✕</button>
+      </div>
+      <div class="gcp-img-slider-row" id="gpBoxImgSliderRow" style="display:none;">
+        <span class="gcp-img-slider-label">👁️</span>
+        <input type="range" id="gpBoxImgOpacity" min="0" max="100" step="1" value="70" />
+        <span class="gcp-img-slider-val" id="gpBoxImgOpacityVal">70%</span>
+      </div>
     </div>
 
     <div class="gcp-appear-label">One-Tap Themes</div>
@@ -14328,6 +14426,60 @@ setTimeout(addBattleButtons, 1800);
     closePanel();
     openBlackboard();
   });
+
+  // ── Question Answer Mode: hide/show the nav + footer control rows ──
+  (function () {
+    const qaBtn  = document.getElementById('gcp-qa-mode-btn');
+    const qaIcon = document.getElementById('gcp-qa-mode-icon');
+    const qaKbd  = document.getElementById('gcp-qa-mode-kbd');
+    if (!qaBtn) return;
+
+    function applyQaMode(on) {
+      document.body.classList.toggle('qa-only-mode', on);
+      qaBtn.classList.toggle('qa-active', on);
+      if (qaIcon) qaIcon.textContent = on ? '🙈' : '👁️';
+      if (qaKbd)  qaKbd.textContent  = on ? 'On' : 'Off';
+    }
+
+    let saved = false;
+    try { saved = localStorage.getItem('qaOnlyMode') === '1'; } catch (e) {}
+    applyQaMode(saved);
+
+    qaBtn.addEventListener('click', () => {
+      const next = !document.body.classList.contains('qa-only-mode');
+      applyQaMode(next);
+      try { localStorage.setItem('qaOnlyMode', next ? '1' : '0'); } catch (e) {}
+    });
+  })();
+
+  // ── Top Bar: show/hide the entire horizontal header row (Portal / topic
+  //    badge / EXAM / PDF Tutor / timer / Battle / nav icon) ──
+  (function () {
+    const tbBtn = document.getElementById('gcp-topbar-btn');
+    const tbIcon = document.getElementById('gcp-topbar-icon');
+    const tbKbd  = document.getElementById('gcp-topbar-kbd');
+    if (!tbBtn) return;
+
+    function applyTopBar(visible) {
+      document.body.classList.toggle('hide-top-bar', !visible);
+      tbBtn.classList.toggle('topbar-hidden', !visible);
+      if (tbIcon) tbIcon.textContent = visible ? '🧭' : '🙈';
+      if (tbKbd)  tbKbd.textContent  = visible ? 'On' : 'Off';
+    }
+
+    let visible = true;
+    try {
+      const saved = localStorage.getItem('topBarVisible');
+      if (saved !== null) visible = saved === '1';
+    } catch (e) {}
+    applyTopBar(visible);
+
+    tbBtn.addEventListener('click', () => {
+      const next = document.body.classList.contains('hide-top-bar'); // currently hidden -> next = show
+      applyTopBar(next);
+      try { localStorage.setItem('topBarVisible', next ? '1' : '0'); } catch (e) {}
+    });
+  })();
 
   // PPT from panel
   document.getElementById('gcp-ppt-btn').addEventListener('click', () => {
@@ -18146,6 +18298,12 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     --gp-text: #f1f5f9;
     --gp-accent: #060d1c;
     --gp-accent2: #444a55;
+    --gp-bg-img: none;
+    --gp-bg1-tint: #060d1c;
+    --gp-bg2-tint: #030810;
+    --gp-box-img: none;
+    --gp-box1-tint: #060d1c;
+    --gp-box2-tint: #050b17;
   }
 
   /* ---- Root scale (cascades through Bootstrap's rem-based sizing too) ---- */
@@ -18160,9 +18318,21 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   #gcp-panel, #gcp-panel *{ font-family: 'Inter', sans-serif !important; }
   #gcp-panel .gcp-font-item{ font-family: var(--gp-preview-font, inherit) !important; }
 
-  /* ---- Page background ---- */
+  /* ---- Page background ----
+     Layer 1 (top): a colour tint (--gp-bg1-tint / --gp-bg2-tint) whose alpha is
+     computed in JS from the "Visibility" slider — plain rgba(), NOT color-mix(),
+     so the PPT screenshot capturer (html2canvas) can render it correctly.
+     Layer 2 (bottom): the custom image, sized to `cover` and pinned with
+     `fixed` attachment so it always fills the entire viewport exactly —
+     no cropping surprises, no repeats, no scrolling out of frame. ---- */
   html, body{
-    background: linear-gradient(160deg, var(--gp-bg1) 0%, var(--gp-bg2) 100%) !important;
+    background-image:
+      linear-gradient(160deg, var(--gp-bg1-tint) 0%, var(--gp-bg2-tint) 100%),
+      var(--gp-bg-img) !important;
+    background-size: cover, cover !important;
+    background-position: center center, center center !important;
+    background-repeat: no-repeat, no-repeat !important;
+    background-attachment: fixed, fixed !important;
   }
   body{ color: var(--gp-text) !important; }
 
@@ -18183,7 +18353,18 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   #dualLangDropdown, .qdot, .qmark-pop, .inline-hint-panel,
   #submitConfirmBox, #submitConfirmBox .sc-stat, #scCancelBtn,
   #gcp-panel{
-    background: linear-gradient(135deg, var(--gp-box1), var(--gp-box2)) !important;
+    /* Same layered tint-over-image technique as the page background — plain
+       rgba() tint vars computed in JS, no color-mix(), so screenshots stay
+       intact. `fixed` attachment means every box acts like a window onto one
+       single image pinned to the viewport — so the picture always sits
+       correctly and fully, no matter how big or small the box is. */
+    background-image:
+      linear-gradient(135deg, var(--gp-box1-tint), var(--gp-box2-tint)),
+      var(--gp-box-img) !important;
+    background-size: cover, cover !important;
+    background-position: center center, center center !important;
+    background-repeat: no-repeat, no-repeat !important;
+    background-attachment: fixed, fixed !important;
     border-color: var(--gp-boxb) !important;
   }
   /* #gcp-panel had no blur behind its old near-opaque background; now that
@@ -18251,6 +18432,84 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   .gcp-preset:hover{ transform: translateY(-2px) scale(1.05); border-color: rgba(255,255,255,0.4); }
 
   #gpResetBtn{ justify-content:center; }
+
+  /* ═══════════════ Background / Box image controls ═══════════════ */
+  .gcp-img-control{ margin-bottom: 12px; }
+
+  .gcp-img-row{ display:flex; align-items:center; gap:8px; }
+
+  .gcp-img-upload-btn{
+    flex:1; display:flex; align-items:center; gap:8px;
+    padding:9px 12px; border-radius:12px; cursor:pointer;
+    font-family:'Inter',sans-serif !important; font-size:11.5px; font-weight:700;
+    color: rgba(226,232,240,.92);
+    background: linear-gradient(135deg, rgba(59,130,246,.16), rgba(255,255,255,.04));
+    border: 1px solid rgba(255,255,255,.14);
+    background-size: cover; background-position:center;
+    position: relative; overflow:hidden;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+    min-height: 38px;
+  }
+  .gcp-img-upload-btn::before{
+    /* subtle sheen so it reads as a premium control, not a stock <input> */
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.10) 48%, transparent 66%);
+    transform: translateX(-120%);
+    transition: transform .6s ease;
+    pointer-events:none;
+  }
+  .gcp-img-upload-btn:hover{
+    transform: translateY(-1px);
+    border-color: rgba(59,130,246,.55);
+    box-shadow: 0 6px 18px rgba(37,99,235,.25);
+  }
+  .gcp-img-upload-btn:hover::before{ transform: translateX(120%); }
+  .gcp-img-upload-btn .gcp-img-upload-icon{ font-size:15px; flex-shrink:0; filter: drop-shadow(0 2px 4px rgba(0,0,0,.4)); }
+  .gcp-img-upload-btn span:last-child{
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    text-shadow: 0 1px 3px rgba(0,0,0,.65);
+  }
+
+  /* once an image is chosen, the button itself previews it via inline style
+     (background-image set from JS) — dim it slightly so the label text
+     stays legible on top of any photo */
+  .gcp-img-upload-btn.gp-has-img{
+    border-color: rgba(34,197,94,.55);
+  }
+  .gcp-img-upload-btn.gp-has-img::after{
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(0deg, rgba(6,10,20,.72), rgba(6,10,20,.42));
+    z-index:0;
+  }
+  .gcp-img-upload-btn.gp-has-img .gcp-img-upload-icon,
+  .gcp-img-upload-btn.gp-has-img span:last-child{ position:relative; z-index:1; }
+  .gcp-img-upload-btn.gp-has-img span:last-child{ color:#dcfce7; }
+
+  .gcp-img-remove-btn{
+    flex-shrink:0; width:30px; height:30px; border-radius:10px;
+    border:1px solid rgba(239,68,68,.35); background: rgba(239,68,68,.12);
+    color:#fecaca; font-size:13px; font-weight:800; cursor:pointer;
+    transition: all .15s ease;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gcp-img-remove-btn:hover{
+    background: rgba(239,68,68,.28); border-color: rgba(239,68,68,.65);
+    transform: translateY(-1px) rotate(90deg);
+  }
+
+  .gcp-img-slider-row{
+    display:flex; align-items:center; gap:8px; margin-top:8px;
+    padding:6px 10px; border-radius:10px;
+    background: rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08);
+  }
+  .gcp-img-slider-label{ font-size:12px; flex-shrink:0; opacity:.85; }
+  #gpBgImgOpacity, #gpBoxImgOpacity{
+    flex:1; height:4px; accent-color:#3b82f6; cursor:pointer;
+  }
+  .gcp-img-slider-val{
+    font-size:10px; font-weight:700; min-width:32px; text-align:right;
+    color: rgba(200,220,255,.85); font-family:'Inter',sans-serif !important;
+  }
 </style>
 
 <script>
@@ -18265,6 +18524,13 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     return { r:(num>>16)&255, g:(num>>8)&255, b:num&255 };
   }
   function toRgba(hex,a){ var c=hexToRgb(hex); return 'rgba('+c.r+','+c.g+','+c.b+','+a+')'; }
+  function withAlpha(colorStr, alpha){
+    var m = /^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/.exec((colorStr||'').trim());
+    var r, g, b;
+    if (m) { r = +m[1]; g = +m[2]; b = +m[3]; }
+    else { var c = hexToRgb(colorStr); r = c.r; g = c.g; b = c.b; }
+    return 'rgba('+r+','+g+','+b+','+alpha+')';
+  }
   function shade(hex,percent){
     var c = hexToRgb(hex);
     var t = percent<0?0:255, p = Math.abs(percent);
@@ -18331,8 +18597,40 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     { name:'Onyx',        bg:'#000000', box:'#525252', text:'#e5e5e5' }
   ];
 
-  var DEFAULTS = { font: FONTS[0].stack, fs: 16, bg:'#060d1c', box:'#060d1c', text:'#f1f5f9' };
-  var state = { font: DEFAULTS.font, fs: DEFAULTS.fs, bg: DEFAULTS.bg, box: DEFAULTS.box, text: DEFAULTS.text };
+  var DEFAULTS = {
+    font: FONTS[0].stack, fs: 16, bg:'#060d1c', box:'#060d1c', text:'#f1f5f9',
+    bgImg:'', bgImgOp:70, boxImg:'', boxImgOp:70
+  };
+  var state = {
+    font: DEFAULTS.font, fs: DEFAULTS.fs, bg: DEFAULTS.bg, box: DEFAULTS.box, text: DEFAULTS.text,
+    bgImg: DEFAULTS.bgImg, bgImgOp: DEFAULTS.bgImgOp, boxImg: DEFAULTS.boxImg, boxImgOp: DEFAULTS.boxImgOp
+  };
+
+  /* ---------- turn an uploaded photo into a screen-friendly data URL ----------
+     Downscales to a sane max dimension so the image always maps cleanly onto
+     any screen size (and so it doesn't blow past localStorage's quota). */
+  function readImageFile(file, cb){
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var img = new Image();
+      img.onload = function(){
+        var maxDim = 1920;
+        var w = img.naturalWidth, h = img.naturalHeight;
+        if(w > h && w > maxDim){ h = Math.round(h * maxDim / w); w = maxDim; }
+        else if(h >= w && h > maxDim){ w = Math.round(w * maxDim / h); h = maxDim; }
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        try{ cb(canvas.toDataURL('image/jpeg', 0.86)); }
+        catch(e){ cb(e.target ? e.target.result : ''); }
+      };
+      img.onerror = function(){ cb(''); };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
 
   /* ---------- persistence (best-effort; safe on file://) ---------- */
   function loadSaved(){
@@ -18361,6 +18659,20 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
 
     root.style.setProperty('--gp-text', state.text);
 
+    // ---- background image layer ----
+    // Visibility slider: 100 = image fully shows (tint alpha low), 0 = solid colour (tint alpha 1).
+    // Computed here as plain rgba() — NOT color-mix() — so html2canvas (used by
+    // "Capture All Questions") can render it correctly when building the PPT.
+    var bgAlpha = state.bgImg ? Math.max(0, Math.min(1, 1 - state.bgImgOp/100)) : 1;
+    root.style.setProperty('--gp-bg-img', state.bgImg ? 'url("'+state.bgImg+'")' : 'none');
+    root.style.setProperty('--gp-bg1-tint', withAlpha(state.bg, bgAlpha.toFixed(3)));
+    root.style.setProperty('--gp-bg2-tint', withAlpha(shade(state.bg, -0.42), bgAlpha.toFixed(3)));
+
+    var boxAlpha = state.boxImg ? Math.max(0, Math.min(1, 1 - state.boxImgOp/100)) : 1;
+    root.style.setProperty('--gp-box-img', state.boxImg ? 'url("'+state.boxImg+'")' : 'none');
+    root.style.setProperty('--gp-box1-tint', withAlpha(state.box, boxAlpha.toFixed(3)));
+    root.style.setProperty('--gp-box2-tint', withAlpha(shade(state.box, -0.18), boxAlpha.toFixed(3)));
+
     // sync controls
     var bgIn=document.getElementById('gpBgColor'), boxIn=document.getElementById('gpBoxColor'),
         txtIn=document.getElementById('gpTextColor'), sizeSlider=document.getElementById('gpSizeSlider'),
@@ -18375,7 +18687,38 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     document.querySelectorAll('.gcp-font-item').forEach(function(el){
       el.classList.toggle('gp-active', el.dataset.stack === state.font);
     });
+
+    // ---- sync the two image controls (button preview, remove btn, slider) ----
+    syncImageControl('bg', state.bgImg, state.bgImgOp);
+    syncImageControl('box', state.boxImg, state.boxImgOp);
   }
+
+  function syncImageControl(kind, imgData, opVal){
+    var label   = document.getElementById('gp'+cap(kind)+'ImgUploadLbl');
+    var btnText = document.getElementById('gp'+cap(kind)+'ImgBtnText');
+    var removeBtn = document.getElementById('gp'+cap(kind)+'ImgRemove');
+    var sliderRow = document.getElementById('gp'+cap(kind)+'ImgSliderRow');
+    var slider    = document.getElementById('gp'+cap(kind)+'ImgOpacity');
+    var sliderVal = document.getElementById('gp'+cap(kind)+'ImgOpacityVal');
+    if(!label) return;
+
+    if(imgData){
+      label.classList.add('gp-has-img');
+      label.style.backgroundImage = 'url("'+imgData+'")';
+      if(btnText) btnText.textContent = 'Image set — tap to change';
+      if(removeBtn) removeBtn.style.display = '';
+      if(sliderRow) sliderRow.style.display = 'flex';
+    } else {
+      label.classList.remove('gp-has-img');
+      label.style.backgroundImage = 'none';
+      if(btnText) btnText.textContent = kind === 'bg' ? 'Upload background image' : 'Upload box image';
+      if(removeBtn) removeBtn.style.display = 'none';
+      if(sliderRow) sliderRow.style.display = 'none';
+    }
+    if(slider) slider.value = opVal;
+    if(sliderVal) sliderVal.textContent = opVal+'%';
+  }
+  function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 
   /* ---------- build font grid ---------- */
   var grid = document.getElementById('gpFontGrid');
@@ -18416,8 +18759,51 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   document.getElementById('gpSizePlus').addEventListener('click', function(){ state.fs = Math.min(22, state.fs+1); applyAll(); persist(); });
 
   document.getElementById('gpResetBtn').addEventListener('click', function(){
-    state = { font: DEFAULTS.font, fs: DEFAULTS.fs, bg: DEFAULTS.bg, box: DEFAULTS.box, text: DEFAULTS.text };
+    state = {
+      font: DEFAULTS.font, fs: DEFAULTS.fs, bg: DEFAULTS.bg, box: DEFAULTS.box, text: DEFAULTS.text,
+      bgImg: '', bgImgOp: DEFAULTS.bgImgOp, boxImg: '', boxImgOp: DEFAULTS.boxImgOp
+    };
     applyAll(); persist();
+  });
+
+  /* ---------- Background image controls ---------- */
+  document.getElementById('gpBgImgInput').addEventListener('change', function(e){
+    var file = e.target.files && e.target.files[0];
+    if(!file) return;
+    readImageFile(file, function(dataUrl){
+      if(!dataUrl) return;
+      state.bgImg = dataUrl;
+      applyAll();
+      try{ persist(); }
+      catch(err){ /* quota exceeded — image still applies for this session */ }
+    });
+    e.target.value = '';
+  });
+  document.getElementById('gpBgImgRemove').addEventListener('click', function(){
+    state.bgImg = ''; applyAll(); persist();
+  });
+  document.getElementById('gpBgImgOpacity').addEventListener('input', function(e){
+    state.bgImgOp = parseInt(e.target.value,10); applyAll(); persist();
+  });
+
+  /* ---------- Box image controls ---------- */
+  document.getElementById('gpBoxImgInput').addEventListener('change', function(e){
+    var file = e.target.files && e.target.files[0];
+    if(!file) return;
+    readImageFile(file, function(dataUrl){
+      if(!dataUrl) return;
+      state.boxImg = dataUrl;
+      applyAll();
+      try{ persist(); }
+      catch(err){ /* quota exceeded — image still applies for this session */ }
+    });
+    e.target.value = '';
+  });
+  document.getElementById('gpBoxImgRemove').addEventListener('click', function(){
+    state.boxImg = ''; applyAll(); persist();
+  });
+  document.getElementById('gpBoxImgOpacity').addEventListener('input', function(e){
+    state.boxImgOp = parseInt(e.target.value,10); applyAll(); persist();
   });
 
   /* ---------- init ---------- */
