@@ -1846,36 +1846,36 @@ body::before {
    DEFAULT FONT: MERRIWEATHER
    ============================================================ */
 
-/* Base — Merriweather for body reading text */
+/* Base — follows the font picker (falls back to Merriweather) */
 html, body {
-  font-family: 'Merriweather', Georgia, 'Times New Roman', serif !important;
+  font-family: var(--gp-font, 'Merriweather', Georgia, 'Times New Roman', serif) !important;
 }
 
-/* Question & option text — Merriweather for exam feel */
+/* Question & option text — follows the font picker */
 #questionText, .qbox, .opt-text, .bm-qtext {
-  font-family: 'Merriweather', Georgia, serif !important;
+  font-family: var(--gp-font, 'Merriweather', Georgia, serif) !important;
   font-size: calc(var(--gp-fs, 16px) * 0.96875) !important;
   line-height: 1.68 !important;
   font-weight: 400 !important;
 }
 
 .option, .bm-opt {
-  font-family: 'Merriweather', Georgia, serif !important;
+  font-family: var(--gp-font, 'Merriweather', Georgia, serif) !important;
   font-size: calc(var(--gp-fs, 16px) * 0.90625) !important;
   line-height: 1.5 !important;
 }
 
-/* UI chrome — Inter for clarity */
+/* UI chrome — follows the font picker too */
 button, .btn, .badge, .pill, input, select, textarea,
 .badge-soft, .bm-btn, .bm-label, .bm-input,
 .engine-topbar *, .nav-panel *, .timer-pill,
 #timerText, .kbd, .bm-qbar *, .bm-sb-head, .bm-fin-title {
-  font-family: 'Inter', system-ui, sans-serif !important;
+  font-family: var(--gp-font, 'Inter', system-ui, sans-serif) !important;
 }
 
-/* Headings — Inter bold */
+/* Headings — follow the font picker, keep bold weight */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', system-ui, sans-serif !important;
+  font-family: var(--gp-font, 'Inter', system-ui, sans-serif) !important;
   font-weight: 700 !important;
   letter-spacing: -0.3px !important;
 }
