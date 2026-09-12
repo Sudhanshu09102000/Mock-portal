@@ -15963,7 +15963,7 @@ body.qa-only-mode #qaToolbarRow {
   // Smoothing: EMA on raw points → Catmull-Rom spline drawn INCREMENTALLY
   // (only the last 4-point window, not the whole path) = O(1) per frame.
 
-  const SMOOTH_ALPHA = 0.55;   // EMA weight (unused now, kept for reference)
+  const SMOOTH_ALPHA = 0.55;   // EMA weight — lower = smoother/laggier, higher = snappier/rawer
   const MIN_DIST     = 0.4;    // capture nearly every coalesced point — denser sampling = smoother curves
 
   // Live overlay canvas (same size as main canvas, positioned on top)
@@ -15987,45 +15987,44 @@ body.qa-only-mode #qaToolbarRow {
   let _pts    = [];   // EMA-smoothed positions
 
   let _liveStyleDirty = true;
+  let _liveLastMid     = null; // last midpoint already committed to the live canvas
 
+  // TRUE incremental draw: only the brand-new curve segment is stroked each
+  // call — we never clear or redraw earlier parts of the stroke. This is the
+  // actual O(1)-per-point behavior the old code only claimed to have (it was
+  // clearing + rebuilding the WHOLE path every single point, which got
+  // slower the longer a stroke got and caused dropped pointer events —
+  // that's what produced the jagged/"spiky" look on longer strokes).
   function _appendLiveSegment() {
     const n = _pts.length;
     if (n < 2) return;
 
-    // Clear in CSS-pixel coords (transform is applied)
-    const cw = _liveCanvas._cssW || _liveCanvas.width;
-    const ch = _liveCanvas._cssH || _liveCanvas.height;
-    _liveCtx.clearRect(0, 0, cw, ch);
+    if (_liveStyleDirty) {
+      _liveCtx.strokeStyle = currentColor;
+      _liveCtx.lineWidth   = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
+      _liveCtx.lineCap     = 'round';
+      _liveCtx.lineJoin    = 'round';
+      _liveCtx.globalAlpha = currentTool === 'highlight' ? 0.35 : 1;
+      _liveCtx.globalCompositeOperation = 'source-over';
+      _liveCtx.shadowBlur  = 0;
+      _liveStyleDirty = false;
+    }
 
-    _liveCtx.strokeStyle = currentColor;
-    _liveCtx.lineWidth   = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
-    _liveCtx.lineCap     = 'round';
-    _liveCtx.lineJoin    = 'round';
-    _liveCtx.globalAlpha = currentTool === 'highlight' ? 0.35 : 1;
-    _liveCtx.globalCompositeOperation = 'source-over';
-    _liveCtx.shadowBlur  = 0;
-
-    // Apply 1 Chaikin pass on raw points for visibly smoother live preview
-    const drawPts = (n >= 3) ? _chaikinPass(_pts) : _pts;
-    const m = drawPts.length;
+    const p1 = _pts[n - 2], p2 = _pts[n - 1];
+    const mid = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
 
     _liveCtx.beginPath();
-    _liveCtx.moveTo(drawPts[0].x, drawPts[0].y);
-
-    if (m === 2) {
-      _liveCtx.lineTo(drawPts[1].x, drawPts[1].y);
+    if (n === 2) {
+      // First segment: nothing to curve through yet, just a straight lead-in.
+      _liveCtx.moveTo(p1.x, p1.y);
+      _liveCtx.lineTo(mid.x, mid.y);
     } else {
-      // Midpoint quadratic bezier — industry standard for smooth handwriting.
-      // Curve passes through midpoints with raw points as control points.
-      for (let i = 1; i < m - 1; i++) {
-        const mx = (drawPts[i].x + drawPts[i + 1].x) / 2;
-        const my = (drawPts[i].y + drawPts[i + 1].y) / 2;
-        _liveCtx.quadraticCurveTo(drawPts[i].x, drawPts[i].y, mx, my);
-      }
-      // End at last point
-      _liveCtx.lineTo(drawPts[m - 1].x, drawPts[m - 1].y);
+      // Continue the curve from where we left off, through p1, to the new midpoint.
+      _liveCtx.moveTo(_liveLastMid.x, _liveLastMid.y);
+      _liveCtx.quadraticCurveTo(p1.x, p1.y, mid.x, mid.y);
     }
     _liveCtx.stroke();
+    _liveLastMid = mid;
   }
 
   // Full stroke redraw on a given context (used for replay / flush)
@@ -16120,13 +16119,24 @@ body.qa-only-mode #qaToolbarRow {
     _rawPts = [{x, y}];
     _pts    = [{x, y}];
     _liveStyleDirty = true;
+    _liveLastMid = null;
   }
 
   function _addSmoothPoint(x, y) {
     const last = _rawPts[_rawPts.length - 1];
     if (Math.hypot(x - last.x, y - last.y) < MIN_DIST) return;
     _rawPts.push({x, y});
-    _pts.push({x, y});
+
+    // Light EMA smoothing on the incoming point to soak up pointer/touch
+    // jitter (small hand tremor, sensor noise) before it ever reaches the
+    // renderer — this is what actually makes the line look smooth, on top
+    // of the incremental-draw fix above which keeps it from lagging.
+    const prev = _pts[_pts.length - 1];
+    _pts.push({
+      x: prev.x + SMOOTH_ALPHA * (x - prev.x),
+      y: prev.y + SMOOTH_ALPHA * (y - prev.y)
+    });
+
     _appendLiveSegment();
   }
 
