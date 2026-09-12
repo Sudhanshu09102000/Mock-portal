@@ -14020,6 +14020,47 @@ body.qa-only-mode #qaToolbarRow {
 .compass-tip-handle {
   pointer-events: auto !important;
 }
+/* Clear Screen button — floats top-left of the blackboard canvas */
+#gbl-clear-screen-btn {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 15px 8px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(239,68,68,0.35);
+  background: linear-gradient(135deg, rgba(239,68,68,0.20), rgba(127,29,29,0.12));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fecaca;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
+  user-select: none;
+}
+#gbl-clear-screen-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+#gbl-clear-screen-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(239,68,68,0.65);
+  background: linear-gradient(135deg, rgba(239,68,68,0.32), rgba(127,29,29,0.18));
+  box-shadow: 0 10px 26px rgba(239,68,68,0.28);
+}
+#gbl-clear-screen-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(239,68,68,0.22);
+}
+
 #gbl-compass-mode-hint {
   display: none;
   position: absolute;
@@ -14339,6 +14380,16 @@ body.qa-only-mode #qaToolbarRow {
     <!-- Canvas Area — takes ALL remaining space, no floating bars needed -->
     <div id="gbl-canvas-area">
       <canvas id="gbl-canvas"></canvas>
+
+      <!-- Clear Screen — wipes only the current page (undoable) -->
+      <button id="gbl-clear-screen-btn" title="Clear this page (undoable)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 20 L14 10 L18 14 L8 20 Z"></path>
+          <path d="M13.5 4.5 L19.5 10.5"></path>
+          <path d="M4 20 L2.5 21.5"></path>
+        </svg>
+        <span>Clear Screen</span>
+      </button>
 
       <!-- Geometry overlays rendered here by JS -->
       <div id="gbl-compass-mode-hint">Click to set center → drag for radius → release to draw circle</div>
@@ -15905,6 +15956,15 @@ body.qa-only-mode #qaToolbarRow {
   }
   document.getElementById('gbl-undo-btn').addEventListener('click', undo);
   document.getElementById('gbl-redo-btn').addEventListener('click', redo);
+
+  // ── CLEAR SCREEN — wipes every stroke on the CURRENT page only ──
+  // Saved to the undo stack first, so a misclick is one Ctrl+Z away from
+  // being reversed, same as any other action.
+  document.getElementById('gbl-clear-screen-btn').addEventListener('click', function () {
+    saveUndoState();
+    strokeHistory[currentPage] = [];
+    replayStrokes();
+  });
 
   // ── CANVAS DRAWING — Windows Ink + Pointer Events + Smooth Bezier ──
   function getXY(e) {
