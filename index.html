@@ -14888,6 +14888,29 @@ body.qa-only-mode #qaToolbarRow {
   document.getElementById('gbl-close-btn').addEventListener('click', closeBlackboard);
   // Overlay is transparent/non-blocking in side-by-side mode
 
+  // ── LIVE PEN-WIDTH DOT CURSOR (PowerPoint-style) ──
+  // Instead of a generic plus/crosshair, show a filled dot matching the
+  // exact color + on-canvas size of the currently selected pen/shape tool.
+  function _gblCursorSvg(diameter, color) {
+    const r    = diameter / 2;
+    const pad  = 2; // room for the outline stroke so it isn't clipped
+    const box  = diameter + pad * 2;
+    const c    = box / 2;
+    const svg  = `<svg xmlns='http://www.w3.org/2000/svg' width='${box}' height='${box}' viewBox='0 0 ${box} ${box}'>` +
+                 `<circle cx='${c}' cy='${c}' r='${r}' fill='${color}' fill-opacity='0.9' stroke='rgba(0,0,0,0.55)' stroke-width='1'/>` +
+                 `</svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}") ${c} ${c}, crosshair`;
+  }
+  function updateGblCursor() {
+    // Eraser keeps its own dedicated icon cursor (CSS class-driven).
+    if (currentTool === 'eraser') { canvas.style.cursor = ''; return; }
+    // Move / text tools manage their own cursor dynamically elsewhere.
+    if (currentTool === 'move' || currentTool === 'text') { canvas.style.cursor = ''; return; }
+    const lw  = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
+    const dot = Math.min(Math.max(Math.round(lw), 3), 80);
+    canvas.style.cursor = _gblCursorSvg(dot, currentColor);
+  }
+
   // ── TOOL BUTTONS ──
   document.querySelectorAll('.gbl-tool[data-tool]').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -14897,8 +14920,8 @@ body.qa-only-mode #qaToolbarRow {
       updateStatusTool();
       // Eraser cursor
       canvas.classList.toggle('eraser-cursor', currentTool === 'eraser');
-      // Move tool cursor
-      canvas.style.cursor = currentTool === 'move' ? 'crosshair' : '';
+      // Pen/shape tools get a dot cursor; move/eraser/text manage their own
+      updateGblCursor();
       // Deactivate geo tools
       geoMode = null;
       document.querySelectorAll('.gbl-tool[data-geo]').forEach(b => b.classList.remove('active'));
@@ -15861,12 +15884,14 @@ body.qa-only-mode #qaToolbarRow {
       document.querySelectorAll('.gbl-color-swatch').forEach(s => s.classList.remove('active'));
       sw.classList.add('active');
       updateStatusColor();
+      updateGblCursor();
     });
   });
   document.getElementById('gbl-custom-color').addEventListener('input', e => {
     currentColor = e.target.value;
     document.querySelectorAll('.gbl-color-swatch').forEach(s => s.classList.remove('active'));
     updateStatusColor();
+    updateGblCursor();
   });
 
   // ── STROKE SIZE ──
@@ -15875,8 +15900,12 @@ body.qa-only-mode #qaToolbarRow {
       strokeSize = parseFloat(sz.dataset.size);
       document.querySelectorAll('.gbl-sz').forEach(s => s.classList.remove('active'));
       sz.classList.add('active');
+      updateGblCursor();
     });
   });
+
+  // Set the initial dot cursor to match the default tool/color/size on load.
+  updateGblCursor();
 
   // ── FILL TOGGLE ──
   document.getElementById('gbl-t-fill').addEventListener('click', function() {
@@ -17069,22 +17098,31 @@ body.qa-only-mode #qaToolbarRow {
   function handleBlackboardKey(e) {
     const tag = (e.target?.tagName||'').toLowerCase();
     if (['input','textarea'].includes(tag) || e.target?.contentEditable === 'true') return;
+    // Ignore modifier combos here (Ctrl/Alt/Meta) so browser/OS shortcuts and
+    // our own Ctrl+Z / Ctrl+Y handling below aren't swallowed by the tool map.
+    if (e.ctrlKey || e.metaKey || e.altKey) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); }
+      else if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'y' || (e.shiftKey && e.key.toLowerCase() === 'z'))) { e.preventDefault(); redo(); }
+      return;
+    }
+
+    // Normalize case so Caps Lock / Shift doesn't break single-letter shortcuts.
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
 
     const keyMap = {
       'p': 'pen', 'h': 'highlight', 'e': 'eraser', 't': 'text',
       'l': 'line', 'r': 'rect', 'c': 'circle', 'm': 'move',
       'a': 'arrow', 'g': 'triangle', 's': 'star'
     };
-    if (keyMap[e.key]) {
+    if (keyMap[key]) {
       e.preventDefault();
-      const btn = document.querySelector(`.gbl-tool[data-tool="${keyMap[e.key]}"]`);
+      const btn = document.querySelector(`.gbl-tool[data-tool="${keyMap[key]}"]`);
       if (btn) btn.click();
+      return;
     }
-    if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); undo(); }
-    if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.shiftKey && e.key === 'z'))) { e.preventDefault(); redo(); }
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); document.getElementById('gbl-prev-page').click(); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); document.getElementById('gbl-next-page').click(); }
-    if (e.key === '+' || e.key === '=') { e.preventDefault(); document.getElementById('gbl-add-page').click(); }
+    if (key === 'ArrowLeft' || e.key === 'ArrowLeft')   { e.preventDefault(); document.getElementById('gbl-prev-page').click(); }
+    if (key === 'ArrowRight' || e.key === 'ArrowRight') { e.preventDefault(); document.getElementById('gbl-next-page').click(); }
+    if (key === '+' || key === '=') { e.preventDefault(); document.getElementById('gbl-add-page').click(); }
   }
 
   // ── Init on window load ──
