@@ -4126,7 +4126,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
   function loop(ts) {
     if (!running) return;
-    if (ts - lastTs >= FRAME_MS) { draw(); lastTs = ts; }
+    if (ts - lastTs >= FRAME_MS) { if (!document.documentElement.classList.contains('lite-mode')) draw(); lastTs = ts; }
     requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
@@ -14176,6 +14176,18 @@ body.qa-only-mode #qaToolbarRow {
     </button>
   </div>
 
+  <!-- PERFORMANCE / LIGHT MODE -->
+  <div class="gcp-section">
+    <div class="gcp-section-title">⚡ Performance</div>
+    <div class="lite-toggle-row" id="liteToggleRow" role="switch" aria-checked="false" tabindex="0" title="Light Mode: removes animations & heavy effects">
+      <div class="lite-toggle-text">
+        <span class="lite-toggle-name">🪶 Light Mode</span>
+        <span class="lite-toggle-sub" id="liteToggleSub">Complex mode (all effects)</span>
+      </div>
+      <span class="lite-switch"><span class="lite-knob"></span></span>
+    </div>
+  </div>
+
   <!-- APPEARANCE -->
   <div class="gcp-section">
     <div class="gcp-section-title">🎨 Appearance</div>
@@ -18920,6 +18932,115 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
 })();
 </script>
 
+<style id="liteModeStyle">
+/* ---- Light Mode toggle (control panel) ---- */
+.lite-toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;cursor:pointer;user-select:none;
+  background:linear-gradient(135deg,rgba(34,197,94,.14),rgba(16,185,129,.06));border:1px solid rgba(34,197,94,.35);transition:background .25s,border-color .25s}
+.lite-toggle-row:hover{border-color:rgba(34,197,94,.7)}
+.lite-toggle-row:focus-visible{outline:2px solid #22c55e;outline-offset:2px}
+.lite-toggle-text{display:flex;flex-direction:column;line-height:1.25}
+.lite-toggle-name{font-weight:700;font-size:13.5px}
+.lite-toggle-sub{font-size:11px;opacity:.7}
+.lite-switch{position:relative;flex:0 0 auto;width:44px;height:24px;border-radius:999px;background:#6b7280;transition:background .25s}
+.lite-knob{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.4);transition:transform .25s}
+.lite-toggle-row.on{background:linear-gradient(135deg,rgba(34,197,94,.3),rgba(16,185,129,.15));border-color:#22c55e}
+.lite-toggle-row.on .lite-switch{background:#22c55e}
+.lite-toggle-row.on .lite-knob{transform:translateX(20px)}
+
+/* ---- Light Mode: strip animations & heavy effects ---- */
+html.lite-mode *,html.lite-mode *::before,html.lite-mode *::after{
+  animation:none!important;animation-delay:0s!important;transition:none!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;filter:none!important;
+  box-shadow:none!important;text-shadow:none!important;scroll-behavior:auto!important;will-change:auto!important}
+html.lite-mode canvas#particles,html.lite-mode #particles,html.lite-mode canvas.particles,html.lite-mode .particles,html.lite-mode .bg-glow,html.lite-mode .orb{display:none!important}
+html.lite-mode body,html.lite-mode body::before,html.lite-mode body::after{background-image:none!important}
+html.lite-mode .gcp-btn,html.lite-mode .card,html.lite-mode [class*="box"],html.lite-mode [class*="card"]{background-image:none!important}
+/* ---- Light Mode: plain white background + black text; colour features disabled ---- */
+html.lite-mode{
+  --gp-bg1:#fff!important;--gp-bg2:#fff!important;--gp-bg1-tint:#fff!important;--gp-bg2-tint:#fff!important;
+  --gp-box1:#fff!important;--gp-box2:#fff!important;--gp-box1-tint:#fff!important;--gp-box2-tint:#fff!important;
+  --gp-boxb:#000!important;--gp-text:#000!important;--gp-accent:#fff!important;--gp-accent2:#fff!important;
+  --gp-bg-img:none!important;--gp-box-img:none!important;
+  color-scheme:light}
+html.lite-mode,html.lite-mode body{background:#fff!important;background-image:none!important;color:#000!important}
+html.lite-mode .glass,html.lite-mode .card,html.lite-mode .modal-content,html.lite-mode #stickyExpPanel,html.lite-mode #mobileHintPanel,
+html.lite-mode #answerModal .modal-content,html.lite-mode #helpPopup,html.lite-mode #hoverTooltip,html.lite-mode .option,
+html.lite-mode .subject-card,html.lite-mode .dlang-item,html.lite-mode .bm-opt,html.lite-mode #dualLangDropdown,
+html.lite-mode .qmark-pop,html.lite-mode .inline-hint-panel,html.lite-mode #submitConfirmBox,html.lite-mode #gcp-panel,
+html.lite-mode .gcp-section,html.lite-mode .gcp-btn,html.lite-mode .btn,html.lite-mode .navbar,html.lite-mode header,
+html.lite-mode .gcp-font-item,html.lite-mode .gcp-size-btn,html.lite-mode .gcp-img-upload-btn{
+  background:#fff!important;background-image:none!important;background-color:#fff!important;border-color:#000!important}
+html.lite-mode #gcp-panel *,html.lite-mode .gcp-btn,html.lite-mode .btn,html.lite-mode .option{color:#000!important}
+html.lite-mode .gcp-btn,html.lite-mode .btn,html.lite-mode .option,html.lite-mode .subject-card{border:1px solid #000!important}
+html.lite-mode .gcp-btn:hover,html.lite-mode .btn:hover,html.lite-mode .option:hover{background:#eee!important}
+/* top bar */
+html.lite-mode #engineView .engine-topbar,html.lite-mode .engine-topbar{background:#fff!important;background-image:none!important;border-bottom:1px solid #000!important}
+html.lite-mode #engineView .engine-topbar::before,html.lite-mode #engineView .engine-topbar::after{display:none!important;content:none!important}
+html.lite-mode .engine-topbar *{background-image:none!important;color:#000!important;border-color:#000!important}
+html.lite-mode .engine-topbar .btn,html.lite-mode .engine-topbar .btn-glass,html.lite-mode .engine-topbar .badge-soft,
+html.lite-mode .engine-topbar .hud-mode-badge,html.lite-mode .engine-topbar #timerShowBtn,html.lite-mode .engine-topbar .nav-toggle-icon,
+html.lite-mode .engine-topbar #pdfTutorToggleBtn,html.lite-mode .engine-topbar #engineBackBtn{background:#fff!important;background-color:#fff!important;border:1px solid #000!important}
+html.lite-mode .engine-topbar .nav-toggle-icon span{background:#000!important}
+html.lite-mode .engine-topbar .progress{background:#ddd!important}
+html.lite-mode .engine-topbar .progress-bar,html.lite-mode #timeProgress{background:#000!important;background-image:none!important}
+/* badges / pills everywhere */
+html.lite-mode .badge-soft,html.lite-mode .hud-mode-badge,html.lite-mode [class*="badge"],html.lite-mode [class*="pill"],html.lite-mode [class*="chip"]{
+  background:#fff!important;background-image:none!important;border:1px solid #000!important;color:#000!important}
+/* back/leave confirmation dialog */
+html.lite-mode #backConfirmOverlay{background:rgba(0,0,0,.35)!important;backdrop-filter:none!important}
+html.lite-mode #backConfirmBox{background:#fff!important;background-image:none!important;border:2px solid #000!important}
+html.lite-mode #backConfirmBox *{color:#000!important;background-image:none!important;border-color:#000!important}
+html.lite-mode #backConfirmBox .bc-node,html.lite-mode #backConfirmBox .bc-node.bc-active,
+html.lite-mode #backConfirmBox button,html.lite-mode #backConfirmBox #bcGoBtn,html.lite-mode #backConfirmBox #bcStayBtn,
+html.lite-mode #backConfirmBox .bc-step{background:#fff!important;background-color:#fff!important;border:1px solid #000!important}
+html.lite-mode #backConfirmBox .bc-node.bc-active{background:#000!important}
+html.lite-mode #backConfirmBox .bc-node.bc-active{color:#fff!important}
+html.lite-mode #backConfirmBox button:hover{background:#eee!important}
+/* Battle Mode (setup modal, lobby, question screen, leaderboard, results, chat) */
+html.lite-mode #bmOverlay{background:rgba(0,0,0,.35)!important;background-image:none!important}
+html.lite-mode #bmQuestionOverlay,html.lite-mode #bmScoreboard,html.lite-mode #bmFinished,html.lite-mode #bmChatPanel{background:#fff!important;background-image:none!important}
+html.lite-mode #bmOverlay .bm-modal{background:#fff!important;background-image:none!important;border:2px solid #000!important}
+html.lite-mode :is(#bmOverlay .bm-modal,#bmQuestionOverlay,#bmScoreboard,#bmFinished,#bmChatPanel) *:not([class*="correct"]):not([class*="wrong"]){
+  background-image:none!important;color:#000!important;border-color:#000!important;-webkit-text-fill-color:#000!important}
+html.lite-mode :is(#bmOverlay .bm-modal,#bmQuestionOverlay,#bmScoreboard,#bmFinished,#bmChatPanel) :is(button,input,.bm-btn,.bm-x,.bm-input,.bm-code-box,.bm-warn,.bm-info,.bm-err,.bm-qbar,.bm-qcard-wrap,.bm-opt,.bm-fin-table,#bmDirectLinkBox){
+  background:#fff!important;background-color:#fff!important;border:1px solid #000!important}
+html.lite-mode :is(#bmOverlay .bm-modal,#bmQuestionOverlay,#bmScoreboard,#bmFinished,#bmChatPanel) :is(button,.bm-btn):hover{background:#eee!important}
+html.lite-mode #bmOverlay .bm-input::placeholder{color:#666!important;-webkit-text-fill-color:#666!important}
+html.lite-mode #bmOverlay .bm-head{border-color:#000!important}
+html.lite-mode #bmOverlay .bm-logo{color:#000!important;-webkit-text-fill-color:#000!important;background:none!important}
+html.lite-mode .bm-flash{display:none!important}
+html.lite-mode .timer-pill,html.lite-mode #timerPill,html.lite-mode .nav-panel,html.lite-mode #bmChatPanel{background:#fff!important;background-image:none!important;border:1px solid #000!important;color:#000!important}
+html.lite-mode .timer-pill *,html.lite-mode #timerPill *{color:#000!important;-webkit-text-fill-color:#000!important}
+/* disable all colour / image / theme controls in the panel */
+html.lite-mode #gpBgColor,html.lite-mode #gpBoxColor,html.lite-mode #gpTextColor,
+html.lite-mode #gpBgImgControl,html.lite-mode #gpBoxImgControl,html.lite-mode #gpPresets,html.lite-mode #gpResetBtn{
+  pointer-events:none!important;opacity:.35!important;filter:grayscale(1)!important}
+html.lite-mode .gcp-color-row{pointer-events:none!important;opacity:.35!important}
+html.lite-mode .lite-toggle-row{background:#fff!important;border-color:#000!important}
+html.lite-mode .lite-toggle-row.on .lite-switch{background:#000!important}
+html.lite-mode .lite-switch{background:#999!important}
+/* keep Light Mode switch itself responsive-looking */
+html.lite-mode .lite-switch,html.lite-mode .lite-knob{transition:none!important}
+</style>
+<script>
+(function(){
+  var KEY='quizLiteMode', root=document.documentElement;
+  var row=document.getElementById('liteToggleRow'), sub=document.getElementById('liteToggleSub');
+  if(!row) return;
+  function apply(on){
+    root.classList.toggle('lite-mode',on);
+    row.classList.toggle('on',on);
+    row.setAttribute('aria-checked',on?'true':'false');
+    sub.textContent=on?'Light mode ON (basic & fast)':'Complex mode (all effects)';
+  }
+  function save(on){try{localStorage.setItem(KEY,on?'1':'0');}catch(e){}}
+  function toggle(){var on=!root.classList.contains('lite-mode');apply(on);save(on);}
+  var saved=false;try{saved=localStorage.getItem(KEY)==='1';}catch(e){}
+  apply(saved);
+  row.addEventListener('click',toggle);
+  row.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+})();
+</script>
 </body>
 
 
