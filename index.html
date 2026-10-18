@@ -20285,6 +20285,78 @@ html.lite-mode .lite-switch,html.lite-mode .lite-knob{transition:none!important}
   row.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
 })();
 </script>
+<style id="mobileExamLayoutFix">
+/* Mobile exam layout fix: box grows with content, nav row pinned to bottom */
+@media (max-width: 767px) {
+  #questionBox.test-resizable-box {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    flex: none !important;
+    margin-bottom: 12px !important;
+  }
+  #questionBox .question-scroll-area {
+    overflow: visible !important;
+    flex: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 0 !important;
+  }
+  #questionBox .test-box-resize-handles { display: none !important; }
+
+  #questionBox > hr { display: none !important; }
+  #qaFooterButtonsRow {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px !important;
+    margin: 12px -4px 0;
+    padding: 8px 4px calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    background: var(--gp-box2, #050b17);
+    border-top: 1px solid rgba(148, 163, 184, .25);
+  }
+  #qaFooterButtonsRow .btn {
+    width: 100%;
+    padding: .5rem .35rem !important;
+    font-size: .85rem !important;
+    white-space: normal;
+    line-height: 1.2;
+  }
+}
+
+/* Phones: the topbar is position:fixed, so push the exam content below it.
+   (An earlier "#engineView > .container-fluid { padding: 6px 8px 8px !important }"
+   rule was overriding the --topbar-h offset, hiding the top of the question.) */
+@media (max-width: 576px) {
+  #engineView > .container-fluid {
+    padding-top: calc(var(--topbar-h, 120px) + 8px) !important;
+    padding-bottom: 4px !important;
+  }
+  /* floating timer chip: tuck into the empty right side of the topbar's 2nd row
+     so it never covers the question, options or the button bar */
+  #timerPill {
+    top: calc(var(--topbar-h, 114px) - 54px) !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: 10px !important;
+  }
+}
+</style>
+<script>
+/* keep --topbar-h accurate whenever the fixed topbar changes height (wrapping, timer, etc.) */
+(function () {
+  var tb = document.querySelector('.engine-topbar');
+  if (!tb || !window.ResizeObserver) return;
+  new ResizeObserver(function () {
+    var h = tb.getBoundingClientRect().height;
+    if (h) document.documentElement.style.setProperty('--topbar-h', h + 'px');
+  }).observe(tb);
+})();
+</script>
 </body>
 
 
