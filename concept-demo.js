@@ -1,6 +1,7 @@
 /* ════════════════════════════════════════════════════════════════
    DEMO — concept pages mixed in between questions
    Register it in portalData.js like any other test (file: "concept-demo").
+   Entry 1 is always the CLASS OVERVIEW page (what we will learn in this class).
 
    Write entries in the order you want them shown:
        1: concept page   2: question   3: question   4: concept page …
@@ -8,7 +9,6 @@
    CONCEPT PAGE fields
      type       : "concept"                 (required)
      title      : "Percentage — Fast Fractions"
-     subtitle   : "optional line under the title"
      icon       : "📊"                       (emoji, optional)
      accent     : "#22c55e"                 (colour of this page, optional)
      pauseTimer : true                      (optional – stops the exam clock while reading)
@@ -27,13 +27,59 @@
 
 window.TEST_DATA = {
 
-  /* ─────────── 1 · CONCEPT PAGE ─────────── */
+  /* ─────────── 1 · CLASS OVERVIEW (opening summary page) ─────────── */
   1: {
+    type: "concept",
+    icon: "🎯",
+    accent: "#6366f1",
+    pauseTimer: true,
+    title: "Class Overview — What We Will Learn Today",
+    html: `
+      <p class="cp-lead">Today's class is a <span class="cp-hl">fast-track on Percentage and Profit &amp; Loss</span> —
+      the two chapters that quietly decide your Quant score in SSC CGL. By the end you will
+      <b>stop calculating and start recognising</b> patterns.</p>
+
+      <div class="cp-stats">
+        <div class="cp-stat"><b>2</b><span>Concept pages</span></div>
+        <div class="cp-stat"><b>5</b><span>Core formulas</span></div>
+        <div class="cp-stat"><b>4</b><span>Practice questions</span></div>
+        <div class="cp-stat"><b>~15 min</b><span>Time needed</span></div>
+      </div>
+
+      <div class="cp-divider">Your roadmap</div>
+
+      <ul class="cp-timeline">
+        <li><b>Percentage — Successive Change</b><br>Net % = a + b + ab/100, and the “start with 100” trick.</li>
+        <li><b>Practice</b> — 2 questions on successive change and the price–consumption rule.</li>
+        <li><b>Profit, Loss &amp; Discount</b><br>SP, profit %, loss % and two successive discounts.</li>
+        <li><b>Practice</b> — 2 questions on single equivalent discount and selling price.</li>
+      </ul>
+
+      <div class="cp-divider">What you will be able to do</div>
+
+      <div class="cp-grid c2">
+        <div class="cp-card green"><div class="cp-card-title">📊 Successive change</div>Combine two percentage changes in one line, without drawing a table.</div>
+        <div class="cp-card amber"><div class="cp-card-title">🛒 Price ↑ → Consumption ↓</div>Find the exact cut needed to keep expenditure constant.</div>
+        <div class="cp-card blue"><div class="cp-card-title">🏷️ Discounts</div>Convert two discounts into one single equivalent discount.</div>
+        <div class="cp-card red"><div class="cp-card-title">⚠️ Traps</div>Spot the classic mistake of simply adding or subtracting percentages.</div>
+      </div>
+
+      <div class="cp-note exam"><b>Why it matters:</b> these formulas appear again inside Data Interpretation,
+      Simple &amp; Compound Interest and Partnership — master them once, use them everywhere.</div>
+
+      <div class="cp-note tip">Read each concept page fully, then attempt the questions right after it.
+      The exam clock pauses on concept pages, so take your time.</div>
+
+      <div class="cp-chips"><span>SSC CGL Tier-1</span><span>Quant</span><span>Percentage</span><span>Profit &amp; Loss</span></div>
+    `
+  },
+
+  /* ─────────── 2 · CONCEPT PAGE ─────────── */
+  2: {
     type: "concept",
     icon: "📊",
     accent: "#22c55e",
     title: "Percentage — Successive Change",
-    subtitle: "Read this once, then the next 2 questions take 20 seconds each",
     html: `
       <p class="cp-lead">A percentage is just a fraction out of <b>100</b>. In SSC CGL the winning move is to
       <span class="cp-hl">stop calculating and start recognising</span> — fractions, successive change, and the
@@ -110,30 +156,29 @@ window.TEST_DATA = {
     `
   },
 
-  /* ─────────── 2 · QUESTION ─────────── */
-  2: {
+  /* ─────────── 3 · QUESTION ─────────── */
+  3: {
     questext: "A number is first increased by 20% and then decreased by 10%. What is the net change?",
     options: ["6% increase", "8% increase", "10% increase", "12% increase"],
     correct: "2",
     exptext: "Net = 20 − 10 + (20 × −10)/100 = +8%. Check with 100 → 120 → 108.",
   },
 
-  /* ─────────── 3 · QUESTION ─────────── */
-  3: {
+  /* ─────────── 4 · QUESTION ─────────── */
+  4: {
     questext: "The price of sugar rises by 25%. By what percent must a family cut its consumption so that its expenditure stays the same?",
     options: ["20%", "25%", "15%", "30%"],
     correct: "1",
     exptext: "Reduction = 25/(100 + 25) × 100 = 20%.",
   },
 
-  /* ─────────── 4 · CONCEPT PAGE (pauses the timer) ─────────── */
-  4: {
+  /* ─────────── 5 · CONCEPT PAGE (pauses the timer) ─────────── */
+  5: {
     type: "concept",
     icon: "🏷️",
     accent: "#f59e0b",
     pauseTimer: true,
     title: "Profit, Loss & Discount",
-    subtitle: "Timer is paused while you read this page",
     html: `
       <div class="cp-formula">
         <small>Selling price</small>
@@ -163,16 +208,16 @@ window.TEST_DATA = {
     `
   },
 
-  /* ─────────── 5 · QUESTION ─────────── */
-  5: {
+  /* ─────────── 6 · QUESTION ─────────── */
+  6: {
     questext: "A shopkeeper gives successive discounts of 20% and 10% on an article. What is the single equivalent discount?",
     options: ["28%", "30%", "25%", "27%"],
     correct: "1",
     exptext: "20 + 10 − (20 × 10)/100 = 28%.",
   },
 
-  /* ─────────── 6 · QUESTION ─────────── */
-  6: {
+  /* ─────────── 7 · QUESTION ─────────── */
+  7: {
     questext: "An article is sold at a 20% profit. If its cost price is ₹250, what is the selling price?",
     options: ["₹275", "₹300", "₹320", "₹290"],
     correct: "2",

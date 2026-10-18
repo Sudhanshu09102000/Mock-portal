@@ -1,0 +1,40 @@
+I am uploading a textbook chapter as a PDF and the sample file concept-demo.js. Convert the whole PDF into one .js file in exactly the same window.TEST_DATA format as concept-demo.js, following the PDF's own order strictly.
+
+ORDER
+0. ENTRY 1 = CLASS OVERVIEW PAGE (before everything, before any concept page or question). Make it a type:"concept" entry with pauseTimer:true, a fitting icon and accent colour, and a title like "<Chapter name> — Class Overview". Build it only from what is actually in the PDF, using the cp-* toolkit. It must contain:
+   - a cp-lead sentence saying what this class covers and why it matters for the exam
+   - cp-stats tiles with the real counts: concept pages, key formulas/rules, worked examples, exercises, total questions, and an estimated time
+   - a cp-timeline roadmap listing every concept topic, worked-example block and exercise in the exact order of the output file
+   - a cp-grid of cp-cards ("what you will be able to do"), one per major formula, rule, trick or trap family
+   - a cp-note exam on why the chapter matters, a cp-note tip on how to use the pages, and cp-chips with the topic tags
+   Do not put images in it. All counts must match the final file. This page is extra and does not count as a PDF concept page.
+1. Then all concept pages that appear before the first exercise. Each is a type:"concept" entry using the cp-* toolkit classes, with pauseTimer:true, a fitting icon and accent colour, and a good-level, exam-oriented explanation of every formula, rule, trick and trap in the PDF.
+2. Then every worked example of the PDF as a question (no solutions).
+3. Then every single question of the first exercise.
+4. Then the concept pages that appear after that exercise and before the next one.
+5. Then all questions of the next exercise, and so on until the last exercise.
+No concept, worked example or exercise question may be skipped, merged or invented. Do not add questions of your own.
+
+QUESTION FORMAT
+- Do NOT solve any question. Leave all four options blank: options: ["","","",""].
+- Leave correct blank: correct: "" (not 1, 2, 3 or 4).
+- Leave exptext and expimage empty. Do not write any solutions.
+- Copy the questions exactly. Add a note like (Take π = 22/7) where needed.
+- Make every questext beautiful with HTML:
+  - wrap key data and the actual ask in <b>bold</b>
+  - underline the key command or condition with <u>underline</u>
+  - use <br> line breaks wherever they help readability, for example between the statement and the sub-parts (i), (ii), (iii)
+
+FIGURES
+- Wherever the PDF has a figure, do not draw it. Use images named 1.jpg, 2.jpg, 3.jpg and so on, numbered in order of appearance in the output file.
+- Reference them as <img src="N.jpg"> inside concept pages and as quesimage:"N.jpg" for questions. Also state the key dimensions in the question text.
+- IMAGE SIZE: images must not be too large. Cap every image at 60% of its container width and 35vh of the screen height, with auto height, object-fit:contain and centred.
+- Put this as an inline style on every <img> in concept pages.
+- Also add a small style-injection snippet at the top of the file (img[src$=".jpg"] with !important) so question images are capped too.
+- At the very end of the .js file, under a comment line such as FIGURE PROMPTS, write one separate line for every image in the form "N.jpg: ...". Each line is a complete, self-contained, detailed description I can copy straight into ChatGPT. It must state the exact shape, every label and dimension with units, relative positions, and the parts to be shaded or dotted. It must ask for a clean, most beautiful, colorful 3D diagram with line art and no extra text or answers.
+- Also add a list of which image goes with which entry number (question or concept), both in the file and in your reply.
+
+CHECKS AND DELIVERY
+- Check that the JS has no syntax errors and that the entry counts and image counts are correct (entry 1 is the overview page).
+- Give me the downloadable file.
+- Briefly tell me which questions or figures were ambiguous so I can check them.

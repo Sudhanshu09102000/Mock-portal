@@ -2859,14 +2859,14 @@ body:not(.dark-mode) .sqc-badge-wrong {
 /* ── MOBILE: fix scrolling + toolbar visibility ── */
 @media (max-width: 767px) {
   /* Let the question box expand to full content height — page scroll handles it */
-  .resizable-question-box {
+  .resizable-question-box:not(.test-resizable-box) {
     overflow: visible !important;
     height: auto !important;
     min-height: unset !important;
     flex: none !important;
   }
   /* Disable inner scroll — content flows naturally, body/page scrolls */
-  .question-scroll-area {
+  .resizable-question-box:not(.test-resizable-box) .question-scroll-area {
     overflow: visible !important;
     flex: none !important;
     height: auto !important;
@@ -3410,6 +3410,253 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 /* Engine question box scroll smooth */
 .question-scroll-area { scroll-behavior: smooth; will-change: scroll-position; }
 
+/* ── Focused question card ── */
+.test-resizable-box {
+  width: 100%;
+  max-width: none;
+  min-width: min(320px, 100%);
+  min-height: min(280px, calc(100vh - 32px));
+  height: min(720px, 72vh);
+  max-height: calc(100vh - 32px);
+  resize: none !important;
+  margin-inline: auto;
+  padding: clamp(1rem, 2.4vw, 2rem) !important;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, .2) !important;
+  border-radius: 24px !important;
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(59, 130, 246, .12), transparent 42%),
+    linear-gradient(145deg, rgba(15, 23, 42, .98), rgba(7, 13, 27, .98)) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .34), inset 0 1px rgba(255, 255, 255, .04) !important;
+}
+
+.test-box-resize-handles {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.test-box-resize-handle {
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+}
+
+.test-box-resize-handle:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: -3px;
+}
+
+body.test-box-resizing,
+body.test-box-resizing * {
+  user-select: none !important;
+}
+
+.test-box-resize-handle[data-edge="n"],
+.test-box-resize-handle[data-edge="s"] {
+  left: 16px;
+  right: 16px;
+  height: 10px;
+  cursor: ns-resize;
+}
+
+.test-box-resize-handle[data-edge="n"] { top: 0; }
+.test-box-resize-handle[data-edge="s"] { bottom: 0; }
+
+.test-box-resize-handle[data-edge="e"],
+.test-box-resize-handle[data-edge="w"] {
+  top: 16px;
+  bottom: 16px;
+  width: 10px;
+  cursor: ew-resize;
+}
+
+.test-box-resize-handle[data-edge="e"] { right: 0; }
+.test-box-resize-handle[data-edge="w"] { left: 0; }
+
+.test-box-resize-handle[data-edge="ne"],
+.test-box-resize-handle[data-edge="nw"],
+.test-box-resize-handle[data-edge="se"],
+.test-box-resize-handle[data-edge="sw"] {
+  width: 18px;
+  height: 18px;
+}
+
+.test-box-resize-handle[data-edge="ne"] { top: 0; right: 0; cursor: nesw-resize; }
+.test-box-resize-handle[data-edge="nw"] { top: 0; left: 0; cursor: nwse-resize; }
+.test-box-resize-handle[data-edge="se"] { bottom: 0; right: 0; cursor: nwse-resize; }
+.test-box-resize-handle[data-edge="sw"] { bottom: 0; left: 0; cursor: nesw-resize; }
+
+.test-box-resize-handle[data-edge="n"]::after,
+.test-box-resize-handle[data-edge="s"]::after {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 36px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(148, 163, 184, .34);
+  content: "";
+  transform: translateX(-50%);
+  transition: background .15s ease, width .15s ease;
+}
+
+.test-box-resize-handle[data-edge="e"]::after,
+.test-box-resize-handle[data-edge="w"]::after {
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  width: 2px;
+  height: 36px;
+  border-radius: 2px;
+  background: rgba(148, 163, 184, .34);
+  content: "";
+  transform: translateY(-50%);
+  transition: background .15s ease, height .15s ease;
+}
+
+.test-box-resize-handle:hover::after,
+.test-box-resize-handle:focus-visible::after {
+  background: rgba(96, 165, 250, .9);
+}
+
+.test-box-resize-handle[data-edge="n"]:hover::after,
+.test-box-resize-handle[data-edge="s"]:hover::after {
+  width: 54px;
+}
+
+.test-box-resize-handle[data-edge="e"]:hover::after,
+.test-box-resize-handle[data-edge="w"]:hover::after {
+  height: 54px;
+}
+
+.test-resizable-box .question-scroll-area {
+  padding: clamp(.25rem, 1.2vw, .8rem);
+}
+
+.test-resizable-box .qbox {
+  padding: clamp(1rem, 2vw, 1.5rem);
+  margin-bottom: 1.25rem !important;
+  border: 1px solid rgba(148, 163, 184, .15);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, .62), rgba(15, 23, 42, .44));
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035);
+}
+
+#questionText {
+  line-height: 1.8 !important;
+  overflow-wrap: anywhere;
+}
+
+#questionText .badge {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: .12em;
+  margin-right: .65rem !important;
+  padding: .38rem .72rem !important;
+  border-radius: 999px !important;
+  background: rgba(59, 130, 246, .14) !important;
+  border: 1px solid rgba(96, 165, 250, .35) !important;
+  color: #bfdbfe !important;
+  font: 700 .76rem/1.2 'Inter', system-ui, sans-serif !important;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+#optionsArea {
+  gap: .7rem !important;
+}
+
+#optionsArea .option {
+  display: flex;
+  align-items: flex-start;
+  gap: .8rem;
+  padding: .95rem 1.1rem;
+  border-color: rgba(148, 163, 184, .17);
+  border-radius: 15px;
+  background: linear-gradient(110deg, rgba(30, 41, 59, .62), rgba(15, 23, 42, .48));
+  line-height: 1.6;
+}
+
+#optionsArea .option:hover {
+  transform: translateY(-1px);
+  border-color: rgba(96, 165, 250, .48);
+  background: linear-gradient(110deg, rgba(30, 58, 99, .62), rgba(15, 23, 42, .58));
+}
+
+#optionsArea .option .kbd {
+  display: inline-grid;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  border-radius: 9px;
+  border-color: rgba(148, 163, 184, .22);
+  background: rgba(15, 23, 42, .78);
+  color: #cbd5e1;
+  font: 700 .8rem/1 'Inter', system-ui, sans-serif;
+}
+
+#optionsArea .option.selected {
+  border-color: rgba(96, 165, 250, .72);
+  background: linear-gradient(110deg, rgba(30, 64, 110, .7), rgba(15, 23, 42, .65));
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, .22), 0 12px 30px rgba(2, 8, 23, .24);
+}
+
+#questionBox > hr {
+  border-color: rgba(148, 163, 184, .2) !important;
+  opacity: 1;
+}
+
+#qaFooterButtonsRow .btn {
+  border-radius: 11px;
+  padding: .62rem .9rem;
+}
+
+@media (max-width: 767px) {
+  .test-resizable-box {
+    width: min(100%, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+    min-width: min(280px, calc(100vw - 24px));
+    min-height: min(260px, calc(100vh - 32px));
+    height: min(720px, 70vh);
+    max-height: calc(100vh - 32px);
+    flex: 1 1 auto;
+    overflow: hidden;
+    padding: 1rem !important;
+    border-radius: 19px !important;
+  }
+
+  .test-resizable-box .question-scroll-area {
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding: 0;
+  }
+
+  .test-resizable-box .qbox {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+
+  .test-resizable-box #optionsArea .option {
+    padding: .8rem;
+  }
+}
+
 /* Big question on phones */
 @media (max-width: 480px) {
   #questionText { font-size: 1.02rem !important; line-height: 1.5; }
@@ -3466,14 +3713,6 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
   position: relative;
   display: none;
   flex-direction: column;
-  width: 100%;
-  min-width: 320px;
-  max-width: 100vw;
-  min-height: 360px;
-  height: calc(100vh - 118px);   /* default; replaced by the inline size when you drag-resize */
-  resize: both;                  /* same drag handle as the question box */
-  padding: 0 !important;
-  overflow: hidden;
   animation: cpBoxIn .35s ease;
 }
 #conceptBox::before {
@@ -3487,7 +3726,6 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
   padding: 4px 12px; border-radius: 999px; font: 800 .72rem 'Inter', system-ui, sans-serif; letter-spacing: 1.4px;
   background: rgba(var(--cp-rgb), .2); border: 1px solid rgba(var(--cp-rgb), .6); color: #fff;
 }
-.cp-meta { font: 600 .78rem 'Inter', system-ui, sans-serif; opacity: .75; }
 .cp-progress { height: 3px; background: rgba(255,255,255,.08); }
 .cp-progress i { display: block; height: 100%; width: 0; background: var(--cp-accent); transition: width .12s linear; }
 
@@ -3731,8 +3969,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
 /* ── mobile ── */
 @media (max-width: 767px) {
-  #conceptBox { width: 100% !important; height: auto !important; min-height: 0; resize: none; overflow: visible; border-radius: 14px; }
-  .cp-scroll { overflow: visible; padding: 14px 14px 18px; }
+  .cp-scroll { overflow: auto; padding: 14px 14px 18px; }
   .cp-top { padding: 14px 14px 8px; }
   .cp-footer { position: sticky; bottom: 0; z-index: 5; padding: 10px 14px; background: #0c101c; border-radius: 0 0 14px 14px; }
   .cp-hero { padding: 14px; gap: 12px; } .cp-icon { width: 52px; height: 52px; font-size: 1.6rem; }
@@ -3758,6 +3995,31 @@ html.lite-mode #conceptBox .cp-body ul > li::before { background: #000 !importan
 html.lite-mode .qdot.cdot { background: #fff !important; border: 1px dashed #000 !important; color: #000 !important; }
 html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style: solid !important; background: #eee !important; }
 
+</style>
+<style id="navToggleCornerStyle">
+/* Hamburger lives OUTSIDE the topbar: small, fixed, top-right corner */
+#engineView > #navToggleIcon.nav-toggle-icon {
+  position: fixed !important;
+  top: 12px !important;
+  right: 14px !important;
+  left: auto !important;
+  margin: 0 !important;
+  width: 30px !important;
+  height: 28px !important;
+  min-height: 0 !important;
+  border-radius: 9px !important;
+  gap: 4px !important;
+  z-index: 9000 !important;   /* above topbar, below the open nav panel (9999) */
+  padding: 0 !important;
+}
+#engineView > #navToggleIcon.nav-toggle-icon span {
+  width: 14px !important;
+  height: 2px !important;
+}
+/* keep topbar content from sliding under the corner button */
+#engineView .engine-topbar .container-fluid { padding-right: 56px !important; }
+html.lite-mode #navToggleIcon{background:#fff!important;border:1px solid #000!important;box-shadow:none!important}
+html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!important}
 </style>
 </head>
 
@@ -3894,6 +4156,10 @@ html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style
 
     <!-- ENGINE VIEW -->
     <div id="engineView" class="view">
+      <!-- ✅ NAV ICON — outside the topbar, small, fixed top-right corner -->
+      <button id="navToggleIcon" class="nav-toggle-icon" aria-label="Open Navigator">
+        <span></span><span></span><span></span>
+      </button>
       <div class="engine-topbar">
         <div class="progress rounded-0">
           <div id="timeProgress" class="progress-bar" role="progressbar" style="width:0%"></div>
@@ -3916,11 +4182,6 @@ html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style
               <!-- ⏱ Timer restore button (appears when timer is hidden) -->
               <button id="timerShowBtn" class="btn" title="Show Timer">⏱</button>
 
-              <!-- ✅ NAV ICON (Top Right) -->
-              <button id="navToggleIcon" class="nav-toggle-icon" aria-label="Open Navigator">
-                <span></span><span></span><span></span>
-              </button>
-
             </div>
 
 
@@ -3931,7 +4192,7 @@ html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style
 
       <div class="container-fluid py-3">
         <div class="row g-3 engine-shell">
-          <div class="col-12 col-lg-8">
+          <div class="col-12 col-lg-10 col-xl-9 mx-auto">
             <!-- PDF TUTOR PANEL (replaces question box when active) -->
             <div id="pdfTutorPanel" class="glass p-3 p-md-4 resizable-question-box" style="display:none;flex-direction:column;">
               <div class="d-flex align-items-center justify-content-between mb-3" style="flex-shrink:0;">
@@ -4010,7 +4271,7 @@ html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style
             </div>
 
             <!-- QUESTION BOX (normal test mode) -->
-            <div class="glass p-3 p-md-4 resizable-question-box" id="questionBox" style="position:relative;">
+            <div class="glass p-3 p-md-4 resizable-question-box test-resizable-box" id="questionBox" style="position:relative;">
               <!-- Swipe hint (mobile only, auto-hides) -->
               <div id="swipeHint" class="swipe-hint" style="display:none;">
                 <span class="sh-arrow">←</span> swipe to navigate <span class="sh-arrow">→</span>
@@ -4087,10 +4348,9 @@ html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style
             </div><!-- end #questionBox -->
 
             <!-- 📖 CONCEPT PAGE (shown instead of #questionBox when a concept page is reached) -->
-            <div class="glass" id="conceptBox" style="display:none;">
+            <div class="glass test-resizable-box" id="conceptBox" style="display:none;">
               <div class="cp-top">
                 <span class="cp-tag" id="cpTag">📖 CONCEPT</span>
-                <span class="cp-meta" id="cpMeta"></span>
               </div>
               <div class="cp-progress"><i id="cpReadBar"></i></div>
 
@@ -6141,10 +6401,125 @@ html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style
         });
       }
 
+      let activeTestBoxResize = null;
+      let testBoxResizeEventsBound = false;
+
+      function setTestBoxSize(box, width, height) {
+        const isMobile = window.innerWidth <= 767;
+        const maxWidth = Math.max(280, window.innerWidth - 24);
+        const minWidth = Math.min(isMobile ? 280 : 320, maxWidth);
+        const maxHeight = Math.max(260, window.innerHeight - 32);
+        const minHeight = Math.min(isMobile ? 260 : 280, maxHeight);
+        box.style.width = Math.max(minWidth, Math.min(maxWidth, width)) + 'px';
+        box.style.height = Math.max(minHeight, Math.min(maxHeight, height)) + 'px';
+      }
+
+      function bindTestBoxResizing() {
+        if (!testBoxResizeEventsBound) {
+          window.addEventListener('pointermove', (event) => {
+            if (!activeTestBoxResize || event.pointerId !== activeTestBoxResize.pointerId) return;
+            const { box, edge, startX, startY, width, height, left, top, screenTop, contentLeft } = activeTestBoxResize;
+            const dx = event.clientX - startX;
+            const dy = event.clientY - startY;
+            const nextWidth = width + dx * (edge.includes('e') ? 1 : edge.includes('w') ? -1 : 0);
+            const nextHeight = height + dy * (edge.includes('s') ? 1 : edge.includes('n') ? -1 : 0);
+            const maxWidthFromAnchor = edge.includes('w')
+              ? left + width - 12
+              : window.innerWidth - left - 12;
+            const maxHeightFromAnchor = edge.includes('n')
+              ? screenTop + height - 16
+              : window.innerHeight - screenTop - 16;
+            setTestBoxSize(
+              box,
+              Math.min(nextWidth, maxWidthFromAnchor),
+              Math.min(nextHeight, maxHeightFromAnchor)
+            );
+            const actualWidth = box.getBoundingClientRect().width;
+            const actualHeight = box.getBoundingClientRect().height;
+            box.style.marginLeft = (left + (edge.includes('w') ? width - actualWidth : 0) - contentLeft) + 'px';
+            box.style.marginRight = '0px';
+            box.style.top = (top + (edge.includes('n') ? height - actualHeight : 0)) + 'px';
+          });
+
+          const finishResize = (event) => {
+            if (!activeTestBoxResize || event.pointerId !== activeTestBoxResize.pointerId) return;
+            activeTestBoxResize.box.classList.remove('is-resizing');
+            document.body.classList.remove('test-box-resizing');
+            activeTestBoxResize = null;
+          };
+          window.addEventListener('pointerup', finishResize);
+          window.addEventListener('pointercancel', finishResize);
+          testBoxResizeEventsBound = true;
+        }
+
+        document.querySelectorAll('.test-resizable-box').forEach((box) => {
+          if (box.querySelector('.test-box-resize-handles')) return;
+          const handles = document.createElement('div');
+          handles.className = 'test-box-resize-handles';
+          handles.setAttribute('aria-hidden', 'false');
+
+          ['n', 'e', 's', 'w', 'ne', 'nw', 'se', 'sw'].forEach((edge) => {
+            const handle = document.createElement('div');
+            handle.className = 'test-box-resize-handle';
+            handle.dataset.edge = edge;
+            handle.tabIndex = 0;
+            handle.setAttribute('role', 'button');
+            handle.setAttribute('aria-label', 'Resize ' + edge + ' edge');
+            handle.addEventListener('pointerdown', (event) => {
+              if (event.button !== 0) return;
+              event.preventDefault();
+              event.stopPropagation();
+              const rect = box.getBoundingClientRect();
+              const parent = box.parentElement;
+              const parentRect = parent.getBoundingClientRect();
+              const parentStyle = getComputedStyle(parent);
+              activeTestBoxResize = {
+                box,
+                edge,
+                pointerId: event.pointerId,
+                startX: event.clientX,
+                startY: event.clientY,
+                left: rect.left,
+                top: parseFloat(box.style.top) || 0,
+                screenTop: rect.top,
+                contentLeft: parentRect.left
+                  + (parseFloat(parentStyle.borderLeftWidth) || 0)
+                  + (parseFloat(parentStyle.paddingLeft) || 0),
+                width: rect.width,
+                height: rect.height
+              };
+              box.classList.add('is-resizing');
+              document.body.classList.add('test-box-resizing');
+            });
+            handle.addEventListener('keydown', (event) => {
+              const step = event.shiftKey ? 40 : 16;
+              let dx = 0, dy = 0;
+              if (event.key === 'ArrowRight') dx = step;
+              else if (event.key === 'ArrowLeft') dx = -step;
+              else if (event.key === 'ArrowDown') dy = step;
+              else if (event.key === 'ArrowUp') dy = -step;
+              else return;
+
+              event.preventDefault();
+              const rect = box.getBoundingClientRect();
+              setTestBoxSize(
+                box,
+                rect.width + dx * (edge.includes('e') ? 1 : edge.includes('w') ? -1 : 0),
+                rect.height + dy * (edge.includes('s') ? 1 : edge.includes('n') ? -1 : 0)
+              );
+            });
+            handles.appendChild(handle);
+          });
+
+          box.appendChild(handles);
+        });
+      }
+
       /* show the right main box: question / concept / PDF tutor */
       function syncMainBoxes() {
         const qb = $('questionBox'), cb = $('conceptBox'), pp = $('pdfTutorPanel');
         if (!qb || !cb) return;
+        bindTestBoxResizing();
         const pdfOpen = !!pp && pp.style.display === 'flex';
         // box that is on screen right now (before we switch) – its size is carried over
         const prev = cb.style.display === 'flex' ? cb : (qb.style.display !== 'none' ? qb : null);
@@ -6155,6 +6530,9 @@ html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style
         if (prev && next && prev !== next) {
           next.style.width = prev.style.width;
           next.style.height = prev.style.height;
+          next.style.marginLeft = prev.style.marginLeft;
+          next.style.marginRight = prev.style.marginRight;
+          next.style.top = prev.style.top;
         }
         const tp = $('timerPill');
         if (tp) tp.classList.toggle('cp-paused', !!state.timerPaused);
@@ -6202,14 +6580,6 @@ html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style
         // header chips
         const no = state.seq.slice(0, pos + 1).filter(s => s.t === 'c').length;
         $('cpTag').textContent = '📖 CONCEPT ' + no + '/' + state.concepts.length;
-        let cover;
-        if (c.count === 0) cover = 'Wrap-up';
-        else if (c.count === 1) cover = 'For Q' + c.firstQ;
-        else cover = 'For Q' + c.firstQ + ' – Q' + c.lastQ + ' · ' + c.count + ' questions';
-        const words = ($('cpBody').textContent.trim().match(/\S+/g) || []).length;
-        const imgs = $('cpBody').querySelectorAll('img').length;
-        const mins = Math.max(1, Math.round(words / 170 + imgs * 0.2));
-        $('cpMeta').textContent = cover + ' · ≈ ' + mins + ' min read' + (c.pauseTimer ? ' · ⏸ timer paused' : '');
 
         cpUpdateFooter(pos);
         updateNavigator();
@@ -10365,15 +10735,15 @@ function buildUI() {
 function addBattleButtons() {
   // Engine topbar button
   if (!document.getElementById('bmEngineBtn')) {
-    const nav = document.getElementById('navToggleIcon');
-    if (nav && nav.parentNode) {
+    const row = document.querySelector('.engine-topbar .right-top-actions');
+    if (row) {
       const b = document.createElement('button');
       b.id = 'bmEngineBtn';
       b.className = 'bm-glow-btn';
       b.style.cssText = 'font-size:12px;padding:5px 10px;border-radius:10px;';
       b.innerHTML = '⚔️ Battle';
       b.onclick = openModal;
-      nav.parentNode.insertBefore(b, nav);
+      row.appendChild(b);
     }
   }
   // Portal button
@@ -10630,6 +11000,7 @@ function bmHideNormalUI(hide) {
   // Elements to hide: topbar, timer, nav panel, action buttons, toolbar strip, progress bar
   const selectors = [
     '.engine-topbar',
+    '#navToggleIcon',
     '.timer-pill',
     '#navPanel',
     '#grandControlBox',
@@ -19729,6 +20100,70 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
 })();
 </script>
 
+<style id="fullSpaceLayout">
+/* ═══ FULL-SPACE LAYOUT v2 — box fills the screen, padding is not stacked ═══ */
+#engineView > .container-fluid { padding: 6px 8px 8px !important; }
+#engineView .engine-shell { --bs-gutter-x: 0 !important; margin: 0 !important; }
+#engineView .engine-shell > .col-12.col-lg-10.col-xl-9 {
+  flex: 0 0 100% !important; max-width: 100% !important; width: 100% !important;
+  margin: 0 !important; padding: 0 !important;
+}
+.engine-topbar .container-fluid { padding-top: 4px !important; padding-bottom: 4px !important; }
+#engineTopbarResizeHandle { height: 5px !important; }
+
+@media (min-width: 768px) {
+  /* default = fill the screen; inline sizes set by the resize handles win over these */
+  #questionBox, #conceptBox, #pdfTutorPanel {
+    width: 100%; max-width: none;
+    margin: 0;
+    height: calc(100vh - var(--topbar-h, 96px) - 16px);
+    height: calc(100dvh - var(--topbar-h, 96px) - 16px);
+    max-height: none; min-height: 420px;
+    padding: clamp(.6rem, 1vw, 1rem) clamp(.7rem, 1.2vw, 1.25rem) !important;
+    border-radius: 18px !important;
+  }
+  body.hide-top-bar #questionBox, body.hide-top-bar #conceptBox { height: calc(100dvh - 16px); }
+  .test-resizable-box .question-scroll-area { padding: 0 !important; }
+  .test-resizable-box .qbox { padding: clamp(1rem, 1.6vw, 1.75rem) clamp(1.1rem, 2vw, 2.25rem); }
+  #questionText { font-size: clamp(1.2rem, 1.35vw + .55rem, 1.65rem) !important; }
+  #optionsArea .option { padding: 1.1rem 1.3rem; }
+  #optionsArea .opt-text { font-size: clamp(1.02rem, .7vw + .6rem, 1.3rem); }
+  #questionImage { max-height: 46vh; }
+}
+@media (min-width: 1100px) {
+  #optionsArea { display: grid !important; grid-template-columns: 1fr 1fr; gap: .9rem !important; align-items: stretch; }
+  #optionsArea .option { height: 100%; }
+}
+#conceptBox .cp-top    { padding: 8px clamp(.5rem, 1vw, 1rem) 8px; }
+#conceptBox .cp-scroll { padding: 14px clamp(.5rem, 1vw, 1rem) 20px; }
+#conceptBox .cp-footer { padding: 10px clamp(.5rem, 1vw, 1rem) 6px; }
+#conceptBox .cp-body   { max-width: none; font-size: clamp(1rem, .55vw + .75rem, 1.28rem); line-height: 1.8; }
+#conceptBox .cp-title  { font-size: clamp(1.5rem, 2vw + .6rem, 2.5rem); }
+#conceptBox .cp-sub    { font-size: clamp(.95rem, .4vw + .8rem, 1.2rem); }
+#conceptBox .cp-hero   { padding: clamp(16px, 1.8vw, 28px); gap: clamp(14px, 1.6vw, 24px); }
+#conceptBox .cp-icon   { width: clamp(64px, 5vw, 88px); height: clamp(64px, 5vw, 88px); font-size: clamp(2rem, 2.6vw, 2.9rem); }
+#conceptBox .cp-grid   { gap: clamp(12px, 1.2vw, 20px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+#conceptBox .cp-grid.c2 { grid-template-columns: repeat(2, 1fr); }
+#conceptBox .cp-grid.c3 { grid-template-columns: repeat(3, 1fr); }
+#conceptBox .cp-grid.c4 { grid-template-columns: repeat(4, 1fr); }
+#conceptBox .cp-card   { padding: 16px 20px 16px 24px; }
+#conceptBox .cp-note   { padding: 14px 20px; }
+#conceptBox .cp-formula { font-size: 1.3em; padding: 20px 24px; }
+#conceptBox .cp-stats  { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+@media (max-width: 767px) {
+  #conceptBox .cp-grid.c2, #conceptBox .cp-grid.c3, #conceptBox .cp-grid.c4 { grid-template-columns: 1fr; }
+}
+</style>
+<script>
+/* double-click any resize edge/corner of the test box to snap back to full screen */
+document.addEventListener('dblclick', function (e) {
+  var h = e.target.closest && e.target.closest('.test-box-resize-handle');
+  if (!h) return;
+  document.querySelectorAll('.test-resizable-box').forEach(function (b) {
+    ['width','height','marginLeft','marginRight','top'].forEach(function (k) { b.style[k] = ''; });
+  });
+});
+</script>
 <style id="liteModeStyle">
 /* ---- Light Mode toggle (control panel) ---- */
 .lite-toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;cursor:pointer;user-select:none;
