@@ -3452,6 +3452,313 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 /* Print-friendly fallback removed for size */
 
   </style>
+<style id="conceptPageCss">
+/* ════════════════════════════════════════════════════════════════
+   📖 CONCEPT PAGES
+   Container, hero, reading bar, footer + a toolkit of components
+   you can use inside the  html:`...`  of a concept page.
+   (no color-mix / oklch → safe for the html2canvas PPT capture)
+════════════════════════════════════════════════════════════════ */
+#conceptBox {
+  --cp-accent: #3b82f6;
+  --cp-rgb: 59,130,246;
+  --cp-on: #ffffff;
+  position: relative;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  min-width: 320px;
+  max-width: 100vw;
+  min-height: 360px;
+  height: calc(100vh - 118px);   /* default; replaced by the inline size when you drag-resize */
+  resize: both;                  /* same drag handle as the question box */
+  padding: 0 !important;
+  overflow: hidden;
+  animation: cpBoxIn .35s ease;
+}
+#conceptBox::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; z-index: 2;
+  background: linear-gradient(90deg, var(--cp-accent), rgba(var(--cp-rgb), 0));
+}
+@keyframes cpBoxIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.cp-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 16px 22px 10px; }
+.cp-tag {
+  padding: 4px 12px; border-radius: 999px; font: 800 .72rem 'Inter', system-ui, sans-serif; letter-spacing: 1.4px;
+  background: rgba(var(--cp-rgb), .2); border: 1px solid rgba(var(--cp-rgb), .6); color: #fff;
+}
+.cp-meta { font: 600 .78rem 'Inter', system-ui, sans-serif; opacity: .75; }
+.cp-progress { height: 3px; background: rgba(255,255,255,.08); }
+.cp-progress i { display: block; height: 100%; width: 0; background: var(--cp-accent); transition: width .12s linear; }
+
+.cp-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 22px 28px; -webkit-overflow-scrolling: touch; }
+
+/* ── hero ── */
+.cp-hero {
+  position: relative; overflow: hidden; display: flex; align-items: center; gap: 16px;
+  padding: 18px; margin-bottom: 20px; border-radius: 20px;
+  background: linear-gradient(135deg, rgba(var(--cp-rgb), .22), rgba(var(--cp-rgb), .04));
+  border: 1px solid rgba(var(--cp-rgb), .4);
+}
+.cp-hero::after {
+  content: ""; position: absolute; right: -40px; top: -40px; width: 160px; height: 160px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--cp-rgb), .35), rgba(var(--cp-rgb), 0) 70%); pointer-events: none;
+}
+.cp-icon {
+  flex: none; width: 64px; height: 64px; display: grid; place-items: center; font-size: 2rem; border-radius: 18px;
+  background: rgba(var(--cp-rgb), .2); border: 1px solid rgba(var(--cp-rgb), .55);
+  box-shadow: 0 0 28px rgba(var(--cp-rgb), .4);
+}
+.cp-hero-text { position: relative; z-index: 1; min-width: 0; }
+.cp-title {
+  font-family: var(--gp-font, 'Inter', system-ui, sans-serif); font-weight: 800; line-height: 1.2;
+  font-size: clamp(1.3rem, 3.2vw, 1.9rem); letter-spacing: -.3px;
+}
+.cp-sub { margin-top: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: .92rem; opacity: .8; }
+
+/* ── footer ── */
+.cp-footer {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 22px 14px;
+  border-top: 1px solid rgba(255,255,255,.1); background: rgba(0,0,0,.18);
+}
+.cp-footer .btn { font-weight: 600; }
+.cp-footer .btn:disabled { opacity: .35; cursor: default; }
+.cp-footer .cp-primary {
+  margin-left: auto; font-weight: 800;
+  background: rgba(var(--cp-rgb), .3) !important; border-color: rgba(var(--cp-rgb), .85) !important; color: #fff !important;
+}
+.cp-footer .cp-primary:hover { background: rgba(var(--cp-rgb), .5) !important; }
+
+/* ── body typography ── */
+.cp-body {
+  font-family: var(--gp-font, 'Merriweather', Georgia, serif);
+  font-size: calc(var(--gp-fs, 16px) * .96875);
+  line-height: 1.75; color: var(--txt, #f1f5f9);
+}
+.cp-body > * { animation: cpUp .5s ease both; }
+.cp-body > *:nth-child(1) { animation-delay: .03s; } .cp-body > *:nth-child(2) { animation-delay: .08s; }
+.cp-body > *:nth-child(3) { animation-delay: .13s; } .cp-body > *:nth-child(4) { animation-delay: .18s; }
+.cp-body > *:nth-child(5) { animation-delay: .23s; } .cp-body > *:nth-child(6) { animation-delay: .28s; }
+.cp-body > *:nth-child(7) { animation-delay: .33s; } .cp-body > *:nth-child(8) { animation-delay: .38s; }
+.cp-body > *:nth-child(n+9) { animation-delay: .42s; }
+@keyframes cpUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .cp-body > *, #conceptBox { animation: none !important; } }
+
+.cp-body p { margin: 0 0 12px; }
+.cp-body .cp-lead { font-size: 1.08em; opacity: .92; }
+.cp-body strong, .cp-body b { font-weight: 800; }
+.cp-body a { color: #93c5fd; text-decoration: underline; }
+.cp-body h2 { font-size: 1.3em; margin: 26px 0 10px; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,.14); }
+.cp-body h3 { font-size: 1.12em; margin: 22px 0 8px; display: flex; align-items: center; gap: 10px; }
+.cp-body h3::before { content: ""; width: 5px; height: 1.1em; border-radius: 3px; background: var(--cp-accent); flex: none; }
+.cp-body h4 { font-size: 1em; margin: 14px 0 6px; color: #fff; }
+.cp-body hr { border: 0; height: 1px; margin: 20px 0; background: linear-gradient(90deg, transparent, rgba(var(--cp-rgb), .6), transparent); opacity: 1; }
+.cp-body code { padding: 1px 7px; border-radius: 7px; background: rgba(255,255,255,.1); font-size: .9em; }
+.cp-body blockquote { margin: 14px 0; padding: 10px 16px; border-left: 4px solid var(--cp-accent); background: rgba(var(--cp-rgb), .08); border-radius: 0 12px 12px 0; font-style: italic; }
+.cp-body mark { background: rgba(250,204,21,.35); color: inherit; padding: 0 3px; border-radius: 4px; }
+
+/* lists */
+.cp-body ul:not(.cp-steps):not(.cp-timeline) { list-style: none; padding-left: 4px; margin: 8px 0 14px; }
+.cp-body ul:not(.cp-steps):not(.cp-timeline) > li { position: relative; padding-left: 22px; margin: 6px 0; }
+.cp-body ul:not(.cp-steps):not(.cp-timeline) > li::before {
+  content: ""; position: absolute; left: 4px; top: .72em; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--cp-accent); box-shadow: 0 0 8px rgba(var(--cp-rgb), .6);
+}
+.cp-body ol:not(.cp-steps) { padding-left: 24px; margin: 8px 0 14px; }
+.cp-body ol:not(.cp-steps) > li { margin: 6px 0; padding-left: 4px; }
+.cp-body ol:not(.cp-steps) > li::marker { color: var(--cp-accent); font-weight: 800; }
+
+/* images */
+.cp-body img {
+  display: block; max-width: 100%; height: auto; margin: 14px auto; border-radius: 14px; cursor: zoom-in;
+  border: 1px solid rgba(255,255,255,.16); box-shadow: 0 8px 26px rgba(0,0,0,.35);
+}
+.cp-body img.cp-plain { border: 0; box-shadow: none; border-radius: 0; }
+.cp-body img.cp-inline { display: inline-block; margin: 0 4px; vertical-align: middle; max-height: 1.6em; cursor: default; }
+.cp-body img.cp-broken { min-height: 44px; padding: 10px; border: 1px dashed #ef4444; color: #fca5a5; font: 600 .8rem 'Inter', sans-serif; }
+.cp-fig { margin: 16px 0; text-align: center; }
+.cp-fig figcaption { margin-top: 6px; font: 500 .82rem 'Inter', system-ui, sans-serif; opacity: .7; }
+
+/* ── CARDS ── <div class="cp-card [blue|green|amber|red|violet|teal|pink]"> */
+.cp-body .cp-card {
+  --k: var(--cp-rgb);
+  position: relative; margin: 14px 0; padding: 14px 16px 14px 20px; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(var(--k), .13), rgba(var(--k), .03));
+  border: 1px solid rgba(var(--k), .34); box-shadow: 0 6px 22px rgba(0,0,0,.25);
+}
+.cp-body .cp-card::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 0 4px 4px 0; background: rgb(var(--k)); }
+.cp-card.blue { --k: 59,130,246; } .cp-card.green { --k: 34,197,94; } .cp-card.amber { --k: 245,158,11; }
+.cp-card.red { --k: 239,68,68; } .cp-card.violet { --k: 139,92,246; } .cp-card.teal { --k: 20,184,166; } .cp-card.pink { --k: 236,72,153; }
+.cp-card > :first-child { margin-top: 0; } .cp-card > :last-child { margin-bottom: 0; }
+.cp-card-title { font: 800 1rem 'Inter', system-ui, sans-serif; margin-bottom: 6px; }
+
+/* grids */
+.cp-grid { display: grid; gap: 12px; margin: 14px 0; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.cp-grid.c2 { grid-template-columns: repeat(2, 1fr); } .cp-grid.c3 { grid-template-columns: repeat(3, 1fr); } .cp-grid.c4 { grid-template-columns: repeat(4, 1fr); }
+.cp-grid > .cp-card { margin: 0; }
+
+/* ── FORMULA ── <div class="cp-formula"><small>Formula</small> … </div> */
+.cp-formula {
+  margin: 16px 0; padding: 16px 18px; text-align: center; border-radius: 18px;
+  font: 700 1.18em 'Inter', system-ui, sans-serif; letter-spacing: .2px; line-height: 1.5;
+  background: radial-gradient(120% 140% at 0% 0%, rgba(var(--cp-rgb), .3), rgba(var(--cp-rgb), .06) 60%), rgba(255,255,255,.03);
+  border: 1px solid rgba(var(--cp-rgb), .6);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset, 0 10px 34px rgba(var(--cp-rgb), .2);
+}
+.cp-formula small { display: block; margin-bottom: 6px; font-size: .6em; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: .75; }
+
+/* fraction  <span class="cp-frac"><i>a</i><i>b</i></span> */
+.cp-frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 .25em; line-height: 1.25; font-size: .94em; }
+.cp-frac > i { font-style: normal; padding: 0 .35em; }
+.cp-frac > i:first-child { border-bottom: 1.5px solid currentColor; }
+
+/* ── NOTES ── <div class="cp-note [tip|trap|trick|remember|info|exam|good]"> */
+.cp-body .cp-note {
+  --k: var(--cp-rgb);
+  margin: 14px 0; padding: 12px 16px; border-radius: 14px;
+  border: 1px solid rgba(var(--k), .45); border-left-width: 5px; background: rgba(var(--k), .1);
+}
+.cp-note::before { display: block; margin-bottom: 4px; font: 800 .7rem 'Inter', system-ui, sans-serif; letter-spacing: 1.6px; color: rgb(var(--k)); filter: brightness(1.35); }
+.cp-note > :last-child { margin-bottom: 0; }
+.cp-note.tip      { --k: 250,204,21; }  .cp-note.tip::before      { content: "💡 TIP"; }
+.cp-note.trap     { --k: 239,68,68; }   .cp-note.trap::before     { content: "⚠️ COMMON TRAP"; }
+.cp-note.trick    { --k: 168,85,247; }  .cp-note.trick::before    { content: "⚡ SHORTCUT"; }
+.cp-note.remember { --k: 34,197,94; }   .cp-note.remember::before { content: "🧠 REMEMBER"; }
+.cp-note.info     { --k: 59,130,246; }  .cp-note.info::before     { content: "ℹ️ NOTE"; }
+.cp-note.exam     { --k: 249,115,22; }  .cp-note.exam::before     { content: "🎯 EXAM FAVOURITE"; }
+.cp-note.good     { --k: 20,184,166; }  .cp-note.good::before     { content: "✅ DO THIS"; }
+.cp-note[data-label]::before { content: attr(data-label); }
+
+/* ── TABLES (auto-wrapped so they scroll sideways on phones) ── */
+.cp-tablewrap { overflow-x: auto; margin: 14px 0; border-radius: 14px; border: 1px solid rgba(255,255,255,.16); }
+.cp-body table { width: 100%; min-width: 340px; border-collapse: collapse; font-size: .93em; margin: 0; }
+.cp-body th { padding: 9px 12px; text-align: left; font: 800 .76rem 'Inter', system-ui, sans-serif; letter-spacing: .7px; text-transform: uppercase; color: #fff; background: rgba(var(--cp-rgb), .3); }
+.cp-body td { padding: 9px 12px; border-top: 1px solid rgba(255,255,255,.09); }
+.cp-body tbody tr:nth-child(even) td { background: rgba(255,255,255,.035); }
+.cp-body tbody tr:hover td { background: rgba(var(--cp-rgb), .12); }
+
+/* ── STEPS ── <ol class="cp-steps"><li>…</li></ol> */
+.cp-steps { list-style: none; counter-reset: cps; padding: 0; margin: 14px 0; }
+.cp-body .cp-steps > li {
+  counter-increment: cps; position: relative; margin: 0 0 10px; padding: 11px 14px 11px 58px; border-radius: 14px;
+  background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.11);
+}
+.cp-steps > li::before {
+  content: counter(cps); position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+  font: 800 .92rem 'Inter', system-ui, sans-serif; background: var(--cp-accent); color: var(--cp-on);
+  box-shadow: 0 0 16px rgba(var(--cp-rgb), .55);
+}
+
+/* ── WORKED EXAMPLE ── <div class="cp-example"><div class="cp-q">…</div><div class="cp-a">…</div></div> */
+.cp-example { margin: 16px 0; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.03); }
+.cp-example > .cp-q { padding: 12px 16px; font-weight: 600; background: rgba(var(--cp-rgb), .16); }
+.cp-example > .cp-q::before, .cp-example > .cp-a::before { display: block; margin-bottom: 4px; font: 800 .66rem 'Inter', system-ui, sans-serif; letter-spacing: 1.8px; }
+.cp-example > .cp-q::before { content: "EXAMPLE"; color: var(--cp-accent); filter: brightness(1.3); }
+.cp-example > .cp-a { padding: 12px 16px; border-top: 1px dashed rgba(255,255,255,.2); }
+.cp-example > .cp-a::before { content: "SOLUTION"; color: #4ade80; }
+
+/* ── MNEMONIC ── */
+.cp-mnemonic {
+  margin: 16px 0; padding: 18px; text-align: center; border-radius: 18px; font-size: 1.12em; font-weight: 700;
+  border: 2px dashed rgba(var(--cp-rgb), .65); background: rgba(var(--cp-rgb), .08);
+}
+.cp-mnemonic::before { content: "🧠 MNEMONIC"; display: block; margin-bottom: 6px; font: 800 .66rem 'Inter', system-ui, sans-serif; letter-spacing: 2px; opacity: .8; }
+
+/* ── VS / COMPARE ── <div class="cp-vs"><div class="good">…</div><div class="bad">…</div></div> */
+.cp-vs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.cp-vs > div { padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.14); }
+.cp-vs > div.good { background: rgba(34,197,94,.09); border-color: rgba(34,197,94,.5); }
+.cp-vs > div.bad  { background: rgba(239,68,68,.09); border-color: rgba(239,68,68,.5); }
+.cp-vs h4 { margin-top: 0; }
+
+/* ── STATS ── <div class="cp-stats"><div class="cp-stat"><b>25%</b><span>1/4</span></div></div> */
+.cp-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin: 14px 0; }
+.cp-stat { padding: 14px 10px; text-align: center; border-radius: 16px; background: rgba(var(--cp-rgb), .1); border: 1px solid rgba(var(--cp-rgb), .38); }
+.cp-stat b { display: block; font: 800 1.6em 'Inter', system-ui, sans-serif; }
+.cp-stat span { font-size: .8em; opacity: .8; }
+
+/* ── CHIPS ── <div class="cp-chips"><span>…</span></div> */
+.cp-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.cp-chips > * { padding: 4px 12px; border-radius: 999px; font: 600 .82rem 'Inter', system-ui, sans-serif; background: rgba(var(--cp-rgb), .16); border: 1px solid rgba(var(--cp-rgb), .45); }
+
+/* ── TIMELINE ── <ul class="cp-timeline"><li><b>1857</b> text</li></ul> */
+.cp-timeline { list-style: none; margin: 16px 0; padding: 0 0 0 22px; border-left: 2px solid rgba(var(--cp-rgb), .5); }
+.cp-body .cp-timeline > li { position: relative; margin: 0 0 14px; padding-left: 14px; }
+.cp-timeline > li::before { content: ""; position: absolute; left: -31px; top: .5em; width: 12px; height: 12px; border-radius: 50%; background: var(--cp-accent); box-shadow: 0 0 0 4px rgba(var(--cp-rgb), .25); }
+
+/* ── COLLAPSIBLE ── <details class="cp-collapse"><summary>…</summary>…</details> */
+.cp-body details.cp-collapse { margin: 12px 0; border-radius: 14px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.04); overflow: hidden; }
+.cp-collapse > summary { cursor: pointer; padding: 11px 16px; font: 700 .95rem 'Inter', system-ui, sans-serif; list-style: none; display: flex; align-items: center; gap: 8px; }
+.cp-collapse > summary::-webkit-details-marker { display: none; }
+.cp-collapse > summary::before { content: "▸"; color: var(--cp-accent); transition: transform .2s; }
+.cp-collapse[open] > summary::before { transform: rotate(90deg); }
+.cp-collapse[open] > summary { background: rgba(var(--cp-rgb), .14); }
+.cp-collapse > :not(summary) { margin-left: 16px; margin-right: 16px; }
+.cp-collapse > :last-child { margin-bottom: 14px; }
+.cp-collapse > summary + * { margin-top: 12px; }
+
+/* ── DIVIDER ── <div class="cp-divider">Section</div> */
+.cp-divider { display: flex; align-items: center; gap: 12px; margin: 24px 0 10px; font: 800 .72rem 'Inter', system-ui, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: var(--cp-accent); filter: brightness(1.25); }
+.cp-divider::before, .cp-divider::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(var(--cp-rgb), .65), transparent); }
+
+/* ── INLINE HELPERS ── */
+.cp-hl   { background: linear-gradient(transparent 55%, rgba(250,204,21,.5) 55%); padding: 0 2px; font-weight: 700; }
+.cp-hl.g { background: linear-gradient(transparent 55%, rgba(34,197,94,.5) 55%); }
+.cp-hl.r { background: linear-gradient(transparent 55%, rgba(239,68,68,.5) 55%); }
+.cp-hl.b { background: linear-gradient(transparent 55%, rgba(59,130,246,.55) 55%); }
+.cp-key  { display: inline-block; padding: 0 9px; border-radius: 8px; font: 700 .85em 'Inter', system-ui, sans-serif; border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.09); }
+.cp-center { text-align: center; } .cp-muted { opacity: .7; } .cp-big { font-size: 1.3em; font-weight: 700; }
+.cp-green { color: #4ade80; } .cp-red { color: #f87171; } .cp-amber { color: #fbbf24; } .cp-blue { color: #60a5fa; }
+
+/* ── image lightbox ── */
+#cpLightbox { position: fixed; left: 0; top: 0; right: 0; bottom: 0; z-index: 100000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.9); cursor: zoom-out; }
+#cpLightbox.open { display: flex; }
+#cpLightbox img { max-width: 96vw; max-height: 92vh; border-radius: 12px; box-shadow: 0 20px 80px rgba(0,0,0,.7); background: #fff; }
+
+/* ── navigator: concept rows ── */
+.qdot.cdot {
+  grid-column: 1 / -1; width: 100% !important; height: auto !important; min-height: 34px; border-radius: 12px !important;
+  display: flex !important; align-items: center; gap: 8px; padding: 6px 12px; text-align: left; font-size: 11.5px; font-weight: 700;
+  border: 1.5px dashed rgba(167,139,250,.6) !important; background: rgba(167,139,250,.1) !important; color: #ddd6fe !important;
+}
+.qdot.cdot .cdot-tx { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qdot.cdot.seen { border-style: solid !important; background: rgba(167,139,250,.2) !important; }
+.qdot.cdot.current { border-color: #a78bfa !important; background: rgba(167,139,250,.34) !important; box-shadow: 0 0 0 2px rgba(167,139,250,.3) inset, 0 0 18px rgba(167,139,250,.4) !important; color: #fff !important; }
+
+/* timer paused indicator */
+#timerPill.cp-paused #timerText::after { content: " ⏸"; }
+
+/* ── mobile ── */
+@media (max-width: 767px) {
+  #conceptBox { width: 100% !important; height: auto !important; min-height: 0; resize: none; overflow: visible; border-radius: 14px; }
+  .cp-scroll { overflow: visible; padding: 14px 14px 18px; }
+  .cp-top { padding: 14px 14px 8px; }
+  .cp-footer { position: sticky; bottom: 0; z-index: 5; padding: 10px 14px; background: #0c101c; border-radius: 0 0 14px 14px; }
+  .cp-hero { padding: 14px; gap: 12px; } .cp-icon { width: 52px; height: 52px; font-size: 1.6rem; }
+  .cp-grid.c2, .cp-grid.c3, .cp-grid.c4, .cp-vs { grid-template-columns: 1fr; }
+}
+
+/* ── Light (lite) mode: plain white / black ── */
+html.lite-mode #conceptBox, html.lite-mode #conceptBox * { background-image: none !important; box-shadow: none !important; text-shadow: none !important; animation: none !important; filter: none !important; }
+html.lite-mode #conceptBox { background: #fff !important; border: 2px solid #000 !important; color: #000 !important; }
+html.lite-mode #conceptBox::before { display: none; }
+html.lite-mode #conceptBox * { color: #000 !important; border-color: #000 !important; -webkit-text-fill-color: #000 !important; }
+html.lite-mode #conceptBox :is(.cp-hero, .cp-card, .cp-note, .cp-formula, .cp-example, .cp-vs > div, .cp-stat, .cp-mnemonic, .cp-steps > li, details.cp-collapse, .cp-tag, .cp-icon, .cp-chips > *, .cp-footer) { background: #fff !important; }
+html.lite-mode #conceptBox .cp-card, html.lite-mode #conceptBox .cp-note, html.lite-mode #conceptBox .cp-formula,
+html.lite-mode #conceptBox .cp-example, html.lite-mode #conceptBox .cp-hero, html.lite-mode #conceptBox .cp-stat,
+html.lite-mode #conceptBox .cp-steps > li, html.lite-mode #conceptBox .cp-vs > div { border: 1px solid #000 !important; }
+html.lite-mode #conceptBox th { background: #000 !important; color: #fff !important; -webkit-text-fill-color: #fff !important; }
+html.lite-mode #conceptBox td { background: #fff !important; }
+html.lite-mode #conceptBox .cp-steps > li::before { background: #000 !important; color: #fff !important; -webkit-text-fill-color: #fff !important; }
+html.lite-mode #conceptBox .cp-progress { background: #ddd !important; }
+html.lite-mode #conceptBox .cp-progress i { background: #000 !important; }
+html.lite-mode #conceptBox .cp-hl { text-decoration: underline !important; text-decoration-thickness: 2px; }
+html.lite-mode #conceptBox .cp-body ul > li::before { background: #000 !important; }
+html.lite-mode .qdot.cdot { background: #fff !important; border: 1px dashed #000 !important; color: #000 !important; }
+html.lite-mode .qdot.cdot.seen, html.lite-mode .qdot.cdot.current { border-style: solid !important; background: #eee !important; }
+
+</style>
 </head>
 
 <body>
@@ -3778,6 +4085,31 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
               </div>
             </div><!-- end #questionBox -->
+
+            <!-- 📖 CONCEPT PAGE (shown instead of #questionBox when a concept page is reached) -->
+            <div class="glass" id="conceptBox" style="display:none;">
+              <div class="cp-top">
+                <span class="cp-tag" id="cpTag">📖 CONCEPT</span>
+                <span class="cp-meta" id="cpMeta"></span>
+              </div>
+              <div class="cp-progress"><i id="cpReadBar"></i></div>
+
+              <div class="cp-scroll" id="cpScroll">
+                <div class="cp-hero">
+                  <div class="cp-icon" id="cpIcon">💡</div>
+                  <div class="cp-hero-text">
+                    <div class="cp-title" id="cpTitle"></div>
+                    <div class="cp-sub" id="cpSub"></div>
+                  </div>
+                </div>
+                <div class="cp-body" id="cpBody"></div>
+              </div>
+
+              <div class="cp-footer">
+                <button id="cpPrevBtn" class="btn btn-glass">◀ Previous</button>
+                <button id="cpNextBtn" class="btn btn-glass cp-primary">Next ▶</button>
+              </div>
+            </div><!-- end #conceptBox -->
           </div><!-- end col-lg-8 -->
 
           <!-- ✅ RIGHT SLIDE NAVIGATOR PANEL -->
@@ -3801,6 +4133,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
                 <div class="nav-legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(34,197,94,.25);border:1.5px solid rgba(34,197,94,.85);margin-right:5px;"></span>Answered</div>
                 <div class="nav-legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:rgba(250,204,21,.22);border:1.5px solid rgba(250,204,21,.85);margin-right:5px;"></span>Review (no answer)</div>
                 <div class="nav-legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,rgba(250,204,21,.35) 0 50%,rgba(34,197,94,.3) 50% 100%);border:1.5px solid rgba(250,204,21,.75);margin-right:5px;"></span>Review + answered</div>
+                <div class="nav-legend-item" id="navConceptLegend" style="display:none;"><span style="display:inline-block;margin-right:5px;">📖</span>Concept page</div>
               </div>
 
               <!-- ✅ Buttons under Navigator -->
@@ -4862,9 +5195,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             return;
           }
 
-          const { questionsObj, explanationsObj } = convertTestData(window.TEST_DATA);
+          const { questionsObj, explanationsObj, conceptsList, seqRaw } = convertTestData(window.TEST_DATA);
 
-          initEngine(questionsObj, explanationsObj);
+          initEngine(questionsObj, explanationsObj, conceptsList, seqRaw);
           showView('engine');
         } catch (err) {
           console.error(err);
@@ -4896,7 +5229,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       }
 
       /* ========= ENGINE CORE ========= */
-      function initEngine(questionsObj, explanationsObj) {
+      function initEngine(questionsObj, explanationsObj, conceptsList, seqRaw) {
         state.questionsMap = questionsObj;
         state.explanationsMap = explanationsObj;
 
@@ -4904,6 +5237,10 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         state.qIds = Object.keys(questionsObj).map(Number).sort((a, b) => a - b);
         state.qCount = state.qIds.length;
         state.currentIndex = 0;
+
+        // ── Concept pages: unified sequence of questions + concept pages ──
+        buildConceptSequence(conceptsList, seqRaw);
+        syncMainBoxes();
 
         // default time: 60s per question (demo heuristic)
         state.timeTotalSec = Math.max(5 * 60, state.qCount * 60);
@@ -4940,6 +5277,11 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         state.submitted = false;
         renderQuestion(0);
+        if (state.seq[0] && state.seq[0].t === 'c') {
+          // test STARTS with a concept page → Q1 isn't 'visited' yet
+          state.qState[state.qIds[0]].visited = false;
+          renderConcept(0);
+        }
         state.startedAt = Date.now(); // ✅ ADD
         startTimer();
 
@@ -4955,23 +5297,50 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       function cleanupEngine() {
         stopTimer();
         detachEngineHandlers();
+        state.conceptView = false;
+        state.timerPaused = false;
+        try { syncMainBoxes(); } catch (_) { }
+        const _lb = document.getElementById('cpLightbox');
+        if (_lb) _lb.classList.remove('open');
       }
 
       function buildNavigator() {
         const wrap = $('qNav');
         wrap.innerHTML = '';
-        state.qIds.forEach((qid, idx) => {
+        state.seq.forEach((it, pos) => {
+          if (it.t === 'c') {
+            // 📖 concept page marker (full-width row in the navigator)
+            const c = state.concepts[it.ci];
+            const cb = document.createElement('button');
+            cb.className = 'qdot cdot';
+            cb._pos = pos;
+            cb.title = 'Concept page';
+            const ic = document.createElement('span'); ic.className = 'cdot-ic'; ic.textContent = c.icon;
+            const tx = document.createElement('span'); tx.className = 'cdot-tx'; tx.textContent = String(c.title).replace(/<[^>]*>/g, '');
+            cb.append(ic, tx);
+            cb.addEventListener('click', () => renderConcept(pos));
+            wrap.appendChild(cb);
+            return;
+          }
+          const idx = it.idx;
           const b = document.createElement('button');
           b.className = 'qdot';
           b.textContent = (idx + 1);
           b.addEventListener('click', () => goToIndex(idx));
           wrap.appendChild(b);
         });
-        $('navLegend').textContent = `${state.qCount} Qs`;
+        $('navLegend').textContent = `${state.qCount} Qs` + (state.hasConcepts ? ` · ${state.concepts.length} 📖` : '');
+        const _cl = $('navConceptLegend');
+        if (_cl) _cl.style.display = state.hasConcepts ? '' : 'none';
       }
 
       function updateNavigator() {
-        const dots = [...$('qNav').children];
+        [...$('qNav').querySelectorAll('.cdot')].forEach(cd => {
+          cd.classList.toggle('current', !!state.conceptView && state.seqPos === cd._pos);
+          const cc = state.concepts[state.seq[cd._pos].ci];
+          cd.classList.toggle('seen', !!(cc && cc.seen));
+        });
+        const dots = [...$('qNav').children].filter(d => !d.classList.contains('cdot'));
         dots.forEach((dot, idx) => {
           const qid = state.qIds[idx];
           const qs  = state.qState[qid];
@@ -4985,7 +5354,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           );
 
           // Current question always gets purple glow
-          if (idx === state.currentIndex) dot.classList.add('current');
+          if (idx === state.currentIndex && !state.conceptView) dot.classList.add('current');
 
           const hasSelected = !!qs.selectedMetaId;
           const visited     = qs.visited;
@@ -5053,6 +5422,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       }
 
       function renderQuestion(index) {
+        if (state.conceptView) { state.conceptView = false; state.timerPaused = false; syncMainBoxes(); }
         state.currentIndex = Math.max(0, Math.min(index, state.qCount - 1));
         const qid = state.qIds[state.currentIndex];
 
@@ -5560,6 +5930,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       }
 
       function selectOption(metaId) {
+        if (state.conceptView) return;
         const qid = state.qIds[state.currentIndex];
         const qs = state.qState[qid];
         if (state.submitted || qs.locked) return;
@@ -5622,6 +5993,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       }
 
       function saveAndNext() {
+        if (state.conceptView) { goNext(); return; }
         const qid = state.qIds[state.currentIndex];
         const qs = state.qState[qid];
         if (state.submitted) return;
@@ -5680,6 +6052,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       }
 
       function markReviewAndNext() {
+        if (state.conceptView) return;
         const qid = state.qIds[state.currentIndex];
         if (state.submitted) return;
         state.qState[qid].review = true;
@@ -5689,6 +6062,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
       }
 
       function clearResponse() {
+        if (state.conceptView) return;
         const qid = state.qIds[state.currentIndex];
         const qs = state.qState[qid];
         if (state.submitted) return;
@@ -5702,11 +6076,263 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         updateNavigator();
       }
 
-      function goPrev() { goToIndex(state.currentIndex - 1); }
-      function goNext() { goToIndex(state.currentIndex + 1); }
+      /* ═══════════════════════════════════════════════════════════
+         NAVIGATION  (questions AND concept pages)
+         state.seq = [{t:'q', idx} | {t:'c', ci}, …]  in the order you
+         wrote them in TEST_DATA.  goNext/goPrev walk that whole sequence.
+      ═══════════════════════════════════════════════════════════ */
+      function seqPosOfQ(idx) { return state.seq.findIndex(s => s.t === 'q' && s.idx === idx); }
+      function curSeqPos() { return state.conceptView ? state.seqPos : seqPosOfQ(state.currentIndex); }
+      function canStepNext() { return curSeqPos() < state.seq.length - 1; }
+      function canStepPrev() { return curSeqPos() > 0; }
+      function openSeq(p) {
+        const it = state.seq[p];
+        if (!it) return;
+        if (it.t === 'q') renderQuestion(it.idx); else renderConcept(p);
+      }
+      function goNext() { if (canStepNext()) openSeq(curSeqPos() + 1); }
+      function goPrev() { if (canStepPrev()) openSeq(curSeqPos() - 1); }
+      /* question-only stepping (used by the PPT capture so concept pages are skipped) */
+      function goNextQuestion() {
+        if (state.conceptView) {
+          const c = state.concepts[state.seq[state.seqPos].ci];
+          if (c && c.nextQ >= 0) goToIndex(c.nextQ);
+          return;
+        }
+        goToIndex(state.currentIndex + 1);
+      }
       function goToIndex(i) {
         if (i < 0 || i >= state.qCount) return;
         renderQuestion(i);
+      }
+
+      /* ═══════════════════════════════════════════════════════════
+         CONCEPT PAGES
+      ═══════════════════════════════════════════════════════════ */
+      function buildConceptSequence(conceptsList, seqRaw) {
+        state.concepts = conceptsList || [];
+        state.hasConcepts = state.concepts.length > 0;
+        state.conceptView = false;
+        state.timerPaused = false;
+        state.seqPos = 0;
+
+        if (!state.hasConcepts) {
+          state.seq = state.qIds.map((_, i) => ({ t: 'q', idx: i }));
+          return;
+        }
+
+        state.seq = seqRaw.map(s => s.t === 'q'
+          ? { t: 'q', idx: state.qIds.indexOf(s.id) }
+          : { t: 'c', ci: s.ci });
+
+        // for each concept page: which questions does it introduce?
+        state.seq.forEach((it, p) => {
+          if (it.t !== 'c') return;
+          const c = state.concepts[it.ci];
+          let j = p + 1;
+          while (j < state.seq.length && state.seq[j].t === 'c') j++;
+          if (j >= state.seq.length) { c.nextQ = -1; c.count = 0; return; }   // trailing concept page
+          let n = 0, k = j;
+          while (k < state.seq.length && state.seq[k].t === 'q') { n++; k++; }
+          c.nextQ = state.seq[j].idx;
+          c.count = n;
+          c.firstQ = state.seq[j].idx + 1;
+          c.lastQ = state.seq[j + n - 1].idx + 1;
+        });
+      }
+
+      /* show the right main box: question / concept / PDF tutor */
+      function syncMainBoxes() {
+        const qb = $('questionBox'), cb = $('conceptBox'), pp = $('pdfTutorPanel');
+        if (!qb || !cb) return;
+        const pdfOpen = !!pp && pp.style.display === 'flex';
+        // box that is on screen right now (before we switch) – its size is carried over
+        const prev = cb.style.display === 'flex' ? cb : (qb.style.display !== 'none' ? qb : null);
+        qb.style.display = (pdfOpen || state.conceptView) ? 'none' : '';
+        cb.style.display = (!pdfOpen && state.conceptView) ? 'flex' : 'none';
+        // question box and concept box always share the same (resizable) size
+        const next = pdfOpen ? null : (state.conceptView ? cb : qb);
+        if (prev && next && prev !== next) {
+          next.style.width = prev.style.width;
+          next.style.height = prev.style.height;
+        }
+        const tp = $('timerPill');
+        if (tp) tp.classList.toggle('cp-paused', !!state.timerPaused);
+      }
+
+      function cpHexToRgb(hex) {
+        let h = String(hex).replace('#', '');
+        if (h.length === 3) h = h.split('').map(x => x + x).join('');
+        const n = parseInt(h, 16);
+        return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+      }
+
+      function renderConcept(pos) {
+        const it = state.seq[pos];
+        if (!it || it.t !== 'c') return;
+        const c = state.concepts[it.ci];
+
+        state.conceptView = true;
+        state.seqPos = pos;
+        // keep a valid question index for legacy code: the question that follows
+        state.currentIndex = c.nextQ >= 0 ? c.nextQ : Math.max(0, state.qCount - 1);
+        state.timerPaused = !!c.pauseTimer && !state.submitted;
+        c.seen = true;
+
+        try { hideQmarkPopover(); hideInlineHintPanel(); } catch (_) { }
+
+        // accent colour for this page
+        const box = $('conceptBox');
+        const [r, g, b] = cpHexToRgb(c.accent);
+        box.style.setProperty('--cp-accent', c.accent);
+        box.style.setProperty('--cp-rgb', r + ',' + g + ',' + b);
+        box.style.setProperty('--cp-on', (0.299 * r + 0.587 * g + 0.114 * b) > 170 ? '#0b1220' : '#ffffff');
+
+        // content
+        $('cpIcon').textContent = c.icon;
+        $('cpTitle').innerHTML = c.title;
+        const sub = $('cpSub');
+        sub.innerHTML = c.subtitle;
+        sub.style.display = c.subtitle ? '' : 'none';
+        $('cpBody').innerHTML = c.html;
+
+        syncMainBoxes();
+        cpEnhanceBody();
+
+        // header chips
+        const no = state.seq.slice(0, pos + 1).filter(s => s.t === 'c').length;
+        $('cpTag').textContent = '📖 CONCEPT ' + no + '/' + state.concepts.length;
+        let cover;
+        if (c.count === 0) cover = 'Wrap-up';
+        else if (c.count === 1) cover = 'For Q' + c.firstQ;
+        else cover = 'For Q' + c.firstQ + ' – Q' + c.lastQ + ' · ' + c.count + ' questions';
+        const words = ($('cpBody').textContent.trim().match(/\S+/g) || []).length;
+        const imgs = $('cpBody').querySelectorAll('img').length;
+        const mins = Math.max(1, Math.round(words / 170 + imgs * 0.2));
+        $('cpMeta').textContent = cover + ' · ≈ ' + mins + ' min read' + (c.pauseTimer ? ' · ⏸ timer paused' : '');
+
+        cpUpdateFooter(pos);
+        updateNavigator();
+
+        // start at the top
+        const sc = $('cpScroll');
+        sc.scrollTop = 0;
+        if (window.scrollY > 0 && window.innerWidth < 768) window.scrollTo(0, 0);
+        cpProgress();
+      }
+
+      function cpUpdateFooter(pos) {
+        const nxt = state.seq[pos + 1], prv = state.seq[pos - 1];
+        const nb = $('cpNextBtn'), pb = $('cpPrevBtn');
+
+        pb.disabled = !prv;
+        pb.textContent = !prv ? '◀ Previous'
+          : prv.t === 'q' ? '◀ Back to Q' + (prv.idx + 1) : '◀ Previous concept';
+
+        nb.disabled = false;
+        if (!nxt) {
+          nb.dataset.act = 'submit';
+          nb.textContent = state.submitted ? 'End of test' : 'Submit test ✔';
+          nb.disabled = !!state.submitted;
+        } else if (nxt.t === 'q') {
+          nb.dataset.act = 'next';
+          nb.textContent = (state.submitted ? 'Q' : 'Start Q') + (nxt.idx + 1) + ' ▶';
+        } else {
+          nb.dataset.act = 'next';
+          nb.textContent = 'Next concept ▶';
+        }
+      }
+
+      function cpPrimary() {
+        const nb = $('cpNextBtn');
+        if (nb && nb.dataset.act === 'submit') { $('submitBtn').click(); return; }
+        goNext();
+      }
+
+      /* tables scroll sideways, images zoom on click */
+      function cpEnhanceBody() {
+        const body = $('cpBody');
+        body.querySelectorAll('table').forEach(t => {
+          if (t.parentElement && t.parentElement.classList.contains('cp-tablewrap')) return;
+          const w = document.createElement('div');
+          w.className = 'cp-tablewrap cp-scroll-x';
+          t.parentNode.insertBefore(w, t);
+          w.appendChild(t);
+        });
+        body.querySelectorAll('img').forEach(img => {
+          img.addEventListener('click', () => cpOpenLightbox(img.currentSrc || img.src, img.alt));
+          img.addEventListener('error', () => {
+            console.error('❌ Concept image not found:', img.getAttribute('src'));
+            img.classList.add('cp-broken');
+            img.alt = '⚠ image not found: ' + img.getAttribute('src');
+          });
+        });
+      }
+
+      function cpOpenLightbox(src, alt) {
+        let lb = document.getElementById('cpLightbox');
+        if (!lb) {
+          lb = document.createElement('div');
+          lb.id = 'cpLightbox';
+          lb.innerHTML = '<img alt="">';
+          lb.addEventListener('click', () => lb.classList.remove('open'));
+          document.body.appendChild(lb);
+          window.addEventListener('keydown', (e) => { if (e.key === 'Escape') lb.classList.remove('open'); });
+        }
+        const im = lb.querySelector('img');
+        im.src = src; im.alt = alt || '';
+        lb.classList.add('open');
+      }
+
+      function cpProgress() {
+        const bar = $('cpReadBar'), sc = $('cpScroll'), box = $('conceptBox');
+        if (!bar || !sc || !box || !state.conceptView) return;
+        let p = 0;
+        if (sc.scrollHeight > sc.clientHeight + 4 && getComputedStyle(sc).overflowY !== 'visible') {
+          p = sc.scrollTop / (sc.scrollHeight - sc.clientHeight);
+        } else {
+          const rc = box.getBoundingClientRect();
+          const h = rc.height - window.innerHeight;
+          p = h > 0 ? -rc.top / h : 1;
+        }
+        bar.style.width = (Math.max(0, Math.min(1, p)) * 100) + '%';
+      }
+
+      function cpScrollBy(dy) {
+        const sc = $('cpScroll');
+        if (sc.scrollHeight > sc.clientHeight + 4 && getComputedStyle(sc).overflowY !== 'visible') {
+          sc.scrollBy({ top: dy, behavior: 'smooth' });
+        } else {
+          window.scrollBy({ top: dy, behavior: 'smooth' });
+        }
+      }
+
+      /* one-time wiring for the concept box (buttons, scroll bar, swipe) */
+      function bindConceptUi() {
+        $('cpPrevBtn').onclick = () => goPrev();
+        $('cpNextBtn').onclick = () => cpPrimary();
+
+        const box = $('conceptBox');
+        if (!box || box._cpBound) return;
+        box._cpBound = true;
+
+        $('cpScroll').addEventListener('scroll', cpProgress, { passive: true });
+        window.addEventListener('scroll', cpProgress, { passive: true });
+
+        // swipe left/right between pages (ignored inside scrollable tables)
+        let sx = 0, sy = 0, on = false;
+        box.addEventListener('touchstart', (e) => {
+          if (e.target.closest && e.target.closest('.cp-scroll-x, pre')) { on = false; return; }
+          const t = e.touches[0]; sx = t.clientX; sy = t.clientY; on = true;
+        }, { passive: true });
+        box.addEventListener('touchend', (e) => {
+          if (!on) return; on = false;
+          const t = e.changedTouches[0];
+          const dx = t.clientX - sx, dy = t.clientY - sy;
+          if (Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * 0.7) return;
+          if (dx < 0 && canStepNext()) animateQuestionSwipe('next', goNext);
+          else if (dx > 0 && canStepPrev()) animateQuestionSwipe('prev', goPrev);
+        }, { passive: true });
       }
       /* ✅ Swipe Left/Right to change question (classic transition) */
       let swipeStartX = 0;
@@ -5718,7 +6344,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         if (swipeLocked) return;
         swipeLocked = true;
 
-        const box = document.getElementById("questionBox");
+        let box = state.conceptView ? document.getElementById("conceptBox") : document.getElementById("questionBox");
         if (!box) { goFn(); swipeLocked = false; return; }
 
         box.classList.add("q-swipe-anim");
@@ -5729,7 +6355,11 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
         setTimeout(() => {
           // change question
+          box.classList.remove("q-out-left", "q-out-right");
           goFn();
+          // the visible box may have switched (question <-> concept page)
+          box = state.conceptView ? document.getElementById("conceptBox") : document.getElementById("questionBox");
+          box.classList.add("q-swipe-anim");
 
           // IN prepare
           box.classList.remove("q-out-left", "q-out-right");
@@ -5814,7 +6444,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
           if (dx <= -TH) {
             // swipe left -> Next
-            if (state.currentIndex < state.qCount - 1) {
+            if (canStepNext()) {
               animateQuestionSwipe("next", goNext);
             } else {
               // Edge bounce — already on last question
@@ -5824,7 +6454,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             }
           } else if (dx >= TH) {
             // swipe right -> Prev
-            if (state.currentIndex > 0) {
+            if (canStepPrev()) {
               animateQuestionSwipe("prev", goPrev);
             } else {
               // Edge bounce — already on first question
@@ -5843,6 +6473,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         $('saveNextBtn').onclick = saveAndNext;
         $('reviewNextBtn').onclick = markReviewAndNext;
         $('clearBtn').onclick = clearResponse;
+        bindConceptUi();
 
         // ── PDF Tutor toggle ──
         const pdfTutorBtn  = $('pdfTutorToggleBtn');
@@ -5855,6 +6486,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           pdfTutorBtn.onclick = () => {
             pdfPanel.style.display    = 'flex';
             questionBox.style.display = 'none';
+            syncMainBoxes();
             pdfTutorBtn.style.background = 'rgba(59, 130, 246,.2)';
             pdfTutorBtn.style.borderColor = 'rgba(59, 130, 246,.7)';
           };
@@ -5863,6 +6495,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           pdfCloseBtn.onclick = () => {
             pdfPanel.style.display   = 'none';
             questionBox.style.display = '';
+            syncMainBoxes();
             if (pdfTutorBtn) {
               pdfTutorBtn.style.background = '';
               pdfTutorBtn.style.borderColor = '';
@@ -5919,7 +6552,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
           }
 
           // Re-render current question to reset colors
-          renderQuestion(state.currentIndex);
+          if (!state.conceptView) renderQuestion(state.currentIndex);
         };
 
 
@@ -6000,6 +6633,19 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
         if (['input', 'textarea', 'select'].includes(tag)) return;
 
+        // ── Concept page showing: arrows/Enter navigate, ↑↓ scroll, 1-4/0 ignored ──
+        if (state.conceptView) {
+          const lb = document.getElementById('cpLightbox');
+          if (lb && lb.classList.contains('open')) return;
+          if (e.key === 'Enter' || e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
+          else if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
+          else if (e.key === 'ArrowDown') { e.preventDefault(); cpScrollBy(110); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); cpScrollBy(-110); }
+          else if (e.key === 'PageDown') { e.preventDefault(); cpScrollBy(Math.round(window.innerHeight * 0.7)); }
+          else if (e.key === 'PageUp') { e.preventDefault(); cpScrollBy(-Math.round(window.innerHeight * 0.7)); }
+          return;
+        }
+
         if (e.key >= '1' && e.key <= '4') {
           selectOption(e.key);
         }
@@ -6057,7 +6703,7 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         stopTimer();
         tickTimerUI();
         state.timerHandle = setInterval(() => {
-          if (state.submitted) return;
+          if (state.submitted || state.timerPaused) return;
           state.timeLeftSec = Math.max(0, state.timeLeftSec - 1);
           tickTimerUI();
           if (state.timeLeftSec <= 0) {
@@ -7004,13 +7650,56 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
         setTimeout(() => startTestFromPortal(sel), 350);
       })();
 
+      /* ── CONCEPT PAGES ───────────────────────────────────────────
+         An entry in TEST_DATA is a CONCEPT PAGE (not a question) when it has
+             type: "concept"   (also "conceptPage")   or a   conceptHtml   field.
+         Fields:  title, subtitle, icon, accent, html, pauseTimer            */
+      function isConceptItem(item) {
+        if (!item || typeof item !== 'object') return false;
+        const t = String(item.type || '').toLowerCase().replace(/[\s_-]/g, '');
+        return t === 'concept' || t === 'conceptpage' ||
+               item.conceptHtml !== undefined || item.concepthtml !== undefined;
+      }
+
+      function normalizeConcept(item, key) {
+        const html = item.html ?? item.conceptHtml ?? item.concepthtml ?? item.content ?? item.concepttext ?? item.text ?? "";
+        let accent = String(item.accent || item.color || '#3b82f6').trim();
+        if (!/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(accent)) accent = '#3b82f6';
+        return {
+          key: Number(key),
+          title: item.title || 'Concept',
+          subtitle: item.subtitle || '',
+          icon: item.icon || '💡',
+          accent: accent,
+          html: String(html),
+          pauseTimer: !!item.pauseTimer,
+          seen: false,
+          nextQ: -1, firstQ: 0, lastQ: 0, count: 0
+        };
+      }
+
       function convertTestData(testData) {
         const questionsObj = {};
         const explanationsObj = {};
+        const conceptsList = [];   // concept pages, in order
+        const seqRaw = [];         // order of everything: {t:'q', id} | {t:'c', ci}
 
-        Object.keys(testData).forEach((k) => {
-          const id = Number(k);
+        const keys = Object.keys(testData);
+        const hasConcepts = keys.some(k => isConceptItem(testData[k]));
+        let nextId = 0;
+
+        keys.forEach((k) => {
           const item = testData[k] || {};
+
+          if (isConceptItem(item)) {
+            conceptsList.push(normalizeConcept(item, k));
+            seqRaw.push({ t: 'c', ci: conceptsList.length - 1 });
+            return;
+          }
+
+          // When concept pages are mixed in, questions are renumbered 1..N
+          // so ids stay contiguous (Q1, Q2, Q3 … never skip a number).
+          const id = hasConcepts ? ++nextId : Number(k);
 
           questionsObj[id] = {
             text: item.questext || "",
@@ -7023,9 +7712,11 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             text: item.exptext || "",
             image: item.expimage || ""
           };
+
+          seqRaw.push({ t: 'q', id: id });
         });
 
-        return { questionsObj, explanationsObj };
+        return { questionsObj, explanationsObj, conceptsList, seqRaw };
       }
       function showMouseHelp(e) {
         if (IS_TOUCH) return;
@@ -8052,6 +8743,8 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
 
             SHOTS.length = 0;
 
+            // concept page on screen? jump to the question after it so capture starts on a question
+            if (typeof state !== 'undefined' && state.conceptView) goToIndex(state.currentIndex);
             // ensure first question exists
             let currentText = getQuestionText();
             if (!currentText) {
@@ -8068,9 +8761,9 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
               visited.add(currentText);
               await captureScreen();
 
-              if (typeof goNext !== "function") break;
+              if (typeof goNextQuestion !== "function") break;
 
-              goNext();
+              goNextQuestion();
               const changed = await waitForQuestionChange(currentText);
 
               if (!changed) break;
@@ -8759,6 +9452,35 @@ button, .btn, .topic-btn, .subtopic-btn, .bm-btn, .nav-toggle-icon, #navToggleIc
             background: ${box} !important;
             border-color: rgba(128,128,128,0.25) !important;
             backdrop-filter: none !important;
+          }
+          /* ── Dialog boxes (Leave the Test / Back to Portal / Script File Not Found) ── */
+          html #backConfirmBox, html #jsErrorBoxInner {
+            background: ${box} !important;
+            background-image: none !important;
+            border-color: color-mix(in srgb, ${txt} 28%, ${box}) !important;
+          }
+          html #backConfirmBox .bc-step,
+          html #backConfirmBox .bc-path .bc-node,
+          html #bcStayBtn,
+          html #jsErrorBox .err-close-btn,
+          html #jsErrorBox .err-filename,
+          html #jsErrorBox .err-icon,
+          html #jsErrorBox .err-tip code {
+            background: color-mix(in srgb, ${txt} 9%, ${box}) !important;
+            background-image: none !important;
+            border-color: color-mix(in srgb, ${txt} 28%, ${box}) !important;
+            color: ${txt} !important;
+          }
+          html #backConfirmBox .bc-path .bc-node.bc-active,
+          html #bcGoBtn:not(.danger) {
+            background: color-mix(in srgb, ${txt} 24%, ${box}) !important;
+            background-image: none !important;
+            border-color: color-mix(in srgb, ${txt} 40%, ${box}) !important;
+            color: ${txt} !important;
+            box-shadow: none !important;
+          }
+          html #bcStayBtn:hover, html #jsErrorBox .err-close-btn:hover {
+            background: color-mix(in srgb, ${txt} 16%, ${box}) !important;
           }
           /* ── Close button: always visible using theme text color ── */
           .btn-close {
@@ -14739,6 +15461,7 @@ body.qa-only-mode #qaToolbarRow {
         cs.textContent = '';
       }
 
+      if (typeof state !== 'undefined' && state.conceptView) goToIndex(state.currentIndex);
       let curText = getQText();
       if (!curText) { statusEl.textContent = '⚠️ No question visible. Open a test first.'; return; }
 
@@ -14748,8 +15471,8 @@ body.qa-only-mode #qaToolbarRow {
         visited.add(curText);
         statusEl.textContent = `📸 Capturing Q${visited.size}…`;
         await shot();
-        if (typeof goNext !== 'function') break;
-        goNext();
+        if (typeof goNextQuestion !== 'function') break;
+        goNextQuestion();
         const changed = await waitChange(curText);
         if (!changed) break;
         curText = getQText();
@@ -18424,6 +19147,10 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     --gp-box-img: none;
     --gp-box1-tint: #060d1c;
     --gp-box2-tint: #050b17;
+    --gp-tx-06: rgba(241,245,249,.07);
+    --gp-tx-12: rgba(241,245,249,.14);
+    --gp-tx-25: rgba(241,245,249,.28);
+    --gp-accent-fg: #ffffff;
   }
 
   /* ---- Root scale (cascades through Bootstrap's rem-based sizing too) ---- */
@@ -18508,6 +19235,66 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
   *, *::before, *::after{
     color: var(--gp-text) !important;
   }
+
+  /* ---- Dialog boxes: "Leave the Test? / Back to Portal?" (#backConfirmBox)
+     and "Script File Not Found" (#jsErrorBoxInner). These were missing from
+     the box list above, so they kept their hardcoded navy / red colours. ---- */
+  #backConfirmBox, #jsErrorBoxInner{
+    background-color: var(--gp-box1) !important;
+    background-image:
+      linear-gradient(135deg, var(--gp-box1-tint), var(--gp-box2-tint)),
+      var(--gp-box-img) !important;
+    background-size: cover, cover !important;
+    background-position: center center, center center !important;
+    background-repeat: no-repeat, no-repeat !important;
+    background-attachment: fixed, fixed !important;
+    border-color: var(--gp-boxb) !important;
+    box-shadow: 0 30px 70px rgba(0,0,0,.60), 0 0 0 1px var(--gp-tx-06) inset !important;
+  }
+
+  /* back-confirm: step pill, breadcrumb, buttons */
+  #backConfirmBox .bc-step{
+    background: var(--gp-tx-06) !important; border-color: var(--gp-boxb) !important;
+  }
+  #backConfirmBox .bc-sub{ opacity: .78; }
+  #backConfirmBox .bc-path .bc-node{
+    background: var(--gp-tx-06) !important; border-color: var(--gp-tx-12) !important; opacity: .72;
+  }
+  #backConfirmBox .bc-path .bc-node.bc-active{
+    background: var(--gp-accent2) !important; border-color: var(--gp-tx-25) !important;
+    color: var(--gp-accent-fg) !important; opacity: 1;
+  }
+  #backConfirmBox .bc-path .bc-arrow{ opacity: .4; }
+  #bcStayBtn, #jsErrorBox .err-close-btn{
+    background: var(--gp-tx-06) !important; border-color: var(--gp-boxb) !important;
+    color: var(--gp-text) !important;
+  }
+  #bcStayBtn:hover, #jsErrorBox .err-close-btn:hover{
+    background: var(--gp-tx-12) !important; border-color: var(--gp-tx-25) !important;
+  }
+  #bcGoBtn{
+    background-image: linear-gradient(135deg, var(--gp-accent2), var(--gp-boxb)) !important;
+    border-color: var(--gp-tx-25) !important;
+    color: var(--gp-accent-fg) !important;
+    box-shadow: 0 6px 18px rgba(0,0,0,.35) !important;
+  }
+  /* destructive action (leave test / leave site) stays red on purpose */
+  #bcGoBtn.danger{
+    background-image: linear-gradient(135deg, rgba(220,38,38,.9), rgba(153,27,27,.95)) !important;
+    border-color: rgba(239,68,68,.55) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 18px rgba(239,68,68,.28) !important;
+  }
+
+  /* script-not-found: icon, filename chip, code chip, hint text */
+  #jsErrorBox .err-icon{
+    background: var(--gp-tx-06) !important; border-color: var(--gp-boxb) !important; box-shadow: none !important;
+  }
+  #jsErrorBox .err-filename{
+    background: var(--gp-tx-06) !important; border-color: var(--gp-boxb) !important;
+  }
+  #jsErrorBox .err-tip code{ background: var(--gp-tx-12) !important; }
+  #jsErrorBox .err-subtitle, #jsErrorBox .err-tip{ opacity: .72; }
 
   /* ═══════════════ Compact widgets embedded in the left Control Panel ═══════════════ */
   .gcp-appear-label{
@@ -18778,6 +19565,16 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     root.style.setProperty('--gp-accent2', shade(state.box, 0.25));
 
     root.style.setProperty('--gp-text', state.text);
+
+    // translucent tints of the text colour + readable foreground for accent-filled buttons
+    root.style.setProperty('--gp-tx-06', withAlpha(state.text, 0.07));
+    root.style.setProperty('--gp-tx-12', withAlpha(state.text, 0.14));
+    root.style.setProperty('--gp-tx-25', withAlpha(state.text, 0.28));
+    (function(){
+      var m = /rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/.exec(shade(state.box, 0.25));
+      var lum = m ? (0.299*(+m[1]) + 0.587*(+m[2]) + 0.114*(+m[3])) / 255 : 0;
+      root.style.setProperty('--gp-accent-fg', lum > 0.6 ? '#0b1020' : '#ffffff');
+    })();
 
     // ---- background image layer ----
     // Visibility slider: 100 = image fully shows (tint alpha low), 0 = solid colour (tint alpha 1).
