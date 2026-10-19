@@ -1,13 +1,10 @@
 I am uploading a textbook chapter as a PDF and the sample file concept-demo.js. Convert the whole PDF into one .js file in exactly the same window.TEST_DATA format as concept-demo.js, following the PDF's own order strictly.
 
 ORDER
-0. ENTRY 1 = CLASS OVERVIEW PAGE (before everything, before any concept page or question). Make it a type:"concept" entry with pauseTimer:true, a fitting icon and accent colour, and a title like "<Chapter name> — Class Overview". Build it only from what is actually in the PDF, using the cp-* toolkit. It must contain:
-   - a cp-lead sentence saying what this class covers and why it matters for the exam
-   - cp-stats tiles with the real counts: concept pages, key formulas/rules, worked examples, exercises, total questions, and an estimated time
-   - a cp-timeline roadmap listing every concept topic, worked-example block and exercise in the exact order of the output file
-   - a cp-grid of cp-cards ("what you will be able to do"), one per major formula, rule, trick or trap family
-   - a cp-note exam on why the chapter matters, a cp-note tip on how to use the pages, and cp-chips with the topic tags
-   Do not put images in it. All counts must match the final file. This page is extra and does not count as a PDF concept page.
+0. ENTRY 1 = FIRST PAGE (before everything, before any concept page or question). Make it a type:"concept" entry with pauseTimer:true, a fitting icon and accent colour, and the title set to the chapter name ONLY (for example "Polynomials"). Do NOT write the word "Overview", "Class Overview" or any subtitle in the title. Build it only from what is actually in the PDF, using the cp-* toolkit. It must contain ONLY:
+   - one cp-divider titled "What you will be able to do"
+   - a cp-grid of cp-cards, one per major formula, rule, trick or trap family in the chapter
+   Nothing else on this page: no cp-lead, no cp-stats tiles, no cp-timeline roadmap, no cp-note, no cp-chips, no images. This page is extra and does not count as a PDF concept page.
 1. Then all concept pages that appear before the first exercise. Each is a type:"concept" entry using the cp-* toolkit classes, with pauseTimer:true, a fitting icon and accent colour, and a good-level, exam-oriented explanation of every formula, rule, trick and trap in the PDF.
 2. Then every worked example of the PDF as a question (no solutions).
 3. Then every single question of the first exercise.
@@ -33,6 +30,9 @@ FIGURES
 - Also add a small style-injection snippet at the top of the file (img[src$=".jpg"] with !important) so question images are capped too.
 - At the very end of the .js file, under a comment line such as FIGURE PROMPTS, write one separate line for every image in the form "N.jpg: ...". Each line is a complete, self-contained, detailed description I can copy straight into ChatGPT. It must state the exact shape, every label and dimension with units, relative positions, and the parts to be shaded or dotted. It must ask for a clean, most beautiful, colorful 3D diagram with line art and no extra text or answers.
 - Also add a list of which image goes with which entry number (question or concept), both in the file and in your reply.
+
+STYLE
+- Do NOT use the cp-hl highlight class anywhere. To emphasise a word in concept pages, use <b class="cp-green">word</b> instead.
 
 CHECKS AND DELIVERY
 - Check that the JS has no syntax errors and that the entry counts and image counts are correct (entry 1 is the overview page).
