@@ -1125,6 +1125,21 @@
       line-height: 1.45;
       animation: fadeInTl .35s ease;
     }
+
+    /* ════════ CONCEPT-PAGE TRANSLATION (same tags / font / weight as the English block) ════════ */
+    #conceptBox .cp-tl:not(.cp-tl-sib) { margin: .35em 0 .2em; }
+    #conceptBox .cp-tl {
+      padding-left: 10px; border-left: 3px solid rgba(var(--cp-rgb, 59,130,246), .65);
+      color: inherit; font: inherit; font-style: inherit; animation: fadeInTl .35s ease;
+    }
+    #conceptBox .cp-tl-sib { margin-top: -4px; }
+    #conceptBox .cp-divider.cp-tl { border-left: 0; padding-left: 0; opacity: .9; }
+    #conceptBox #cpTitle .cp-tl, #conceptBox #cpSub .cp-tl { border-left: 0; padding-left: 0; }
+    #conceptBox .cp-tl-status {
+      margin-left: auto; font: 700 .72rem 'Inter', system-ui, sans-serif; letter-spacing: .6px;
+      padding: 3px 10px; border-radius: 999px; color: #93c5fd;
+      background: rgba(59,130,246,.14); border: 1px solid rgba(59,130,246,.4);
+    }
     /* Language selector pill */
     #dualLangBtn {
       position: relative;
@@ -6293,6 +6308,7 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
 
             dd.classList.remove('open');
             applyDualLangToCurrentQuestion();
+            try { applyDualLangToConcept(); } catch (_) { }
             // Pre-translate current + upcoming questions immediately after a lang change
             if (lang) preTranslateUpcoming(state.currentIndex);
             // If battle is currently active, re-translate the displayed battle question too
@@ -6311,6 +6327,166 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
           });
         });
       }
+
+
+      /* ══════════════════════════════════════════════════════════════
+         CONCEPT-PAGE TRANSLATION
+         Every text run of the concept page (title, paragraphs, list items,
+         table cells, cards, notes, steps, chips …) is translated and put
+         right under the English text. Inline tags (<b>, <u>, <i>, spans with
+         colour classes …) are carried over through {n} placeholders, and
+         whole blocks (p, h2-h4, blockquote, divider) are re-created with the
+         SAME tag + classes, so font, size, weight and underline look identical.
+         Opt-out: translate="no" or class="notranslate" on any element.
+      ══════════════════════════════════════════════════════════════ */
+      window._cpTlTok = window._cpTlTok || 0;
+      const CP_INLINE = new Set(['A','B','STRONG','I','EM','U','S','SPAN','MARK','SUB','SUP','SMALL','CODE','ABBR','CITE','Q','KBD','FONT','BR','DEL','INS','BDI','TIME','VAR','IMG','SVG']);
+      const CP_SKIP = new Set(['SCRIPT','STYLE','SVG','CANVAS','VIDEO','AUDIO','IFRAME','NOSCRIPT','PRE','TEXTAREA','IMG','INPUT','BUTTON']);
+
+      function cpTlClear() {
+        document.querySelectorAll('#conceptBox .cp-tl, #conceptBox .cp-tl-status').forEach(n => n.remove());
+      }
+      function cpTlStatus(on) {
+        const top = document.querySelector('#conceptBox .cp-top');
+        if (!top) return;
+        let st = top.querySelector('.cp-tl-status');
+        if (!on) { if (st) st.remove(); return; }
+        if (!st) { st = document.createElement('span'); st.className = 'cp-tl-status'; top.appendChild(st); }
+        st.textContent = '🌐 Translating…';
+      }
+
+      function cpTlCollect(root) {
+        const runs = [];
+        const walk = (parent) => {
+          let run = [];
+          const flush = () => { if (run.length) { runs.push({ parent, nodes: run }); run = []; } };
+          const pcs = getComputedStyle(parent);
+          const pFlex = /flex|grid/.test(pcs.display);
+          const flatten = /^(H[1-6]|SUMMARY)$/.test(parent.tagName);
+          for (const n of parent.childNodes) {
+            if (n.nodeType === 3) { run.push(n); continue; }
+            if (n.nodeType !== 1) continue;
+            if (n.classList.contains('cp-tl') || n.classList.contains('cp-tl-status')) { flush(); continue; }
+            const T = n.tagName.toUpperCase();
+            const cs = getComputedStyle(n);
+            if (cs.display === 'none') { flush(); continue; }
+            let inl = false;
+            if (CP_INLINE.has(T)) {
+              if (T === 'BR' || cs.display.indexOf('inline') === 0) inl = true;
+              else if (pFlex && flatten) inl = true;
+            }
+            if (inl) { run.push(n); continue; }
+            flush();
+            if (CP_SKIP.has(T)) continue;
+            if (n.getAttribute('translate') === 'no' || n.classList.contains('notranslate')) continue;
+            walk(n);
+          }
+          flush();
+        };
+        walk(root);
+        return runs;
+      }
+
+      function cpTlSerialize(nodes) {
+        const saved = [];
+        const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const ph = html => { saved.push(html); return '{' + (saved.length - 1) + '}'; };
+        const ser = (node) => {
+          if (node.nodeType === 3) return esc(node.nodeValue.replace(/\s+/g, ' '));
+          if (node.nodeType !== 1) return '';
+          const T = node.tagName.toUpperCase();
+          if (T === 'BR' || T === 'IMG' || T === 'SVG' || T === 'CODE' ||
+              node.classList.contains('cp-frac') || node.classList.contains('cp-key') ||
+              node.getAttribute('translate') === 'no' || node.classList.contains('notranslate')) {
+            return ph(node.outerHTML);
+          }
+          const shell = node.cloneNode(false).outerHTML;
+          const close = '</' + node.tagName.toLowerCase() + '>';
+          const open = shell.slice(0, shell.length - close.length);
+          let inner = '';
+          node.childNodes.forEach(c => { inner += ser(c); });
+          const o = ph(open);
+          const c2 = ph(close);
+          return o + inner + c2;
+        };
+        let text = '';
+        nodes.forEach(n => { text += ser(n); });
+        return { text: text.trim(), saved };
+      }
+
+      function cpTlWorthIt(text) {
+        const bare = text.replace(/\{\d+\}/g, '').replace(/&\w+;/g, ' ').replace(/\s+/g, '');
+        if (!/[A-Za-z]{3,}/.test(bare)) return false;
+        const alpha = (bare.match(/[A-Za-z]/g) || []).length;
+        return alpha / bare.length > 0.5;
+      }
+
+      function cpTlInsert(job, tr, lang) {
+        const { parent, nodes, saved } = job;
+        const first = nodes[0], last = nodes[nodes.length - 1];
+        if (!last || !last.parentNode) return;
+        const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        let html = esc(tr).replace(/\{\s*(\d+)\s*\}/g, (_, i) => saved[+i] !== undefined ? saved[+i] : '');
+        if (!html.replace(/<[^>]*>/g, '').trim()) return;
+
+        const isBlank = n => n.nodeType === 3 && !n.nodeValue.trim();
+        const sig = nodes.filter(n => !isBlank(n));
+        const parentSig = [...parent.childNodes].filter(n => !isBlank(n) && !(n.nodeType === 1 && n.classList.contains('cp-tl')));
+        const whole = sig.length > 0 && parentSig.length === sig.length;
+        const clonable = /^(P|H[1-6]|BLOCKQUOTE)$/.test(parent.tagName) || parent.classList.contains('cp-divider');
+
+        let el;
+        if (whole && clonable && parent.parentNode && !parent.id) {
+          el = parent.cloneNode(false);              // same tag + same classes = same font style
+          el.classList.add('cp-tl', 'cp-tl-sib');
+          el.innerHTML = html;
+          parent.parentNode.insertBefore(el, parent.nextSibling);
+        } else {
+          el = document.createElement('div');        // inherits the font of its parent block
+          el.className = 'cp-tl';
+          el.innerHTML = html;
+          last.parentNode.insertBefore(el, last.nextSibling);
+        }
+        el.setAttribute('lang', lang);
+        if (lang === 'ar' || lang === 'ur') el.setAttribute('dir', 'rtl');
+      }
+
+      async function applyDualLangToConcept() {
+        const tok = ++window._cpTlTok;
+        cpTlClear();
+        const lang = state.dualLang;
+        if (!lang || !state.conceptView) return;
+        const pos = state.seqPos;
+
+        const roots = ['cpTitle', 'cpSub', 'cpBody'].map(id => document.getElementById(id))
+          .filter(r => r && r.style.display !== 'none');
+        const jobs = [];
+        roots.forEach(root => {
+          cpTlCollect(root).forEach(run => {
+            const { text, saved } = cpTlSerialize(run.nodes);
+            if (text && cpTlWorthIt(text)) jobs.push({ parent: run.parent, nodes: run.nodes, text, saved });
+          });
+        });
+        if (!jobs.length) return;
+
+        cpTlStatus(true);
+        const alive = () => tok === window._cpTlTok && state.conceptView && state.seqPos === pos && state.dualLang === lang;
+        let idx = 0;
+        const worker = async () => {
+          while (idx < jobs.length) {
+            if (!alive()) return;
+            const j = jobs[idx++];
+            try {
+              const tr = await tlFetch(j.text, lang);
+              if (!alive()) return;
+              if (tr) cpTlInsert(j, tr, lang);
+            } catch (_) { }
+          }
+        };
+        await Promise.all(Array.from({ length: Math.min(6, jobs.length) }, worker));
+        if (tok === window._cpTlTok) cpTlStatus(false);
+      }
+      window.applyDualLangToConcept = applyDualLangToConcept;
 
       function selectOption(metaId) {
         if (state.conceptView) return;
@@ -6700,6 +6876,8 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
 
         syncMainBoxes();
         cpEnhanceBody();
+        // 🌐 translate this concept page too (same tags / fonts as the English text)
+        if (state.dualLang) { try { applyDualLangToConcept(); } catch (e) { console.error('concept translate', e); } }
 
         // header chips
         const no = state.seq.slice(0, pos + 1).filter(s => s.t === 'c').length;
