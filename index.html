@@ -4534,13 +4534,13 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
   <div id="jsErrorBox">
     <div id="jsErrorBoxInner">
       <div class="err-icon">📂</div>
-      <div class="err-title">Script File Not Found</div>
-      <div class="err-subtitle">The following file could not be loaded:</div>
+      <div class="err-title" id="jsErrorTitle">Script File Not Found</div>
+      <div class="err-subtitle" id="jsErrorSubtitle">The following file could not be loaded:</div>
       <div class="err-filename">
         <span class="file-icon">📄</span>
         <span id="jsErrorFilename">unknown.js</span>
       </div>
-      <div class="err-tip">
+      <div class="err-tip" id="jsErrorTip">
         Make sure the <strong style="color:rgba(251,191,36,.85);">.js</strong> file exists in the
         <code style="background:rgba(255,255,255,.08);padding:.1rem .35rem;border-radius:6px;font-size:.92em;">scripts/</code>
         folder and the filename exactly matches the test key (case-sensitive).
@@ -5539,15 +5539,46 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
         // Reset globals expected from external scripts
         window.questions = undefined;
         window.explanations = undefined;
+        window.TEST_DATA = undefined;   // never reuse the previous test's data
 
         // Load question + explanation scripts based on fileKey
         const qFile = `scripts/${sel.fileKey}.js`;
 
+        const showJsError = (kind, detail) => {
+          const box  = document.getElementById('jsErrorBox');
+          const fnEl = document.getElementById('jsErrorFilename');
+          const tEl  = document.getElementById('jsErrorTitle');
+          const sEl  = document.getElementById('jsErrorSubtitle');
+          const tipEl= document.getElementById('jsErrorTip');
+          if (kind === 'missing') {
+            if (tEl) tEl.textContent = 'Script File Not Found';
+            if (sEl) sEl.textContent = 'The following file could not be loaded:';
+            if (fnEl) fnEl.textContent = qFile;
+            if (tipEl) tipEl.innerHTML = 'Make sure the <strong style="color:rgba(251,191,36,.85);">.js</strong> file exists in the <code style="background:rgba(255,255,255,.08);padding:.1rem .35rem;border-radius:6px;font-size:.92em;">scripts/</code> folder and the filename exactly matches the test key (case-sensitive).';
+          } else {
+            if (tEl) tEl.textContent = kind === 'nodata' ? 'TEST_DATA Missing' : 'Script Loaded, But Failed To Start';
+            if (sEl) sEl.textContent = kind === 'nodata'
+              ? 'The file loaded, but it did not define window.TEST_DATA:'
+              : 'The file loaded fine, but the portal hit an error while starting it:';
+            if (fnEl) fnEl.textContent = qFile;
+            if (tipEl) tipEl.textContent = detail || '';
+          }
+          if (box) box.classList.add('show');
+        };
+
+        // Step 1: fetch the file
         try {
           await loadScript(qFile);
+        } catch (err) {
+          console.error(err);
+          showJsError('missing');
+          return;
+        }
 
+        // Step 2: use the data (errors here are NOT a missing file)
+        try {
           if (!window.TEST_DATA) {
-            alert('TEST_DATA not found in loaded script.');
+            showJsError('nodata', 'Check the file for a syntax error (open DevTools → Console) and that it starts with window.TEST_DATA = { ... }.');
             return;
           }
 
@@ -5557,11 +5588,7 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
           showView('engine');
         } catch (err) {
           console.error(err);
-          // ✅ Beautiful error box showing the exact missing filename
-          const box = document.getElementById('jsErrorBox');
-          const fnEl = document.getElementById('jsErrorFilename');
-          if (fnEl) fnEl.textContent = qFile;
-          if (box) box.classList.add('show');
+          showJsError('runtime', (err && err.message ? err.message : String(err)));
         }
 
       }
@@ -5635,7 +5662,7 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
         renderQuestion(0);
         if (state.seq[0] && state.seq[0].t === 'c') {
           // test STARTS with a concept page → Q1 isn't 'visited' yet
-          state.qState[state.qIds[0]].visited = false;
+          if (state.qIds.length && state.qState[state.qIds[0]]) state.qState[state.qIds[0]].visited = false;
           renderConcept(0);
         }
         state.startedAt = Date.now(); // ✅ ADD
