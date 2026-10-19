@@ -32,6 +32,13 @@ ORDER
 5. Then all questions of the next exercise, and so on until the last exercise.
 No concept, worked example or exercise question may be skipped, merged or invented. Do not add questions of your own.
 
+TRANSLATION-READY CONCEPT PAGES (index.html translates them automatically)
+- When the Translate button is on, index.html translates EVERY concept page (entry 1 included: title, lead, stats, roadmap, cards, notes, steps, tables, chips) and shows the translation right under each English block, with the same tag, font, size, weight, bold and underline as the English text. Do not add any translated text or extra fields to the file yourself.
+- So write all concept text as real HTML text inside the cp-* toolkit. Never put words inside images, SVG, CSS content or emoji-only labels.
+- Keep emphasis with <b>, <u>, <i> only (they are carried over to the translation). Keep one full sentence or idea inside ONE element (p, li, td, cp-card, cp-note, cp-step); never split a sentence across several tags or <br>.
+- For pure formulas, symbols or names that must stay as they are, add translate="no" on that element (e.g. <div class="cp-formula" translate="no">).
+- The thumb and yt fields of entry 1 stay in English (they are copy-ready for YouTube and are not translated).
+
 QUESTION FORMAT
 - Do NOT solve any question. Leave all four options blank: options: ["","","",""].
 - Leave correct blank: correct: "" (not 1, 2, 3 or 4).
