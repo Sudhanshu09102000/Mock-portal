@@ -61,6 +61,15 @@
      cp-stats / cp-stat, cp-chips, cp-timeline (ul), details.cp-collapse,
      cp-divider, cp-fig, cp-key, plain <table>, <img>, h2/h3/h4
      EMPHASIS RULE: never use the brown cp-hl highlight. Emphasise key words with <u>underline</u> (and <b>bold</b>) only.
+
+   🌐 TRANSLATION (automatic, nothing to write in this file)
+     When the Translate button is on, index.html translates every concept page (title, lead, stats, roadmap,
+     cards, notes, steps, tables, chips …) and shows it under each English block with the SAME tag, font, size,
+     weight, bold and underline. To keep it clean:
+       • write all text as real HTML text (never inside images / SVG / CSS content)
+       • emphasise with <b>, <u>, <i> only; keep one sentence inside ONE element
+       • add translate="no" (or class="notranslate") on anything that must stay untranslated, e.g. a pure formula
+       • thumb / yt fields stay English (they are not translated)
 ════════════════════════════════════════════════════════════════ */
 
 window.TEST_DATA = {
