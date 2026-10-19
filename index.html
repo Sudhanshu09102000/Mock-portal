@@ -3699,6 +3699,97 @@ body.test-box-resizing * {
 /* Print-friendly fallback removed for size */
 
   </style>
+<style id="ytStudioCss">
+/* ═══ 🎬 YouTube Studio — clickable chapter icon, thumbnail + copy kit ═══ */
+.cp-icon.cp-icon-click { cursor: pointer; position: relative; transition: transform .2s ease; animation: ytIconPulse 2.4s ease-in-out infinite; -webkit-tap-highlight-color: transparent; }
+.cp-icon.cp-icon-click:hover { transform: scale(1.08) rotate(-3deg); }
+.cp-icon.cp-icon-click:active { transform: scale(.94); }
+.cp-icon.cp-icon-click::after { content: "▶"; position: absolute; right: -7px; bottom: -7px; width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg,#ff2d55,#ff0033); color: #fff; font: 800 10px/24px 'Inter', system-ui, sans-serif; text-align: center; box-shadow: 0 4px 14px rgba(255,0,51,.6), 0 0 0 2px rgba(255,255,255,.85); }
+@keyframes ytIconPulse { 0%,100% { box-shadow: 0 0 28px rgba(var(--cp-rgb), .4), 0 0 0 0 rgba(var(--cp-rgb), .55); } 50% { box-shadow: 0 0 36px rgba(var(--cp-rgb), .65), 0 0 0 14px rgba(var(--cp-rgb), 0); } }
+
+.cp-thumbwrap { position: relative; display: none; margin: 0 auto 16px; max-width: 760px; aspect-ratio: 16/9; border-radius: 20px; overflow: hidden; cursor: pointer; border: 1px solid rgba(var(--cp-rgb), .6); background: #070b16; box-shadow: 0 18px 50px rgba(var(--cp-rgb), .28), 0 0 0 1px rgba(255,255,255,.05) inset; transition: transform .25s ease, box-shadow .25s ease; }
+.cp-thumbwrap.show { display: block; animation: cpUp .5s ease both; }
+.cp-thumbwrap:hover { transform: translateY(-3px); box-shadow: 0 26px 70px rgba(var(--cp-rgb), .45); }
+.cp-thumbwrap img.cp-thumb-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.cp-thumbwrap .cp-thumb-miss { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; text-align: center; padding: 20px; font: 600 .85rem 'Inter', sans-serif; color: #fca5a5; background: repeating-linear-gradient(45deg, rgba(239,68,68,.08) 0 12px, rgba(239,68,68,.02) 12px 24px); }
+.cp-thumbwrap.missing .cp-thumb-miss { display: flex; }
+.cp-thumbwrap.missing img.cp-thumb-img { display: none; }
+.cp-thumbwrap .cp-thumb-cta { position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.35); background: linear-gradient(135deg, rgba(255,45,85,.95), rgba(255,0,51,.95)); color: #fff; font: 800 .8rem 'Inter', system-ui, sans-serif; letter-spacing: .3px; box-shadow: 0 8px 22px rgba(255,0,51,.5); cursor: pointer; }
+.cp-thumbwrap .cp-thumb-cta:hover { filter: brightness(1.12); }
+.cp-thumbwrap::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,.55)); }
+.cp-thumbwrap .cp-thumb-cta { z-index: 2; }
+
+#ytStudio { position: fixed; inset: 0; z-index: 100001; display: none; align-items: center; justify-content: center; padding: 14px; background: radial-gradient(1200px 700px at 15% 0%, rgba(var(--yk-rgb), .28), transparent 60%), radial-gradient(900px 600px at 100% 100%, rgba(255,0,51,.16), transparent 60%), rgba(3,5,12,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-family: 'Inter', system-ui, sans-serif; color: #e8ecf8; }
+#ytStudio.open { display: flex; animation: ykFade .25s ease both; }
+@keyframes ykFade { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: none; } }
+#ytStudio * { box-sizing: border-box; }
+.yk-panel { width: min(1180px, 100%); max-height: 100%; display: flex; flex-direction: column; border-radius: 26px; overflow: hidden; background: linear-gradient(160deg, rgba(20,26,46,.96), rgba(8,11,22,.98)); border: 1px solid rgba(var(--yk-rgb), .55); box-shadow: 0 30px 120px rgba(0,0,0,.75), 0 0 80px rgba(var(--yk-rgb), .22); position: relative; }
+.yk-panel::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, #ff0033, rgb(var(--yk-rgb)), #facc15, #ff0033); background-size: 300% 100%; animation: ykBar 6s linear infinite; z-index: 3; }
+@keyframes ykBar { to { background-position: 300% 0; } }
+.yk-head { display: flex; align-items: center; gap: 14px; padding: 18px 22px 12px; }
+.yk-logo { flex: none; width: 58px; height: 58px; border-radius: 18px; display: grid; place-items: center; font-size: 1.9rem; background: rgba(var(--yk-rgb), .22); border: 1px solid rgba(var(--yk-rgb), .7); box-shadow: 0 0 30px rgba(var(--yk-rgb), .5); }
+.yk-ht { min-width: 0; flex: 1; }
+.yk-kicker { font: 800 .66rem 'Inter', sans-serif; letter-spacing: 2.4px; color: #ff4d6d; display: flex; align-items: center; gap: 6px; }
+.yk-kicker i { width: 8px; height: 8px; border-radius: 50%; background: #ff0033; box-shadow: 0 0 10px #ff0033; animation: ykBlink 1.4s infinite; }
+@keyframes ykBlink { 50% { opacity: .25; } }
+.yk-title { font-weight: 800; font-size: clamp(1.05rem, 1.4vw + .6rem, 1.6rem); line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.yk-x { flex: none; width: 42px; height: 42px; border-radius: 14px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.07); color: #fff; font-size: 1.1rem; cursor: pointer; }
+.yk-x:hover { background: rgba(239,68,68,.35); border-color: rgba(239,68,68,.8); }
+.yk-tabs { display: flex; gap: 8px; padding: 0 22px 12px; }
+.yk-tab { padding: 9px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.05); color: #cbd5e1; font: 700 .86rem 'Inter', sans-serif; cursor: pointer; transition: all .2s; }
+.yk-tab.on { background: linear-gradient(135deg, rgba(var(--yk-rgb), .9), rgba(var(--yk-rgb), .55)); border-color: rgba(var(--yk-rgb), 1); color: #fff; box-shadow: 0 6px 22px rgba(var(--yk-rgb), .45); }
+.yk-body { flex: 1; min-height: 0; overflow-y: auto; padding: 4px 22px 26px; -webkit-overflow-scrolling: touch; }
+.yk-pane { display: none; } .yk-pane.on { display: block; animation: ykFade .25s ease both; }
+
+.yk-stage { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 20px; align-items: start; }
+.yk-canvaswrap { border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 24px 70px rgba(0,0,0,.6), 0 0 60px rgba(var(--yk-rgb), .25); background: #000; line-height: 0; }
+.yk-canvaswrap canvas { width: 100%; height: auto; display: block; }
+.yk-ctl { display: flex; flex-direction: column; gap: 12px; }
+.yk-box { padding: 14px; border-radius: 18px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.12); }
+.yk-lab { display: block; margin-bottom: 6px; font: 800 .64rem 'Inter', sans-serif; letter-spacing: 1.8px; text-transform: uppercase; color: #94a3b8; }
+.yk-in { width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.18); background: rgba(0,0,0,.35); color: #fff; font: 600 .92rem 'Inter', sans-serif; outline: none; }
+.yk-in:focus { border-color: rgb(var(--yk-rgb)); box-shadow: 0 0 0 3px rgba(var(--yk-rgb), .3); }
+.yk-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.yk-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.yk-chip { flex: 1; padding: 9px 12px; text-align: center; border-radius: 12px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.05); color: #cbd5e1; font: 700 .8rem 'Inter', sans-serif; cursor: pointer; }
+.yk-chip.on { background: rgba(var(--yk-rgb), .35); border-color: rgb(var(--yk-rgb)); color: #fff; }
+.yk-color { width: 100%; height: 40px; padding: 2px; border-radius: 12px; border: 1px solid rgba(255,255,255,.18); background: rgba(0,0,0,.35); cursor: pointer; }
+.yk-dl { display: grid; gap: 10px; }
+.yk-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 13px 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,.25); font: 800 .92rem 'Inter', sans-serif; color: #fff; cursor: pointer; text-decoration: none; transition: transform .15s, filter .15s; }
+.yk-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.yk-btn:active { transform: scale(.98); }
+.yk-btn.red { background: linear-gradient(135deg, #ff2d55, #e60026); box-shadow: 0 10px 28px rgba(255,0,51,.4); }
+.yk-btn.acc { background: linear-gradient(135deg, rgba(var(--yk-rgb), 1), rgba(var(--yk-rgb), .6)); box-shadow: 0 10px 28px rgba(var(--yk-rgb), .4); }
+.yk-btn.ghost { background: rgba(255,255,255,.07); }
+.yk-hint { font-size: .76rem; color: #94a3b8; line-height: 1.5; }
+
+.yk-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.yk-topbar p { margin: 0; color: #94a3b8; font-size: .86rem; }
+.yk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 14px; }
+.yk-card { --k: var(--yk-rgb); position: relative; padding: 14px 16px 16px 20px; border-radius: 18px; background: linear-gradient(160deg, rgba(var(--k), .12), rgba(255,255,255,.035)); border: 1px solid rgba(var(--k), .45); overflow: hidden; }
+.yk-card::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 4px; border-radius: 0 4px 4px 0; background: rgb(var(--k)); box-shadow: 0 0 14px rgba(var(--k), .8); }
+.yk-card.wide { grid-column: 1 / -1; }
+.yk-ch { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.yk-ch .ic { font-size: 1.25rem; }
+.yk-ch b { font: 800 .98rem 'Inter', sans-serif; flex: 1; min-width: 0; }
+.yk-meta { font: 700 .7rem 'Inter', sans-serif; padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,.08); color: #cbd5e1; white-space: nowrap; }
+.yk-meta.ok { background: rgba(34,197,94,.2); color: #86efac; } .yk-meta.warn { background: rgba(245,158,11,.2); color: #fcd34d; } .yk-meta.bad { background: rgba(239,68,68,.22); color: #fca5a5; }
+.yk-copy { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 11px; border: 1px solid rgba(var(--k), .8); background: rgba(var(--k), .22); color: #fff; font: 800 .76rem 'Inter', sans-serif; cursor: pointer; transition: all .15s; }
+.yk-copy:hover { background: rgba(var(--k), .45); }
+.yk-copy.done { background: #16a34a; border-color: #4ade80; }
+.yk-text { white-space: pre-wrap; word-break: break-word; font-size: .92rem; line-height: 1.65; color: #e2e8f0; user-select: text; -webkit-user-select: text; }
+.yk-text.big { font-size: 1.12rem; font-weight: 800; line-height: 1.4; color: #fff; }
+.yk-tagbox { display: flex; flex-wrap: wrap; gap: 6px; }
+.yk-tagbox span { padding: 4px 10px; border-radius: 999px; font: 600 .76rem 'Inter', sans-serif; background: rgba(var(--k), .18); border: 1px solid rgba(var(--k), .45); user-select: text; }
+.yk-alt { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-top: 1px dashed rgba(255,255,255,.14); }
+.yk-alt:first-of-type { border-top: 0; padding-top: 0; }
+.yk-alt .yk-text { flex: 1; font-weight: 600; }
+.yk-toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 30px); opacity: 0; z-index: 100002; padding: 11px 20px; border-radius: 999px; background: #16a34a; color: #fff; font: 800 .86rem 'Inter', sans-serif; box-shadow: 0 12px 36px rgba(0,0,0,.5); transition: all .3s; pointer-events: none; max-width: 92vw; text-align: center; }
+.yk-toast.show { opacity: 1; transform: translate(-50%, 0); } .yk-toast.err { background: #dc2626; }
+@media (max-width: 900px) { .yk-stage { grid-template-columns: 1fr; } }
+@media (max-width: 767px) { #ytStudio { padding: 0; } .yk-panel { border-radius: 0; height: 100%; } .yk-head, .yk-tabs, .yk-body { padding-left: 14px; padding-right: 14px; } .yk-card { padding-left: 16px; } .yk-ch { flex-wrap: wrap; } }
+</style>
+
 <style id="conceptPageCss">
 /* ════════════════════════════════════════════════════════════════
    📖 CONCEPT PAGES
@@ -4361,6 +4452,11 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
                     <div class="cp-title" id="cpTitle"></div>
                     <div class="cp-sub" id="cpSub"></div>
                   </div>
+                </div>
+                <div class="cp-thumbwrap" id="cpThumbWrap">
+                  <img class="cp-thumb-img" id="cpThumbImg" alt="Class thumbnail">
+                  <div class="cp-thumb-miss" id="cpThumbMiss"></div>
+                  <button type="button" class="cp-thumb-cta" id="cpThumbCta">🎬 Open Thumbnail &amp; YouTube Kit</button>
                 </div>
                 <div class="cp-body" id="cpBody"></div>
               </div>
@@ -6568,6 +6664,7 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
 
         // content
         $('cpIcon').textContent = c.icon;
+        try { if (window.ytStudioBind) window.ytStudioBind(c); } catch (e) { console.error('ytStudioBind', e); }
         $('cpTitle').innerHTML = c.title;
         const sub = $('cpSub');
         sub.innerHTML = c.subtitle;
@@ -8043,6 +8140,8 @@ html.lite-mode #navToggleIcon span{background:#000!important;box-shadow:none!imp
           accent: accent,
           html: String(html),
           pauseTimer: !!item.pauseTimer,
+          thumb: item.thumb || item.thumbnail || null,   // 🎬 YouTube thumbnail config / image link
+          yt: item.yt || item.youtube || null,           // 🎬 YouTube title/tags/description kit
           seen: false,
           nextQ: -1, firstQ: 0, lastQ: 0, count: 0
         };
@@ -20360,6 +20459,279 @@ html.lite-mode .lite-switch,html.lite-mode .lite-knob{transition:none!important}
   }).observe(tb);
 })();
 </script>
+<script id="ytStudioJs">
+/* ═══════════════════════════════════════════════════════════════
+   🎬 YOUTUBE STUDIO
+   Tap the chapter icon on a concept page that has  thumb / yt  fields:
+     thumb : "thumbnail.jpg"   or   { image, line1, line2, badge, ribbon, burst, mode:"pro"|"image" }
+     yt    : { title, altTitles[], description, tags[], hashtags[], pinnedComment,
+               thumbText, communityPost, chapters, playlist, extra:[{label,text}] }
+   ═══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var ST = { c: null, img: null, imgOk: false, mode: 'pro', accent: '#3b82f6', raf: 0, texts: [], tab: 'thumb' };
+  var E = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]; }); };
+  var plain = function (h) { var d = document.createElement('div'); d.innerHTML = String(h || ''); return (d.textContent || '').trim(); };
+  function rgb(hex) { var h = String(hex).replace('#', ''); if (h.length === 3) h = h.split('').map(function (x) { return x + x; }).join(''); var n = parseInt(h, 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+  function mix(hex, t) { var c = rgb(hex).map(function (v) { return Math.max(0, Math.min(255, Math.round(t < 0 ? v * (1 + t) : v + (255 - v) * t))); }); return 'rgb(' + c.join(',') + ')'; }
+
+  /* ---------- normalise config ---------- */
+  function tcfg(c) {
+    var t = c.thumb; if (typeof t === 'string') t = { image: t }; t = t || {};
+    var title = plain(c.title).replace(/\s*[—–-]\s*(class\s*overview.*)$/i, '').trim() || 'CLASS';
+    var w = title.split(/\s+/), half = Math.ceil(w.length / 2);
+    var l1 = w.length > 2 ? w.slice(0, half).join(' ') : title, l2 = w.length > 2 ? w.slice(half).join(' ') : '';
+    return {
+      image: t.image || '', mode: t.mode === 'image' ? 'image' : 'pro',
+      line1: t.line1 != null ? t.line1 : l1.toUpperCase(), line2: t.line2 != null ? t.line2 : l2.toUpperCase(),
+      badge: t.badge != null ? t.badge : 'FULL CLASS', ribbon: t.ribbon != null ? t.ribbon : '', burst: t.burst != null ? t.burst : ''
+    };
+  }
+
+  /* ---------- bind icon + thumbnail on the page ---------- */
+  window.ytStudioBind = function (c) {
+    var ic = E('cpIcon'), wrap = E('cpThumbWrap'), im = E('cpThumbImg');
+    if (!ic) return;
+    var on = !!(c && (c.thumb || c.yt));
+    ic.classList.toggle('cp-icon-click', on);
+    if (on) {
+      ic.setAttribute('role', 'button'); ic.setAttribute('tabindex', '0'); ic.setAttribute('title', 'Tap: YouTube thumbnail + title/tags kit');
+      ic.onclick = function (e) { e.stopPropagation(); openStudio(c); };
+      ic.onkeydown = function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openStudio(c); } };
+    } else { ic.removeAttribute('role'); ic.removeAttribute('tabindex'); ic.removeAttribute('title'); ic.onclick = null; ic.onkeydown = null; }
+    if (!wrap) return;
+    var cfg = on ? tcfg(c) : null;
+    wrap.classList.remove('show', 'missing');
+    if (cfg && cfg.image) {
+      wrap.classList.add('show');
+      wrap.onclick = function () { openStudio(c); };
+      E('cpThumbMiss').textContent = '⚠ thumbnail image not found: ' + cfg.image + ' — put the file next to index.html';
+      im.onerror = function () { wrap.classList.add('missing'); console.error('❌ Thumbnail not found:', cfg.image); };
+      im.onload = function () { wrap.classList.remove('missing'); };
+      im.src = cfg.image;
+    } else { im.removeAttribute('src'); }
+  };
+
+  /* ---------- canvas drawing ---------- */
+  function cover(ctx, img, W, H) {
+    var s = Math.max(W / img.naturalWidth, H / img.naturalHeight), w = img.naturalWidth * s, h = img.naturalHeight * s;
+    ctx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
+  }
+  function rr(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  var FONT = "'Inter','Arial Black',Impact,'Segoe UI',sans-serif";
+  function fit(ctx, text, maxW, start, weight) { var sz = start; do { ctx.font = weight + ' ' + sz + 'px ' + FONT; sz -= 4; } while (ctx.measureText(text).width > maxW && sz > 40); return sz + 4; }
+
+  function artBg(ctx, W, H, o, s) {
+    var a = o.accent, g = ctx.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, '#04060d'); g.addColorStop(.5, mix(a, -.7)); g.addColorStop(1, '#0a0f1f'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    var r1 = ctx.createRadialGradient(W * .78, H * .35, 0, W * .78, H * .35, 760 * s); r1.addColorStop(0, mix(a, .1)); r1.addColorStop(.35, 'rgba(' + rgb(a).join(',') + ',.45)'); r1.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = r1; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(255,255,255,.055)'; ctx.lineWidth = 2 * s;
+    for (var x = 0; x < W; x += 80 * s) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (var y = 0; y < H; y += 80 * s) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+    for (var i = 0; i < 46; i++) { var px = (Math.sin(i * 12.9898) * 43758.5453 % 1 + 1) % 1 * W, py = (Math.sin(i * 78.233) * 12345.678 % 1 + 1) % 1 * H; ctx.fillStyle = 'rgba(255,255,255,' + (0.1 + (i % 5) * .08) + ')'; ctx.beginPath(); ctx.arc(px, py, (2 + i % 4) * s, 0, 7); ctx.fill(); }
+    ctx.save(); ctx.shadowColor = a; ctx.shadowBlur = 80 * s; ctx.font = (620 * s) + 'px ' + FONT; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(o.icon || '🎯', W * .78, H * .5); ctx.restore();
+  }
+
+  function draw(ctx, W, H, o) {
+    var s = W / 1920, acc = o.accent, ar = rgb(acc).join(',');
+    ctx.save(); ctx.clearRect(0, 0, W, H); ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+    var hasImg = !!(o.img && o.imgOk);
+    if (hasImg) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); cover(ctx, o.img, W, H); } else artBg(ctx, W, H, o, s);
+    if (o.mode === 'image') { ctx.restore(); return; }
+
+    /* readability gradients */
+    var lg = ctx.createLinearGradient(0, 0, W * .82, 0);
+    lg.addColorStop(0, 'rgba(3,5,14,' + (hasImg ? .9 : .55) + ')'); lg.addColorStop(.5, 'rgba(3,5,14,' + (hasImg ? .55 : .25) + ')'); lg.addColorStop(1, 'rgba(3,5,14,0)');
+    ctx.fillStyle = lg; ctx.fillRect(0, 0, W, H);
+    var bg = ctx.createLinearGradient(0, H * .6, 0, H); bg.addColorStop(0, 'rgba(0,0,0,0)'); bg.addColorStop(1, 'rgba(0,0,0,.6)'); ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    var vg = ctx.createRadialGradient(W / 2, H / 2, H * .45, W / 2, H / 2, H * 1.05); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.5)'); ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+
+    /* accent edge stripe + diagonal light beams */
+    var st = ctx.createLinearGradient(0, 0, 0, H); st.addColorStop(0, mix(acc, .35)); st.addColorStop(1, acc);
+    ctx.save(); ctx.shadowColor = acc; ctx.shadowBlur = 40 * s; ctx.fillStyle = st; ctx.fillRect(0, 0, 20 * s, H); ctx.restore();
+    ctx.save(); ctx.globalCompositeOperation = 'lighter';
+    [[.30, .05], [.40, .035]].forEach(function (b) { var bm = ctx.createLinearGradient(0, 0, W * .5, 0); bm.addColorStop(0, 'rgba(' + ar + ',' + b[1] + ')'); bm.addColorStop(1, 'rgba(' + ar + ',0)'); ctx.fillStyle = bm; ctx.beginPath(); ctx.moveTo(W * b[0], 0); ctx.lineTo(W * (b[0] + .12), 0); ctx.lineTo(W * (b[0] - .1), H); ctx.lineTo(W * (b[0] - .22), H); ctx.closePath(); ctx.fill(); });
+    ctx.restore();
+
+    /* badge */
+    var bx = 78 * s, by = 62 * s;
+    if (o.badge) {
+      ctx.font = '800 ' + (42 * s) + 'px ' + FONT; var bw = ctx.measureText(o.badge).width + 78 * s;
+      var bgd = ctx.createLinearGradient(bx, 0, bx + bw, 0); bgd.addColorStop(0, acc); bgd.addColorStop(1, mix(acc, .35));
+      ctx.save(); ctx.shadowColor = 'rgba(' + ar + ',.8)'; ctx.shadowBlur = 30 * s; ctx.fillStyle = bgd; rr(ctx, bx, by, bw, 78 * s, 39 * s); ctx.fill(); ctx.restore();
+      ctx.lineWidth = 3 * s; ctx.strokeStyle = 'rgba(255,255,255,.75)'; rr(ctx, bx, by, bw, 78 * s, 39 * s); ctx.stroke();
+      ctx.fillStyle = '#fff'; ctx.shadowColor = 'rgba(0,0,0,.5)'; ctx.shadowBlur = 6 * s; ctx.fillText(o.badge, bx + 39 * s, by + 54 * s); ctx.shadowBlur = 0;
+    }
+
+    /* title (3D extruded) */
+    var maxW = (hasImg ? .6 : .56) * W, y1 = H * .42, y2 = H * .66, L1 = o.line1 || '', L2 = o.line2 || '';
+    var sz = Math.min(fit(ctx, L1 || ' ', maxW, 230 * s, 900), L2 ? fit(ctx, L2, maxW, 230 * s, 900) : 999), x = 78 * s;
+    if (L2) { y1 = H * .40; y2 = y1 + sz * 1.04; } else { y1 = H * .52; }
+    function ext(text, y, top, bot, glow) {
+      ctx.font = '900 ' + sz + 'px ' + FONT; ctx.lineJoin = 'round';
+      for (var i = 14; i >= 1; i--) { ctx.fillStyle = mix(acc, -.55 - i * .02); ctx.fillText(text, x + i * 1.7 * s, y + i * 1.7 * s); }
+      ctx.save(); ctx.lineWidth = 20 * s; ctx.strokeStyle = 'rgba(0,0,0,.9)'; ctx.strokeText(text, x, y); ctx.restore();
+      var tg = ctx.createLinearGradient(0, y - sz * .85, 0, y); tg.addColorStop(0, top); tg.addColorStop(1, bot);
+      ctx.save(); if (glow) { ctx.shadowColor = glow; ctx.shadowBlur = 50 * s; } ctx.fillStyle = tg; ctx.fillText(text, x, y); ctx.restore();
+      ctx.save(); ctx.lineWidth = 3 * s; ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.strokeText(text, x, y); ctx.restore();
+    }
+    if (L1) ext(L1, y1, '#ffffff', '#cfd8ec', null);
+    if (L2) ext(L2, y2, '#fff27a', '#ff9a1f', 'rgba(255,170,30,.85)');
+
+    /* ribbon */
+    if (o.ribbon) {
+      var ry = (L2 ? y2 : y1) + 70 * s, rh = 84 * s; ctx.font = '800 ' + (46 * s) + 'px ' + FONT; var rw = ctx.measureText(o.ribbon).width + 110 * s, sk = 26 * s;
+      var rg = ctx.createLinearGradient(x, 0, x + rw, 0); rg.addColorStop(0, '#ff2d55'); rg.addColorStop(1, '#ff7a00');
+      ctx.save(); ctx.shadowColor = 'rgba(255,60,60,.7)'; ctx.shadowBlur = 30 * s; ctx.fillStyle = rg;
+      ctx.beginPath(); ctx.moveTo(x + sk, ry); ctx.lineTo(x + rw + sk, ry); ctx.lineTo(x + rw, ry + rh); ctx.lineTo(x, ry + rh); ctx.closePath(); ctx.fill(); ctx.restore();
+      ctx.fillStyle = '#fff'; ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 6 * s; ctx.fillText(o.ribbon, x + 62 * s, ry + 58 * s); ctx.shadowBlur = 0;
+    }
+
+    /* burst (top-right) */
+    if (o.burst) {
+      var cx = W - 235 * s, cy = 230 * s, R = 155 * s, n = 18; ctx.save(); ctx.translate(cx, cy); ctx.rotate(-.14);
+      ctx.beginPath(); for (var k = 0; k < n * 2; k++) { var rad = k % 2 ? R * .8 : R, ang = Math.PI * k / n; ctx.lineTo(Math.cos(ang) * rad, Math.sin(ang) * rad); } ctx.closePath();
+      var bgr = ctx.createRadialGradient(0, 0, 10, 0, 0, R); bgr.addColorStop(0, '#ffe45c'); bgr.addColorStop(1, '#ff3b30');
+      ctx.shadowColor = 'rgba(255,60,40,.8)'; ctx.shadowBlur = 40 * s; ctx.fillStyle = bgr; ctx.fill(); ctx.shadowBlur = 0; ctx.lineWidth = 6 * s; ctx.strokeStyle = '#fff'; ctx.stroke();
+      var parts = String(o.burst).split(/\\n|\n|\s+/).filter(Boolean).slice(0, 3), fs = parts.length > 2 ? 46 * s : 58 * s; ctx.font = '900 ' + fs + 'px ' + FONT; ctx.textAlign = 'center'; ctx.fillStyle = '#fff'; ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 8 * s;
+      parts.forEach(function (p, i) { ctx.fillText(p, 0, (i - (parts.length - 1) / 2) * fs * 1.05 + fs * .35); }); ctx.restore();
+    }
+
+    /* chapter logo (bottom-right, only over a photo) */
+    if (hasImg && o.icon) {
+      var lx = W - 150 * s, ly = H - 190 * s; ctx.save(); ctx.shadowColor = acc; ctx.shadowBlur = 36 * s; ctx.fillStyle = 'rgba(8,12,26,.72)'; ctx.beginPath(); ctx.arc(lx, ly, 76 * s, 0, 7); ctx.fill(); ctx.restore();
+      ctx.lineWidth = 5 * s; ctx.strokeStyle = acc; ctx.beginPath(); ctx.arc(lx, ly, 76 * s, 0, 7); ctx.stroke();
+      ctx.font = (84 * s) + 'px ' + FONT; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(o.icon, lx, ly + 4 * s); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    }
+
+    ctx.restore();
+  }
+
+  /* ---------- state helpers ---------- */
+  function opts() {
+    var v = function (id) { var e = E(id); return e ? e.value : ''; };
+    return { img: ST.img, imgOk: ST.imgOk, mode: ST.mode, accent: ST.accent, icon: ST.c.icon || '🎯', line1: v('ykL1'), line2: v('ykL2'), badge: v('ykBadge'), ribbon: v('ykRib'), burst: v('ykBurst') };
+  }
+  function redraw() { cancelAnimationFrame(ST.raf); ST.raf = requestAnimationFrame(function () { var cv = E('ykCv'); if (cv) draw(cv.getContext('2d'), 1920, 1080, opts()); }); }
+  function toast(msg, err) { var t = E('ykToast'); if (!t) { t = document.createElement('div'); t.id = 'ykToast'; t.className = 'yk-toast'; document.body.appendChild(t); } t.textContent = msg; t.classList.toggle('err', !!err); t.classList.add('show'); clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('show'); }, 2200); }
+  function slug() { return (plain(ST.c.title).replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase() || 'thumbnail'); }
+
+  function blobOf(type, w, h, q) {
+    return new Promise(function (res, rej) {
+      var cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+      try { draw(cv.getContext('2d'), w, h, opts()); cv.toBlob(function (b) { b ? res(b) : rej(new Error('empty')); }, type, q); } catch (e) { rej(e); }
+    });
+  }
+  function save(blob, name) { var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
+  function dlFail(e) { console.error(e); toast('Browser blocked export (open the site via http://, not file://). Use “Original image” instead.', true); }
+  function dlPng() { toast('Rendering HD PNG…'); blobOf('image/png', 1920, 1080).then(function (b) { save(b, slug() + '-thumbnail-1920x1080.png'); toast('✓ HD PNG downloaded'); }).catch(dlFail); }
+  function dlJpg() {
+    toast('Rendering YouTube JPG…');
+    (function tryQ(q) { blobOf('image/jpeg', 1280, 720, q).then(function (b) { if (b.size > 2 * 1024 * 1024 && q > .6) return tryQ(q - .08); save(b, slug() + '-thumbnail-1280x720.jpg'); toast('✓ YouTube JPG downloaded (' + Math.round(b.size / 1024) + ' KB)'); }).catch(dlFail); })(.94);
+  }
+
+  /* ---------- copy ---------- */
+  function copyText(t) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t);
+    return new Promise(function (res, rej) { var ta = document.createElement('textarea'); ta.value = t; ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy') ? res() : rej(); } catch (e) { rej(e); } ta.remove(); });
+  }
+  function doCopy(btn, idx) {
+    copyText(ST.texts[idx]).then(function () { var o = btn.innerHTML; btn.classList.add('done'); btn.innerHTML = '✓ Copied'; toast('✓ Copied to clipboard'); setTimeout(function () { btn.classList.remove('done'); btn.innerHTML = o; }, 1600); }).catch(function () { toast('Copy blocked — long-press the text to copy', true); });
+  }
+
+  /* ---------- YouTube kit ---------- */
+  function lenMeta(n, ok, warn) { var cls = n <= ok ? 'ok' : n <= warn ? 'warn' : 'bad'; return '<span class="yk-meta ' + cls + '">' + n + ' / ' + warn + '</span>'; }
+  function kitHtml(y) {
+    ST.texts = []; var cards = [], all = [];
+    function reg(t) { ST.texts.push(t); return ST.texts.length - 1; }
+    function card(ic, label, body, text, meta, o) {
+      o = o || {}; var i = text != null ? reg(text) : -1;
+      cards.push('<div class="yk-card' + (o.wide ? ' wide' : '') + '"' + (o.k ? ' style="--k:' + o.k + '"' : '') + '><div class="yk-ch"><span class="ic">' + ic + '</span><b>' + esc(label) + '</b>' + (meta || '') + (i >= 0 ? '<button class="yk-copy" data-i="' + i + '">⧉ Copy</button>' : '') + '</div>' + body + '</div>');
+      if (text != null) all.push('═══ ' + label.toUpperCase() + ' ═══\n' + text);
+    }
+    if (y.title) card('🏆', 'Best Title', '<div class="yk-text big">' + esc(y.title) + '</div>', y.title, lenMeta(y.title.length, 70, 100), { k: '255,45,85', wide: true });
+    if (y.altTitles && y.altTitles.length) {
+      var rows = y.altTitles.map(function (t) { var i = reg(t); return '<div class="yk-alt"><div class="yk-text">' + esc(t) + '</div>' + lenMeta(t.length, 70, 100) + '<button class="yk-copy" data-i="' + i + '">⧉ Copy</button></div>'; }).join('');
+      cards.push('<div class="yk-card wide" style="--k:250,204,21"><div class="yk-ch"><span class="ic">🔀</span><b>Alternate Titles (A/B test)</b></div>' + rows + '</div>');
+      all.push('═══ ALTERNATE TITLES ═══\n' + y.altTitles.join('\n'));
+    }
+    if (y.description) card('📝', 'Description', '<div class="yk-text">' + esc(y.description) + '</div>', y.description, '<span class="yk-meta">' + y.description.length + ' / 5000</span>', { k: '59,130,246', wide: true });
+    if (y.tags && y.tags.length) { var tj = y.tags.join(', '); card('🏷️', 'Tags (comma separated)', '<div class="yk-tagbox">' + y.tags.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>', tj, '<span class="yk-meta ' + (tj.length <= 480 ? 'ok' : 'bad') + '">' + tj.length + ' / 500</span>', { k: '34,197,94', wide: true }); }
+    if (y.hashtags && y.hashtags.length) { var hj = y.hashtags.map(function (h) { return /^#/.test(h) ? h : '#' + h; }).join(' '); card('#️⃣', 'Hashtags', '<div class="yk-text">' + esc(hj) + '</div>', hj, '<span class="yk-meta">first 3 show above title</span>', { k: '168,85,247' }); }
+    if (y.thumbText) card('🖼️', 'Thumbnail Text', '<div class="yk-text big">' + esc(y.thumbText) + '</div>', y.thumbText, '', { k: '249,115,22' });
+    if (y.pinnedComment) card('📌', 'Pinned Comment', '<div class="yk-text">' + esc(y.pinnedComment) + '</div>', y.pinnedComment, '', { k: '20,184,166' });
+    if (y.communityPost) card('📣', 'Community Post / Shorts Caption', '<div class="yk-text">' + esc(y.communityPost) + '</div>', y.communityPost, '', { k: '236,72,153' });
+    if (y.chapters) card('⏱️', 'Video Chapters (edit the times)', '<div class="yk-text">' + esc(y.chapters) + '</div>', y.chapters, '', { k: '99,102,241' });
+    if (y.playlist) card('📂', 'Playlist Name', '<div class="yk-text">' + esc(y.playlist) + '</div>', y.playlist, '', { k: '14,165,233' });
+    (y.extra || []).forEach(function (x) { if (x && x.text) card(x.icon || '✨', x.label || 'Extra', '<div class="yk-text">' + esc(x.text) + '</div>', x.text, '', { k: '234,179,8' }); });
+    var allIdx = reg(all.join('\n\n'));
+    return '<div class="yk-topbar"><p>Tap <b>Copy</b> on any block and paste straight into YouTube Studio.</p><button class="yk-copy" data-i="' + allIdx + '" style="--k:255,45,85;padding:10px 18px;font-size:.84rem">⧉ Copy everything</button></div><div class="yk-grid">' + cards.join('') + '</div>';
+  }
+
+  /* ---------- modal ---------- */
+  function build() {
+    var m = E('ytStudio'); if (m) return m;
+    m = document.createElement('div'); m.id = 'ytStudio';
+    m.innerHTML = '<div class="yk-panel"><div class="yk-head"><div class="yk-logo" id="ykLogo"></div><div class="yk-ht"><div class="yk-kicker"><i></i>YOUTUBE STUDIO</div><div class="yk-title" id="ykTitle"></div></div><button class="yk-x" id="ykClose" aria-label="Close">✕</button></div><div class="yk-tabs"><button class="yk-tab on" data-tab="thumb">🎬 Thumbnail</button><button class="yk-tab" data-tab="kit" id="ykKitTab">📋 Title · Tags · Description</button></div><div class="yk-body"><div class="yk-pane on" id="ykPaneThumb"></div><div class="yk-pane" id="ykPaneKit"></div></div></div>';
+    document.body.appendChild(m);
+    m.addEventListener('click', function (e) { if (e.target === m) closeStudio(); });
+    E('ykClose').onclick = closeStudio;
+    m.querySelectorAll('.yk-tab').forEach(function (b) { b.onclick = function () { setTab(b.getAttribute('data-tab')); }; });
+    m.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('.yk-copy'); if (b) doCopy(b, +b.getAttribute('data-i')); });
+    window.addEventListener('keydown', function (e) { if (e.key === 'Escape' && m.classList.contains('open')) closeStudio(); });
+    return m;
+  }
+  function setTab(t) {
+    ST.tab = t; var m = E('ytStudio');
+    m.querySelectorAll('.yk-tab').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === t); });
+    E('ykPaneThumb').classList.toggle('on', t === 'thumb'); E('ykPaneKit').classList.toggle('on', t === 'kit');
+    if (t === 'thumb') redraw();
+  }
+  function closeStudio() { var m = E('ytStudio'); if (m) m.classList.remove('open'); document.documentElement.style.overflow = ST._ov || ''; }
+
+  function openStudio(c) {
+    var m = build(), cfg = tcfg(c); ST.c = c; ST.mode = cfg.mode; ST.accent = c.accent || '#3b82f6'; ST.img = null; ST.imgOk = false;
+    var r = rgb(ST.accent); m.style.setProperty('--yk-rgb', r.join(','));
+    E('ykLogo').textContent = c.icon || '🎯'; E('ykTitle').textContent = plain(c.title);
+    E('ykKitTab').style.display = c.yt ? '' : 'none';
+
+    E('ykPaneThumb').innerHTML =
+      '<div class="yk-stage"><div><div class="yk-canvaswrap"><canvas id="ykCv" width="1920" height="1080"></canvas></div><p class="yk-hint" style="margin:10px 2px 0">Preview of the 1920×1080 export. YouTube shows thumbnails at 1280×720 (16:9, under 2 MB) — the JPG button handles that for you.</p></div>' +
+      '<div class="yk-ctl">' +
+      '<div class="yk-box yk-dl"><button class="yk-btn red" id="ykPng">⬇ Download HD PNG · 1920×1080</button><button class="yk-btn acc" id="ykJpg">⬇ Download YouTube JPG · 1280×720</button>' + (cfg.image ? '<a class="yk-btn ghost" id="ykOrig" href="' + esc(cfg.image) + '" download>⬇ Original image</a>' : '') + '</div>' +
+      '<div class="yk-box"><span class="yk-lab">Style</span><div class="yk-chips"><div class="yk-chip' + (ST.mode === 'pro' ? ' on' : '') + '" data-m="pro">✨ Pro design</div><div class="yk-chip' + (ST.mode === 'image' ? ' on' : '') + '" data-m="image">🖼 Image only</div></div></div>' +
+      '<div class="yk-box"><span class="yk-lab">Line 1</span><input class="yk-in" id="ykL1" value="' + esc(cfg.line1) + '"><span class="yk-lab" style="margin-top:10px">Line 2 (gold)</span><input class="yk-in" id="ykL2" value="' + esc(cfg.line2) + '"><div class="yk-row2" style="margin-top:10px"><div><span class="yk-lab">Badge</span><input class="yk-in" id="ykBadge" value="' + esc(cfg.badge) + '"></div><div><span class="yk-lab">Burst</span><input class="yk-in" id="ykBurst" value="' + esc(cfg.burst) + '" placeholder="e.g. FREE"></div></div><span class="yk-lab" style="margin-top:10px">Ribbon</span><input class="yk-in" id="ykRib" value="' + esc(cfg.ribbon) + '"><span class="yk-lab" style="margin-top:10px">Accent colour</span><input type="color" class="yk-color" id="ykAcc" value="' + esc(ST.accent.length === 4 ? '#' + ST.accent.slice(1).split('').map(function (x) { return x + x; }).join('') : ST.accent) + '"></div>' +
+      '</div></div>';
+    E('ykPaneKit').innerHTML = c.yt ? kitHtml(c.yt) : '';
+
+    var pane = E('ykPaneThumb');
+    pane.querySelectorAll('.yk-in').forEach(function (i) { i.addEventListener('input', redraw); });
+    E('ykAcc').addEventListener('input', function (e) { ST.accent = e.target.value; m.style.setProperty('--yk-rgb', rgb(ST.accent).join(',')); redraw(); });
+    pane.querySelectorAll('.yk-chip').forEach(function (ch) { ch.onclick = function () { ST.mode = ch.getAttribute('data-m'); pane.querySelectorAll('.yk-chip').forEach(function (x) { x.classList.toggle('on', x === ch); }); redraw(); }; });
+    E('ykPng').onclick = dlPng; E('ykJpg').onclick = dlJpg;
+
+    ST._ov = document.documentElement.style.overflow; document.documentElement.style.overflow = 'hidden';
+    m.classList.add('open'); setTab('thumb');
+
+    /* fonts first, then image (try CORS-safe, then plain), then draw */
+    var fonts = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load('900 100px Inter'), document.fonts.load('800 100px Inter')]).catch(function () { }) : Promise.resolve();
+    fonts.then(function () { redraw(); });
+    if (cfg.image) {
+      var tryLoad = function (cors) {
+        var im = new Image(); if (cors) im.crossOrigin = 'anonymous';
+        im.onload = function () { ST.img = im; ST.imgOk = true; redraw(); };
+        im.onerror = function () { if (cors) tryLoad(false); else { ST.imgOk = false; redraw(); toast('Thumbnail image not found: ' + cfg.image, true); } };
+        im.src = cfg.image;
+      }; tryLoad(true);
+    }
+  }
+  window.ytStudioOpen = openStudio;
+})();
+</script>
+
 </body>
 
 
