@@ -46,7 +46,12 @@
      The thumbnail box and the "Open Thumbnail & YouTube Kit" link are hidden on the page (see the first snippet); the chapter icon opens the studio.
 
      thumb : "thumbnail.jpg"                      (image link, file next to index.html)
-             or { image:"thumbnail.jpg", line1:"", line2:"", badge:"", ribbon:"", burst:"", mode:"pro"|"image" }
+             or { image, banner, line1, line2, line3, person, logo, badge, ribbon, burst, mode:"creator"|"pro"|"image" }
+             mode "creator" = teacher-style thumbnail: red top banner (banner), white line1, big gold line2,
+             cyan line3, teacher cut-out photo on the right, round channel logo top-right.
+             Teacher photo + logo: put person.png (transparent PNG) and logo.png next to index.html, OR just pick them
+             inside the studio once (they are remembered in the browser and reused for every chapter).
+             "pro" mode uses badge / ribbon / burst instead.
      yt    : { title, altTitles:[], description, tags:[], hashtags:[], pinnedComment,
                thumbText, communityPost, chapters, playlist, extra:[{icon,label,text}] }
      NOTE: export needs the site opened over http(s)://, not file:// (browser canvas rule).
@@ -85,12 +90,14 @@ window.TEST_DATA = {
     /* 🎬 tap the 🎯 icon on this page → thumbnail studio + YouTube kit */
     thumb: {
       image: "thumbnail.jpg",
-      line1: "PERCENTAGE",
-      line2: "+ PROFIT & LOSS",
+      banner: "COMPETITIVE EXAMS 2026",
+      line1: "FAST TRICKS",
+      line2: "PERCENTAGE",
+      line3: "PROFIT & LOSS",
       badge: "FULL CLASS",
       ribbon: "FORMULAS • TRICKS • PRACTICE",
       burst: "Competitive exams",
-      mode: "pro"
+      mode: "creator"
     },
     yt: {
       title: "Percentage & Profit-Loss Fast Tricks | Competitive exams Quant",
@@ -325,5 +332,5 @@ window.TEST_DATA = {
      (the demo has no other numbered figures; real chapters continue 1.jpg, 2.jpg …)
 
    FIGURE PROMPTS  (copy each line into ChatGPT, save the result under the given name)
-   thumbnail.jpg: Create a 16:9 landscape YouTube thumbnail, 1920×1080 px, ultra-sharp, vibrant and eye-catching cinematic 3D illustration in deep indigo, violet and electric-blue tones (accent #6366f1) with warm gold highlights. Hero subject on the RIGHT 45% of the frame: a large glossy 3D percent sign (%) glowing in the centre, orbited by a gold price tag, a shopping bag, a stack of coins and a rising bar chart, each floating with soft shadows and light rim glow. Keep the LEFT 55% of the frame a calm, darker, smooth gradient area with no objects, because the title, badge and ribbon will be overlaid there later. Absolutely no text, letters, numbers, logos, watermarks, channel names or human faces anywhere in the image. Clean, most beautiful, colorful, professional, high-contrast composition.
+   thumbnail.jpg: Create a 16:9 landscape background image for a YouTube thumbnail, 1920×1080 px, ultra-sharp, vibrant cinematic 3D illustration in deep indigo, violet and electric-blue tones (accent #6366f1) with warm gold highlights. Dark edges and a bright soft glow behind the right-centre of the frame, where a teacher's photo will be placed later. Spread a few soft, glowing, slightly blurred decorative 3D elements around the frame, mostly behind the right side: a glossy percent sign (%), a gold price tag, a stack of coins and a rising bar chart. Keep the LEFT 62% of the frame calm, darker and uncluttered because the red banner and big title lines will be overlaid there later. Absolutely no text, letters, numbers, logos, watermarks, channel names or human faces anywhere in the image. Clean, most beautiful, colorful, professional, high-contrast composition.
    ════════════════════════════════════════════════════════════════ */
