@@ -1,7 +1,27 @@
-/* ════════════════════════════════════════════════════════════════ 
+/* ── STYLE SNIPPET: hides the thumbnail box and the "Open Thumbnail & YouTube Kit" link on page 1 (the chapter icon still opens the studio) ── */
+(function () {
+  function hide(el) {
+    if (!el || el.getAttribute("data-hidden")) return;
+    el.setAttribute("data-hidden", "1");
+    el.style.setProperty("display", "none", "important");
+  }
+  function sweep() {
+    document.querySelectorAll("img.cp-thumb-img").forEach(function (img) {
+      var p = img.parentElement;
+      hide(p && !p.querySelector("p,.cp-lead,.cp-stats") ? p : img);
+    });
+    document.querySelectorAll("button,a,[role=button]").forEach(function (el) {
+      if (/open thumbnail/i.test(el.textContent || "")) hide(el);
+    });
+  }
+  try { new MutationObserver(sweep).observe(document.documentElement, { childList: true, subtree: true }); } catch (e) {}
+  sweep();
+})();
+
+/* ════════════════════════════════════════════════════════════════
    DEMO — concept pages mixed in between questions
    Register it in portalData.js like any other test (file: "concept-demo").
-   Entry 1 is always the FIRST PAGE: chapter name + "What you will be able to do" cards only.
+   Entry 1 is always the CLASS OVERVIEW page (what we will learn in this class).
 
    Write entries in the order you want them shown:
        1: concept page   2: question   3: question   4: concept page …
@@ -14,6 +34,23 @@
      pauseTimer : true                      (optional – stops the exam clock while reading)
      html       : `...any HTML, text, <img>, tables...`
 
+   🎬 YOUTUBE STUDIO (optional – put these two fields on ENTRY 1 only)
+     The chapter ICON on that page becomes tappable (pulsing red ▶ badge).
+     Tapping it opens a studio with 2 tabs:
+       🎬 Thumbnail  – composes a 1920×1080 YouTube thumbnail from YOUR image
+                       (Pro design / Image only, editable text, accent colour)
+                       → Download HD PNG (1920×1080) or YouTube JPG (1280×720, <2 MB)
+       📋 Kit        – best title, A/B titles, description, tags, hashtags,
+                       pinned comment, thumbnail text, community post, chapters,
+                       playlist … each with a one-tap COPY button + "Copy everything".
+     The thumbnail box and the "Open Thumbnail & YouTube Kit" link are hidden on the page (see the first snippet); the chapter icon opens the studio.
+
+     thumb : "thumbnail.jpg"                      (image link, file next to index.html)
+             or { image:"thumbnail.jpg", line1:"", line2:"", badge:"", ribbon:"", burst:"", mode:"pro"|"image" }
+     yt    : { title, altTitles:[], description, tags:[], hashtags:[], pinnedComment,
+               thumbText, communityPost, chapters, playlist, extra:[{icon,label,text}] }
+     NOTE: export needs the site opened over http(s)://, not file:// (browser canvas rule).
+
    QUESTION fields stay exactly as before:
      questext, options[4], correct:"1".."4", quesimage, exptext, expimage
 
@@ -22,19 +59,87 @@
      cp-formula, cp-frac, cp-note (tip trap trick remember info exam good),
      cp-steps (ol), cp-example (cp-q / cp-a), cp-mnemonic, cp-vs (good / bad),
      cp-stats / cp-stat, cp-chips, cp-timeline (ul), details.cp-collapse,
-     cp-divider, cp-fig, cp-hl (g r b), cp-key, plain <table>, <img>, h2/h3/h4
+     cp-divider, cp-fig, cp-key, plain <table>, <img>, h2/h3/h4
+     EMPHASIS RULE: never use the brown cp-hl highlight. Emphasise key words with <u>underline</u> (and <b>bold</b>) only.
 ════════════════════════════════════════════════════════════════ */
 
 window.TEST_DATA = {
 
-  /* ─────────── 1 · FIRST PAGE (chapter name + what you will be able to do) ─────────── */
+  /* ─────────── 1 · CLASS OVERVIEW (opening summary page) ─────────── */
   1: {
     type: "concept",
     icon: "🎯",
     accent: "#6366f1",
     pauseTimer: true,
-    title: "Percentage and Profit & Loss",
+    title: "Class Overview — What We Will Learn Today",
+
+    /* 🎬 tap the 🎯 icon on this page → thumbnail studio + YouTube kit */
+    thumb: {
+      image: "thumbnail.jpg",
+      line1: "PERCENTAGE",
+      line2: "+ PROFIT & LOSS",
+      badge: "FULL CLASS",
+      ribbon: "FORMULAS • TRICKS • PRACTICE",
+      burst: "Competitive exams",
+      mode: "pro"
+    },
+    yt: {
+      title: "Percentage & Profit-Loss Fast Tricks | Competitive exams Quant",
+      altTitles: [
+        "Percentage Successive Change Trick in 1 Line | Competitive exams Quant",
+        "Profit, Loss & Discount: Single Equivalent Discount Formula | Competitive exams",
+        "Stop Calculating Percentage! Use This Trick | Competitive exams Tier-1 Quant",
+        "Percentage + Profit & Loss Full Class with Practice Questions | Competitive exams"
+      ],
+      description:
+"Percentage and Profit & Loss quietly decide your Quant score in Competitive exams — in this fast-track class you stop calculating and start recognising patterns.\n\n" +
+"📌 IN THIS CLASS\n" +
+"✅ Successive change: Net % = a + b + ab/100 and the “start with 100” trick\n" +
+"✅ Price up → consumption down: keep expenditure constant\n" +
+"✅ Profit, Loss & Discount: SP, profit %, loss %\n" +
+"✅ Two successive discounts → one single equivalent discount\n" +
+"✅ Classic traps (adding or subtracting percentages directly)\n" +
+"✅ 4 practice questions right after the concepts\n\n" +
+"⏱️ CHAPTERS\n" +
+"00:00 Class overview\n00:00 Percentage — Successive Change\n00:00 Practice: successive change & price–consumption\n00:00 Profit, Loss & Discount\n00:00 Practice: single equivalent discount & selling price\n\n" +
+"👍 Like, share and subscribe, and comment “DONE” after you finish the practice questions.\n\n" +
+"#SSCCGL #Percentage #ProfitAndLoss #Quant",
+      tags: [
+        "percentage tricks", "percentage for Competitive exams", "successive change percentage", "percentage shortcut tricks",
+        "profit and loss tricks", "profit loss discount", "successive discount formula", "single equivalent discount",
+        "price consumption percentage", "Competitive exams quant", "Competitive exams maths", "Competitive exams tier 1", "quantitative aptitude",
+        "quant for ssc", "maths tricks", "fast track maths", "percentage questions", "profit and loss questions",
+        "Competitive exams preparation", "Competitive exams maths"
+      ],
+      hashtags: ["SSCCGL", "Percentage", "ProfitAndLoss", "Quant"],
+      thumbText: "PERCENTAGE + PROFIT & LOSS",
+      pinnedComment: "📌 Practice what you learned: solve the 4 questions in the class, then write your answers below. Which trick helped you most — successive change or successive discount? 👇",
+      communityPost: "📊 New class is live: Percentage + Profit & Loss — formulas, tricks and practice for Competitive exams Quant. Start with the class overview, then try the 4 questions and tell me your score! 🎯",
+      chapters: "00:00 Class overview\n00:00 Percentage — Successive Change\n00:00 Practice: successive change & price–consumption\n00:00 Profit, Loss & Discount\n00:00 Practice: single equivalent discount & selling price",
+      playlist: "Competitive exams Quant — Fast Track Classes"
+    },
+
     html: `
+      <p class="cp-lead">Today's class is a <u>fast-track on Percentage and Profit &amp; Loss</u> —
+      the two chapters that quietly decide your Quant score in Competitive exams. By the end you will
+      <b>stop calculating and start recognising</b> patterns.</p>
+
+      <div class="cp-stats">
+        <div class="cp-stat"><b>2</b><span>Concept pages</span></div>
+        <div class="cp-stat"><b>5</b><span>Core formulas</span></div>
+        <div class="cp-stat"><b>4</b><span>Practice questions</span></div>
+        <div class="cp-stat"><b>~15 min</b><span>Time needed</span></div>
+      </div>
+
+      <div class="cp-divider">Your roadmap</div>
+
+      <ul class="cp-timeline">
+        <li><b>Percentage — Successive Change</b><br>Net % = a + b + ab/100, and the “start with 100” trick.</li>
+        <li><b>Practice</b> — 2 questions on successive change and the price–consumption rule.</li>
+        <li><b>Profit, Loss &amp; Discount</b><br>SP, profit %, loss % and two successive discounts.</li>
+        <li><b>Practice</b> — 2 questions on single equivalent discount and selling price.</li>
+      </ul>
+
       <div class="cp-divider">What you will be able to do</div>
 
       <div class="cp-grid c2">
@@ -43,6 +148,14 @@ window.TEST_DATA = {
         <div class="cp-card blue"><div class="cp-card-title">🏷️ Discounts</div>Convert two discounts into one single equivalent discount.</div>
         <div class="cp-card red"><div class="cp-card-title">⚠️ Traps</div>Spot the classic mistake of simply adding or subtracting percentages.</div>
       </div>
+
+      <div class="cp-note exam"><b>Why it matters:</b> these formulas appear again inside Data Interpretation,
+      Simple &amp; Compound Interest and Partnership — master them once, use them everywhere.</div>
+
+      <div class="cp-note tip">Read each concept page fully, then attempt the questions right after it.
+      The exam clock pauses on concept pages, so take your time.</div>
+
+      <div class="cp-chips"><span>Competitive exams Tier-1</span><span>Quant</span><span>Percentage</span><span>Profit &amp; Loss</span></div>
     `
   },
 
@@ -53,8 +166,8 @@ window.TEST_DATA = {
     accent: "#22c55e",
     title: "Percentage — Successive Change",
     html: `
-      <p class="cp-lead">A percentage is just a fraction out of <b>100</b>. In SSC CGL the winning move is to
-      <b class="cp-green">stop calculating and start recognising</b> — fractions, successive change, and the
+      <p class="cp-lead">A percentage is just a fraction out of <b>100</b>. In Competitive exams the winning move is to
+      <u>stop calculating and start recognising</u> — fractions, successive change, and the
       price–consumption trick cover most of the questions you will see.</p>
 
       <div class="cp-stats">
@@ -124,7 +237,7 @@ window.TEST_DATA = {
         and 10% of 120 is 12, not 10 — that extra 2 is exactly 20 × 10 ÷ 100.</p>
       </details>
 
-      <div class="cp-chips"><span>SSC CGL Tier-1</span><span>Quant</span><span>High-yield</span></div>
+      <div class="cp-chips"><span>Competitive exams Tier-1</span><span>Quant</span><span>High-yield</span></div>
     `
   },
 
@@ -196,3 +309,12 @@ window.TEST_DATA = {
     exptext: "SP = 250 × 120/100 = ₹300.",
   }
 };
+
+/* ════════════════════════════════════════════════════════════════
+   IMAGE LIST (which image belongs to which entry)
+     thumbnail.jpg → ENTRY 1 (class overview, "thumb" field)  — not numbered
+     (the demo has no other numbered figures; real chapters continue 1.jpg, 2.jpg …)
+
+   FIGURE PROMPTS  (copy each line into ChatGPT, save the result under the given name)
+   thumbnail.jpg: Create a 16:9 landscape YouTube thumbnail, 1920×1080 px, ultra-sharp, vibrant and eye-catching cinematic 3D illustration in deep indigo, violet and electric-blue tones (accent #6366f1) with warm gold highlights. Hero subject on the RIGHT 45% of the frame: a large glossy 3D percent sign (%) glowing in the centre, orbited by a gold price tag, a shopping bag, a stack of coins and a rising bar chart, each floating with soft shadows and light rim glow. Keep the LEFT 55% of the frame a calm, darker, smooth gradient area with no objects, because the title, badge and ribbon will be overlaid there later. Absolutely no text, letters, numbers, logos, watermarks, channel names or human faces anywhere in the image. Clean, most beautiful, colorful, professional, high-contrast composition.
+   ════════════════════════════════════════════════════════════════ */
