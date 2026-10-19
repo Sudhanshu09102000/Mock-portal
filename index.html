@@ -1096,7 +1096,7 @@
       border-radius: 10px;
       background: linear-gradient(135deg, rgba(59,130,246,.10), rgba(56,189,248,.06));
       border-left: 3px solid rgba(59,130,246,.55);
-      font-size: calc(var(--gp-fs, 16px) * 0.88);
+      font-size: inherit !important;
       color: rgba(148,210,255,.92);
       line-height: 1.55;
       font-style: italic;
@@ -1107,7 +1107,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
     .dual-lang-label {
-      font-size: calc(var(--gp-fs, 16px) * 0.72);
+      font-size: .75em;
       font-weight: 700;
       letter-spacing: .6px;
       text-transform: uppercase;
@@ -1117,7 +1117,7 @@
     }
     .dual-lang-opt-wrap {
       margin-top: .28rem;
-      font-size: calc(var(--gp-fs, 16px) * 0.84);
+      font-size: inherit !important;
       color: rgba(148,210,255,.85);
       font-style: italic;
       padding-left: .3rem;
@@ -17104,18 +17104,18 @@ body.qa-only-mode #qaToolbarRow {
   // ── CANVAS DRAWING — Windows Ink + Pointer Events + Smooth Bezier ──
   function getXY(e) {
     const rect = canvas.getBoundingClientRect();
+    const pointer = e.touches && e.touches.length
+      ? e.touches[0]
+      : e.changedTouches && e.changedTouches.length
+        ? e.changedTouches[0]
+        : e;
+    const scaleX = rect.width ? (canvas._cssW || rect.width) / rect.width : 1;
+    const scaleY = rect.height ? (canvas._cssH || rect.height) / rect.height : 1;
     // Return CSS-pixel coordinates. Drawing context has dpr transform applied,
     // so all coords throughout the engine are in CSS pixels for sharp rendering.
-    if (e.touches && e.touches.length) {
-      return {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top,
-        pressure: 0.5
-      };
-    }
     return {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: (pointer.clientX - rect.left) * scaleX,
+      y: (pointer.clientY - rect.top) * scaleY,
       pressure: (e.pressure !== undefined && e.pressure > 0) ? e.pressure : 0.5
     };
   }
@@ -17155,8 +17155,8 @@ body.qa-only-mode #qaToolbarRow {
   // (a single drawImage call) and clear _liveCanvas.  Zero pixel reads, zero
   // full-canvas repaints mid-stroke.
   //
-  // Smoothing: EMA on raw points → Catmull-Rom spline drawn INCREMENTALLY
-  // (only the last 4-point window, not the whole path) = O(1) per frame.
+  // Smoothing: EMA on raw points → incrementally drawn Catmull-Rom cubic
+  // segments. Each segment shares a tangent with its neighbors to avoid kinks.
 
   const SMOOTH_ALPHA = 0.55;   // EMA weight — lower = smoother/laggier, higher = snappier/rawer
   const MIN_DIST     = 0.4;    // capture nearly every coalesced point — denser sampling = smoother curves
@@ -17182,17 +17182,32 @@ body.qa-only-mode #qaToolbarRow {
   let _pts    = [];   // EMA-smoothed positions
 
   let _liveStyleDirty = true;
-  let _liveLastMid     = null; // last midpoint already committed to the live canvas
+  let _liveDrawnTo     = 0;    // last point index committed to the live canvas
 
-  // TRUE incremental draw: only the brand-new curve segment is stroked each
-  // call — we never clear or redraw earlier parts of the stroke. This is the
-  // actual O(1)-per-point behavior the old code only claimed to have (it was
-  // clearing + rebuilding the WHOLE path every single point, which got
-  // slower the longer a stroke got and caused dropped pointer events —
-  // that's what produced the jagged/"spiky" look on longer strokes).
+  function _addCatmullSegment(targetCtx, p0, p1, p2, p3) {
+    const tension = 1 / 6;
+    targetCtx.bezierCurveTo(
+      p1.x + (p2.x - p0.x) * tension,
+      p1.y + (p2.y - p0.y) * tension,
+      p2.x - (p3.x - p1.x) * tension,
+      p2.y - (p3.y - p1.y) * tension,
+      p2.x,
+      p2.y
+    );
+  }
+
+  function _strokeCatmullSegment(targetCtx, p0, p1, p2, p3) {
+    targetCtx.beginPath();
+    targetCtx.moveTo(p1.x, p1.y);
+    _addCatmullSegment(targetCtx, p0, p1, p2, p3);
+    targetCtx.stroke();
+  }
+
+  // Draw only completed curve segments; the newest point is held as a lookahead
+  // so its tangent is known before the segment is rendered.
   function _appendLiveSegment() {
     const n = _pts.length;
-    if (n < 2) return;
+    if (n < 3 || _liveDrawnTo >= n - 2) return;
 
     if (_liveStyleDirty) {
       _liveCtx.strokeStyle = currentColor;
@@ -17205,21 +17220,16 @@ body.qa-only-mode #qaToolbarRow {
       _liveStyleDirty = false;
     }
 
-    const p1 = _pts[n - 2], p2 = _pts[n - 1];
-    const mid = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
-
-    _liveCtx.beginPath();
-    if (n === 2) {
-      // First segment: nothing to curve through yet, just a straight lead-in.
-      _liveCtx.moveTo(p1.x, p1.y);
-      _liveCtx.lineTo(mid.x, mid.y);
-    } else {
-      // Continue the curve from where we left off, through p1, to the new midpoint.
-      _liveCtx.moveTo(_liveLastMid.x, _liveLastMid.y);
-      _liveCtx.quadraticCurveTo(p1.x, p1.y, mid.x, mid.y);
+    const endIndex = n - 2;
+    while (_liveDrawnTo < endIndex) {
+      const startIndex = _liveDrawnTo;
+      const p1 = _pts[startIndex];
+      const p2 = _pts[startIndex + 1];
+      const p0 = startIndex > 0 ? _pts[startIndex - 1] : p1;
+      const p3 = _pts[startIndex + 2];
+      _strokeCatmullSegment(_liveCtx, p0, p1, p2, p3);
+      _liveDrawnTo++;
     }
-    _liveCtx.stroke();
-    _liveLastMid = mid;
   }
 
   // Full stroke redraw on a given context (used for replay / flush)
@@ -17244,68 +17254,23 @@ body.qa-only-mode #qaToolbarRow {
       return;
     }
 
-    c.beginPath();
-    c.moveTo(pts[0].x, pts[0].y);
-
     if (pts.length === 2) {
+      c.beginPath();
+      c.moveTo(pts[0].x, pts[0].y);
       c.lineTo(pts[1].x, pts[1].y);
     } else {
-      // Midpoint quadratic bezier — same algorithm as live drawing for consistency
-      for (let i = 1; i < pts.length - 1; i++) {
-        const mx = (pts[i].x + pts[i + 1].x) / 2;
-        const my = (pts[i].y + pts[i + 1].y) / 2;
-        c.quadraticCurveTo(pts[i].x, pts[i].y, mx, my);
+      c.beginPath();
+      c.moveTo(pts[0].x, pts[0].y);
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        const p0 = i > 0 ? pts[i - 1] : p1;
+        const p3 = i + 2 < pts.length ? pts[i + 2] : p2;
+        _addCatmullSegment(c, p0, p1, p2, p3);
       }
-      c.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
     }
     c.stroke();
     c.restore();
-  }
-
-  // Douglas-Peucker simplification
-  function _dpSimplify(pts, epsilon) {
-    if (pts.length <= 2) return pts;
-    let maxDist = 0, idx = 0;
-    const end = pts.length - 1;
-    const x1 = pts[0].x, y1 = pts[0].y;
-    const x2 = pts[end].x, y2 = pts[end].y;
-    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
-    for (let i = 1; i < end; i++) {
-      const d = len === 0
-        ? Math.hypot(pts[i].x - x1, pts[i].y - y1)
-        : Math.abs(dy * pts[i].x - dx * pts[i].y + x2 * y1 - y2 * x1) / len;
-      if (d > maxDist) { maxDist = d; idx = i; }
-    }
-    if (maxDist > epsilon) {
-      const left  = _dpSimplify(pts.slice(0, idx + 1), epsilon);
-      const right = _dpSimplify(pts.slice(idx), epsilon);
-      return left.slice(0, -1).concat(right);
-    }
-    return [pts[0], pts[end]];
-  }
-
-  // Chaikin corner-cutting pass
-  function _chaikinPass(pts) {
-    if (pts.length < 3) return pts;
-    const out = [pts[0]];
-    for (let i = 0; i < pts.length - 1; i++) {
-      const p0 = pts[i], p1 = pts[i + 1];
-      out.push({ x: p0.x * 0.75 + p1.x * 0.25, y: p0.y * 0.75 + p1.y * 0.25 });
-      out.push({ x: p0.x * 0.25 + p1.x * 0.75, y: p0.y * 0.25 + p1.y * 0.75 });
-    }
-    out.push(pts[pts.length - 1]);
-    return out;
-  }
-
-  // Post-process raw stroke: simplify + Chaikin smoothing (runs once on pen-up)
-  function _postProcessStroke(rawPts) {
-    if (rawPts.length <= 2) return rawPts;
-    // Light simplification only — keep curve fidelity
-    let pts = _dpSimplify(rawPts, 0.4);
-    // Two Chaikin passes — corner-cutting yields visibly smoother curves
-    pts = _chaikinPass(pts);
-    pts = _chaikinPass(pts);
-    return pts;
   }
 
   function _beginStroke(x, y) {
@@ -17314,7 +17279,7 @@ body.qa-only-mode #qaToolbarRow {
     _rawPts = [{x, y}];
     _pts    = [{x, y}];
     _liveStyleDirty = true;
-    _liveLastMid = null;
+    _liveDrawnTo = 0;
   }
 
   function _addSmoothPoint(x, y) {
@@ -17337,9 +17302,39 @@ body.qa-only-mode #qaToolbarRow {
 
   function _flushBezier() {
     if (_rawPts.length === 0) return;
-    // Apply Chaikin-based smoothing for the committed stroke — eliminates
-    // visible polygonal segments on curves, matching the live-preview look.
-    _pts = _postProcessStroke(_rawPts);
+    // Finish the one-point lookahead segment before committing the same curve.
+    const n = _pts.length;
+    if (n === 2) {
+      if (_liveStyleDirty) {
+        _liveCtx.strokeStyle = currentColor;
+        _liveCtx.lineWidth = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
+        _liveCtx.lineCap = 'round';
+        _liveCtx.lineJoin = 'round';
+        _liveCtx.globalAlpha = currentTool === 'highlight' ? 0.35 : 1;
+        _liveCtx.globalCompositeOperation = 'source-over';
+        _liveStyleDirty = false;
+      }
+      _liveCtx.beginPath();
+      _liveCtx.moveTo(_pts[0].x, _pts[0].y);
+      _liveCtx.lineTo(_pts[1].x, _pts[1].y);
+      _liveCtx.stroke();
+    } else if (n > 2 && _liveDrawnTo < n - 1) {
+      if (_liveStyleDirty) {
+        _liveCtx.strokeStyle = currentColor;
+        _liveCtx.lineWidth = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
+        _liveCtx.lineCap = 'round';
+        _liveCtx.lineJoin = 'round';
+        _liveCtx.globalAlpha = currentTool === 'highlight' ? 0.35 : 1;
+        _liveCtx.globalCompositeOperation = 'source-over';
+        _liveStyleDirty = false;
+      }
+      const startIndex = n - 2;
+      const p1 = _pts[startIndex];
+      const p2 = _pts[startIndex + 1];
+      const p0 = startIndex > 0 ? _pts[startIndex - 1] : p1;
+      _strokeCatmullSegment(_liveCtx, p0, p1, p2, p2);
+      _liveDrawnTo = n - 1;
+    }
     // Clear live overlay (CSS-pixel coords; ctx has dpr transform)
     if (_liveCanvas) {
       const cw = _liveCanvas._cssW || _liveCanvas.width;
@@ -17689,6 +17684,10 @@ body.qa-only-mode #qaToolbarRow {
 
     // Flush remaining bezier tail
     if (currentTool === 'pen' || currentTool === 'highlight') {
+      if (e.clientX !== undefined || (e.changedTouches && e.changedTouches.length)) {
+        const end = getXY(e);
+        _addSmoothPoint(end.x, end.y);
+      }
       _flushBezier();
       // Record completed freehand stroke
       strokeHistory[currentPage].push({
@@ -19523,6 +19522,10 @@ console.log('✅ Geo Tools Enhancement v2.0 loaded: arc drawing, rotation, draw-
     --gp-tx-25: rgba(241,245,249,.28);
     --gp-accent-fg: #ffffff;
   }
+
+  /* ---- Translated text always matches the original text size ---- */
+  .dual-lang-wrap, .dual-lang-opt-wrap, .dual-lang-wrap *, .dual-lang-opt-wrap *{ font-size: inherit !important; }
+  .dual-lang-wrap .dual-lang-label{ font-size: .75em !important; }
 
   /* ---- Root scale (cascades through Bootstrap's rem-based sizing too) ---- */
   html{ font-size: var(--gp-fs) !important; }
