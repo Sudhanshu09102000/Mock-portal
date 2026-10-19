@@ -1,10 +1,30 @@
 I am uploading a textbook chapter as a PDF and the sample file concept-demo.js. Convert the whole PDF into one .js file in exactly the same window.TEST_DATA format as concept-demo.js, following the PDF's own order strictly.
 
 ORDER
-0. ENTRY 1 = FIRST PAGE (before everything, before any concept page or question). Make it a type:"concept" entry with pauseTimer:true, a fitting icon and accent colour, and the title set to the chapter name ONLY (for example "Polynomials"). Do NOT write the word "Overview", "Class Overview" or any subtitle in the title. Build it only from what is actually in the PDF, using the cp-* toolkit. It must contain ONLY:
-   - one cp-divider titled "What you will be able to do"
-   - a cp-grid of cp-cards, one per major formula, rule, trick or trap family in the chapter
-   Nothing else on this page: no cp-lead, no cp-stats tiles, no cp-timeline roadmap, no cp-note, no cp-chips, no images. This page is extra and does not count as a PDF concept page.
+0. ENTRY 1 = CLASS OVERVIEW PAGE (before everything, before any concept page or question). Make it a type:"concept" entry with pauseTimer:true, a fitting icon and accent colour, and a title like "<Chapter name>". Build it only from what is actually in the PDF, using the cp-* toolkit. It must contain:
+   - a cp-lead sentence saying what this class covers and why it matters for the exam
+   - cp-stats tiles with the real counts: concept pages, key formulas/rules, worked examples, exercises, total questions, and an estimated time
+   - a cp-timeline roadmap listing every concept topic, worked-example block and exercise in the exact order of the output file
+   - a cp-grid of cp-cards ("what you will be able to do"), one per major formula, rule, trick or trap family
+   - a cp-note exam on why the chapter matters, a cp-note tip on how to use the pages, and cp-chips with the topic tags
+   Do not put any <img> inside its html.
+   - NO BROWN HIGHLIGHT: never use <span class="cp-hl"> anywhere (overview or concept pages). Emphasise key words and phrases with <u>underline</u> (and <b>bold</b>) instead. All counts must match the final file. This page is extra and does not count as a PDF concept page.
+   - YOUTUBE STUDIO FIELDS (on ENTRY 1 only, exactly as in concept-demo.js): add a "thumb" field and a "yt" field right after the title. The chapter icon of this page becomes tappable and opens a thumbnail + YouTube-kit studio (the thumbnail box and link text are hidden on the page), so these fields must be complete and copy-ready.
+     * thumb: { image:"thumbnail.jpg", line1, line2, badge, ribbon, burst, mode:"pro" }
+         - image is always the fixed name "thumbnail.jpg" (I will generate the file myself from the prompt you write). It is NOT one of the numbered figures: do not number it (it never takes a number like 1.jpg, 2.jpg), and it does not shift the numbering of the other figures. BUT it MUST get its own FIGURE PROMPT line and its own entry in the image list (see FIGURES below), just like every other image.
+         - line1 = first thumbnail line (chapter keyword, UPPERCASE, max ~14 characters); line2 = second line in gold (UPPERCASE, max ~16 characters, e.g. the hook or second topic); badge = 2-3 words (e.g. "FULL CLASS"); ribbon = 3 short promises joined by " • "; burst = 1-2 short words for the star burst (e.g. an exam name that appears in the PDF or in the sample). Keep every text short and punchy, in the chapter's real topic.
+     * yt: { title, altTitles, description, tags, hashtags, thumbText, pinnedComment, communityPost, chapters, playlist }
+         - title: the single best click-worthy title, max 70 characters (never above 100), main keyword first, exam name only if it appears in the PDF/sample, no clickbait that the chapter cannot deliver.
+         - altTitles: exactly 4 different angles for A/B testing (trick / formula / mistake-trap / full-class), each max 70 characters.
+         - description: use real line breaks with \n. Order: 1-2 hook sentences, "IN THIS CLASS" list with ✅ lines built only from the real formulas, rules, tricks and traps of the PDF, "CHAPTERS" list with one line per entry of the roadmap in the exact output order (use "00:00 Topic" so I can edit the times), a short like/share/subscribe call to action, and the hashtags as the last line.
+         - tags: 20-30 lowercase search phrases (topic, formula names, exam, syllabus), all joined by ", " must stay under 480 characters.
+         - hashtags: 3-5 words without "#" (the first three show above the title).
+         - thumbText: the 3-5 word text for the thumbnail, UPPERCASE.
+         - pinnedComment: one engaging question or practice challenge for the first comment, with emojis.
+         - communityPost: a 2-3 sentence announcement post with emojis.
+         - chapters: the same chapter lines as in the description, as a separate copy-ready block.
+         - playlist: a fitting playlist name.
+         - Do not invent facts, channel names, links, prices, results or claims that are not supported by the PDF.
 1. Then all concept pages that appear before the first exercise. Each is a type:"concept" entry using the cp-* toolkit classes, with pauseTimer:true, a fitting icon and accent colour, and a good-level, exam-oriented explanation of every formula, rule, trick and trap in the PDF.
 2. Then every worked example of the PDF as a question (no solutions).
 3. Then every single question of the first exercise.
@@ -27,14 +47,21 @@ FIGURES
 - Reference them as <img src="N.jpg"> inside concept pages and as quesimage:"N.jpg" for questions. Also state the key dimensions in the question text.
 - IMAGE SIZE: images must not be too large. Cap every image at 60% of its container width and 35vh of the screen height, with auto height, object-fit:contain and centred.
 - Put this as an inline style on every <img> in concept pages.
-- Also add a small style-injection snippet at the top of the file (img[src$=".jpg"] with !important) so question images are capped too.
+- NO THUMBNAIL BOX, NO LINK TEXT: also copy, unchanged, the first snippet of concept-demo.js (the "STYLE SNIPPET: hides the thumbnail box and the Open Thumbnail & YouTube Kit link" function) to the very top of the file, so page 1 shows neither the thumbnail box nor the "Open Thumbnail & YouTube Kit" link text. Tapping the chapter icon of page 1 still opens the studio.
+- Also add a small style-injection snippet at the top of the file (img[src$=".jpg"]:not(.cp-thumb-img) with !important) so question images are capped too. The :not(.cp-thumb-img) part is required so the class thumbnail on page 1 is not shrunk.
 - At the very end of the .js file, under a comment line such as FIGURE PROMPTS, write one separate line for every image in the form "N.jpg: ...". Each line is a complete, self-contained, detailed description I can copy straight into ChatGPT. It must state the exact shape, every label and dimension with units, relative positions, and the parts to be shaded or dotted. It must ask for a clean, most beautiful, colorful 3D diagram with line art and no extra text or answers.
-- Also add a list of which image goes with which entry number (question or concept), both in the file and in your reply.
-
-STYLE
-- Do NOT use the cp-hl highlight class anywhere. To emphasise a word in concept pages, use <b class="cp-green">word</b> instead.
+- THUMBNAIL PROMPT (required): the very FIRST line under FIGURE PROMPTS must be "thumbnail.jpg: ..." — a complete, self-contained, detailed prompt I can copy straight into ChatGPT to generate the class thumbnail that is used on page 1. It is written in the same way as the other figure prompts, but for a YouTube thumbnail:
+    * 16:9 landscape, 1920×1080 px, ultra-sharp, vibrant and eye-catching, cinematic 3D / illustrated style in colours matching the accent colour of entry 1.
+    * Show the real main subject of the chapter (the key objects, shapes, symbols or scene taken from the PDF's actual topic) as the hero visual, large and clear, placed on the RIGHT ~45% of the frame.
+    * Keep the LEFT ~55% a calm, darker, uncluttered gradient area, because the title text, badge and ribbon are overlaid there by the studio.
+    * Absolutely NO text, letters, numbers, logos, watermarks, channel names or people's faces inside the image (all text is added later by the studio).
+    * Must be based only on the chapter's content; do not invent anything that is not in the PDF.
+- Also add a list of which image goes with which entry number (question or concept), both in the file and in your reply. This list MUST also include the thumbnail as its own line: "thumbnail.jpg → ENTRY 1 (class overview, thumb field)". It is listed first and is not numbered; the numbered images 1.jpg, 2.jpg ... continue to be counted only for the PDF's real figures.
 
 CHECKS AND DELIVERY
 - Check that the JS has no syntax errors and that the entry counts and image counts are correct (entry 1 is the overview page).
+- Check that entry 1 has both the thumb and yt fields, the title is at most 70 characters, the tags joined by ", " are under 480 characters, there are exactly 4 altTitles, and the chapter lines match the roadmap order.
+- Check that FIGURE PROMPTS has the "thumbnail.jpg: ..." line first, followed by exactly one line for each numbered image, and that the image-to-entry list includes the thumbnail.
 - Give me the downloadable file.
 - Briefly tell me which questions or figures were ambiguous so I can check them.
+- Remind me in one line to generate thumbnail.jpg from its prompt (like the other images) and put it next to index.html together with the numbered images (tap the chapter icon on page 1 to open the thumbnail studio and the YouTube kit).
