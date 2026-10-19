@@ -3801,6 +3801,13 @@ body.test-box-resizing * {
 .yk-alt .yk-text { flex: 1; font-weight: 600; }
 .yk-toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 30px); opacity: 0; z-index: 100002; padding: 11px 20px; border-radius: 999px; background: #16a34a; color: #fff; font: 800 .86rem 'Inter', sans-serif; box-shadow: 0 12px 36px rgba(0,0,0,.5); transition: all .3s; pointer-events: none; max-width: 92vw; text-align: center; }
 .yk-toast.show { opacity: 1; transform: translate(-50%, 0); } .yk-toast.err { background: #dc2626; }
+.yk-frow { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.yk-fbtn { flex: 1; min-width: 0; padding: 9px 12px; border-radius: 12px; border: 1px dashed rgba(255,255,255,.35); background: rgba(255,255,255,.06); color: #e2e8f0; font: 700 .78rem 'Inter', sans-serif; cursor: pointer; text-align: center; transition: all .15s; }
+.yk-fbtn:hover { background: rgba(var(--yk-rgb), .3); border-color: rgb(var(--yk-rgb)); }
+.yk-fst { flex: none; font: 700 .68rem 'Inter', sans-serif; color: #86efac; min-width: 78px; }
+.yk-fx { flex: none; width: 30px; height: 30px; border-radius: 9px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.06); color: #fca5a5; cursor: pointer; }
+.yk-range { width: 100%; accent-color: rgb(var(--yk-rgb)); }
+.yk-chk { display: flex; align-items: center; gap: 8px; margin-top: 10px; font: 700 .8rem 'Inter', sans-serif; color: #cbd5e1; cursor: pointer; }
 @media (max-width: 900px) { .yk-stage { grid-template-columns: 1fr; } }
 @media (max-width: 767px) { #ytStudio { padding: 0; } .yk-panel { border-radius: 0; height: 100%; } .yk-head, .yk-tabs, .yk-body { padding-left: 14px; padding-right: 14px; } .yk-card { padding-left: 16px; } .yk-ch { flex-wrap: wrap; } }
 </style>
@@ -20674,7 +20681,7 @@ html.lite-mode .lite-switch,html.lite-mode .lite-knob{transition:none!important}
    ═══════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
-  var ST = { c: null, img: null, imgOk: false, mode: 'pro', accent: '#3b82f6', raf: 0, texts: [], tab: 'thumb' };
+  var ST = { c: null, img: null, imgOk: false, fileImg: null, asset: { person: null, logo: null, bg: null }, mode: 'creator', accent: '#3b82f6', raf: 0, texts: [], tab: 'thumb' };
   var E = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]; }); };
   var plain = function (h) { var d = document.createElement('div'); d.innerHTML = String(h || ''); return (d.textContent || '').trim(); };
@@ -20688,8 +20695,9 @@ html.lite-mode .lite-switch,html.lite-mode .lite-knob{transition:none!important}
     var w = title.split(/\s+/), half = Math.ceil(w.length / 2);
     var l1 = w.length > 2 ? w.slice(0, half).join(' ') : title, l2 = w.length > 2 ? w.slice(half).join(' ') : '';
     return {
-      image: t.image || '', mode: t.mode === 'image' ? 'image' : 'pro',
-      line1: t.line1 != null ? t.line1 : l1.toUpperCase(), line2: t.line2 != null ? t.line2 : l2.toUpperCase(),
+      image: t.image || '', mode: t.mode === 'image' ? 'image' : (t.mode === 'pro' ? 'pro' : 'creator'),
+      line1: t.line1 != null ? t.line1 : l1.toUpperCase(), line2: t.line2 != null ? t.line2 : l2.toUpperCase(), line3: t.line3 != null ? t.line3 : '',
+      banner: t.banner != null ? t.banner : (t.badge != null ? t.badge : ''), person: t.person || '', logo: t.logo || '',
       badge: t.badge != null ? t.badge : 'FULL CLASS', ribbon: t.ribbon != null ? t.ribbon : '', burst: t.burst != null ? t.burst : ''
     };
   }
@@ -20736,13 +20744,80 @@ html.lite-mode .lite-switch,html.lite-mode .lite-knob{transition:none!important}
     for (var x = 0; x < W; x += 80 * s) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
     for (var y = 0; y < H; y += 80 * s) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
     for (var i = 0; i < 46; i++) { var px = (Math.sin(i * 12.9898) * 43758.5453 % 1 + 1) % 1 * W, py = (Math.sin(i * 78.233) * 12345.678 % 1 + 1) % 1 * H; ctx.fillStyle = 'rgba(255,255,255,' + (0.1 + (i % 5) * .08) + ')'; ctx.beginPath(); ctx.arc(px, py, (2 + i % 4) * s, 0, 7); ctx.fill(); }
-    ctx.save(); ctx.shadowColor = a; ctx.shadowBlur = 80 * s; ctx.font = (620 * s) + 'px ' + FONT; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(o.icon || '🎯', W * .78, H * .5); ctx.restore();
+    if (o.icon !== '') { ctx.save(); ctx.shadowColor = a; ctx.shadowBlur = 80 * s; ctx.font = (620 * s) + 'px ' + FONT; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(o.icon || '🎯', W * .78, H * .5); ctx.restore(); }
+  }
+
+
+  /* ═══ CREATOR STYLE (teacher photo + red exam banner + 3 coloured title lines) ═══ */
+  function coverRect(ctx, img, x, y, w, h) { var sc = Math.max(w / img.naturalWidth, h / img.naturalHeight), iw = img.naturalWidth * sc, ih = img.naturalHeight * sc; ctx.drawImage(img, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih); }
+  function drawCreator(ctx, W, H, o, s) {
+    var acc = o.accent, ar = rgb(acc).join(','), hasBg = !!(o.img && o.imgOk), P = o.person, cx = W * .335, maxW = W * .62;
+    /* background */
+    if (hasBg) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); cover(ctx, o.img, W, H); var lg = ctx.createLinearGradient(0, 0, W * .75, 0); lg.addColorStop(0, 'rgba(3,6,20,.55)'); lg.addColorStop(1, 'rgba(3,6,20,0)'); ctx.fillStyle = lg; ctx.fillRect(0, 0, W, H); }
+    else artBg(ctx, W, H, { accent: acc, icon: '' }, s);
+    var vg = ctx.createRadialGradient(W / 2, H / 2, H * .5, W / 2, H / 2, H * 1.1); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.45)'); ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+
+    /* teacher photo (transparent PNG), bottom-anchored on the right */
+    if (P) {
+      var ph = H * (o.pscale || .92), pw = P.naturalWidth * ph / P.naturalHeight, pcx = W * .80 + (o.px || 0) * s;
+      var rl = ctx.createRadialGradient(pcx, H * .5, 0, pcx, H * .5, 620 * s); rl.addColorStop(0, 'rgba(' + ar + ',.55)'); rl.addColorStop(1, 'rgba(' + ar + ',0)'); ctx.fillStyle = rl; ctx.fillRect(0, 0, W, H);
+      ctx.save(); ctx.translate(pcx, H); if (o.flip) ctx.scale(-1, 1);
+      ctx.shadowColor = 'rgba(255,255,255,.9)'; ctx.shadowBlur = 22 * s; ctx.drawImage(P, -pw / 2, -ph, pw, ph);
+      ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 40 * s; ctx.shadowOffsetX = -18 * s; ctx.drawImage(P, -pw / 2, -ph, pw, ph);
+      ctx.restore();
+    }
+
+    /* red exam banner */
+    var by = 34 * s, bh = 128 * s, bottomTop = by + 30 * s;
+    if (o.banner) {
+      var bt = String(o.banner).toUpperCase(), bfs = fit(ctx, bt, W * .64 - 110 * s, 92 * s, 900); ctx.font = '900 ' + bfs + 'px ' + FONT;
+      var bw = Math.min(W * .64, ctx.measureText(bt).width + 110 * s), bx = cx - bw / 2, bc = o.bcol || '#e11d2e';
+      var bg = ctx.createLinearGradient(0, by, 0, by + bh); bg.addColorStop(0, mix(bc, .3)); bg.addColorStop(.5, bc); bg.addColorStop(1, mix(bc, -.35));
+      ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.65)'; ctx.shadowBlur = 30 * s; ctx.shadowOffsetY = 10 * s; ctx.fillStyle = bg; rr(ctx, bx, by, bw, bh, 30 * s); ctx.fill(); ctx.restore();
+      ctx.lineWidth = 7 * s; ctx.strokeStyle = '#fff'; rr(ctx, bx, by, bw, bh, 30 * s); ctx.stroke();
+      ctx.lineWidth = 3 * s; ctx.strokeStyle = 'rgba(0,0,0,.35)'; rr(ctx, bx + 9 * s, by + 9 * s, bw - 18 * s, bh - 18 * s, 22 * s); ctx.stroke();
+      ctx.textAlign = 'center'; ctx.font = '900 ' + bfs + 'px ' + FONT; var by2 = by + bh / 2 + bfs * .36;
+      ctx.save(); ctx.lineJoin = 'round'; ctx.lineWidth = bfs * .16; ctx.strokeStyle = 'rgba(0,0,0,.85)'; ctx.strokeText(bt, cx, by2); ctx.restore();
+      ctx.fillStyle = '#fff'; ctx.fillText(bt, cx, by2); ctx.textAlign = 'left';
+      bottomTop = by + bh + 34 * s;
+    }
+
+    /* three title lines: white / gold (biggest) / cyan */
+    var defs = [
+      { t: o.line1, st: 150, k: 'white' }, { t: o.line2, st: 360, k: 'gold' }, { t: o.line3, st: 240, k: 'cyan' }
+    ].filter(function (d) { return d.t && String(d.t).trim(); });
+    defs.forEach(function (d) { d.t = String(d.t).toUpperCase(); d.sz = fit(ctx, d.t, maxW, d.st * s, 900); d.cap = d.sz * .74; });
+    var gap = 38 * s, total = 0; defs.forEach(function (d, i) { total += d.cap + (i ? gap : 0); });
+    var areaB = H - 56 * s, cur = bottomTop + Math.max(0, (areaB - bottomTop - total) / 2);
+    ctx.textAlign = 'center'; ctx.lineJoin = 'round';
+    defs.forEach(function (d) {
+      var y = cur + d.cap, sz = d.sz; cur += d.cap + gap; ctx.font = '900 ' + sz + 'px ' + FONT;
+      var depth = d.k === 'gold' ? '#7a2f00' : d.k === 'cyan' ? '#06235f' : '#0b1020', n = d.k === 'gold' ? 16 : 11;
+      for (var i = n; i >= 1; i--) { ctx.fillStyle = depth; ctx.fillText(d.t, cx + i * 1.5 * s, y + i * 1.9 * s); }
+      ctx.save(); ctx.lineWidth = sz * (d.k === 'cyan' ? .17 : .12); ctx.strokeStyle = '#000'; ctx.strokeText(d.t, cx, y); ctx.restore();
+      if (d.k === 'cyan') { ctx.save(); ctx.lineWidth = sz * .075; ctx.strokeStyle = '#fff'; ctx.strokeText(d.t, cx, y); ctx.restore(); }
+      var g = ctx.createLinearGradient(0, y - d.cap, 0, y);
+      if (d.k === 'gold') { g.addColorStop(0, '#fff7a0'); g.addColorStop(.45, '#ffd51a'); g.addColorStop(1, '#ff9400'); }
+      else if (d.k === 'cyan') { g.addColorStop(0, '#7df6ff'); g.addColorStop(1, '#1668ff'); }
+      else { g.addColorStop(0, '#ffffff'); g.addColorStop(1, '#d9e2f3'); }
+      ctx.save(); if (d.k === 'gold') { ctx.shadowColor = 'rgba(255,160,20,.75)'; ctx.shadowBlur = 46 * s; } ctx.fillStyle = g; ctx.fillText(d.t, cx, y); ctx.restore();
+      ctx.save(); ctx.lineWidth = Math.max(2, 3 * s); ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.strokeText(d.t, cx, y); ctx.restore();
+    });
+    ctx.textAlign = 'left';
+
+    /* round channel logo (top-right) */
+    if (o.logo) {
+      var lx = W - 128 * s, ly = 128 * s, r = 96 * s;
+      ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 24 * s; ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(lx, ly, r + 8 * s, 0, 7); ctx.fill(); ctx.restore();
+      ctx.save(); ctx.beginPath(); ctx.arc(lx, ly, r, 0, 7); ctx.clip(); ctx.fillStyle = '#fff'; ctx.fillRect(lx - r, ly - r, 2 * r, 2 * r); coverRect(ctx, o.logo, lx - r, ly - r, 2 * r, 2 * r); ctx.restore();
+    }
   }
 
   function draw(ctx, W, H, o) {
     var s = W / 1920, acc = o.accent, ar = rgb(acc).join(',');
     ctx.save(); ctx.clearRect(0, 0, W, H); ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+    if (o.mode === 'creator') { drawCreator(ctx, W, H, o, s); ctx.restore(); return; }
     var hasImg = !!(o.img && o.imgOk);
     if (hasImg) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); cover(ctx, o.img, W, H); } else artBg(ctx, W, H, o, s);
     if (o.mode === 'image') { ctx.restore(); return; }
@@ -20818,7 +20893,8 @@ html.lite-mode .lite-switch,html.lite-mode .lite-knob{transition:none!important}
   /* ---------- state helpers ---------- */
   function opts() {
     var v = function (id) { var e = E(id); return e ? e.value : ''; };
-    return { img: ST.img, imgOk: ST.imgOk, mode: ST.mode, accent: ST.accent, icon: ST.c.icon || '🎯', line1: v('ykL1'), line2: v('ykL2'), badge: v('ykBadge'), ribbon: v('ykRib'), burst: v('ykBurst') };
+    return { img: ST.img, imgOk: ST.imgOk, mode: ST.mode, accent: ST.accent, icon: ST.c.icon || '🎯', line1: v('ykL1'), line2: v('ykL2'), line3: v('ykL3'), banner: v('ykBanner'), badge: v('ykBadge'), ribbon: v('ykRib'), burst: v('ykBurst'),
+      person: ST.asset.person, logo: ST.asset.logo, bcol: v('ykBcol') || '#e11d2e', pscale: (+v('ykPS') || 92) / 100, px: +v('ykPX') || 0, flip: !!(E('ykFlip') && E('ykFlip').checked) };
   }
   function redraw() { cancelAnimationFrame(ST.raf); ST.raf = requestAnimationFrame(function () { var cv = E('ykCv'); if (cv) draw(cv.getContext('2d'), 1920, 1080, opts()); }); }
   function toast(msg, err) { var t = E('ykToast'); if (!t) { t = document.createElement('div'); t.id = 'ykToast'; t.className = 'yk-toast'; document.body.appendChild(t); } t.textContent = msg; t.classList.toggle('err', !!err); t.classList.add('show'); clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('show'); }, 2200); }
@@ -20897,41 +20973,94 @@ html.lite-mode .lite-switch,html.lite-mode .lite-knob{transition:none!important}
   }
   function closeStudio() { var m = E('ytStudio'); if (m) m.classList.remove('open'); document.documentElement.style.overflow = ST._ov || ''; }
 
+  /* ---------- photo helpers (person / logo / background are remembered in this browser) ---------- */
+  function stored(k) { try { return localStorage.getItem('ytStudio.' + k); } catch (e) { return null; } }
+  function storeSet(k, v) { try { if (v == null || v === '') localStorage.removeItem('ytStudio.' + k); else localStorage.setItem('ytStudio.' + k, v); return true; } catch (e) { return false; } }
+  function loadImg(src, cb) {
+    if (!src) return cb(null);
+    var isData = /^data:/.test(src);
+    (function t(cors) { var im = new Image(); if (cors && !isData) im.crossOrigin = 'anonymous'; im.onload = function () { cb(im); }; im.onerror = function () { if (cors && !isData) t(false); else cb(null); }; im.src = src; })(true);
+  }
+  function curBg() { ST.img = ST.asset.bg || ST.fileImg; ST.imgOk = !!ST.img; }
+  function pickFile(kind, file) {
+    if (!file) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      var im = new Image();
+      im.onload = function () {
+        var max = kind === 'logo' ? 480 : kind === 'bg' ? 1920 : 1500, big = kind === 'bg' ? im.naturalWidth : Math.max(im.naturalWidth, im.naturalHeight), sc = Math.min(1, max / big);
+        var cv = document.createElement('canvas'); cv.width = Math.round(im.naturalWidth * sc); cv.height = Math.round(im.naturalHeight * sc);
+        cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
+        var url = kind === 'bg' ? cv.toDataURL('image/jpeg', .9) : cv.toDataURL('image/png');
+        if (!storeSet(kind, url)) toast('Loaded, but too big to remember after reload', true);
+        loadImg(url, function (i2) { ST.asset[kind] = i2; curBg(); syncFileLabels(); redraw(); toast('✓ ' + (kind === 'person' ? 'Photo' : kind === 'logo' ? 'Logo' : 'Background') + ' added'); });
+      };
+      im.onerror = function () { toast('Could not read that image', true); };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  }
+  function syncFileLabels() {
+    ['person', 'logo', 'bg'].forEach(function (k) { var e = E('ykSt_' + k); if (e) e.textContent = ST.asset[k] ? '✓ loaded' : (k === 'bg' ? 'using thumbnail.jpg' : 'none'); });
+  }
+  function applyModes() {
+    var pane = E('ykPaneThumb'); if (!pane) return;
+    pane.querySelectorAll('[data-modes]').forEach(function (el) { el.style.display = el.getAttribute('data-modes').split(' ').indexOf(ST.mode) > -1 ? '' : 'none'; });
+  }
+
   function openStudio(c) {
-    var m = build(), cfg = tcfg(c); ST.c = c; ST.mode = cfg.mode; ST.accent = c.accent || '#3b82f6'; ST.img = null; ST.imgOk = false;
+    var m = build(), cfg = tcfg(c); ST.c = c; ST.mode = cfg.mode; ST.accent = c.accent || '#3b82f6'; ST.img = null; ST.imgOk = false; ST.fileImg = null; ST.asset = { person: null, logo: null, bg: null };
     var r = rgb(ST.accent); m.style.setProperty('--yk-rgb', r.join(','));
     E('ykLogo').textContent = c.icon || '🎯'; E('ykTitle').textContent = plain(c.title);
     E('ykKitTab').style.display = c.yt ? '' : 'none';
+    var hex = function (a) { return a.length === 4 ? '#' + a.slice(1).split('').map(function (x) { return x + x; }).join('') : a; };
+    var fileBtn = function (kind, label) { return '<div class="yk-frow"><label class="yk-fbtn">' + label + '<input type="file" accept="image/*" id="ykF_' + kind + '" hidden></label><span class="yk-fst" id="ykSt_' + kind + '"></span><button type="button" class="yk-fx" data-rm="' + kind + '" title="Remove">✕</button></div>'; };
+    var chip = function (mode, label) { return '<div class="yk-chip' + (ST.mode === mode ? ' on' : '') + '" data-m="' + mode + '">' + label + '</div>'; };
 
     E('ykPaneThumb').innerHTML =
       '<div class="yk-stage"><div><div class="yk-canvaswrap"><canvas id="ykCv" width="1920" height="1080"></canvas></div><p class="yk-hint" style="margin:10px 2px 0">Preview of the 1920×1080 export. YouTube shows thumbnails at 1280×720 (16:9, under 2 MB) — the JPG button handles that for you.</p></div>' +
       '<div class="yk-ctl">' +
       '<div class="yk-box yk-dl"><button class="yk-btn red" id="ykPng">⬇ Download HD PNG · 1920×1080</button><button class="yk-btn acc" id="ykJpg">⬇ Download YouTube JPG · 1280×720</button>' + (cfg.image ? '<a class="yk-btn ghost" id="ykOrig" href="' + esc(cfg.image) + '" download>⬇ Original image</a>' : '') + '</div>' +
-      '<div class="yk-box"><span class="yk-lab">Style</span><div class="yk-chips"><div class="yk-chip' + (ST.mode === 'pro' ? ' on' : '') + '" data-m="pro">✨ Pro design</div><div class="yk-chip' + (ST.mode === 'image' ? ' on' : '') + '" data-m="image">🖼 Image only</div></div></div>' +
-      '<div class="yk-box"><span class="yk-lab">Line 1</span><input class="yk-in" id="ykL1" value="' + esc(cfg.line1) + '"><span class="yk-lab" style="margin-top:10px">Line 2 (gold)</span><input class="yk-in" id="ykL2" value="' + esc(cfg.line2) + '"><div class="yk-row2" style="margin-top:10px"><div><span class="yk-lab">Badge</span><input class="yk-in" id="ykBadge" value="' + esc(cfg.badge) + '"></div><div><span class="yk-lab">Burst</span><input class="yk-in" id="ykBurst" value="' + esc(cfg.burst) + '" placeholder="e.g. FREE"></div></div><span class="yk-lab" style="margin-top:10px">Ribbon</span><input class="yk-in" id="ykRib" value="' + esc(cfg.ribbon) + '"><span class="yk-lab" style="margin-top:10px">Accent colour</span><input type="color" class="yk-color" id="ykAcc" value="' + esc(ST.accent.length === 4 ? '#' + ST.accent.slice(1).split('').map(function (x) { return x + x; }).join('') : ST.accent) + '"></div>' +
+      '<div class="yk-box"><span class="yk-lab">Style</span><div class="yk-chips">' + chip('creator', '👨‍🏫 Creator') + chip('pro', '✨ Pro design') + chip('image', '🖼 Image only') + '</div></div>' +
+      '<div class="yk-box"><div data-modes="creator"><span class="yk-lab">Red top banner (exam / class name)</span><input class="yk-in" id="ykBanner" value="' + esc(cfg.banner) + '"></div>' +
+      '<span class="yk-lab" style="margin-top:10px">Line 1 (white)</span><input class="yk-in" id="ykL1" value="' + esc(cfg.line1) + '"><span class="yk-lab" style="margin-top:10px">Line 2 (gold · biggest)</span><input class="yk-in" id="ykL2" value="' + esc(cfg.line2) + '">' +
+      '<div data-modes="creator"><span class="yk-lab" style="margin-top:10px">Line 3 (cyan)</span><input class="yk-in" id="ykL3" value="' + esc(cfg.line3) + '"></div>' +
+      '<div data-modes="pro"><div class="yk-row2" style="margin-top:10px"><div><span class="yk-lab">Badge</span><input class="yk-in" id="ykBadge" value="' + esc(cfg.badge) + '"></div><div><span class="yk-lab">Burst</span><input class="yk-in" id="ykBurst" value="' + esc(cfg.burst) + '" placeholder="e.g. FREE"></div></div><span class="yk-lab" style="margin-top:10px">Ribbon</span><input class="yk-in" id="ykRib" value="' + esc(cfg.ribbon) + '"></div>' +
+      '<div class="yk-row2" style="margin-top:10px"><div><span class="yk-lab">Background colour</span><input type="color" class="yk-color" id="ykAcc" value="' + esc(hex(ST.accent)) + '"></div><div data-modes="creator"><span class="yk-lab">Banner colour</span><input type="color" class="yk-color" id="ykBcol" value="' + esc(stored('bcol') || '#e11d2e') + '"></div></div></div>' +
+      '<div class="yk-box" data-modes="creator"><span class="yk-lab">Photos (saved in this browser — set once, reused for every chapter)</span>' +
+      fileBtn('person', '📷 Teacher photo (transparent PNG)') + fileBtn('logo', '🔵 Channel logo') + fileBtn('bg', '🖼 Background image (optional)') +
+      '<span class="yk-lab" style="margin-top:12px">Photo size · <span id="ykPSv"></span>%</span><input type="range" class="yk-range" id="ykPS" min="50" max="140" value="' + esc(stored('ps') || '92') + '">' +
+      '<span class="yk-lab" style="margin-top:8px">Photo left ⟷ right</span><input type="range" class="yk-range" id="ykPX" min="-400" max="400" value="' + esc(stored('px') || '0') + '">' +
+      '<label class="yk-chk"><input type="checkbox" id="ykFlip"' + (stored('flip') === '1' ? ' checked' : '') + '> Flip photo horizontally</label>' +
+      '<p class="yk-hint" style="margin:8px 0 0">Tip: use a background-removed (transparent) PNG of the teacher. Without a photo, the design still renders with a glowing background.</p></div>' +
       '</div></div>';
     E('ykPaneKit').innerHTML = c.yt ? kitHtml(c.yt) : '';
 
     var pane = E('ykPaneThumb');
-    pane.querySelectorAll('.yk-in').forEach(function (i) { i.addEventListener('input', redraw); });
+    pane.querySelectorAll('input.yk-in, input.yk-range, #ykFlip').forEach(function (i) { i.addEventListener('input', redraw); });
     E('ykAcc').addEventListener('input', function (e) { ST.accent = e.target.value; m.style.setProperty('--yk-rgb', rgb(ST.accent).join(',')); redraw(); });
-    pane.querySelectorAll('.yk-chip').forEach(function (ch) { ch.onclick = function () { ST.mode = ch.getAttribute('data-m'); pane.querySelectorAll('.yk-chip').forEach(function (x) { x.classList.toggle('on', x === ch); }); redraw(); }; });
+    E('ykBcol').addEventListener('input', function (e) { storeSet('bcol', e.target.value); redraw(); });
+    var psv = function () { E('ykPSv').textContent = E('ykPS').value; };
+    E('ykPS').addEventListener('input', function () { psv(); storeSet('ps', E('ykPS').value); }); psv();
+    E('ykPX').addEventListener('input', function () { storeSet('px', E('ykPX').value); });
+    E('ykFlip').addEventListener('change', function () { storeSet('flip', E('ykFlip').checked ? '1' : ''); redraw(); });
+    ['person', 'logo', 'bg'].forEach(function (k) { E('ykF_' + k).addEventListener('change', function (e) { pickFile(k, e.target.files && e.target.files[0]); e.target.value = ''; }); });
+    pane.querySelectorAll('[data-rm]').forEach(function (b) { b.onclick = function () { var k = b.getAttribute('data-rm'); storeSet(k, null); ST.asset[k] = null; curBg(); syncFileLabels(); redraw(); toast('Removed'); }; });
+    pane.querySelectorAll('.yk-chip').forEach(function (ch) { ch.onclick = function () { ST.mode = ch.getAttribute('data-m'); pane.querySelectorAll('.yk-chip').forEach(function (x) { x.classList.toggle('on', x === ch); }); applyModes(); redraw(); }; });
     E('ykPng').onclick = dlPng; E('ykJpg').onclick = dlJpg;
+    applyModes(); syncFileLabels();
 
     ST._ov = document.documentElement.style.overflow; document.documentElement.style.overflow = 'hidden';
     m.classList.add('open'); setTab('thumb');
 
-    /* fonts first, then image (try CORS-safe, then plain), then draw */
+    /* fonts first, then images (saved upload → file next to index.html), then draw */
     var fonts = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load('900 100px Inter'), document.fonts.load('800 100px Inter')]).catch(function () { }) : Promise.resolve();
     fonts.then(function () { redraw(); });
-    if (cfg.image) {
-      var tryLoad = function (cors) {
-        var im = new Image(); if (cors) im.crossOrigin = 'anonymous';
-        im.onload = function () { ST.img = im; ST.imgOk = true; redraw(); };
-        im.onerror = function () { if (cors) tryLoad(false); else { ST.imgOk = false; redraw(); toast('Thumbnail image not found: ' + cfg.image, true); } };
-        im.src = cfg.image;
-      }; tryLoad(true);
-    }
+    var token = ST.c;
+    loadImg(stored('person') || cfg.person || 'person.png', function (im) { if (ST.c === token) { ST.asset.person = im; syncFileLabels(); redraw(); } });
+    loadImg(stored('logo') || cfg.logo || 'logo.png', function (im) { if (ST.c === token) { ST.asset.logo = im; syncFileLabels(); redraw(); } });
+    if (stored('bg')) loadImg(stored('bg'), function (im) { if (ST.c === token) { ST.asset.bg = im; curBg(); syncFileLabels(); redraw(); } });
+    if (cfg.image) loadImg(cfg.image, function (im) { if (ST.c !== token) return; ST.fileImg = im; curBg(); redraw(); if (!im && ST.mode !== 'creator') toast('Thumbnail image not found: ' + cfg.image, true); });
   }
   window.ytStudioOpen = openStudio;
 })();
