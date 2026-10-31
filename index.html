@@ -15553,6 +15553,72 @@ body.qa-only-mode #qaToolbarRow {
     <div id="gcp-ppt-status"></div>
   </div>
 
+  <!-- SCREEN RECORDER (all UI lives here) -->
+  <div class="gcp-section" id="rec-root">
+    <div class="gcp-section-title">🎥 Screen Recorder</div>
+
+    <div id="rec-idle">
+      <div class="rec-row on" id="rec-row-sys" role="switch" aria-checked="true" tabindex="0">
+        <div class="ic">🔊</div>
+        <div class="tx"><b>Internal audio</b><small>Sound playing on your device / tab</small></div>
+        <div class="rec-sw"></div>
+      </div>
+      <div class="rec-row on" id="rec-row-mic" role="switch" aria-checked="true" tabindex="0">
+        <div class="ic">🎙️</div>
+        <div class="tx"><b>External audio</b><small>Your microphone / voice</small></div>
+        <div class="rec-sw"></div>
+      </div>
+      <div class="rec-mic-detail" id="rec-mic-detail">
+        <select class="rec-select" id="rec-mic-sel"><option value="">Default microphone</option></select>
+        <div class="rec-meter"><i id="rec-meter-fill"></i></div>
+        <div class="rec-lbl" style="margin:12px 0 6px">Noise cancellation</div>
+        <div class="rec-seg" id="rec-seg-nc" style="margin-bottom:4px"><button data-v="off">Off</button><button data-v="standard" class="on">Standard</button><button data-v="strong">Strong</button></div>
+        <div class="rec-nc-note" id="rec-nc-note"></div>
+        <div class="rec-mic-foot"><span id="rec-meter-cap">Press “Test mic” and speak</span><button type="button" class="rec-mini" id="rec-test">Test mic</button></div>
+      </div>
+
+      <div class="rec-lbl">Video quality</div>
+      <div class="rec-seg" id="rec-seg-res"><button data-v="720">720p</button><button data-v="1080" class="on">1080p</button><button data-v="1440">1440p (2K)</button><button data-v="2160">4K Ultra HD</button><button data-v="0">Max</button></div>
+      <div class="rec-seg" id="rec-seg-fps"><button data-v="30" class="on">30 fps</button><button data-v="60">60 fps</button><button data-v="120">120 fps</button><button data-v="144">144 fps</button></div>
+      <div class="rec-lbl" style="margin:10px 0 6px">Dynamic range</div>
+      <div class="rec-seg" id="rec-seg-hdr"><button data-v="off">SDR</button><button data-v="on">HDR · 10-bit</button></div>
+      <div class="rec-lbl" style="margin:10px 0 6px">Bitrate / sharpness</div>
+      <div class="rec-seg" id="rec-seg-q"><button data-v="high">High</button><button data-v="ultra">Ultra</button><button data-v="max">Maximum</button></div>
+      <div class="rec-nc-note" id="rec-dev-info" style="margin:2px 0 6px;line-height:1.55"></div>
+      <div class="rec-row on" id="rec-row-auto" role="switch" aria-checked="true" tabindex="0" style="margin-top:8px">
+        <div class="ic">💾</div>
+        <div class="tx"><b>Auto-download files</b><small>Save the recording when finished</small></div>
+        <div class="rec-sw"></div>
+      </div>
+
+      <div class="rec-out"><span>🎞️ One file<br>MP4 · video + audio</span><span id="rec-out-aud">🔊 Sound<br>built into the video</span></div>
+      <div class="rec-tip">💡 In the share picker choose <b>Chrome Tab</b> or <b>Entire Screen</b> and tick <b>“Share audio”</b>. Use headphones to avoid echo. While recording, the panel closes — hotkeys: <b>Alt+Shift+P</b> pause · <b>Alt+Shift+R</b> stop.</div>
+      <div class="rec-tip rec-warn" id="rec-unsupported" hidden>⚠️ Screen recording isn’t supported on this browser/device (mobile browsers block it). Use Chrome or Edge on desktop.</div>
+      <button class="rec-primary" id="rec-start"><span class="dot"></span> Start Recording</button>
+    </div>
+
+    <div id="rec-live" hidden>
+      <div class="rec-live-card" id="rec-live-card">
+        <div class="rec-live-top"><span class="rec-dot"></span><span id="rec-state">RECORDING</span></div>
+        <div id="rec-time">00:00</div>
+        <div class="rec-live-sub" id="rec-live-sub">Video + audio in one MP4</div>
+        <canvas id="rec-wave" width="480" height="92"></canvas>
+        <div class="rec-ctrl">
+          <button type="button" class="rec-cb" id="rec-btn-pause"><b>⏸</b><span>Pause</span></button>
+          <button type="button" class="rec-cb" id="rec-btn-mic"><b>🎙️</b><span>Mute</span></button>
+          <button type="button" class="rec-cb stop" id="rec-btn-stop"><b>⏹</b><span>Stop &amp; Save</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="rec-done" hidden>
+      <video class="rec-video" id="rec-video" controls playsinline></video>
+      <div class="rec-meta"><span id="rec-m-dur">⏱ 00:00</span><span id="rec-m-aud">🔊 Audio</span></div>
+      <button type="button" class="rec-dl" id="rec-dl-video"><span class="ic">🎞️</span><span class="tx"><b id="rec-dl-video-t">Video · MP4</b><small id="rec-dl-video-s"></small></span><span class="ic">⬇</span></button>
+      <div class="rec-pair"><button type="button" class="rec-ghost" id="rec-again">● Record again</button><button type="button" class="rec-ghost danger" id="rec-discard">🗑 Discard</button></div>
+    </div>
+  </div>
+
   <!-- SHORTCUTS -->
   <div class="gcp-section">
     <div class="gcp-section-title">⌨️ Shortcuts</div>
@@ -17469,10 +17535,21 @@ body.qa-only-mode #qaToolbarRow {
   // Smoothing: EMA on raw points → incrementally drawn Catmull-Rom cubic
   // segments. Each segment shares a tangent with its neighbors to avoid kinks.
 
-  const SMOOTH_ALPHA = 0.55;   // EMA weight — lower = smoother/laggier, higher = snappier/rawer
-  const MIN_DIST     = 0.4;    // capture nearly every coalesced point — denser sampling = smoother curves
+  // ── PRO INK ENGINE (whiteboard-grade smooth ink) ─────────────────────
+  //  1. Adaptive low-pass filter  – slow hand = heavy smoothing (kills tremor),
+  //                                 fast hand = light smoothing (no lag).
+  //  2. Midpoint quadratic Béziers – C1-continuous curve through the filtered
+  //                                 points, so there are never visible corners.
+  //  3. Dynamic width              – stylus pressure when available, otherwise
+  //                                 pen speed (fast = a touch thinner), eased
+  //                                 so the width never jumps.
+  //  4. Live overlay canvas        – current stroke is drawn on a transparent
+  //                                 layer; committed once on pen-up (no
+  //                                 getImageData / putImageData mid-stroke).
+  //  5. Highlighter                – drawn opaque on the live layer and faded
+  //                                 with CSS opacity, so overlaps never darken.
+  const MIN_DIST = 0.6;   // ignore sub-pixel jitter
 
-  // Live overlay canvas (same size as main canvas, positioned on top)
   let _liveCanvas = null;
   let _liveCtx    = null;
 
@@ -17489,68 +17566,38 @@ body.qa-only-mode #qaToolbarRow {
     _applyDpr(_liveCanvas, cssW, cssH);
   }
 
-  let _rawPts = [];   // raw pointer positions collected this stroke
-  let _pts    = [];   // EMA-smoothed positions
+  let _rawPts = [];       // raw pointer positions this stroke
+  let _pts    = [];       // filtered points {x, y, w}  (w = width factor)
+  let _liveDrawnTo = 0;   // next segment index to paint on the live canvas
+  let _fx = 0, _fy = 0;   // filter state
+  let _wSm = 1;           // smoothed width factor
+  let _lastT = 0;         // last event timestamp
+  let _liveHL = false;    // current live stroke is a highlighter
 
-  let _liveStyleDirty = true;
-  let _liveDrawnTo     = 0;    // last point index committed to the live canvas
+  const _mid = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
 
-  function _addCatmullSegment(targetCtx, p0, p1, p2, p3) {
-    const tension = 1 / 6;
-    targetCtx.bezierCurveTo(
-      p1.x + (p2.x - p0.x) * tension,
-      p1.y + (p2.y - p0.y) * tension,
-      p2.x - (p3.x - p1.x) * tension,
-      p2.y - (p3.y - p1.y) * tension,
-      p2.x,
-      p2.y
-    );
+  // Paint segment i of a point list: curve from mid(i-1,i) through control i to mid(i,i+1)
+  function _paintSeg(c, pts, i, constW, baseW) {
+    const n = pts.length;
+    const p = pts[i];
+    const a = i === 0 ? p : _mid(pts[i - 1], p);
+    const b = i === n - 1 ? p : _mid(p, pts[i + 1]);
+    const wf = constW ? 1 : (p.w === undefined ? 1 : p.w);
+    c.lineWidth = Math.max(0.2, baseW * wf);
+    c.beginPath();
+    c.moveTo(a.x, a.y);
+    if (i === 0 || i === n - 1) c.lineTo(b.x, b.y);
+    else c.quadraticCurveTo(p.x, p.y, b.x, b.y);
+    c.stroke();
   }
 
-  function _strokeCatmullSegment(targetCtx, p0, p1, p2, p3) {
-    targetCtx.beginPath();
-    targetCtx.moveTo(p1.x, p1.y);
-    _addCatmullSegment(targetCtx, p0, p1, p2, p3);
-    targetCtx.stroke();
-  }
-
-  // Draw only completed curve segments; the newest point is held as a lookahead
-  // so its tangent is known before the segment is rendered.
-  function _appendLiveSegment() {
-    const n = _pts.length;
-    if (n < 3 || _liveDrawnTo >= n - 2) return;
-
-    if (_liveStyleDirty) {
-      _liveCtx.strokeStyle = currentColor;
-      _liveCtx.lineWidth   = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
-      _liveCtx.lineCap     = 'round';
-      _liveCtx.lineJoin    = 'round';
-      _liveCtx.globalAlpha = currentTool === 'highlight' ? 0.35 : 1;
-      _liveCtx.globalCompositeOperation = 'source-over';
-      _liveCtx.shadowBlur  = 0;
-      _liveStyleDirty = false;
-    }
-
-    const endIndex = n - 2;
-    while (_liveDrawnTo < endIndex) {
-      const startIndex = _liveDrawnTo;
-      const p1 = _pts[startIndex];
-      const p2 = _pts[startIndex + 1];
-      const p0 = startIndex > 0 ? _pts[startIndex - 1] : p1;
-      const p3 = _pts[startIndex + 2];
-      _strokeCatmullSegment(_liveCtx, p0, p1, p2, p3);
-      _liveDrawnTo++;
-    }
-  }
-
-  // Full stroke redraw on a given context (used for replay / flush)
+  // Full-stroke renderer (commit + replay). Name kept for compatibility.
   function _drawCatmullRom(pts, lw, color, alpha, targetCtx) {
     const c = targetCtx || ctx;
     if (!pts || pts.length === 0) return;
     c.save();
     c.strokeStyle = color;
     c.fillStyle   = color;
-    c.lineWidth   = lw;
     c.lineCap     = 'round';
     c.lineJoin    = 'round';
     c.globalAlpha = alpha;
@@ -17558,103 +17605,113 @@ body.qa-only-mode #qaToolbarRow {
     c.shadowBlur  = 0;
 
     if (pts.length === 1) {
+      const w = lw * (pts[0].w === undefined ? 1 : pts[0].w);
       c.beginPath();
-      c.arc(pts[0].x, pts[0].y, Math.max(lw / 2, 1), 0, Math.PI * 2);
+      c.arc(pts[0].x, pts[0].y, Math.max(w / 2, 0.6), 0, Math.PI * 2);
       c.fill();
       c.restore();
       return;
     }
 
-    if (pts.length === 2) {
+    if (alpha < 1) {
+      // translucent (highlighter): ONE constant-width path so overlaps don't stack
+      c.lineWidth = lw;
       c.beginPath();
       c.moveTo(pts[0].x, pts[0].y);
-      c.lineTo(pts[1].x, pts[1].y);
-    } else {
-      c.beginPath();
-      c.moveTo(pts[0].x, pts[0].y);
-      for (let i = 0; i < pts.length - 1; i++) {
-        const p1 = pts[i];
-        const p2 = pts[i + 1];
-        const p0 = i > 0 ? pts[i - 1] : p1;
-        const p3 = i + 2 < pts.length ? pts[i + 2] : p2;
-        _addCatmullSegment(c, p0, p1, p2, p3);
+      for (let i = 1; i < pts.length - 1; i++) {
+        const m = _mid(pts[i], pts[i + 1]);
+        c.quadraticCurveTo(pts[i].x, pts[i].y, m.x, m.y);
       }
+      const last = pts[pts.length - 1];
+      c.lineTo(last.x, last.y);
+      c.stroke();
+    } else {
+      for (let i = 0; i < pts.length; i++) _paintSeg(c, pts, i, false, lw);
     }
-    c.stroke();
     c.restore();
   }
 
-  function _beginStroke(x, y) {
+  function _liveStyle() {
+    _liveCtx.strokeStyle = currentColor;
+    _liveCtx.fillStyle   = currentColor;
+    _liveCtx.lineCap     = 'round';
+    _liveCtx.lineJoin    = 'round';
+    _liveCtx.globalAlpha = 1;
+    _liveCtx.globalCompositeOperation = 'source-over';
+    _liveCtx.shadowBlur  = 0;
+  }
+
+  // Paint every segment that already has a known successor
+  function _appendLiveSegment() {
+    const n = _pts.length;
+    if (n < 2) return;
+    const base = _liveHL ? strokeSize * 6 : strokeSize;
+    while (_liveDrawnTo < n - 1) {
+      _paintSeg(_liveCtx, _pts, _liveDrawnTo, _liveHL, base);
+      _liveDrawnTo++;
+    }
+  }
+
+  function _beginStroke(x, y, pressure, ptype) {
     _ensureLiveCanvas();
-    _liveCtx.clearRect(0, 0, _liveCanvas.width, _liveCanvas.height);
-    _rawPts = [{x, y}];
-    _pts    = [{x, y}];
-    _liveStyleDirty = true;
+    const cw = _liveCanvas._cssW || _liveCanvas.width;
+    const ch = _liveCanvas._cssH || _liveCanvas.height;
+    _liveCtx.clearRect(0, 0, cw, ch);
+    _liveHL = currentTool === 'highlight';
+    _liveCanvas.style.opacity = _liveHL ? '0.35' : '1';
+    _liveStyle();
+    _fx = x; _fy = y;
+    _wSm = (ptype === 'pen' && pressure > 0) ? (0.55 + pressure * 0.9) : 1;
+    _lastT = performance.now();
+    _rawPts = [{ x, y }];
+    _pts    = [{ x, y, w: _wSm }];
     _liveDrawnTo = 0;
   }
 
-  function _addSmoothPoint(x, y) {
+  function _addSmoothPoint(x, y, pressure, ptype, t) {
     const last = _rawPts[_rawPts.length - 1];
-    if (Math.hypot(x - last.x, y - last.y) < MIN_DIST) return;
-    _rawPts.push({x, y});
+    const d = Math.hypot(x - last.x, y - last.y);
+    if (d < MIN_DIST) return;
+    _rawPts.push({ x, y });
 
-    // Light EMA smoothing on the incoming point to soak up pointer/touch
-    // jitter (small hand tremor, sensor noise) before it ever reaches the
-    // renderer — this is what actually makes the line look smooth, on top
-    // of the incremental-draw fix above which keeps it from lagging.
-    const prev = _pts[_pts.length - 1];
-    _pts.push({
-      x: prev.x + SMOOTH_ALPHA * (x - prev.x),
-      y: prev.y + SMOOTH_ALPHA * (y - prev.y)
-    });
+    const now = (typeof t === 'number' && t > 0) ? t : performance.now();
+    const dt  = Math.max(1, now - _lastT);
+    _lastT = now;
+    const speed = d / dt;                                // px per ms
 
+    // adaptive smoothing: slow → heavy smoothing, fast → follow the pen
+    const a = Math.min(0.85, 0.26 + speed * 0.5);
+    _fx += a * (x - _fx);
+    _fy += a * (y - _fy);
+
+    // width: stylus pressure, else speed-based (fast = slightly thinner)
+    let target;
+    if (ptype === 'pen' && pressure > 0) target = 0.55 + pressure * 0.9;
+    else target = 1.15 - Math.min(1, speed / 3.5) * 0.45;
+    if (_liveHL) target = 1;
+    _wSm += 0.16 * (target - _wSm);
+
+    _pts.push({ x: _fx, y: _fy, w: _wSm });
     _appendLiveSegment();
   }
 
   function _flushBezier() {
     if (_rawPts.length === 0) return;
-    // Finish the one-point lookahead segment before committing the same curve.
-    const n = _pts.length;
-    if (n === 2) {
-      if (_liveStyleDirty) {
-        _liveCtx.strokeStyle = currentColor;
-        _liveCtx.lineWidth = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
-        _liveCtx.lineCap = 'round';
-        _liveCtx.lineJoin = 'round';
-        _liveCtx.globalAlpha = currentTool === 'highlight' ? 0.35 : 1;
-        _liveCtx.globalCompositeOperation = 'source-over';
-        _liveStyleDirty = false;
-      }
-      _liveCtx.beginPath();
-      _liveCtx.moveTo(_pts[0].x, _pts[0].y);
-      _liveCtx.lineTo(_pts[1].x, _pts[1].y);
-      _liveCtx.stroke();
-    } else if (n > 2 && _liveDrawnTo < n - 1) {
-      if (_liveStyleDirty) {
-        _liveCtx.strokeStyle = currentColor;
-        _liveCtx.lineWidth = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
-        _liveCtx.lineCap = 'round';
-        _liveCtx.lineJoin = 'round';
-        _liveCtx.globalAlpha = currentTool === 'highlight' ? 0.35 : 1;
-        _liveCtx.globalCompositeOperation = 'source-over';
-        _liveStyleDirty = false;
-      }
-      const startIndex = n - 2;
-      const p1 = _pts[startIndex];
-      const p2 = _pts[startIndex + 1];
-      const p0 = startIndex > 0 ? _pts[startIndex - 1] : p1;
-      _strokeCatmullSegment(_liveCtx, p0, p1, p2, p2);
-      _liveDrawnTo = n - 1;
+    // ease the stroke end: pull the last point to the true pen-up position
+    if (_pts.length > 1) {
+      const lr = _rawPts[_rawPts.length - 1];
+      const lp = _pts[_pts.length - 1];
+      lp.x += (lr.x - lp.x) * 0.6;
+      lp.y += (lr.y - lp.y) * 0.6;
     }
-    // Clear live overlay (CSS-pixel coords; ctx has dpr transform)
     if (_liveCanvas) {
       const cw = _liveCanvas._cssW || _liveCanvas.width;
       const ch = _liveCanvas._cssH || _liveCanvas.height;
       _liveCtx.clearRect(0, 0, cw, ch);
+      _liveCanvas.style.opacity = '1';
     }
-    // Commit the smoothed stroke directly to the main canvas
-    const lw    = currentTool === 'highlight' ? strokeSize * 6 : strokeSize;
-    const alpha = currentTool === 'highlight' ? 0.35 : 1;
+    const lw    = _liveHL ? strokeSize * 6 : strokeSize;
+    const alpha = _liveHL ? 0.35 : 1;
     _drawCatmullRom(_pts, lw, currentColor, alpha, ctx);
     _rawPts = [];
   }
@@ -17750,7 +17807,7 @@ body.qa-only-mode #qaToolbarRow {
 
   function _moveStroke(s, dx, dy) {
     if (s.pts && s.pts.length) {
-      s.pts = s.pts.map(p => ({ x: p.x + dx, y: p.y + dy }));
+      s.pts = s.pts.map(p => ({ x: p.x + dx, y: p.y + dy, w: p.w }));
     }
     if (s.x1 !== undefined) { s.x1 += dx; s.x2 += dx; s.y1 += dy; s.y2 += dy; }
     if (s.textX !== undefined) { s.textX += dx; s.textY += dy; }
@@ -17871,7 +17928,7 @@ body.qa-only-mode #qaToolbarRow {
 
     setCtxStyle(false);
     if (currentTool === 'pen' || currentTool === 'highlight') {
-      _beginStroke(x, y);
+      _beginStroke(x, y, pos.pressure, e.pointerType);
     }
   }
 
@@ -17931,11 +17988,7 @@ body.qa-only-mode #qaToolbarRow {
       setCtxStyle(false);
 
       if (currentTool === 'pen' || currentTool === 'highlight') {
-        if (ev.pointerType === 'pen' && ev.pressure > 0 && currentTool === 'pen') {
-          const pressureWidth = Math.max(1, strokeSize * (0.5 + ev.pressure * 1.5));
-          ctx.lineWidth = pressureWidth;
-        }
-        _addSmoothPoint(x, y);
+        _addSmoothPoint(x, y, pos.pressure, ev.pointerType, ev.timeStamp);
         lastX = x; lastY = y;
       } else {
         // Shape preview
@@ -17997,7 +18050,7 @@ body.qa-only-mode #qaToolbarRow {
     if (currentTool === 'pen' || currentTool === 'highlight') {
       if (e.clientX !== undefined || (e.changedTouches && e.changedTouches.length)) {
         const end = getXY(e);
-        _addSmoothPoint(end.x, end.y);
+        _addSmoothPoint(end.x, end.y, end.pressure, e.pointerType, e.timeStamp);
       }
       _flushBezier();
       // Record completed freehand stroke
@@ -21063,6 +21116,540 @@ html.lite-mode .lite-switch,html.lite-mode .lite-knob{transition:none!important}
     if (cfg.image) loadImg(cfg.image, function (im) { if (ST.c !== token) return; ST.fileImg = im; curBg(); redraw(); if (!im && ST.mode !== 'creator') toast('Thumbnail image not found: ' + cfg.image, true); });
   }
   window.ytStudioOpen = openStudio;
+})();
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     🎥 SCREEN RECORDER — lives entirely inside the ⚡ Control Panel
+     Output: 1) video-only MP4   2) audio-only MP3 (internal audio + mic mixed)
+═══════════════════════════════════════════════════════════════════ -->
+<style>
+#rec-root, #rec-root * { font-family: 'Inter', system-ui, sans-serif !important; box-sizing: border-box; }
+#rec-root { --rec-red:#ff3b5c; --rec-red2:#ff6a3d; --rec-ink:#eef2ff; --rec-mute:rgba(200,212,255,.6); }
+#rec-root [hidden] { display: none !important; }
+
+.rec-nc-note { font-size: 10px; color: var(--rec-mute); margin: 2px 0 0; line-height: 1.4; }
+.rec-lbl { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(160,180,255,.4); margin: 14px 0 7px; }
+
+/* toggle rows */
+.rec-row { display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 14px; margin-bottom: 7px; cursor: pointer; user-select: none;
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); transition: .18s; }
+.rec-row:hover { background: rgba(255,255,255,.07); }
+.rec-row.on { border-color: rgba(255,59,92,.55); background: linear-gradient(135deg, rgba(255,59,92,.15), rgba(255,255,255,.03)); }
+.rec-row .ic { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; font-size: 15px; background: rgba(255,255,255,.07); flex-shrink: 0; }
+.rec-row .tx { flex: 1; min-width: 0; }
+.rec-row .tx b { display: block; font-size: 12.5px; font-weight: 700; color: #fff; }
+.rec-row .tx small { display: block; font-size: 10.5px; color: var(--rec-mute); margin-top: 1px; line-height: 1.3; }
+.rec-sw { width: 38px; height: 22px; border-radius: 99px; background: rgba(255,255,255,.14); position: relative; flex-shrink: 0; transition: .2s; }
+.rec-sw::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: .2s cubic-bezier(.3,1.4,.5,1); box-shadow: 0 2px 5px rgba(0,0,0,.4); }
+.rec-row.on .rec-sw { background: linear-gradient(135deg, var(--rec-red), var(--rec-red2)); }
+.rec-row.on .rec-sw::after { transform: translateX(16px); }
+
+.rec-mic-detail { margin: -1px 0 7px; padding: 10px; border-radius: 12px; background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.06); }
+.rec-select { width: 100%; padding: 8px 10px; border-radius: 9px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color: #fff; font-size: 11.5px; outline: none; }
+.rec-select option { background: #0b1230; color: #fff; }
+.rec-meter { height: 7px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; margin-top: 9px; }
+.rec-meter i { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, #22c55e, #facc15 70%, #ef4444); transition: width .06s linear; }
+.rec-mic-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 7px; }
+.rec-mic-foot span { font-size: 10px; color: var(--rec-mute); line-height: 1.3; }
+.rec-mini { padding: 5px 10px; border-radius: 8px; font-size: 10.5px; font-weight: 700; color: #fff; cursor: pointer; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); white-space: nowrap; }
+.rec-mini:hover { background: rgba(255,255,255,.16); }
+
+.rec-seg { display: flex; gap: 4px; padding: 3px; border-radius: 11px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07); margin-bottom: 6px; }
+.rec-seg button { flex: 1; padding: 7px 2px; border: 0; border-radius: 8px; background: transparent; color: var(--rec-mute); font-size: 11.5px; font-weight: 700; cursor: pointer; transition: .15s; }
+.rec-seg button:hover { color: #fff; }
+.rec-seg button.on { background: linear-gradient(135deg, rgba(59,130,246,.6), rgba(99,102,241,.5)); color: #fff; box-shadow: 0 3px 12px rgba(59,130,246,.3); }
+
+.rec-out { display: flex; gap: 6px; margin-top: 12px; }
+.rec-out span { flex: 1; padding: 7px 4px; border-radius: 10px; text-align: center; font-size: 10.5px; font-weight: 700; color: #dbe4ff; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09); line-height: 1.3; }
+.rec-tip { margin-top: 10px; padding: 9px 10px; border-radius: 11px; font-size: 10.5px; line-height: 1.5; color: rgba(210,222,255,.72); background: rgba(59,130,246,.09); border: 1px solid rgba(59,130,246,.2); }
+.rec-warn { background: rgba(251,146,60,.1); border-color: rgba(251,146,60,.35); color: #fed7aa; }
+
+.rec-primary { width: 100%; margin-top: 12px; padding: 13px; border: 0; border-radius: 14px; cursor: pointer; color: #fff; font-size: 13.5px; font-weight: 800;
+  background: linear-gradient(135deg, var(--rec-red), var(--rec-red2)); box-shadow: 0 8px 24px rgba(255,59,92,.4), inset 0 1px 0 rgba(255,255,255,.25); transition: .18s; display: flex; align-items: center; justify-content: center; gap: 9px; }
+.rec-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,59,92,.55), inset 0 1px 0 rgba(255,255,255,.25); }
+.rec-primary:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.rec-primary .dot { width: 10px; height: 10px; border-radius: 50%; background: #fff; }
+
+/* live card */
+.rec-live-card { padding: 14px; border-radius: 18px; border: 1px solid rgba(255,59,92,.5); text-align: center;
+  background: radial-gradient(220px 110px at 50% 0%, rgba(255,59,92,.22), transparent 70%), linear-gradient(160deg, rgba(20,24,52,.9), rgba(8,10,26,.95));
+  box-shadow: 0 0 36px rgba(255,59,92,.15), inset 0 1px 0 rgba(255,255,255,.06); }
+.rec-live-card.paused { border-color: rgba(250,204,21,.55); background: radial-gradient(220px 110px at 50% 0%, rgba(250,204,21,.16), transparent 70%), linear-gradient(160deg, rgba(20,24,52,.9), rgba(8,10,26,.95)); box-shadow: 0 0 36px rgba(250,204,21,.1); }
+.rec-live-top { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 10px; font-weight: 800; letter-spacing: 2.5px; color: #ffb3c0; }
+.rec-live-card.paused .rec-live-top { color: #fde68a; }
+.rec-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--rec-red); animation: recPulse 1.2s ease-in-out infinite; }
+.rec-live-card.paused .rec-dot { background: #facc15; animation: none; }
+#rec-time { font-size: 38px; font-weight: 900; letter-spacing: 1px; color: #fff; font-variant-numeric: tabular-nums; margin: 6px 0 2px; text-shadow: 0 0 24px rgba(255,59,92,.45); }
+.rec-live-sub { font-size: 10.5px; color: var(--rec-mute); }
+#rec-wave { width: 100%; height: 46px; display: block; margin: 8px 0 12px; }
+.rec-ctrl { display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 7px; }
+.rec-cb { padding: 10px 4px 8px; border-radius: 13px; cursor: pointer; color: #fff; font-size: 10.5px; font-weight: 700; border: 1px solid rgba(255,255,255,.13); background: rgba(255,255,255,.07); transition: .15s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.rec-cb b { font-size: 17px; line-height: 1; font-weight: 400; }
+.rec-cb:hover { background: rgba(255,255,255,.15); transform: translateY(-1px); }
+.rec-cb.stop { background: linear-gradient(135deg, var(--rec-red), var(--rec-red2)); border: 0; box-shadow: 0 6px 18px rgba(255,59,92,.45); }
+.rec-cb.off { background: rgba(239,68,68,.25); border-color: rgba(239,68,68,.6); }
+.rec-cb[hidden] { display: none; }
+
+/* done */
+.rec-video { width: 100%; max-height: 150px; border-radius: 12px; background: #000; border: 1px solid rgba(255,255,255,.1); display: block; }
+.rec-meta { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0 4px; }
+.rec-meta span { padding: 4px 9px; border-radius: 99px; font-size: 10.5px; font-weight: 700; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); color: #dbe4ff; }
+.rec-dl { display: flex; width: 100%; text-align: left; appearance: none; -webkit-appearance: none; align-items: center; gap: 10px; margin-top: 8px; padding: 11px 12px; border-radius: 13px; text-decoration: none; cursor: pointer; color: #fff; transition: .15s;
+  background: linear-gradient(135deg, rgba(34,197,94,.3), rgba(34,197,94,.1)); border: 1px solid rgba(34,197,94,.55); }
+.rec-dl.aud { background: linear-gradient(135deg, rgba(168,85,247,.3), rgba(99,102,241,.12)); border-color: rgba(168,85,247,.55); }
+.rec-dl:hover { transform: translateX(3px); filter: brightness(1.15); }
+.rec-dl[aria-disabled="true"] { opacity: .55; cursor: progress; pointer-events: none; }
+.rec-dl .ic { font-size: 18px; }
+.rec-dl .tx { flex: 1; min-width: 0; }
+.rec-dl .tx b { display: block; font-size: 12.5px; font-weight: 800; }
+.rec-dl .tx small { display: block; font-size: 10.5px; opacity: .75; margin-top: 1px; }
+.rec-prog { height: 5px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; margin-top: 6px; }
+.rec-prog i { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, #a855f7, #6366f1); transition: width .12s linear; }
+.rec-pair { display: flex; gap: 7px; margin-top: 10px; }
+.rec-ghost { flex: 1; padding: 10px 6px; border-radius: 12px; cursor: pointer; font-size: 11.5px; font-weight: 700; color: #fff; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); transition: .15s; }
+.rec-ghost:hover { background: rgba(255,255,255,.12); }
+.rec-ghost.danger:hover { background: rgba(239,68,68,.2); border-color: rgba(239,68,68,.5); color: #fecaca; }
+
+@keyframes recPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,59,92,.6); } 50% { box-shadow: 0 0 0 7px rgba(255,59,92,0); } }
+
+/* tiny ring on the panel's door button while recording (no popup, no text) */
+body.rec-live-on #gcp-trigger { animation: recRing 1.4s ease-in-out infinite; }
+@keyframes recRing { 0%,100% { box-shadow: 0 0 0 0 rgba(255,59,92,.7); } 50% { box-shadow: 0 0 0 9px rgba(255,59,92,0); } }
+
+/* toast (only shown when NOT recording, or for errors) */
+#rec-toast { position: fixed; top: 20px; left: 50%; transform: translate(-50%,-20px); z-index: 2147483647; opacity: 0; pointer-events: none; max-width: min(92vw, 440px); padding: 10px 16px; border-radius: 13px; font-family: 'Inter', system-ui, sans-serif !important; font-size: 12.5px; font-weight: 600; color: #fff; text-align: center;
+  background: rgba(10,14,34,.96); border: 1px solid rgba(120,150,255,.35); box-shadow: 0 14px 40px rgba(0,0,0,.5); transition: .3s; }
+#rec-toast.show { opacity: 1; transform: translate(-50%,0); }
+#rec-toast.err { border-color: rgba(239,68,68,.6); }
+</style>
+
+<div id="rec-toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   SCREEN RECORDER → ONE video file (MP4) with audio embedded
+   Everything is rendered inside #gcp-panel (#rec-root). No floating UI.
+═══════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var root = $('rec-root'); if (!root) return;
+  var store = {
+    get: function (k, d) { try { var v = localStorage.getItem('rec_' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set: function (k, v) { try { localStorage.setItem('rec_' + k, JSON.stringify(v)); } catch (e) {} }
+  };
+  var supported = !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia && window.MediaRecorder);
+  var cfg = { sys: store.get('sys', true), mic: store.get('mic', true), res: store.get('res', '2160'), fps: store.get('fps', '60'), hdr: store.get('hdr', 'on'), q: store.get('q', 'ultra'), micId: store.get('micId', ''), auto: store.get('auto', true), nc: store.get('nc', 'standard') };
+  var S = { display: null, mic: null, ctx: null, dest: null, micGain: null, analyser: null, vrec: null, arec: null, vchunks: [], achunks: [], vmime: '', vext: 'mp4', amime: '', aext: 'webm',
+            acc: 0, t0: 0, paused: false, active: false, stopping: false, sid: 0, fin: 0, vname: '', tick: 0, raf: 0, hasSys: false, hasMic: false, hasAudio: false, micMuted: false, vurl: null };
+  var P = { stream: null, ctx: null, raf: 0 };
+
+  /* ───────── helpers ───────── */
+  var toastEl = $('rec-toast'), toastT;
+  function toast(msg, err) {
+    if (S.active && !err) return;                       // nothing pops up while recording
+    toastEl.textContent = msg; toastEl.className = 'show' + (err ? ' err' : '');
+    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.className = ''; }, err ? 5200 : 2800);
+  }
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60); s = s % 60;
+    var p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return (h ? h + ':' : '') + p(m) + ':' + p(s);
+  }
+  function fmtSize(b) { return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; }
+  function elapsed() { return S.acc + (S.paused || !S.t0 ? 0 : performance.now() - S.t0); }
+  function pickMime(list) {
+    for (var i = 0; i < list.length; i++) { try { if (MediaRecorder.isTypeSupported(list[i][0])) return { mime: list[i][0], ext: list[i][1] }; } catch (e) {} }
+    return { mime: '', ext: list[list.length - 1][1] };
+  }
+  function show(which) { $('rec-idle').hidden = which !== 'idle'; $('rec-live').hidden = which !== 'live'; $('rec-done').hidden = which !== 'done'; }
+  function closeControlPanel() { var c = $('gcp-close-btn'); if (c) c.click(); }
+  function openControlPanel() { var p = $('gcp-panel'); if (p && !p.classList.contains('open')) { var t = $('gcp-trigger'); if (t) t.click(); } }
+
+  /* ───────── device maximum (pixels + refresh rate) ───────── */
+  var DEV = { w: 0, h: 0, hz: 0 };
+  function devPixels() {
+    var d = window.devicePixelRatio || 1;
+    DEV.w = Math.round((screen.width || window.innerWidth) * d); DEV.h = Math.round((screen.height || window.innerHeight) * d);
+  }
+  function measureHz() {
+    var n = 0, t0 = 0;
+    (function f(t) {
+      if (!t0) t0 = t; n++;
+      if (t - t0 < 700) return requestAnimationFrame(f);
+      var raw = (n - 1) * 1000 / (t - t0), list = [30, 48, 50, 60, 72, 75, 90, 100, 120, 144, 165, 240], best = 60;
+      for (var k = 0; k < list.length; k++) if (Math.abs(list[k] - raw) < Math.abs(best - raw)) best = list[k];
+      DEV.hz = best; syncUI();
+    })(performance.now());
+  }
+  function devInfo() {
+    devPixels();
+    var maxFps = DEV.hz >= 144 ? 144 : DEV.hz >= 120 ? 120 : DEV.hz >= 60 ? 60 : 30;
+    var mb = $('rec-seg-res').querySelector('[data-v="0"]'); if (mb) mb.textContent = 'Max ' + DEV.w + '×' + DEV.h;
+    var t = '📺 <b>This device:</b> max ' + DEV.w + '×' + DEV.h + ' px · ' + (DEV.hz ? 'display ' + DEV.hz + ' Hz → up to <b>' + maxFps + ' fps</b>' : 'measuring refresh rate…');
+    if (parseInt(cfg.fps, 10) > 60 && DEV.hz && DEV.hz < parseInt(cfg.fps, 10)) t += '<br>⚠️ Your display runs at ' + DEV.hz + ' Hz, so ' + cfg.fps + ' fps will repeat frames. Real ' + cfg.fps + ' fps needs a ' + cfg.fps + ' Hz+ screen.';
+    var rh = parseInt(cfg.res, 10);
+    if (rh && DEV.h && rh > DEV.h * 1.05) t += '<br>ℹ️ Your screen is ' + DEV.w + '×' + DEV.h + ', so ' + rh + 'p is produced by <b>upscaling</b> (bigger file, same detail as your screen). Real 4K needs a 4K monitor.';
+    var hdrScr = false, wide = '';
+    try { hdrScr = matchMedia('(dynamic-range: high)').matches; wide = matchMedia('(color-gamut: rec2020)').matches ? 'Rec.2020' : matchMedia('(color-gamut: p3)').matches ? 'P3' : 'sRGB'; } catch (e) {}
+    t += '<br>🌈 Display: ' + (hdrScr ? '<b>HDR capable</b>' : 'SDR only') + (wide ? ' · ' + wide + ' gamut' : '');
+    if (cfg.hdr === 'on') t += '<br>ℹ️ HDR mode records <b>10-bit, wide-colour</b> video (HEVC/AV1/VP9-10bit when your browser supports it). True HDR brightness only exists if your screen + browser capture HDR; otherwise you get 10-bit SDR with less banding.';
+    $('rec-dev-info').innerHTML = t;
+  }
+
+  /* ───────── idle UI ───────── */
+  function syncUI() {
+    $('rec-row-sys').classList.toggle('on', cfg.sys); $('rec-row-sys').setAttribute('aria-checked', cfg.sys);
+    $('rec-row-mic').classList.toggle('on', cfg.mic); $('rec-row-mic').setAttribute('aria-checked', cfg.mic);
+    $('rec-mic-detail').hidden = !cfg.mic;
+    [].forEach.call($('rec-seg-res').children, function (b) { b.classList.toggle('on', b.dataset.v === cfg.res); });
+    [].forEach.call($('rec-seg-fps').children, function (b) { b.classList.toggle('on', b.dataset.v === cfg.fps); });
+    [].forEach.call($('rec-seg-hdr').children, function (b) { b.classList.toggle('on', b.dataset.v === cfg.hdr); });
+    [].forEach.call($('rec-seg-q').children, function (b) { b.classList.toggle('on', b.dataset.v === cfg.q); });
+    $('rec-row-auto').classList.toggle('on', cfg.auto); $('rec-row-auto').setAttribute('aria-checked', cfg.auto);
+    [].forEach.call($('rec-seg-nc').children, function (x) { x.classList.toggle('on', x.dataset.v === cfg.nc); });
+    $('rec-nc-note').textContent = cfg.nc === 'off' ? 'Raw microphone — no cleanup.' : cfg.nc === 'standard' ? 'Browser noise suppression + rumble filter + smart noise gate.' : 'Maximum: voice-band filter + aggressive noise gate. Best for noisy rooms.';
+    devInfo();
+    $('rec-out-aud').style.opacity = (cfg.sys || cfg.mic) ? 1 : .35;
+    $('rec-unsupported').hidden = supported; $('rec-start').disabled = !supported;
+  }
+  function bindRow(id, key) {
+    var el = $(id);
+    var flip = function () { cfg[key] = !cfg[key]; store.set(key, cfg[key]); if (key === 'mic' && !cfg.mic) stopPreview(); syncUI(); };
+    el.addEventListener('click', flip);
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+  }
+  bindRow('rec-row-sys', 'sys'); bindRow('rec-row-mic', 'mic'); bindRow('rec-row-auto', 'auto');
+  $('rec-seg-nc').addEventListener('click', function (e) { var x = e.target.closest('button'); if (!x) return; cfg.nc = x.dataset.v; store.set('nc', cfg.nc); syncUI(); });
+  $('rec-seg-res').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; cfg.res = b.dataset.v; store.set('res', cfg.res); syncUI(); });
+  $('rec-seg-fps').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; cfg.fps = b.dataset.v; store.set('fps', cfg.fps); syncUI(); });
+  $('rec-seg-hdr').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; cfg.hdr = b.dataset.v; store.set('hdr', cfg.hdr); syncUI(); });
+  $('rec-seg-q').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; cfg.q = b.dataset.v; store.set('q', cfg.q); syncUI(); });
+  $('rec-mic-sel').addEventListener('change', function () { cfg.micId = this.value; store.set('micId', cfg.micId); if (P.stream) startPreview(); });
+
+  /* ───────── mic test + level meter (only when user presses “Test mic”) ───────── */
+  function stopPreview() {
+    cancelAnimationFrame(P.raf);
+    if (P.stream) P.stream.getTracks().forEach(function (t) { t.stop(); }); P.stream = null;
+    if (P.ctx) { try { P.ctx.close(); } catch (e) {} } P.ctx = null;
+    $('rec-meter-fill').style.width = '0%'; $('rec-test').textContent = 'Test mic'; $('rec-meter-cap').textContent = 'Press “Test mic” and speak';
+  }
+  function startPreview() {
+    stopPreview();
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+    $('rec-meter-cap').textContent = 'Requesting microphone…';
+    navigator.mediaDevices.getUserMedia({ audio: cfg.micId ? { deviceId: { exact: cfg.micId } } : true }).then(function (st) {
+      if (!cfg.mic) { st.getTracks().forEach(function (t) { t.stop(); }); return; }
+      P.stream = st;
+      var AC = window.AudioContext || window.webkitAudioContext; P.ctx = new AC();
+      var an = P.ctx.createAnalyser(); an.fftSize = 512; P.ctx.createMediaStreamSource(st).connect(an);
+      var buf = new Uint8Array(an.fftSize), fill = $('rec-meter-fill');
+      $('rec-test').textContent = 'Stop test'; $('rec-meter-cap').textContent = 'Listening… speak now';
+      (function loop() {
+        an.getByteTimeDomainData(buf); var peak = 0;
+        for (var i = 0; i < buf.length; i++) { var v = Math.abs(buf[i] - 128) / 128; if (v > peak) peak = v; }
+        fill.style.width = Math.min(100, peak * 160) + '%'; P.raf = requestAnimationFrame(loop);
+      })();
+      navigator.mediaDevices.enumerateDevices().then(function (devs) {
+        var sel = $('rec-mic-sel'), cur = cfg.micId; sel.innerHTML = '';
+        var o = document.createElement('option'); o.value = ''; o.textContent = 'Default microphone'; sel.appendChild(o);
+        devs.filter(function (d) { return d.kind === 'audioinput'; }).forEach(function (d, i) {
+          var op = document.createElement('option'); op.value = d.deviceId; op.textContent = d.label || ('Microphone ' + (i + 1)); sel.appendChild(op);
+        });
+        sel.value = cur; if (sel.value !== cur) sel.value = '';
+      });
+    }).catch(function () { $('rec-meter-cap').textContent = 'Microphone blocked — allow it in the address bar.'; });
+  }
+  $('rec-test').addEventListener('click', function () { P.stream ? stopPreview() : startPreview(); });
+  ['gcp-close-btn', 'gcp-backdrop'].forEach(function (id) { var el = $(id); if (el) el.addEventListener('click', stopPreview); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') stopPreview(); });
+
+  /* ───────── start ───────── */
+  function start() {
+    if (!supported || S.active) return;
+    var fps = parseInt(cfg.fps, 10), h = parseInt(cfg.res, 10);
+    var video = { frameRate: { ideal: fps }, cursor: 'always' };
+    devPixels();
+    if (h) { video.height = { ideal: h }; video.width = { ideal: Math.round(h * 16 / 9) }; }
+    else { video.width = { ideal: DEV.w }; video.height = { ideal: DEV.h }; }
+    stopPreview();
+    var opts = { video: video, audio: cfg.sys ? { echoCancellation: false, noiseSuppression: false, autoGainControl: false } : false, selfBrowserSurface: 'include' };
+    if (cfg.sys) opts.systemAudio = 'include';
+    var wantSys = cfg.sys, wantMic = cfg.mic;
+
+    navigator.mediaDevices.getDisplayMedia(opts).then(function (disp) {
+      S.display = disp; S.hasSys = disp.getAudioTracks().length > 0;
+      if (wantSys && !S.hasSys) toast('⚠️ No internal audio was shared — tick “Share tab/system audio” in the picker next time.', true);
+      if (!wantMic) return null;
+      return navigator.mediaDevices.getUserMedia({ audio: { deviceId: cfg.micId ? { ideal: cfg.micId } : undefined, echoCancellation: true, noiseSuppression: cfg.nc !== 'off', autoGainControl: true, voiceIsolation: cfg.nc === 'strong' } })
+        .catch(function () { toast('🎙️ Microphone unavailable — continuing without it.', true); return null; });
+    }).then(function (mic) {
+      if (!S.display) return;
+      S.mic = mic || null; S.hasMic = !!mic;
+      closeControlPanel();                                // clear the panel so it isn't in the recording
+      setTimeout(begin, 700);                             // let the panel finish sliding out
+    }).catch(function (err) {
+      cleanup();
+      if (err && (err.name === 'NotAllowedError' || err.name === 'AbortError')) toast('Recording cancelled.');
+      else toast('Could not start recording: ' + ((err && err.message) || err), true);
+    });
+  }
+
+  /* Noise gate runs on the audio thread (AudioWorklet) so it keeps working even when this tab is in the background */
+  var GATE_SRC = `
+class RecGate extends AudioWorkletProcessor {
+  constructor(o) { super(); var p = (o && o.processorOptions) || {};
+    this.ratio = p.ratio || 2.6; this.red = p.reduction || 0.15; this.floor = 0.006; this.gain = this.red; this.open = false; this.hold = 0;
+    this.aUp = 1 - Math.exp(-1 / (sampleRate * 0.004)); this.aDn = 1 - Math.exp(-1 / (sampleRate * 0.15)); }
+  process(inputs, outputs) {
+    var i = inputs[0], o = outputs[0];
+    if (!i || !i.length || !i[0]) return true;
+    var n = i[0].length, sum = 0, ch = i.length, c, k;
+    for (c = 0; c < ch; c++) { var d = i[c]; for (k = 0; k < n; k++) sum += d[k] * d[k]; }
+    var rms = Math.sqrt(sum / (n * ch));
+    if (rms < this.floor) this.floor += (rms - this.floor) * 0.25;
+    else if (!this.open) this.floor += (rms - this.floor) * 0.0008;
+    if (this.floor < 0.0005) this.floor = 0.0005; if (this.floor > 0.03) this.floor = 0.03;
+    var thr = this.floor * this.ratio + 0.003;
+    if (rms > thr) { this.open = true; this.hold = Math.ceil(sampleRate * 0.3 / n); }
+    else if (this.hold > 0) this.hold--; else this.open = false;
+    var target = this.open ? 1 : this.red, g = this.gain, a = this.open ? this.aUp : this.aDn, oc = o.length;
+    for (k = 0; k < n; k++) { g += (target - g) * a; for (c = 0; c < oc; c++) { var s = i[c] || i[0]; o[c][k] = s[k] * g; } }
+    this.gain = g; return true;
+  }
+}
+registerProcessor('rec-noise-gate', RecGate);`;
+
+  function begin() {
+    if (!S.display) return;
+    var vt = S.display.getVideoTracks()[0];
+    if (!vt || vt.readyState === 'ended') { cleanup(); toast('Screen sharing was stopped.'); return; }
+    var sid = ++S.sid;
+    vt.addEventListener('ended', function () { if (S.active && sid === S.sid) stop(); });
+    // Browsers often hand back 30 fps / reduced size at first — push the track to what was asked for
+    var wantFps = parseInt(cfg.fps, 10) || 30, wantH = parseInt(cfg.res, 10);
+    try { vt.contentHint = wantFps >= 60 ? 'motion' : 'detail'; } catch (e) {}
+    try {
+      var ac = { frameRate: { ideal: wantFps } };
+      if (wantH) { ac.height = { ideal: wantH }; ac.width = { ideal: Math.round(wantH * 16 / 9) }; } else { ac.width = { ideal: DEV.w }; ac.height = { ideal: DEV.h }; }
+      var pr = vt.applyConstraints(ac); if (pr && pr.catch) pr.catch(function () {});
+    } catch (e) {}
+
+    var AC = window.AudioContext || window.webkitAudioContext, prep = Promise.resolve(false);
+    if ((S.hasSys || S.hasMic) && AC) {
+      S.ctx = new AC(); try { S.ctx.resume(); } catch (e) {}
+      if (S.hasMic && cfg.nc !== 'off' && S.ctx.audioWorklet) {
+        var gurl = URL.createObjectURL(new Blob([GATE_SRC], { type: 'application/javascript' }));
+        prep = S.ctx.audioWorklet.addModule(gurl).then(function () { URL.revokeObjectURL(gurl); return true; }).catch(function () { return false; });
+      }
+    }
+    prep.then(function (gateOk) {
+      if (sid !== S.sid || !S.display || vt.readyState === 'ended') { if (sid === S.sid) { cleanup(); toast('Screen sharing was stopped.'); } return; }
+
+      /* audio graph: internal audio (untouched) + mic (cleaned) → one mixed track */
+      var audioStream = null;
+      if (S.ctx) {
+        S.dest = S.ctx.createMediaStreamDestination();
+        S.analyser = S.ctx.createAnalyser(); S.analyser.fftSize = 128; S.analyser.smoothingTimeConstant = .75;
+        if (S.hasSys) { var sg = S.ctx.createGain(); S.ctx.createMediaStreamSource(new MediaStream(S.display.getAudioTracks())).connect(sg); sg.connect(S.dest); sg.connect(S.analyser); }
+        if (S.hasMic) {
+          var node = S.ctx.createMediaStreamSource(S.mic);
+          if (cfg.nc !== 'off') {
+            var strong = cfg.nc === 'strong';
+            var hp = S.ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = strong ? 140 : 90; hp.Q.value = .7; node.connect(hp); node = hp;
+            if (strong) { var lp = S.ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 9000; lp.Q.value = .7; node.connect(lp); node = lp; }
+            if (gateOk) {
+              try {
+                var gate = new AudioWorkletNode(S.ctx, 'rec-noise-gate', { channelCount: 1, channelCountMode: 'explicit', numberOfInputs: 1, numberOfOutputs: 1, outputChannelCount: [1],
+                  processorOptions: { ratio: strong ? 4 : 2.6, reduction: strong ? 0.02 : 0.18 } });
+                node.connect(gate); node = gate;
+              } catch (e) {}
+            }
+          }
+          S.micGain = S.ctx.createGain(); S.micGain.gain.value = 1.15; node.connect(S.micGain); S.micGain.connect(S.dest); S.micGain.connect(S.analyser);
+        }
+        audioStream = S.dest.stream;
+      }
+
+      /* ONE recorder — screen video + the processed (noise-cancelled) audio mix muxed into a single file */
+      var aTracks = audioStream ? audioStream.getAudioTracks() : [];
+      S.hasAudio = aTracks.length > 0;
+      var wantHdr = cfg.hdr === 'on', A = S.hasAudio ? ',mp4a.40.2' : '', Ao = S.hasAudio ? ',opus' : '';
+      var hdrList = [['video/mp4;codecs=hvc1.2.4.L153.B0' + A, 'mp4'], ['video/mp4;codecs=hev1.2.4.L153.B0' + A, 'mp4'], ['video/mp4;codecs=av01.0.13M.10' + A, 'mp4'],
+                     ['video/webm;codecs=av01.0.13M.10' + Ao, 'webm'], ['video/webm;codecs=vp09.02.10.10' + Ao, 'webm'], ['video/webm;codecs=vp9.2' + Ao, 'webm']];
+      var hiRes = (parseInt(cfg.res, 10) || DEV.h) >= 1440;
+      var hevcList = [['video/mp4;codecs=hvc1.1.6.L153.B0' + A, 'mp4'], ['video/mp4;codecs=hev1.1.6.L153.B0' + A, 'mp4']];
+      var h264List = [['video/mp4;codecs=avc1.640034' + A, 'mp4'], ['video/mp4;codecs=avc1.64002A' + A, 'mp4'], ['video/mp4;codecs=avc1.640028' + A, 'mp4'], ['video/mp4;codecs=avc1.42E01E' + A, 'mp4'], ['video/mp4;codecs=avc1' + A, 'mp4'], ['video/mp4', 'mp4'],
+                      ['video/webm;codecs=vp9' + Ao, 'webm'], ['video/webm;codecs=vp8' + Ao, 'webm'], ['video/webm', 'webm']];
+      var mimeList = (wantHdr ? hdrList : []).concat(hiRes ? hevcList : [], h264List);
+      var hdrPicked = false;
+      var vm = pickMime(mimeList);
+      S.vmime = vm.mime; S.vext = vm.ext;
+      hdrPicked = wantHdr && /hvc1\.2|hev1\.2|av01\.0\.13M\.10|vp09\.02|vp9\.2/.test(vm.mime);
+      S.codecTag = /hvc1|hev1/.test(vm.mime) ? 'HEVC' : /av01/.test(vm.mime) ? 'AV1' : /vp09|vp9/.test(vm.mime) ? 'VP9' : /avc1/.test(vm.mime) ? 'H.264' : 'auto'; S.vchunks = []; S.arec = null;
+      var fpsN = parseInt(cfg.fps, 10) || 30, tw = 0, th = 0, tf = 0;
+      try { var gs = vt.getSettings(); tw = gs.width || 0; th = gs.height || 0; tf = gs.frameRate || 0; } catch (e) {}
+      if (!tw || !th) { var hh = parseInt(cfg.res, 10); th = hh || DEV.h || 1080; tw = hh ? Math.round(hh * 16 / 9) : (DEV.w || 1920); }
+      var effFps = Math.max(fpsN, Math.round(tf) || 0);
+      var qMul = cfg.q === 'max' ? 1.9 : cfg.q === 'ultra' ? 1.35 : 1;
+      var bpp = (effFps > 60 ? 0.12 : 0.16) * qMul * (hdrPicked ? 1.25 : 1);   // bits per pixel per frame — higher = sharper
+      if (S.codecTag === 'HEVC' || S.codecTag === 'AV1') bpp *= 0.75;           // newer codecs need fewer bits for same quality
+      var vbps = Math.round(tw * th * effFps * bpp);
+      vbps = Math.min(150000000, Math.max(effFps > 30 ? 16000000 : 10000000, vbps));   // e.g. 4K60 Ultra ≈ 120 Mbps
+      /* Upscale path: browsers never capture more pixels than the screen has, so for 1440p / 4K on a smaller
+         screen we redraw each frame onto a larger canvas and record that. A Worker drives the clock so it keeps
+         running when this tab is in the background. */
+      var outTrack = vt, wantRes = parseInt(cfg.res, 10) || 0;
+      if (wantRes && th && th < wantRes * 0.95) {
+        try {
+          var oh = wantRes, ow = Math.round(oh * tw / th); ow += ow % 2;
+          var cv = document.createElement('canvas'); cv.width = ow; cv.height = oh;
+          var cx = cv.getContext('2d', { alpha: false, desynchronized: true, colorSpace: wantHdr ? 'display-p3' : 'srgb' }); cx.imageSmoothingEnabled = true; cx.imageSmoothingQuality = 'high';
+          var sv = document.createElement('video'); sv.muted = true; sv.playsInline = true; sv.srcObject = new MediaStream([vt]);
+          var pl = sv.play(); if (pl && pl.catch) pl.catch(function () {});
+          var wk = new Worker(URL.createObjectURL(new Blob(['var t;onmessage=function(e){clearInterval(t);if(e.data>0)t=setInterval(function(){postMessage(0)},1000/e.data)}'], { type: 'application/javascript' })));
+          wk.onmessage = function () { if (sv.readyState >= 2) cx.drawImage(sv, 0, 0, ow, oh); };
+          wk.postMessage(Math.max(fpsN, 30));
+          var cs = cv.captureStream(Math.max(fpsN, 30)); outTrack = cs.getVideoTracks()[0];
+          S.up = { wk: wk, sv: sv };
+          tw = ow; th = oh; tf = fpsN;
+          vbps = Math.min(150000000, Math.max(vbps, Math.round(tw * th * effFps * bpp)));
+        } catch (e) { outTrack = vt; S.up = null; toast('Upscaling unavailable — recording at screen size.', true); }
+      }
+      S.outW = tw; S.outH = th;
+      var recStream = new MediaStream([outTrack].concat(aTracks));
+      var ropts = { videoBitsPerSecond: vbps };
+      if (S.hasAudio) ropts.audioBitsPerSecond = 160000;
+      if (S.vmime) ropts.mimeType = S.vmime;
+      try { S.vrec = new MediaRecorder(recStream, ropts); }
+      catch (e) { toast('Recorder error: ' + e.message, true); cleanup(); return; }
+      S.vrec.ondataavailable = function (e) { if (e.data && e.data.size) S.vchunks.push(e.data); };
+      // finalize exactly once, after the recorder has fully stopped
+      S.vrec.onstop = function () { if (sid === S.sid) finalize(); };
+
+      S.active = true; S.paused = false; S.stopping = false; S.acc = 0; S.t0 = performance.now(); S.micMuted = false;
+      S.vrec.start(1000);
+      $('rec-live-card').classList.remove('paused'); $('rec-state').textContent = 'RECORDING';
+      $('rec-live-sub').textContent = (S.hasAudio ? 'Video + audio in one ' + S.vext.toUpperCase() : 'Video ' + S.vext.toUpperCase() + ' only (no audio source)') + (S.hasMic && cfg.nc !== 'off' ? ' · 🔇 noise cancel' : '');
+      try { var st = vt.getSettings(); if (st.width) $('rec-live-sub').textContent += ' · ' + (S.up ? S.outW + '×' + S.outH + ' (upscaled from ' + st.width + '×' + st.height + ')' : st.width + '×' + st.height) + (st.frameRate ? ' @ ' + Math.round(st.frameRate) + ' fps' : ''); } catch (e) {}
+      $('rec-live-sub').textContent += ' · ' + S.codecTag + (hdrPicked ? ' 10-bit HDR' : (wantHdr ? ' (10-bit codec unavailable → SDR)' : '')) + ' · ' + Math.round(vbps / 1e6) + ' Mbps';
+      $('rec-wave').hidden = !S.hasAudio;
+      var mb = $('rec-btn-mic'); mb.hidden = !S.hasMic; mb.classList.remove('off'); mb.firstChild.textContent = '🎙️'; mb.lastChild.textContent = 'Mute';
+      var pb = $('rec-btn-pause'); pb.firstChild.textContent = '⏸'; pb.lastChild.textContent = 'Pause';
+      document.body.classList.add('rec-live-on'); show('live');
+      S.tick = setInterval(updateTime, 250); updateTime(); drawWave();
+    });
+  }
+
+  function updateTime() { $('rec-time').textContent = fmt(elapsed()); }
+
+  /* ───────── live waveform ───────── */
+  function drawWave() {
+    var cv = $('rec-wave'), g = cv.getContext('2d'), W = cv.width, H = cv.height, bars = 28, gap = 6, bw = (W - gap * (bars - 1)) / bars;
+    var data = S.analyser ? new Uint8Array(S.analyser.frequencyBinCount) : null;
+    (function loop() {
+      g.clearRect(0, 0, W, H); if (!S.active) return;
+      var live = data && !S.paused && !panelHidden(); if (live) S.analyser.getByteFrequencyData(data);
+      if (!panelHidden()) for (var i = 0; i < bars; i++) {
+        var v = live ? data[Math.floor(i * (data.length * .7) / bars)] / 255 : 0;
+        var bh = Math.max(5, v * H), x = i * (bw + gap), y = (H - bh) / 2;
+        var gr = g.createLinearGradient(0, y, 0, y + bh); gr.addColorStop(0, '#ff6a3d'); gr.addColorStop(1, '#ff3b5c');
+        g.fillStyle = S.paused ? 'rgba(250,204,21,.45)' : gr;
+        g.beginPath(); if (g.roundRect) g.roundRect(x, y, bw, bh, 5); else g.rect(x, y, bw, bh); g.fill();
+      }
+      S.raf = requestAnimationFrame(loop);
+    })();
+  }
+  function panelHidden() { var p = $('gcp-panel'); return p && !p.classList.contains('open'); }   // skip drawing while panel is closed (saves CPU)
+
+  /* ───────── controls ───────── */
+  function togglePause() {
+    if (!S.active) return;
+    var pb = $('rec-btn-pause');
+    if (!S.paused) {
+      S.vrec.pause(); S.acc += performance.now() - S.t0; S.paused = true;
+      $('rec-live-card').classList.add('paused'); $('rec-state').textContent = 'PAUSED'; pb.firstChild.textContent = '▶'; pb.lastChild.textContent = 'Resume';
+    } else {
+      S.vrec.resume(); S.t0 = performance.now(); S.paused = false;
+      $('rec-live-card').classList.remove('paused'); $('rec-state').textContent = 'RECORDING'; pb.firstChild.textContent = '⏸'; pb.lastChild.textContent = 'Pause';
+    }
+    updateTime();
+  }
+  function toggleMic() {
+    if (!S.micGain) return; S.micMuted = !S.micMuted; S.micGain.gain.value = S.micMuted ? 0 : 1.15;
+    var b = $('rec-btn-mic'); b.classList.toggle('off', S.micMuted); b.firstChild.textContent = S.micMuted ? '🔇' : '🎙️'; b.lastChild.textContent = S.micMuted ? 'Unmute' : 'Mute';
+  }
+  function stop() {
+    if (!S.active || S.stopping) return; S.stopping = true;
+    var sid = S.sid;
+    if (!S.paused) S.acc += performance.now() - S.t0; S.paused = true; S.t0 = 0;
+    try { if (S.vrec && S.vrec.state !== 'inactive') S.vrec.stop(); } catch (e) {}
+    setTimeout(function () { if (S.active && sid === S.sid) finalize(); }, 5000);   // safety net
+  }
+  $('rec-btn-pause').addEventListener('click', togglePause);
+  $('rec-btn-mic').addEventListener('click', toggleMic);
+  $('rec-btn-stop').addEventListener('click', stop);
+  $('rec-start').addEventListener('click', start);
+
+  /* ───────── finish ───────── */
+  function saveFile(url, name) {
+    var a = document.createElement('a');
+    a.href = url; a.download = name; a.rel = 'noopener'; a.style.display = 'none';
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); }, 1500);
+  }
+  function finalize() {
+    if (!S.active) return;                                   // already finalized
+    var dur = S.acc, vext = S.vext, hadSys = S.hasSys, hadMic = S.hasMic, hadAudio = S.hasAudio;
+    var vblob = new Blob(S.vchunks, { type: S.vmime ? S.vmime.split(';')[0] : ('video/' + vext) });
+    cleanup();
+    if (!vblob.size) { toast('Nothing was recorded.', true); openControlPanel(); return; }
+    revoke();
+    var token = ++S.fin, auto = cfg.auto;
+    var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; };
+    var stamp = d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
+
+    S.vname = 'recording-' + stamp + '.' + vext; S.vurl = URL.createObjectURL(vblob);
+    var v = $('rec-video'); v.muted = false; v.src = S.vurl;
+    $('rec-dl-video-t').textContent = (hadAudio ? 'Video + Audio · ' : 'Video · ') + vext.toUpperCase();
+    $('rec-dl-video-s').textContent = fmtSize(vblob.size) + (auto ? ' · saving…' : ' · tap to save');
+    $('rec-m-dur').textContent = '⏱ ' + fmt(dur);
+    $('rec-m-aud').textContent = '🔊 ' + (hadSys && hadMic ? 'Internal + Mic' : hadSys ? 'Internal audio' : hadMic ? 'Mic only' : 'No audio');
+    if (vext !== 'mp4') toast('Your browser can’t record MP4 directly, so the file was saved as WEBM (video + audio together). Use the latest Chrome / Edge for MP4.', true);
+    if (auto) setTimeout(function () { if (token === S.fin) saveFile(S.vurl, S.vname); }, 400);
+    show('done'); openControlPanel();
+  }
+
+  function cleanup() {
+    S.active = false; S.stopping = false; clearInterval(S.tick); cancelAnimationFrame(S.raf);
+    [S.display, S.mic].forEach(function (s) { if (s) s.getTracks().forEach(function (t) { t.stop(); }); });
+    if (S.up) { try { S.up.wk.postMessage(0); S.up.wk.terminate(); S.up.sv.srcObject = null; } catch (e) {} S.up = null; }
+    if (S.ctx) { try { S.ctx.close(); } catch (e) {} }
+    S.display = S.mic = S.ctx = S.dest = S.micGain = S.analyser = S.vrec = S.arec = null;
+    S.hasSys = S.hasMic = S.hasAudio = false; S.paused = false; S.t0 = 0;
+    document.body.classList.remove('rec-live-on'); show('idle');
+  }
+  function revoke() { if (S.vurl) URL.revokeObjectURL(S.vurl); S.vurl = null; }
+  function reset() { S.fin++; var v = $('rec-video'); v.pause(); v.removeAttribute('src'); v.load(); revoke(); show('idle'); syncUI(); }
+  $('rec-again').addEventListener('click', function () { if (confirm('Start a new recording? Make sure you have downloaded these files first.')) reset(); });
+  $('rec-discard').addEventListener('click', function () { if (confirm('Discard this recording?')) { reset(); toast('Recording discarded.'); } });
+  $('rec-dl-video').addEventListener('click', function () { if (!S.vurl) return; saveFile(S.vurl, S.vname); toast('⬇ Saving recording…'); });
+
+  /* ───────── keyboard ───────── */
+  // keep the portal's global shortcuts (Space / "." / "/") from firing while using recorder controls
+  window.addEventListener('keydown', function (e) {
+    if (e.target && e.target.closest && e.target.closest('#rec-root') && (e.key === ' ' || e.key === '.' || e.key === '/' || e.code === 'Space')) e.stopImmediatePropagation();
+    // hotkeys so you never need to open the panel mid-recording:  Alt+Shift+R = stop,  Alt+Shift+P = pause/resume
+    if (e.altKey && e.shiftKey && e.code === 'KeyR' && S.active) { e.preventDefault(); e.stopImmediatePropagation(); stop(); }
+    if (e.altKey && e.shiftKey && e.code === 'KeyP' && S.active) { e.preventDefault(); e.stopImmediatePropagation(); togglePause(); }
+  }, true);
+  window.addEventListener('beforeunload', function (e) { if (S.active) { e.preventDefault(); e.returnValue = ''; } });
+
+  show('idle'); syncUI(); measureHz();
+  window.addEventListener('resize', devInfo);
+  window.screenRecorder = { stop: stop, pause: togglePause };
 })();
 </script>
 
