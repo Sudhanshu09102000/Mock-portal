@@ -4410,17 +4410,13 @@ html .qdot.cdot.current{ color:var(--gp-text,#f1f5f9) !important; }
                 <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#4ade80;">✅ Exam Mode</span>
                 <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(37, 99, 235,.12);border:1px solid rgba(37, 99, 235,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#93c5fd;">⚔️ Battle Mode</span>
                 <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(250,204,21,.10);border:1px solid rgba(250,204,21,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#facc15;">📄 PDF Tutor</span>
-                <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(59, 130, 246,.10);border:1px solid rgba(59, 130, 246,.3);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#3b82f6;">⌨️ Typing Test</span>
-              </div>
+                </div>
             </div>
 
             <div class="d-flex gap-2 flex-wrap justify-content-center action-btn-row" style="flex-shrink:0;">
-              <button id="typingBtn" class="btn btn-glass" style="border-color:rgba(59, 130, 246,.4);color:#3b82f6;font-weight:600;">⌨️ Typing Test Engine</button>
-              <button onclick="location.href='pdfocr.html'" class="btn btn-glass" style="border-color:rgba(251,113,133,.55);color:#fb7185;font-weight:600;background:linear-gradient(135deg,rgba(251,113,133,.10),rgba(244,63,94,.06));box-shadow:0 0 18px rgba(251,113,133,.18);transition:all .18s ease;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='rgba(251,113,133,.9)';this.style.boxShadow='0 0 28px rgba(251,113,133,.38)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(251,113,133,.55)';this.style.boxShadow='0 0 18px rgba(251,113,133,.18)';this.style.transform='translateY(0)'">
-                <span style="display:inline-flex;align-items:center;gap:6px;">
-                  <span style="font-size:15px;filter:drop-shadow(0 0 6px rgba(251,113,133,.7));">🔍</span>
-                  <span>OCR PDF Reader</span>
-                  </span>
+              <button id="usefulToolsBtn" type="button" class="ut-open-btn" aria-haspopup="dialog" aria-controls="utOverlay">
+                <span class="ut-open-icon">🧰</span>
+                <span class="ut-open-text">Useful Tools</span>
               </button>
             </div>
           </div>
@@ -5602,7 +5598,6 @@ html .qdot.cdot.current{ color:var(--gp-text,#f1f5f9) !important; }
 
       // Back button listeners are handled by initBackGuard() above
 
-      $('typingBtn').addEventListener('click', () => { location.href = 'typing-test.html'; });
 
       /* ========= SEARCH ========= */
       function buildSearchIndex() {
@@ -19894,6 +19889,205 @@ html.lite-mode #questionText .badge { background: #fff !important; background-im
   document.addEventListener('click', soon, true); document.addEventListener('input', soon, true); document.addEventListener('change', soon, true);
   window.addEventListener('load', soon); setInterval(fix, 2000); soon();
   window.fixBadgeContrast = fix;
+})();
+</script>
+
+<!-- ===================== USEFUL TOOLS ===================== -->
+<style>
+/* All colours come from --ut-* variables, which the script below derives from the
+   Appearance Studio theme (--gp-bg1 / --gp-text / --gp-box1). Fallbacks = default dark. */
+
+/* ---- Trigger button ---- */
+.ut-open-btn{
+  display:inline-flex; align-items:center; gap:10px; padding:11px 24px; border-radius:16px; cursor:pointer;
+  font:800 15px/1 'Inter',system-ui,sans-serif; letter-spacing:.3px;
+  color:var(--ut-on,#fff);
+  background:linear-gradient(135deg,var(--ut-a1,#3b82f6),var(--ut-a2,#60a5fa));
+  border:1px solid var(--ut-line,rgba(255,255,255,.25));
+  box-shadow:0 8px 24px color-mix(in srgb,var(--ut-a1,#3b82f6) 35%,transparent);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.ut-open-btn:hover{ transform:translateY(-3px); box-shadow:0 14px 34px color-mix(in srgb,var(--ut-a1,#3b82f6) 50%,transparent); }
+.ut-open-btn:active{ transform:translateY(0) scale(.98); }
+.ut-open-icon{ font-size:19px; }
+
+/* ---- Overlay ---- */
+#utOverlay{
+  position:fixed; inset:0; z-index:100050; display:none; align-items:center; justify-content:center;
+  padding:18px; overflow-y:auto;
+  background:var(--ut-scrim,rgba(6,13,28,.82));
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+}
+#utOverlay.open{ display:flex; animation:utFade .22s ease both; }
+@keyframes utFade{ from{opacity:0} to{opacity:1} }
+
+/* ---- Box (static gradient border from theme accent) ---- */
+.ut-box{
+  position:relative; width:min(760px,100%); border-radius:28px; padding:2px;
+  background:linear-gradient(135deg,var(--ut-a1,#3b82f6),var(--ut-a2,#60a5fa) 50%,var(--ut-a1,#3b82f6));
+  box-shadow:0 30px 90px color-mix(in srgb,var(--ut-a1,#3b82f6) 28%,rgba(0,0,0,.45));
+  animation:utPop .35s ease both;
+}
+@keyframes utPop{ from{opacity:0;transform:translateY(20px) scale(.96)} to{opacity:1;transform:none} }
+.ut-inner{
+  position:relative; border-radius:26px; padding:30px 28px 26px; overflow:hidden;
+  background:linear-gradient(160deg,var(--ut-bg,#060d1c),var(--ut-bg2,#0d1426));
+  color:var(--ut-tx,#f1f5f9); font-family:'Inter',system-ui,sans-serif;
+}
+.ut-close{
+  position:absolute; top:14px; right:14px; z-index:3; width:38px; height:38px; border-radius:12px; cursor:pointer;
+  display:grid; place-items:center; font-size:17px; color:var(--ut-tx,#f1f5f9);
+  background:var(--ut-card,rgba(255,255,255,.06)); border:1px solid var(--ut-line,rgba(255,255,255,.14));
+  transition:all .2s ease;
+}
+.ut-close:hover{ background:var(--ut-a1,#3b82f6); border-color:var(--ut-a1,#3b82f6); color:var(--ut-on,#fff); }
+.ut-head{ position:relative; text-align:center; margin-bottom:22px; }
+.ut-eyebrow{ display:inline-flex; align-items:center; gap:7px; padding:3px 13px; border-radius:999px; margin-bottom:10px;
+  font-size:11px; font-weight:800; letter-spacing:1.4px; color:var(--ut-tx,#f1f5f9);
+  background:var(--ut-card,rgba(255,255,255,.06)); border:1px solid var(--ut-line,rgba(255,255,255,.14)); }
+.ut-eyebrow i{ width:6px; height:6px; border-radius:50%; background:var(--ut-a1,#3b82f6); display:inline-block; }
+.ut-title{ margin:0; font-size:clamp(1.6rem,4.5vw,2.2rem); font-weight:900; line-height:1.1; color:var(--ut-tx,#f1f5f9); }
+.ut-sub{ margin:8px auto 0; max-width:420px; font-size:.92rem; color:var(--ut-mute,rgba(241,245,249,.7)); }
+
+/* ---- Tool cards ---- */
+.ut-grid{ position:relative; display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+.ut-card{
+  position:relative; display:flex; align-items:center; gap:14px; padding:16px; border-radius:20px;
+  text-decoration:none !important; color:var(--ut-tx,#f1f5f9) !important; cursor:pointer; overflow:hidden;
+  background:var(--ut-card,rgba(255,255,255,.05)); border:1px solid var(--ut-line,rgba(255,255,255,.12));
+  transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.ut-card:hover{
+  transform:translateY(-4px); border-color:var(--ut-a1,#3b82f6); background:var(--ut-card2,rgba(255,255,255,.09));
+  box-shadow:0 14px 32px color-mix(in srgb,var(--ut-a1,#3b82f6) 30%,transparent);
+}
+.ut-card:focus-visible{ outline:2px solid var(--ut-a1,#3b82f6); outline-offset:3px; }
+.ut-ico{
+  flex:0 0 auto; width:56px; height:56px; border-radius:17px; display:grid; place-items:center; font-size:27px;
+  background:linear-gradient(135deg,var(--ut-a1,#3b82f6),var(--ut-a2,#60a5fa));
+  box-shadow:0 8px 18px color-mix(in srgb,var(--ut-a1,#3b82f6) 35%,transparent);
+  transition:transform .22s ease;
+}
+.ut-card:hover .ut-ico{ transform:scale(1.08); }
+.ut-txt{ min-width:0; flex:1; }
+.ut-name{ font-size:1rem; font-weight:800; line-height:1.2; }
+.ut-desc{ margin-top:3px; font-size:.78rem; line-height:1.35; color:var(--ut-mute,rgba(241,245,249,.7)); }
+.ut-go{ font-size:18px; color:var(--ut-mute,rgba(241,245,249,.7)); transition:transform .2s ease, color .2s ease; }
+.ut-card:hover .ut-go{ transform:translateX(4px); color:var(--ut-a1,#3b82f6); }
+.ut-foot{ margin-top:18px; text-align:center; font-size:.74rem; color:var(--ut-mute,rgba(241,245,249,.7)); }
+.ut-foot kbd{ background:var(--ut-card,rgba(255,255,255,.08)); border:1px solid var(--ut-line,rgba(255,255,255,.15));
+  border-radius:6px; padding:1px 7px; font-size:.7rem; color:var(--ut-tx,#f1f5f9); }
+
+/* ---- Light themes: pure black & white (emoji icons turn grey, tiles become neutral) ---- */
+#utOverlay[data-mode="light"] .ut-ico{
+  background:var(--ut-card2); border:1px solid var(--ut-line); box-shadow:none; filter:grayscale(1);
+}
+#utOverlay[data-mode="light"] .ut-card:hover{ box-shadow:0 12px 28px rgba(0,0,0,.14); }
+#utOverlay[data-mode="light"] .ut-box{ box-shadow:0 30px 80px rgba(0,0,0,.28); }
+
+@media (max-width:600px){
+  .ut-grid{ grid-template-columns:1fr; }
+  .ut-inner{ padding:26px 16px 20px; }
+  .ut-ico{ width:50px; height:50px; font-size:24px; }
+}
+</style>
+
+<div id="utOverlay" role="dialog" aria-modal="true" aria-labelledby="utTitle" data-mode="dark">
+  <div class="ut-box">
+    <div class="ut-inner">
+      <button type="button" class="ut-close" id="utClose" aria-label="Close">✕</button>
+      <div class="ut-head">
+        <div class="ut-eyebrow"><i></i>TOOLKIT</div>
+        <h2 class="ut-title" id="utTitle">Useful Tools</h2>
+        <p class="ut-sub">Handy utilities to supercharge your preparation. Pick one to open it.</p>
+      </div>
+      <div class="ut-grid" id="utGrid"></div>
+      <div class="ut-foot">Press <kbd>Esc</kbd> or click outside to close</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ✏️ EDIT THE LINKS HERE — each tool opens the html file/URL given in `url` */
+  var UT_TOOLS = [
+    { name:'PDF OCR Reader',  desc:'Read scanned PDFs and extract selectable text.',  icon:'🔍', url:'pdf-ocr-reader.html' },
+    { name:'PDF Page Getter', desc:'Pick and pull out just the pages you need.',      icon:'📑', url:'pdf-page-getter.html' },
+    { name:'Typing Engine',   desc:'Practice speed and accuracy with typing tests.',  icon:'⌨️', url:'typing-engine.html' },
+    { name:'PixelForge',      desc:'Craft, edit and enhance images in your browser.', icon:'🎨', url:'PixelForge · Image & PDF Converter.html' }
+  ];
+
+  var overlay = document.getElementById('utOverlay');
+  var grid = document.getElementById('utGrid');
+  var openBtn = document.getElementById('usefulToolsBtn');
+  if(!overlay || !grid || !openBtn) return;
+
+  UT_TOOLS.forEach(function(t){
+    var a = document.createElement('a');
+    a.className = 'ut-card';
+    a.href = encodeURI(t.url);   /* handles spaces, “·” and “&” in file names */
+    a.innerHTML = '<span class="ut-ico">' + t.icon + '</span>' +
+      '<span class="ut-txt"><div class="ut-name"></div><div class="ut-desc"></div></span><span class="ut-go">➜</span>';
+    a.querySelector('.ut-name').textContent = t.name;
+    a.querySelector('.ut-desc').textContent = t.desc;
+    grid.appendChild(a);
+  });
+
+  /* ---------- derive the palette from the active Appearance Studio theme ---------- */
+  function parse(c){
+    c = (c||'').trim(); var m;
+    if((m=/^#([0-9a-f]{3})$/i.exec(c))) return [0,1,2].map(function(i){ return parseInt(m[1][i]+m[1][i],16); });
+    if((m=/^#([0-9a-f]{6})/i.exec(c))) return [0,2,4].map(function(i){ return parseInt(m[1].substr(i,2),16); });
+    if((m=/rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)/i.exec(c))) return [+m[1],+m[2],+m[3]];
+    return null;
+  }
+  function lum(c){ return (0.299*c[0]+0.587*c[1]+0.114*c[2])/255; }
+  function mix(a,b,t){ return [0,1,2].map(function(i){ return Math.round(a[i]*(1-t)+b[i]*t); }); }
+  function css(c){ return 'rgb('+c[0]+','+c[1]+','+c[2]+')'; }
+
+  function applyPalette(){
+    var cs = getComputedStyle(document.documentElement);
+    var bg  = parse(cs.getPropertyValue('--gp-bg1'))  || [6,13,28];
+    var tx  = parse(cs.getPropertyValue('--gp-text')) || [241,245,249];
+    var box = parse(cs.getPropertyValue('--gp-box1')) || [6,13,28];
+    var light = lum(bg) > 0.55, a1, a2;
+    if(light){                       /* light theme → strict black & white */
+      a1 = tx; a2 = mix(tx,bg,.45);
+    } else {                         /* dark theme → theme's accent colour */
+      a1 = lum(box) < 0.28 ? mix(box,tx,.6) : box;
+      a2 = mix(a1,tx,.4);
+    }
+    var v = {
+      '--ut-bg':   css(bg),
+      '--ut-bg2':  css(mix(bg,tx,.07)),
+      '--ut-tx':   css(tx),
+      '--ut-mute': css(mix(tx,bg,.35)),
+      '--ut-card': css(mix(bg,tx,.06)),
+      '--ut-card2':css(mix(bg,tx,.12)),
+      '--ut-line': css(mix(bg,tx,.22)),
+      '--ut-a1':   css(a1),
+      '--ut-a2':   css(a2),
+      '--ut-on':   lum(a1) > 0.6 ? '#0b1020' : '#ffffff',
+      '--ut-scrim':'rgba('+bg[0]+','+bg[1]+','+bg[2]+',.82)'
+    };
+    [overlay, openBtn].forEach(function(el){ for(var k in v) el.style.setProperty(k, v[k]); });
+    overlay.setAttribute('data-mode', light ? 'light' : 'dark');
+  }
+  applyPalette();
+  var t;
+  new MutationObserver(function(){ clearTimeout(t); t = setTimeout(applyPalette, 60); })
+    .observe(document.documentElement, { attributes:true, attributeFilter:['style','class','data-theme'] });
+  window.addEventListener('load', applyPalette);
+
+  function open(){ applyPalette(); overlay.classList.add('open'); document.body.style.overflow='hidden'; }
+  function close(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
+
+  openBtn.addEventListener('click', open);
+  document.getElementById('utClose').addEventListener('click', close);
+  overlay.addEventListener('mousedown', function(e){ if(e.target === overlay) close(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && overlay.classList.contains('open')){ e.stopPropagation(); close(); }
+  }, true);
 })();
 </script>
 </body>

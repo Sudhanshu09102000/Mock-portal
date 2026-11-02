@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Typing Engine</title>
+<meta name="description" content="Free online typing speed test. Type for 1, 2, 3 or 5 minutes and get your speed in WPM and KDPH, your accuracy and the keys you miss most. No sign-up." />
+<meta name="theme-color" content="#203864" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
+<style>
+:root{--bg:#f4f7fc}*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:#1f2937;font-family:Poppins,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.55}
+/* Typing test design */
+.ty{--navy:#203864;--navy2:#2b4a82;--gold:#ffc107;--ink:#1f2937;--mut:#5b6475;--line:#dde4f0;--tint:#eef3fb}
+body{background:#f4f7fc;font-feature-settings:"tnum"}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+
+/* hero */
+.ty-hero{background:radial-gradient(900px 300px at 85% -10%,#ffe9a8 0,transparent 60%),linear-gradient(180deg,#e7effc,#f4f7fc);border-bottom:1px solid var(--line);padding:56px 16px 40px}
+.ty-hero .in,.ty-wrap{max-width:1100px;margin:0 auto}
+.ty-hero h1{margin:0 0 12px;font-size:clamp(28px,4.4vw,44px);line-height:1.15;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.ty-hero h1 span{display:block;font-size:.55em;font-weight:600;color:#9a6a00;letter-spacing:0;margin-top:6px}
+.ty-hero p{max-width:68ch;margin:0 0 22px;color:#374151;font-size:16px}
+
+.ty-wrap{padding:24px 16px}
+.ty-wrap h2{margin:40px 0 16px;font-size:24px;line-height:1.3;color:var(--navy);font-weight:700}
+
+/* mode keys: the keycap motif */
+.pr-modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:-8px}
+.pr-modes button{font:inherit;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;padding:14px 16px 16px;background:#fff;color:var(--ink);border:1px solid var(--line);border-bottom-width:5px;border-radius:14px;transition:transform .12s,border-color .12s,background .12s}
+.pr-modes button i{font-style:normal;font-size:24px;line-height:1.2}
+.pr-modes button b{font-size:16px;color:var(--navy)}
+.pr-modes button span{font-size:13px;color:var(--mut);line-height:1.4}
+.pr-modes button:hover{border-color:#b9c8e4;transform:translateY(-2px)}
+.pr-modes button:active{transform:translateY(3px);border-bottom-width:2px;margin-bottom:3px}
+.pr-modes button.on{background:var(--navy);border-color:var(--navy);border-bottom-color:#ffc107}
+.pr-modes button.on b{color:#fff}.pr-modes button.on span{color:#cfdcf3}
+
+/* practice stage */
+.lr-stage{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 18px 40px -22px rgba(32,56,100,.35)}
+.pr-cfg{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.pr-cfg:empty{display:none}
+.lr-top{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;margin-bottom:14px}
+.lr-stats{display:grid;grid-template-columns:repeat(4,minmax(84px,1fr));gap:10px;flex:1 1 380px}
+.lr-stats div{background:var(--tint);border-radius:14px;padding:10px 14px;text-align:center}
+.lr-stats b{display:block;font-size:28px;line-height:1.1;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.lr-stats div:nth-child(2){background:#fff3c4}
+.lr-stats span{font-size:12.5px;color:var(--mut)}
+.lr-opts{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:14px;color:var(--ink)}
+.lr-opts label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.lr-opts input{width:16px;height:16px;accent-color:var(--navy)}
+.ty-btn{font:600 14px Poppins,Arial,sans-serif;background:var(--navy);color:#fff;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;box-shadow:0 3px 0 #0f1f3d;transition:background .15s}
+.ty-btn:hover{background:var(--navy2)}.ty-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #0f1f3d}.ty-btn.sm{padding:8px 14px;font-size:13px}
+.lr-prog{height:8px;border-radius:99px;background:#e6ecf7;overflow:hidden;margin-bottom:16px}
+.lr-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#facc15,#ffb300);border-radius:99px;transition:width .25s}
+#pr-area{min-height:150px;border:2px dashed #cdd8ec;border-radius:14px;padding:18px;background:#fbfcff;font:500 20px/1.9 "Courier New",ui-monospace,monospace;color:#2a3550;word-spacing:2px}
+#pr-area:empty::before{content:"Choose a mode above, then start typing. The timer starts on your first key.";font:400 15px Poppins,sans-serif;color:var(--mut)}
+#pr-area:focus-within{border-color:var(--navy);background:#fff}
+#pr-area textarea,#pr-area input{font:inherit;width:100%;border:2px solid var(--line);border-radius:10px;padding:12px;margin-top:10px}
+#pr-out:not(:empty){margin-top:16px;padding:16px;border-radius:14px;background:var(--tint)}
+
+/* progress boxes */
+.ty-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.ty-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.ty-note{color:var(--mut);font-size:14px}
+.heat{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+
+/* speed table */
+.ty-scroll{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:16px}
+.ty-t{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}
+.ty-t th{background:var(--navy);color:#fff;font-size:14px;font-weight:600;text-transform:none;letter-spacing:0;padding:12px 16px}
+.ty-t td{padding:13px 16px;border-top:1px solid var(--line);color:var(--ink)}
+.ty-t tr:nth-child(even) td{background:#f8faff}
+.ty-t td:first-child{white-space:nowrap}.ty-t td:nth-child(2){font-weight:700;color:var(--navy);white-space:nowrap}
+.ty-t tr:last-child td:first-child b{color:#9a6a00}
+
+/* other tests */
+
+/* FAQ */
+.ty-faq details{background:#fff;border:1px solid var(--line);border-radius:14px;margin:10px 0;overflow:hidden}
+.ty-faq summary{display:flex;justify-content:space-between;gap:12px;padding:15px 18px;font-size:16px;font-weight:600;color:var(--navy);cursor:pointer}
+.ty-faq summary::before{content:none}
+.ty-faq summary::after{content:"+";font-size:22px;line-height:1;color:#9a6a00;transition:transform .2s}
+.ty-faq details[open] summary::after{transform:rotate(45deg)}
+.ty-faq details[open]{border-color:#b9c8e4}
+.ty-faq p{margin:0;padding:0 18px 16px;color:#4b5565;max-width:75ch}
+
+
+@media(max-width:640px){.ty-hero{padding:48px 16px 28px}.lr-stats{grid-template-columns:repeat(2,1fr)}#pr-area{font-size:17px}.ty-wrap h2{font-size:21px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.ty-hero{padding:48px 16px 36px}
+.ty-wrap{padding:20px 16px 8px}
+.pr-cfg{margin-bottom:14px}.pr-cfg:empty{display:none}.pr-cfg>span{font-size:14px;color:var(--mut);margin-right:2px}
+.pr-cfg .ty-btn{background:#fff;color:var(--navy);box-shadow:0 3px 0 #c5d1e8;border:1px solid var(--line)}
+.pr-cfg .ty-btn.on{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 3px 0 #0f1f3d}
+#cu{width:100%;min-height:90px;border:2px solid var(--line);border-radius:12px;padding:12px;font:15px/1.5 Poppins,sans-serif;resize:vertical}
+#pr-area{white-space:pre-wrap;height:190px;min-height:0;overflow:hidden;cursor:text;border-style:solid;border-color:#d4def0;position:relative;scroll-behavior:auto}
+#pr-area:empty::before{content:none}
+#pr-area.f{border-color:var(--navy);background:#fff}
+#pr-area span.ok{color:#15803d}
+#pr-area span.bad{color:#b91c1c;background:#fee2e2;border-radius:3px}
+#pr-area span.cur{background:#ffe08a;border-radius:3px;box-shadow:0 2px 0 var(--navy)}
+#pr-area .hint{font:400 15px Poppins,sans-serif;color:var(--mut)}
+.sr{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.tip{margin:10px 2px 0;font-size:13.5px;color:var(--mut)}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.res div{background:#fff;border-radius:12px;padding:12px;text-align:center}
+.res b{display:block;font-size:26px;color:var(--navy);line-height:1.15}.res span{font-size:13px;color:var(--mut)}
+.res+p{margin:12px 0 0;color:var(--ink);font-size:14.5px}
+.bars{display:flex;align-items:flex-end;gap:8px;height:130px;padding-top:22px;margin-top:10px}
+.bars i{flex:1;position:relative;background:linear-gradient(#ffc107,#ffb300);border-radius:6px 6px 0 0;min-height:4px}
+.bars b{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:12px;color:var(--navy);font-style:normal}
+.heat span{width:36px;height:36px;display:grid;place-items:center;border-radius:9px;font:600 14px Poppins,sans-serif;background:#eef1f6;color:#8a94a6;border-bottom:3px solid rgba(0,0,0,.08)}
+.foot{margin-top:40px;background:#16294d;border-top:4px solid var(--gold);color:#cbd5e1;text-align:center;padding:20px 16px;font-size:14px}
+
+</style>
+</head>
+<body class="ty">
+<header class="ty-hero"><div class="in">
+<h1>Typing Speed Test <span>Check your WPM, free</span></h1>
+<p>Start typing the words below. The timer starts with your first key. You get your speed in words per minute (WPM) and key depressions per hour (KDPH), your accuracy and a map of the keys you miss. Change the time to 2, 3 or 5 minutes at any point.</p>
+</div></header>
+<main class="ty-wrap">
+<div class="pr-modes" id="pr-modes">
+<button data-m="speed" class="on"><i>⚡</i><b>Speed test</b><span>Common words for 1, 2, 3 or 5 minutes</span></button>
+<button data-m="weak"><i>🎯</i><b>Weak keys</b><span>Words full of the keys you miss most</span></button>
+<button data-m="num"><i>🔢</i><b>Numbers &amp; symbols</b><span>Figures, years, dates and punctuation</span></button>
+<button data-m="passage"><i>📄</i><b>Passage</b><span>A short paragraph, no timer</span></button>
+<button data-m="custom"><i>✍️</i><b>My own text</b><span>Paste any text and practise it</span></button>
+</div>
+<div class="lr-stage" style="margin-top:16px">
+<div class="pr-cfg" id="pr-cfg"></div>
+<div class="lr-top">
+<div class="lr-stats">
+<div><b id="ps-time">1:00</b><span>Time</span></div>
+<div><b id="ps-wpm">0</b><span>WPM</span></div>
+<div><b id="ps-kdph">0</b><span>KDPH</span></div>
+<div><b id="ps-acc">100</b><span>Accuracy %</span></div>
+</div>
+<div class="lr-opts">
+<label><input type="checkbox" id="op-sound" /> Key sound</label>
+<button class="ty-btn sm" id="pr-restart" type="button">↻ Restart</button>
+</div>
+</div>
+<div class="lr-prog"><i id="ps-prog"></i></div>
+<div id="pr-area" aria-live="off"></div>
+<input id="cap" class="sr" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Typing input" />
+<p class="tip">Click the box if typing does not start. Backspace fixes a mistake, but the mistake still counts against accuracy.</p>
+<div id="pr-out"></div>
+</div>
+<h2>Your progress</h2>
+<div class="ty-two">
+<div class="ty-box"><b style="color:#203864">Speed over your last tests</b><div id="pr-hist" class="ty-note">Finish a test to see your chart.</div></div>
+<div class="ty-box"><b style="color:#203864">Key heat-map</b> <span class="ty-note">(green = accurate, red = many mistakes)</span><div id="pr-heat" class="heat"></div></div>
+</div>
+<h2>What is a good typing speed?</h2>
+<div class="ty-scroll"><table class="ty-t"><tbody>
+<tr><th>Level</th><th>Speed</th><th>What it means</th></tr>
+<tr><td><b>Beginner</b></td><td>Below 25 WPM</td><td>Still looking at the keys. Practise the home row first.</td></tr>
+<tr><td><b>Average</b></td><td>30–40 WPM</td><td>Enough for daily computer work and most clerk-level typing tests.</td></tr>
+<tr><td><b>Good</b></td><td>45–60 WPM</td><td>Comfortable for office, data entry and content work.</td></tr>
+<tr><td><b>Fast</b></td><td>60+ WPM</td><td>Professional speed. Keep accuracy above 97%.</td></tr>
+</tbody></table></div>
+<section class="ty-faq">
+<h2>Questions</h2>
+<details><summary>How do I check my typing speed?</summary><p>Choose Speed test, pick 1, 2, 3 or 5 minutes and start typing the words shown. When time is up you see your WPM, KDPH, accuracy and the keys you miss most.</p></details>
+<details><summary>How is WPM calculated?</summary><p>Every 5 correctly typed characters (spaces included) count as one word. WPM = correct characters ÷ 5 ÷ minutes. KDPH = correct characters per hour, so 35 WPM = 10,500 KDPH.</p></details>
+<details><summary>What is a good typing speed?</summary><p>Below 25 WPM is a beginner, 30–40 WPM is average, 45–60 WPM is good and above 60 WPM is fast. For job and exam typing tests, accuracy matters as much as speed. Aim for 95% or more.</p></details>
+<details><summary>How can I learn typing fast as a beginner?</summary><p>Learn touch typing: keep your fingers on the home row (A S D F – J K L ;), let each finger press only its own keys and avoid looking at the keyboard. Practise 30 minutes twice a day and use Weak keys mode to target your mistakes.</p></details>
+</section>
+</main>
+<div class="foot">Free typing speed test. Your results are stored only in this browser.</div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var W="the of and to in is you that it he was for on are as with his they at be this have from or one had by word but not what all were we when your can said there use an each which she do how their if will up other about out many then them these so some her would make like him into time has look two more write go see number no way could people my than first water been call who its now find long down day did get come made may part keyboard practice typing speed accuracy finger quick brown jumps over lazy window garden market journey simple question answer".split(" ");
+var PASS=["A good habit grows from small steps repeated every day. Practise for a few minutes, keep your wrists relaxed and look at the screen instead of the keys. Speed arrives on its own once your fingers know where to go.",
+"The library opens at nine and closes at six. Students arrive early, find a quiet table and spread out their notes. By noon the room is warm, the pens are moving, and nobody notices how fast the morning has gone.",
+"Rivers begin as tiny streams high in the hills. They gather rain, cut valleys and carry soil to the plains below. Over many years a gentle current can shape a whole landscape, one patient mile at a time."];
+var area=$("pr-area"),cap=$("cap"),sp=[],S={},mode="speed",dur=60,custom="",tm;
+function rnd(n){return Math.floor(Math.random()*n)}
+function pick(a){return a[rnd(a.length)]}
+function LS(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function weakSet(){var k=LS("tt_keys")||{},a=Object.keys(k).filter(function(c){return k[c][1]>0}).sort(function(a,b){return k[b][1]/(k[b][0]+k[b][1])-k[a][1]/(k[a][0]+k[a][1])}).slice(0,6);return a.length>=3?a:"qzxjkvwy".split("")}
+function weakPool(){var w=weakSet(),p=W.filter(function(x){return w.some(function(c){return x.indexOf(c)>=0})});for(var i=0;i<25;i++){var s="";for(var j=0;j<3+rnd(4);j++)s+=j%2?pick("aeiou".split("")):pick(w);p.push(s)}return p}
+function nums(){var o=[];for(var i=0;i<30;i++){var r=rnd(6);o.push(r==0?String(10+rnd(99990)):r==1?String(1990+rnd(41)):r==2?("0"+(1+rnd(9))).slice(-2)+"/"+("0"+(1+rnd(12))).slice(-2)+"/"+(2000+rnd(30)):r==3?(rnd(900)+10)+"."+("0"+rnd(100)).slice(-2):r==4?"("+rnd(500)+")":(rnd(90)+10)+pick(["%","-","/",","," +"]).trim()+(rnd(90)+10))}return o.join(" ")+" "}
+function chunk(){return mode=="num"?nums():(function(){var p=mode=="weak"?weakPool():W,a=[];for(var i=0;i<40;i++)a.push(pick(p));return a.join(" ")+" "})()}
+function fixed(){return mode=="passage"||mode=="custom"}
+function addText(t){S.text+=t;var f=document.createDocumentFragment();for(var i=0;i<t.length;i++){var s=document.createElement("span");s.textContent=t[i];f.appendChild(s);sp.push(s)}area.appendChild(f)}
+function reset(){clearInterval(tm);S={text:"",st:[],pos:0,t0:0,typed:0,err:0,ok:0,keys:{},run:false,done:false};sp=[];area.innerHTML="";$("pr-out").innerHTML="";
+if(mode=="custom"&&!custom){area.innerHTML='<span class="hint">Paste your text above and press Start typing.</span>';S.done=true}
+else{addText(mode=="passage"?pick(PASS):mode=="custom"?custom:chunk());sp[0].className="cur"}
+area.scrollTop=0;stats();if(!S.done)cap.focus()}
+function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+("0"+s%60).slice(-2)}
+function elapsed(){return S.run?Math.min(fixed()?1e9:dur,(Date.now()-S.t0)/1000):0}
+function stats(){var el=elapsed(),acc=S.typed?Math.round((S.typed-S.err)/S.typed*100):100,wpm=el>=1?Math.round(S.ok/5/(el/60)):0;
+$("ps-time").textContent=fixed()?fmt(el):fmt(dur-el);$("ps-wpm").textContent=wpm;$("ps-kdph").textContent=wpm*300;$("ps-acc").textContent=acc;
+$("ps-prog").style.width=(fixed()?S.pos/S.text.length*100:el/dur*100)+"%"}
+function click(){if(!$("op-sound").checked)return;try{window.AC=window.AC||new(window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain();o.type="square";o.frequency.value=700+rnd(120);g.gain.value=.03;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+.025)}catch(e){}}
+function key(ch){if(S.done)return;if(!S.run){S.run=true;S.t0=Date.now();tm=setInterval(function(){stats();if(!fixed()&&elapsed()>=dur)finish()},200)}
+var exp=S.text[S.pos],ok=ch===exp,k=exp.toLowerCase();S.typed++;if(k.trim()){S.keys[k]=S.keys[k]||[0,0];S.keys[k][ok?0:1]++}
+if(!ok)S.err++;else S.ok++;S.st[S.pos]=ok?1:2;sp[S.pos].className=ok?"ok":"bad";S.pos++;click();
+if(S.pos>=S.text.length){if(fixed())return finish();addText(chunk())}
+sp[S.pos].className="cur";var c=sp[S.pos];if(c.offsetTop>area.scrollTop+90)area.scrollTop=c.offsetTop-40;stats()}
+function back(){if(S.done||S.pos<=0)return;sp[S.pos].className="";S.pos--;if(S.st[S.pos]==1)S.ok--;S.st[S.pos]=0;sp[S.pos].className="cur"}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function finish(){if(S.done)return;S.done=true;clearInterval(tm);if(!fixed())S.t0=Date.now()-dur*1000;stats();
+var el=fixed()?(Date.now()-S.t0)/1000:dur,wpm=Math.round(S.ok/5/(Math.max(el,1)/60)),acc=S.typed?Math.round((S.typed-S.err)/S.typed*100):100;
+$("ps-wpm").textContent=wpm;$("ps-kdph").textContent=wpm*300;
+var K=LS("tt_keys")||{},miss=[];for(var c in S.keys){K[c]=K[c]||[0,0];K[c][0]+=S.keys[c][0];K[c][1]+=S.keys[c][1];if(S.keys[c][1])miss.push([c,S.keys[c][1]])}LS("tt_keys",K);
+miss.sort(function(a,b){return b[1]-a[1]});var H=LS("tt_hist")||[];H.push(wpm);LS("tt_hist",H.slice(-10));
+$("pr-out").innerHTML='<div class="res"><div><b>'+wpm+'</b><span>WPM</span></div><div><b>'+wpm*300+'</b><span>KDPH</span></div><div><b>'+acc+'%</b><span>Accuracy</span></div><div><b>'+S.ok+' / '+S.err+'</b><span>Correct / wrong keys</span></div></div><p>'+(miss.length?"Keys you missed most: "+miss.slice(0,5).map(function(m){return "<b>"+esc(m[0])+"</b> ("+m[1]+")"}).join(", "):"No mistakes. Clean run!")+"</p>";
+draw()}
+function draw(){var H=LS("tt_hist")||[],m=Math.max.apply(null,H.concat(1));
+if(H.length)$("pr-hist").innerHTML='<div class="bars">'+H.map(function(v){return '<i style="height:'+Math.max(4,v/m*100)+'%"><b>'+v+"</b></i>"}).join("")+"</div>";
+var K=LS("tt_keys")||{},h="";"abcdefghijklmnopqrstuvwxyz".split("").forEach(function(c){var d=K[c],st="";if(d&&d[0]+d[1]){var a=d[0]/(d[0]+d[1]);st=' style="background:hsl('+Math.round(a*a*120)+',65%,86%);color:hsl('+Math.round(a*a*120)+',60%,26%)"'}h+="<span"+st+">"+c+"</span>"});$("pr-heat").innerHTML=h}
+function cfg(){var c=$("pr-cfg");c.innerHTML="";
+if(mode=="speed"||mode=="weak"||mode=="num"){c.innerHTML="<span>Time:</span>";[1,2,3,5].forEach(function(m){var b=document.createElement("button");b.type="button";b.className="ty-btn sm"+(dur==m*60?" on":"");b.textContent=m+" min";b.onclick=function(){dur=m*60;cfg();reset()};c.appendChild(b)})}
+else if(mode=="passage"){var b=document.createElement("button");b.type="button";b.className="ty-btn sm";b.textContent="New passage";b.onclick=reset;c.appendChild(b)}
+else{c.innerHTML='<textarea id="cu" placeholder="Paste or type the text you want to practise"></textarea><button type="button" class="ty-btn sm" id="cu-go">Start typing</button>';$("cu").value=custom;$("cu-go").onclick=function(){custom=$("cu").value.replace(/\s+/g," ").trim();reset()}}}
+$("pr-modes").onclick=function(e){var b=e.target.closest("button");if(!b)return;mode=b.getAttribute("data-m");[].forEach.call(this.children,function(x){x.classList.toggle("on",x===b)});cfg();reset()};
+$("pr-restart").onclick=reset;
+area.onclick=function(){cap.focus()};cap.onfocus=function(){area.classList.add("f")};cap.onblur=function(){area.classList.remove("f")};
+cap.addEventListener("input",function(e){var t=e.inputType||"";if(t=="deleteContentBackward")back();else if(e.data)e.data.split("").forEach(key);cap.value=""});
+cap.addEventListener("keydown",function(e){if(e.key=="Backspace"){e.preventDefault();back()}else if(e.key=="Enter"||e.key=="Tab")e.preventDefault()});
+document.addEventListener("keydown",function(e){var t=document.activeElement.tagName;if(t!="TEXTAREA"&&t!="INPUT"&&t!="BUTTON"&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&e.key.length==1&&!S.done)cap.focus()});
+cfg();draw();reset();
+})();
+</script>
+</body>
+</html>
