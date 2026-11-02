@@ -3811,6 +3811,60 @@ body.test-box-resizing * {
 @media (max-width: 900px) { .yk-stage { grid-template-columns: 1fr; } }
 @media (max-width: 767px) { #ytStudio { padding: 0; } .yk-panel { border-radius: 0; height: 100%; } .yk-head, .yk-tabs, .yk-body { padding-left: 14px; padding-right: 14px; } .yk-card { padding-left: 16px; } .yk-ch { flex-wrap: wrap; } }
 </style>
+<style id="ytStudioThemeCss">
+/* ═══ YouTube Studio — follow the app theme (colour presets / custom colours) + Light Mode ═══
+   Uses the same --gp-* variables as every other modal (#backConfirmBox, #answerModal …). */
+#ytStudio { background: radial-gradient(1200px 700px at 15% 0%, rgba(var(--yk-rgb), .20), transparent 60%), rgba(3,5,12,.72) !important; }
+#ytStudio .yk-panel {
+  background-color: var(--gp-box1, #060d1c) !important;
+  background-image: linear-gradient(135deg, var(--gp-box1-tint, #060d1c), var(--gp-box2-tint, #050b17)), var(--gp-box-img, none) !important;
+  background-size: cover, cover !important; background-position: center, center !important; background-repeat: no-repeat, no-repeat !important;
+  border-color: var(--gp-boxb, #3d424e) !important;
+  box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 0 60px rgba(var(--yk-rgb), .18) !important;
+}
+#ytStudio .yk-x, #ytStudio .yk-tab, #ytStudio .yk-chip, #ytStudio .yk-fbtn, #ytStudio .yk-fx,
+#ytStudio .yk-btn.ghost, #ytStudio .yk-meta, #ytStudio .yk-in, #ytStudio .yk-color {
+  background: var(--gp-tx-06, rgba(255,255,255,.07)) !important; border-color: var(--gp-tx-25, rgba(255,255,255,.28)) !important; color: var(--gp-text, #f1f5f9) !important;
+}
+#ytStudio .yk-box { background: var(--gp-tx-06, rgba(255,255,255,.045)) !important; border-color: var(--gp-tx-12, rgba(255,255,255,.14)) !important; }
+#ytStudio .yk-card { background: linear-gradient(160deg, rgba(var(--k), .14), var(--gp-tx-06, rgba(255,255,255,.035))) !important; }
+#ytStudio .yk-alt { border-top-color: var(--gp-tx-25, rgba(255,255,255,.14)) !important; }
+#ytStudio .yk-tagbox span { color: var(--gp-text, #f1f5f9) !important; }
+#ytStudio .yk-copy { color: var(--gp-text, #fff) !important; }
+#ytStudio .yk-x:hover, #ytStudio .yk-tab:hover, #ytStudio .yk-chip:hover, #ytStudio .yk-fbtn:hover { background: var(--gp-tx-12, rgba(255,255,255,.14)) !important; }
+#ytStudio .yk-lab, #ytStudio .yk-hint, #ytStudio .yk-topbar p { opacity: .72; }
+#ytStudio .yk-kicker { color: #ff3355 !important; }
+#ytStudio .yk-meta.ok { background: rgba(34,197,94,.22) !important; } #ytStudio .yk-meta.warn { background: rgba(245,158,11,.24) !important; } #ytStudio .yk-meta.bad { background: rgba(239,68,68,.24) !important; }
+/* filled / coloured buttons keep white text so they read on any theme */
+#ytStudio .yk-tab.on, #ytStudio .yk-chip.on, #ytStudio .yk-btn.red, #ytStudio .yk-btn.acc, #ytStudio .yk-copy.done,
+.cp-thumbwrap .cp-thumb-cta, .yk-toast { color: #fff !important; }
+#ytStudio .yk-tab.on, #ytStudio .yk-chip.on { background: linear-gradient(135deg, rgba(var(--yk-rgb), .95), rgba(var(--yk-rgb), .65)) !important; border-color: rgb(var(--yk-rgb)) !important; }
+#ytStudio .yk-btn.red { background: linear-gradient(135deg, #ff2d55, #e60026) !important; }
+#ytStudio .yk-btn.acc { background: linear-gradient(135deg, rgba(var(--yk-rgb), 1), rgba(var(--yk-rgb), .6)) !important; }
+#ytStudio .yk-copy.done { background: #16a34a !important; border-color: #4ade80 !important; }
+
+/* ── Light Mode (html.lite-mode): plain white box, black text/borders, no gradients ── */
+html.lite-mode #ytStudio { background: rgba(0,0,0,.35) !important; }
+html.lite-mode #ytStudio .yk-panel { background: #fff !important; background-image: none !important; border: 2px solid #000 !important; }
+html.lite-mode #ytStudio .yk-panel::before { display: none !important; }
+html.lite-mode #ytStudio, html.lite-mode #ytStudio * { color: #000 !important; -webkit-text-fill-color: #000 !important; }
+html.lite-mode #ytStudio .yk-x, html.lite-mode #ytStudio .yk-tab, html.lite-mode #ytStudio .yk-chip, html.lite-mode #ytStudio .yk-fbtn,
+html.lite-mode #ytStudio .yk-fx, html.lite-mode #ytStudio .yk-btn, html.lite-mode #ytStudio .yk-meta, html.lite-mode #ytStudio .yk-in,
+html.lite-mode #ytStudio .yk-color, html.lite-mode #ytStudio .yk-copy, html.lite-mode #ytStudio .yk-logo, html.lite-mode #ytStudio .yk-tagbox span,
+html.lite-mode #ytStudio .yk-box, html.lite-mode #ytStudio .yk-card {
+  background: #fff !important; background-image: none !important; border: 1px solid #000 !important;
+}
+html.lite-mode #ytStudio .yk-card::before { background: #000 !important; box-shadow: none !important; }
+html.lite-mode #ytStudio .yk-alt { border-top: 1px dashed #000 !important; }
+html.lite-mode #ytStudio .yk-tab.on, html.lite-mode #ytStudio .yk-chip.on, html.lite-mode #ytStudio .yk-copy.done { background: #000 !important; }
+html.lite-mode #ytStudio .yk-tab.on, html.lite-mode #ytStudio .yk-tab.on *, html.lite-mode #ytStudio .yk-chip.on,
+html.lite-mode #ytStudio .yk-copy.done { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+html.lite-mode #ytStudio .yk-x:hover, html.lite-mode #ytStudio .yk-btn:hover, html.lite-mode #ytStudio .yk-copy:hover,
+html.lite-mode #ytStudio .yk-tab:hover, html.lite-mode #ytStudio .yk-fbtn:hover { background: #eee !important; }
+html.lite-mode #ytStudio .yk-canvaswrap { border: 1px solid #000 !important; }
+html.lite-mode #ytStudio .yk-kicker i { background: #000 !important; }
+</style>
+
 
 <style id="conceptPageCss">
 /* ════════════════════════════════════════════════════════════════
@@ -8060,12 +8114,65 @@ html .qdot.cdot.current{ color:var(--gp-text,#f1f5f9) !important; }
           });
         }
 
-        // Helper: wait for all images inside a container to load
+        // Helper: make every <img> inside a container PDF-safe, then wait for it.
+        //  - drops crossorigin / lazy-loading (lazy images never load off-screen)
+        //  - converts each image to a data: URL so html2canvas never has to re-fetch it
+        //    (re-fetching is what made images come out blank in the PDF)
+        //  - an image that truly can't load is replaced by a small text note instead of a blank gap
+        function _blobToDataUrl(blob) {
+          return new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = rej; fr.readAsDataURL(blob); });
+        }
+        function _loadOne(img) {
+          if (img.complete && img.naturalWidth) return Promise.resolve(true);
+          return new Promise(res => {
+            const t = setTimeout(() => res(!!img.naturalWidth), 15000);
+            img.onload = () => { clearTimeout(t); res(true); };
+            img.onerror = () => { clearTimeout(t); res(false); };
+          });
+        }
         async function _waitImgs(container) {
           const imgs = [...container.querySelectorAll('img')];
-          await Promise.all(imgs.map(img => {
-            if (img.complete && img.naturalWidth) return Promise.resolve();
-            return new Promise(res => { img.onload = res; img.onerror = res; });
+          await Promise.all(imgs.map(async img => {
+            img.removeAttribute('crossorigin');
+            img.removeAttribute('srcset');
+            img.removeAttribute('loading');
+            img.loading = 'eager';
+            const src = img.getAttribute('src') || '';
+            let ok = false;
+            if (src && !src.startsWith('data:')) {
+              // 1st try: fetch -> data URL
+              try {
+                const r = await fetch(new URL(src, document.baseURI).href);
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                const dataUrl = await _blobToDataUrl(await r.blob());
+                img.src = dataUrl;
+                ok = await _loadOne(img);
+              } catch (e) { ok = false; }
+              // 2nd try: let the browser load it, then redraw through a canvas
+              if (!ok) {
+                try {
+                  const im2 = new Image();
+                  im2.crossOrigin = 'anonymous';
+                  const loaded = await new Promise(res => { im2.onload = () => res(true); im2.onerror = () => res(false); im2.src = new URL(src, document.baseURI).href; });
+                  if (loaded && im2.naturalWidth) {
+                    const cv = document.createElement('canvas');
+                    cv.width = im2.naturalWidth; cv.height = im2.naturalHeight;
+                    cv.getContext('2d').drawImage(im2, 0, 0);
+                    img.src = cv.toDataURL('image/png');
+                    ok = await _loadOne(img);
+                  }
+                } catch (e) { ok = false; }
+              }
+            } else {
+              ok = await _loadOne(img);
+            }
+            if (!ok) {
+              console.warn('PDF: image could not be loaded:', src.slice(0, 120));
+              const note = document.createElement('div');
+              note.textContent = '[image not available: ' + (src.startsWith('data:') ? 'embedded image' : src.split('/').pop().slice(0, 60)) + ']';
+              note.style.cssText = 'font:italic 12px sans-serif;opacity:.6;padding:8px 0;';
+              if (img.parentNode) img.parentNode.replaceChild(note, img);
+            }
           }));
         }
 
@@ -8136,7 +8243,7 @@ html .qdot.cdot.current{ color:var(--gp-text,#f1f5f9) !important; }
                           background:rgba(34,211,238,0.10);color:#22d3ee;
                           font-size:11px;font-weight:700;letter-spacing:0.6px;">EXPLANATION</div>
               ${expText ? `<div style="color:${_pdfTxt};font-size:14.5px;line-height:1.75;">${expText}</div>` : ''}
-              ${expImgSrc ? `<img src="${expImgSrc}" crossorigin="anonymous"
+              ${expImgSrc ? `<img src="${expImgSrc}"
                                   style="max-width:100%;border-radius:12px;margin-top:10px;
                                          border:1px solid rgba(128,128,128,0.2);" />` : ''}
             </div>` : '';
@@ -8161,7 +8268,7 @@ html .qdot.cdot.current{ color:var(--gp-text,#f1f5f9) !important; }
                 <div style="color:${_pdfTxt};font-size:16px;line-height:1.75;
                             font-weight:600;margin-bottom:${q.image?'10px':'16px'};">${q.text}</div>
                 <!-- Question image -->
-                ${q.image ? `<img src="${q.image}" crossorigin="anonymous"
+                ${q.image ? `<img src="${q.image}"
                                   style="max-width:100%;border-radius:12px;margin-bottom:16px;
                                          border:1px solid rgba(128,128,128,0.2);" />` : ''}
                 <!-- Options (full HTML preserved, with correct/wrong colours) -->
@@ -8215,7 +8322,8 @@ html .qdot.cdot.current{ color:var(--gp-text,#f1f5f9) !important; }
             scale: 2,
             backgroundColor: _pdfBg,
             useCORS: true,
-            allowTaint: true,
+            allowTaint: false,
+            imageTimeout: 20000,
             logging: false,
             removeContainer: false,
           });
@@ -8306,7 +8414,7 @@ html .qdot.cdot.current{ color:var(--gp-text,#f1f5f9) !important; }
             await new Promise(r => setTimeout(r, 30));
 
             const rCanvas = await html2canvas(_wrap2.firstElementChild, {
-              scale: 2, backgroundColor: _pdfBg, useCORS: true, allowTaint: true, logging: false, removeContainer: false,
+              scale: 2, backgroundColor: _pdfBg, useCORS: true, allowTaint: false, imageTimeout: 20000, logging: false, removeContainer: false,
             });
 
             const rImgH = cW * rCanvas.height / rCanvas.width;
@@ -18906,6 +19014,21 @@ html.lite-mode #sp-pick .spp-foot .spp-go:disabled{opacity:.4!important}
     });
   }
   function fixClone(doc) {
+    /* PDF image fix: the page-wide `img { content-visibility:auto }` rule makes an image in html2canvas' hidden clone
+       skip rendering -> size-containment collapses its height to 0, leaving only its border (a thin line of the image's width). */
+    try {
+      var fx = doc.createElement('style');
+      fx.textContent = '*,*::before,*::after{content-visibility:visible!important;contain-intrinsic-size:auto!important}img{content-visibility:visible!important}';
+      (doc.head || doc.documentElement).appendChild(fx);
+      doc.querySelectorAll('img').forEach(function (im) {
+        im.style.setProperty('content-visibility', 'visible', 'important');
+        im.removeAttribute('loading');
+        var live = im.getAttribute('data-sp-lw');
+        if (live) { im.style.setProperty('width', live + 'px', 'important'); }
+        var lh = im.getAttribute('data-sp-lh');
+        if (lh && +lh > 0) { im.style.setProperty('height', lh + 'px', 'important'); }
+      });
+    } catch (e) { console.warn('img fix failed', e); }
     doc.querySelectorAll('style').forEach(function (st) {
       st.textContent = mixFix(st.textContent).replace(/(?<![a-zA-Z-])color\(\s*[a-zA-Z0-9-]+[^)]*\)/g, 'transparent');
     });
@@ -18931,12 +19054,250 @@ html.lite-mode #sp-pick .spp-foot .spp-go:disabled{opacity:.4!important}
       n.style.setProperty('flex', 'none', 'important');
     });
   }
+  /* ── PDF fix: turn every <img> of the captured page into a data: URL BEFORE html2canvas runs.
+       html2canvas re-downloads each picture with its own CORS request; that silently fails for concept-page
+       images (cached copy without CORS headers, lazy images, etc.) and left them blank in the PDF. ── */
+  var _imgDataCache = {};
+  function _blob2data(b) { return new Promise(function (res, rej) { var fr = new FileReader(); fr.onload = function () { res(fr.result); }; fr.onerror = rej; fr.readAsDataURL(b); }); }
+  function _imgReady(img, ms) {
+    if (img.complete && img.naturalWidth) return Promise.resolve(true);
+    if (img.complete && /\.svg(?:[?#]|$)/i.test(img.currentSrc || img.src || '')) return Promise.resolve(true);
+    return new Promise(function (res) {
+      var t = setTimeout(function () { res(!!img.naturalWidth); }, ms || 8000);
+      img.addEventListener('load', function () { clearTimeout(t); res(true); }, { once: true });
+      img.addEventListener('error', function () { clearTimeout(t); res(false); }, { once: true });
+    });
+  }
+  function _canvasData(im) {
+    var cv = document.createElement('canvas');
+    cv.width = im.naturalWidth; cv.height = im.naturalHeight;
+    cv.getContext('2d').drawImage(im, 0, 0);
+    return cv.toDataURL('image/png');                 // throws if the canvas is tainted
+  }
+  /* ── image embedding v2 ──
+     Fixes the remaining reasons a concept-page picture came out blank:
+     • server sends a wrong / missing MIME type  -> the data: URL could not be decoded (now fixed from the file extension)
+     • SVG without width/height                  -> naturalWidth 0, canvas blank (now sized from its viewBox)
+     • <picture><source> overriding the <img>     -> the swapped src was ignored
+     • every candidate is test-decoded; a bad one is thrown away and the ORIGINAL src is restored instead of leaving a broken image
+     • CSS background-image: url(...) pictures inside the page are embedded too */
+  var _MIME = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', webp: 'image/webp', svg: 'image/svg+xml', bmp: 'image/bmp', avif: 'image/avif' };
+  var _bgUndo = [];
+  function _fixMime(b, url) {
+    if (/^image\//i.test(b.type || '')) return b;
+    var m = /\.([a-z0-9]+)(?:[?#]|$)/i.exec(String(url).split('#')[0]), mt = m && _MIME[m[1].toLowerCase()];
+    return mt ? b.slice(0, b.size, mt) : b;
+  }
+  function _svgFix(txt) {                              // give a size-less SVG a width/height so it has an intrinsic size
+    try {
+      var d = new DOMParser().parseFromString(txt, 'image/svg+xml'), r = d.documentElement;
+      if (!r || r.nodeName.toLowerCase() !== 'svg' || d.querySelector('parsererror')) return txt;
+      if (!r.getAttribute('width') || !r.getAttribute('height') || /%/.test(r.getAttribute('width') + r.getAttribute('height'))) {
+        var vb = (r.getAttribute('viewBox') || '').trim().split(/[\s,]+/).map(Number);
+        var w = vb.length === 4 && vb[2] > 0 ? vb[2] : 800, h = vb.length === 4 && vb[3] > 0 ? vb[3] : 600;
+        r.setAttribute('width', w); r.setAttribute('height', h);
+        if (!r.getAttribute('xmlns')) r.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        return new XMLSerializer().serializeToString(r);
+      }
+    } catch (e) { /* keep as is */ }
+    return txt;
+  }
+  function _decodes(d) {                               // does this data: URL really turn into a picture?
+    return new Promise(function (res) {
+      var t = new Image(), to = setTimeout(function () { res(false); }, 8000);
+      t.onload = function () { clearTimeout(to); res(true); };
+      t.onerror = function () { clearTimeout(to); res(false); };
+      t.src = d;
+    });
+  }
+  function _canvasData(im) {
+    var cv = document.createElement('canvas');
+    cv.width = im.naturalWidth || im.width || 800; cv.height = im.naturalHeight || im.height || 600;
+    cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
+    var u = cv.toDataURL('image/png');                 // throws if the canvas is tainted
+    return u.length > 20 ? u : null;
+  }
+  async function _fetchData(url) {
+    var r = await fetch(url); if (!r.ok) throw new Error('HTTP ' + r.status);
+    var b = _fixMime(await r.blob(), url);
+    if (b.type === 'image/svg+xml') {
+      var txt = _svgFix(await b.text());
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(txt);
+    }
+    return await _blob2data(b);
+  }
+  /* ── image embedding v3 ──────────────────────────────────────────────────────────────────────────
+     When fetch() / canvas cannot read a picture's pixels, the PDF used to come out with a blank gap.
+     That happens in two real-life situations, both handled here:
+       1) the portal was opened by double-clicking the file (file://): browsers refuse to read local files from a page
+          -> a one-time "choose your images folder" box; the pictures are then read through the File API (always allowed)
+       2) the picture is hosted on a site that sends no CORS headers (so its pixels are locked)
+          -> last-resort fetch through a public CORS image proxy (images.weserv.nl)
+     A picture that still can't be read is drawn as a clearly labelled grey box instead of an invisible hole. */
+  var _localMap = null, _localPending = null, _skipLocal = false, _imgUndo = [];
+  function _pathParts(p) {
+    var t = String(p || '').split('#')[0].split('?')[0];
+    try { t = decodeURIComponent(t); } catch (e) { }
+    t = t.replace(/\\/g, '/').replace(/^file:\/*/i, '').replace(/^[a-z]:\//i, '');
+    var out = []; t.split('/').forEach(function (x) { if (x && x !== '.' && x !== '..') out.push(x.toLowerCase()); });
+    return out;
+  }
+  function _buildLocalMap(files) {
+    var m = {};
+    [].forEach.call(files, function (f) {
+      var parts = _pathParts(f.webkitRelativePath || f.name);
+      for (var i = 0; i < parts.length; i++) { var k = parts.slice(i).join('/'); if (!m[k]) m[k] = f; }
+    });
+    return m;
+  }
+  function _findLocal(url) {
+    if (!_localMap) return null;
+    var parts = _pathParts(url);
+    for (var i = 0; i < parts.length; i++) { var f = _localMap[parts.slice(i).join('/')]; if (f) return f; }
+    return null;
+  }
+  function _askLocalFolder() {
+    if (_localMap) return Promise.resolve(true);
+    if (_skipLocal) return Promise.resolve(false);
+    if (_localPending) return _localPending;
+    _localPending = new Promise(function (res) {
+      var w = document.createElement('div'); w.id = 'sp-imgask';
+      w.style.cssText = 'position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,.72);backdrop-filter:blur(6px);font-family:Inter,system-ui,sans-serif';
+      w.innerHTML = '<div style="width:min(460px,calc(100vw - 28px));padding:22px;border-radius:18px;background:#0f172a;color:#f1f5f9;border:1px solid rgba(148,163,184,.35);box-shadow:0 30px 80px rgba(0,0,0,.7)">' +
+        '<div style="font-weight:800;font-size:17px;margin-bottom:8px">🖼️ Pictures need your permission</div>' +
+        '<div style="font-size:13.5px;line-height:1.55;color:#cbd5e1;margin-bottom:16px">This portal is opened as a local file, so the browser blocks reading the pictures used in the concept / question pages. ' +
+        'Select the <b>folder that contains your images</b> (for example the folder that has index.html) and they will be placed in the PDF. Nothing is uploaded anywhere.</div>' +
+        '<div style="display:flex;gap:10px;justify-content:flex-end"><button type="button" data-a="skip" style="padding:9px 16px;border-radius:11px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#e2e8f0;font:700 13px Inter,system-ui,sans-serif;cursor:pointer">Skip pictures</button>' +
+        '<button type="button" data-a="pick" style="padding:9px 18px;border-radius:11px;border:1px solid rgba(147,197,253,.7);background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;font:800 13px Inter,system-ui,sans-serif;cursor:pointer">📁 Choose images folder</button></div></div>';
+      var inp = document.createElement('input'); inp.type = 'file'; inp.setAttribute('webkitdirectory', ''); inp.multiple = true; inp.style.display = 'none';
+      w.appendChild(inp);
+      function done(ok) { try { w.remove(); } catch (e) { } _localPending = null; if (!ok) _skipLocal = true; res(ok); }
+      inp.addEventListener('change', function () { if (inp.files && inp.files.length) { _localMap = _buildLocalMap(inp.files); done(true); } });
+      w.addEventListener('click', function (e) {
+        var b = e.target.closest && e.target.closest('button'); if (!b) return;
+        e.stopPropagation();
+        if (b.getAttribute('data-a') === 'pick') inp.click(); else done(false);
+      });
+      w.addEventListener('keydown', function (e) { e.stopPropagation(); }, true);
+      document.body.appendChild(w);
+    });
+    return _localPending;
+  }
+  async function _blobData(b) {
+    if (b.type === 'image/svg+xml') return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(_svgFix(await b.text()));
+    return await _blob2data(b);
+  }
+  async function _lastResort(url) {
+    if (/^file:/i.test(url)) {
+      if (!_localMap) await _askLocalFolder();
+      var f = _findLocal(url); if (!f) return null;
+      return await _blobData(_fixMime(f, f.name));
+    }
+    if (/^https?:/i.test(url)) {
+      var host = ''; try { host = new URL(url).hostname; } catch (e) { }
+      if (!host || host === 'localhost' || /^(127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host) || /\.local$/i.test(host)) return null;   // proxy can't see private hosts
+      var r = await fetch('https://images.weserv.nl/?url=' + encodeURIComponent(url)); if (!r.ok) throw new Error('proxy HTTP ' + r.status);
+      var b = await r.blob(); if (b.type && !/^image\//i.test(b.type)) throw new Error('proxy returned ' + b.type);
+      return await _blobData(_fixMime(b, url));
+    }
+    return null;
+  }
+  function _placeholder(img, why) {                  // visible grey box instead of an invisible hole; original is restored after the capture
+    var w = Math.max(220, Math.round(img.clientWidth || img.naturalWidth || 320)), h = Math.max(90, Math.round(img.clientHeight || img.naturalHeight || 140));
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '"><rect width="100%" height="100%" rx="12" fill="#1e293b" stroke="#64748b" stroke-dasharray="6 5"/>' +
+      '<text x="50%" y="46%" fill="#e2e8f0" font-family="sans-serif" font-size="15" text-anchor="middle">&#128444; picture could not be saved</text>' +
+      '<text x="50%" y="62%" fill="#94a3b8" font-family="sans-serif" font-size="11" text-anchor="middle">' + String(why || '').replace(/[<>&"]/g, '').slice(0, 60) + '</text></svg>';
+    _imgUndo.push({ img: img, src: img.getAttribute('src'), w: img.style.width, h: img.style.height });
+    img.style.width = w + 'px'; img.style.height = h + 'px';
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+  async function _toDataUrl(img) {
+    var src = img.currentSrc || img.src;
+    if (_imgDataCache[src]) return _imgDataCache[src];
+    var url = new URL(src, document.baseURI).href, d = null, tries = [
+      function () { return _fetchData(url); },
+      function () { return _fetchData(url + (url.indexOf('?') < 0 ? '?' : '&') + '_pdf=' + Date.now()); },
+      function () { return _canvasData(img); },
+      function () {
+        return new Promise(function (res, rej) {
+          var im2 = new Image(); im2.crossOrigin = 'anonymous';
+          im2.onload = function () { try { res(_canvasData(im2)); } catch (e) { rej(e); } };
+          im2.onerror = function () { rej(new Error('load')); };
+          im2.src = url + (url.indexOf('?') < 0 ? '?' : '&') + '_pdf=' + Date.now();
+        });
+      }
+    ];
+    for (var i = 0; i < tries.length && !d; i++) {
+      try { var c = await tries[i](); if (c && await _decodes(c)) d = c; } catch (e) { d = null; }
+    }
+    if (!d) { try { var c4 = await _lastResort(url); if (c4 && await _decodes(c4)) d = c4; } catch (e) { d = null; } }
+    if (d) _imgDataCache[src] = d;
+    return d;
+  }
+  async function _embedBackgrounds(box) {              // background-image: url(...) -> data: URL (restored after the capture)
+    var els = [box].concat([].slice.call(box.querySelectorAll('*'))).slice(0, 1500), failed = 0;
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i], bg = '';
+      try { bg = getComputedStyle(el).backgroundImage || ''; } catch (e) { continue; }
+      if (bg.indexOf('url(') < 0) continue;
+      var out = bg, urls = [], re = /url\((['"]?)(.*?)\1\)/g, m;
+      while ((m = re.exec(bg))) if (m[2] && m[2].indexOf('data:') !== 0) urls.push(m[2]);
+      if (!urls.length) continue;
+      for (var k = 0; k < urls.length; k++) {
+        var full = urls[k], data = _imgDataCache['bg:' + full];
+        if (!data) {
+          var absU = new URL(full, document.baseURI).href;
+          try { var c = await _fetchData(absU); if (c && await _decodes(c)) data = c; } catch (e) { data = null; }
+          if (!data) { try { var c5 = await _lastResort(absU); if (c5 && await _decodes(c5)) data = c5; } catch (e) { data = null; } }
+          if (data) _imgDataCache['bg:' + full] = data;
+        }
+        if (data) out = out.split(full).join(data); else failed++;
+      }
+      if (out !== bg) {
+        _bgUndo.push({ el: el, v: el.style.getPropertyValue('background-image'), p: el.style.getPropertyPriority('background-image') });
+        el.style.setProperty('background-image', out, 'important');
+      }
+    }
+    return failed;
+  }
+  async function prepImages(box) {
+    /* <picture><source> would override the <img> we are about to replace */
+    [].forEach.call(box.querySelectorAll('picture source'), function (s) { s.remove(); });
+    var imgs = [].slice.call(box.querySelectorAll('img')), failed = 0;
+    await Promise.all(imgs.map(async function (img) {
+      img.removeAttribute('loading'); img.removeAttribute('srcset'); img.removeAttribute('sizes'); img.removeAttribute('crossorigin'); img.loading = 'eager';
+      img.style.removeProperty('content-visibility');
+      var s = img.getAttribute('src') || '';
+      if (!s || s.indexOf('data:') === 0) { try { await img.decode(); } catch (e) { } return; }
+      await _imgReady(img, 6000);
+      var d = await _toDataUrl(img);
+      if (!d) { failed++; console.warn('PDF: could not embed image', s.slice(0, 120)); _placeholder(img, s.split('/').pop()); return; }
+      var ok = await new Promise(function (res) {
+        var t = setTimeout(function () { res(false); }, 8000);
+        img.addEventListener('load', function () { clearTimeout(t); res(true); }, { once: true });
+        img.addEventListener('error', function () { clearTimeout(t); res(false); }, { once: true });
+        img.src = d;
+      });
+      if (!ok) { img.src = s; failed++; _placeholder(img, s.split('/').pop()); return; }
+      try { await img.decode(); } catch (e) { }
+    }));
+    try { failed += await _embedBackgrounds(box); } catch (e) { console.warn('bg embed failed', e); }
+    if (failed) toast('⚠ ' + failed + ' picture(s) could not be read by the browser and appear as a grey box in the PDF. Run Save PDF again and choose your images folder, or open the portal through http://localhost.', true);
+    await sleep(120);
+  }
   /* screenshot of the whole question / concept box (scroll area fully expanded) + where every anchor sits inside it */
   async function captureView(kind, bgCol, anchors) {
     var box = document.getElementById(kind === 'c' ? 'conceptBox' : 'questionBox');
     if (!box || !box.getClientRects().length) return null;
     var t0 = Date.now();
     while (Date.now() - t0 < 2500 && ![].every.call(box.querySelectorAll('img'), function (i) { return i.complete; })) await sleep(120);
+    try { await prepImages(box); } catch (e) { console.warn('prepImages failed', e); }
+    /* remember each picture's on-screen size so the capture can never shrink it to a line */
+    [].forEach.call(box.querySelectorAll('img'), function (im) {
+      im.style.setProperty('content-visibility', 'visible', 'important');
+      var r = im.getBoundingClientRect();
+      if (r.width > 1 && r.height > 4) { im.setAttribute('data-sp-lw', String(Math.round(r.width * 100) / 100)); im.setAttribute('data-sp-lh', String(Math.round(r.height * 100) / 100)); }
+    });
 
     var marked = [], saved = [];
     function mark(n) { if (n.getAttribute('data-sp-exp') === null) { n.setAttribute('data-sp-h', n.getBoundingClientRect().height); n.setAttribute('data-sp-exp', ''); marked.push(n); } }
@@ -18985,7 +19346,7 @@ html.lite-mode #sp-pick .spp-foot .spp-go:disabled{opacity:.4!important}
     while (sc > 0.5 && (bR.width * sc * est * sc > 22e6 || est * sc > 16000)) sc -= 0.25;
 
     var cs = document.createElement('style');
-    cs.textContent = '*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}#particleCanvas{display:none!important}';
+    cs.textContent = '*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;content-visibility:visible!important;contain-intrinsic-size:auto!important}img{content-visibility:visible!important;height:auto}#particleCanvas{display:none!important}';
     document.head.appendChild(cs);
     await sleep(60);
     try {
@@ -19041,8 +19402,13 @@ html.lite-mode #sp-pick .spp-foot .spp-go:disabled{opacity:.4!important}
       };
     } finally {
       cs.remove();
+      _bgUndo.forEach(function (u) { try { if (u.v) u.el.style.setProperty('background-image', u.v, u.p); else u.el.style.removeProperty('background-image'); } catch (e) { } });
+      _bgUndo = [];
+      _imgUndo.forEach(function (u) { try { if (u.src === null) u.img.removeAttribute('src'); else u.img.setAttribute('src', u.src); u.img.style.width = u.w; u.img.style.height = u.h; } catch (e) { } });
+      _imgUndo = [];
       ancEls.forEach(function (a) { a.removeAttribute('data-sp-anc'); });
       box.querySelectorAll('[data-sp-e]').forEach(function (n) { n.removeAttribute('data-sp-e'); });
+      box.querySelectorAll('img').forEach(function (im) { im.removeAttribute('data-sp-lw'); im.removeAttribute('data-sp-lh'); im.style.removeProperty('content-visibility'); });
       marked.forEach(function (n) { n.removeAttribute('data-sp-exp'); n.removeAttribute('data-sp-h'); });
       saved.forEach(function (o) { try { o.n.scrollTo({ top: o.t, left: o.l, behavior: 'instant' }); } catch (_) { o.n.scrollTop = o.t; o.n.scrollLeft = o.l; } });
     }
@@ -19100,7 +19466,7 @@ html.lite-mode #sp-pick .spp-foot .spp-go:disabled{opacity:.4!important}
   async function runExport(sel) {
     if (exporting) return;
     sel = sel.slice().sort(function (a, b) { return a.pos - b.pos; });
-    exporting = true;
+    exporting = true; _skipLocal = false; _localPending = null;
     var startKey = viewKey, startPos = whichView().pos, imgs = [], skipped = 0;
     try {
       var haveH2C = true;
@@ -19137,7 +19503,7 @@ html.lite-mode #sp-pick .spp-foot .spp-go:disabled{opacity:.4!important}
       a.download = 'drawings-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '-' + pad(d.getHours()) + pad(d.getMinutes()) + '.pdf';
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
-      toast('Saved PDF (ink-fix v3) · ' + imgs.length + ' page' + (imgs.length > 1 ? 's' : '') + (skipped ? '  (' + skipped + ' skipped – could not capture)' : ''), true);
+      toast('Saved PDF (ink-fix v3 + images v3) · ' + imgs.length + ' page' + (imgs.length > 1 ? 's' : '') + (skipped ? '  (' + skipped + ' skipped – could not capture)' : ''), true);
     } catch (err) {
       console.error(err); toast('PDF failed — see console', true);
       try { if (viewKey !== startKey && startPos < 1e9 && typeof openSeq === 'function') openSeq(startPos); } catch (_) {}
@@ -19450,6 +19816,84 @@ html.lite-mode #sp-pick .spp-foot .spp-go:disabled{opacity:.4!important}
   }
   new MutationObserver(sync).observe(panel, { attributes: true, attributeFilter: ['class'] });
   sync();
+})();
+</script>
+
+<style id="qBadgeContrastCss">
+/* Q counter pills: always readable on light AND dark themes (JS below picks black/white text by real contrast) */
+#qCounterBadge, #modeBadge, #bmQLabel, .bm-qbar-label, .summary-q-num { text-shadow: none !important; }
+html.lite-mode #qCounterBadge, html.lite-mode #modeBadge, html.lite-mode #bmQLabel { color: #000 !important; -webkit-text-fill-color: #000 !important; opacity: 1 !important; }
+/* "Q3/105" pill in front of every question: the base theme uses pale-blue text (#bfdbfe) which vanishes on light backgrounds.
+   Light mode gets a plain white pill with black text; every other light theme is handled by the contrast script below. */
+html.lite-mode #questionText .badge { background: #fff !important; background-image: none !important; border: 1px solid #000 !important; color: #000 !important; -webkit-text-fill-color: #000 !important; opacity: 1 !important; }
+#questionText .badge { text-shadow: none !important; opacity: 1 !important; }
+</style>
+<script id="qBadgeContrast">
+/* Keeps text of the "Q 3/105" style pills (and other small badges) readable in every theme.
+   It composites the pill's real background over its parents, measures the WCAG contrast of the text,
+   and only if it is below 4.5:1 forces dark or light text. Re-runs whenever the theme / text changes. */
+(function () {
+  var SEL = '#questionText .badge, #qCounterBadge, #modeBadge, #testInfoTop, .engine-topbar .badge-soft, .hud-mode-badge, #bmQLabel, .bm-qbar-label, .badge-soft';
+  var cv = document.createElement('canvas'); cv.width = cv.height = 1;
+  var cx = cv.getContext('2d', { willReadFrequently: true });
+  function rgba(c) {                                   // any CSS colour (rgb, hex, color-mix, oklch…) -> [r,g,b,a]
+    try {
+      cx.clearRect(0, 0, 1, 1); cx.fillStyle = '#000'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1);
+      var d = cx.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255];
+    } catch (e) { return null; }
+  }
+  function over(top, bot) {
+    var a = top[3] + bot[3] * (1 - top[3]); if (a <= 0) return [0, 0, 0, 0];
+    return [0, 1, 2].map(function (i) { return (top[i] * top[3] + bot[i] * bot[3] * (1 - top[3])) / a; }).concat([a]);
+  }
+  function backdrop(el) {                              // what the pill really sits on
+    var chain = [], n = el;
+    while (n && n.nodeType === 1) { chain.push(n); n = n.parentElement; }
+    var col = [255, 255, 255, 1];
+    for (var i = chain.length - 1; i >= 0; i--) {
+      var c = rgba(getComputedStyle(chain[i]).backgroundColor);
+      if (c && c[3] > 0) col = over(c, [col[0], col[1], col[2], 1]);
+    }
+    return col;
+  }
+  function lum(c) { var f = function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126 * f(c[0]) + .7152 * f(c[1]) + .0722 * f(c[2]); }
+  function ratio(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); }
+  var busy = false, timer = 0;
+  function fix() {
+    if (busy) return; busy = true;
+    try {
+      document.querySelectorAll(SEL).forEach(function (el) {
+        if (!el.getClientRects().length) return;
+        el.style.removeProperty('color'); el.style.removeProperty('-webkit-text-fill-color');   // re-measure from the theme's own colour
+        var cs = getComputedStyle(el), fg = rgba(cs.color), bg = backdrop(el);
+        if (!fg || !bg) return;
+        var solid = over(fg, [bg[0], bg[1], bg[2], 1]);
+        if (ratio(solid, bg) >= 4.5) return;
+        var dark = [11, 18, 32, 1], light = [255, 255, 255, 1];
+        var pick = ratio(dark, bg) >= ratio(light, bg) ? '#0b1220' : '#ffffff';
+        if (el.matches('#questionText .badge')) {          // keep the blue identity of the pill when a deep blue is readable enough
+          var navy = rgba('#1e3a8a'); if (navy && ratio(navy, bg) >= 4.5) pick = '#1e3a8a';
+        }
+        el.style.setProperty('color', pick, 'important');
+        el.style.setProperty('-webkit-text-fill-color', pick, 'important');
+        el.style.setProperty('opacity', '1', 'important');
+      });
+    } catch (e) { console.warn('qBadgeContrast', e); }
+    busy = false;
+  }
+  function soon() { clearTimeout(timer); timer = setTimeout(fix, 120); }
+  var mo = new MutationObserver(function (m) {
+    for (var i = 0; i < m.length; i++) { var t = m[i].target; if (t && t.nodeType === 1 && t.style && t.style.color && /qCounterBadge|modeBadge/.test(t.id || '') && m[i].attributeName === 'style') continue; soon(); return; }
+  });
+  mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-theme'] });
+  mo.observe(document.body, { attributes: true, attributeFilter: ['class', 'style'] });
+  mo.observe(document.head, { childList: true, subtree: true, characterData: true });   // dynamic theme <style> injection
+  ['qCounterBadge', 'testInfoTop', 'bmQLabel', 'questionText'].forEach(function (id) {
+    var el = document.getElementById(id); if (el) mo.observe(el, { childList: true, characterData: true, subtree: true });
+  });
+  document.addEventListener('click', soon, true); document.addEventListener('input', soon, true); document.addEventListener('change', soon, true);
+  window.addEventListener('load', soon); setInterval(fix, 2000); soon();
+  window.fixBadgeContrast = fix;
 })();
 </script>
 </body>
